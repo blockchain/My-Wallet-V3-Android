@@ -24,6 +24,7 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+//import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,8 +49,6 @@ import info.blockchain.wallet.util.ToastCustom;
 import info.blockchain.wallet.util.TypefaceUtil;
 import info.blockchain.wallet.util.WebUtil;
 import piuk.blockchain.android.R;
-
-//import android.util.Log;
 
 public class MapActivity extends ActionBarActivity implements LocationListener	{
 
@@ -116,14 +115,7 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 	
 	private LinearLayout infoLayout = null;
 
-	//
-	//
-	//
-    /*
-	private DrawerLayout mDrawerLayout = null;
-	private ListView mDrawerList = null;
-	private ActionBarDrawerToggle mDrawerToggle = null;
-	*/
+    private static final int radius = 40000;
 
 	@Override
 	public boolean onSupportNavigateUp() {
@@ -141,103 +133,6 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_general);
 		toolbar.setTitle(R.string.merchant_map);
 		setSupportActionBar(toolbar);
-/*
-        ActionBar actionBar = getActionBar();
-        actionBar.hide();
-        actionBar.setDisplayOptions(actionBar.getDisplayOptions() | ActionBar.DISPLAY_SHOW_CUSTOM);
-        
-        LinearLayout layout_icons = new LinearLayout(actionBar.getThemedContext());
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        layoutParams.height = 72;
-        layoutParams.width = 72 + 50;
-        layout_icons.setLayoutParams(layoutParams);
-        layout_icons.setOrientation(LinearLayout.HORIZONTAL);
-
-        ActionBar.LayoutParams imgParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL);
-	    if(!DeviceUtil.getInstance(this).isSmallScreen()) {
-	        layoutParams.height = 72;
-	    }
-	    else {
-	        layoutParams.height = 30;
-	    }
-        imgParams.height = layoutParams.height;
-        imgParams.width = layoutParams.height;
-        imgParams.rightMargin = 5;
-        
-        final ImageView listview_icon = new ImageView(actionBar.getThemedContext());
-        listview_icon.setImageResource(R.drawable.listview_icon);
-        listview_icon.setScaleType(ImageView.ScaleType.FIT_XY);
-        listview_icon.setLayoutParams(imgParams);
-        listview_icon.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-            	
-            	doListView();
-            	
-        		return false;
-            }
-        });
-
-        layout_icons.addView(listview_icon);
-
-        if(android.os.Build.VERSION.SDK_INT >= 21)	{
-        	actionBar.setDisplayOptions(actionBar.getDisplayOptions() | ActionBar.DISPLAY_SHOW_TITLE);
-        }
-        else	{
-        	actionBar.setDisplayOptions(actionBar.getDisplayOptions() ^ ActionBar.DISPLAY_SHOW_TITLE);
-        }
-        actionBar.setLogo(R.drawable.masthead);
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1B8AC7")));
-        //
-        //
-        //
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.drawer_list);
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-			
-			public void onDrawerClosed(View view) {
-				super.onDrawerClosed(view);
-				}
-
-			public void onDrawerOpened(View view) {
-				super.onDrawerOpened(view);
-			    }
-
-			};
-
-		// hide settings menu
-//		invalidateOptionsMenu();
-
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		ArrayAdapter<String> hAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.drawer_list_item, getResources().getStringArray(R.array.menus_merchantDirectory));
-		mDrawerList.setAdapter(hAdapter);
-//		actionBar.setDisplayHomeAsUpEnabled(true);
-//		actionBar.setHomeButtonEnabled(true);
-		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-			    switch (position) {
-		    	case 0:
-		    		doSuggest();
-		    		break;
-		    	default:
-		    		break;
-			    }
-
-				// Closing the drawer
-				mDrawerLayout.closeDrawer(mDrawerList);
-			    invalidateOptionsMenu();
-
-			}
-		});
-
-//        actionBar.setCustomView(layout_icons);
-//        actionBar.show();
-*/
 
     	markerValues = new HashMap<String,BTCBusiness>();
     	btcb = new ArrayList<BTCBusiness>();
@@ -290,12 +185,6 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
                                 
                 BTCBusiness b = markerValues.get(marker.getId());
 
-                //
-                // launch via intent: waze://?ll=<lat>,<lon>&navigate=yes
-                //
-                // Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=New+York+NY));
-                // startActivity(i);
-                //
 				String url = "http://maps.google.com/?saddr=" +
 	 	     	    	currLocation.getLatitude() + "," + currLocation.getLongitude() +
 	 	     	     	"&daddr=" + markerValues.get(marker.getId()).lat + "," + markerValues.get(marker.getId()).lon;
@@ -495,7 +384,7 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 		map.animateCamera(cameraUpdate);
 		locationManager.removeUpdates(this);
 		
-		setProperZoomLevel(latLng, 7, 1);
+		setProperZoomLevel(latLng, radius, 1);
 		drawData(true);
 
 	}
@@ -543,29 +432,22 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-//		if (mDrawerToggle.onOptionsItemSelected(item)) {
-//			return true;
-//		}
-//		else {
-		    switch (item.getItemId()) {
-	    	case R.id.action_merchant_list:
-	    		doListView();
-	    		return true;
-	    	case R.id.action_merchant_suggest:
-	    		doSuggest();
-	    		return true;
-		    default:
-		        return super.onOptionsItemSelected(item);
-		    }
-//		}
 
+		switch (item.getItemId()) {
+			case R.id.action_merchant_list:
+				doListView();
+				return true;
+			case R.id.action_merchant_suggest:
+				doSuggest();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-//		mDrawerToggle.syncState();
 	}
 
 	@Override
@@ -596,8 +478,8 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 
 				try {
 					if(fetch) {
-						final String url = "https://merchant-directory.blockchain.info/cgi-bin/btcd.pl?ULAT=" + currLocation.getLatitude() + "&ULON=" + currLocation.getLongitude() + "&D=40000&K=1";
-	         			strJSONData = WebUtil.getInstance().getURL(url);
+						final String url = "https://merchant-directory.blockchain.info/cgi-bin/btcd.pl?ULAT=" + currLocation.getLatitude() + "&ULON=" + currLocation.getLongitude() + "&D=" + radius + "&K=1";
+  	         			strJSONData = WebUtil.getInstance().getURL(url);
 					}
 
 					handler.post(new Runnable() {
@@ -613,13 +495,9 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 								else {
 									btcb = null;
 								}
-								
-//								btcb = ParseData.parse(strJSONData);
-								
+
 								if(btcb != null && btcb.size() > 0) {
 
-//									markerValues.clear();
-									
 									BTCBusiness b = null;
 
 				         			for(int i = 0; i < btcb.size(); i++) {
@@ -627,8 +505,16 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 				         				b = btcb.get(i);
 
 				            			BitmapDescriptor bmd = null;
-				            			
-				            			switch(Integer.parseInt(b.hc)) {
+
+                                        int hc = BTCBusiness.HEADING_CAFE;
+                                        try {
+                                            hc = Integer.parseInt(b.hc);
+                                        }
+                                        catch(Exception e) {
+                                            ;
+                                        }
+
+				            			switch(hc) {
 				            				case BTCBusiness.HEADING_CAFE:
 				            					if(cafeSelected) {
 					            					bmd = b.flag.equals("1") ? BitmapDescriptorFactory.fromResource(R.drawable.marker_cafe_featured) : BitmapDescriptorFactory.fromResource(R.drawable.marker_cafe);
@@ -696,7 +582,7 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
 							}
 
 							if(changeZoom) {
-								setProperZoomLevel(new LatLng(currLocation.getLatitude(), currLocation.getLongitude()), 40000, 1);
+								setProperZoomLevel(new LatLng(currLocation.getLatitude(), currLocation.getLongitude()), radius, 1);
 							}
 							else {
 								changeZoom = true;
@@ -807,4 +693,5 @@ public class MapActivity extends ActionBarActivity implements LocationListener	{
     public void onUserLeaveHint() {
         AppUtil.getInstance(this).setInBackground(true);
     }
+
 }
