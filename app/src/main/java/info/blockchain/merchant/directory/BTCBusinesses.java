@@ -38,12 +38,7 @@ public class BTCBusinesses	{
 	public static void refresh(String url) throws Exception {
 
 		Log.d("URL", url);
-/*
-		String data = WalletUtils.getURL(url);
-		Log.d("JSON data", data);
-		businesses = parse(data);
-		Log.d("Businesses returned", "" + businesses.size());
-*/
+
 	}
 
     public static ArrayList<BTCBusiness> parse(String data)	{
