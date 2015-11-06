@@ -13,6 +13,7 @@ import info.blockchain.wallet.util.AppUtil;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -160,7 +161,11 @@ public class PayloadBridge	{
      */
     public ECKey newLegacyAddress()  {
 
-        PRNGFixes.apply();
+        if(!AppUtil.getInstance(context).isPRNG_FIXED())    {
+            Security.removeProvider("LinuxPRNG");   // older versions of Android throw an exception if the provider is already installed
+            PRNGFixes.apply();
+            AppUtil.getInstance(context).setPRNG_FIXED(true);
+        }
 
         String result = null;
         byte[] data = null;
@@ -185,7 +190,6 @@ public class PayloadBridge	{
                 return null;
             }
             ecKey = ECKey.fromPrivate(privbytes, true);
-            Log.i("PayloadBridge", "" + ecKey.hasPrivKey());
             // erase all byte arrays:
             random.nextBytes(privbytes);
             random.nextBytes(rdata);
