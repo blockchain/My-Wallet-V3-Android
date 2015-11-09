@@ -13,6 +13,7 @@ import info.blockchain.wallet.util.AppUtil;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -160,6 +161,9 @@ public class PayloadBridge	{
      */
     public ECKey newLegacyAddress()  {
 
+        if(Security.getProvider("LinuxPRNG") != null)    {
+            Security.removeProvider("LinuxPRNG");
+        }
         PRNGFixes.apply();
 
         String result = null;
