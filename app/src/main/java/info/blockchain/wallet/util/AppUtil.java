@@ -25,7 +25,6 @@ public class AppUtil {
 
     private static boolean DEBUG = false;
     private static boolean LEGACY = true;
-    private static boolean PRNG_FIXES = false;
 
     private static long TIMEOUT_DELAY = 1000L * 60L * 2L;
     private static long lastUserInteraction = 0L;
@@ -89,15 +88,6 @@ public class AppUtil {
     public void setDEBUG(boolean debug) {
         DEBUG = debug;
     }
-
-    public boolean isPRNG_FIXED() {
-        return PRNG_FIXES;
-    }
-
-    public void setPRNG_FIXED(boolean prng) {
-        PRNG_FIXES = prng;
-    }
-
 
     public void initUserInteraction() {
         lastUserInteraction = System.currentTimeMillis();
