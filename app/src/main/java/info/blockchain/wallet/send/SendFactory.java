@@ -57,9 +57,6 @@ public class SendFactory	{
 
     private boolean sentChange = false;
 
-    private static final BigInteger bDust = BigInteger.valueOf(Coin.parseCoin("0.00000546").longValue());
-    public static final BigInteger bFee = BigInteger.valueOf(Coin.parseCoin("0.0001").longValue());
-
     public static SendFactory getInstance(Context ctx) {
 
         context = ctx.getApplicationContext();
@@ -384,7 +381,7 @@ public class SendFactory	{
                 ret.setRecommendedFee(FeeUtil.getInstance().getRecommendedFee(outputs.size(), 1));
                 return ret;
             }
-            else if(outPoint.getValue().compareTo(totalAmount.add(bDust).add(FeeUtil.getInstance().getRecommendedFee(1, 2))) >= 0) {
+            else if(outPoint.getValue().compareTo(totalAmount.add(SendCoins.bDust).add(FeeUtil.getInstance().getRecommendedFee(1, 2))) >= 0) {
                 outputs.clear();
                 outputs.add(outPoint);
                 ret.setTotalAmount(outPoint.getValue());
@@ -408,7 +405,7 @@ public class SendFactory	{
             if(totalValue.compareTo(totalAmount.add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 1))) == 0) {
                 break;
             }
-            else if(totalValue.compareTo(totalAmount.add(bDust).add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2))) >= 0) {
+            else if(totalValue.compareTo(totalAmount.add(SendCoins.bDust).add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2))) >= 0) {
                 break;
             }
             else    {
@@ -421,7 +418,7 @@ public class SendFactory	{
         if(totalValue.compareTo(totalAmount.add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 1))) == 0) {
             ret.setRecommendedFee(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 1));
         }
-        else if(totalValue.compareTo(totalAmount.add(bDust).add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2))) >= 0) {
+        else if(totalValue.compareTo(totalAmount.add(SendCoins.bDust).add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2))) >= 0) {
             ret.setRecommendedFee(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2));
         }
 

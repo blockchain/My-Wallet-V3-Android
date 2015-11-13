@@ -64,6 +64,7 @@ import info.blockchain.wallet.payload.LegacyAddress;
 import info.blockchain.wallet.payload.PayloadBridge;
 import info.blockchain.wallet.payload.PayloadFactory;
 import info.blockchain.wallet.payload.ReceiveAddress;
+import info.blockchain.wallet.send.SendCoins;
 import info.blockchain.wallet.send.SendFactory;
 import info.blockchain.wallet.send.UnspentOutputsBundle;
 import info.blockchain.wallet.util.AccountsUtil;
@@ -801,7 +802,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
 
             if(xpub != null && MultiAddrFactory.getInstance().getXpubAmounts().containsKey(xpub)) {
                 long _lamount = MultiAddrFactory.getInstance().getXpubAmounts().get(xpub);
-                if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendFactory.bFee.longValue()) > _lamount) {
+                if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendCoins.bFee.longValue()) > _lamount) {
                     if(showMessages) {
                         ToastCustom.makeText(getActivity(), getString(R.string.insufficient_funds), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
                     }
@@ -811,7 +812,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         }
         else {
             long _lamount = MultiAddrFactory.getInstance().getLegacyBalance(currentSelectedFromAddress);
-            if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendFactory.bFee.longValue()) > _lamount) {
+            if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendCoins.bFee.longValue()) > _lamount) {
                 if(showMessages) {
                     ToastCustom.makeText(getActivity(), getString(R.string.insufficient_funds), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
                 }
@@ -872,7 +873,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
             }
         }
 
-        long amount_available = amount - SendFactory.bFee.longValue();
+        long amount_available = amount - SendCoins.bFee.longValue();
         if(amount_available > 0L) {
             double btc_balance = (((double)amount_available) / 1e8);
             tvMax.setText(getActivity().getResources().getText(R.string.max_available) + " " + MonetaryUtil.getInstance().getBTCFormat().format(MonetaryUtil.getInstance(getActivity()).getDenominatedAmount(btc_balance)) + " " + strBTC);
@@ -1449,7 +1450,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
 
             if(xpub != null && MultiAddrFactory.getInstance().getXpubAmounts().containsKey(xpub)) {
                 long _lamount = MultiAddrFactory.getInstance().getXpubAmounts().get(xpub);
-                if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendFactory.bFee.longValue()) > _lamount) {
+                if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendCoins.bFee.longValue()) > _lamount) {
                     ToastCustom.makeText(getActivity(), getString(R.string.insufficient_funds), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
                     return false;
                 }
@@ -1464,7 +1465,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
                 _lamount = MultiAddrFactory.getInstance().getLegacyBalance(currentSelectedFromAddress);
             }
 
-            if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendFactory.bFee.longValue()) > _lamount) {
+            if((MonetaryUtil.getInstance(getActivity()).getUndenominatedAmount(lamount).longValue() + SendCoins.bFee.longValue()) > _lamount) {
                 ToastCustom.makeText(getActivity(), getString(R.string.insufficient_funds), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
                 return false;
             }
