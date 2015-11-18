@@ -857,7 +857,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         int hdAccountsIdx = AccountsUtil.getInstance(getActivity()).getLastHDIndex();
         if(position >= hdAccountsIdx) {
             if(AppUtil.getInstance(getActivity()).isLegacy())    {
-                amount = MultiAddrFactory.getInstance().getLegacyBalance();
+                amount = MultiAddrFactory.getInstance().getLegacyBalance(PayloadFactory.NORMAL_ADDRESS);
             }
             else    {
                 amount = MultiAddrFactory.getInstance().getLegacyBalance(AccountsUtil.getInstance(getActivity()).getLegacyAddress(position - hdAccountsIdx).getAddress());
