@@ -487,12 +487,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
                             //Legacy addresses
                             LegacyAddress account = AccountsUtil.getInstance(getActivity()).getLegacyAddress(position - AccountsUtil.getInstance(getActivity()).getLastHDIndex());
 
-                            if(account.getTag() == PayloadFactory.WATCHONLY_ADDRESS)    {
-                                edDestination.setText("");
-                                ToastCustom.makeText(getActivity(), getString(R.string.watchonly_address), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
-                                return;
-                            }
-                            else if(account.getTag() == PayloadFactory.ARCHIVED_ADDRESS)   {
+                            if(account.getTag() == PayloadFactory.ARCHIVED_ADDRESS)   {
                                 edDestination.setText("");
                                 ToastCustom.makeText(getActivity(), getString(R.string.archived_address), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
                                 return;

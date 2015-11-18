@@ -375,11 +375,7 @@ public class MyAccountsActivity extends Activity {
 
             LegacyAddress legacyAddress = legacy.get(position - HEADERS.length - hdAccountsIdx);
 
-            if(legacyAddress.getTag() == PayloadFactory.WATCHONLY_ADDRESS)    {
-                ToastCustom.makeText(MyAccountsActivity.this, getString(R.string.watchonly_address), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
-                return;
-            }
-            else if(legacyAddress.getTag() == PayloadFactory.ARCHIVED_ADDRESS)   {
+            if(legacyAddress.getTag() == PayloadFactory.ARCHIVED_ADDRESS)   {
                 ToastCustom.makeText(MyAccountsActivity.this, getString(R.string.archived_address), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
                 return;
             }

@@ -555,12 +555,7 @@ public class ReceiveFragment extends Fragment implements OnClickListener, Custom
 
             LegacyAddress legacyAddress = AccountsUtil.getInstance(getActivity()).getLegacyAddress(position - AccountsUtil.getInstance(getActivity()).getLastHDIndex());
 
-            if(legacyAddress.getTag() == PayloadFactory.WATCHONLY_ADDRESS)    {
-                spAccounts.setSelection(0);
-                ToastCustom.makeText(getActivity(), getString(R.string.watchonly_address), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
-                return;
-            }
-            else if(legacyAddress.getTag() == PayloadFactory.ARCHIVED_ADDRESS)   {
+            if(legacyAddress.getTag() == PayloadFactory.ARCHIVED_ADDRESS)   {
                 spAccounts.setSelection(0);
                 ToastCustom.makeText(getActivity(), getString(R.string.archived_address), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
                 return;

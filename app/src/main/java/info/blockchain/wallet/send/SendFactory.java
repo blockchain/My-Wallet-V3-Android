@@ -237,7 +237,7 @@ public class SendFactory	{
 
                     if(AppUtil.getInstance(context).isLegacy())    {
                         wallet = new Wallet(MainNetParams.get());
-                        List<LegacyAddress> addrs = PayloadFactory.getInstance().get().getLegacyAddresses();
+                        List<LegacyAddress> addrs = PayloadFactory.getInstance().get().getLegacyAddresses(PayloadFactory.NORMAL_ADDRESS);
                         for(LegacyAddress addr : addrs)   {
                             if(addr != null && addr.getECKey() != null && addr.getECKey().hasPrivKey())    {
                                 wallet.addKey(addr.getECKey());
