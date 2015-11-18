@@ -76,7 +76,6 @@ public class ExchangeRateFactory	{
 
     public double getLastPrice(String currency)	 {
     	if(fxRates.get(currency) != null && fxRates.get(currency) > 0.0)	 {
-            // Is preferences really the right place for this?
             PrefsUtil.getInstance(context).setValue("LAST_KNOWN_VALUE_FOR_CURRENCY_" + currency, Double.toString(fxRates.get(currency)));
     		return fxRates.get(currency);
     	}
@@ -124,7 +123,6 @@ public class ExchangeRateFactory	{
         		if(jsonCurr != null)	{
         			double last_price = jsonCurr.getDouble("last");
         			fxRates.put(currency, Double.valueOf(last_price));
-//        			Log.i("ExchangeRateFactory", currency + "  " + Double.valueOf(last_price));
         			String symbol = jsonCurr.getString("symbol");
         			fxSymbols.put(currency, symbol);
         		}
