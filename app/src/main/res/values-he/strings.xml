@@ -261,11 +261,6 @@
     <item>המילה האחת עשרה</item>
     <item>המילה השתים עשרה</item>
   </string-array>
-  <string name="confirmation_code">קוד האישור</string>
-  <string name="verification_failed">אימות נכשל</string>
-  <string name="resend_email_confirmation">שלח מחדש דואר אלקטרוני</string>
-  <string name="please_confirm_email">אנא אשרו את כתובת הדוא ל שלך</string>
-  <string name="confirmation_instructions">שלחנו לך מייל-[--email_address--]. בבקשה לפתוח את הדואר האלקטרוני, בצע את ההוראות כדי להשלים את ההתקנה את הארנק שלך.</string>
   <string name="send_payment">שליחת תשלום</string>
   <string name="share">השיתוף לקבל כתובת</string>
   <string name="scan_qr">לסרוק קוד QR</string>

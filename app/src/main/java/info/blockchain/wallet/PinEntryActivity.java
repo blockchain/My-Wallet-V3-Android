@@ -128,16 +128,16 @@ public class PinEntryActivity extends Activity {
             final String message = getString(R.string.check_connectivity_exit);
 
             builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.dialog_continue,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface d, int id) {
-                            d.dismiss();
-                            Intent intent = new Intent(PinEntryActivity.this, PinEntryActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }
-                });
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.dialog_continue,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface d, int id) {
+                                    d.dismiss();
+                                    Intent intent = new Intent(PinEntryActivity.this, PinEntryActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            });
 
             builder.create().show();
         }
@@ -435,40 +435,25 @@ public class PinEntryActivity extends Activity {
                                     progress = null;
                                 }
 
-                                if(PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.KEY_EMAIL_VERIFIED, false)){
+                                if(PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.KEY_HD_UPGRADED_LAST_REMINDER, 0L) == 0L && !PayloadFactory.getInstance().get().isUpgraded())    {
 
-                                    AppUtil.getInstance(PinEntryActivity.this).restartApp("verified", true);
-
-                                }
-                                else    {
-
-                                    if(PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.KEY_HD_UPGRADED_LAST_REMINDER, 0L) == 0L && !PayloadFactory.getInstance().get().isUpgraded())    {
-
-                                        if(AppUtil.getInstance(PinEntryActivity.this).isLegacy())    {
-                                            AppUtil.getInstance(PinEntryActivity.this).setUpgradeReminder(System.currentTimeMillis());
-                                            PrefsUtil.getInstance(PinEntryActivity.this).setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
-                                            PrefsUtil.getInstance(PinEntryActivity.this).setValue(PrefsUtil.KEY_ASK_LATER, true);
-                                            AccessFactory.getInstance(PinEntryActivity.this).setIsLoggedIn(true);
-                                            AppUtil.getInstance(PinEntryActivity.this).restartApp("verified", true);
-                                        }
-                                        else    {
-                                            Intent intent = new Intent(PinEntryActivity.this, UpgradeWalletActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                        }
-
-                                    }
-                                    else if(PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.KEY_EMAIL_VERIFIED, false) || PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.KEY_EMAIL_VERIFY_ASK_LATER, false))    {
+                                    if(AppUtil.getInstance(PinEntryActivity.this).isLegacy())    {
+                                        AppUtil.getInstance(PinEntryActivity.this).setUpgradeReminder(System.currentTimeMillis());
+                                        PrefsUtil.getInstance(PinEntryActivity.this).setValue(PrefsUtil.KEY_ASK_LATER, true);
+                                        AccessFactory.getInstance(PinEntryActivity.this).setIsLoggedIn(true);
                                         AppUtil.getInstance(PinEntryActivity.this).restartApp("verified", true);
                                     }
                                     else    {
-                                        Intent intent = new Intent(PinEntryActivity.this, ConfirmationCodeActivity.class);
+                                        Intent intent = new Intent(PinEntryActivity.this, UpgradeWalletActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                     }
-                                }
 
-                           }
+                                }
+                                else  {
+                                    AppUtil.getInstance(PinEntryActivity.this).restartApp("verified", true);
+                                }
+                            }
 
                         });
 
@@ -632,10 +617,10 @@ public class PinEntryActivity extends Activity {
         password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         new AlertDialog.Builder(this)
-        .setTitle(R.string.app_name)
-        .setMessage(PinEntryActivity.this.getString(R.string.password_entry))
-        .setView(password)
-        .setCancelable(false)
+                .setTitle(R.string.app_name)
+                .setMessage(PinEntryActivity.this.getString(R.string.password_entry))
+                .setView(password)
+                .setCancelable(false)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 

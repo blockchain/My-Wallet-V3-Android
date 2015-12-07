@@ -261,11 +261,6 @@
     <item>yhdestoista sana</item>
     <item>kahdestoista sana</item>
   </string-array>
-  <string name="confirmation_code">Vahvistuskoodi</string>
-  <string name="verification_failed">Tarkistus epäonnistui</string>
-  <string name="resend_email_confirmation">Lähetä sähköposti</string>
-  <string name="please_confirm_email">Vahvista sähköpostiosoitteesi</string>
-  <string name="confirmation_instructions">Lähetimme sinulle sähköpostiviestin [--email_address--]. Auki email ja ohjeiden lompakon asetukset valmiiksi.</string>
   <string name="send_payment">Lähettää maksun</string>
   <string name="share">Osuus saavat osoitteen</string>
   <string name="scan_qr">Skannaa QR-koodi</string>

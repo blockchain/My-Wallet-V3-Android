@@ -261,11 +261,6 @@
     <item>thứ mười một từ</item>
     <item>12 từ</item>
   </string-array>
-  <string name="confirmation_code">Mã xác nhận</string>
-  <string name="verification_failed">Xác minh đã thất bại</string>
-  <string name="resend_email_confirmation">Gửi lại Email</string>
-  <string name="please_confirm_email">Xin vui lòng xác nhận địa chỉ Email của bạn</string>
-  <string name="confirmation_instructions">Chúng tôi đã gửi cho bạn một email tại [--email_address--]. Xin vui lòng mở email và thực hiện theo các hướng dẫn để hoàn thành thiết lập ví của bạn.</string>
   <string name="send_payment">Gửi thanh toán</string>
   <string name="share">Chia sẻ nhận được địa chỉ</string>
   <string name="scan_qr">Quét mã QR</string>

@@ -261,11 +261,6 @@
     <item>elften Wort</item>
     <item>zwölfte Wort</item>
   </string-array>
-  <string name="confirmation_code">Bestätigungs-Code</string>
-  <string name="verification_failed">Überprüfung fehlgeschlagen</string>
-  <string name="resend_email_confirmation">E-Mail erneut senden</string>
-  <string name="please_confirm_email">Bitte bestätigen Sie Ihre E-Mail-Adresse</string>
-  <string name="confirmation_instructions">Wir haben Ihnen eine e-Mail an [--email_address--] gesendet. Bitte öffnen Sie die e-Mail und folgen Sie die Anweisungen, um Ihr Portemonnaie-Setup abzuschließen.</string>
   <string name="send_payment">Zahlung senden</string>
   <string name="share">Anteil erhalten Adresse</string>
   <string name="scan_qr">QR Code scannen</string>

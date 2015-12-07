@@ -261,11 +261,6 @@
     <item>a unsprezecea cuvântul</item>
     <item>a douăsprezecea cuvântul</item>
   </string-array>
-  <string name="confirmation_code">Cod de confirmare</string>
-  <string name="verification_failed">Verificare nu a reuşit</string>
-  <string name="resend_email_confirmation">Retrimite Email</string>
-  <string name="please_confirm_email">Vă rugăm să confirmaţi adresa de E-mail</string>
-  <string name="confirmation_instructions">Am trimis un e-mail la [--email_address--]. Vă rugăm să deschideţi e-mail și urmați instrucțiunile pentru a finaliza configurarea portofel.</string>
   <string name="send_payment">Trimiteţi plata</string>
   <string name="share">Cota primi adresa</string>
   <string name="scan_qr">Scanaţi codul QR</string>

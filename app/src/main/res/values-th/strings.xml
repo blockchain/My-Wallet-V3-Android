@@ -261,11 +261,6 @@
     <item>สิบเอ็ดคำ</item>
     <item>สิบสองคำ</item>
   </string-array>
-  <string name="confirmation_code">รหัสยืนยัน</string>
-  <string name="verification_failed">การตรวจสอบล้มเหลว</string>
-  <string name="resend_email_confirmation">ส่งอีเมล์</string>
-  <string name="please_confirm_email">กรุณายืนยันอีเมล์ของคุณ</string>
-  <string name="confirmation_instructions">เราได้ส่งอีเมล์ที่ [--email_address--] กรุณาเปิดอีเมล์ และทำตามคำแนะนำเพื่อติดตั้งกระเป๋าสตางค์ของคุณ</string>
   <string name="send_payment">ส่งการชำระเงิน</string>
   <string name="share">ใช้ร่วมกันได้รับที่อยู่</string>
   <string name="scan_qr">สแกนรหัส QR</string>

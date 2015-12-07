@@ -261,11 +261,6 @@
     <item>paraula onzè</item>
     <item>paraula XII</item>
   </string-array>
-  <string name="confirmation_code">Codi de confirmació</string>
-  <string name="verification_failed">Verificació ha fallat</string>
-  <string name="resend_email_confirmation">Enviar correu electrònic</string>
-  <string name="please_confirm_email">Si us plau Confirmeu la vostra adreça de correu electrònic</string>
-  <string name="confirmation_instructions">Ens han enviat un correu electrònic a [--email_address--]. Si us plau obri l\'e-mail i seguiu les instruccions per completar la configuració de la cartera.</string>
   <string name="send_payment">Enviar pagament</string>
   <string name="share">Quota rebre adreça</string>
   <string name="scan_qr">Escaneja un codi QR</string>

@@ -257,7 +257,6 @@ public class UpgradeWalletActivity extends Activity {
                     public void onClick(View v) {
                         if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
 
-                        PrefsUtil.getInstance(UpgradeWalletActivity.this).setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
                         PrefsUtil.getInstance(UpgradeWalletActivity.this).setValue(PrefsUtil.KEY_ASK_LATER, false);
                         AccessFactory.getInstance(UpgradeWalletActivity.this).setIsLoggedIn(true);
                         AppUtil.getInstance(UpgradeWalletActivity.this).restartApp("verified", true);
@@ -290,7 +289,6 @@ public class UpgradeWalletActivity extends Activity {
 
     public void askLaterClicked(View view) {
         AppUtil.getInstance(this).setUpgradeReminder(System.currentTimeMillis());
-        PrefsUtil.getInstance(UpgradeWalletActivity.this).setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
         PrefsUtil.getInstance(UpgradeWalletActivity.this).setValue(PrefsUtil.KEY_ASK_LATER, true);
         AccessFactory.getInstance(UpgradeWalletActivity.this).setIsLoggedIn(true);
         AppUtil.getInstance(UpgradeWalletActivity.this).restartApp("verified", true);

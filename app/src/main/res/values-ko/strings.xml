@@ -261,11 +261,6 @@
     <item>11 번째 단어</item>
     <item>열 두 번째 단어</item>
   </string-array>
-  <string name="confirmation_code">확인 코드</string>
-  <string name="verification_failed">확인 실패</string>
-  <string name="resend_email_confirmation">이메일을 다시 보내기</string>
-  <string name="please_confirm_email">귀하의 이메일 주소를 확인 하시기 바랍니다</string>
-  <string name="confirmation_instructions">우리는 이메일을 보내 당신이 [--email_address--]에. 제발 이메일을 열고 지갑 설치를 완료 하려면 지시를 따릅니다.</string>
   <string name="send_payment">결제 보내기</string>
   <string name="share">공유 받을 주소</string>
   <string name="scan_qr">QR 코드를 스캔</string>

@@ -261,11 +261,6 @@
     <item>tizenegyedik szó</item>
     <item>tizenkettedik szó</item>
   </string-array>
-  <string name="confirmation_code">Megerősítés kód</string>
-  <string name="verification_failed">-Ellenőrzés nem sikerült</string>
-  <string name="resend_email_confirmation">E-mail Újraküldés</string>
-  <string name="please_confirm_email">Kérjük, erősítse meg E-mail címét</string>
-  <string name="confirmation_instructions">Küldtünk neked egy e-mailt a [--email_address--]. Nyit a elektronikus levél, és kövesse az utasításokat a mobiltárca beállításait.</string>
   <string name="send_payment">Küldje fizetés</string>
   <string name="share">Megoszt kap cím</string>
   <string name="scan_qr">QR-kód beolvasásához</string>

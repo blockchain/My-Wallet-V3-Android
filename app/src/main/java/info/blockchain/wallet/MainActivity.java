@@ -233,7 +233,6 @@ public class MainActivity extends ActionBarActivity implements CreateNdefMessage
 
                 if(AppUtil.getInstance(MainActivity.this).isLegacy())    {
                     AppUtil.getInstance(this).setUpgradeReminder(System.currentTimeMillis());
-                    PrefsUtil.getInstance(MainActivity.this).setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
                     PrefsUtil.getInstance(MainActivity.this).setValue(PrefsUtil.KEY_ASK_LATER, true);
                     AccessFactory.getInstance(MainActivity.this).setIsLoggedIn(true);
                     AppUtil.getInstance(MainActivity.this).restartApp("verified", true);
@@ -1040,7 +1039,6 @@ public class MainActivity extends ActionBarActivity implements CreateNdefMessage
 
         if(AppUtil.getInstance(MainActivity.this).isLegacy())    {
             AppUtil.getInstance(this).setUpgradeReminder(System.currentTimeMillis());
-            PrefsUtil.getInstance(MainActivity.this).setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
             PrefsUtil.getInstance(MainActivity.this).setValue(PrefsUtil.KEY_ASK_LATER, true);
             AccessFactory.getInstance(MainActivity.this).setIsLoggedIn(true);
             AppUtil.getInstance(MainActivity.this).restartApp("verified", true);

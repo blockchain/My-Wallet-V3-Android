@@ -261,11 +261,6 @@
     <item>Одинадцятий слово</item>
     <item>дванадцятий слово</item>
   </string-array>
-  <string name="confirmation_code">Код підтвердження</string>
-  <string name="verification_failed">Не вдалося здійснити верифікацію</string>
-  <string name="resend_email_confirmation">Повторно надіслати лист</string>
-  <string name="please_confirm_email">Будь ласка, Підтвердіть адресу електронної пошти</string>
-  <string name="confirmation_instructions">Ми надіслали вам електронною поштою на [--email_address--]. Відкрити електронну пошту і дотримуйтесь інструкцій, щоб завершити установку вашого гаманця.</string>
   <string name="send_payment">Відправити платіж</string>
   <string name="share">Частка отримання адресу</string>
   <string name="scan_qr">Скануйте QR код</string>

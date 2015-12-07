@@ -261,11 +261,6 @@
     <item>elfde woord</item>
     <item>twaalfde woord</item>
   </string-array>
-  <string name="confirmation_code">Bevestigingscode</string>
-  <string name="verification_failed">Verificatie mislukt</string>
-  <string name="resend_email_confirmation">E-mail opnieuw sturen</string>
-  <string name="please_confirm_email">Bevestig uw e-mailadres</string>
-  <string name="confirmation_instructions">We hebben u een e-mail gestuurd op [--email_address--]. Gelieve open de e-mail en volg de instructies om uw portemonnee-installatie is voltooid.</string>
   <string name="send_payment">Stuur de betaling</string>
   <string name="share">Aandeel ontvangen adres</string>
   <string name="scan_qr">QR Code scannen</string>

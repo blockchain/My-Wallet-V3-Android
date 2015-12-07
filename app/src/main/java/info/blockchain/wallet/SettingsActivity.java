@@ -156,17 +156,6 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
         });
-
-        Preference verifyEmail = (Preference) findPreference("verify_email");
-        verifyEmail.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-
-                Intent intent = new Intent(SettingsActivity.this, ConfirmationCodeActivity.class);
-                startActivity(intent);
-
-                return true;
-            }
-        });
     }
 
     private void displayMnemonicForDoubleEncryptedWallet() {
@@ -313,11 +302,6 @@ public class SettingsActivity extends PreferenceActivity {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         }
-
-        PreferenceScreen scr = getPreferenceScreen();
-        Preference verifyEmail = (Preference) findPreference("verify_email");
-        if (scr!=null && verifyEmail!=null && !PrefsUtil.getInstance(this).getValue(PrefsUtil.KEY_EMAIL_VERIFY_ASK_LATER, false))
-            scr.removePreference(verifyEmail);
     }
 
     @Override

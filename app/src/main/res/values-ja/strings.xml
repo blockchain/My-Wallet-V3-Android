@@ -261,11 +261,6 @@
     <item>第 11 回単語</item>
     <item>12 の単語</item>
   </string-array>
-  <string name="confirmation_code">確認コード</string>
-  <string name="verification_failed">検証に失敗しました</string>
-  <string name="resend_email_confirmation">電子メールを再送信します。</string>
-  <string name="please_confirm_email">あなたのメール アドレスを確認してください。</string>
-  <string name="confirmation_instructions">我々 は [--email_address--] で電子メールを送信しました。くださいメールを開いてあなたの財布のセットアップを完了する指示に従ってください。</string>
   <string name="send_payment">支払いを送金す送る</string>
   <string name="share">共有アドレスを受信します。</string>
   <string name="scan_qr">QR コードをスキャンします。</string>
