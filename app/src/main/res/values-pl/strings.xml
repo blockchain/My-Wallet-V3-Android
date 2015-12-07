@@ -261,11 +261,6 @@
     <item>jedenaste słowem</item>
     <item>XII słowo</item>
   </string-array>
-  <string name="confirmation_code">Kod potwierdzający</string>
-  <string name="verification_failed">Weryfikacja nie powiodła się</string>
-  <string name="resend_email_confirmation">Wysłać E-mail</string>
-  <string name="please_confirm_email">Proszę potwierdzić swój adres E-mail</string>
-  <string name="confirmation_instructions">Wysłaliśmy ci maila na [--email_address--]. Proszę otworzyć ten poczta elektroniczna i postępuj zgodnie z instrukcjami, aby zakończyć ustawienia portfela.</string>
   <string name="send_payment">Wyślij płatności</string>
   <string name="share">Udział otrzymać adres</string>
   <string name="scan_qr">Kod QR dla</string>

@@ -22,10 +22,6 @@ public class AllTests extends ActivityInstrumentationTestCase2<Activity> {
         t.addTestSuite(ClearWalletData.class);
         t.addTestSuite(CreateAWalletTest.class);
 
-        //Test email confirmation
-        t.addTestSuite(ClearWalletData.class);
-        t.addTestSuite(ConfirmationCodeTest.class);
-
         //Test pairing
         t.addTestSuite(ClearWalletData.class);
         t.addTestSuite(PairingTest.class);

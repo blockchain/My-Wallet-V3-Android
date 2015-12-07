@@ -261,11 +261,6 @@
     <item>الكلمة الحادية عشرة</item>
     <item>الكلمة الثانية عشرة</item>
   </string-array>
-  <string name="confirmation_code">رمز التأكيد</string>
-  <string name="verification_failed">فشل التحقق</string>
-  <string name="resend_email_confirmation">إعادة إرسال البريد الإلكتروني</string>
-  <string name="please_confirm_email">يرجى تأكيد عنوان البريد الإلكتروني الخاص بك</string>
-  <string name="confirmation_instructions">لقد أرسلنا لك رسالة بالبريد إلكتروني في [--email_address--]. الرجاء فتح رسالة البريد الإلكتروني، واتبع الإرشادات لإتمام الإعداد المحفظة الخاصة بك.</string>
   <string name="send_payment">إرسال الدفع</string>
   <string name="share">حصة تلقي عنوان</string>
   <string name="scan_qr">مسح رمز ريال قطري</string>

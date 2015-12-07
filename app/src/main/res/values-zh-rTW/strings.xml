@@ -261,11 +261,6 @@
     <item>第十一屆的詞</item>
     <item>第十二字</item>
   </string-array>
-  <string name="confirmation_code">確認代碼</string>
-  <string name="verification_failed">驗證失敗</string>
-  <string name="resend_email_confirmation">發送電子郵件</string>
-  <string name="please_confirm_email">請確認您的電子郵件地址</string>
-  <string name="confirmation_instructions">我們在 [--email_address--] 給你一封電子郵件。請打開電子郵件並按照說明來完成你的錢包安裝。</string>
   <string name="send_payment">發送付款</string>
   <string name="share">共用接收位址</string>
   <string name="scan_qr">掃描 QR 代碼</string>

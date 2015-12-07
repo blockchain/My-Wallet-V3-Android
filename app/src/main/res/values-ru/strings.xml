@@ -261,11 +261,6 @@
     <item>Одиннадцатое слово</item>
     <item>Двенадцатый слово</item>
   </string-array>
-  <string name="confirmation_code">Код подтверждения</string>
-  <string name="verification_failed">Сбой проверки</string>
-  <string name="resend_email_confirmation">Отправить</string>
-  <string name="please_confirm_email">Пожалуйста, подтвердите свой адрес электронной почты</string>
-  <string name="confirmation_instructions">Мы отправили вам по электронной почте на [--email_address--]. Пожалуйста откройте электронную почту и следуйте инструкциям для завершения установки вашего кошелька.</string>
   <string name="send_payment">Отправить платеж</string>
   <string name="share">Доля получить адрес</string>
   <string name="scan_qr">Отсканируйте QR-код</string>

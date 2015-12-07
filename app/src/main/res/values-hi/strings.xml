@@ -261,11 +261,6 @@
     <item>ग्यारहवें शब्द</item>
     <item>बारहवें शब्द</item>
   </string-array>
-  <string name="confirmation_code">पुष्टिकरण कोड</string>
-  <string name="verification_failed">सत्यापन में विफल रहा</string>
-  <string name="resend_email_confirmation">ईमेल पुनः भेजें</string>
-  <string name="please_confirm_email">कृपया अपने ईमेल पते की पुष्टि करें</string>
-  <string name="confirmation_instructions">हम आपको [--email_address--] पर एक ईमेल भेजा है। कृपया ईमेल खोलने और अपने बटुए सेटअप को पूरा करने के लिए निर्देशों का पालन करें।</string>
   <string name="send_payment">भुगतान भेजें</string>
   <string name="share">हिस्सा प्राप्त पता</string>
   <string name="scan_qr">QR कोड स्कैन करें</string>

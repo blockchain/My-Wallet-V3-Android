@@ -261,11 +261,6 @@
     <item>Enajsta besedo</item>
     <item>dvanajsta besedo</item>
   </string-array>
-  <string name="confirmation_code">Krizma zbornik</string>
-  <string name="verification_failed">Preverjanje ni uspelo</string>
-  <string name="resend_email_confirmation">Vnovično pošiljanje e-pošte</string>
-  <string name="please_confirm_email">Prosimo, da potrdite vaš e-poštni naslov</string>
-  <string name="confirmation_instructions">So prejeli ste e-pošto na [--email_address--]. Prosim plan email in sledite navodilom za dokončanje nastavitve denarnice.</string>
   <string name="send_payment">Pošljite plačilo</string>
   <string name="share">Delež prejeli naslov</string>
   <string name="scan_qr">Skeniranje QR kode</string>

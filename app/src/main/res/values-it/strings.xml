@@ -261,11 +261,6 @@
     <item>undicesima parola</item>
     <item>dodicesimo parola</item>
   </string-array>
-  <string name="confirmation_code">Codice di conferma</string>
-  <string name="verification_failed">Verifica non riuscita</string>
-  <string name="resend_email_confirmation">Reinvia Email</string>
-  <string name="please_confirm_email">Prego confermare il tuo indirizzo Email</string>
-  <string name="confirmation_instructions">Ti abbiamo inviato una mail a [--email_address--]. Si prega di aprire l\'e-mail e seguire le istruzioni per completare la configurazione del portafoglio.</string>
   <string name="send_payment">Invia pagamento</string>
   <string name="share">Condividi ricevere indirizzo</string>
   <string name="scan_qr">Codice QR</string>

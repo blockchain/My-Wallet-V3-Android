@@ -261,11 +261,6 @@
     <item>Единадесета дума</item>
     <item>дванадесета дума</item>
   </string-array>
-  <string name="confirmation_code">Код за потвърждение</string>
-  <string name="verification_failed">Неуспешна проверка</string>
-  <string name="resend_email_confirmation">Повторно изпращане на имейл</string>
-  <string name="please_confirm_email">Моля, потвърдете вашия имейл адрес</string>
-  <string name="confirmation_instructions">Сме ви изпратили имейл на [--email_address--]. Моля отворете имейл и следвайте инструкциите, за да завършите настройката си портфейл.</string>
   <string name="send_payment">Изпращане на плащане</string>
   <string name="share">Споделяне получаване адрес</string>
   <string name="scan_qr">Сканиране на QR код</string>

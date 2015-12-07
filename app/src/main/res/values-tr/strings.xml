@@ -261,11 +261,6 @@
     <item>onbirinci kelime</item>
     <item>On ikinci kelime</item>
   </string-array>
-  <string name="confirmation_code">Onay kodu</string>
-  <string name="verification_failed">Doğrulama başarısız</string>
-  <string name="resend_email_confirmation">E-posta göndermek</string>
-  <string name="please_confirm_email">Lütfen e-posta adresinizi doğrulayın</string>
-  <string name="confirmation_instructions">[--email_address--] size bir e-posta gönderdik. Lütfen e-postayı açın ve cüzdan kurulum işlemini tamamlamak için yönergeleri izleyin.</string>
   <string name="send_payment">Ödeme gönderme</string>
   <string name="share">Paylaşım adresi alma</string>
   <string name="scan_qr">QR Code tarama</string>

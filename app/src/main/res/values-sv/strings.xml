@@ -261,11 +261,6 @@
     <item>elfte word</item>
     <item>tolfte word</item>
   </string-array>
-  <string name="confirmation_code">Bekräftelsekoden</string>
-  <string name="verification_failed">Verifieringen misslyckades</string>
-  <string name="resend_email_confirmation">Skicka e-post</string>
-  <string name="please_confirm_email">Vänligen bekräfta din e-postadress</string>
-  <string name="confirmation_instructions">Vi har skickat dig ett mail på [--email_address--]. Öppna e-postmeddelandet och följ instruktionerna för att slutföra din plånbok setup.</string>
   <string name="send_payment">Skicka betalning</string>
   <string name="share">Aktien får adress</string>
   <string name="scan_qr">Skanna QR-kod</string>

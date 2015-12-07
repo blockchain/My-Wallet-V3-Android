@@ -261,11 +261,6 @@
     <item>ellevte ord</item>
     <item>tolvte ord</item>
   </string-array>
-  <string name="confirmation_code">Bekræftelseskoden</string>
-  <string name="verification_failed">Kontrollen mislykkedes</string>
-  <string name="resend_email_confirmation">Sende e</string>
-  <string name="please_confirm_email">Bekræft venligst din E-mail-adresse</string>
-  <string name="confirmation_instructions">Vi har sendt dig en e-mail på [--email_address--]. Åbn e-mailen, og følg vejledningen for at fuldføre din tegnebog opsætning.</string>
   <string name="send_payment">Send betaling</string>
   <string name="share">Andel modtager adresse</string>
   <string name="scan_qr">Skan QR koden</string>

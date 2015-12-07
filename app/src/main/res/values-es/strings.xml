@@ -261,11 +261,6 @@
     <item>undécima palabra</item>
     <item>palabra XII</item>
   </string-array>
-  <string name="confirmation_code">Código de confirmación</string>
-  <string name="verification_failed">Verificación de error</string>
-  <string name="resend_email_confirmation">Reenviar correo electrónico</string>
-  <string name="please_confirm_email">Por favor confirme su dirección de correo electrónico</string>
-  <string name="confirmation_instructions">Le hemos enviado un correo electrónico a [--email_address--]. Abra el correo electrónico y siga las instrucciones para completar la configuración de su cartera.</string>
   <string name="send_payment">Enviar pago</string>
   <string name="share">Cuota de recibir dirección</string>
   <string name="scan_qr">Escanear el código QR</string>

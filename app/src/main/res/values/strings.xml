@@ -335,12 +335,6 @@
         <item>twelfth word</item>
     </string-array>
 
-    <string name="confirmation_code">Confirmation Code</string>
-    <string name="verification_failed">Verification Failed</string>
-    <string name="resend_email_confirmation">Resend Email</string>
-    <string name="please_confirm_email">Please Confirm Your Email Address</string>
-    <string name="confirmation_instructions">We have sent you an email at [--email_address--]. Please open the email and follow the instructions to complete your wallet setup.</string>
-
     <string name="send_payment">Send Payment</string>
     <string name="share">Share Receive Address</string>
     <string name="scan_qr">Scan QR Code</string>

@@ -261,11 +261,6 @@
     <item>onzième mot</item>
     <item>douzième mot</item>
   </string-array>
-  <string name="confirmation_code">Code de confirmation</string>
-  <string name="verification_failed">Vérification a échoué</string>
-  <string name="resend_email_confirmation">Renvoyer Email</string>
-  <string name="please_confirm_email">Veuillez confirmer votre adresse Email</string>
-  <string name="confirmation_instructions">Nous vous avons envoyé un email à [--email_address--]. Ouvrez l\'email et suivez les instructions pour terminer la configuration de votre portefeuille.</string>
   <string name="send_payment">Envoyer le paiement</string>
   <string name="share">Part recevoir adresse</string>
   <string name="scan_qr">Scannez le Code QR</string>

@@ -261,11 +261,6 @@
     <item>kesebelas kata</item>
     <item>kata kedua belas</item>
   </string-array>
-  <string name="confirmation_code">Kode konfirmasi</string>
-  <string name="verification_failed">Verifikasi gagal</string>
-  <string name="resend_email_confirmation">Kirim ulang Email</string>
-  <string name="please_confirm_email">Harap mengkonfirmasi alamat Email Anda</string>
-  <string name="confirmation_instructions">Kami telah mengirimi Anda email di [--email_address--]. Silahkan buka email dan ikuti petunjuk untuk menyelesaikan pengaturan dompet.</string>
   <string name="send_payment">Kirim pembayaran</string>
   <string name="share">Berbagi menerima alamat</string>
   <string name="scan_qr">Pindai kode QR</string>

@@ -114,7 +114,6 @@ public class PairOrCreateWalletActivity extends ActionBarActivity {
                 Looper.prepare();
 
                 if(PairingFactory.getInstance(PairOrCreateWalletActivity.this).handleQRCode(data))	{
-                    PrefsUtil.getInstance(PairOrCreateWalletActivity.this).setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
 //                    ToastCustom.makeText(PairOrCreateWalletActivity.this, getString(R.string.pairing_success), ToastCustom.LENGTH_LONG, ToastCustom.TYPE_OK);
                     Intent intent = new Intent(PairOrCreateWalletActivity.this, PinEntryActivity.class);
                     intent.putExtra(PairingFactory.KEY_EXTRA_IS_PAIRING, true);

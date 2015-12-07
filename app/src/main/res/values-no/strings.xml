@@ -261,11 +261,6 @@
     <item>ellevte ord</item>
     <item>tolvte ord</item>
   </string-array>
-  <string name="confirmation_code">Bekreftelseskode</string>
-  <string name="verification_failed">Bekreftelse mislyktes</string>
-  <string name="resend_email_confirmation">Send e-post</string>
-  <string name="please_confirm_email">Bekreft e-postadresse</string>
-  <string name="confirmation_instructions">Vi har sendt deg en e-post på [--email_address--]. Åpne e-posten og følg instruksjonene for å fullføre din lommebok oppsett.</string>
   <string name="send_payment">Send betaling</string>
   <string name="share">Dele motta adressen</string>
   <string name="scan_qr">Skanne QR-kode</string>

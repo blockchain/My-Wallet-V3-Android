@@ -261,11 +261,6 @@
     <item>ενδέκατη λέξη</item>
     <item>δωδέκατη λέξη</item>
   </string-array>
-  <string name="confirmation_code">Κωδικός επιβεβαίωσης</string>
-  <string name="verification_failed">Επαλήθευση απέτυχε</string>
-  <string name="resend_email_confirmation">Νέα αποστολή Email</string>
-  <string name="please_confirm_email">Επιβεβαιώστε διεύθυνση ηλεκτρονικού ταχυδρομείου σας</string>
-  <string name="confirmation_instructions">Σας έχουμε αποστείλει ένα μήνυμα ηλεκτρονικού ταχυδρομείου στο [--email_address--]. Ανοίξτε το ηλεκτρονικό ταχυδρομείο και ακολουθήστε τις οδηγίες για να ολοκληρώσετε την εγκατάσταση του πορτοφολιού σας.</string>
   <string name="send_payment">Αποστολή πληρωμής</string>
   <string name="share">Μερίδιο λαμβάνουν διεύθυνση</string>
   <string name="scan_qr">Σάρωση κωδικού QR</string>

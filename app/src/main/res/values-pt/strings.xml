@@ -261,11 +261,6 @@
     <item>décima primeira palavra</item>
     <item>décima segunda palavra</item>
   </string-array>
-  <string name="confirmation_code">Código de confirmação</string>
-  <string name="verification_failed">Verificação falhada</string>
-  <string name="resend_email_confirmation">Reenviar E-mail</string>
-  <string name="please_confirm_email">Por favor, confirme o seu endereço de E-mail</string>
-  <string name="confirmation_instructions">Enviamos um e-mail para [--email_address--]. Por favor, abra o e-mail e siga as instruções para concluir a instalação da carteira.</string>
   <string name="send_payment">Enviar pagamento</string>
   <string name="share">Parte receber endereço</string>
   <string name="scan_qr">Examine o código QR</string>

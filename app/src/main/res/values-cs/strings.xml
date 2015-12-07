@@ -261,11 +261,6 @@
     <item>Jedenáctá slovo</item>
     <item>Dvanáctá slovo</item>
   </string-array>
-  <string name="confirmation_code">Potvrzovací kód</string>
-  <string name="verification_failed">Ověření se nezdařilo.</string>
-  <string name="resend_email_confirmation">Znovu poslat Email</string>
-  <string name="please_confirm_email">Potvrďte prosím svou e-mailovou adresu</string>
-  <string name="confirmation_instructions">Poslali jsme vám e-mailem na [--email_address--]. Otevřete e-mail a postupujte podle pokynů k dokončení instalace peněženku.</string>
   <string name="send_payment">Pošlete platbu</string>
   <string name="share">Podíl je přiřazena adresa</string>
   <string name="scan_qr">Skenování QR kód</string>
