@@ -1032,8 +1032,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         }
         else {
             LegacyAddress addr = null;
-//            List<LegacyAddress> legacy = AccountsUtil.getInstance(getActivity()).getLegacyAddresses();
-            List<LegacyAddress> legacy = PayloadFactory.getInstance().get().getActiveLegacyAddresses();
+            List<LegacyAddress> legacy = AccountsUtil.getInstance(getActivity()).getLegacyAddresses();
             for(int i = 0; i < legacy.size(); i++) {
                 if(legacy.get(i).getAddress().equals(currentSelectedFromAddress)) {
                     addr = legacy.get(i);
