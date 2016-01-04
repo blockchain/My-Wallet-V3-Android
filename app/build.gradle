@@ -31,10 +31,6 @@ android {
 }
 
 dependencies {
-    repositories {
-        mavenCentral()
-        maven { url 'http://maven.livotovlabs.pro/content/groups/public' }
-    }
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.sothree.slidinguppanel:library:3.0.0'
     compile 'com.android.support:appcompat-v7:22.0.0'
@@ -47,6 +43,6 @@ dependencies {
     compile 'org.thoughtcrime.ssl.pinning:AndroidPinning:1.0.0'
     compile 'com.neovisionaries:nv-websocket-client:1.9'
     compile 'com.android.support:multidex:1.0.0'
-    compile('eu.livotov.labs:camview:2.0.0.DEV4-SNAPSHOT@aar') {transitive=true}
+    compile('com.google.zxing:core:3.2.1') { transitive = true }
     androidTestCompile files('libs/robotium-solo-5.3.1.jar')
 }
