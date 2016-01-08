@@ -320,6 +320,7 @@ public class BalanceFragment extends Fragment {
 
     private void displayBalance() {
 
+        //Display help text to user if no txs on selected account/address
         if (txs != null && txs.size() > 0) {
             txList.setVisibility(View.VISIBLE);
             noTxMessage.setVisibility(View.GONE);
@@ -332,7 +333,7 @@ public class BalanceFragment extends Fragment {
         btc_fx = ExchangeRateFactory.getInstance(thisActivity).getLastPrice(strFiat);
 
         Account hda = null;
-        if (AccountsUtil.getInstance(getActivity()).getCurrentSpinnerIndex() == 0) {
+        if (selectedAccount < 0) {
             //All accounts / funds
             if (PayloadFactory.getInstance().get().isUpgraded())
                 btc_balance = ((double) MultiAddrFactory.getInstance().getXpubBalance()) + ((double) MultiAddrFactory.getInstance().getLegacyActiveBalance());
@@ -342,17 +343,19 @@ public class BalanceFragment extends Fragment {
         } else {
             //Individual account / address
             hda = AccountsUtil.getInstance(getActivity()).getBalanceAccountMap().get(selectedAccount);
+
             if (hda instanceof ImportedAccount) {
-                if (PayloadFactory.getInstance().get().isUpgraded())
+
+                if (PayloadFactory.getInstance().get().isUpgraded()) {
 //                    btc_balance = ((double) MultiAddrFactory.getInstance().getLegacyBalance());
                     btc_balance = ((double) MultiAddrFactory.getInstance().getLegacyActiveBalance());
-                else
+                }else {
                     btc_balance = MultiAddrFactory.getInstance().getLegacyBalance(AccountsUtil.getInstance(getActivity()).getLegacyAddress(selectedAccount - AccountsUtil.getLastHDIndex()).getAddress());
-
+                }
             } else {
-                HashMap<String, Long> meh = MultiAddrFactory.getInstance().getXpubAmounts();
+                HashMap<String, Long> xpubMap = MultiAddrFactory.getInstance().getXpubAmounts();
                 String xpub = account2Xpub(selectedAccount);
-                Long bal = (meh.get(xpub) == null ? 0l : meh.get(xpub));
+                Long bal = (xpubMap.get(xpub) == null ? 0l : xpubMap.get(xpub));
                 btc_balance = ((double) (bal));
             }
         }
@@ -388,34 +391,33 @@ public class BalanceFragment extends Fragment {
 
         txMap = MultiAddrFactory.getInstance().getXpubTxs();
 
-        if (AccountsUtil.getInstance(getActivity()).getBalanceAccountMap() == null || AccountsUtil.getInstance(getActivity()).getBalanceAccountMap().size() < 1) {
-            return;
-        }
-
-        if (AccountsUtil.getInstance(getActivity()).getCurrentSpinnerIndex() == 0) {
+        if (selectedAccount < 0) {
             //All accounts / funds
             if (PayloadFactory.getInstance().get().isUpgraded())
                 txs = MultiAddrFactory.getInstance().getAllXpubTxs();
             else
                 txs = MultiAddrFactory.getInstance().getLegacyTxs();
         } else {
-            String xpub = account2Xpub(AppUtil.getInstance(getActivity()).isNotUpgraded() ? selectedAccount + 1 : selectedAccount);
+            String xpub = account2Xpub(selectedAccount);
 
             if (xpub != null) {
+                //V3 account selected
                 if (MultiAddrFactory.getInstance().getXpubAmounts().containsKey(xpub)) {
                     txs = txMap.get(xpub);
                 }
             } else {
-                Account hda = AccountsUtil.getInstance(getActivity()).getBalanceAccountMap().get(selectedAccount + 1);
+                //V2 address or V3 "Imported Addresses" selected
+                Account hda = AccountsUtil.getInstance(getActivity()).getBalanceAccountMap().get(selectedAccount);
                 if (hda instanceof ImportedAccount) {
                     if (PayloadFactory.getInstance().get().isUpgraded())
-                        txs = MultiAddrFactory.getInstance().getLegacyTxs();
+                        txs = MultiAddrFactory.getInstance().getLegacyTxs();//V3 get all address' txs
                     else
-                        txs = MultiAddrFactory.getInstance().getAddressLegacyTxs(AccountsUtil.getInstance(getActivity()).getLegacyAddress(selectedAccount).getAddress());
+                        txs = MultiAddrFactory.getInstance().getAddressLegacyTxs(AccountsUtil.getInstance(getActivity()).getLegacyAddress(selectedAccount).getAddress());//V2 get single address' txs
                 }
             }
         }
 
+        //After sending btc we create a "placeholder" tx until websocket handler refreshes list
         if (intent != null && intent.getExtras() != null) {
             long amount = intent.getLongExtra("queued_bamount", 0);
             String strNote = intent.getStringExtra("queued_strNote");
@@ -428,6 +430,7 @@ public class BalanceFragment extends Fragment {
             if (txs.get(0).getHash().isEmpty()) txs.remove(0);
         }
 
+        //Sort txs as server does not return sorted txs
         if (txs != null) {
             List<Tx> _txs = new ArrayList<Tx>();
             _txs.addAll(txs);
@@ -661,7 +664,7 @@ public class BalanceFragment extends Fragment {
                             else
                                 txs = MultiAddrFactory.getInstance().getLegacyTxs();
                         } else {
-                            String xpub = account2Xpub(AppUtil.getInstance(getActivity()).isNotUpgraded() ? selectedAccount + 1 : selectedAccount);
+                            String xpub = account2Xpub(selectedAccount);
 
                             if (xpub != null) {
                                 if (MultiAddrFactory.getInstance().getXpubAmounts().containsKey(xpub)) {
@@ -669,7 +672,7 @@ public class BalanceFragment extends Fragment {
                                 } else
                                     txs = new ArrayList<Tx>();
                             } else {
-                                Account hda = AccountsUtil.getInstance(getActivity()).getBalanceAccountMap().get(AppUtil.getInstance(getActivity()).isNotUpgraded() ? selectedAccount + 1 : selectedAccount);
+                                Account hda = AccountsUtil.getInstance(getActivity()).getBalanceAccountMap().get(selectedAccount);
                                 if (hda instanceof ImportedAccount) {
 
                                     if (PayloadFactory.getInstance().get().isUpgraded())
@@ -738,7 +741,9 @@ public class BalanceFragment extends Fragment {
                 }
             });
 
-        updateTx(null);
+        //Reset spinner index
+        AccountsUtil.getInstance(getActivity()).setCurrentSpinnerIndex(0);
+        selectedAccount = 0;
 
         // drawerTitle account now that wallet has been created
         if (PrefsUtil.getInstance(thisActivity).getValue(PrefsUtil.KEY_INITIAL_ACCOUNT_NAME, "").length() > 0) {
