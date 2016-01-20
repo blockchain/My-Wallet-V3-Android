@@ -8,9 +8,11 @@ import com.google.zxing.client.android.encode.QRCodeEncoder;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -21,6 +23,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -110,6 +113,19 @@ public class ReceiveFragment extends Fragment implements OnClickListener, Custom
     private double btc_fx = 319.13;
     private boolean textChangeAllowed = true;
     private String defaultSeparator;
+
+    protected BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+
+        if (BalanceFragment.ACTION_INTENT.equals(intent.getAction())) {
+            if (PayloadFactory.getInstance().get().isUpgraded()) {
+                assignHDReceiveAddress();
+                displayQRCode();
+            }
+        }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -563,10 +579,14 @@ public class ReceiveFragment extends Fragment implements OnClickListener, Custom
             spinnerReceiveTo.setSelection(currentSelected);
             selectAccount(currentSelected);
         }
+
+        IntentFilter filter = new IntentFilter(BalanceFragment.ACTION_INTENT);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
     }
 
     @Override
     public void onPause() {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
         super.onPause();
     }
 
