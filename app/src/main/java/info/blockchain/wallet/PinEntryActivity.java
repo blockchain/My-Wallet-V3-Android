@@ -254,15 +254,6 @@ public class PinEntryActivity extends Activity {
                 try {
                     Looper.prepare();
 
-                    //V3 Upgrade Sanity check
-                    if (PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.KEY_UPGRADE_INTERRUPTED, false)) {
-
-                        ToastCustom.makeText(PinEntryActivity.this, getString(R.string.upgrade_interrupted), ToastCustom.LENGTH_LONG, ToastCustom.TYPE_ERROR);
-                        dismissProgressView();
-                        AppUtil.getInstance(PinEntryActivity.this).clearCredentialsAndRestart();
-                        return;
-                    }
-
                     if (HDPayloadBridge.getInstance(PinEntryActivity.this).init(pw)) {
                         PayloadFactory.getInstance().setTempPassword(pw);
                         AppUtil.getInstance(PinEntryActivity.this).setSharedKey(PayloadFactory.getInstance().get().getSharedKey());

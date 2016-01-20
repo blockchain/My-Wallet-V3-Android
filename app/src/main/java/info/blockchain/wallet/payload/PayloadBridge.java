@@ -1,8 +1,9 @@
 package info.blockchain.wallet.payload;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Log;
 
 import info.blockchain.wallet.util.AppUtil;
 import info.blockchain.wallet.util.PrefsUtil;
@@ -20,6 +21,9 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import piuk.blockchain.android.R;
 
@@ -106,39 +110,34 @@ public class PayloadBridge {
     /**
      * Thread for remote save of payload to server.
      */
+    public boolean remoteSaveThreadLocked()  {
+
+        if (PayloadFactory.getInstance().get() != null) {
+            return PayloadFactory.getInstance().put();
+        }else{
+            return false;
+        }
+    }
+
     public void remoteSaveThread() {
 
-        final Handler handler = new Handler();
+        getSaveThread().execute();
+    }
 
-        new Thread(new Runnable() {
+    private AsyncTask getSaveThread(){
+
+        return new AsyncTask<Void, Void, Boolean>(){
+
             @Override
-            public void run() {
-                Looper.prepare();
-
+            protected Boolean doInBackground(Void... params) {
                 if (PayloadFactory.getInstance().get() != null) {
-
-                    if (PayloadFactory.getInstance().put()) {
-//                        ToastCustom.makeText(context, "Remote save OK", ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_OK);
-                        ;
-                    } else {
-                        ToastCustom.makeText(context, context.getString(R.string.remote_save_ko), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
-                    }
-
-                } else {
-                    ToastCustom.makeText(context, context.getString(R.string.payload_corrupted), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
+                    return PayloadFactory.getInstance().put();
+                }else{
+                    ToastCustom.makeText(context, context.getString(R.string.remote_save_ko), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
+                    return false;
                 }
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        ;
-                    }
-                });
-
-                Looper.loop();
-
             }
-        }).start();
+        };
     }
 
     /*

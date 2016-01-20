@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 
 public class PrefsUtil implements PersistantPrefs {
 
-    public static String KEY_UPGRADE_INTERRUPTED = "KEY_UPGRADE_INTERRUPTED";//Move to PersistantPrefs in jar
     private static Context context = null;
     private static PrefsUtil instance = null;
 
