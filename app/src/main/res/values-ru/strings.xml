@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <string name="backup_wallet">Резервный кошелек</string>
+    <string name="upgrade_wallet">Обновить кошелек</string>
+    <string-array name="navigation_drawer_items_lame">
+        <item>Мои адреса</item>
+        <item>Новости, цены и графики</item>
+        <item>Настройки</item>
+        <item>Поддержка</item>
+        <item>Изменить PIN</item>
+        <item>Отменить сопряжение кошелька</item>
+        <item>@string/upgrade_wallet</item>
+    </string-array>
+    <string-array name="navigation_drawer_items_hd">
+        <item>Мои учетные записи</item>
+        <item>Новости, цены и графики</item>
+        <item>Настройки</item>
+        <item>Поддержка</item>
+        <item>Изменить PIN</item>
+        <item>@string/backup_wallet</item>
+        <item>Отменить сопряжение кошелька</item>
+    </string-array>
+
+    <array name="navigation_drawer_icons_lame">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/icon_logout</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+    </array>
+    <array name="navigation_drawer_icons_hd">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/bad_backup</item>
+        <item>@drawable/icon_logout</item>
+    </array><!--
+    <string name="app_name">Blockchain HD</string>
+    --><string name="app_name">Blockchain</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="all_accounts">Все учетные записи</string>
+
+    <string name="please_wait">Подождите</string>
+
+    <string name="send_bitcoin">Отправить</string>
+    <string name="receive_bitcoin">Получить</string>
+    <string name="blockchain">Blockchain</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="polite_no">Нет, спасибо</string>
+
+    <string name="YESTERDAY">Вчера</string>
+    <string name="TODAY">Сегодня</string>
+    <string name="AGO">назад</string>
+
+    <string name="SENT">Отправлено</string>
+    <string name="RECEIVED">Получено</string>
+    <string name="MOVED">Переведено</string>
+
+    <string name="copied_to_clipboard">Скопировано в буфер обмена</string>
+
+    <string name="options_id">ID кошелька</string>
+    <string name="options_id2">ID кошелька</string>
+    <string name="preferences_about_title">О системе</string>
+    <string name="about_us">О системе</string>
+
+    <string name="ask_you_sure_unpair">Вы уверены, что хотите отменить сопряжение устройства?</string>
+
+    <string name="select_currency">Выбор валюты</string>
+    <string name="options_currency">Местная валюта</string>
+    <string name="options_currency2">Ваша предпочтительная официальная валюта</string>
+
+    <string name="options_mnemonic">Показать мнемоник</string>
+    <string name="options_mnemonic2">Показать мнемоник для этого кошелька</string>
+    <string name="options_units">Единица Bitcoin</string>
+    <string name="options_units2">BTC, mBTC или bits</string>
+    <string name="options_tos">Условия предоставления услуг</string>
+    <string name="options_tos2">Условия предоставления услуг для Blockchain Android Bitcoin</string>
+    <string name="options_privacy">Политика конфиденциальности</string>
+    <string name="options_privacy2">Blockchain: политика конфиденциальности</string>
+
+    <string name="invalid_email">Недействительный адрес электронной почты</string>
+    <string name="invalid_mobile">Недействительный номер мобильного телефона</string>
+    <string name="invalid_password">Недействительный пароль</string>
+    <string name="invalid_guid">Недействительный ID кошелька</string>
+    <string name="password_mismatch_error">Пароли не совпадают</string>
+
+    <string name="no_private_key">Невозможно создать личный ключ.</string>
+    <string name="pin_4_strikes">4 неудачные попытки ввода PIN-кода. Предоставьте пароль.</string>
+    <string name="pin_4_strikes_password_accepted">Пароль принят. Введите новый PIN-код.</string>
+
+    <string name="bip38_password_entry">Введите пароль личного ключа</string>
+
+    <string name="pin_entry">Введите PIN-код</string>
+    <string name="password_entry">Введите пароль</string>
+    <string name="options_CLEAR">ОЧИСТИТЬ</string>
+    <string name="options_FORGOT_PIN">ЗАБЫЛИ PIN-КОД</string>
+    <string name="zero_pin">0000 является недействительным PIN-кодом. Попробуйте еще раз.</string>
+    <string name="invalid_pin">Недействительный PIN-код. Попробуйте еще раз.</string>
+    <string name="pin_mismatch_error">PIN-коды не совпадают</string>
+    <string name="create_pin">Создать PIN-код</string>
+    <string name="confirm_pin">Подтвердить PIN-код</string>
+    <string name="create_pin_failed">Сбой при создании PIN-кода. Выполните сопряжение устройства еще раз.</string>
+    <string name="pairing_failed">Сопряжение не удалось. Попробуйте еще раз.</string>
+    <string name="pairing_failed_decrypt_error">Сопряжение не удалось. Ошибка дешифровки.</string>
+
+    <string name="check_connectivity_exit">Кошелек Blockchain не может получить доступ к Интернету. Проверьте возможность подключения на вашем устройстве и повторите попытку.</string>
+    <string name="dialog_continue">Продолжить</string>
+    <string name="cannot_edit_imported_label">Невозможно отредактировать ярлыки импортированных адресов</string>
+
+    <string name="double_encryption_password_error">Ошибка двойного шифрования пароля. Попробуйте еще раз.</string>
+
+    <string name="command2">Отсканируйте код сопряжения</string>
+    <string name="command3">Я не могу получить доступ к моей камере</string>
+    <string name="CREATE">СОЗДАТЬ НОВЫЙ КОШЕЛЕК</string>
+    <string name="LOGIN">Войти в мой кошелек</string>
+    <string name="pair_your_wallet">Выполните сопряжение своего кошелька</string>
+    <string name="scan_pairing_code">Отсканируйте код сопряжения</string>
+    <string name="manual_pairing">Ручное сопряжение</string>
+    <string name="pair_wallet_step_1">Войдите в свой кошелек Blockchain через ПК или Mac по адресу blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_2">Нажмите кнопку Параметры учетной записи, а затем выберите вкладку Устройства.</string>
+    <string name="pair_wallet_step_3">Нажмите кнопку Показать код сопряжения, чтобы открыть QR-код - квадратный черно-белый штрих-код. Отсканируйте код своей камерой.</string>
+    <string name="disable_two_factor">Прежде чем пытаться вручную выполнить сопряжение своего кошелька, необходимо отключить двухфакторную аутентификацию</string>
+    <string name="wallet_id">ID кошелька</string>
+    <string name="default_wallet_name">Мой кошелек Bitcoin</string>
+
+    <string name="password">Пароль</string>
+    <string name="email">Электронный адрес</string>
+    <string name="agree_terms_of_service">Создавая новый кошелек, вы соглашаетесь с</string>
+    <string name="blockchain_tos">Условия предоставления услуг Blockchain </string>
+    <string name="create_wallet">Создать кошелек</string>
+    <string name="new_wallet">Новый кошелек</string>
+    <string name="strength_weak">Ненадежный</string>
+    <string name="strength_medium">Обычный </string>
+    <string name="strength_strong">Надежный</string>
+    <string name="strength_very_strong">Очень надежный</string>
+
+    <string name="CONTINUE">Продолжить</string>
+    <string name="SEND">ОТПРАВИТЬ</string>
+    <string name="CONFIRM_PAYMENT">ПОДТВЕРДИТЬ ОПЛАТУ</string>
+    <string name="GO_BACK">ВЕРНУТЬСЯ</string>
+
+    <string name="total_to_send">Всего для отправки</string>
+
+    <string name="no_funds_available">Нет средств, доступных для этой учетной записи</string>
+    <string name="no_funds_available2">Нет средств, доступных для этого адреса</string>
+    <string name="max_available">Максимум доступно:</string>
+
+    <string name="invalid_bitcoin_address">Недействительный адрес Bitcoin</string>
+    <string name="invalid_amount">Недействительная сумма</string>
+    <string name="insufficient_funds">Недостаточно средств</string>
+
+    <string name="enter_double_encryption_pw">Введите пароль с двойным шифрованием</string>
+    <string name="send_payment_code">Отправить код платежа</string>
+    <string name="edit_label">Правка ярлыка</string>
+
+    <string name="support">Поддержка</string>
+    <string name="rate_us">Оцените нас</string>
+    <string name="email_chooser">Отправить электронное сообщение...</string>
+    <string name="about">Кошелек Blockchain %1$s\n©%2$s Blockchain.info</string>
+    <string name="merchant_download">Приложение Free Merchant</string>
+    <string name="feedback">Отправить отзыв</string>
+    <string name="password_or_wipe">Войдите, используя свой пароль или удалите этот кошелек</string>
+    <string name="use_password">Использовать пароль</string>
+    <string name="wipe_wallet">Удалить кошелек</string>
+
+    <string name="select_units">Выберите отображаемые единицы BTC</string>
+    <string name="weak_password">Выбранный пароль слишком ненадежный, чтобы обезопасить ваши средства. Мы настоятельно рекомендуем вам выбрать другой. Хотите задать новый пароль?</string>
+
+    <string name="from">От</string>
+    <string name="to">Кому</string>
+
+    <string name="confirm_details">Подтвердить детали</string>
+    <string name="fee">Комиссия</string>
+    <string name="dialog_send">ОТПРАВИТЬ</string>
+    <string name="dialog_cancel">ОТМЕНА</string>
+    <string name="dialog_priority_fee">ОТПРАВИТЬ С КОМИССИЕЙ ЗА ПРИОРИТЕТ</string>
+    <string name="exit_confirm">Для выхода еще раз нажмите кнопку Назад</string>
+
+    <string name="label_address">Ваш адрес успешно импортирован. При необходимости присвойте понятное отображаемое имя этому адресу.</string>
+    <string name="label_address2">Ваш адрес успешно создан. При необходимости присвойте понятное отображаемое имя этому адресу.</string>
+
+    <string name="bip38_error">Недействительный пароль личного ключа</string>
+    <string name="privkey_error">Нераспознанный формат личного ключа</string>
+    <string name="hd_error">Ошибка кошелька HD</string>
+    <string name="scan_not_recognized">Невозможно декодировать скан</string>
+
+    <string name="imported_addresses">Импортированные адреса</string>
+    <string name="account_colon">Учетная запись:</string>
+    <string name="created_account_colon">Созданная учетная запись:</string>
+
+    <string name="tx_length_error">Кошелек Blockchain не может обрабатывать транзакции размером более 100 КБ. Попробуйте разделить ваши транзакции.</string>
+    <string name="invalid_tx">Попытка недействительной транзакции</string>
+
+    <string name="remote_save_ok">Удаленное сохранение выполнено</string>
+    <string name="remote_save_ko">Сбой удаленного сохранения</string>
+    <string name="payload_corrupted">Удаленная полезная информация повреждена, не сохранена на сервере.</string>
+
+    <string name="my_bitcoin_wallet">Кошелек Blockchain</string>
+    <string name="drawer_open">Ящик открыт</string>
+    <string name="drawer_close">Ящик закрыт</string>
+
+    <string name="unpair_wallet">Отменить сопряжение кошелька</string>
+    <string name="unpair">ОТМЕНИТЬ СОПРЯЖЕНИЕ</string>
+
+    <string name="ok_cap">OK</string>
+    <string name="change_pin_code">Изменить PIN</string>
+    <string name="enter_password_to_change_pin">Введите пароль для изменения PIN-кода.</string>
+
+    <string name="suggest_merchant">Предложить торговца</string>
+    <string name="business_name">Название компании</string>
+    <string name="select_category">Категория</string>
+    <string name="business_category">Категория</string>
+    <string name="street_address">Почтовый адрес</string>
+    <string name="description">Описание</string>
+    <string name="city">Город</string>
+    <string name="postal">Почтовый индекс</string>
+    <string name="telephone">Телефон</string>
+    <string name="web">Веб-сайт</string>
+    <string name="latitude">Широта:</string>
+    <string name="longitude">Долгота:</string>
+    <string name="get_location">Я здесь. Используйте мое местоположение.</string>
+    <string name="merchant_cat_hint">Выберите категорию...</string>
+    <string name="merchant_cat1">Кафе</string>
+    <string name="merchant_cat2">Бары/напитки</string>
+    <string name="merchant_cat3">Продукты и напитки</string>
+    <string name="merchant_cat4">Шоппинг/расходы</string>
+    <string name="merchant_cat5">ATM</string>
+    <string name="missing_merchant_category">Укажите категорию для этого торговца</string>
+    <string name="missing_merchant_name">Укажите имя торговца</string>
+    <string name="missing_merchant_street_address">Укажите почтовый адрес торговца</string>
+    <string name="missing_merchant_city">Укажите город</string>
+    <string name="missing_merchant_postal">Укажите почтовый индекс</string>
+    <string name="ok_writing_merchant">Спасибо за ваше предложение.</string>
+    <string name="error_writing_merchant">Ошибка при записи в базу данных. Попробуйте еще раз.</string>
+    <string name="no_merchants_in_range">В пределах диапазона списка нет сфер бизнеса с Bitcoin.</string>
+    <string name="merchant_info">Информация о торговце</string>
+    <string name="directions">Направления</string>
+    <string name="call">Вызов</string>
+    <string name="enable_geo">Включите GPS или любую другую службу определения местоположения для поиска текущего местоположения. Чтобы сделать это, нажмите ОК, чтобы перейти к настройкам службы определения местоположения.</string>
+
+    <string-array name="menus_merchantDirectory">
+        <item>Предложить торговца</item>
+    </string-array>
+
+    <string name="my_accounts">Мои учетные записи</string>
+    <string name="my_addresses">Мои адреса</string>
+    <string name="accounts">Учетные записи</string>
+    <string name="addresses">Адреса</string>
+    <string name="create_new_account">Создать новую учетную запись</string>
+    <string name="import_address">Импортировать адреса</string>
+    <string name="save_name">Сохранить имя</string>
+
+    <string name="receive_address_to_clipboard">Скопировать этот адрес получения в буфер обмена? Если да, рекомендуется, что другие приложения могли видеть эту информацию.</string>
+    <string name="receive_address_to_share">Поделиться этим адресом получения для отправки? Если да, рекомендуется, что другие приложения могли видеть эту информацию.</string>
+    <string name="guid_to_clipboard">Скопировать ID кошелька в буфер обмена? Если да, рекомендуется, что другие приложения могли видеть эту информацию.</string>
+
+    <string name="ssl_hostname_invalid">Мы не можем проверить имя хоста SSL-сертификата. Это может указывать на вредоносную активность. Прежде чем продолжить, проверьте сетевое подключение и устройство.</string>
+    <string name="ssl_pinning_invalid">SSL-сертификат закрепить не удалось. Это может указывать на вредоносную активность. Прежде чем продолжить, проверьте сетевое подключение и устройство.</string>
+
+    <string name="address_already_used">Этот адрес получения уже используется.</string>
+
+    <string name="my_wallet_id">Мой ID кошелька</string>
+    <string name="EMAIL">ЭЛЕКТРОННАЯ ПОЧТА</string>
+    <string name="new_support_request">Новый запрос группе поддержки</string>
+    <string name="contact_support">Связаться с группой поддержки</string>
+    <string name="email_subject">Запрос группе поддержки Android</string>
+
+    <string name="merchant_map">Карта торговца</string>
+    <string name="merchant_list">Список торговцев</string>
+    <string name="merchant_suggest">Предложить торговца</string>
+    <string name="name">Имя</string>
+    <string name="location">Местоположение</string>
+    <string name="manual_entry">РУЧНОЙ ВВОД</string>
+    <string name="use_my_current_location">ИСПОЛЬЗОВАТЬ МОЕ ТЕКУЩЕЕ МЕСТОПОЛОЖЕНИЕ</string>
+    <string name="save">Сохранить</string>
+    <string name="next">Далее</string>
+    <string name="address_lookup_fail">Невозможно восстановить адрес. Введите адрес вручную.</string>
+
+    <string name="backup_1_heading">Вы еще не сделали резервную копию вашего кошелька</string>
+    <string name="backup_1_subheading">Сделать резервное копирование вашего кошелька легко, оно гарантирует, что вы не потеряете доступ к вашим средствам, даже если наш сервис недоступен.</string>
+    <string name="BACKUP_WALLET">РЕЗЕРВНЫЙ КОШЕЛЕК</string>
+    <string name="backup_how_to">Как восстановить кошелек</string>
+    <string name="backup_step_1">Перейдите на blockchain.info/restorewallet</string>
+    <string name="backup_step_2">Введите свою резервную фразу из 12 слов</string>
+    <string name="START">НАЧАТЬ</string>
+    <string name="backup_write_down_words">Запишите слова в точном порядке, в котором они отображаются на листе бумаги.</string>
+    <string name="NEXT_WORD">СЛЕДУЮЩЕЕ СЛОВО</string>
+    <string name="press_to_reveal">Нажмите и удерживайте, чтобы показать слово</string>
+    <string name="VERIFY">ВЕРИФИЦИРОВАТЬ</string>
+    <string name="backup_verify_heading">Убедитесь, что вы записали резервную фразу</string>
+    <string name="VERIFY_BACKUP">ВЕРИФИЦИРОВАТЬ РЕЗЕРВНУЮ КОПИЮ</string>
+    <string name="Word">Слово</string>
+    <string name="of">из</string>
+    <string name="backup_confirmed">Резервное копирование подтверждено</string>
+    <string name="backup_word_mismatch">Несоответствие слова</string>
+    <string name="backup_days_ago">Вы скопировали кошелек  [--time--] [--day--] назад</string>
+    <string name="day">день</string>
+    <string name="days">дней</string>
+    <string name="backup_only_need_to_once_reminder">Вам нужно скопировать кошелек один раз, но это хорошая идея, периодически проверять действительность копии</string>
+
+    <string name="received_bitcoin">Полученные Bitcoin</string>
+    <string name="refresh_balance">Обновить баланс</string>
+
+    <string-array name="mnemonic_word_requests">
+        <item>первое слово</item>
+        <item>второе слово</item>
+        <item>третье слово</item>
+        <item>четвертое слово</item>
+        <item>пятое слово</item>
+        <item>шестое слово</item>
+        <item>седьмое слово</item>
+        <item>восьмое слово</item>
+        <item>девятое слово</item>
+        <item>десятое слово</item>
+        <item>одиннадцатое слово</item>
+        <item>двенадцатое слово</item>
+    </string-array>
+
+    <string name="confirmation_code">Код подтверждения</string>
+    <string name="verification_failed">Сбой верификации</string>
+    <string name="resend_email_confirmation">Отправить электронное сообщение заново</string>
+    <string name="please_confirm_email">Подтвердите свой адрес электронной почты</string>
+    <string name="confirmation_instructions">Мы отправили вам  электронное сообщение на [--email_address--]. Откройте  электронное сообщение и следуйте инструкциям для завершения настройки кошелька.</string>
+
+    <string name="send_payment">Отправить платеж</string>
+    <string name="share">Поделиться адресом получения</string>
+    <string name="scan_qr">Сканировать QR-код</string>
+    <string name="confirm_password">Подтвердить пароль</string>
+    <string name="check_email_to_auth_login">Проверьте свою электронную почту, чтобы одобрить эту попытку входа.</string>
+    <string name="confirmations">Подтверждения</string>
+    <string name="transaction_fee">Комиссия майнеров Bitcoin</string>
+    <string name="transaction_hash">Искажение транзакции</string>
+    <string name="your_transactions">Ваши транзакции</string>
+    <string name="transaction_occur_when">Транзакции осуществляются, когда вы получаете и отправляете bitcoin.</string>
+    <string name="click">Нажмите</string>
+    <string name="to_start_sending_and_receiving_btc">для начала отправки и получения bitcoin.</string>
+
+    <string name="watch_only_label">(только для просмотра)</string>
+    <string name="archived_label">(архивировано)</string>
+
+    <string name="dust_change">Транзакция возвращает незначительную сумму в виде сдачи.</string>
+    <string name="dust_amount">Транзакция расходует незначительную сумму.</string>
+    <string name="logging_out_automatically">Сеанс заканчивается автоматически</string>
+    <string name="transaction_submitted">Транзакция выполнена</string>
+    <string name="transaction_failed">Сбой транзакции</string>
+    <string name="UPGRADE_YOUR_WALLET">ОБНОВИТЕ СВОЙ КОШЕЛЕК</string>
+    <string name="ASK_ME_LATER">СПРОСИТЕ МЕНЯ ПОЗЖЕ</string>
+    <string name="upgrade_page_1">Создайте персонализированные учетные записи, чтобы помочь сохранить организацию вашего кошелька.</string>
+    <string name="upgrade_page_2">Простое, одноразовое создание резервной копии кошелька обеспечивает контроль над вашими средствами.</string>
+    <string name="upgrade_page_3">Все, что вам нужно для получения, отправки и хранения bitcoin.</string>
+    <string name="CONFIRM">ПОДТВЕРДИТЬ</string>
+    <string name="confirm_upgrade">Подтвердить обновление</string>
+    <string name="confirm_upgrade_info">Ваш кошелек будет обновлен до нашего последнего формата кошелька. Это позволит вам воспользоваться преимуществами важных улучшений конфиденциальности и безопасности. Обратите внимание, что сразу после вашего подтверждения процесс обновления начнется и вы не сможете его отменить.</string>
+    <string name="upgrading">Идет обновление...</string>
+    <string name="upgrading_started_info">Ваш кошелек обновляется, будьте терпеливы, это может занять некоторое время в зависимости от размера и продолжительности действия вашего кошелька.</string>
+    <string name="upgrade_success_heading">Ваш кошелек был обновлен!</string>
+    <string name="upgrade_interrupted">Обновление кошелька было прервано. Выполните сопряжение вашего кошелька еще раз и повторите попытку.</string>
+    <string name="upgrade_success_info">Теперь у вас есть наиболее безопасный и конфиденциальный кошелек Blockchain, вы можете продолжить работу с кошельком.</string>
+    <string name="CLOSE">ЗАКРЫТЬ</string>
+    <string name="total_funds">Все</string>
+    <string name="unexpected_error">Непредвиденная ошибка, повторите попытку позже.</string>
+    <string name="upgrade_fail_heading">Не удалось обновить кошелек!</string>
+    <string name="upgrade_fail_info">Произошла ошибка при обновлении кошелька. Попробуйте еще раз позднее.</string>
+    <string name="not_sane_error">Установка вашего кошелька Blockchain не завершена. Выполните сопряжение вашего кошелька еще раз или создайте новый кошелек.</string>
+
+    <string name="archived_address">Этот адрес архивируется. Вы можете управлять ими через веб-кошелек Blockchain.</string>
+    <string name="watchonly_address">Этот адрес предназначен только для просмотра. Вы можете управлять ими через веб-кошелек Blockchain.</string>
+    <string name="watchonly_address_spend_warning">Этот адрес часы только. Вы можете потратить от него с помощью веб-кошелька Blockchain.</string>
+    <string name="watchonly_address_receive_warning">Вы собираетесь получить в часы только адрес. Вы можете только потратить эти средства, если у вас есть доступ к закрытому ключу. Продолжать?</string>
+
+    <string name="PENDING">НА РАССМОТРЕНИИ</string>
+    <string name="COMPLETE">ЗАВЕРШИТЬ</string>
+
+    <string name="camera_unavailable">Сейчас камера открыта другим приложением. Закройте другое приложение и повторите попытку.</string>
+    <string name="transaction_failed_will_retry">Сбой транзакции, повторная попытка будет выполнена через несколько секунд.</string>
+
+    <string name="limit_21m_exceeded">Эта сумма не может быть переслана по сети Bitcoin.</string>
+    <string name="validating_password">Идет проверка пароля...</string>
+    <string name="validating_pin">Идет проверка PIN-кода...</string>
+    <string name="creating_pin">Идет создание PIN-кода...</string>
+    <string name="decrypting_wallet">Идет расшифровка кошелька...</string>
+    <string name="verifying_email">Идет верификация электронной почты...</string>
+    <string name="pairing_wallet">Идет сопряжение кошелька...</string>
+    <string name="transaction_queued">Транзакция в очереди</string>
+    <string name="WAITING">В ОЧЕРЕДИ</string>
+    <string name="password_unchanged">Пароль не изменен</string>
+    <string name="password_changed">Пароль изменен</string>
+    <string name="sending">Идет отправка...</string>
+    <string name="ask_me_later">Спросите меня позже</string>
+    <string name="verify_email">Верифицировать электронную почту</string>
+    <string name="email_verified">Электронная почта верифицирована</string>
+    <string name="verify_email2">Ваш верифицированный адрес электронной почты используется для отправки кодов входа в систему при подозрительной или необычной активности, для напоминания  ID для доступа к кошельку и отправки сообщений о платеже bitcoin, когда средства отправлены или получены. Мы не будем использовать ваш электронный адрес в маркетинговых целях.</string>
+    <string name="disable_root_warning">Отключить предупреждения</string>
+    <string name="disable_root_warning2">Отключить предупреждение диалог в случае, если ваш телефон коренится</string>
+
+    <string name="show_balance">Показать баланс</string>
+    <string name="my_address">Мой адрес</string>
+    <string name="create_new_address">Создать новый адрес</string>
+    <string name="confirmation_code_error">Введенный код неверен. Попробуйте еще раз.</string>
+    <string name="auth_failed">Сбой авторизации. Попробуйте еще раз.</string>
+    <string name="send_failed">Сбой отправки. Попробуйте еще раз.</string>
+    <string name="invalid_qr">Недействительный QR-код</string>
+
+    <string name="wallet_updated">Обновление кошелька получено</string>
+    <string name="lame_mode_hd_pair_fail">Невозможно выполнить сопряжение кошелька V3.</string>
+    <string name="please_repair">Произошла ошибка. Невозможно декодировать кошелек в текущем состоянии. Выполните сопряжение вашего кошелька еще раз.</string>
+
+    <string name="device_rooted">Возможно, ваше устройство делается корневым. Имейте в виду, что хранение средств на корневом устройстве является небезопасным и, кроме того, может вызвать проблемы со стабильностью. Если вы продолжаете использовать наш кошелек Bitcoin на этом устройстве, мы рекомендуем использовать двойное шифрование вашей учетной записи Blockchain.</string>
+    <string name="address_already_in_wallet">Ваш кошелек уже содержит этот адрес.</string>
+    <string name="cannot_create_address">В это время невозможно создать новый адрес. Попробуйте еще раз.</string>
+    <string name="saving_address">Идет сохранение адреса...</string>
+    <string name="cannot_create_wallet">В это время невозможно создать/восстановить кошелек. Попробуйте еще раз.</string>
+
+    <string name="cannot_launch_app">На этом устройстве невозможно запустить кошелек Blockchain.</string>
+    <string name="support_guide">Подробно опишите проблему, с которой вы столкнулись, а также шаги, которые мы можем предпринять, чтобы отследить ошибку.</string>
+    <string name="label">переименовать</string>
+    <string name="rename_address">Rename Address</string>
+    <string name="edit">редактировать</string>
+    <string name="label_cant_be_empty">Этикетка не может быть пустым.</string>
+    <string name="saving_changes">Сохранение изменений...</string>
+    <string name="warning">Предупреждение</string>
+
+</resources>

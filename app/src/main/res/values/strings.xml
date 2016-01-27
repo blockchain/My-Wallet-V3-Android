@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="version_name">6.0.4</string>
-
     <string name="backup_wallet">Backup funds</string>
     <string name="upgrade_wallet">Upgrade to V3</string>
     <string-array name="navigation_drawer_items_lame">
@@ -43,9 +41,6 @@
         <item>@drawable/icon_logout</item>
     </array>
 
-    <!--
-    <string name="app_name">Blockchain HD</string>
-    -->
     <string name="app_name">Blockchain</string>
     <string name="action_settings">Settings</string>
 
@@ -117,9 +112,6 @@
     <string name="create_pin_failed">PIN creation failed. Please pair device again.</string>
     <string name="pairing_failed">Pairing failed. Please try again.</string>
     <string name="pairing_failed_decrypt_error">Pairing failed. Decryption error.</string>
-    <!--
-    <string name="pairing_success">Pairing OK.</string>
-    -->
 
     <string name="check_connectivity_exit">Blockchain Wallet cannot obtain an Internet connection. Please check the connectivity on your device and try again.</string>
     <string name="dialog_continue">Continue</string>

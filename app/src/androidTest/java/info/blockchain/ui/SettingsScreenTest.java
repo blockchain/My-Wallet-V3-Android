@@ -15,6 +15,7 @@ import info.blockchain.wallet.util.PrefsUtil;
 
 import junit.framework.TestCase;
 
+import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 
 public class SettingsScreenTest extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -161,7 +162,7 @@ public class SettingsScreenTest extends ActivityInstrumentationTestCase2<MainAct
 
     public void testD_AboutUs() throws AssertionError {
         solo.clickOnText(getActivity().getString(R.string.about_us));
-        assertTrue(solo.waitForText(getActivity().getString(R.string.version_name)));
+        assertTrue(solo.waitForText(BuildConfig.VERSION_NAME));
         solo.goBack();
     }
 

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <string name="backup_wallet">Proteger carteira</string>
+    <string name="upgrade_wallet">Atualizar carteira</string>
+    <string-array name="navigation_drawer_items_lame">
+        <item>Meus endereços</item>
+        <item>Notícias, preços e gráficos</item>
+        <item>Configurações</item>
+        <item>Suporte</item>
+        <item>Alterar PIN</item>
+        <item>Cancelar pareamento da carteira</item>
+        <item>@string/upgrade_wallet</item>
+    </string-array>
+    <string-array name="navigation_drawer_items_hd">
+        <item>Minhas contas</item>
+        <item>Notícias, preços e gráficos</item>
+        <item>Configurações</item>
+        <item>Suporte</item>
+        <item>Alterar PIN</item>
+        <item>@string/backup_wallet</item>
+        <item>Cancelar pareamento da carteira</item>
+    </string-array>
+
+    <array name="navigation_drawer_icons_lame">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/icon_logout</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+    </array>
+    <array name="navigation_drawer_icons_hd">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/bad_backup</item>
+        <item>@drawable/icon_logout</item>
+    </array>
+
+    <string name="app_name">Blockchain</string>
+    <string name="action_settings">Configurações</string>
+
+    <string name="all_accounts">Todas as contas</string>
+
+    <string name="please_wait">Aguarde</string>
+
+    <string name="send_bitcoin">Enviar</string>
+    <string name="receive_bitcoin">Receber</string>
+    <string name="blockchain">Blockchain</string>
+
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="polite_no">Não, obrigado</string>
+
+    <string name="YESTERDAY">Ontem</string>
+    <string name="TODAY">Hoje</string>
+    <string name="AGO">Há</string>
+
+    <string name="SENT">Enviado</string>
+    <string name="RECEIVED">Recebido</string>
+    <string name="MOVED">Transferido</string>
+
+    <string name="copied_to_clipboard">Copiado para a área de transferência</string>
+
+    <string name="options_id">ID da carteira</string>
+    <string name="options_id2">ID da carteira</string>
+    <string name="preferences_about_title">Sobre nós</string>
+    <string name="about_us">Sobre nós</string>
+
+    <string name="ask_you_sure_unpair">Tem certeza de que deseja cancelar o pareamento com seu dispositivo?</string>
+
+    <string name="select_currency">Selecionar moeda</string>
+    <string name="options_currency">Moeda local</string>
+    <string name="options_currency2">Sua moeda determinada preferida</string>
+
+    <string name="options_mnemonic">Exibir mnemônico</string>
+    <string name="options_mnemonic2">Exibir mnemônico desta carteira</string>
+    <string name="options_units">Unidade de bitcoin</string>
+    <string name="options_units2">BTC, mBTC ou bits</string>
+    <string name="options_tos">Termos de serviço</string>
+    <string name="options_tos2">Termos do serviço da Carteira de bitcoins para Android do Blockchain</string>
+    <string name="options_privacy">Política de privacidade</string>
+    <string name="options_privacy2">Política de privacidade do Blockchain</string>
+
+    <string name="invalid_email">Endereço de e-mail inválido</string>
+    <string name="invalid_mobile">Número de celular inválido</string>
+    <string name="invalid_password">Senha inválida</string>
+    <string name="invalid_guid">ID da carteira inválido</string>
+    <string name="password_mismatch_error">As senhas não correspondem</string>
+
+    <string name="no_private_key">Não é possível produzir chaves privadas.</string>
+    <string name="pin_4_strikes">4 falhas na tentativa de inserção do PIN. Digite a senha.</string>
+    <string name="pin_4_strikes_password_accepted">Senha aceita. Defina um novo PIN.</string>
+
+    <string name="bip38_password_entry">Digite a senha da chave privada</string>
+
+    <string name="pin_entry">Digitar PIN</string>
+    <string name="password_entry">Digite a senha</string>
+    <string name="options_CLEAR">APAGAR</string>
+    <string name="options_FORGOT_PIN">ESQUECI O PIN</string>
+    <string name="zero_pin">0000 é um PIN inválido. Tente novamente.</string>
+    <string name="invalid_pin">PIN inválido. Tente novamente.</string>
+    <string name="pin_mismatch_error">Os PINs não correspondem</string>
+    <string name="create_pin">Criar PIN</string>
+    <string name="confirm_pin">Confirmar PIN</string>
+    <string name="create_pin_failed">Falha na criação do PIN. Pareie o dispositivo novamente.</string>
+    <string name="pairing_failed">Falha no pareamento. Tente novamente.</string>
+    <string name="pairing_failed_decrypt_error">Falha no pareamento. Erro de descriptografia.</string>
+
+    <string name="check_connectivity_exit">O Blockchain Wallet não conseguiu estabelecer conexão com a Internet. Verifique a conectividade no seu dispositivo e tente novamente.</string>
+    <string name="dialog_continue">Continuar</string>
+    <string name="cannot_edit_imported_label">A etiqueta de endereços importados não pode ser editada</string>
+
+    <string name="double_encryption_password_error">Erro na senha de criptografia dupla. Tente novamente.</string>
+
+    <string name="command2">Digitalizar código de pareamento</string>
+    <string name="command3">Não consigo acessar minha câmera</string>
+    <string name="CREATE">CRIAR NOVA CARTEIRA</string>
+    <string name="LOGIN">Acesse “Minha carteira”</string>
+    <string name="pair_your_wallet">Pareie sua carteira</string>
+    <string name="scan_pairing_code">Digitalize o código de pareamento</string>
+    <string name="manual_pairing">Pareamento manual</string>
+    <string name="pair_wallet_step_1">Acesse sua carteira do Blockchain via PC ou Mac em blochchain.info/wallet.</string>
+    <string name="pair_wallet_step_2">Clique no botão “Configurações da conta” e, em seguida, selecione a aba “Dispositivos”.</string>
+    <string name="pair_wallet_step_3">Clique em “Exibir código de pareamento” para revelar um código QR, um código de barras quadradas pretas e brancas. Digitalize com a câmera.</string>
+    <string name="disable_two_factor">Você deve desativar a autenticação de dois fatores antes de tentar parear manualmente sua carteira</string>
+    <string name="wallet_id">ID da carteira</string>
+    <string name="default_wallet_name">Minha carteira Bitcoin</string>
+
+    <string name="password">Senha</string>
+    <string name="email">Email</string>
+    <string name="agree_terms_of_service">Ao criar uma nova carteira, você concorda com o</string>
+    <string name="blockchain_tos">Termos de serviço do Blockchain</string>
+    <string name="create_wallet">Criar carteira</string>
+    <string name="new_wallet">Nova carteira</string>
+    <string name="strength_weak">Fraca</string>
+    <string name="strength_medium">Regular</string>
+    <string name="strength_strong">Fortes</string>
+    <string name="strength_very_strong">Muito forte</string>
+
+    <string name="CONTINUE">Continuar</string>
+    <string name="SEND">ENVIAR</string>
+    <string name="CONFIRM_PAYMENT">CONFIRMAR PAGAMENTO</string>
+    <string name="GO_BACK">VOLTAR</string>
+
+    <string name="total_to_send">Total a enviar</string>
+
+    <string name="no_funds_available">Não há fundos disponíveis para esta conta</string>
+    <string name="no_funds_available2">Não há fundos disponíveis para este endereço</string>
+    <string name="max_available">Máximo disponível:</string>
+
+    <string name="invalid_bitcoin_address">Endereço Bitcoin inválido</string>
+    <string name="invalid_amount">Quantia inválida</string>
+    <string name="insufficient_funds">Fundos insuficientes</string>
+
+    <string name="enter_double_encryption_pw">Digite a senha de criptografia dupla</string>
+    <string name="send_payment_code">Enviar código de pagamento</string>
+    <string name="edit_label">Editar etiqueta</string>
+
+    <string name="support">Suporte</string>
+    <string name="rate_us">Classifique-nos</string>
+    <string name="email_chooser">Envie um e-mail...</string>
+    <string name="about">Blockchain Wallet %1$s\n©%2$s Blockchain.info</string>
+    <string name="merchant_download">Aplicativo Merchant gratuito</string>
+    <string name="feedback">Enviar Feedback</string>
+    <string name="password_or_wipe">Entre usando sua senha ou abandone esta carteira</string>
+    <string name="use_password">Usar senha</string>
+    <string name="wipe_wallet">Abandonar carteira</string>
+
+    <string name="select_units">Selecionar unidades BTC exibíveis</string>
+    <string name="weak_password">A senha selecionada é muito fraca para proteger seus fundos. Recomendamos que você selecione uma diferente. Gostaria de definir uma nova senha?</string>
+
+    <string name="from">De</string>
+    <string name="to">Para</string>
+
+    <string name="confirm_details">Confirmar detalhes</string>
+    <string name="fee">Taxa</string>
+    <string name="dialog_send">ENVIAR</string>
+    <string name="dialog_cancel">CANCELAR</string>
+    <string name="dialog_priority_fee">ENVIAR COM TAXA DE PRIORIDADE</string>
+    <string name="exit_confirm">Pressione o botão de voltar novamente para sair</string>
+
+    <string name="label_address">Seu endereço foi importado com sucesso. Opcionalmente, atribua um nome de exibição amistoso para este endereço.</string>
+    <string name="label_address2">Seu endereço foi criado com sucesso. Opcionalmente, atribua um nome de exibição amistoso para este endereço.</string>
+
+    <string name="bip38_error">Senha da chave privada inválida</string>
+    <string name="privkey_error">Formato de chave privada irreconhecível</string>
+    <string name="hd_error">Erro na carteira HD</string>
+    <string name="scan_not_recognized">A digitalização não pôde ser decodificada</string>
+
+    <string name="imported_addresses">Endereços importados</string>
+    <string name="account_colon">Conta:</string>
+    <string name="created_account_colon">Conta criada:</string>
+
+    <string name="tx_length_error">A carteira do Blockchain não suporta transações com tamanho superior a 100Kb. Tente dividir a transação.</string>
+    <string name="invalid_tx">Tentativa de transação inválida</string>
+
+    <string name="remote_save_ok">Salvamento remoto ok</string>
+    <string name="remote_save_ko">Falha no salvamento remoto</string>
+    <string name="payload_corrupted">Carga remota corrompida, não salva no servidor.</string>
+
+    <string name="my_bitcoin_wallet">Blockchain Wallet</string>
+    <string name="drawer_open">Gaveta aberta</string>
+    <string name="drawer_close">Gaveta fechada</string>
+
+    <string name="unpair_wallet">Cancelar pareamento da carteira</string>
+    <string name="unpair">CANCELAR PAREAMENTO</string>
+
+    <string name="ok_cap">Ok</string>
+    <string name="change_pin_code">Alterar PIN</string>
+    <string name="enter_password_to_change_pin">Digite a senha para alterar o PIN.</string>
+
+    <string name="suggest_merchant">Estabelecimento sugerido</string>
+    <string name="business_name">Nome da empresa</string>
+    <string name="select_category">Categoria</string>
+    <string name="business_category">Categoria</string>
+    <string name="street_address">Endereço</string>
+    <string name="description">Descrição</string>
+    <string name="city">Cidade</string>
+    <string name="postal">Código postal</string>
+    <string name="telephone">Telefone</string>
+    <string name="web">Site</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="get_location">Estou aqui. Use minha localização.</string>
+    <string name="merchant_cat_hint">Escolha uma categoria...</string>
+    <string name="merchant_cat1">Café</string>
+    <string name="merchant_cat2">Bares/bebidas</string>
+    <string name="merchant_cat3">Alimentos e jantares</string>
+    <string name="merchant_cat4">Compras/consumo</string>
+    <string name="merchant_cat5">ATM</string>
+    <string name="missing_merchant_category">Indique uma categoria para este estabelecimento</string>
+    <string name="missing_merchant_name">Forneça o nome do estabelecimento</string>
+    <string name="missing_merchant_street_address">Forneça o endereço do estabelecimento</string>
+    <string name="missing_merchant_city">Indique uma cidade</string>
+    <string name="missing_merchant_postal">Indique um código postal</string>
+    <string name="ok_writing_merchant">Agradecemos pela sugestão.</string>
+    <string name="error_writing_merchant">Erro ao gravar no banco de dados. Tente novamente.</string>
+    <string name="no_merchants_in_range">Não há nenhuma empresa Bitcoin no intervalo determinado para a listagem.</string>
+    <string name="merchant_info">Informações do estabelecimento</string>
+    <string name="directions">Direções</string>
+    <string name="call">Ligar</string>
+    <string name="enable_geo">Ative o GPS ou qualquer outro serviço de localização para encontrar o local atual. Para tanto, clique em “Ok” para acessar as configurações dos serviços de localização.</string>
+
+    <string-array name="menus_merchantDirectory">
+        <item>Sugerir um estabelecimento</item>
+    </string-array>
+
+    <string name="my_accounts">Minhas contas</string>
+    <string name="my_addresses">Meus endereços</string>
+    <string name="accounts">Contas</string>
+    <string name="addresses">Endereços</string>
+    <string name="create_new_account">Criar nova conta</string>
+    <string name="import_address">Importar endereço</string>
+    <string name="save_name">Salvar nome</string>
+
+    <string name="receive_address_to_clipboard">Deseja copiar este endereço de recebimento para a área de transferência? Se sim, saiba que outros aplicativos terão acesso a estas informações.</string>
+    <string name="receive_address_to_share">Deseja compartilhar este endereço de recebimento para envio? Se sim, saiba que outros aplicativos terão acesso a estas informações.</string>
+    <string name="guid_to_clipboard">Deseja copiar o ID da carteira para a área de transferência? Se sim, saiba que outros aplicativos terão acesso a estas informações.</string>
+
+    <string name="ssl_hostname_invalid">Não foi possível validar o nome de host do certificado SSL. Isto pode indicar atividade maliciosa. Verifique sua conexão com a rede e com o dispositivo antes de continuar.</string>
+    <string name="ssl_pinning_invalid">Falha na fixação do certificado SSl. Isto pode indicar atividade maliciosa. Verifique sua conexão com a rede e com o dispositivo antes de continuar.</string>
+
+    <string name="address_already_used">Este endereço de recebimento já está sendo usado.</string>
+
+    <string name="my_wallet_id">Meu ID de carteira</string>
+    <string name="EMAIL">E-MAIL</string>
+    <string name="new_support_request">Nova solicitação de suporte</string>
+    <string name="contact_support">Contatar suporte</string>
+    <string name="email_subject">Solicitação de suporte do Android</string>
+
+    <string name="merchant_map">Mapa de estabelecimentos</string>
+    <string name="merchant_list">Lista de estabelecimentos</string>
+    <string name="merchant_suggest">Sugerir estabelecimento</string>
+    <string name="name">Nome</string>
+    <string name="location">Localização</string>
+    <string name="manual_entry">INSERÇÃO MANUAL</string>
+    <string name="use_my_current_location">USAR MINHA POSIÇÃO ATUAL</string>
+    <string name="save">Salvar</string>
+    <string name="next">Próximo</string>
+    <string name="address_lookup_fail">Não foi possível recuperar o endereço. Digite o endereço manualmente.</string>
+
+    <string name="backup_1_heading">Você não protegeu seus fundos ainda</string>
+    <string name="backup_1_subheading">Proteger sua carteira é fácil e garante que você não perca o acesso aos seus fundos, mesmo que o nosso serviço fique indisponível.</string>
+    <string name="BACKUP_WALLET">PROTEGER CARTEIRA</string>
+    <string name="backup_how_to">Como recuperar a carteira</string>
+    <string name="backup_step_1">Acesse blockchain.info/restorewallet</string>
+    <string name="backup_step_2">Digite a frase de segurança de 12 palavras</string>
+    <string name="START">INÍCIO</string>
+    <string name="backup_write_down_words">Escreva as palavras na exata ordem em que aparecem e armazene-as em um local seguro</string>
+    <string name="NEXT_WORD">PRÓXIMA PALAVRA</string>
+    <string name="press_to_reveal">mantenha pressionado para revelar a palavra</string>
+    <string name="VERIFY">VERIFICAR</string>
+    <string name="backup_verify_heading">Verifique se você anotou a frase de segurança</string>
+    <string name="VERIFY_BACKUP">VERIFICAR PROTEÇÃO</string>
+    <string name="Word">Palavra</string>
+    <string name="of">de</string>
+    <string name="backup_confirmed">Proteção confirmada</string>
+    <string name="backup_word_mismatch">Palavra incompatível</string>
+    <string name="backup_days_ago">Você protegeu sua carteira há [--time--] [--day--]</string>
+    <string name="day">dia</string>
+    <string name="days">dias</string>
+    <string name="backup_only_need_to_once_reminder">Você só precisa proteger sua carteira uma vez, mas é recomendável verificar ocasionalmente se a proteção ainda é válida</string>
+
+    <string name="received_bitcoin">Bitcoins recebidos</string>
+    <string name="refresh_balance">Atualizar saldo</string>
+
+    <string-array name="mnemonic_word_requests">
+        <item>primeira palavra</item>
+        <item>segunda palavra</item>
+        <item>terceira palavra</item>
+        <item>quarta palavra</item>
+        <item>quinta palavra</item>
+        <item>sexta palavra</item>
+        <item>sétima palavra</item>
+        <item>oitava palavra</item>
+        <item>nona palavra</item>
+        <item>décima palavra</item>
+        <item>décima primeira palavra</item>
+        <item>décima segunda palavra</item>
+    </string-array>
+
+    <string name="confirmation_code">Código de confirmação</string>
+    <string name="verification_failed">Falha na verificação</string>
+    <string name="resend_email_confirmation">Reenviar e-mail</string>
+    <string name="please_confirm_email">Confirme seu endereço de e-mail</string>
+    <string name="confirmation_instructions">Enviamos um e-mail para [--email_address--]. Abra o e-mail e siga as instruções para concluir a instalação da carteira.</string>
+
+    <string name="send_payment">Enviar pagamento</string>
+    <string name="share">Compartilhar endereço de recebimento</string>
+    <string name="scan_qr">Digitalizar código QR</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="check_email_to_auth_login">Verifique seu e-mail para aprovar esta tentativa de acesso.</string>
+    <string name="confirmations">Confirmações</string>
+    <string name="transaction_fee">Taxa de mineradores de bitcoins</string>
+    <string name="transaction_hash">Hash da transação</string>
+    <string name="your_transactions">Suas transações</string>
+    <string name="transaction_occur_when">As transações ocorrem quando você recebe e envia bitcoin.</string>
+    <string name="click">Clique</string>
+    <string name="to_start_sending_and_receiving_btc">para iniciar o envio e o recebimento de bitcoins.</string>
+
+    <string name="watch_only_label">(somente visualização)</string>
+    <string name="archived_label">(arquivado)</string>
+
+    <string name="dust_change">A transação retorna a quantia mínima como alteração.</string>
+    <string name="dust_amount">A transação gasta a quantia mínima.</string>
+    <string name="logging_out_automatically">Desconectar automaticamente</string>
+    <string name="transaction_submitted">Transação concluída</string>
+    <string name="transaction_failed">Falha na transação</string>
+    <string name="UPGRADE_YOUR_WALLET">ATUALIZE SUA CARTEIRA</string>
+    <string name="ASK_ME_LATER">PERGUNTAR MAIS TARDE</string>
+    <string name="upgrade_page_1">Crie contas personalizadas para ajudar a manter sua carteira organizada.</string>
+    <string name="upgrade_page_2">A proteção de carteira configurada em apenas um procedimento é muito simples e mantém você no controle dos seus fundos.</string>
+    <string name="upgrade_page_3">Tudo o que você precisa para armazenar, usar e receber bitcoins.</string>
+    <string name="CONFIRM">CONFIRMAR</string>
+    <string name="confirm_upgrade">Confirmar atualização</string>
+    <string name="confirm_upgrade_info">Sua carteira será atualizada para o nosso formato de carteira mais recente. Isso permitirá que você aproveite as grandes melhorias na privacidade e na segurança. Observe que após confirmar, o processo de atualização iniciará e não poderá ser revertido.</string>
+    <string name="upgrading">Atualizando...</string>
+    <string name="upgrading_started_info">Sua carteira está atualizando, aguarde um momento. Isto pode levar alguns minutos dependendo do tamanho e tempo de existência da sua carteira.</string>
+    <string name="upgrade_success_heading">Sua carteira foi atualizada!</string>
+    <string name="upgrade_interrupted">Atualização da carteira interrompida. Pareie a carteira mais uma vez e tente novamente.</string>
+    <string name="upgrade_success_info">Agora, você está usando a Blockchain Wallet mais segura e privada e pode seguir para a sua carteira.</string>
+    <string name="CLOSE">FECHAR</string>
+    <string name="total_funds">Todos</string>
+    <string name="unexpected_error">Erro inesperado, tente novamente mais tarde.</string>
+    <string name="upgrade_fail_heading">Falha na atualização da carteira!</string>
+    <string name="upgrade_fail_info">Houve um erro ao atualizar a carteira. Tente novamente mais tarde.</string>
+    <string name="not_sane_error">A instalação do Blockchain Wallet está incompleta. Pareie a carteira novamente ou crie uma nova.</string>
+
+    <string name="archived_address">Este endereço está arquivado. Você pode controlá-lo pela carteira web do Blockchain.</string>
+    <string name="watchonly_address">Este endereço é somente para visualização. Você pode controlá-lo pela carteira web do Blockchain.</string>
+    <string name="watchonly_address_spend_warning">Este endereço é um watch-only. Você pode passar a partir dele através da web carteira Blockchain.</string>
+    <string name="watchonly_address_receive_warning">Você está prestes a receber para um endereço watch-only. Você só pode gastar esses fundos se você tiver acesso à chave privada. Continuar?</string>
+
+    <string name="PENDING">PENDENTE</string>
+    <string name="COMPLETE">COMPLETE</string>
+
+    <string name="camera_unavailable">A câmera está aberta atualmente por outro aplicativo. Feche esse aplicativo e tente novamente.</string>
+    <string name="transaction_failed_will_retry">Falha na transação, haverá uma nova tentativa em alguns segundos.</string>
+
+    <string name="limit_21m_exceeded">Esta quantia não pode ser transmitida na rede Bitcoin.</string>
+    <string name="validating_password">Validando senha...</string>
+    <string name="validating_pin">Validando PIN...</string>
+    <string name="creating_pin">Criando PIN...</string>
+    <string name="decrypting_wallet">Descriptografando carteira...</string>
+    <string name="verifying_email">Verificando e-mail...</string>
+    <string name="pairing_wallet">Pareando carteira...</string>
+    <string name="transaction_queued">Transação enfileirada</string>
+    <string name="WAITING">NA FILA</string>
+    <string name="password_unchanged">Senha inalterada</string>
+    <string name="password_changed">Senha alterada.</string>
+    <string name="sending">Enviando...</string>
+    <string name="ask_me_later">Perguntar mais tarde</string>
+    <string name="verify_email">Verificar E-mail</string>
+    <string name="email_verified">E-mail verificado</string>
+    <string name="verify_email2">Seu endereço de e-mail é usado para enviarmos códigos de acesso quando uma atividade incomum ou suspeita for detectada para lembrar do ID de acesso da sua carteira e enviar alertas de pagamento de bitcoin ao enviar ou receber fundos. Não usaremos o seu endereço de e-mail para fins de marketing</string>
+    <string name="disable_root_warning">Aviso Disable</string>
+    <string name="disable_root_warning2">Desativar diálogo de aviso em caso seu telefone seja rooted</string>
+
+    <string name="show_balance">Exibir saldo</string>
+    <string name="my_address">Meu endereço</string>
+    <string name="create_new_address">Criar novo endereço</string>
+    <string name="confirmation_code_error">O código digitado está incorreto. Tente novamente.</string>
+    <string name="auth_failed">Falha na autorização. Tente novamente.</string>
+    <string name="send_failed">Falha no envio. Tente novamente.</string>
+    <string name="invalid_qr">QR inválido</string>
+
+    <string name="wallet_updated">Atualização da carteira recebida</string>
+    <string name="lame_mode_hd_pair_fail">Não foi possível parear a carteira V3.</string>
+    <string name="please_repair">Ocorreu um erro. Não foi possível decodificar a carteira no estado atual. Pareie a carteira novamente.</string>
+
+    <string name="device_rooted">O dispositivo parece ter sido modificado. Esteja ciente de que armazenar fundos em um dispositivo modificado é arriscado e, além disso, pode causar problemas de estabilidade. Se você continuar usando nossa carteira de bitcoins neste dispositivo, recomendamos que use criptografia dupla na sua conta do Blockchain.</string>
+    <string name="address_already_in_wallet">Sua carteira já contém este endereço.</string>
+    <string name="cannot_create_address">Não é possível criar um endereço novo neste momento. Tente novamente.</string>
+    <string name="saving_address">Salvando endereço...</string>
+    <string name="cannot_create_wallet">A carteira não pode ser criada/restaurada neste momento. Tente novamente.</string>
+
+    <string name="cannot_launch_app">O Blockchain Wallet não pode ser executado neste dispositivo.</string>
+    <string name="support_guide">Descreva detalhadamente o problema que você está enfrentando, juntamente com as etapas que podemos realizar para reproduzi-lo.</string>
+    <string name="label">Etiqueta</string>
+    <string name="rename_address">Renomeie</string>
+    <string name="edit">Editar</string>
+    <string name="label_cant_be_empty">Etiqueta não pode ficar em branco.</string>
+    <string name="saving_changes">Salvando alterações...</string>
+    <string name="warning">Aviso</string>
+
+</resources>

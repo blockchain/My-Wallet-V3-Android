@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <string name="backup_wallet">备份钱包</string>
+    <string name="upgrade_wallet">升级钱包</string>
+    <string-array name="navigation_drawer_items_lame">
+        <item>我的地址</item>
+        <item>新闻、价格与图表</item>
+        <item>设置</item>
+        <item>支持</item>
+        <item>更改 PIN</item>
+        <item>取消配对钱包</item>
+        <item>@string/upgrade_wallet</item>
+    </string-array>
+    <string-array name="navigation_drawer_items_hd">
+        <item>我的账户</item>
+        <item>新闻、价格与图表</item>
+        <item>设置</item>
+        <item>支持</item>
+        <item>更改 PIN</item>
+        <item>@string/backup_wallet</item>
+        <item>取消配对钱包</item>
+    </string-array>
+
+    <array name="navigation_drawer_icons_lame">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/icon_logout</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+    </array>
+    <array name="navigation_drawer_icons_hd">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/bad_backup</item>
+        <item>@drawable/icon_logout</item>
+    </array><!--
+    <string name="app_name">Blockchain HD</string>
+    --><string name="app_name">Blockchain</string>
+    <string name="action_settings">设置</string>
+
+    <string name="all_accounts">所有账户</string>
+
+    <string name="please_wait">请稍候</string>
+
+    <string name="send_bitcoin">发送</string>
+    <string name="receive_bitcoin">接收</string>
+    <string name="blockchain">Blockchain</string>
+
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="polite_no">不，谢谢</string>
+
+    <string name="YESTERDAY">昨天</string>
+    <string name="TODAY">今天</string>
+    <string name="AGO">以前</string>
+
+    <string name="SENT">已发送</string>
+    <string name="RECEIVED">已接收</string>
+    <string name="MOVED">已传送</string>
+
+    <string name="copied_to_clipboard">已复制到剪贴板</string>
+
+    <string name="options_id">钱包 ID</string>
+    <string name="options_id2">钱包 ID</string>
+    <string name="preferences_about_title">关于我们</string>
+    <string name="about_us">关于我们</string>
+
+    <string name="ask_you_sure_unpair">是否确定要取消配对设备？</string>
+
+    <string name="select_currency">选择货币</string>
+    <string name="options_currency">本地货币</string>
+    <string name="options_currency2">您的首选法定货币</string>
+
+    <string name="options_mnemonic">显示助记词</string>
+    <string name="options_mnemonic2">显示此钱包的助记词</string>
+    <string name="options_units">比特币单位</string>
+    <string name="options_units2">BTC、mBTC 或比特</string>
+    <string name="options_tos">服务条款</string>
+    <string name="options_tos2">Blockchain Android 比特币钱包服务条款</string>
+    <string name="options_privacy">隐私政策</string>
+    <string name="options_privacy2">Blockchain 隐私政策</string>
+
+    <string name="invalid_email">无效的电子邮件地址</string>
+    <string name="invalid_mobile">无效的手机号码</string>
+    <string name="invalid_password">无效的密码</string>
+    <string name="invalid_guid">无效的钱包 ID</string>
+    <string name="password_mismatch_error">密码不匹配</string>
+
+    <string name="no_private_key">无法生成私钥。</string>
+    <string name="pin_4_strikes">4 次 PIN 尝试失败。请提供密码。</string>
+    <string name="pin_4_strikes_password_accepted">密码已接受。请定义新 PIN。</string>
+
+    <string name="bip38_password_entry">请输入私钥密码</string>
+
+    <string name="pin_entry">输入 PIN</string>
+    <string name="password_entry">请输入密码</string>
+    <string name="options_CLEAR">清除</string>
+    <string name="options_FORGOT_PIN">忘记 PIN</string>
+    <string name="zero_pin">0000 是无效的 PIN。请重试。</string>
+    <string name="invalid_pin">无效的 PIN。请重试。</string>
+    <string name="pin_mismatch_error">PIN 不相符</string>
+    <string name="create_pin">创建 PIN</string>
+    <string name="confirm_pin">确认 PIN</string>
+    <string name="create_pin_failed">PIN 创建失败。请重新配对设备。</string>
+    <string name="pairing_failed">配对失败。请重试。</string>
+    <string name="pairing_failed_decrypt_error">配对失败。解密错误。</string>
+
+    <string name="check_connectivity_exit">Blockchain 钱包无法获得 Internet 连接。请检查设备连接并重试。</string>
+    <string name="dialog_continue">继续</string>
+    <string name="cannot_edit_imported_label">导入的地址标签无法编辑</string>
+
+    <string name="double_encryption_password_error">双加密密码错误。请重试。</string>
+
+    <string name="command2">扫描配对代码</string>
+    <string name="command3">我无法访问我的摄像头</string>
+    <string name="CREATE">创建新钱包</string>
+    <string name="LOGIN">登录我的钱包</string>
+    <string name="pair_your_wallet">配对您的钱包</string>
+    <string name="scan_pairing_code">扫描配对代码</string>
+    <string name="manual_pairing">手动配对</string>
+    <string name="pair_wallet_step_1">在 PC 或 Mac 上通过 blockchain.info/wallet 登录您的 Blockchain 钱包。</string>
+    <string name="pair_wallet_step_2">单击 Account Settings（账户设置）按钮，然后选择 Devices（设备）选项卡。</string>
+    <string name="pair_wallet_step_3">单击 Show Pairing Code（显示配对代码）以生成二维码 - 一个方形黑白条码。使用您的摄像头扫描该代码。</string>
+    <string name="disable_two_factor">您必须禁用双因素身份认证才能尝试手动配对您的钱包</string>
+    <string name="wallet_id">钱包 ID</string>
+    <string name="default_wallet_name">我的比特币钱包</string>
+
+    <string name="password">密码</string>
+    <string name="email">电子邮件</string>
+    <string name="agree_terms_of_service">创建一个新钱包即表示您同意</string>
+    <string name="blockchain_tos">Blockchain 服务条款</string>
+    <string name="create_wallet">创建钱包</string>
+    <string name="new_wallet">新建钱包</string>
+    <string name="strength_weak">弱</string>
+    <string name="strength_medium">普通</string>
+    <string name="strength_strong">强</string>
+    <string name="strength_very_strong">很强</string>
+
+    <string name="CONTINUE">继续</string>
+    <string name="SEND">发送</string>
+    <string name="CONFIRM_PAYMENT">确认付款</string>
+    <string name="GO_BACK">返回</string>
+
+    <string name="total_to_send">发送合计</string>
+
+    <string name="no_funds_available">此账户没有资金</string>
+    <string name="no_funds_available2">此地址没有资金</string>
+    <string name="max_available">最大可用金额：</string>
+
+    <string name="invalid_bitcoin_address">比特币地址无效</string>
+    <string name="invalid_amount">无效的金额</string>
+    <string name="insufficient_funds">资金不足</string>
+
+    <string name="enter_double_encryption_pw">请输入双加密密码</string>
+    <string name="send_payment_code">发送支付代码</string>
+    <string name="edit_label">编辑标签</string>
+
+    <string name="support">支持</string>
+    <string name="rate_us">评价我们</string>
+    <string name="email_chooser">发送电子邮件...</string>
+    <string name="about">Blockchain 钱包 %1$s\n©%2$s Blockchain.info</string>
+    <string name="merchant_download">免费商家应用程序</string>
+    <string name="feedback">发送反馈</string>
+    <string name="password_or_wipe">使用密码进入或忘记此钱包</string>
+    <string name="use_password">使用密码</string>
+    <string name="wipe_wallet">忘记钱包</string>
+
+    <string name="select_units">选择可显示的 BTC 单位</string>
+    <string name="weak_password">选用的密码太弱，无法确保您的资金安全。强烈建议您选用其他密码。是否要定义新密码？</string>
+
+    <string name="from">自</string>
+    <string name="to">至</string>
+
+    <string name="confirm_details">确认详细信息</string>
+    <string name="fee">费用</string>
+    <string name="dialog_send">发送</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_priority_fee">优先付费发送</string>
+    <string name="exit_confirm">再次按返回按钮退出</string>
+
+    <string name="label_address">您的地址已成功导入。也可为此地址分配一个友好显示名称。</string>
+    <string name="label_address2">您的地址已成功创建。也可为此地址分配一个友好显示名称。</string>
+
+    <string name="bip38_error">无效的私钥密码</string>
+    <string name="privkey_error">未被识别的私钥格式</string>
+    <string name="hd_error">HD 钱包错误</string>
+    <string name="scan_not_recognized">无法解码扫描的内容</string>
+
+    <string name="imported_addresses">导入的地址</string>
+    <string name="account_colon">账户：</string>
+    <string name="created_account_colon">创建的账户：</string>
+
+    <string name="tx_length_error">Blockchain 钱包无法处理大小超过 100KB 的交易。请尝试分次交易。</string>
+    <string name="invalid_tx">无效的交易尝试</string>
+
+    <string name="remote_save_ok">远程保存成功</string>
+    <string name="remote_save_ko">远程保存失败</string>
+    <string name="payload_corrupted">远程净负荷已损坏，未保存到服务器。</string>
+
+    <string name="my_bitcoin_wallet">Blockchain 钱包</string>
+    <string name="drawer_open">抽屉打开</string>
+    <string name="drawer_close">抽屉关闭</string>
+
+    <string name="unpair_wallet">取消配对钱包</string>
+    <string name="unpair">取消配对</string>
+
+    <string name="ok_cap">确定</string>
+    <string name="change_pin_code">更改 PIN</string>
+    <string name="enter_password_to_change_pin">请输入密码以更改 PIN。</string>
+
+    <string name="suggest_merchant">推荐商家</string>
+    <string name="business_name">商家名称</string>
+    <string name="select_category">类别</string>
+    <string name="business_category">类别</string>
+    <string name="street_address">街道地址</string>
+    <string name="description">描述</string>
+    <string name="city">城市</string>
+    <string name="postal">邮政编码</string>
+    <string name="telephone">电话</string>
+    <string name="web">网页</string>
+    <string name="latitude">纬度：</string>
+    <string name="longitude">经度：</string>
+    <string name="get_location">我在这里。使用我的地点。</string>
+    <string name="merchant_cat_hint">选择类别...</string>
+    <string name="merchant_cat1">咖啡店</string>
+    <string name="merchant_cat2">酒吧/饮料吧</string>
+    <string name="merchant_cat3">饮食</string>
+    <string name="merchant_cat4">购物/消费</string>
+    <string name="merchant_cat5">自动取款机</string>
+    <string name="missing_merchant_category">请为此商家选择类别</string>
+    <string name="missing_merchant_name">请提供商家名称</string>
+    <string name="missing_merchant_street_address">请提供商家街道地址</string>
+    <string name="missing_merchant_city">请提供城市</string>
+    <string name="missing_merchant_postal">请提供邮政编码</string>
+    <string name="ok_writing_merchant">感谢您的建议。</string>
+    <string name="error_writing_merchant">写入数据库时出错。请重试。</string>
+    <string name="no_merchants_in_range">列表范围内没有比特币商家。</string>
+    <string name="merchant_info">商家信息</string>
+    <string name="directions">导航</string>
+    <string name="call">致电</string>
+    <string name="enable_geo">启用 GPS 或任何其他位置服务以查找当前位置。单击“确定”前往位置服务设置以进行查找。</string>
+
+    <string-array name="menus_merchantDirectory">
+        <item>推荐一个商家</item>
+    </string-array>
+
+    <string name="my_accounts">我的账户</string>
+    <string name="my_addresses">我的地址</string>
+    <string name="accounts">账户</string>
+    <string name="addresses">地址</string>
+    <string name="create_new_account">创建新账户</string>
+    <string name="import_address">导入地址</string>
+    <string name="save_name">保存名称</string>
+
+    <string name="receive_address_to_clipboard">将此接收地址复制到剪贴板？ 若这样操作，要注意其他应用程序可能会看到这些信息。</string>
+    <string name="receive_address_to_share">分享该接收地址以便发送？ 若这样操作，要注意其他应用程序可能会看到这些信息。</string>
+    <string name="guid_to_clipboard">复制您的钱包 ID 到剪贴板？ 若这样操作，要注意其他应用程序可能会看到这些信息。</string>
+
+    <string name="ssl_hostname_invalid">我们无法验证 SSL 证书的主机名称。这可能属于恶意行为。请在继续之前检查您的网络连接和设备。</string>
+    <string name="ssl_pinning_invalid">SSL 证书锁定已失败。这可能属于恶意行为。请在继续之前检查您的网络连接和设备。</string>
+
+    <string name="address_already_used">此接收地址已被使用。</string>
+
+    <string name="my_wallet_id">我的钱包 ID</string>
+    <string name="EMAIL">电子邮件</string>
+    <string name="new_support_request">新支持请求</string>
+    <string name="contact_support">联系支持</string>
+    <string name="email_subject">Android 支持请求</string>
+
+    <string name="merchant_map">商家地图</string>
+    <string name="merchant_list">商家列表</string>
+    <string name="merchant_suggest">推荐商家</string>
+    <string name="name">名称</string>
+    <string name="location">位置</string>
+    <string name="manual_entry">手动输入</string>
+    <string name="use_my_current_location">使用我的当前位置</string>
+    <string name="save">保存</string>
+    <string name="next">下一步</string>
+    <string name="address_lookup_fail">无法检索地址。请手动输入地址。</string>
+
+    <string name="backup_1_heading">您尚未备份自己的钱包</string>
+    <string name="backup_1_subheading">备份钱包很简单，这样可确保您不会失去对自己资金的控制，即使我们的服务无法使用。</string>
+    <string name="BACKUP_WALLET">备份钱包</string>
+    <string name="backup_how_to">如何还原您的钱包</string>
+    <string name="backup_step_1">转至 blockchain.info/restorewallet</string>
+    <string name="backup_step_2">输入您的 12 个词的备份短语</string>
+    <string name="START">开始</string>
+    <string name="backup_write_down_words">按先后顺序在纸上写下这些词。</string>
+    <string name="NEXT_WORD">下一个词</string>
+    <string name="press_to_reveal">长按可显示该词</string>
+    <string name="VERIFY">验证</string>
+    <string name="backup_verify_heading">验证您已记下备份短语</string>
+    <string name="VERIFY_BACKUP">验证备份</string>
+    <string name="Word">词</string>
+    <string name="of">/</string>
+    <string name="backup_confirmed">备份已确认</string>
+    <string name="backup_word_mismatch">词不匹配</string>
+    <string name="backup_days_ago">您在 [--day--] [--time--] 前备份了钱包</string>
+    <string name="day">天</string>
+    <string name="days">天</string>
+    <string name="backup_only_need_to_once_reminder">您只需要备份一次钱包，但不时地检查一下备份的有效性是个好主意</string>
+
+    <string name="received_bitcoin">收到的比特币</string>
+    <string name="refresh_balance">刷新余额</string>
+
+    <string-array name="mnemonic_word_requests">
+        <item>第一个词</item>
+        <item>第二个词</item>
+        <item>第三个词</item>
+        <item>第四个词</item>
+        <item>第五个词</item>
+        <item>第六个词</item>
+        <item>第七个词</item>
+        <item>第八个词</item>
+        <item>第九个词</item>
+        <item>第十个词</item>
+        <item>第十一个词</item>
+        <item>第十二个词</item>
+    </string-array>
+
+    <string name="confirmation_code">确认代码</string>
+    <string name="verification_failed">验证失败</string>
+    <string name="resend_email_confirmation">重新发送电子邮件</string>
+    <string name="please_confirm_email">请确认您的电子邮件地址</string>
+    <string name="confirmation_instructions">您已发送了一封电子邮件至 [--email_address--]。请打开电子邮件并按照说明完成钱包设置。</string>
+
+    <string name="send_payment">发送付款</string>
+    <string name="share">分享接收地址</string>
+    <string name="scan_qr">扫描二维码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="check_email_to_auth_login">请检查您的电子邮件以同意该登录尝试。</string>
+    <string name="confirmations">确认</string>
+    <string name="transaction_fee">比特币矿工费</string>
+    <string name="transaction_hash">交易哈希值</string>
+    <string name="your_transactions">您的交易记录</string>
+    <string name="transaction_occur_when">接收和发送比特币即会产生交易。</string>
+    <string name="click">单击</string>
+    <string name="to_start_sending_and_receiving_btc">开始发送和接收比特币。</string>
+
+    <string name="watch_only_label">（仅监视）</string>
+    <string name="archived_label">（已归档）</string>
+
+    <string name="dust_change">交易会随变化退回微额量。</string>
+    <string name="dust_amount">交易会花费微额量。</string>
+    <string name="logging_out_automatically">自动注销</string>
+    <string name="transaction_submitted">交易完成</string>
+    <string name="transaction_failed">交易失败</string>
+    <string name="UPGRADE_YOUR_WALLET">升级您的钱包</string>
+    <string name="ASK_ME_LATER">稍后再问我</string>
+    <string name="upgrade_page_1">创建个性化账户以便让您的钱包整理有序。</string>
+    <string name="upgrade_page_2">轻松的一次性钱包备份让您掌控自己的资金。</string>
+    <string name="upgrade_page_3">您要做的就只有接收、花费和存放您的比特币。</string>
+    <string name="CONFIRM">确认</string>
+    <string name="confirm_upgrade">确认升级</string>
+    <string name="confirm_upgrade_info">您的钱包将升级为我们最新的钱包格式。这样将为您带来重大的隐私和安全改进。请注意，一旦您确认，升级流程就会开始并且不可逆转。</string>
+    <string name="upgrading">正在升级...</string>
+    <string name="upgrading_started_info">您的钱包正在升级，请耐心等待，所需的时间取决于钱包的大小和历史。</string>
+    <string name="upgrade_success_heading">您的钱包已升级！</string>
+    <string name="upgrade_interrupted">钱包升级已被中断。请重新配对您的钱包并重试。</string>
+    <string name="upgrade_success_info">您正在运行最安全和私密的 Blockchain 钱包，您可以立即继续使用自己的钱包。</string>
+    <string name="CLOSE">关闭</string>
+    <string name="total_funds">全部</string>
+    <string name="unexpected_error">意外错误，请稍后重试。</string>
+    <string name="upgrade_fail_heading">钱包升级失败！</string>
+    <string name="upgrade_fail_info">升级钱包时出错。请稍后再试。</string>
+    <string name="not_sane_error">您的 Blockchain 钱包安装未完成。请重新配对您的钱包或创建一个新钱包。</string>
+
+    <string name="archived_address">此地址已存档。您可以通过 Blockchain 网络钱包来管理地址。</string>
+    <string name="watchonly_address">此地址仅供监视。您可以通过 Blockchain 网络钱包来管理地址。</string>
+    <string name="watchonly_address_spend_warning">这个地址是一个手表只。你可以从它通过 Blockchain 网络钱包花</string>
+    <string name="watchonly_address_receive_warning">您将要接收到手表只地址。你可以，如果你有机会到私钥只花这些资金。 继续？</string>
+
+    <string name="PENDING">待定</string>
+    <string name="COMPLETE">完成</string>
+
+    <string name="camera_unavailable">摄像头当前已被其他应用程序打开。请关闭其他应用程序并重试。</string>
+    <string name="transaction_failed_will_retry">交易失败，数秒后将重试。</string>
+
+    <string name="limit_21m_exceeded">此金额无法通过比特币网络进行传送。</string>
+    <string name="validating_password">正在验证密码...</string>
+    <string name="validating_pin">正在验证 PIN...</string>
+    <string name="creating_pin">正在创建 PIN...</string>
+    <string name="decrypting_wallet">正在解密钱包...</string>
+    <string name="verifying_email">正在验证电子邮件...</string>
+    <string name="pairing_wallet">正在配对钱包...</string>
+    <string name="transaction_queued">交易已排队</string>
+    <string name="WAITING">已排队</string>
+    <string name="password_unchanged">密码未更改</string>
+    <string name="password_changed">密码已更改</string>
+    <string name="sending">正在发送...</string>
+    <string name="ask_me_later">稍后再问我</string>
+    <string name="verify_email">验证电子邮件</string>
+    <string name="email_verified">电子邮件已通过验证</string>
+    <string name="verify_email2">检测到可疑或异常活动时会将您已通过验证的电子邮件地址用于发送登录代码，以提醒您自己的钱包登录 ID，并可在发送或收到资金时发送比特币支付通知。我们不会将您的电子邮件地址用于商业用途</string>
+    <string name="disable_root_warning">禁用警告</string>
+    <string name="disable_root_warning2">禁用的情况下警告对话框中你的手机是植根</string>
+
+    <string name="show_balance">显示余额</string>
+    <string name="my_address">我的地址</string>
+    <string name="create_new_address">创建新地址</string>
+    <string name="confirmation_code_error">您输入的代码不正确。请重试。</string>
+    <string name="auth_failed">授权失败。请重试。</string>
+    <string name="send_failed">发送失败。请重试。</string>
+    <string name="invalid_qr">无效的二维码</string>
+
+    <string name="wallet_updated">钱包更新已收到</string>
+    <string name="lame_mode_hd_pair_fail">无法配对 V3 钱包。</string>
+    <string name="please_repair">出现错误。无法在当前状态下解码钱包。请重新配对您的钱包。</string>
+
+    <string name="device_rooted">您的设备似乎已被 Root。请注意，在已 Root 的设备上存放资金不仅不安全，并且还会导致稳定性问题。如果您继续在此设备上使用我们的比特币钱包，则建议您对您的 Blockchain 账户使用双加密。</string>
+    <string name="address_already_in_wallet">您的钱包已包含此地址。</string>
+    <string name="cannot_create_address">此时无法创建新地址。请重试。</string>
+    <string name="saving_address">正在保存地址...</string>
+    <string name="cannot_create_wallet">此时无法创建/恢复钱包。请重试。</string>
+
+    <string name="cannot_launch_app">Blockchain 钱包无法在此设备上运行。</string>
+    <string name="support_guide">请详细描述遇到的问题，以及我们重现该问题所采取的步骤。</string>
+    <string name="label">标签</string>
+    <string name="rename_address">重命名</string>
+    <string name="edit">编辑</string>
+    <string name="label_cant_be_empty">标签不能为空.</string>
+    <string name="saving_changes">保存更改...</string>
+    <string name="warning">警告</string>
+
+</resources>

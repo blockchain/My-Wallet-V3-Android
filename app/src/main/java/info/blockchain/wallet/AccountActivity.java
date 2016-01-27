@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 
 //import android.util.Log;
@@ -692,7 +693,7 @@ public class AccountActivity extends AppCompatActivity {
                 legacyAddress.setAddress(ecKey.toAddress(MainNetParams.get()).toString());
                 legacyAddress.setCreatedDeviceName("android");
                 legacyAddress.setCreated(System.currentTimeMillis());
-                legacyAddress.setCreatedDeviceVersion(AccountActivity.this.getString(R.string.version_name));
+                legacyAddress.setCreatedDeviceVersion(BuildConfig.VERSION_NAME);
 
                 progress.dismiss();
 

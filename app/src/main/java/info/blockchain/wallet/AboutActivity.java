@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import info.blockchain.wallet.util.AppUtil;
 
+import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 
 //import android.util.Log;
@@ -37,7 +38,7 @@ public class AboutActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         tvAbout = (TextView) findViewById(R.id.about);
-        tvAbout.setText(getString(R.string.about, getString(R.string.version_name), "2015"));
+        tvAbout.setText(getString(R.string.about, BuildConfig.VERSION_NAME, "2015"));
 
         bRate = (TextView) findViewById(R.id.rate_us);
         bRate.setOnClickListener(new Button.OnClickListener() {

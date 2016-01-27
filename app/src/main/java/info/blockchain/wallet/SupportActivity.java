@@ -18,6 +18,7 @@ import info.blockchain.wallet.util.AppUtil;
 import info.blockchain.wallet.util.ToastCustom;
 import info.blockchain.wallet.util.TypefaceUtil;
 
+import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 
 public class SupportActivity extends Activity {
@@ -117,7 +118,7 @@ public class SupportActivity extends Activity {
                         "" +
                         "\n\n" +
                         "--\n" +
-                        "App: " + getString(R.string.app_name) + ", Version " + getString(R.string.version_name) + " \n" +
+                        "App: " + getString(R.string.app_name) + ", Version " + BuildConfig.VERSION_NAME + " \n" +
                         "System: " + Build.MANUFACTURER + "\n" +
                         "Model: " + Build.MODEL + "\n" +
                         "Version: " + Build.VERSION.RELEASE);

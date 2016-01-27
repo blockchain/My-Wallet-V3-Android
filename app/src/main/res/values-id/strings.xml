@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <string name="backup_wallet">Dompet Cadangan</string>
+    <string name="upgrade_wallet">Memutakhirkan Dompet</string>
+    <string-array name="navigation_drawer_items_lame">
+        <item>Alamat Saya</item>
+        <item>Berita, Harga, &amp; Grafik</item>
+        <item>Pengaturan</item>
+        <item>Dukungan</item>
+        <item>Ubah PIN</item>
+        <item>Pisahkan Dompet</item>
+        <item>@string/upgrade_wallet</item>
+    </string-array>
+    <string-array name="navigation_drawer_items_hd">
+        <item>Akun Saya</item>
+        <item>Berita, Harga, &amp; Grafik</item>
+        <item>Pengaturan</item>
+        <item>Dukungan</item>
+        <item>Ubah PIN</item>
+        <item>@string/backup_wallet</item>
+        <item>Pisahkan Dompet</item>
+    </string-array>
+
+    <array name="navigation_drawer_icons_lame">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/icon_logout</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+    </array>
+    <array name="navigation_drawer_icons_hd">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/bad_backup</item>
+        <item>@drawable/icon_logout</item>
+    </array>
+
+    <string name="app_name">Rangkaian Blok</string>
+    <string name="action_settings">Pengaturan</string>
+
+    <string name="all_accounts">Semua Akun</string>
+
+    <string name="please_wait">Harap tunggu</string>
+
+    <string name="send_bitcoin">Mengirim</string>
+    <string name="receive_bitcoin">Menerima</string>
+    <string name="blockchain">Rangkaian Blok</string>
+
+    <string name="ok">OKE</string>
+    <string name="cancel">Batal</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="polite_no">Tidak, terima kasih</string>
+
+    <string name="YESTERDAY">Kemarin</string>
+    <string name="TODAY">Hari ini</string>
+    <string name="AGO">yang lalu</string>
+
+    <string name="SENT">Telah Dikirim</string>
+    <string name="RECEIVED">Telah Menerima</string>
+    <string name="MOVED">Telah Ditransfer</string>
+
+    <string name="copied_to_clipboard">Disalin ke Papan Klip</string>
+
+    <string name="options_id">ID Dompet</string>
+    <string name="options_id2">ID Dompet</string>
+    <string name="preferences_about_title">Tentang Kami</string>
+    <string name="about_us">Tentang kami</string>
+
+    <string name="ask_you_sure_unpair">Anda yakin ingin memisah perangkat?</string>
+
+    <string name="select_currency">Pilih Mata Uang</string>
+    <string name="options_currency">Mata Uang Lokal</string>
+    <string name="options_currency2">Mata uang fiat yang menjadi preferensi Anda</string>
+
+    <string name="options_mnemonic">Tampilkan Mnemonic</string>
+    <string name="options_mnemonic2">Tampilkan Mnemonic untuk dompet ini</string>
+    <string name="options_units">Unit Bitcoin</string>
+    <string name="options_units2">BTC, mBTC, atau bits</string>
+    <string name="options_tos">Persyaratan Layanan</string>
+    <string name="options_tos2">Ketentuan layanan Rangkaian Blok Dompet Bitcoin Android</string>
+    <string name="options_privacy">Kebijakan Privasi</string>
+    <string name="options_privacy2">Kebijakan privasi rangkaian blok</string>
+
+    <string name="invalid_email">Alamat email Anda tidak valid</string>
+    <string name="invalid_mobile">Nomor ponsel tidak valid</string>
+    <string name="invalid_password">Sandi tidak valid</string>
+    <string name="invalid_guid">ID Dompet Tidak Valid</string>
+    <string name="password_mismatch_error">Sandi tidak cocok</string>
+
+    <string name="no_private_key">Tidak bisa membuat kunci pribadi.</string>
+    <string name="pin_4_strikes">4 upaya mengisikan PIN gagal. Mohon sediakan sandi.</string>
+    <string name="pin_4_strikes_password_accepted">Sandi diterima. Mohon tentukan PIN baru.</string>
+
+    <string name="bip38_password_entry">Mohon isikan sandi kunci pribadi</string>
+
+    <string name="pin_entry">Isikan PIN</string>
+    <string name="password_entry">Mohon isikan sandi</string>
+    <string name="options_CLEAR">HAPUS</string>
+    <string name="options_FORGOT_PIN">LUPAKAN PIN</string>
+    <string name="zero_pin">0000 adalah PIN yang tidak valid. Silakan coba lagi.</string>
+    <string name="invalid_pin">PIN tidak valid Silakan coba lagi.</string>
+    <string name="pin_mismatch_error">Sandi tidak cocok</string>
+    <string name="create_pin">Buat PIN</string>
+    <string name="confirm_pin">Konfirmasikan PIN</string>
+    <string name="create_pin_failed">Pembuatan PIN gagal. Mohon pasangkan kembali perangkat</string>
+    <string name="pairing_failed">Pemasangan gagal. Silakan coba lagi.</string>
+    <string name="pairing_failed_decrypt_error">Pemasangan gagal. Dekripsi eror.</string>
+
+    <string name="check_connectivity_exit">Dompet Rangkaian Blok tidak dapat memperoleh koneksi internet. Mohon periksa konektivitas perangkat Anda lalu coba lagi.</string>
+    <string name="dialog_continue">Lanjutkan</string>
+    <string name="cannot_edit_imported_label">Label alamat yang diimpor tidak bisa diedit</string>
+
+    <string name="double_encryption_password_error">Sandi enkripsi ganda eror. Silakan coba lagi.</string>
+
+    <string name="command2">Pindai Kode Pemasangan</string>
+    <string name="command3">Saya tidak dapat mengakses kamera</string>
+    <string name="CREATE">MEMBUAT DOMPET BARU</string>
+    <string name="LOGIN">Masuk ke dompet saya</string>
+    <string name="pair_your_wallet">Pasangkan Dompet Anda</string>
+    <string name="scan_pairing_code">Pindai Kode Pemasangan</string>
+    <string name="manual_pairing">Pemasangan Manual</string>
+    <string name="pair_wallet_step_1">Masuk ke Dompet Rangkaian Blok di PC atau Mac Anda di blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_2">Klik tombol Pengaturan Akun, lalu pilih tab Perangkat.</string>
+    <string name="pair_wallet_step_3">Klik Tampilkan Kode Pemasangan untuk menampilkan Kode QR – kode batang hitam putih persegi. Pindai kode dengan kamera Anda.</string>
+    <string name="disable_two_factor">Anda harus menonaktifkan dua faktor otentikasi sebelum berusaha memasangkan dompet Anda secara manual</string>
+    <string name="wallet_id">ID Dompet</string>
+    <string name="default_wallet_name">Dompet Bitcoin Saya</string>
+
+    <string name="password">Sandi</string>
+    <string name="email">Email</string>
+    <string name="agree_terms_of_service">Dengan menciptakan sebuah dompet baru Anda menyetujui</string>
+    <string name="blockchain_tos">Persyaratan Layanan Blockchain</string>
+    <string name="create_wallet">Membuat Dompet</string>
+    <string name="new_wallet">Dompet Baru</string>
+    <string name="strength_weak">Lemah</string>
+    <string name="strength_medium">Reguler</string>
+    <string name="strength_strong">Kuat</string>
+    <string name="strength_very_strong">Sangat Kuat</string>
+
+    <string name="CONTINUE">Lanjutkan</string>
+    <string name="SEND">MENGIRIM</string>
+    <string name="CONFIRM_PAYMENT">KONFIRMASIKAN PEMBAYARAN</string>
+    <string name="GO_BACK">KEMBALI</string>
+
+    <string name="total_to_send">Total yang Akan Dikirim</string>
+
+    <string name="no_funds_available">Tidak tersedia dana untuk akun ini</string>
+    <string name="no_funds_available2">Tidak tersedia dana untuk alamat ini</string>
+    <string name="max_available">Maksimum tersedia:</string>
+
+    <string name="invalid_bitcoin_address">Alamat Bitcoin tidak valid</string>
+    <string name="invalid_amount">Jumlah tidak valid</string>
+    <string name="insufficient_funds">Dana Tidak Mencukupi</string>
+
+    <string name="enter_double_encryption_pw">Mohon isikan sandi enkripsi ganda</string>
+    <string name="send_payment_code">Kirim kode pembayaran</string>
+    <string name="edit_label">Sunting label</string>
+
+    <string name="support">Dukungan</string>
+    <string name="rate_us">Beri kami nilai</string>
+    <string name="email_chooser">Kirim e-mail...</string>
+    <string name="about">Dompet Rangkaian Blok %1$s\n©%2$s Blockchain.info</string>
+    <string name="merchant_download">Aplikasi Gratis untuk Pedagang</string>
+    <string name="feedback">Kirim Saran</string>
+    <string name="password_or_wipe">Isikan menggunakan sandi Anda atau lupakan dompet ini</string>
+    <string name="use_password">Gunakan sandi</string>
+    <string name="wipe_wallet">Lupakan Dompet</string>
+
+    <string name="select_units">Pilih unit BTC yang bisa ditampilkan</string>
+    <string name="weak_password">Sandi yang dipilih terlalu lemah untuk mengamankan dana Anda. Kami sangat menyarankan agar Anda memilih sandi yang berbeda. Anda ingin menentukan sandi baru?</string>
+
+    <string name="from">Dari</string>
+    <string name="to">Untuk</string>
+
+    <string name="confirm_details">Konfirmasikan Detail</string>
+    <string name="fee">Biaya</string>
+    <string name="dialog_send">MENGIRIM</string>
+    <string name="dialog_cancel">BATAL</string>
+    <string name="dialog_priority_fee">KIRIM DENGAN BIAYA PRIORITAS</string>
+    <string name="exit_confirm">Tekan tombol kembali sekali lagi untuk keluar</string>
+
+    <string name="label_address">Alamat Anda berhasil diimpor. Beri nama tampilan yang ramah untuk alamat ini secara opsional.</string>
+    <string name="label_address2">Alamat Anda berhasil dibuat. Beri nama tampilan yang ramah untuk alamat ini secara opsional.</string>
+
+    <string name="bip38_error">Sandi kunci pribadi tidak valid</string>
+    <string name="privkey_error">Format kunci pribadi tidak dikenali</string>
+    <string name="hd_error">Dompet HD eror</string>
+    <string name="scan_not_recognized">Pemindai tidak dapat didekodekan</string>
+
+    <string name="imported_addresses">Alamat yang Diimpor</string>
+    <string name="account_colon">Akun:</string>
+    <string name="created_account_colon">Akun yang dibuat:</string>
+
+    <string name="tx_length_error">Dompet rangkaian blok tidak dapat menangani transaksi yang berukuran lebih dari 100KB. Mohon Anda mencoba untuk memecah transaksi.</string>
+    <string name="invalid_tx">Upaya transaksi tidak valid</string>
+
+    <string name="remote_save_ok">Penyimpanan jarak jauh OK</string>
+    <string name="remote_save_ko">Penyimpanan jarak jauh gagal</string>
+    <string name="payload_corrupted">Payload jarak jauh rusak, tidak disimpan di server.</string>
+
+    <string name="my_bitcoin_wallet">Dompet Rangkaian Blok</string>
+    <string name="drawer_open">Laci terbuka</string>
+    <string name="drawer_close">Laci tertutup</string>
+
+    <string name="unpair_wallet">Pisahkan Dompet</string>
+    <string name="unpair">PISAHKAN</string>
+
+    <string name="ok_cap">OKE</string>
+    <string name="change_pin_code">Ubah PIN</string>
+    <string name="enter_password_to_change_pin">Mohon isikan sandi untuk mengganti PIN.</string>
+
+    <string name="suggest_merchant">Sarankan pedagang</string>
+    <string name="business_name">Nama perusahaan</string>
+    <string name="select_category">Kategori</string>
+    <string name="business_category">Kategori</string>
+    <string name="street_address">Alamat</string>
+    <string name="description">Deskripsi</string>
+    <string name="city">Kota</string>
+    <string name="postal">Kode pos</string>
+    <string name="telephone">Telepon</string>
+    <string name="web">Web</string>
+    <string name="latitude">Lintang:</string>
+    <string name="longitude">Bujur:</string>
+    <string name="get_location">Saya di sini. Gunakan lokasi saya.</string>
+    <string name="merchant_cat_hint">Pilih kategori...</string>
+    <string name="merchant_cat1">Café</string>
+    <string name="merchant_cat2">Bar/Tempat minum-minum</string>
+    <string name="merchant_cat3">Makanan dan Jamuan</string>
+    <string name="merchant_cat4">Belanja/Pengeluaran</string>
+    <string name="merchant_cat5">ATM</string>
+    <string name="missing_merchant_category">Mohon sebutkan kategori untuk pedagang ini</string>
+    <string name="missing_merchant_name">Mohon sebutkan nama pedagang</string>
+    <string name="missing_merchant_street_address">Mohon sebutkan alamat pedagang</string>
+    <string name="missing_merchant_city">Mohon sebutkan kotanya</string>
+    <string name="missing_merchant_postal">Mohon sebutkan kode pos</string>
+    <string name="ok_writing_merchant">Terima kasih atas saran Anda</string>
+    <string name="error_writing_merchant">Upaya menulis ke database eror Silakan coba lagi.</string>
+    <string name="no_merchants_in_range">Tidak ada bisnis Bitcoin dalam rentang yang bisa dicantumkan.</string>
+    <string name="merchant_info">Informasi Pedagang</string>
+    <string name="directions">Arah</string>
+    <string name="call">Panggil</string>
+    <string name="enable_geo">Aktifkan baik GPS atau layanan lokasi lainnya untuk menemukan lokasi saat ini. Klik OK untuk membuka pengaturan layanan lokasi sehingga Anda bisa melakukannya.</string>
+
+    <string-array name="menus_merchantDirectory">
+        <item>Sarankan pedagang</item>
+    </string-array>
+
+    <string name="my_accounts">Akun Saya</string>
+    <string name="my_addresses">Alamat Saya</string>
+    <string name="accounts">Akun</string>
+    <string name="addresses">Alamat-alamat</string>
+    <string name="create_new_account">Buat Akun Baru</string>
+    <string name="import_address">Mengimpor Alamat</string>
+    <string name="save_name">Simpan nama</string>
+
+    <string name="receive_address_to_clipboard">Salin alamat penerima ini ke papan klip? Jika ya, ingatlah bahwa ada kemungkinan aplikasi lain bisa melihat informasi ini.</string>
+    <string name="receive_address_to_share">Bagikan alamat penerima ini untuk pengiriman? Jika ya, ingatlah bahwa ada kemungkinan aplikasi lain bisa melihat informasi ini.</string>
+    <string name="guid_to_clipboard">Salin ID Dompet Anda ke papan klip? Jika ya, ingatlah bahwa ada kemungkinan aplikasi lain bisa melihat informasi ini.</string>
+
+    <string name="ssl_hostname_invalid">Kami tidak bisa memvalidasi nama inang sertifikat SSL. Hal ini bisa saja mengindikasikan aktivitas berbahaya. Mohon verifikasikan koneksi jaringan dan perangkat Anda sebelum melanjutkan.</string>
+    <string name="ssl_pinning_invalid">Penyematan sertifikat SSL gagal. Hal ini bisa saja mengindikasikan aktivitas berbahaya. Mohon verifikasikan koneksi jaringan dan perangkat Anda sebelum melanjutkan.</string>
+
+    <string name="address_already_used">Alamat penerima ini sudah digunakan.</string>
+
+    <string name="my_wallet_id">ID Dompet Saya</string>
+    <string name="EMAIL">EMAIL:</string>
+    <string name="new_support_request">Permintaan Dukungan Baru</string>
+    <string name="contact_support">Hubungi Dukungan</string>
+    <string name="email_subject">Permintaan Dukungan Android</string>
+
+    <string name="merchant_map">Peta Pedagang</string>
+    <string name="merchant_list">Daftar Pedagang</string>
+    <string name="merchant_suggest">Sarankan Pedagang</string>
+    <string name="name">Nama</string>
+    <string name="location">Lokasi</string>
+    <string name="manual_entry">ENTRI MANUAL</string>
+    <string name="use_my_current_location">GUNAKAN LOKASI SAYA SAAT INI</string>
+    <string name="save">Simpan</string>
+    <string name="next">Berikutnya</string>
+    <string name="address_lookup_fail">Tidak dapat mengambil alamat. Mohon isikan alamat secara manual.</string>
+
+    <string name="backup_1_heading">Anda belum mencadangkan dompet</string>
+    <string name="backup_1_subheading">Mencadangkan dompet Anda sesungguhnya mudah dan akan memastikan bahwa Anda tidak akan kehilangan akses pada dana Anda, sekalipun jika layanan kami tidak tersedia.</string>
+    <string name="BACKUP_WALLET">CADANGKAN DOMPET</string>
+    <string name="backup_how_to">Cara mengembalikan dompet Anda</string>
+    <string name="backup_step_1">Buka blockchain.info/restorewallet</string>
+    <string name="backup_step_2">Isikan kalimat pencadangan 12 kata Anda</string>
+    <string name="START">MULAI</string>
+    <string name="backup_write_down_words">Di atas selembar kertas, tuliskan kata-kata dalam urutan yang sama persis dengan urutan mereka ditampilkan.</string>
+    <string name="NEXT_WORD">KATA BERIKUTNYA</string>
+    <string name="press_to_reveal">tekan dan tahan untuk menampilkan kata tersebut</string>
+    <string name="VERIFY">MEMVERIFIKASI</string>
+    <string name="backup_verify_heading">Pastikan Anda sudah menulis frasa cadangan</string>
+    <string name="VERIFY_BACKUP">MEMVERIFIKASI PENCADANGAN</string>
+    <string name="Word">Kata</string>
+    <string name="of">dari</string>
+    <string name="backup_confirmed">Pencadangan Dikonfirmasikan</string>
+    <string name="backup_word_mismatch">Kata Tidak Sesuai</string>
+    <string name="backup_days_ago">Anda mencadangkan dompet [--time--] [--day--] yang lalu</string>
+    <string name="day">hari</string>
+    <string name="days">hari</string>
+    <string name="backup_only_need_to_once_reminder">Anda hanya perlu mencadangkan dompet sekali saja, namun tidak ada salahnya untuk kadang-kadang memastikan bahwa pencadangan Anda valid</string>
+
+    <string name="received_bitcoin">Terima Bitcoin</string>
+    <string name="refresh_balance">Segarkan saldo</string>
+
+    <string-array name="mnemonic_word_requests">
+        <item>kata pertama</item>
+        <item>kata kedua</item>
+        <item>kata ketiga</item>
+        <item>kata keempat</item>
+        <item>kata kelima</item>
+        <item>kata keenam</item>
+        <item>kata ketujuh</item>
+        <item>kata kedelapan</item>
+        <item>kata kesembilan</item>
+        <item>kata kesepuluh</item>
+        <item>kata kesebelas</item>
+        <item>kata keduabelas</item>
+    </string-array>
+
+    <string name="confirmation_code">Kode Konfirmasi</string>
+    <string name="verification_failed">Verifikasi Gagal</string>
+    <string name="resend_email_confirmation">Kirim Ulang Email</string>
+    <string name="please_confirm_email">Mohon Konfirmasikan Alamat Email Anda</string>
+    <string name="confirmation_instructions">Kami telah mengirimi Anda email di [--email_address--]. Silakan buka email dan ikuti petunjuk untuk menyelesaikan pengaturan dompet Anda.</string>
+
+    <string name="send_payment">Kirim Pembayaran</string>
+    <string name="share">Terima Alamat yang Dibagikan</string>
+    <string name="scan_qr">Pindai Kode QR</string>
+    <string name="confirm_password">Konfirmasi Sandi</string>
+    <string name="check_email_to_auth_login">Mohon periksa email Anda untuk menyetujui upaya log masuk ini.</string>
+    <string name="confirmations">Konfirmasi</string>
+    <string name="transaction_fee">Biaya Penambang Bitcoin</string>
+    <string name="transaction_hash">Hash Transaksi</string>
+    <string name="your_transactions">Transaksi-transaksi Anda</string>
+    <string name="transaction_occur_when">Transaksi terjadi ketika Anda menerima dan mengirim bitcoin.</string>
+    <string name="click">Klik</string>
+    <string name="to_start_sending_and_receiving_btc">untuk mulai mengirim dan menerima bitcoin.</string>
+
+    <string name="watch_only_label">(untuk dilihat saja)</string>
+    <string name="archived_label">(diarsipkan)</string>
+
+    <string name="dust_change">Transaksi mengembalikan recehan sebagai kembalian.</string>
+    <string name="dust_amount">Transaksi menggunakan recehan.</string>
+    <string name="logging_out_automatically">Keluar secara otomatis</string>
+    <string name="transaction_submitted">Transaksi selesai</string>
+    <string name="transaction_failed">Transaksi gagal</string>
+    <string name="UPGRADE_YOUR_WALLET">MUTAKHIRKAN DOMPET ANDA</string>
+    <string name="ASK_ME_LATER">TANYAKAN PADA SAYA NANTI</string>
+    <string name="upgrade_page_1">Buat akun terpersonalisasi untuk membantu menjaga agar dompet Anda terorganisasi.</string>
+    <string name="upgrade_page_2">Pencadangan cepat untuk dompet satu kali saja memastikan bahwa dana tetap dalam kendali Anda.</string>
+    <string name="upgrade_page_3">Segala hal yang Anda butuhkan untuk menerima, membelanjakan, dan menyimpan Bitcoin.</string>
+    <string name="CONFIRM">KONFIRMASI:</string>
+    <string name="confirm_upgrade">Konfirmasikan Peningkatan Versi</string>
+    <string name="confirm_upgrade_info">Dompet Anda akan ditingkatkan versinya ke format dompet terkini kami. Ini akan membuat Anda bisa memperoleh keuntungan privasi yang signifikan dan peningkatan keamanan. Perhatikan bahwa setelah Anda mengonfirmasi, proses peningkatan versi akan dimulai dan tidak bisa dibalikkan.</string>
+    <string name="upgrading">Meningkatkan versi...</string>
+    <string name="upgrading_started_info">Dompet Anda sedang ditingkatkan versinya, mohon sabar karena ini bisa membutuhkan waktu cukup lama sesuai dengan ukuran dan usia dompet Anda.</string>
+    <string name="upgrade_success_heading">Dompet Anda sudah ditingkatkan versinya!</string>
+    <string name="upgrade_interrupted">Peningkatan versi dompet terganggu. Mohon pasangkan ulang dompet Anda lalu coba lagi.</string>
+    <string name="upgrade_success_info">Anda kini menjalankan Dompet Rangkaian Blok yang paling aman dan pribadi, Anda bisa melanjutkan dompet Anda sekarang.</string>
+    <string name="CLOSE">TUTUP</string>
+    <string name="total_funds">Semua</string>
+    <string name="unexpected_error">Kesalahan yang tidak diharapkan, mohon coba lagi nanti.</string>
+    <string name="upgrade_fail_heading">Peningkatan versi dompet gagal!</string>
+    <string name="upgrade_fail_info">Terjadi eror saat meningkatkan versi dompet Anda. Mohon coba lagi nanti.</string>
+    <string name="not_sane_error">Pemasangan Dompet Rangkaian Blok Anda belum selesai. Mohon pasangkan kembali dompet Anda atau buat dompet yang baru.</string>
+
+    <string name="archived_address">Alamat ini sudah diarsipkan. Anda bisa mengelolanya melalui Rangkaian Blok dompet web.</string>
+    <string name="watchonly_address">Alamat ini hanya untuk dilihat. Anda bisa mengelolanya melalui Rangkaian Blok dompet web.</string>
+    <string name="watchonly_address_spend_warning">Alamat ini adalah watch-only. Anda dapat menghabiskan dari itu melalui web dompet Blockchain.</string>
+    <string name="watchonly_address_receive_warning">Anda akan menerima sebuah watch-only alamat. Anda hanya dapat menghabiskan dana ini jika Anda memiliki akses ke kunci pribadi. Terus?</string>
+
+    <string name="PENDING">TERTUNDA</string>
+    <string name="COMPLETE">LENGKAP</string>
+
+    <string name="camera_unavailable">Saat ini kamera sedang dibuka oleh aplikasi lain. Mohon tutup aplikasi lain tersebut lalu coba lagi.</string>
+    <string name="transaction_failed_will_retry">Transaksi gagal, akan mencoba lagi dalam beberapa detik.</string>
+
+    <string name="limit_21m_exceeded">Jumlah ini tidak bisa dikirim melalui jaringan Bitcoin.</string>
+    <string name="validating_password">Memvalidasi Sandi...</string>
+    <string name="validating_pin">Memvalidasi PIN...</string>
+    <string name="creating_pin">Membuat PIN...</string>
+    <string name="decrypting_wallet">Mendekripsi Dompet...</string>
+    <string name="verifying_email">Memverifikasikan Email...</string>
+    <string name="pairing_wallet">Memasangkan Dompet...</string>
+    <string name="transaction_queued">Transaksi diantrekan</string>
+    <string name="WAITING">DIANTREKAN</string>
+    <string name="password_unchanged">Sandi tidak diubah</string>
+    <string name="password_changed">Sandi diubah</string>
+    <string name="sending">Mengirim...</string>
+    <string name="ask_me_later">Tanyakan Pada Saya Nanti</string>
+    <string name="verify_email">Verifikasikan Email</string>
+    <string name="email_verified">Email sudah diverifikasi</string>
+    <string name="verify_email2">Alamat email Anda yang sudah diverifikasikan digunakan untuk mengirim kode log masuk saat terdeteksi aktivitas yang mencurigakan atau tidak biasanya, untuk mengingatkan Anda akan ID log masuk dompet Anda, dan untuk mengirimkan pemberitahan Kami tidak akan menggunakan alamat email Anda untuk tujuan pemasaran.</string>
+    <string name="disable_root_warning">Nonaktifkan peringatan</string>
+    <string name="disable_root_warning2">Menonaktifkan peringatan dialog dalam kasus telepon Anda rooted</string>
+
+    <string name="show_balance">Tampilkan Saldo</string>
+    <string name="my_address">Alamat Saya</string>
+    <string name="create_new_address">Buat alamat baru</string>
+    <string name="confirmation_code_error">Kode yang Anda isikan salah. Silakan coba lagi.</string>
+    <string name="auth_failed">Otorisasi gagal. Silakan coba lagi.</string>
+    <string name="send_failed">Pengiriman gagal. Silakan coba lagi.</string>
+    <string name="invalid_qr">QR tidak valid</string>
+
+    <string name="wallet_updated">Pengkinian dompet diterima</string>
+    <string name="lame_mode_hd_pair_fail">Tidak bisa memasangkan dompet V3.</string>
+    <string name="please_repair">Terjadi eror. Dompet tidak bisa didekodekan dalam kondisinya saat ini. Mohon pasangkan ulang dompet Anda.</string>
+
+    <string name="device_rooted">Perangkat Anda sepertinya di-root. Perhatikan bahwa menyimpan dana di perangkat yang di-root tidak aman dan, selain itu, bisa menyebabkan masalah ketidakstabilan. Jika Anda terus menggunakan dompet Bitcoin kami pada perangkat ini, kami sarankan agar Anda menggunakan enkripsi ganda pada akun Rangkaian Blok Anda.</string>
+    <string name="address_already_in_wallet">Dompet Anda sudah memiliki alamat ini.</string>
+    <string name="cannot_create_address">Alamat baru tidak bisa dibuat saat ini. Silakan coba lagi.</string>
+    <string name="saving_address">Menyimpan alamat...</string>
+    <string name="cannot_create_wallet">Saat ini dompet tidak bisa dibuat/disimpan. Silakan coba lagi.</string>
+
+    <string name="cannot_launch_app">Dompet Rangkaian Blok tidak bisa dijalankan pada perangkat ini.</string>
+    <string name="support_guide">Jelaskan secara rinci masalah yang Anda alami, bersama dengan setiap langkah yang dapat kita lakukan untuk mereproduksi itu.</string>
+    <string name="label">Label</string>
+    <string name="rename_address">Ganti nama</string>
+    <string name="edit">Mengedit</string>
+    <string name="label_cant_be_empty">Label tidak boleh kosong.</string>
+    <string name="saving_changes">Menyimpan perubahan...</string>
+    <string name="warning">Peringatan</string>
+
+</resources>

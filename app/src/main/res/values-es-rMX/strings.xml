@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <string name="backup_wallet">Copia de seguridad del monedero</string>
+    <string name="upgrade_wallet">Actualización del monedero</string>
+    <string-array name="navigation_drawer_items_lame">
+        <item>Mis direcciones</item>
+        <item>Noticias, precios y gráficos</item>
+        <item>Configuración</item>
+        <item>Ayuda</item>
+        <item>Cambiar PIN</item>
+        <item>Desemparejar monedero</item>
+        <item>@string/upgrade_wallet</item>
+    </string-array>
+    <string-array name="navigation_drawer_items_hd">
+        <item>Mis cuentas</item>
+        <item>Noticias, precios y gráficos</item>
+        <item>Configuración</item>
+        <item>Ayuda</item>
+        <item>Cambiar PIN</item>
+        <item>@string/backup_wallet</item>
+        <item>Desemparejar monedero</item>
+    </string-array>
+
+    <array name="navigation_drawer_icons_lame">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/icon_logout</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+    </array>
+    <array name="navigation_drawer_icons_hd">
+        <item>@drawable/icon_accounts</item>
+        <item>@drawable/icon_news</item>
+        <item>@drawable/icon_settings</item>
+        <item>@drawable/ic_info_outline_grey600_24dp</item>
+        <item>@drawable/icon_pincode</item>
+        <item>@drawable/bad_backup</item>
+        <item>@drawable/icon_logout</item>
+    </array>
+
+    <string name="app_name">Blockchain</string>
+    <string name="action_settings">Configuración</string>
+
+    <string name="all_accounts">Todas las cuentas</string>
+
+    <string name="please_wait">Espere</string>
+
+    <string name="send_bitcoin">Enviar</string>
+    <string name="receive_bitcoin">Recibir</string>
+    <string name="blockchain">Blockchain</string>
+
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="polite_no">No, gracias</string>
+
+    <string name="YESTERDAY">Ayer</string>
+    <string name="TODAY">Hoy</string>
+    <string name="AGO">atrás</string>
+
+    <string name="SENT">Enviado</string>
+    <string name="RECEIVED">Recibido</string>
+    <string name="MOVED">Transferido</string>
+
+    <string name="copied_to_clipboard">Se ha copiado el archivo %@ al portapapeles</string>
+
+    <string name="options_id">Identificador del monedero:</string>
+    <string name="options_id2">Identificador del monedero:</string>
+    <string name="preferences_about_title">Acerca de Nosotros</string>
+    <string name="about_us">Acerca de nosotros</string>
+
+    <string name="ask_you_sure_unpair">¿Está seguro que desea desemparejar su dispositivo?</string>
+
+    <string name="select_currency">Seleccione moneda</string>
+    <string name="options_currency">Moneda local</string>
+    <string name="options_currency2">Su moneda fiduciaria de preferencia</string>
+
+    <string name="options_mnemonic">Mostrar la frase mnemotécnica</string>
+    <string name="options_mnemonic2">Mostrar la frase mnemotécnica para este monedero</string>
+    <string name="options_units">Unidad de Bitcoin</string>
+    <string name="options_units2">BTC, miles de BTC o millones de BTC</string>
+    <string name="options_tos">Términos de servicio</string>
+    <string name="options_tos2">Términos de servicio del monedero de Bitcoin Blockchain para Android</string>
+    <string name="options_privacy">Política de privacidad</string>
+    <string name="options_privacy2">Política de privacidad de Blockchain</string>
+
+    <string name="invalid_email">Dirección de correo electrónico inválida</string>
+    <string name="invalid_mobile">Número de teléfono celular inválido</string>
+    <string name="invalid_password">Contraseña inválida</string>
+    <string name="invalid_guid">Identificador de Monedero inválido</string>
+    <string name="password_mismatch_error">Las contraseñas no coinciden</string>
+
+    <string name="no_private_key">No se puede crear la clave privada.</string>
+    <string name="pin_4_strikes">4 intentos fallidos de introducir el PIN. Introduzca la contraseña.</string>
+    <string name="pin_4_strikes_password_accepted">La contraseña ha sido aceptada. Defina su nuevo PIN.</string>
+
+    <string name="bip38_password_entry">Introduzca la nueva contraseña con clave privada</string>
+
+    <string name="pin_entry">Introduzca el PIN</string>
+    <string name="password_entry">Introduzca la contraseña</string>
+    <string name="options_CLEAR">LIMPIAR TODO</string>
+    <string name="options_FORGOT_PIN">OLVIDÉ EL PIN</string>
+    <string name="zero_pin">0000 es un PIN inválido. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="invalid_pin">PIN Inválido Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="pin_mismatch_error">Los PIN no coinciden</string>
+    <string name="create_pin">Crear PIN</string>
+    <string name="confirm_pin">Confirmar PIN</string>
+    <string name="create_pin_failed">Se ha producido un error al crear PIN. Empareje de nuevo el dispositivo.</string>
+    <string name="pairing_failed">Se ha producido un error al emparejar. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="pairing_failed_decrypt_error">Se ha producido un error al emparejar. Error de descifrado.</string>
+
+    <string name="check_connectivity_exit">Monedero de Blockchain no puede conectarse a internet. Por favor, compruebe que su dispositivo está correctamente conectado a internet e inténtelo de nuevo.</string>
+    <string name="dialog_continue">Continuar</string>
+    <string name="cannot_edit_imported_label">No se puede editar la etiqueta de direcciones importadas</string>
+
+    <string name="double_encryption_password_error">Se ha producido un error en la contraseña de doble cifrado. Por favor, inténtelo de nuevo más tarde.</string>
+
+    <string name="command2">Escanear el código de emparejamiento</string>
+    <string name="command3">No puedo acceder a mi cámara</string>
+    <string name="CREATE">CREAR UN NUEVO MONEDERO</string>
+    <string name="LOGIN">Iniciar sesión en mi monedero</string>
+    <string name="pair_your_wallet">Emparejar su monedero</string>
+    <string name="scan_pairing_code">Escanear el código de emparejamiento</string>
+    <string name="manual_pairing">Emparejamiento manual</string>
+    <string name="pair_wallet_step_1">Inicie sesión en su monedero de Blockchain través de su PC o Mac en blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_2">Haga clic en el botón de configuración de la cuenta y elija la pestaña de dispositivos.</string>
+    <string name="pair_wallet_step_3">Haga clic en Mostrar código de emparejamiento para mostrar un código QR, es decir un código de barras cuadrado en blanco y negro. Escanear el código con la cámara.</string>
+    <string name="disable_two_factor">Debe desactivar la autenticación de dos factores antes de intentar sincronizar manualmente su monedero</string>
+    <string name="wallet_id">Identificador del monedero:</string>
+    <string name="default_wallet_name">Mi monedero de Bitcoin</string>
+
+    <string name="password">Contraseña</string>
+    <string name="email">Correo electrónico</string>
+    <string name="agree_terms_of_service">Mediante la creación de un nuevo monedero acepta</string>
+    <string name="blockchain_tos">Condiciones del servicio de Blockchain</string>
+    <string name="create_wallet">Crear Monedero</string>
+    <string name="new_wallet">Nuevo monedero</string>
+    <string name="strength_weak">Débil</string>
+    <string name="strength_medium">Regular</string>
+    <string name="strength_strong">Fuerte</string>
+    <string name="strength_very_strong">Muy fuerte</string>
+
+    <string name="CONTINUE">Continuar</string>
+    <string name="SEND">ENVIAR</string>
+    <string name="CONFIRM_PAYMENT">CONFIRMAR EL PAGO</string>
+    <string name="GO_BACK">VOLVER</string>
+
+    <string name="total_to_send">Total a enviar</string>
+
+    <string name="no_funds_available">No hay fondos disponibles para esta cuenta</string>
+    <string name="no_funds_available2">No hay fondos disponibles para esta dirección</string>
+    <string name="max_available">Máximo disponible:</string>
+
+    <string name="invalid_bitcoin_address">Dirección de Bitcoin inválida</string>
+    <string name="invalid_amount">Cantidad inválida</string>
+    <string name="insufficient_funds">Fondos insuficientes</string>
+
+    <string name="enter_double_encryption_pw">Introduzca la contraseña de cifrado doble</string>
+    <string name="send_payment_code">Enviar código de pago</string>
+    <string name="edit_label">Editar etiqueta</string>
+
+    <string name="support">Ayuda</string>
+    <string name="rate_us">Valóranos</string>
+    <string name="email_chooser">Enviar un correo electrónico...</string>
+    <string name="about">Monedero Blockchain %1$s\n©%2$s Blockchain.info</string>
+    <string name="merchant_download">Aplicación gratuita para comerciante</string>
+    <string name="feedback">Enviar comentarios</string>
+    <string name="password_or_wipe">Inicie introduciendo su contraseña u olvide esta carpeta</string>
+    <string name="use_password">Usar contraseña</string>
+    <string name="wipe_wallet">Olvidar el monedero</string>
+
+    <string name="select_units">Seleccionar las unidades de BTC que pueden ser mostradas</string>
+    <string name="weak_password">La contraseña seleccionada es demasiado débil para garantizar la seguridad de sus fondos. Le sugerimos que seleccione una diferente. ¿Quiere establecer una nueva contraseña?</string>
+
+    <string name="from">De</string>
+    <string name="to">Para</string>
+
+    <string name="confirm_details">Confirmar los detalles</string>
+    <string name="fee">Tarifa</string>
+    <string name="dialog_send">ENVIAR</string>
+    <string name="dialog_cancel">CANCELAR</string>
+    <string name="dialog_priority_fee">ENVIAR CON TARIFA DE PRIORIDAD</string>
+    <string name="exit_confirm">Pulse de nuevo el botón atrás para salir</string>
+
+    <string name="label_address">Su dirección ha sido importada con éxito. Opcionalmente, asigne un nombre más fácil a esta dirección.</string>
+    <string name="label_address2">Su dirección ha sido creada con éxito. Opcionalmente, asigne un nombre más fácil a esta dirección.</string>
+
+    <string name="bip38_error">Contraseña con clave privada inválida</string>
+    <string name="privkey_error">Formato de clave privada no reconocido</string>
+    <string name="hd_error">Error en el monedero HD</string>
+    <string name="scan_not_recognized">El escaneo no puede ser decodificado</string>
+
+    <string name="imported_addresses">Direcciones importadas</string>
+    <string name="account_colon">Cuenta:</string>
+    <string name="created_account_colon">Cuenta creada:</string>
+
+    <string name="tx_length_error">El monedero de Blockchain no puede manejar las transacciones de más de 100KB de tamaño. Trate de dividir su transacción.</string>
+    <string name="invalid_tx">Intento de transacción no válido</string>
+
+    <string name="remote_save_ok">Guardado de forma remota OK</string>
+    <string name="remote_save_ko">Se ha producido un error al guardar de forma remota</string>
+    <string name="payload_corrupted">Carga remota corrupta, no se ha guardado en el servidor.</string>
+
+    <string name="my_bitcoin_wallet">Bienvenido al Monedero Blockchain</string>
+    <string name="drawer_open">Cajón abierto</string>
+    <string name="drawer_close">Cajón cerrado</string>
+
+    <string name="unpair_wallet">Desemparejar monedero</string>
+    <string name="unpair">DESEMPAREJAR</string>
+
+    <string name="ok_cap">VALE</string>
+    <string name="change_pin_code">Cambiar PIN</string>
+    <string name="enter_password_to_change_pin">Introduzca la contraseña para cambiar el PIN</string>
+
+    <string name="suggest_merchant">Sugerir comerciante</string>
+    <string name="business_name">Nombre del negocio</string>
+    <string name="select_category">Categoría</string>
+    <string name="business_category">Categoría</string>
+    <string name="street_address">Dirección postal</string>
+    <string name="description">Descripción</string>
+    <string name="city">Ciudad</string>
+    <string name="postal">Código postal</string>
+    <string name="telephone">Teléfono</string>
+    <string name="web">Web</string>
+    <string name="latitude">Latitud:</string>
+    <string name="longitude">Longitud:</string>
+    <string name="get_location">Estoy aquí. Utilizar mi ubicación.</string>
+    <string name="merchant_cat_hint">Elige una categoría...</string>
+    <string name="merchant_cat1">Café</string>
+    <string name="merchant_cat2">Bares y Bebidas</string>
+    <string name="merchant_cat3">Comida y cena</string>
+    <string name="merchant_cat4">Compras y gastos</string>
+    <string name="merchant_cat5">Cajeros automáticos</string>
+    <string name="missing_merchant_category">Proporcione una categoría para este comerciante</string>
+    <string name="missing_merchant_name">Proporcione el nombre del comerciante</string>
+    <string name="missing_merchant_street_address">Proporcione la dirección postal del comerciante</string>
+    <string name="missing_merchant_city">Proporcione una ciudad</string>
+    <string name="missing_merchant_postal">Proporcione un código postal</string>
+    <string name="ok_writing_merchant">Gracias por su sugerencia.</string>
+    <string name="error_writing_merchant">Error al escribir en la base de datos. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="no_merchants_in_range">No hay empresas de Bitcoin dentro del rango para el listado.</string>
+    <string name="merchant_info">Información del comerciante</string>
+    <string name="directions">Indicaciones</string>
+    <string name="call">Llamar</string>
+    <string name="enable_geo">Active el GPS o cualquier otro servicio de ubicación para encontrar su ubicación actual. Haga clic en Aceptar para ir a la configuración de servicios de ubicación para poder activarlos.</string>
+
+    <string-array name="menus_merchantDirectory">
+        <item>Sugerir un comerciante</item>
+    </string-array>
+
+    <string name="my_accounts">Mis cuentas</string>
+    <string name="my_addresses">Mis direcciones</string>
+    <string name="accounts">Cuentas</string>
+    <string name="addresses">Direcciones</string>
+    <string name="create_new_account">Crear nueva cuenta</string>
+    <string name="import_address">Importar la dirección</string>
+    <string name="save_name">Guardar nombre</string>
+
+    <string name="receive_address_to_clipboard">¿Quiere copiar la dirección de recepción al portapapeles? Si es así, tenga en cuenta que es posible que otras aplicaciones vean esta información.</string>
+    <string name="receive_address_to_share">¿Quiere compartir esta dirección de recepción para realizar envíos? Si es así, tenga en cuenta que es posible que otras aplicaciones vean esta información.</string>
+    <string name="guid_to_clipboard">¿Quiere copiar su Identificador de monedero al portapapeles? Si es así, tenga en cuenta que es posible que otras aplicaciones vean esta información.</string>
+
+    <string name="ssl_hostname_invalid">No hemos sido capaces de validar el nombre del host del certificado SSL. Esto podría ser señal de un actividad malintencionada. Por favor verifique su conexión de red y el dispositivo antes de continuar.</string>
+    <string name="ssl_pinning_invalid">Se ha producido un error en la fijación del certificado SSL. Esto podría ser señal de un actividad malintencionada. Por favor verifique su conexión de red y el dispositivo antes de continuar.</string>
+
+    <string name="address_already_used">Esta dirección de recepción ya ha sido utilizada.</string>
+
+    <string name="my_wallet_id">ID de mi monedero</string>
+    <string name="EMAIL">CORREO ELECTRÓNICO</string>
+    <string name="new_support_request">Solicitud de soporte para iOS</string>
+    <string name="contact_support">Contactar al Centro de Ayuda</string>
+    <string name="email_subject">Solicitud de soporte para Android</string>
+
+    <string name="merchant_map">Mapa del comerciante</string>
+    <string name="merchant_list">Lista del comerciante</string>
+    <string name="merchant_suggest">Sugerir comerciante</string>
+    <string name="name">Nombre</string>
+    <string name="location">Ubicación</string>
+    <string name="manual_entry">ENTRADA MANUAL</string>
+    <string name="use_my_current_location">UTILIZAR MI UBICACIÓN ACTUAL</string>
+    <string name="save">Guardar</string>
+    <string name="next">Siguiente</string>
+    <string name="address_lookup_fail">No se ha podido recuperar la dirección. Introduzca la dirección manualmente.</string>
+
+    <string name="backup_1_heading">Todavía no ha realizado una copia de seguridad de sus fondos</string>
+    <string name="backup_1_subheading">Hacer una copia de seguridad de sus fondos es fácil y asegura que no perderá acceso a sus Bitcoins, incluso en caso de que nuestro servicio no esté disponible.</string>
+    <string name="BACKUP_WALLET">COPIA DE SEGURIDAD DEL MONEDERO</string>
+    <string name="backup_how_to">Cómo restaurar su monedero</string>
+    <string name="backup_step_1">Ir a blockchain.info/restorewallet</string>
+    <string name="backup_step_2">Introduzca su frase de copia de seguridad de 12 palabras</string>
+    <string name="START">INICIAR</string>
+    <string name="backup_write_down_words">Escriba las palabras en el orden en que aparecen en una hoja de papel y guárdela en lugar seguro</string>
+    <string name="NEXT_WORD">SIGUIENTE PALABRA</string>
+    <string name="press_to_reveal">Presione y mantenga presionado para mostrar la palabra</string>
+    <string name="VERIFY">VERIFICAR</string>
+    <string name="backup_verify_heading">Verifique que ha escrito la palabra de la copia de seguridad</string>
+    <string name="VERIFY_BACKUP">COMPROBAR COPIA DE SEGURIDAD</string>
+    <string name="Word">Palabra</string>
+    <string name="of">de</string>
+    <string name="backup_confirmed">Copia de seguridad confirmada</string>
+    <string name="backup_word_mismatch">Se ha producido un error de concordancia con la palabra</string>
+    <string name="backup_days_ago">Ha hecho una copia de seguridad hace [--time--] [--day--]</string>
+    <string name="day">día</string>
+    <string name="days">días</string>
+    <string name="backup_only_need_to_once_reminder">Sólo tiene que crear una copia de seguridad su monedero una vez, pero es una buena idea comprobar de vez en cuando que la copia de seguridad es válida</string>
+
+    <string name="received_bitcoin">Bitcoin recibido</string>
+    <string name="refresh_balance">Actualizar saldo</string>
+
+    <string-array name="mnemonic_word_requests">
+        <item>primera palabra</item>
+        <item>segunda palabra</item>
+        <item>tercera palabra</item>
+        <item>cuarta palabra</item>
+        <item>quinta palabra</item>
+        <item>sexta palabra</item>
+        <item>séptima palabra</item>
+        <item>octava palabra</item>
+        <item>novena Palabra</item>
+        <item>décima palabra</item>
+        <item>undécima palabra</item>
+        <item>duodécima palabra</item>
+    </string-array>
+
+    <string name="confirmation_code">Código de confirmación</string>
+    <string name="verification_failed">Error de verificación</string>
+    <string name="resend_email_confirmation">Reenviar correo electrónico</string>
+    <string name="please_confirm_email">Confirme su dirección de correo electrónico</string>
+    <string name="confirmation_instructions">Le hemos enviado un correo electrónico a [--email_address--]. Por favor, abra el correo electrónico y siga las instrucciones para completar la configuración de su monedero.</string>
+
+    <string name="send_payment">Enviar pago</string>
+    <string name="share">Compartir dirección de recepción</string>
+    <string name="scan_qr">Escanear código QR</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="check_email_to_auth_login">Revise su correo electrónico para aprobar este intento de inicio de sesión.</string>
+    <string name="confirmations">Confirmaciones</string>
+    <string name="transaction_fee">Tarifa de los mineros de Bitcoin</string>
+    <string name="transaction_hash">Hash de la transacción</string>
+    <string name="your_transactions">Sus Transacciones</string>
+    <string name="transaction_occur_when">Las transacciones se producen al recibir y enviar bitcoins.</string>
+    <string name="click">Haga clic</string>
+    <string name="to_start_sending_and_receiving_btc">para comenzar a enviar y recibir bitcoin.</string>
+
+    <string name="watch_only_label">(ver sólo)</string>
+    <string name="archived_label">(archivado)</string>
+
+    <string name="dust_change">La operación devuelve una cantidad inapreciable o \'polvo\' como cambio.</string>
+    <string name="dust_amount">La transacción gasta la cantidad inapreciable o \'polvo\'</string>
+    <string name="logging_out_automatically">Sesión cerrada automáticamente</string>
+    <string name="transaction_submitted">Transacción completa</string>
+    <string name="transaction_failed">Se ha producido un error al realizar la transacción</string>
+    <string name="UPGRADE_YOUR_WALLET">ACTUALIZAR SU MONEDERO</string>
+    <string name="ASK_ME_LATER">PREGÚNTAME MÁS TARDE</string>
+    <string name="upgrade_page_1">Crear cuentas personalizadas para ayudar a mantener su monedero organizado.</string>
+    <string name="upgrade_page_2">Puede crear fácilmente una copia de seguridad que hará que esté en control de sus fondos</string>
+    <string name="upgrade_page_3">Todo lo que necesita para almacenar, gastar y recibir sus Bitcoin</string>
+    <string name="CONFIRM">CONFIRMAR:</string>
+    <string name="confirm_upgrade">Confirmar actualización</string>
+    <string name="confirm_upgrade_info">Su monedero se actualizarán a nuestro formato más reciente de monedero. Esto le permitirá aprovechar las ventajas de privacidad y las mejoras en la seguridad. Tenga en cuenta que una vez que usted lo confirme el proceso de actualización se iniciará y no se podrá revertir.</string>
+    <string name="upgrading">Actualizando...</string>
+    <string name="upgrading_started_info">Su monedero está siendo actualizado, le pedimos tenga paciencia ya que esto puede tomar algún tiempo dependiendo del tamaño y la edad del monedero.</string>
+    <string name="upgrade_success_heading">¡Su monedero ha sido actualizado!</string>
+    <string name="upgrade_interrupted">La actualización del monedero se ha interrumpido. Empareje de nuevo su monedero e inténtelo de nuevo.</string>
+    <string name="upgrade_success_info">Ahora tiene el monedero de Blockchain más seguro y privado, ya puede continuar usando su monedero.</string>
+    <string name="CLOSE">CERRAR</string>
+    <string name="total_funds">Todos</string>
+    <string name="unexpected_error">Se ha producido un error inesperado. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="upgrade_fail_heading">Error de actualización del monedero.</string>
+    <string name="upgrade_fail_info">Se ha producido un error de actualización del monedero. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="not_sane_error">La instalación del monedero Blockchain está incompleta. Por favor vuelva a emparejar su monedero o cree uno nuevo.</string>
+
+    <string name="archived_address">Esta dirección ha sido archivada. Se puede gestionar a través del monedero web Blockchain.</string>
+    <string name="watchonly_address">Esta dirección está configurada como \'sólo ver\'. Se puede gestionar a través del monedero web Blockchain.</string>
+    <string name="watchonly_address_spend_warning">Esta dirección es de sólo un reloj. Puede pasar de ella a través de la cartera web Blockchain.</string>
+    <string name="watchonly_address_receive_warning">Usted está a punto de recibir a una dirección-reloj solamente. Sólo se puede gastar estos fondos si tiene acceso a la clave privada. ¿Continuar?</string>
+
+    <string name="PENDING">PENDIENTE</string>
+    <string name="COMPLETE">COMPLETA</string>
+
+    <string name="camera_unavailable">La cámara está actualmente abierta por otra aplicación. Cierre la aplicación y vuelva a intentarlo.</string>
+    <string name="transaction_failed_will_retry">La transacción no se pudo realizar, inténtelo de nuevo en unos segundos.</string>
+
+    <string name="limit_21m_exceeded">Esta cantidad no puede ser transmitida en la red Bitcoin.</string>
+    <string name="validating_password">Validando la contraseña...</string>
+    <string name="validating_pin">Validación el PIN...</string>
+    <string name="creating_pin">Creando PIN...</string>
+    <string name="decrypting_wallet">Descifrando el monedero</string>
+    <string name="verifying_email">Verificando correo electrónico...</string>
+    <string name="pairing_wallet">Emparejando monedero...</string>
+    <string name="transaction_queued">La transacción ha sido colocada en la fila</string>
+    <string name="WAITING">EN FILA</string>
+    <string name="password_unchanged">Contraseña sin cambios</string>
+    <string name="password_changed">Contraseñada cambiada</string>
+    <string name="sending">Enviando...</string>
+    <string name="ask_me_later">Pregúntame más tarde</string>
+    <string name="verify_email">Verificar correo electrónico</string>
+    <string name="email_verified">Correo electrónico verificado</string>
+    <string name="verify_email2">Su dirección de correo electrónico verificada se utiliza para enviar códigos de inicio de sesión cuando se detecta actividad sospechosa o inusual, para recordarle el Identificador de inicio de sesión de monedero y para enviar avisos de pago de bitcoin cuando reciba los fondos. No utilizaremos su dirección de correo electrónico para fines de mercadeo y/o publicidad.</string>
+    <string name="disable_root_warning">Desactivar la advertencia</string>
+    <string name="disable_root_warning2">Desactivar diálogo de advertencia en caso de que su teléfono está arraigado</string>
+
+    <string name="show_balance">Mostrar saldo</string>
+    <string name="my_address">Mi dirección</string>
+    <string name="create_new_address">Crear nueva dirección</string>
+    <string name="confirmation_code_error">El código introducido es incorrecto. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="auth_failed">Se ha producido un error en la autorización. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="send_failed">No se pudo enviar. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="invalid_qr">QR inválido</string>
+
+    <string name="wallet_updated">Se ha recibido la actualización del monedero</string>
+    <string name="lame_mode_hd_pair_fail">No se ha podido emparejar el monedero V3</string>
+    <string name="please_repair">Se ha producido un error. No se ha podido decodificar el monedero en su estado actual. Empareje de nuevo su monedero.</string>
+
+    <string name="device_rooted">Parece que el sistema operativo de este dispositivo ha sido modificado. Tenga en cuenta que guardar fondos en un dispositivo con un sistema operativo modificado es arriesgado y, además, puede causar problemas de estabilidad. Si continúa utilizando nuestra billetera Bitcoin en este dispositivo le recomendamos que utilice cifrado doble en su cuenta de Blockchain.</string>
+    <string name="address_already_in_wallet">Su monedero ya contiene esta dirección.</string>
+    <string name="cannot_create_address">No se puede crear una nueva dirección en este momento. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="saving_address">Guardando dirección...</string>
+    <string name="cannot_create_wallet">En este momento no se puede crear o restaurar el monedero. Por favor, inténtelo de nuevo más tarde.</string>
+
+    <string name="cannot_launch_app">En este momento no se puede ejecutar el monedero de Blockchain.</string>
+    <string name="support_guide">Por favor describa en detalle el problema que experimenta, junto con las medidas que podemos tomar para reproducirlo.</string>
+    <string name="label">Label</string>
+    <string name="rename_address">Dirección Renombrar</string>
+    <string name="edit">Editar</string>
+    <string name="label_cant_be_empty">Label no puede estar en blanco.</string>
+    <string name="saving_changes">Guardando cambios...</string>
+    <string name="warning">Advertencia</string>
+
+</resources>
