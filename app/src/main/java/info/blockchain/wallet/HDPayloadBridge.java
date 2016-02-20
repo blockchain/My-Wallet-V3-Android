@@ -2,13 +2,16 @@ package info.blockchain.wallet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
 import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.HDWallet;
+import info.blockchain.wallet.payload.ImportedAccount;
 import info.blockchain.wallet.payload.PayloadBridge;
 import info.blockchain.wallet.payload.PayloadFactory;
 import info.blockchain.wallet.payload.ReceiveAddress;
+import info.blockchain.wallet.payload.Tx;
 import info.blockchain.wallet.util.AddressFactory;
 import info.blockchain.wallet.util.AppUtil;
 import info.blockchain.wallet.util.CharSequenceX;
@@ -20,6 +23,7 @@ import info.blockchain.wallet.util.ToastCustom;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.StringUtils;
 import org.bitcoinj.core.AddressFormatException;
+import org.bitcoinj.core.bip44.Wallet;
 import org.bitcoinj.core.bip44.WalletFactory;
 import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONException;
@@ -291,5 +295,63 @@ public class HDPayloadBridge {
         }
 
         return xpubs.toArray(new String[xpubs.size()]);
+    }
+
+    public Account addAccount(String label) throws IOException, MnemonicException.MnemonicLengthException {
+
+        String xpub = null;
+        String xpriv = null;
+
+        Wallet wallet = WalletFactory.getInstance().get();
+        Wallet watchOnlyWallet = WalletFactory.getInstance().getWatchOnlyWallet();//double encryption wallet
+
+        if(!PayloadFactory.getInstance().get().isDoubleEncrypted()) {
+
+            wallet.addAccount();
+
+            xpub = wallet.getAccounts().get(wallet.getAccounts().size() - 1).xpubstr();
+            xpriv = wallet.getAccounts().get(wallet.getAccounts().size() - 1).xprvstr();
+        }
+        else {
+            watchOnlyWallet.addAccount();
+
+            xpub = watchOnlyWallet.getAccounts().get(watchOnlyWallet.getAccounts().size() - 1).xpubstr();
+            xpriv = watchOnlyWallet.getAccounts().get(watchOnlyWallet.getAccounts().size() - 1).xprvstr();
+        }
+
+        //Initialize newly created xpub's tx list and balance
+        List<Tx> txs = new ArrayList<Tx>();
+        MultiAddrFactory.getInstance().getXpubTxs().put(xpub, txs);
+        MultiAddrFactory.getInstance().getXpubAmounts().put(xpub, 0L);
+
+        //Get account list from payload (not in sync with wallet from WalletFactory)
+        List<Account> accounts = PayloadFactory.getInstance().get().getHdWallet().getAccounts();
+
+        //Create new account (label, xpub, xpriv)
+        Account account = new Account(label);
+        account.setXpub(xpub);
+        if(!PayloadFactory.getInstance().get().isDoubleEncrypted()) {
+            account.setXpriv(xpriv);
+        }
+        else {
+            String encrypted_xpriv = DoubleEncryptionFactory.getInstance().encrypt(
+                    xpriv,
+                    PayloadFactory.getInstance().get().getSharedKey(),
+                    PayloadFactory.getInstance().getTempDoubleEncryptPassword().toString(),
+                    PayloadFactory.getInstance().get().getDoubleEncryptionPbkdf2Iterations());
+            account.setXpriv(encrypted_xpriv);
+        }
+
+        //Add new account to payload
+        if(accounts.get(accounts.size() - 1) instanceof ImportedAccount) {
+            accounts.add(accounts.size() - 1, account);
+        }
+        else {
+            accounts.add(account);
+        }
+        PayloadFactory.getInstance().get().getHdWallet().setAccounts(accounts);
+
+        //After this, remember to save payload remotely
+        return account;
     }
 }

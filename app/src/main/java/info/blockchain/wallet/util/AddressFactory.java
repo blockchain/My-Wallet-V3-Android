@@ -43,6 +43,10 @@ public class AddressFactory {
         return instance;
     }
 
+    public void updateDoubleEncryptionWallet(){
+        double_encryption_wallet = WalletFactory.getInstance().getWatchOnlyWallet();
+    }
+
     public ReceiveAddress getReceiveAddress(int accountIdx) {
         int idx = 0;
         Address addr = null;
