@@ -233,9 +233,19 @@ public class MainActivity extends ActionBarActivity implements BalanceFragment.C
                             PrefsUtil.getInstance(MainActivity.this).setValue(PrefsUtil.KEY_SCHEME_URL, "");
                             doScanInput(strUri);
                         } else {
-                            Fragment fragment = new BalanceFragment();
-                            FragmentManager fragmentManager = getFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+                            if(!isFinishing())    {
+                                Handler handler = new Handler();
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Fragment fragment = new BalanceFragment();
+                                        FragmentManager fragmentManager = getFragmentManager();
+                                        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+                                    }
+                                });
+                            }
+
                         }
 
                         Looper.loop();
