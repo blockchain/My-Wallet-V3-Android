@@ -684,46 +684,50 @@ public class AccountEditActivity extends AppCompatActivity {
 
     public void scanXPrivClicked(View view) {
 
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.privx_required)
-                .setMessage(getString(R.string.watch_only_spend_instructions).replace("[--address--]",legacyAddress.getAddress()))
-                .setCancelable(false)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+        if (PayloadFactory.getInstance().get().isDoubleEncrypted()) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.privx_required)
+                    .setMessage(getString(R.string.watch_only_spend_instructions).replace("[--address--]", legacyAddress.getAddress()))
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
 
-                        final EditText password = new EditText(AccountEditActivity.this);
-                        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                            final EditText password = new EditText(AccountEditActivity.this);
+                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
-                        new AlertDialog.Builder(AccountEditActivity.this)
-                                .setTitle(R.string.app_name)
-                                .setMessage(R.string.enter_double_encryption_pw)
-                                .setView(password)
-                                .setCancelable(false)
-                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
+                            new AlertDialog.Builder(AccountEditActivity.this)
+                                    .setTitle(R.string.app_name)
+                                    .setMessage(R.string.enter_double_encryption_pw)
+                                    .setView(password)
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
 
-                                        final String pw = password.getText().toString();
+                                            final String pw = password.getText().toString();
 
-                                        if (DoubleEncryptionFactory.getInstance().validateSecondPassword(PayloadFactory.getInstance().get().getDoublePasswordHash(), PayloadFactory.getInstance().get().getSharedKey(), new CharSequenceX(pw), PayloadFactory.getInstance().get().getDoubleEncryptionPbkdf2Iterations())) {
+                                            if (DoubleEncryptionFactory.getInstance().validateSecondPassword(PayloadFactory.getInstance().get().getDoublePasswordHash(), PayloadFactory.getInstance().get().getSharedKey(), new CharSequenceX(pw), PayloadFactory.getInstance().get().getDoubleEncryptionPbkdf2Iterations())) {
 
-                                            PayloadFactory.getInstance().setTempDoubleEncryptPassword(new CharSequenceX(pw));
-                                            Intent intent = new Intent(AccountEditActivity.this, CaptureActivity.class);
-                                            startActivityForResult(intent, SCAN_PRIVX);
+                                                PayloadFactory.getInstance().setTempDoubleEncryptPassword(new CharSequenceX(pw));
+                                                Intent intent = new Intent(AccountEditActivity.this, CaptureActivity.class);
+                                                startActivityForResult(intent, SCAN_PRIVX);
 
-                                        } else {
-                                            ToastCustom.makeText(AccountEditActivity.this, getString(R.string.double_encryption_password_error), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
+                                            } else {
+                                                ToastCustom.makeText(AccountEditActivity.this, getString(R.string.double_encryption_password_error), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
+                                            }
+
                                         }
+                                    }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    ;
+                                }
+                            }).show();
 
-                                    }
-                                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                ;
-                            }
-                        }).show();
-
-                    }
-                }).setNegativeButton(R.string.cancel, null).show();
-
+                        }
+                    }).setNegativeButton(R.string.cancel, null).show();
+        }else{
+            Intent intent = new Intent(AccountEditActivity.this, CaptureActivity.class);
+            startActivityForResult(intent, SCAN_PRIVX);
+        }
     }
 
     @Override
