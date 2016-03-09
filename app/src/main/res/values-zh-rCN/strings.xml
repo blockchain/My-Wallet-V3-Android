@@ -149,7 +149,7 @@
     <string name="CONFIRM_PAYMENT">确认付款</string>
     <string name="GO_BACK">返回</string>
 
-    <string name="total_to_send">发送合计</string>
+    <string name="total">发送合计</string>
 
     <string name="no_funds_available">此账户没有资金</string>
     <string name="no_funds_available2">此地址没有资金</string>

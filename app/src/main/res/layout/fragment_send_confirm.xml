@@ -1,119 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:background="@color/blockchain_pearl_white"
-			  android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/blockchain_pearl_white"
+              android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:layout_marginTop="24dp"
-		android:layout_marginLeft="24dp"
-		android:layout_marginRight="24dp"
-		android:layout_marginBottom="16dp">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_details"
+                android:padding="16dp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textColor="@color/primary_text_default_material_light"
+                android:textSize="24sp"/>
+
+        <ImageView
+                android:id="@+id/confirm_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_alignParentRight="true"
+                android:tint="@color/blockchain_send_red"
+                android:src="@drawable/abc_ic_clear_mtrl_alpha"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="16dp">
+
+        <TextView
+                android:id="@+id/confirm_from_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
 
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center_vertical"
-			android:orientation="horizontal">
+        <ImageView android:layout_width="32dp"
+                   android:layout_height="32dp"
+                   android:layout_margin="16dp"
+                   android:tint="@color/blockchain_blue"
+                   android:src="@drawable/icon_receive"/>
 
-			<TextView
-				android:layout_width="0dp"
-				android:layout_weight="1"
-				android:layout_height="wrap_content"
-				android:text="@string/confirm_details"
-				android:textColor="@color/primary_text_default_material_light"
-				android:textSize="24sp"/>
+        <TextView
+                android:id="@+id/confirm_to_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:gravity="center"/>
 
-		</LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="32dp"
+                      android:layout_marginBottom="4dp"
+                      android:gravity="center_vertical"
+                      android:orientation="horizontal">
 
-		<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@string/from"
-				android:layout_marginTop="16dp"
-				android:textColor="@color/blockchain_grey"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"/>
 
-		<TextView
-				android:id="@+id/confirm_from"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:textColor="@color/primary_text_default_material_light"/>
+            <TextView
+                    android:id="@+id/confirm_amount_fiat_unit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="8dp"
+                    android:gravity="right"/>
 
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/to"
-			android:layout_marginTop="16dp"
-			android:textColor="@color/blockchain_grey"/>
+            <TextView
+                    android:id="@+id/confirm_amount_btc_unit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"/>
 
-		<TextView
-			android:id="@+id/confirm_to"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textColor="@color/primary_text_default_material_light"/>
+        </LinearLayout>
 
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/fee"
-			android:layout_marginTop="16dp"
-			android:textColor="@color/blockchain_grey"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="4dp"
+                      android:layout_marginBottom="4dp"
+                      android:gravity="center_vertical"
+                      android:orientation="horizontal">
 
-		<TextView
-			android:id="@+id/confirm_fee"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textColor="@color/primary_text_default_material_light"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amount"
+                    android:alpha="0.7"
+                    android:gravity="left"/>
 
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/total_to_send"
-			android:layout_marginTop="16dp"
-			android:textColor="@color/blockchain_grey"/>
+            <TextView
+                    android:id="@+id/confirm_amount_fiat"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="8dp"
+                    android:alpha="0.7"
+                    android:gravity="right"/>
 
-		<TextView
-			android:id="@+id/confirm_total_to_send"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textColor="@color/primary_text_default_material_light"/>
+            <TextView
+                    android:id="@+id/confirm_amount_btc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:gravity="right"/>
 
-	</LinearLayout>
+        </LinearLayout>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:orientation="horizontal"
-		android:gravity="center_vertical|right">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="4dp"
+                      android:layout_marginBottom="4dp"
+                      android:orientation="horizontal">
 
-		<TextView
-			android:id="@+id/confirm_cancel"
-			android:layout_width="wrap_content"
-			android:layout_height="36dp"
-			android:text="@string/dialog_cancel"
-			android:gravity="center"
-			android:layout_marginRight="8dp"
-			android:paddingLeft="8dp"
-			android:paddingRight="8dp"
-			android:textColor="@color/primary_text_default_material_light"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="@string/fee"
+                    android:gravity="left"/>
 
-		<TextView
-			android:id="@+id/confirm_send"
-			android:layout_width="wrap_content"
-			android:layout_height="36dp"
-			android:text="@string/dialog_send"
-			android:gravity="center"
-			android:layout_marginRight="16dp"
-			android:paddingLeft="8dp"
-			android:paddingRight="8dp"
-			android:textColor="@color/blockchain_blue"/>
+            <LinearLayout android:layout_width="0dp"
+                          android:layout_weight="1"
+                          android:gravity="right"
+                          android:paddingRight="8dp"
+                          android:orientation="vertical"
+                          android:layout_height="wrap_content">
 
-	</LinearLayout>
+                <TextView
+                        android:id="@+id/confirm_fee_fiat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"/>
 
+                <TextView
+                        android:id="@+id/tv_customize_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/blockchain_blue"
+                        android:text="@string/customize"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                    android:id="@+id/confirm_fee_btc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:gravity="right"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:layout_marginTop="8dp"
+              android:layout_marginBottom="8dp"
+              android:background="@color/blockchain_grey"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="4dp"
+                      android:layout_marginBottom="4dp"
+                      android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"
+                    android:gravity="left"/>
+
+            <TextView
+                    android:id="@+id/confirm_total_fiat"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="8dp"
+                    android:gravity="right"/>
+
+            <TextView
+                    android:id="@+id/confirm_total_btc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/confirm_send"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:elevation="4dp"
+            android:background="@color/blockchain_receive_green"
+            android:textColor="@color/white"
+            android:text="@string/SEND"/>
 
 </LinearLayout>

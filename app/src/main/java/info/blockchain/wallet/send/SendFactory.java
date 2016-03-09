@@ -2,6 +2,7 @@ package info.blockchain.wallet.send;
 
 import android.content.Context;
 import android.os.Looper;
+import android.util.Log;
 
 import info.blockchain.wallet.callbacks.OpCallback;
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
@@ -9,6 +10,7 @@ import info.blockchain.wallet.payload.LegacyAddress;
 import info.blockchain.wallet.payload.PayloadFactory;
 import info.blockchain.wallet.util.AppUtil;
 import info.blockchain.wallet.util.ConnectivityStatus;
+import info.blockchain.wallet.util.FeeUtil;
 import info.blockchain.wallet.util.Hash;
 import info.blockchain.wallet.util.PrivateKeyFactory;
 import info.blockchain.wallet.util.ToastCustom;
@@ -114,14 +116,14 @@ public class SendFactory {
         UnspentOutputsBundle ret;
         try {
             if (isHD) {
-                ret = getUnspentOutputPoints(true, new String[]{xpub}, amount.add(fee));
+                ret = getUnspentOutputPoints(true, new String[]{xpub}, amount.add(fee), fee);
             } else {
                 if (AppUtil.getInstance(context).isNotUpgraded()) {
                     List<String> addrs = PayloadFactory.getInstance().get().getActiveLegacyAddressStrings();
                     from = addrs.toArray(new String[addrs.size()]);
                 }
 
-                ret = getUnspentOutputPoints(false, from, amount.add(fee));
+                ret = getUnspentOutputPoints(false, from, amount.add(fee), fee);
             }
         } catch (Exception e) {
             return null;
@@ -285,7 +287,7 @@ public class SendFactory {
      * @param BigInteger totalAmount Amount including fee
      * @return UnspentOutputsBundle
      */
-    private UnspentOutputsBundle getUnspentOutputPoints(boolean isHD, String[] from, BigInteger totalAmount) throws Exception {
+    private UnspentOutputsBundle getUnspentOutputPoints(boolean isHD, String[] from, BigInteger totalAmount, BigInteger fee) throws Exception {
 
         UnspentOutputsBundle ret = new UnspentOutputsBundle();
 
@@ -346,19 +348,19 @@ public class SendFactory {
             MyTransactionOutPoint outPoint = new MyTransactionOutPoint(txHash, txOutputN, value, scriptBytes);
             outPoint.setConfirmations(confirmations);
             // return single output >= totalValue, otherwise save for randomization
-            if (outPoint.getValue().compareTo(totalAmount.add(FeeUtil.getInstance().getRecommendedFee(1, 1))) == 0) {
+            if (outPoint.getValue().compareTo(totalAmount) == 0) {
                 outputs.clear();
                 outputs.add(outPoint);
                 ret.setTotalAmount(outPoint.getValue());
                 ret.setOutputs(outputs);
-                ret.setRecommendedFee(FeeUtil.getInstance().getRecommendedFee(outputs.size(), 1));
+                ret.setRecommendedFee(totalAmount);
                 return ret;
-            } else if (outPoint.getValue().compareTo(totalAmount.add(SendCoins.bDust).add(FeeUtil.getInstance().getRecommendedFee(1, 2))) >= 0) {
+            } else if (outPoint.getValue().compareTo(totalAmount.add(SendCoins.bDust)) >= 0) {
                 outputs.clear();
                 outputs.add(outPoint);
                 ret.setTotalAmount(outPoint.getValue());
                 ret.setOutputs(outputs);
-                ret.setRecommendedFee(FeeUtil.getInstance().getRecommendedFee(outputs.size(), 2));
+                ret.setRecommendedFee(totalAmount);
                 return ret;
             } else {
                 outputs.add(outPoint);
@@ -366,7 +368,7 @@ public class SendFactory {
 
         }
 
-        if (totalAvailableBalance.compareTo(totalAmount.add(FeeUtil.getInstance().getRecommendedFee(1, 1))) < 0) {
+        if (totalAvailableBalance.compareTo(totalAmount) < 0) {
             ToastCustom.makeText(context, context.getString(R.string.insufficient_funds), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
             return null;
         }
@@ -379,9 +381,9 @@ public class SendFactory {
         for (MyTransactionOutPoint output : outputs) {
             totalValue = totalValue.add(output.getValue());
             _outputs.add(output);
-            if (totalValue.compareTo(totalAmount.add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 1))) == 0) {
+            if (totalValue.compareTo(totalAmount) == 0) {
                 break;
-            } else if (totalValue.compareTo(totalAmount.add(SendCoins.bDust).add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2))) >= 0) {
+            } else if (totalValue.compareTo(totalAmount.add(SendCoins.bDust)) >= 0) {
                 break;
             } else {
                 ;
@@ -390,6 +392,8 @@ public class SendFactory {
 
         ret.setTotalAmount(totalValue);
         ret.setOutputs(_outputs);
+
+        //TODO - We never use the below recommended fee
         if (totalValue.compareTo(totalAmount.add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 1))) == 0) {
             ret.setRecommendedFee(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 1));
         } else if (totalValue.compareTo(totalAmount.add(SendCoins.bDust).add(FeeUtil.getInstance().getRecommendedFee(_outputs.size(), 2))) >= 0) {

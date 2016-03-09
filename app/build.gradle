@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '23.0.2'
 
     // Introduced to prevent crash during DEXing step since SDK 23, but also speeds up DEXing in general
     dexOptions {

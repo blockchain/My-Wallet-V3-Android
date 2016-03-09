@@ -149,7 +149,7 @@
     <string name="CONFIRM_PAYMENT">ПОДТВЕРДИТЬ ОПЛАТУ</string>
     <string name="GO_BACK">ВЕРНУТЬСЯ</string>
 
-    <string name="total_to_send">Всего для отправки</string>
+    <string name="total">Всего для отправки</string>
 
     <string name="no_funds_available">Нет средств, доступных для этой учетной записи</string>
     <string name="no_funds_available2">Нет средств, доступных для этого адреса</string>

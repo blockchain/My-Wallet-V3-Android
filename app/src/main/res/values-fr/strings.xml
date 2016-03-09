@@ -149,7 +149,7 @@
     <string name="CONFIRM_PAYMENT">CONFIRMER LE PAIEMENT</string>
     <string name="GO_BACK">RETOURNER</string>
 
-    <string name="total_to_send">Total à envoyer</string>
+    <string name="total">Total à envoyer</string>
 
     <string name="no_funds_available">Pas de fonds disponibles pour ce compte</string>
     <string name="no_funds_available2">Pas de fonds disponibles pour cette adresse</string>

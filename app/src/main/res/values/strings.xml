@@ -149,7 +149,7 @@
     <string name="CONFIRM_PAYMENT">CONFIRM PAYMENT</string>
     <string name="GO_BACK">GO BACK</string>
 
-    <string name="total_to_send">Total To Send</string>
+    <string name="total">Total</string>
 
     <string name="no_funds_available">No funds available for this account</string>
     <string name="no_funds_available2">No funds available for this address</string>
@@ -179,7 +179,7 @@
     <string name="from">From</string>
     <string name="to">To</string>
 
-    <string name="confirm_details">Confirm Details</string>
+    <string name="confirm_details">Confirm Payment</string>
     <string name="fee">Fee</string>
     <string name="dialog_send">SEND</string>
     <string name="dialog_cancel">CANCEL</string>
@@ -338,7 +338,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="check_email_to_auth_login">Please check your email to approve this login attempt.</string>
     <string name="confirmations">Confirmations</string>
-    <string name="transaction_fee">Bitcoin Miners Fee</string>
+    <string name="transaction_fee">Transaction Fee</string>
     <string name="transaction_hash">Transaction Hash</string>
     <string name="your_transactions">Your Transactions</string>
     <string name="transaction_occur_when">Transactions occur when you receive and send bitcoin.</string>
@@ -487,4 +487,9 @@
     <string name="total_fees">Total fees</string>
 
     <string name="dont_ask_again">Don\'t ask me again.</string>
+    <string name="insufficient_fee">Transaction fee is too low.</string>
+    <string name="customize">customize</string>
+    <string name="amount">Amount</string>
+    <string name="recommended">(Recommended)</string>
+    <string name="recommended_fee">Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.</string>
 </resources>

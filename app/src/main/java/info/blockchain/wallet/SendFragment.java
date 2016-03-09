@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -36,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -58,6 +60,7 @@ import info.blockchain.wallet.util.CharSequenceX;
 import info.blockchain.wallet.util.ConnectivityStatus;
 import info.blockchain.wallet.util.DoubleEncryptionFactory;
 import info.blockchain.wallet.util.ExchangeRateFactory;
+import info.blockchain.wallet.util.FeeUtil;
 import info.blockchain.wallet.util.FormatsUtil;
 import info.blockchain.wallet.util.MonetaryUtil;
 import info.blockchain.wallet.util.PrefsUtil;
@@ -75,6 +78,8 @@ import org.bitcoinj.core.bip44.WalletFactory;
 import org.bitcoinj.crypto.BIP38PrivateKey;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -104,6 +109,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
     private TextView tvFiat2 = null;
     private MenuItem btSend;
     private TextView tvMax = null;
+    private EditText etCustomFee = null;
     private TableLayout numpad;
 
     private Spinner sendFromSpinner = null;
@@ -131,6 +137,10 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
     private boolean spDestinationSelected = false;//When a destination is selected from dropdown, mark spend as 'Moved'
 
     private PendingSpend watchOnlyPendingSpend;
+
+    private BigInteger dynamicFee = SendCoins.bFee;
+    private boolean dynamicFeeFailed = false;
+    private boolean isFeeAbnormallyHigh;
 
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -230,6 +240,25 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         tvFiat2 = (TextView) rootView.findViewById(R.id.fiat2);
         tvMax = (TextView) rootView.findViewById(R.id.max);
 
+        etCustomFee = (EditText) rootView.findViewById(R.id.custom_fee);
+        //As soon as the user customizes our suggested dynamic fee - hide (recommended)
+        etCustomFee.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                rootView.findViewById(R.id.tv_recommended).setVisibility(View.GONE);
+                displayMaxAvailable();
+            }
+        });
     }
 
     private void setSendFromDropDown(){
@@ -581,6 +610,44 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         }
     }
 
+    private void setDynamicFee(){
+
+        new AsyncTask<Void, Void, Void>(){
+
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                try {
+                    //This call might take a while - so when a result is returned refresh the max available
+                    JSONObject dynamicFeeJson = FeeUtil.getInstance().getDynamicFee();
+                    if(dynamicFeeJson != null){
+
+                        dynamicFee = BigInteger.valueOf(dynamicFeeJson.getLong("fee"));
+                        isFeeAbnormallyHigh = dynamicFeeJson.getBoolean("surge");//We'll use this later to warn the user if the dynamic fee is too high
+                        dynamicFeeFailed = false;
+                    }else{
+                        dynamicFee = SendCoins.bFee;
+                        dynamicFeeFailed = true;
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    dynamicFee = SendCoins.bFee;
+                    dynamicFeeFailed = true;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        displayMaxAvailable();
+                    }
+                });
+
+                return null;
+            }
+        }.execute();
+    }
+
     private void setBtcTextWatcher(){
 
         btcTextWatcher = new TextWatcher() {
@@ -842,7 +909,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
 
         selectDefaultAccount();
 
-        displayMaxAvailable();
+        setDynamicFee();
 
         IntentFilter filter = new IntentFilter(BalanceFragment.ACTION_INTENT);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
@@ -902,6 +969,13 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
 
     private void displayMaxAvailable() {
 
+        long fee = dynamicFee.longValue();
+
+        //User has customized the fee
+        if(!etCustomFee.getText().toString().isEmpty()){
+            fee = getLongValue(etCustomFee.getText().toString());
+        }
+
         Object object = sendFromBiMap.inverse().get(sendFromSpinner.getSelectedItemPosition());//the current selected item in from dropdown (Account or Legacy Address)
 
         long balance = 0L;
@@ -916,7 +990,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         }
 
         //Subtract fee
-        long balanceAfterFee = (balance - SendCoins.bFee.longValue());
+        long balanceAfterFee = (balance - fee);
 
         if (balanceAfterFee > 0L) {
             double btc_balance = (((double) balanceAfterFee) / 1e8);
@@ -1275,7 +1349,7 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.setCanceledOnTouchOutside(false);
 
-                TextView confirmFrom = (TextView) dialogView.findViewById(R.id.confirm_from);
+                TextView confirmFrom = (TextView) dialogView.findViewById(R.id.confirm_from_label);
 
                 if(pendingSpend.isHD) {
                     confirmFrom.setText(pendingSpend.fromAccount.getLabel());
@@ -1283,17 +1357,76 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
                     confirmFrom.setText(pendingSpend.fromLegacyAddress.getLabel());
                 }
 
-                TextView confirmDestination = (TextView) dialogView.findViewById(R.id.confirm_to);
+                TextView confirmDestination = (TextView) dialogView.findViewById(R.id.confirm_to_label);
                 confirmDestination.setText(pendingSpend.destination);
 
-                TextView confirmFee = (TextView) dialogView.findViewById(R.id.confirm_fee);
-                confirmFee.setText(MonetaryUtil.getInstance(getActivity()).getDisplayAmount(pendingSpend.bigIntFee.longValue()) + " " + strBTC);
+                TextView tvAmountBtcUnit = (TextView) dialogView.findViewById(R.id.confirm_amount_btc_unit);
+                tvAmountBtcUnit.setText(strBTC);
+                TextView tvAmountFiatUnit = (TextView) dialogView.findViewById(R.id.confirm_amount_fiat_unit);
+                tvAmountFiatUnit.setText(strFiat);
 
-                TextView confirmTotal = (TextView) dialogView.findViewById(R.id.confirm_total_to_send);
-                BigInteger cTotal = (pendingSpend.bigIntAmount.add(pendingSpend.bigIntFee));
-                confirmTotal.setText(MonetaryUtil.getInstance(getActivity()).getDisplayAmount(cTotal.longValue()) + " " + strBTC);
+                //BTC
+                TextView tvAmountBtc = (TextView) dialogView.findViewById(R.id.confirm_amount_btc);
+                tvAmountBtc.setText(MonetaryUtil.getInstance(getActivity()).getDisplayAmount(pendingSpend.bigIntAmount.longValue()));
 
-                TextView confirmCancel = (TextView) dialogView.findViewById(R.id.confirm_cancel);
+                final TextView tvFeeBtc = (TextView) dialogView.findViewById(R.id.confirm_fee_btc);
+                if(isFeeAbnormallyHigh)tvFeeBtc.setTextColor(getResources().getColor(R.color.blockchain_send_red));
+                tvFeeBtc.setText(MonetaryUtil.getInstance(getActivity()).getDisplayAmount(pendingSpend.bigIntFee.longValue()));
+
+                TextView tvTotlaBtc = (TextView) dialogView.findViewById(R.id.confirm_total_btc);
+                BigInteger totalBtc = (pendingSpend.bigIntAmount.add(pendingSpend.bigIntFee));
+                tvTotlaBtc.setText(MonetaryUtil.getInstance(getActivity()).getDisplayAmount(totalBtc.longValue()));
+
+                //Fiat
+                btc_fx = ExchangeRateFactory.getInstance(getActivity()).getLastPrice(strFiat);
+                String amountFiat = (MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (pendingSpend.bigIntAmount.doubleValue() / 1e8)));
+                TextView tvAmountFiat = (TextView) dialogView.findViewById(R.id.confirm_amount_fiat);
+                tvAmountFiat.setText(amountFiat);
+
+                TextView tvFeeFiat = (TextView) dialogView.findViewById(R.id.confirm_fee_fiat);
+                String feeFiat = (MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (pendingSpend.bigIntFee.doubleValue() / 1e8)));
+                if(isFeeAbnormallyHigh)tvFeeFiat.setTextColor(getResources().getColor(R.color.blockchain_send_red));
+                tvFeeFiat.setText(feeFiat);
+
+                TextView tvTotalFiat = (TextView) dialogView.findViewById(R.id.confirm_total_fiat);
+                BigInteger totalFiat = (pendingSpend.bigIntAmount.add(pendingSpend.bigIntFee));
+                String totalFiatS = (MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (totalFiat.doubleValue() / 1e8)));
+                tvTotalFiat.setText(totalFiatS);
+
+                TextView tvCustomizeFee = (TextView) dialogView.findViewById(R.id.tv_customize_fee);
+                tvCustomizeFee.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (alertDialog != null && alertDialog.isShowing()) {
+                            alertDialog.cancel();
+                        }
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rootView.findViewById(R.id.custom_fee_container).setVisibility(View.VISIBLE);
+
+                                String fee = MonetaryUtil.getInstance().getBTCFormat().format(MonetaryUtil.getInstance(getActivity()).getDenominatedAmount(dynamicFee.doubleValue() / 1e8));
+
+                                EditText etCustomFee = (EditText)rootView.findViewById(R.id.custom_fee);
+                                etCustomFee.setText(fee);
+                                etCustomFee.setHint(fee);
+                                etCustomFee.requestFocus();
+                                etCustomFee.setSelection(etCustomFee.getText().length());
+
+                                //If dynamic fee service is failing, don't display 'recommended'
+                                if(!dynamicFeeFailed)rootView.findViewById(R.id.tv_recommended).setVisibility(View.VISIBLE);
+                            }
+                        });
+
+                        //If dynamic fee service is failing, don't display 'recommended' prompt
+                        if(!dynamicFeeFailed)
+                            alertCustomSpend();
+
+                    }
+                });
+
+                ImageView confirmCancel = (ImageView) dialogView.findViewById(R.id.confirm_cancel);
                 confirmCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1323,7 +1456,8 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
 
                             context = getActivity();
 
-                            final UnspentOutputsBundle unspents = SendFactory.getInstance(context).prepareSend(pendingSpend.fromXpubIndex, pendingSpend.destination, pendingSpend.bigIntAmount, pendingSpend.fromLegacyAddress, BigInteger.ZERO, null);
+                            final UnspentOutputsBundle unspents = SendFactory.getInstance(context).prepareSend(pendingSpend.fromXpubIndex, pendingSpend.destination, pendingSpend.bigIntAmount, pendingSpend.fromLegacyAddress, pendingSpend.bigIntFee, null);
+                            //TODO - unspents.getRecommendedFee() = fee per kb?
 
                             if (unspents != null) {
                                 executeSend(pendingSpend, unspents, alertDialog);
@@ -1345,6 +1479,19 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
 
             }
         }).start();
+    }
+
+    private void alertCustomSpend(){
+
+        String message = getResources().getString(R.string.recommended_fee)
+                +"\n\n"
+                +MonetaryUtil.getInstance(getActivity()).getDisplayAmount(dynamicFee.longValue())
+                +" "+strBTC;
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.transaction_fee)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, null).show();
     }
 
     private void executeSend(final PendingSpend pendingSpend, final UnspentOutputsBundle unspents, final AlertDialog alertDialog){
@@ -1513,8 +1660,12 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
         pendingSpend.bigIntAmount = BigInteger.valueOf(getLongValue(edAmount1.getText().toString()));
 
         //Fee
-        pendingSpend.bigIntFee = SendCoins.bFee;
-//        pendingSpend.bigIntFee = BigInteger.valueOf(PayloadFactory.getInstance().get().getOptions().getFeePerKB());
+        if(etCustomFee.getText() != null && !etCustomFee.getText().toString().isEmpty()){
+            //User customized fee
+            pendingSpend.bigIntFee = BigInteger.valueOf(getLongValue(etCustomFee.getText().toString()));
+        }else{
+            pendingSpend.bigIntFee = dynamicFee;
+        }
 
         //Destination
         pendingSpend.destination = edReceiveTo.getText().toString().trim();
@@ -1533,8 +1684,14 @@ public class SendFragment extends Fragment implements View.OnClickListener, Cust
             return false;
         }
 
+        //Validate sufficient fee
+        if(pendingSpend.bigIntFee.compareTo(SendCoins.bDust) <= 0){
+            ToastCustom.makeText(getActivity(), getString(R.string.insufficient_fee), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
+            return false;
+        }
+
         //Validate sufficient funds
-        long amountToSendIncludingFee = pendingSpend.bigIntAmount.longValue() + SendCoins.bFee.longValue();
+        long amountToSendIncludingFee = pendingSpend.bigIntAmount.longValue() + pendingSpend.bigIntFee.longValue();
         if(pendingSpend.isHD){
             String xpub = pendingSpend.fromAccount.getXpub();
             if(!hasSufficientFunds(xpub, null, amountToSendIncludingFee)){
