@@ -492,4 +492,6 @@
     <string name="amount">Amount</string>
     <string name="recommended">(Recommended)</string>
     <string name="recommended_fee">Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.</string>
+    <string name="high_fee_not_necessary">High fee not necessary.</string>
+    <string name="high_fee_not_necessary_info">You specified an unusually high transaction fee of [--custom_fee--].\n\nEven if you lower the fee to [--dynamic_fee--], you can expect the transaction to confirm within the next ~10 minutes (one block).</string>
 </resources>
