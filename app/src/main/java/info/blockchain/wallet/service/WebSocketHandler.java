@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
@@ -126,36 +127,41 @@ public class WebSocketHandler {
     private void startPingTimer() {
 
         pingTimer = new Timer();
-        pingTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (mConnection != null) {
-                    if (mConnection.isOpen()) {
-                        pingPongSuccess = false;
-                        mConnection.sendPing();
-                        startPongTimer();
-                    } else {
-                        start();
+
+        synchronized (pingTimer) {
+            pingTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (mConnection != null) {
+                        if (mConnection.isOpen()) {
+                            pingPongSuccess = false;
+
+                            //Ping
+                            mConnection.sendPing();
+
+                            //Give ping time to respond
+                            try{Thread.sleep(pongTimeout);}catch (Exception e){}
+
+                            if (!pingPongSuccess) {
+                                //ping pong unsuccessful after x seconds - restart connection
+                                start();
+                            }
+
+                        } else {
+                            start();
+                        }
                     }
                 }
-            }
-        }, pingInterval, pingInterval);
+            }, pingInterval, pingInterval);
+        }
     }
 
     private void stopPingTimer() {
-        if (pingTimer != null) pingTimer.cancel();
-    }
-
-    private void startPongTimer() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!pingPongSuccess) {
-                    //ping pong unsuccessful after x seconds - restart connection
-                    start();
-                }
+        if (pingTimer != null){
+            synchronized (pingTimer) {
+                pingTimer.cancel();
             }
-        }, pongTimeout);
+        }
     }
 
     /**
