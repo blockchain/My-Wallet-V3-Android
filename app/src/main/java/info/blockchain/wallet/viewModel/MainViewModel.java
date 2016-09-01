@@ -110,12 +110,12 @@ public class MainViewModel implements ViewModel {
 
                 dataListener.onFetchTransactionCompleted();
 
+                dataListener.onStartBalanceFragment();
+
                 if (prefs.getValue(PrefsUtil.KEY_SCHEME_URL, "").length() > 0) {
                     String strUri = prefs.getValue(PrefsUtil.KEY_SCHEME_URL, "");
                     prefs.setValue(PrefsUtil.KEY_SCHEME_URL, "");
                     dataListener.onScanInput(strUri);
-                } else {
-                    dataListener.onStartBalanceFragment();
                 }
 
                 Looper.loop();
