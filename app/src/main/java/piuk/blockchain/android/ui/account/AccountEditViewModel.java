@@ -26,6 +26,7 @@ import info.blockchain.wallet.payment.Payment;
 import info.blockchain.wallet.payment.data.SweepBundle;
 import info.blockchain.wallet.payment.data.UnspentOutputs;
 import info.blockchain.wallet.send.SendCoins;
+import info.blockchain.wallet.util.CharSequenceX;
 import info.blockchain.wallet.util.DoubleEncryptionFactory;
 import info.blockchain.wallet.util.PrivateKeyFactory;
 
@@ -442,7 +443,7 @@ public class AccountEditViewModel extends BaseViewModel {
         int defaultIndex = payloadManager.getPayload().getHdWallet().getDefaultIndex();
         Account defaultAccount = payloadManager.getPayload().getHdWallet().getAccounts().get(defaultIndex);
         pendingTransaction.receivingObject = new ItemAccount(defaultAccount.getLabel(), "", "", defaultAccount);
-        pendingTransaction.receivingAddress = payloadManager.getReceiveAddress(defaultIndex);
+        pendingTransaction.receivingAddress = payloadManager.getNextReceiveAddress(defaultIndex);
 
         pendingTransaction.unspentOutputBundle = payment.getSpendableCoins(coins, sweepBundle.getSweepAmount(), suggestedFeePerKb);
         pendingTransaction.bigIntAmount = sweepBundle.getSweepAmount();
@@ -472,21 +473,24 @@ public class AccountEditViewModel extends BaseViewModel {
 
                 try {
 
-                    boolean isWatchOnly = false;
-
                     LegacyAddress legacyAddress = ((LegacyAddress) pendingTransaction.sendingObject.accountObject);
                     String changeAddress = legacyAddress.getAddress();
 
+                    List<ECKey> keys = new ArrayList<ECKey>();
+                    if (payloadManager.getPayload().isDoubleEncrypted()) {
+                        ECKey walletKey = legacyAddress.getECKey(new CharSequenceX(secondPassword));
+                        keys.add(walletKey);
+                    } else {
+                        ECKey walletKey = legacyAddress.getECKey();
+                        keys.add(walletKey);
+                    }
+
                     new Payment().submitPayment(pendingTransaction.unspentOutputBundle,
-                            null,
-                            legacyAddress,
+                            keys,
                             pendingTransaction.receivingAddress,
                             changeAddress,
-                            pendingTransaction.note,
                             pendingTransaction.bigIntFee,
                             pendingTransaction.bigIntAmount,
-                            isWatchOnly,
-                            secondPassword,
                             new Payment.SubmitPaymentListener() {
                                 @Override
                                 public void onSuccess(String s) {

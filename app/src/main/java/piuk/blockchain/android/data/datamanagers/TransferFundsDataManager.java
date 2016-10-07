@@ -14,6 +14,7 @@ import info.blockchain.wallet.payment.data.UnspentOutputs;
 import info.blockchain.wallet.send.SendCoins;
 import info.blockchain.wallet.util.CharSequenceX;
 
+import org.bitcoinj.core.ECKey;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
@@ -122,27 +123,29 @@ public class TransferFundsDataManager {
             for (int i = 0; i < pendingTransactions.size(); i++) {
                 PendingTransaction pendingTransaction = pendingTransactions.get(i);
 
-                boolean isWatchOnly = false;
-
-                LegacyAddress legacyAddress = ((LegacyAddress) pendingTransaction.sendingObject.accountObject);
-                String changeAddress = legacyAddress.getAddress();
-                String receivingAddress = mPayloadManager.getReceiveAddress(pendingTransaction.addressToReceiveIndex);
-
-                isWatchOnly = legacyAddress.isWatchOnly();
-
                 final int finalI = i;
                 try {
+
+                    LegacyAddress legacyAddress = ((LegacyAddress) pendingTransaction.sendingObject.accountObject);
+                    String changeAddress = legacyAddress.getAddress();
+                    String receivingAddress = receivingAddress = mPayloadManager.getNextReceiveAddress(pendingTransaction.addressToReceiveIndex);
+
+                    List<ECKey> keys = new ArrayList<ECKey>();
+                    if (mPayloadManager.getPayload().isDoubleEncrypted()) {
+                        ECKey walletKey = legacyAddress.getECKey(new CharSequenceX(secondPassword));
+                        keys.add(walletKey);
+                    } else {
+                        ECKey walletKey = legacyAddress.getECKey();
+                        keys.add(walletKey);
+                    }
+
                     payment.submitPayment(
                             pendingTransaction.unspentOutputBundle,
-                            null,
-                            legacyAddress,
+                            keys,
                             receivingAddress,
                             changeAddress,
-                            pendingTransaction.note,
                             pendingTransaction.bigIntFee,
                             pendingTransaction.bigIntAmount,
-                            isWatchOnly,
-                            secondPassword != null ? secondPassword.toString() : null,
                             new Payment.SubmitPaymentListener() {
                                 @Override
                                 public void onSuccess(String s) {

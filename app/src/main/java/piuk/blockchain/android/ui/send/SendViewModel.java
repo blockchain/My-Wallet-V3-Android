@@ -23,9 +23,11 @@ import info.blockchain.wallet.payment.data.SuggestedFee;
 import info.blockchain.wallet.payment.data.SweepBundle;
 import info.blockchain.wallet.payment.data.UnspentOutputs;
 import info.blockchain.wallet.send.SendCoins;
+import info.blockchain.wallet.util.CharSequenceX;
 import info.blockchain.wallet.util.FormatsUtil;
 import info.blockchain.wallet.util.PrivateKeyFactory;
 
+import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.BIP38PrivateKey;
 import org.bitcoinj.params.MainNetParams;
@@ -815,7 +817,6 @@ public class SendViewModel extends BaseViewModel {
 
                         @Override
                         public void onSecondPasswordValidated(String validatedSecondPassword) {
-                            payloadManager.decryptDoubleEncryptedWallet(validatedSecondPassword);
                             sendModel.verifiedSecondPassword = validatedSecondPassword;
                             confirmPayment();
                         }
@@ -1014,7 +1015,11 @@ public class SendViewModel extends BaseViewModel {
 
                 //V3
                 Account account = ((Account) selectedItem.accountObject);
-                sendModel.pendingTransaction.receivingAddress = payloadManager.getReceiveAddress(account.getRealIdx());
+                try {
+                    sendModel.pendingTransaction.receivingAddress = payloadManager.getNextReceiveAddress(account.getRealIdx());
+                } catch (AddressFormatException e) {
+                    e.printStackTrace();
+                }
 
             } else if (selectedItem.accountObject instanceof LegacyAddress) {
 
@@ -1070,41 +1075,44 @@ public class SendViewModel extends BaseViewModel {
         new Thread(() -> {
             try {
 
-                boolean isWatchOnly = false;
-
                 String changeAddress;
                 Account account = null;
                 LegacyAddress legacyAddress = null;
+                List<ECKey> keys = new ArrayList<ECKey>();
 
                 if (sendModel.pendingTransaction.isHD()) {
                     account = ((Account) sendModel.pendingTransaction.sendingObject.accountObject);
-                    changeAddress = payloadManager.getChangeAddress(account.getRealIdx());
+                    changeAddress = payloadManager.getNextChangeAddress(account.getRealIdx());
+
+                    keys.addAll(payloadManager.getHDKeys(sendModel.verifiedSecondPassword, account, sendModel.pendingTransaction.unspentOutputBundle));
+
                 } else {
                     legacyAddress = ((LegacyAddress) sendModel.pendingTransaction.sendingObject.accountObject);
                     changeAddress = legacyAddress.getAddress();
-                    isWatchOnly = legacyAddress.isWatchOnly();
+
+                    if (!legacyAddress.isWatchOnly() && payloadManager.getPayload().isDoubleEncrypted()) {
+                        ECKey walletKey = legacyAddress.getECKey(new CharSequenceX(sendModel.verifiedSecondPassword));
+                        keys.add(walletKey);
+                    } else {
+                        ECKey walletKey = legacyAddress.getECKey();
+                        keys.add(walletKey);
+                    }
                 }
 
                 payment.submitPayment(sendModel.pendingTransaction.unspentOutputBundle,
-                        account,
-                        legacyAddress,
+                        keys,
                         sendModel.pendingTransaction.receivingAddress,
                         changeAddress,
-                        sendModel.pendingTransaction.note,
                         sendModel.pendingTransaction.bigIntFee,
                         sendModel.pendingTransaction.bigIntAmount,
-                        isWatchOnly,
-                        sendModel.verifiedSecondPassword,
                         new Payment.SubmitPaymentListener() {
                             @Override
                             public void onSuccess(String s) {
 
                                 if (alertDialog != null && alertDialog.isShowing())
                                     alertDialog.dismiss();
-                                updateInternalBalances();
-                                PayloadBridge.getInstance().remoteSaveThread(null);
-                                dataListener.onShowTransactionSuccess();
 
+                                handleSuccessfulPayment();
                             }
 
                             @Override
@@ -1119,6 +1127,17 @@ public class SendViewModel extends BaseViewModel {
             }
         }).start();
 
+    }
+
+    private void handleSuccessfulPayment(){
+        if (sendModel.pendingTransaction.isHD()) {
+            // increment change address counter
+            ((Account) sendModel.pendingTransaction.sendingObject.accountObject).incChange();
+        }
+
+        updateInternalBalances();
+        PayloadBridge.getInstance().remoteSaveThread(null);
+        dataListener.onShowTransactionSuccess();
     }
 
     /**
