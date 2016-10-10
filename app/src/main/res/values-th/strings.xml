@@ -72,7 +72,7 @@
     <string name="LOGIN">ล็อกอินไปยังกระเป๋าเงินของฉัน</string>
     <string name="pair_your_wallet">จับคู่กระเป๋าเงินของคุณ</string>
     <string name="manual_pairing">จับคู่ด้วยตนเอง</string>
-    <string name="pair_wallet_step_1">ล็อกอินไปยังกระเป๋าเงิน Blockchain ของคุณผ่านทาง PC หรือ Mac ของคุณที่ https://blockchain.info/wallet</string>
+    <string name="pair_wallet_step_1">ล็อกอินไปยังกระเป๋าเงิน Blockchain ของคุณผ่านทาง PC หรือ Mac ของคุณที่ %1$s</string>
     <string name="pair_wallet_step_2">หากคุณกำลังใช้กระเป๋าเงินเก่า คลิกปุ่ม การตั้งค่าบัญชี แล้วเลือกแถบ อุปกรณ์ หากคุณกำลังใช้กระเป๋าเงินใหม่แบบเบต้าของเรา ไปยัง การตั้งค่า / ข้อมูลกระเป๋าเงิน</string>
     <string name="pair_wallet_step_3">คลิก แสดงรหัสจับคู่ เพื่อแสดงรหัส QR ซึ่งเป็นบาร์โค้ดขาว &amp; ดำในรูปแบบช่องสี่เหลี่ยม สแกนรหัสด้วยกล้องของคุณ</string>
     <string name="disable_two_factor">คุณต้องปิดใช้งานการพิสูจน์ตัวตนสองชั้นก่อนพยายามจับคู่กระเป๋าเงินของคุณด้วยตนเอง</string>

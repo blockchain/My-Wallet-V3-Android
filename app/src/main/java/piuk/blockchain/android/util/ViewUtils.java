@@ -2,9 +2,12 @@ package piuk.blockchain.android.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.IntDef;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -65,6 +68,22 @@ public class ViewUtils {
         frameLayout.addView(editText, params);
 
         return frameLayout;
+    }
+
+    /**
+     * Sets an elevation value for a View using the appropriate method for a given API level. For now,
+     * {@link ViewCompat#setElevation(View, float)} only accesses stub methods but this may change
+     * in the future.
+     *
+     * @param view       The {@link View} to set elevation on
+     * @param elevation     A float value for elevation (in pixels, not dp)
+     */
+    public static void setElevation(View view, float elevation) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.setElevation(elevation);
+        } else {
+            ViewCompat.setElevation(view, elevation);
+        }
     }
 
     /**

@@ -72,7 +72,7 @@
     <string name="LOGIN">Войти в мой кошелек</string>
     <string name="pair_your_wallet">Выполните сопряжение своего кошелька</string>
     <string name="manual_pairing">Ручное сопряжение</string>
-    <string name="pair_wallet_step_1">Войдите в свой кошелек Blockchain на ПК или Mac, пройдя по ссылке https:// blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Войдите в свой кошелек Blockchain на ПК или Mac, пройдя по ссылке %1$s.</string>
     <string name="pair_wallet_step_2">Если вы используете старый кошелек, нажмите кнопку «Параметры учетной записи» и выберите вкладку «Устройства». Если вы используете нашу новую бета-версию кошелька, перейдите в «Настройки / Информация о кошельке».</string>
     <string name="pair_wallet_step_3">Нажмите кнопку «Показать код сопряжения», чтобы открыть QR-код, черно-белый квадрат со штрих-кодом. Отсканируйте код своей камерой.</string>
     <string name="disable_two_factor">Прежде чем пытаться вручную выполнить сопряжение своего кошелька, необходимо отключить двухфакторную аутентификацию</string>

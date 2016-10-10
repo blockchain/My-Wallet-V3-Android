@@ -1,6 +1,7 @@
 package piuk.blockchain.android.ui.account;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 class AccountItem {
@@ -25,20 +26,24 @@ class AccountItem {
         this.isDefault = isDefault;
     }
 
+    @NonNull
     public String getLabel() {
-        return label;
+        return label != null ? label : "";
     }
 
+    @NonNull
     public String getAddress() {
-        return address;
+        return address != null ? address : "";
     }
 
+    @Nullable
     public Drawable getIcon() {
         return icon;
     }
 
+    @NonNull
     public String getAmount() {
-        return amount;
+        return amount != null ? amount : "";
     }
 
     public boolean isArchived() {
@@ -65,8 +70,8 @@ class AccountItem {
         isDefault = aDefault;
     }
 
-    @Nullable
-    public Integer getCorrectPosition() {
-        return correctedPosition;
+    @NonNull
+    Integer getCorrectPosition() {
+        return correctedPosition != null ? correctedPosition : -1;
     }
 }

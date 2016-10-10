@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.util.CharSequenceX;
-import info.blockchain.wallet.util.DoubleEncryptionFactory;
-
-import org.apache.commons.lang3.StringUtils;
 
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
@@ -58,12 +54,7 @@ public class SecondPasswordHandler {
 
                         String secondPassword = passwordField.getText().toString();
 
-                        if (secondPassword.length() > 0 && DoubleEncryptionFactory.getInstance().validateSecondPassword(
-                                payloadManager.getPayload().getDoublePasswordHash(),
-                                payloadManager.getPayload().getSharedKey(),
-                                new CharSequenceX(secondPassword),
-                                payloadManager.getPayload().getOptions().getIterations()) && !StringUtils.isEmpty(secondPassword)) {
-
+                        if (secondPassword.length() > 0 && payloadManager.validateSecondPassword(secondPassword)) {
                             listener.onSecondPasswordValidated(secondPassword);
 
                         } else {

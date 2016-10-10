@@ -125,6 +125,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="SpinnerWhite">
+        <item name="colorControlNormal">@color/blockchain_pearl_white</item>
+    </style>
+
     <style name="RecoveryPhraseEditText">
         <item name="android:theme">@style/RecoveryPhraseTextCursorTheme</item>
         <item name="android:layout_width">match_parent</item>

@@ -46,7 +46,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static piuk.blockchain.android.ui.home.BalanceFragment.KEY_TRANSACTION_LIST_POSITION;
+import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION_LIST_POSITION;
 
 @SuppressLint("UseSparseArrays")
 @SuppressWarnings("PrivateMemberAccessBetweenOuterAndInnerClass")

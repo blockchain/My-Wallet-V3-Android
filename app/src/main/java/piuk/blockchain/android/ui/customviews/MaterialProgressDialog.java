@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,19 @@ public class MaterialProgressDialog {
         }
     }
 
+    public void setMessage(@StringRes int message) {
+        if (mAlertDialog != null && mMessageTextView != null) {
+            mMessageTextView.setText(message);
+        }
+    }
+
     public void setTitle(String title) {
+        if (mAlertDialog != null) {
+            mAlertDialog.setTitle(title);
+        }
+    }
+
+    public void setTitle(@StringRes int title) {
         if (mAlertDialog != null) {
             mAlertDialog.setTitle(title);
         }

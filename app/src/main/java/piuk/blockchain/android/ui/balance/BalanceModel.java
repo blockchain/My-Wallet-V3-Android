@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.home;
+package piuk.blockchain.android.ui.balance;
 
 public class BalanceModel {
 

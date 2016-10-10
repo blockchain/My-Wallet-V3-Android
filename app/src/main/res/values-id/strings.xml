@@ -72,7 +72,7 @@
     <string name="LOGIN">Masuk ke dompet saya</string>
     <string name="pair_your_wallet">Pasangkan Dompet Anda</string>
     <string name="manual_pairing">Pemasangan Manual</string>
-    <string name="pair_wallet_step_1">Masuk ke Dompet Blockchain Anda melalui komputer atau Mac Anda di https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Masuk ke Dompet Blockchain Anda melalui komputer atau Mac Anda di %1$s.</string>
     <string name="pair_wallet_step_2">Jika Anda menggunakan dompet yang lama, klik tombol Pengaturan Akun dan pilih tab Perangkat. Jika Anda menggunakan dompet beta yang baru dari kami, pergilah ke Pengaturan / Informasi Dompet.</string>
     <string name="pair_wallet_step_3">Klik Tampilkan Kode Pemasangan untuk memunculkan Kode QR, sebuah kode palang persegi berwarna hitam putih. Pindai kode dengan kamera Anda.</string>
     <string name="disable_two_factor">Anda harus menonaktifkan otentikasi dua faktor sebelum berusaha memasangkan dompet Anda secara manual</string>

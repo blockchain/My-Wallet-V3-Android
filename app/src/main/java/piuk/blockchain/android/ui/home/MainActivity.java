@@ -30,6 +30,7 @@ import piuk.blockchain.android.ui.account.AccountActivity;
 import piuk.blockchain.android.ui.auth.LandingActivity;
 import piuk.blockchain.android.ui.auth.PinEntryActivity;
 import piuk.blockchain.android.ui.backup.BackupWalletActivity;
+import piuk.blockchain.android.ui.balance.BalanceFragment;
 import piuk.blockchain.android.ui.base.BaseAuthActivity;
 import piuk.blockchain.android.ui.customviews.MaterialProgressDialog;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
@@ -41,6 +42,7 @@ import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.PermissionUtil;
 import piuk.blockchain.android.util.PrefsUtil;
+import piuk.blockchain.android.util.ViewUtils;
 
 public class MainActivity extends BaseAuthActivity implements BalanceFragment.Communicator, MainViewModel.DataListener {
 
@@ -51,8 +53,8 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.Co
 
     private boolean drawerIsOpen = false;
 
-    private Toolbar toolbar = null;
-    private MainViewModel mainViewModel;//MainActivity logic
+    private Toolbar toolbar;
+    private MainViewModel mainViewModel;
     private ActivityMainBinding binding;
     private MaterialProgressDialog fetchTransactionsProgress;
     private AlertDialog mRootedDialog;
@@ -171,7 +173,6 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.Co
     }
 
     private void doScanInput(String strResult) {
-
         Intent intent = new Intent(this, SendActivity.class);
         intent.putExtra("scan_data", strResult);
         startActivity(intent);
@@ -226,9 +227,11 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.Co
     @Override
     public void resetNavigationDrawer() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_general);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_menu_white_24dp));
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        ViewUtils.setElevation(toolbar, 0F);
 
         View headerLayout = binding.nvView.getHeaderView(0);//TODO - future use for account selection
         MenuItem backUpMenuItem = binding.nvView.getMenu().findItem(R.id.nav_backup);
@@ -263,7 +266,7 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.Co
                     return true;
                 });
     }
-
+    
     private void startMerchantActivity() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

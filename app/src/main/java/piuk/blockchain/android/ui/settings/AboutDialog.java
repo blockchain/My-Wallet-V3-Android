@@ -7,11 +7,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import piuk.blockchain.android.BuildConfig;
@@ -31,6 +33,7 @@ public class AboutDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.activity_about, null);
 
         TextView about = (TextView) view.findViewById(R.id.about);
+        TextView licenses = (TextView) view.findViewById(R.id.licenses);
         TextView rateUs = (TextView) view.findViewById(R.id.rate_us);
         TextView freeWallet = (TextView) view.findViewById(R.id.free_wallet);
 
@@ -45,6 +48,16 @@ public class AboutDialog extends AppCompatDialogFragment {
             } catch (ActivityNotFoundException e) {
                 Log.e(AboutDialog.class.getSimpleName(), "Google Play Store not found", e);
             }
+        });
+
+        licenses.setOnClickListener(v -> {
+            View layout = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_licenses, null);
+            WebView webView = (WebView) layout.findViewById(R.id.webview);
+            webView.loadUrl(("file:///android_asset/licenses.html"));
+                    new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle)
+                    .setView(layout)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
         });
 
         if (hasWallet()) {
@@ -72,4 +85,6 @@ public class AboutDialog extends AppCompatDialogFragment {
             return false;
         }
     }
+
+
 }

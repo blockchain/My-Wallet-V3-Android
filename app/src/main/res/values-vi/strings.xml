@@ -72,7 +72,7 @@
     <string name="LOGIN">Đăng nhập vào ví của bạn</string>
     <string name="pair_your_wallet">Kết nối ví của bạn</string>
     <string name="manual_pairing">Kết nối thủ công</string>
-    <string name="pair_wallet_step_1">Đăng nhập vào Ví Blockchain của bạn bằng PC hoặc Mac tại https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Đăng nhập vào Ví Blockchain của bạn bằng PC hoặc Mac tại %1$s.</string>
     <string name="pair_wallet_step_2">Nếu bạn đang sử dụng ví cũ, nhấn vào Cài đặt Tài khoản và chọn thẻ Thiết bị. Nếu bạn đang sử dụng ví phiên bản thử nghiệm mới, đến Cài đặt / Thông tin Ví.</string>
     <string name="pair_wallet_step_3">Nhấn hiển thị mã kết nối để hiện mã QR, mã vạch gồm các hình vuông đen &amp; trắng. Quét mã bằng camera.</string>
     <string name="disable_two_factor">Bạn phải tắt Bảo mật 2 lớp trước khi thử kết nối thủ công đến ví của mình</string>

@@ -5,16 +5,10 @@ import android.util.Pair;
 
 import info.blockchain.wallet.payload.PayloadManager;
 
-import org.bitcoinj.crypto.MnemonicException;
-
-import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import piuk.blockchain.android.R;
-import piuk.blockchain.android.ui.customviews.ToastCustom;
 
 public class BackupWalletUtil {
 
@@ -61,54 +55,21 @@ public class BackupWalletUtil {
     }
 
     /**
-     * Return mnemonic in the form of a string array. Make sure double encryption access is
-     * activated before calling.
+     * Return mnemonic in the form of a string array.
      *
      * @return String[]
      */
     public String[] getMnemonic(String secondPassword) {
-        // Wallet is not double encrypted
-        if (!PayloadManager.getInstance().getPayload().isDoubleEncrypted()) {
-            return getHDSeedAsMnemonic(true);
-        }
-        // User has already entered double-encryption password
-        else if (secondPassword != null && secondPassword.length() > 0) {
-            return getMnemonicForDoubleEncryptedWallet(secondPassword);
-        }
-        // access must be established before calling this function
-        else {
-            return null;
-        }
-
-    }
-
-    private String[] getMnemonicForDoubleEncryptedWallet(String secondPassword) {
-
-        String[] mnemonic = PayloadManager.getInstance().getMnemonicForDoubleEncryptedWallet(secondPassword);
-
-        if (mnemonic != null) {
-            return mnemonic;
-        } else {
-            ToastCustom.makeText(context, context.getString(R.string.double_encryption_password_error), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
-            return null;
-        }
-    }
-
-    private String[] getHDSeedAsMnemonic(boolean mnemonic) {
-
-        String seed = null;
 
         try {
-
-            seed = PayloadManager.getInstance().getHDMnemonic();
-
-        } catch (IOException | MnemonicException.MnemonicLengthException e) {
+            if(PayloadManager.getInstance().getPayload().isDoubleEncrypted()) {
+                return PayloadManager.getInstance().getMnemonic(secondPassword);
+            } else {
+                return PayloadManager.getInstance().getMnemonic();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-            ToastCustom.makeText(context, context.getString(R.string.hd_error), ToastCustom.LENGTH_LONG, ToastCustom.TYPE_ERROR);
-        } finally {
-
-            return seed.split("\\s+");
-
+            return null;
         }
     }
 }

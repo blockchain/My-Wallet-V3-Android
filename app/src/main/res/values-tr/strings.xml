@@ -72,7 +72,7 @@
     <string name="LOGIN">Cüzdanıma giriş yap</string>
     <string name="pair_your_wallet">Cüzdanınızı Eşleştirin</string>
     <string name="manual_pairing">Manüel Eşleştirme</string>
-    <string name="pair_wallet_step_1">Blockchain Cüzdanınıza https://blockchain.info/wallet adresinden PC veya Mac cihazınızla giriş yapın.</string>
+    <string name="pair_wallet_step_1">Blockchain Cüzdanınıza %1$s adresinden PC veya Mac cihazınızla giriş yapın.</string>
     <string name="pair_wallet_step_2">Eski bir cüzdan kullanıyorsanız, Hesap Ayarları düğmesini tıklayın ve Cihazlar sekmesini seçin. Yeni beta cüzdanımızı kullanıyorsanız, Ayarlar / Cüzdan Bilgileri sekmesine gidin.</string>
     <string name="pair_wallet_step_3">Kare şeklindeki siyah ve beyaz QR kodunu görüntülemek için Eşleştirme Kodunu Göster seçeneğine tıklayın. Kameranızla kodu tarayın.</string>
     <string name="disable_two_factor">Cüzdanınızı manüel olarak eşleştirmeden önce iki aşamalı kimlik doğrulamayı devre dışı bırakmalısınız</string>

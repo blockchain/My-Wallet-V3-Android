@@ -72,7 +72,7 @@
     <string name="LOGIN">Acessar a minha carteira</string>
     <string name="pair_your_wallet">Pareie sua carteira.</string>
     <string name="manual_pairing">Pareamento Manual</string>
-    <string name="pair_wallet_step_1">Acesse sua Carteira Blockchain com seu PC ou Mac em blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Acesse sua Carteira Blockchain com seu PC ou Mac em %1$s.</string>
     <string name="pair_wallet_step_2">Se estiver usando a carteira antiga, clique no botão Configurações da Conta e escolha a aba Dispositivos. Se estiver usando a nossa carteira beta, acesse Configurações / Informações da Carteira.</string>
     <string name="pair_wallet_step_3">Clique em Exibir Código de Pareamento para gerar o Código QR, um código de barras quadrado preto e branco. Escaneie o código com a sua câmera.</string>
     <string name="disable_two_factor">Antes de parear manualmente a carteira, você precisa desativar a Autenticação de Dois Fatores.</string>

@@ -72,7 +72,7 @@
     <string name="LOGIN">Log in op mijn portemonnee</string>
     <string name="pair_your_wallet">Koppel uw Portemonnee</string>
     <string name="manual_pairing">Handmatige koppeling</string>
-    <string name="pair_wallet_step_1">Log in op uw Blockchain Portemonnee via uw pc of Mac op https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Log in op uw Blockchain Portemonnee via uw pc of Mac op %1$s.</string>
     <string name="pair_wallet_step_2">Als u de oude portemonnee gebruikt, klikt u op de accountinstellingen-knop en kiest u het tabblad Apparaten. Als u onze nieuwe beta-portemonnee gebruikt, gaat u naar Instellingen/Portemonnee-informatie.</string>
     <string name="pair_wallet_step_3">Klik op Koppelcode tonen om een QR-code, een vierkante zwart-witte barcode, te onthullen. Scan de code met uw camera.</string>
     <string name="disable_two_factor">U dient de tweeledige verificatiemethode uit te schakelen voordat u uw portemonnee handmatig kunt gaan koppelen</string>

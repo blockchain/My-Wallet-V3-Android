@@ -23,10 +23,8 @@ import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.SwitchPreferenceCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,13 +53,18 @@ import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.ui.auth.PinEntryActivity;
 import piuk.blockchain.android.ui.customviews.MaterialProgressDialog;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
-import piuk.blockchain.android.ui.home.BalanceFragment;
+import piuk.blockchain.android.ui.balance.BalanceFragment;
 import piuk.blockchain.android.util.ExchangeRateFactory;
 import piuk.blockchain.android.util.MonetaryUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.RootUtil;
 import piuk.blockchain.android.util.ViewUtils;
 import piuk.blockchain.android.util.annotations.Thunk;
+
+import static android.app.Activity.RESULT_OK;
+import static piuk.blockchain.android.ui.auth.PinEntryActivity.KEY_VALIDATED_PIN;
+import static piuk.blockchain.android.ui.auth.PinEntryActivity.KEY_VALIDATING_PIN_FOR_RESULT;
+import static piuk.blockchain.android.ui.auth.PinEntryActivity.REQUEST_CODE_VALIDATE_PIN;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener {
 
@@ -933,34 +936,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void showDialogChangePin() {
-        final AppCompatEditText etPin = new AppCompatEditText(getActivity());
-        etPin.setInputType(InputType.TYPE_CLASS_NUMBER);
-        etPin.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        Intent intent = new Intent(getActivity(), PinEntryActivity.class);
+        intent.putExtra(KEY_VALIDATING_PIN_FOR_RESULT, true);
+        startActivityForResult(intent, REQUEST_CODE_VALIDATE_PIN);
+    }
 
-        FrameLayout frameLayout = new FrameLayout(getActivity());
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int marginInPixels = (int) ViewUtils.convertDpToPixel(20, getActivity());
-        params.setMargins(marginInPixels, 0, marginInPixels, 0);
-        frameLayout.addView(etPin, params);
-
-        int maxLength = 4;
-        InputFilter[] fArray = new InputFilter[1];
-        fArray[0] = new InputFilter.LengthFilter(maxLength);
-        etPin.setFilters(fArray);
-
-        new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle)
-                .setTitle(R.string.change_pin_code)
-                .setMessage(R.string.enter_current_pin)
-                .setView(frameLayout)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    String pin = etPin.getText().toString();
-                    updatePin(pin);
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .create()
-                .show();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_VALIDATE_PIN && resultCode == RESULT_OK) {
+            String pin = data.getStringExtra(KEY_VALIDATED_PIN);
+            updatePin(pin);
+        }
     }
 
     private void showDialogEmailNotifications() {

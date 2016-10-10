@@ -72,7 +72,7 @@
     <string name="LOGIN">Me connecter à mon portefeuille</string>
     <string name="pair_your_wallet">Jumelez votre portefeuille</string>
     <string name="manual_pairing">Jumelage manuel</string>
-    <string name="pair_wallet_step_1">Connectez-vous à votre portefeuille Blockchain via votre PC ou votre Mac à l\’adresse https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Connectez-vous à votre portefeuille Blockchain via votre PC ou votre Mac à l\’adresse %1$s.</string>
     <string name="pair_wallet_step_2">Si vous utilisez l\'ancien portefeuille, cliquez sur le bouton « Paramètres du compte » et choisissez l\'onglet « Appareils ». Si vous utilisez notre nouveau portefeuille bêta, allez dans Paramètres / Informations portefeuille.</string>
     <string name="pair_wallet_step_3">Cliquez sur « Afficher le code de jumelage » afin de révéler le code QR, un code-barres carré en noir et blanc. Scannez le code avec votre appareil photo.</string>
     <string name="disable_two_factor">Vous devez désactiver l\'authentification à deux facteurs avant d\'essayer de jumeler votre portefeuille manuellement</string>

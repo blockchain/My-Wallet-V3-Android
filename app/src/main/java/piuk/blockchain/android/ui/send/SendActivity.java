@@ -44,12 +44,14 @@ import piuk.blockchain.android.ui.base.BaseAuthActivity;
 import piuk.blockchain.android.ui.customviews.CustomKeypad;
 import piuk.blockchain.android.ui.customviews.CustomKeypadCallback;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
-import piuk.blockchain.android.ui.home.BalanceFragment;
+import piuk.blockchain.android.ui.balance.BalanceFragment;
 import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.android.util.AppRate;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.PermissionUtil;
 import piuk.blockchain.android.util.annotations.Thunk;
+
+import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_SELECTED_ACCOUNT_POSITION;
 
 public class SendActivity extends BaseAuthActivity implements SendViewModel.DataListener, CustomKeypadCallback {
 
@@ -121,7 +123,6 @@ public class SendActivity extends BaseAuthActivity implements SendViewModel.Data
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.send_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
@@ -129,9 +130,7 @@ public class SendActivity extends BaseAuthActivity implements SendViewModel.Data
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -319,7 +318,12 @@ public class SendActivity extends BaseAuthActivity implements SendViewModel.Data
             }
         });
 
-        binding.accounts.spinner.setSelection(viewModel.getDefaultAccount());
+        if (getIntent().hasExtra(KEY_SELECTED_ACCOUNT_POSITION)
+                && getIntent().getIntExtra(KEY_SELECTED_ACCOUNT_POSITION, -1) != -1) {
+            binding.accounts.spinner.setSelection(getIntent().getIntExtra(KEY_SELECTED_ACCOUNT_POSITION, -1));
+        } else {
+            binding.accounts.spinner.setSelection(viewModel.getDefaultAccount());
+        }
     }
 
     private void setupReceiveToView() {

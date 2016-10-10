@@ -72,7 +72,7 @@
     <string name="LOGIN">Zaloguj się do mojego portfela</string>
     <string name="pair_your_wallet">Sparuj swój Portfel</string>
     <string name="manual_pairing">Parowanie ręczne</string>
-    <string name="pair_wallet_step_1">Zaloguj się do swojego Portfela Blockchain na swoim komputerze lub Macu pod adresem https://blockchain.info/wallet</string>
+    <string name="pair_wallet_step_1">Zaloguj się do swojego Portfela Blockchain na swoim komputerze lub Macu pod adresem %1$s</string>
     <string name="pair_wallet_step_2">Jeśli korzystasz ze starego portfela, kliknij przycisk Ustawienia Konta i wybierz zakładkę Urządzenia. Jeśli korzystasz z nowej wersji beta Portfela, przejdź do Ustawień / Informacji o Portfelu.</string>
     <string name="pair_wallet_step_3">Kliknij "Pokaż kod parowania", by zobaczyć kwadratowy, czarno-biały kod QR. Zeskanuj kod swoim aparatem.</string>
     <string name="disable_two_factor">Musisz wyłączyć Uwierzytelnianie Dwustopniowe przed próbą ręcznego parowania swojego urządzenia</string>

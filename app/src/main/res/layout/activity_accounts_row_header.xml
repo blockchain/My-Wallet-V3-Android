@@ -15,7 +15,7 @@
             android:layout_alignParentBottom="true"
             android:padding="16dp"
             android:textColor="@color/blockchain_blue"
-            android:text="Imported"
+            android:text="@string/imported_addresses"
             android:textSize="16sp" />
 
     </RelativeLayout>

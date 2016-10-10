@@ -1,11 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    buildToolsVersion '24.0.3'
 
     // Introduced to prevent crash during DEXing step since SDK 23, but also speeds up DEXing in general
     dexOptions {
@@ -130,13 +129,13 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     // Dagger2
     compile 'com.google.dagger:dagger:2.7'
-    apt 'com.google.guava:guava:19.0'
-    apt 'com.google.dagger:dagger-compiler:2.7'
+    annotationProcessor 'com.google.guava:guava:19.0'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
 
     // UI/Instrumentation Tests
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.1'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile('com.android.support.test:runner:0.5') {

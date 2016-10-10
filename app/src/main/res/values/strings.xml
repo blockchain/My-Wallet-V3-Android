@@ -7,7 +7,7 @@
     <string name="app_name">Blockchain</string>
     <string name="action_settings">Settings</string>
 
-    <string name="all_accounts">All</string>
+    <string name="all_accounts">All Wallets</string>
 
     <string name="please_wait">Please wait</string>
 
@@ -75,7 +75,7 @@
     <string name="LOGIN">Log in to my Wallet</string>
     <string name="pair_your_wallet">Pair Your Wallet</string>
     <string name="manual_pairing">Manual Pairing</string>
-    <string name="pair_wallet_step_1">Log in to your Blockchain Wallet via your PC or Mac at https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Log in to your Blockchain Wallet via your PC or Mac at %1$s.</string>
     <string name="pair_wallet_step_2">Go to Settings / Wallet Information.</string>
     <string name="pair_wallet_step_3">Click Show Pairing Code to reveal a QR Code, a square black &amp; white barcode. Scan the code with your camera.</string>
     <string name="disable_two_factor">You must disable two-factor authentication before attempting to manually pair your wallet</string>
@@ -117,6 +117,8 @@
 
     <string name="support">Support</string>
     <string name="rate_us">Rate us</string>
+    <string name="licenses">Licenses</string>
+    <string name="email_chooser">Send e-mail…</string>
     <string name="about">Blockchain Wallet %1$s\n©%2$s Blockchain.info</string>
     <string name="merchant_download">Free Merchant app</string>
     <string name="password_or_wipe">Enter using your password or forget this wallet</string>

@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.home;
+package piuk.blockchain.android.ui.balance;
 
 import com.google.common.collect.HashBiMap;
 
@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import info.blockchain.api.Settings;
@@ -29,6 +30,7 @@ import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.injection.Injector;
+import piuk.blockchain.android.ui.account.ItemAccount;
 import piuk.blockchain.android.ui.base.ViewModel;
 import piuk.blockchain.android.util.ExchangeRateFactory;
 import piuk.blockchain.android.util.MonetaryUtil;
@@ -46,8 +48,8 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
     private DataListener dataListener;
     private BalanceModel model;
 
-    private ArrayList<String> activeAccountAndAddressList = null;
-    private HashBiMap<Object, Integer> activeAccountAndAddressBiMap = null;
+    private List<ItemAccount> activeAccountAndAddressList;
+    private HashBiMap<Object, Integer> activeAccountAndAddressBiMap;
     private final String TAG_ALL = "TAG_ALL";
     private final String TAG_IMPORTED_ADDRESSES = "TAG_IMPORTED_ADDRESSES";
     private List<Tx> transactionList;
@@ -180,7 +182,7 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
         compositeSubscription.clear();
     }
 
-    public ArrayList<String> getActiveAccountAndAddressList() {
+    public List<ItemAccount> getActiveAccountAndAddressList() {
         return activeAccountAndAddressList;
     }
 
@@ -193,7 +195,7 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
         int spinnerIndex = 0;
 
         //All accounts/addresses
-        List<Account> allAccounts = null;
+        List<Account> allAccounts;
         List<LegacyAddress> allLegacyAddresses = payloadManager.getPayload().getLegacyAddresses();
 
         //Only active accounts/addresses (exclude archived)
@@ -224,16 +226,18 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
                 Account all = new Account();
                 all.setLabel(context.getResources().getString(R.string.all_accounts));
                 all.setTags(Collections.singletonList(TAG_ALL));
-                activeAccountAndAddressList.add(all.getLabel());
+                String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(all));
+                activeAccountAndAddressList.add(new ItemAccount(all.getLabel(), balance, null, null));
                 activeAccountAndAddressBiMap.put(all, spinnerIndex);
                 spinnerIndex++;
 
             } else if (activeLegacyAddresses.size() > 1) {
 
                 //V2 "All" at top of accounts spinner if wallet contains multiple legacy addresses
-                ImportedAccount iAccount = new ImportedAccount(context.getString(R.string.total_funds), payloadManager.getPayload().getLegacyAddresses(), new ArrayList<String>(), MultiAddrFactory.getInstance().getLegacyBalance());
+                ImportedAccount iAccount = new ImportedAccount(context.getString(R.string.total_funds), payloadManager.getPayload().getLegacyAddresses(), new ArrayList<>(), MultiAddrFactory.getInstance().getLegacyBalance());
                 iAccount.setTags(Collections.singletonList(TAG_ALL));
-                activeAccountAndAddressList.add(iAccount.getLabel());
+                String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(iAccount));
+                activeAccountAndAddressList.add(new ItemAccount(iAccount.getLabel(), balance, null, null));
                 activeAccountAndAddressBiMap.put(iAccount, spinnerIndex);
                 spinnerIndex++;
             }
@@ -245,8 +249,8 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
 
             if (item.getLabel().trim().length() == 0)
                 item.setLabel("Account: " + accountIndex);//Give unlabeled account a label
-
-            activeAccountAndAddressList.add(item.getLabel());
+            String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(item));
+            activeAccountAndAddressList.add(new ItemAccount(item.getLabel(), balance, null, null));
             activeAccountAndAddressBiMap.put(item, spinnerIndex);
             spinnerIndex++;
             accountIndex++;
@@ -258,7 +262,8 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
             //Only V3 - Consolidate and add Legacy addresses to "Imported Addresses" at bottom of accounts spinner
             ImportedAccount iAccount = new ImportedAccount(context.getString(R.string.imported_addresses), payloadManager.getPayload().getLegacyAddresses(), new ArrayList<String>(), MultiAddrFactory.getInstance().getLegacyBalance());
             iAccount.setTags(Collections.singletonList(TAG_IMPORTED_ADDRESSES));
-            activeAccountAndAddressList.add(iAccount.getLabel());
+            String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(iAccount));
+            activeAccountAndAddressList.add(new ItemAccount(iAccount.getLabel(), balance, null, null));
             activeAccountAndAddressBiMap.put(iAccount, spinnerIndex);
             spinnerIndex++;
 
@@ -273,7 +278,8 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
                     labelOrAddress = context.getString(R.string.watch_only_label) + " " + labelOrAddress;
                 }
 
-                activeAccountAndAddressList.add(labelOrAddress);
+                String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(legacyAddress));
+                activeAccountAndAddressList.add(new ItemAccount(labelOrAddress, balance, null, null));
                 activeAccountAndAddressBiMap.put(legacyAddress, spinnerIndex);
                 spinnerIndex++;
             }
@@ -294,7 +300,6 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
     //TODO refactor isBTC out
     public void updateBalanceAndTransactionList(Intent intent, int accountSpinnerPosition, boolean isBTC) {
         double btc_balance;
-        double fiat_balance;
 
         Object object = activeAccountAndAddressBiMap.inverse().get(accountSpinnerPosition);//the current selected item in dropdown (Account or Legacy Address)
 
@@ -325,7 +330,15 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
             if (transactionList.get(0).getHash().isEmpty()) transactionList.remove(0);
         }
 
-        //Update Balance
+        String balanceTotal = getBalanceString(isBTC, btc_balance);
+
+        setBalance(balanceTotal);
+        dataListener.onRefreshBalanceAndTransactions();
+    }
+
+    @NonNull
+    private String getBalanceString(boolean isBTC, double btc_balance) {
+        double fiat_balance;//Update Balance
         String strFiat = prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY);
         double btc_fx = ExchangeRateFactory.getInstance().getLastPrice(strFiat);
         fiat_balance = btc_fx * (btc_balance / 1e8);
@@ -336,9 +349,7 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
         } else {
             balanceTotal = (getMonetaryUtil().getFiatFormat(strFiat).format(fiat_balance) + " " + strFiat);
         }
-
-        setBalance(balanceTotal);
-        dataListener.onRefreshBalanceAndTransactions();
+        return balanceTotal;
     }
 
     public String getDisplayUnits() {

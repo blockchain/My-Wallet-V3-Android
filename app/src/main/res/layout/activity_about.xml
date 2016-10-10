@@ -4,64 +4,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minWidth="420dp"
-        android:background="@color/blockchain_blue"
-        android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal">
+        android:background="@color/blockchain_blue"
+        android:gravity="center_horizontal"
+        android:minWidth="420dp"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="165dp"
             android:layout_height="188dp"
-            android:src="@drawable/logo3x"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:src="@drawable/logo3x" />
 
         <TextView
             android:id="@+id/about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:textSize="22sp"
-            android:textColor="@color/white" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/rate_us"
-                android:layout_width="140dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:text="@string/rate_us"
-                android:textSize="22sp"
-                android:textColor="@color/primary_text_default_material_dark" />
+        <TextView
+            android:id="@+id/rate_us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/rate_us"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/licenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/licenses"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
 
         <TextView
             android:id="@+id/free_wallet"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="@string/merchant_download"
-            android:textSize="22sp"
-            android:textColor="@color/primary_text_default_material_dark" />
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
     </LinearLayout>
 </layout>

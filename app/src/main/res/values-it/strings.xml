@@ -72,7 +72,7 @@
     <string name="LOGIN">Accedi al mio portafoglio</string>
     <string name="pair_your_wallet">Associa il tuo portafoglio</string>
     <string name="manual_pairing">Associazione manuale</string>
-    <string name="pair_wallet_step_1">Accedi al tuo Portafoglio Blockchain tramite il tuo PC o Mac su https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Accedi al tuo Portafoglio Blockchain tramite il tuo PC o Mac su %1$s.</string>
     <string name="pair_wallet_step_2">Se stai usando il vecchio portafoglio, clicca sul pulsante delle Impostazioni dell\'Account e scegli la casella Dispositivi. Se stai usando il nostro nuovo portafoglio beta, vai su Impostazioni/Informazioni sul Portafoglio.</string>
     <string name="pair_wallet_step_3">Clicca su Mostra il Codice di Associazione per rivelare un Codice QR, un codice a barre quadrato bianco e nero. Fai la scansione del codice con la tua fotocamera.</string>
     <string name="disable_two_factor">Devi disabilitare l\'autenticazione a due fattori prima di tentare di associare manualmente il tuo portafoglio.</string>

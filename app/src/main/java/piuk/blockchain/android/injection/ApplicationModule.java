@@ -3,6 +3,8 @@ package piuk.blockchain.android.injection;
 import android.app.Application;
 import android.content.Context;
 
+import info.blockchain.wallet.multiaddr.MultiAddrFactory;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -63,6 +65,11 @@ public class ApplicationModule {
     @Provides
     protected ExchangeRateFactory provideExchangeRateFactory() {
         return ExchangeRateFactory.getInstance();
+    }
+
+    @Provides
+    protected MultiAddrFactory provideMultiAddrFactory() {
+        return MultiAddrFactory.getInstance();
     }
 
 }

@@ -135,7 +135,9 @@ public class AuthDataManager {
                             }
                         });
             } catch (Exception e) {
-                subscriber.onError(e);
+                if (!subscriber.isUnsubscribed()) {
+                    subscriber.onError(e);
+                }
             }
         }));
     }

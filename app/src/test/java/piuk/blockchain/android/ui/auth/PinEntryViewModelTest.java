@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import piuk.blockchain.android.util.DialogButtonCallback;
-import piuk.blockchain.android.data.datamanagers.AuthDataManager;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
@@ -17,11 +15,7 @@ import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.HDWallet;
 import info.blockchain.wallet.payload.Payload;
 import info.blockchain.wallet.payload.PayloadManager;
-import piuk.blockchain.android.util.AppUtil;
 import info.blockchain.wallet.util.CharSequenceX;
-
-import piuk.blockchain.android.util.PrefsUtil;
-import piuk.blockchain.android.util.StringUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,21 +30,25 @@ import java.util.ArrayList;
 
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
+import piuk.blockchain.android.data.datamanagers.AuthDataManager;
 import piuk.blockchain.android.injection.ApiModule;
 import piuk.blockchain.android.injection.ApplicationModule;
 import piuk.blockchain.android.injection.DataManagerModule;
 import piuk.blockchain.android.injection.Injector;
 import piuk.blockchain.android.injection.InjectorTestUtils;
+import piuk.blockchain.android.ui.customviews.ToastCustom;
+import piuk.blockchain.android.util.AppUtil;
+import piuk.blockchain.android.util.DialogButtonCallback;
+import piuk.blockchain.android.util.PrefsUtil;
+import piuk.blockchain.android.util.StringUtils;
 import rx.Observable;
 
-import static piuk.blockchain.android.ui.auth.CreateWalletFragment.KEY_INTENT_EMAIL;
-import static piuk.blockchain.android.ui.auth.CreateWalletFragment.KEY_INTENT_PASSWORD;
-import static piuk.blockchain.android.ui.auth.LandingActivity.KEY_INTENT_RECOVERING_FUNDS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -58,6 +56,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+import static piuk.blockchain.android.ui.auth.CreateWalletFragment.KEY_INTENT_EMAIL;
+import static piuk.blockchain.android.ui.auth.CreateWalletFragment.KEY_INTENT_PASSWORD;
+import static piuk.blockchain.android.ui.auth.LandingActivity.KEY_INTENT_RECOVERING_FUNDS;
+import static piuk.blockchain.android.ui.auth.PinEntryActivity.KEY_VALIDATING_PIN_FOR_RESULT;
 import static rx.Observable.just;
 
 @Config(sdk = 23, constants = BuildConfig.class, application = BlockchainTestApplication.class)
@@ -108,6 +110,18 @@ public class PinEntryViewModelTest {
         verify(mPrefsUtil).setValue(PrefsUtil.KEY_EMAIL, email);
         verify(mPayloadManager).setEmail(email);
         verify(mPayloadManager).setTempPassword(new CharSequenceX(password));
+    }
+
+    @Test
+    public void onViewReadyValidatingPinForResult() throws Exception {
+        // Arrange
+        Intent intent = new Intent();
+        intent.putExtra(KEY_VALIDATING_PIN_FOR_RESULT, true);
+        when(mActivity.getPageIntent()).thenReturn(intent);
+        // Act
+        mSubject.onViewReady();
+        // Assert
+        assertEquals(true, mSubject.isForValidatingPinForResult());
     }
 
     @Test
@@ -294,6 +308,47 @@ public class PinEntryViewModelTest {
     }
 
     @Test
+    public void padClickedVerifyPinForResultReturnsValidPassword() throws Exception {
+        // Arrange
+        mSubject.mUserEnteredPin = "133";
+        mSubject.mValidatingPinForResult = true;
+        when(mPrefsUtil.getValue(PrefsUtil.KEY_PIN_IDENTIFIER, "")).thenReturn("1234567890");
+        when(mAuthDataManager.validatePin(anyString())).thenReturn(just(new CharSequenceX("")));
+        // Act
+        View mockView = mock(View.class);
+        when(mockView.getTag()).thenReturn("7");
+        mSubject.padClicked(mockView);
+        // Assert
+        verify(mActivity).setTitleVisibility(View.INVISIBLE);
+        verify(mActivity).showProgressDialog(anyInt(), anyString());
+        verify(mActivity).dismissProgressDialog();
+        verify(mAuthDataManager).validatePin(anyString());
+        verify(mActivity).finishWithResultOk("1337");
+    }
+
+    @Test
+    public void padClickedVerifyPinForResultReturnsNull() throws Exception {
+        // Arrange
+        mSubject.mUserEnteredPin = "133";
+        mSubject.mValidatingPinForResult = true;
+        when(mPrefsUtil.getValue(PrefsUtil.KEY_PIN_IDENTIFIER, "")).thenReturn("1234567890");
+        when(mAuthDataManager.validatePin(anyString())).thenReturn(just(null));
+        // Act
+        View mockView = mock(View.class);
+        when(mockView.getTag()).thenReturn("7");
+        mSubject.padClicked(mockView);
+        // Assert
+        verify(mActivity).setTitleVisibility(View.INVISIBLE);
+        verify(mActivity).showProgressDialog(anyInt(), anyString());
+        verify(mAuthDataManager).validatePin(anyString());
+        verify(mActivity).setTitleString(anyInt());
+        verify(mActivity).setTitleVisibility(View.VISIBLE);
+        //noinspection WrongConstant
+        verify(mActivity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
+        assertEquals("", mSubject.mUserEnteredPin);
+    }
+
+    @Test
     public void padClickedVerifyPinValidateCalledReturnsNullIncrementsFailureCount() throws Exception {
         // Arrange
         mSubject.mUserEnteredPin = "133";
@@ -311,7 +366,7 @@ public class PinEntryViewModelTest {
         verify(mPrefsUtil).getValue(anyString(), anyInt());
         //noinspection WrongConstant
         verify(mActivity).showToast(anyInt(), anyString());
-        verify(mActivity).restartPage();
+        verify(mActivity).restartPageAndClearTop();
     }
 
     @Test
@@ -408,7 +463,7 @@ public class PinEntryViewModelTest {
         //noinspection WrongConstant
         verify(mActivity).showToast(anyInt(), anyString());
         verify(mPrefsUtil, times(2)).removeValue(anyString());
-        verify(mActivity).restartPage();
+        verify(mActivity).restartPageAndClearTop();
     }
 
     @Test
@@ -606,13 +661,13 @@ public class PinEntryViewModelTest {
         // Arrange
 
         // Act
-        mSubject.incrementFailureCount();
+        mSubject.incrementFailureCountAndRestart();
         // Assert
         verify(mPrefsUtil).getValue(anyString(), anyInt());
         verify(mPrefsUtil).setValue(anyString(), anyInt());
         //noinspection WrongConstant
         verify(mActivity).showToast(anyInt(), anyString());
-        verify(mActivity).restartPage();
+        verify(mActivity).restartPageAndClearTop();
     }
 
     @Test

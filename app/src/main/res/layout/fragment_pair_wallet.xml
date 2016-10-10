@@ -32,6 +32,7 @@
                     android:text="1" />
 
                 <TextView
+                        android:id="@+id/pairing_first_step"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textColor="@color/black"

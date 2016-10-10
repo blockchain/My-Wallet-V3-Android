@@ -28,7 +28,7 @@ import piuk.blockchain.android.R;
 import piuk.blockchain.android.ui.account.SecondPasswordHandler;
 import piuk.blockchain.android.ui.customviews.MaterialProgressDialog;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
-import piuk.blockchain.android.ui.home.BalanceFragment;
+import piuk.blockchain.android.ui.balance.BalanceFragment;
 import piuk.blockchain.android.ui.send.AddressAdapter;
 import piuk.blockchain.android.util.annotations.Thunk;
 
@@ -51,6 +51,8 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
     private AppCompatButton mTransferButton;
     // Layouts
     private RelativeLayout mLoadingLayout;
+    // Dismiss Listener
+    private OnDismissListener mDismissListener;
 
     public static ConfirmFundsTransferDialogFragment newInstance() {
         ConfirmFundsTransferDialogFragment fragment = new ConfirmFundsTransferDialogFragment();
@@ -212,6 +214,7 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
     public void dismissDialog() {
         Intent intent = new Intent(BalanceFragment.ACTION_INTENT);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+        if (mDismissListener != null) mDismissListener.onDismiss();
         dismiss();
     }
 
@@ -224,5 +227,15 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
     public void onDestroy() {
         super.onDestroy();
         mViewModel.destroy();
+    }
+
+    public void setOnDismissListener(OnDismissListener listener) {
+        mDismissListener = listener;
+    }
+
+    public interface OnDismissListener {
+
+        void onDismiss();
+
     }
 }

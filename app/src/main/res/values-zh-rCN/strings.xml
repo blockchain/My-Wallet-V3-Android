@@ -72,7 +72,7 @@
     <string name="LOGIN">登录「我的钱包」</string>
     <string name="pair_your_wallet">配对您的钱包</string>
     <string name="manual_pairing">手动配对</string>
-    <string name="pair_wallet_step_1">在 PC 或 Mac 上通过 https://blockchain.info/wallet 登录您的 Blockchain 钱包。</string>
+    <string name="pair_wallet_step_1">在 PC 或 Mac 上通过 %1$s 登录您的 Blockchain 钱包。</string>
     <string name="pair_wallet_step_2">如果您使用的是旧钱包，请单击“帐户设置”按钮并选择“设备”选项卡。如果您正在使用我们的测试版钱包，请转到“设置”/“钱包信息”。</string>
     <string name="pair_wallet_step_3">单击“显示配对代码”可显示二维码，这是一个方形黑白条码。使用您的相机扫描该代码。</string>
     <string name="disable_two_factor">您必须禁用双重认证才能尝试手动配对您的钱包</string>

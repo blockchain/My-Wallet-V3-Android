@@ -241,7 +241,7 @@ public class ReceiveViewModel extends BaseViewModel {
         try {
             int spinnerIndex = mAccountMap.inverse().get(account);
             int accountIndex = mSpinnerIndexMap.get(spinnerIndex);
-            return mPayloadManager.getReceiveAddress(accountIndex);
+            return mPayloadManager.getNextReceiveAddress(accountIndex);
         } catch (Exception e) {
             Log.e(TAG, "getV3ReceiveAddress: ", e);
             return null;

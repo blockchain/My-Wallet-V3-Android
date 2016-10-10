@@ -6,10 +6,11 @@ import dagger.Component;
 import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.data.datamanagers.AuthDataManager;
 import piuk.blockchain.android.ui.account.AccountEditViewModel;
+import piuk.blockchain.android.ui.account.AccountViewModel;
 import piuk.blockchain.android.ui.auth.PasswordRequiredViewModel;
 import piuk.blockchain.android.ui.auth.PinEntryViewModel;
 import piuk.blockchain.android.ui.backup.ConfirmFundsTransferViewModel;
-import piuk.blockchain.android.ui.home.BalanceViewModel;
+import piuk.blockchain.android.ui.balance.BalanceViewModel;
 import piuk.blockchain.android.ui.home.MainViewModel;
 import piuk.blockchain.android.ui.launcher.LauncherViewModel;
 import piuk.blockchain.android.ui.pairing.ManualPairingViewModel;
@@ -71,4 +72,6 @@ public interface ApplicationComponent {
     void inject(TransactionDetailViewModel transactionDetailViewModel);
 
     void inject(ConfirmFundsTransferViewModel confirmFundsTransferViewModel);
+
+    void inject(AccountViewModel accountViewModel);
 }

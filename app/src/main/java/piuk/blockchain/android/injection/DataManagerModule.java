@@ -1,6 +1,8 @@
 package piuk.blockchain.android.injection;
 
+import info.blockchain.api.AddressInfo;
 import info.blockchain.api.Unspent;
+import info.blockchain.wallet.multiaddr.MultiAddrFactory;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.payment.Payment;
 
@@ -8,10 +10,12 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import piuk.blockchain.android.data.datamanagers.AccountDataManager;
 import piuk.blockchain.android.data.datamanagers.AuthDataManager;
 import piuk.blockchain.android.data.datamanagers.ReceiveDataManager;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
 import piuk.blockchain.android.data.datamanagers.TransferFundsDataManager;
+import piuk.blockchain.android.data.services.AddressInfoService;
 import piuk.blockchain.android.ui.receive.WalletAccountHelper;
 import piuk.blockchain.android.ui.transactions.TransactionHelper;
 
@@ -55,5 +59,11 @@ public class DataManagerModule {
     @Provides
     protected TransactionHelper provideTransactionHelper(PayloadManager payloadManager) {
         return new TransactionHelper(payloadManager);
+    }
+
+    @Provides
+    @Singleton
+    protected AccountDataManager provideAccountDataManager(PayloadManager payloadManager, MultiAddrFactory multiAddrFactory) {
+        return new AccountDataManager(payloadManager, multiAddrFactory, new AddressInfoService(new AddressInfo()));
     }
 }

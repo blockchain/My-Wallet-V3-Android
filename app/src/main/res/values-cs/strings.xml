@@ -72,7 +72,7 @@
     <string name="LOGIN">Přihlásit se do peněženky</string>
     <string name="pair_your_wallet">Spárujte svoji peněženku</string>
     <string name="manual_pairing">Ruční spárování</string>
-    <string name="pair_wallet_step_1">Přihlaste se ke své peněžence Blockchain přes počítač nebo Mac na stránce https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Přihlaste se ke své peněžence Blockchain přes počítač nebo Mac na stránce %1$s.</string>
     <string name="pair_wallet_step_2">Pokud používáte původní peněženku, klikněte na tlačítko Nastavení účtu a vyberte kartu Zařízení. Pokud používáte svoji novou beta peněženku, přejděte do nabídky Nastavení / Informace o peněžence.</string>
     <string name="pair_wallet_step_3">Kliknutím na Zobrazit párovací kód zobrazíte QR kód, což je černobílý čárový kód ve tvaru čtverce. Naskenujte kód pomocí fotoaparátu.</string>
     <string name="disable_two_factor">Dříve než se pokusíte spárovat svoji peněženku ručně, musíte deaktivovat dvoufaktorovou autentizaci</string>

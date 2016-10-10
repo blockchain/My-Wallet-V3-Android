@@ -309,7 +309,7 @@ public class ReceiveViewModelTest {
         when(mockHdWallet.getAccounts()).thenReturn(accounts);
 
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
-        when(mPayloadManager.getReceiveAddress(anyInt())).thenReturn("test address");
+        when(mPayloadManager.getNextReceiveAddress(anyInt())).thenReturn("test address");
         // Act
         mSubject.onViewReady(); // Update account list first
         String value = mSubject.getV3ReceiveAddress(account2);
@@ -335,7 +335,7 @@ public class ReceiveViewModelTest {
         when(mockHdWallet.getAccounts()).thenReturn(accounts);
 
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
-        when(mPayloadManager.getReceiveAddress(anyInt())).thenThrow(new RuntimeException());
+        when(mPayloadManager.getNextReceiveAddress(anyInt())).thenThrow(new RuntimeException());
         // Act
         mSubject.onViewReady(); // Update account list first
         String value = mSubject.getV3ReceiveAddress(account2);

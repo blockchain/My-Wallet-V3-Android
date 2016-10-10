@@ -29,6 +29,9 @@ import piuk.blockchain.android.util.ViewUtils;
 
 public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewModel.DataListener {
 
+    public static final String KEY_VALIDATING_PIN_FOR_RESULT = "validating_pin";
+    public static final String KEY_VALIDATED_PIN = "validated_pin";
+    public static final int REQUEST_CODE_VALIDATE_PIN = 88;
     private static final int COOL_DOWN_MILLIS = 2 * 1000;
     private static final int PIN_LENGTH = 4;
     private static final Handler mDelayHandler = new Handler();
@@ -72,7 +75,7 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
             new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                     .setMessage(getString(R.string.check_connectivity_exit))
                     .setCancelable(false)
-                    .setPositiveButton(R.string.dialog_continue, (dialog, id) -> restartPage())
+                    .setPositiveButton(R.string.dialog_continue, (dialog, id) -> restartPageAndClearTop())
                     .create()
                     .show();
         }
@@ -91,7 +94,10 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
 
     @Override
     public void onBackPressed() {
-        if (mViewModel.allowExit()) {
+        if (mViewModel.isForValidatingPinForResult()) {
+            finishWithResultCanceled();
+
+        } else if (mViewModel.allowExit()) {
             if (mBackPressed + COOL_DOWN_MILLIS > System.currentTimeMillis()) {
                 AccessState.getInstance().logout(this);
                 return;
@@ -146,6 +152,7 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
         startActivity(intent);
     }
 
+    @SuppressWarnings("unused") // DataBindingMethod
     public void padClicked(View view) {
         mViewModel.padClicked(view);
     }
@@ -160,6 +167,7 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
         mBinding.titleBox.setVisibility(visibility);
     }
 
+    @SuppressWarnings("unused") // DataBindingMethod
     public void deleteClicked(View view) {
         mViewModel.onDeleteClicked();
     }
@@ -170,7 +178,7 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
     }
 
     @Override
-    public void restartPage() {
+    public void restartPageAndClearTop() {
         Intent intent = new Intent(this, PinEntryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -205,7 +213,7 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
                     if (pw.length() > 0) {
                         mViewModel.validatePassword(new CharSequenceX(pw));
                     } else {
-                        mViewModel.incrementFailureCount();
+                        mViewModel.incrementFailureCountAndRestart();
                     }
 
                 }).show();
@@ -242,6 +250,22 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
     protected void onResume() {
         super.onResume();
         mViewModel.clearPinBoxes();
+    }
+
+    @Override
+    public void finishWithResultOk(String pin) {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_VALIDATED_PIN, pin);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private void finishWithResultCanceled() {
+        Intent intent = new Intent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
     }
 
     @Override

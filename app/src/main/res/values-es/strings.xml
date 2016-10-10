@@ -72,7 +72,7 @@
     <string name="LOGIN">Iniciar sesión en mi monedero</string>
     <string name="pair_your_wallet">Sincronizar tu monedero</string>
     <string name="manual_pairing">Sincronización manual</string>
-    <string name="pair_wallet_step_1">Inicia sesión en tu monedero Blockchain a través de tu PC o Mac en https://blockchain.info/wallet.</string>
+    <string name="pair_wallet_step_1">Inicia sesión en tu monedero Blockchain a través de tu PC o Mac en %1$s.</string>
     <string name="pair_wallet_step_2">Si estás usando un monedero antiguo, haz clic en el botón Configuración de la Cuenta y selecciona la pestaña de Dispositivos. Si estás usando nuestro nuevo monedero beta, ve a Configuración / Información del monedero.</string>
     <string name="pair_wallet_step_3">Haz clic en Mostrar código de sincronización para mostrar un código QR, un código de barras cuadrado en blanco y negro. Escanea el código con tu cámara.</string>
     <string name="disable_two_factor">Debes desactivar la autentificación de dos factores antes de intentar sincronizar manualmente tu monedero.</string>
