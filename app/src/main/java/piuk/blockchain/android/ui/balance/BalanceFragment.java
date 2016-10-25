@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Tx;
 
 import org.json.JSONException;
 import org.json.JSONObject;

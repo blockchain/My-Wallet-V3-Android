@@ -111,7 +111,7 @@ public class ReceiveViewModelTest {
         when(mockPayload.isUpgraded()).thenReturn(true);
         when(mockPayload.getHdWallet()).thenReturn(mockHdWallet);
         when(mockHdWallet.getAccounts()).thenReturn(accounts);
-        when(mockPayload.getLegacyAddresses()).thenReturn(legacyAddresses);
+        when(mockPayload.getLegacyAddressList()).thenReturn(legacyAddresses);
         // Act
         mSubject.onViewReady();
         // Assert

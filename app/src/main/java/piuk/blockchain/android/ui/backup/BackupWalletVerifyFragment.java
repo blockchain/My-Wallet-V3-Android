@@ -61,7 +61,7 @@ public class BackupWalletVerifyFragment extends Fragment {
 
                 showProgressDialog();
 
-                PayloadManager.getInstance().getPayload().getHdWallet().mnemonic_verified(true);
+                PayloadManager.getInstance().getPayload().getHdWallet().setMnemonicVerified(true);
                 PayloadBridge.getInstance().remoteSaveThread(new PayloadBridge.PayloadSaveListener() {
                     @Override
                     public void onSaveSuccess() {

@@ -58,8 +58,8 @@ public class AccountDataManager {
      */
     public Observable<Boolean> setPrivateKey(ECKey key, @Nullable CharSequenceX secondPassword) {
         Payload payload = payloadManager.getPayload();
-        int index = payload.getLegacyAddressStrings().indexOf(key.toAddress(MainNetParams.get()).toString());
-        LegacyAddress legacyAddress = payload.getLegacyAddresses().get(index);
+        int index = payload.getLegacyAddressStringList().indexOf(key.toAddress(MainNetParams.get()).toString());
+        LegacyAddress legacyAddress = payload.getLegacyAddressList().get(index);
         try {
             setKeyForLegacyAddress(legacyAddress, key, secondPassword);
         } catch (Exception e) {
@@ -120,7 +120,7 @@ public class AccountDataManager {
 
     private Observable<Long> addAddressAndUpdate(LegacyAddress address) {
         try {
-            List<String> legacyAddressList = payloadManager.getPayload().getLegacyAddressStrings();
+            List<String> legacyAddressList = payloadManager.getPayload().getLegacyAddressStringList();
             multiAddrFactory.refreshLegacyAddressData(legacyAddressList.toArray(new String[legacyAddressList.size()]), false);
         } catch (Exception e) {
             throw Exceptions.propagate(e);

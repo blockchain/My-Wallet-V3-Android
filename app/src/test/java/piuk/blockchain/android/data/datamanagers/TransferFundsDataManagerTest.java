@@ -83,7 +83,7 @@ public class TransferFundsDataManagerTest extends RxTest {
         HDWallet mockHdWallet = mock(HDWallet.class);
         when(mockPayload.getHdWallet()).thenReturn(mockHdWallet);
         when(mockHdWallet.getDefaultIndex()).thenReturn(0);
-        when(mockPayload.getLegacyAddresses()).thenReturn(legacyAddresses);
+        when(mockPayload.getLegacyAddressList()).thenReturn(legacyAddresses);
         when(mUnspentApi.getUnspentOutputs(anyString())).thenReturn(mock(JSONObject.class));
         UnspentOutputs mockUnspentOutputs = mock(UnspentOutputs.class);
         when(mPayment.getCoins(any(JSONObject.class))).thenReturn(mockUnspentOutputs);

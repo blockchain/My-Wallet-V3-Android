@@ -81,12 +81,12 @@ public class WebSocketService extends android.app.Service {
 
     private String[] getAddresses() {
 
-        int nbLegacy = payloadManager.getPayload().getLegacyAddresses().size();
+        int nbLegacy = payloadManager.getPayload().getLegacyAddressList().size();
         final String[] addrs = new String[nbLegacy];
         for (int i = 0; i < nbLegacy; i++) {
-            String s = payloadManager.getPayload().getLegacyAddresses().get(i).getAddress();
+            String s = payloadManager.getPayload().getLegacyAddressList().get(i).getAddress();
             if (s != null && s.length() > 0) {
-                addrs[i] = payloadManager.getPayload().getLegacyAddresses().get(i).getAddress();
+                addrs[i] = payloadManager.getPayload().getLegacyAddressList().get(i).getAddress();
             }
         }
 

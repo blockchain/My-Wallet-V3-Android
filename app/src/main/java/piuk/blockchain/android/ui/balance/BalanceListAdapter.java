@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Tx;
 
 import java.util.List;
 

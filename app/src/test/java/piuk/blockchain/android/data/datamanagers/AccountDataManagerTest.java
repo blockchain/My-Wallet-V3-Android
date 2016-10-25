@@ -109,9 +109,9 @@ public class AccountDataManagerTest extends RxTest {
         TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().indexOf(any())).thenReturn(0);
+        when(mockPayload.getLegacyAddressStringList().indexOf(any())).thenReturn(0);
         when(mockPayload.isDoubleEncrypted()).thenReturn(false);
-        when(mockPayload.getLegacyAddresses().get(anyInt())).thenReturn(mock(LegacyAddress.class));
+        when(mockPayload.getLegacyAddressList().get(anyInt())).thenReturn(mock(LegacyAddress.class));
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(payloadManager.savePayloadToServer()).thenReturn(true);
         ECKey mockECKey = mock(ECKey.class);
@@ -130,9 +130,9 @@ public class AccountDataManagerTest extends RxTest {
         TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().indexOf(any())).thenReturn(0);
+        when(mockPayload.getLegacyAddressStringList().indexOf(any())).thenReturn(0);
         when(mockPayload.isDoubleEncrypted()).thenReturn(true);
-        when(mockPayload.getLegacyAddresses().get(anyInt())).thenReturn(mock(LegacyAddress.class));
+        when(mockPayload.getLegacyAddressList().get(anyInt())).thenReturn(mock(LegacyAddress.class));
         when(mockPayload.getSharedKey()).thenReturn("shared key");
         when(mockPayload.getOptions().getIterations()).thenReturn(10);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
@@ -154,7 +154,7 @@ public class AccountDataManagerTest extends RxTest {
         TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         LegacyAddress mockLegacyAddress = mock(LegacyAddress.class);
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getLegacyAddressStrings()).thenReturn(new ArrayList<>());
+        when(mockPayload.getLegacyAddressStringList()).thenReturn(new ArrayList<>());
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(payloadManager.addLegacyAddress(mockLegacyAddress)).thenReturn(true);
         when(addressInfoService.getAddressBalance(any(LegacyAddress.class), anyString())).thenReturn(Observable.just(0L));
@@ -172,7 +172,7 @@ public class AccountDataManagerTest extends RxTest {
         TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         LegacyAddress mockLegacyAddress = mock(LegacyAddress.class);
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getLegacyAddressStrings()).thenReturn(new ArrayList<>());
+        when(mockPayload.getLegacyAddressStringList()).thenReturn(new ArrayList<>());
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(payloadManager.addLegacyAddress(mockLegacyAddress)).thenReturn(false);
         // Act
@@ -189,7 +189,7 @@ public class AccountDataManagerTest extends RxTest {
         TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         LegacyAddress mockLegacyAddress = mock(LegacyAddress.class);
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getLegacyAddressStrings()).thenReturn(new ArrayList<>());
+        when(mockPayload.getLegacyAddressStringList()).thenReturn(new ArrayList<>());
         when(payloadManager.addLegacyAddress(mockLegacyAddress)).thenReturn(true);
         // Act
         subject.updateLegacyAddress(mockLegacyAddress).toBlocking().subscribe(subscriber);

@@ -238,7 +238,7 @@ public class AccountViewModel extends BaseViewModel {
     private void importWatchOnlyAddress(String address) {
         if (!FormatsUtil.getInstance().isValidBitcoinAddress(correctAddressFormatting(address))) {
             dataListener.showToast(R.string.invalid_bitcoin_address, ToastCustom.TYPE_ERROR);
-        } else if (payloadManager.getPayload().getLegacyAddressStrings().contains(address)) {
+        } else if (payloadManager.getPayload().getLegacyAddressStringList().contains(address)) {
             dataListener.showToast(R.string.address_already_in_wallet, ToastCustom.TYPE_ERROR);
         } else {
             // Do some things
@@ -275,13 +275,13 @@ public class AccountViewModel extends BaseViewModel {
     @VisibleForTesting
     void handlePrivateKey(ECKey key, @Nullable CharSequenceX secondPassword) {
         if (key != null && key.hasPrivKey()
-                && payloadManager.getPayload().getLegacyAddressStrings().contains(key.toAddress(MainNetParams.get()).toString())) {
+                && payloadManager.getPayload().getLegacyAddressStringList().contains(key.toAddress(MainNetParams.get()).toString())) {
 
             // A private key to an existing address has been scanned
             setPrivateECKey(key, secondPassword);
 
         } else if (key != null && key.hasPrivKey()
-                && !payloadManager.getPayload().getLegacyAddressStrings().contains(key.toAddress(MainNetParams.get()).toString())) {
+                && !payloadManager.getPayload().getLegacyAddressStringList().contains(key.toAddress(MainNetParams.get()).toString())) {
             LegacyAddress legacyAddress =
                     new LegacyAddress(
                             null,

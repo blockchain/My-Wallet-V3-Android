@@ -170,10 +170,9 @@ public class AccountEditViewModel extends BaseViewModel {
 
             //V2
             ImportedAccount iAccount = null;
-            if (payloadManager.getPayload().getLegacyAddresses().size() > 0) {
+            if (payloadManager.getPayload().getLegacyAddressList().size() > 0) {
                 iAccount = new ImportedAccount(context.getString(R.string.imported_addresses),
-                        payloadManager.getPayload().getLegacyAddresses(),
-                        new ArrayList<>(),
+                        payloadManager.getPayload().getLegacyAddressList(),
                         MultiAddrFactory.getInstance().getLegacyBalance());
             }
 
@@ -314,7 +313,7 @@ public class AccountEditViewModel extends BaseViewModel {
                 return false;
         } else {
             //V2 - must have a single unarchived address
-            List<LegacyAddress> allActiveLegacyAddresses = payloadManager.getPayload().getActiveLegacyAddresses();
+            List<LegacyAddress> allActiveLegacyAddresses = payloadManager.getPayload().getActiveLegacyAddressList();
             return (allActiveLegacyAddresses.size() > 1);
         }
 
@@ -768,10 +767,10 @@ public class AccountEditViewModel extends BaseViewModel {
     }
 
     private void importUnmatchedPrivateKey(ECKey key) throws Exception {
-        if (payloadManager.getPayload().getLegacyAddressStrings().contains(key.toAddress(MainNetParams.get()).toString())) {
+        if (payloadManager.getPayload().getLegacyAddressStringList().contains(key.toAddress(MainNetParams.get()).toString())) {
             // Wallet contains address associated with this private key, find & save it with scanned key
             String foundAddressString = key.toAddress(MainNetParams.get()).toString();
-            for (LegacyAddress legacyAddress : payloadManager.getPayload().getLegacyAddresses()) {
+            for (LegacyAddress legacyAddress : payloadManager.getPayload().getLegacyAddressList()) {
                 if (legacyAddress.getAddress().equals(foundAddressString)) {
                     importAddressPrivateKey(key, legacyAddress, false);
                 }
@@ -802,14 +801,14 @@ public class AccountEditViewModel extends BaseViewModel {
     private void remoteSaveUnmatchedPrivateKey(final LegacyAddress legacyAddress) {
 
         Payload updatedPayload = payloadManager.getPayload();
-        List<LegacyAddress> updatedLegacyAddresses = updatedPayload.getLegacyAddresses();
+        List<LegacyAddress> updatedLegacyAddresses = updatedPayload.getLegacyAddressList();
         updatedLegacyAddresses.add(legacyAddress);
-        updatedPayload.setLegacyAddresses(updatedLegacyAddresses);
+        updatedPayload.setLegacyAddressList(updatedLegacyAddresses);
         payloadManager.setPayload(updatedPayload);
 
         if (payloadManager.savePayloadToServer()) {
 
-            List<String> legacyAddressList = payloadManager.getPayload().getLegacyAddressStrings();
+            List<String> legacyAddressList = payloadManager.getPayload().getLegacyAddressStringList();
             try {
                 MultiAddrFactory.getInstance().refreshLegacyAddressData(legacyAddressList.toArray(new String[legacyAddressList.size()]), false);
             } catch (Exception e) {

@@ -141,7 +141,7 @@ public class ReceiveViewModel extends BaseViewModel {
         }
 
         // Legacy Addresses
-        List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddresses();
+        List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddressList();
         for (LegacyAddress legacyAddress : legacyAddresses) {
 
             if (legacyAddress.getTag() == LegacyAddress.ARCHIVED_ADDRESS)

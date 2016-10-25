@@ -1,7 +1,7 @@
 package piuk.blockchain.android.data.services;
 
 import info.blockchain.api.TransactionDetails;
-import info.blockchain.wallet.payload.Transaction;
+import info.blockchain.wallet.transaction.Transaction;
 
 import org.junit.Before;
 import org.junit.Test;

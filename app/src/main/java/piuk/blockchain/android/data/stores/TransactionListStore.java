@@ -1,7 +1,7 @@
 package piuk.blockchain.android.data.stores;
 
-import info.blockchain.wallet.payload.Tx;
-import info.blockchain.wallet.payload.TxMostRecentDateComparator;
+import info.blockchain.wallet.transaction.Tx;
+import info.blockchain.wallet.transaction.TxMostRecentDateComparator;
 
 import java.util.List;
 

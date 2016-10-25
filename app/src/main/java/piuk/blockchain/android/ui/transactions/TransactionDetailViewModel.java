@@ -8,8 +8,8 @@ import android.support.v4.util.Pair;
 
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.payload.Transaction;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Transaction;
+import info.blockchain.wallet.transaction.Tx;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,7 +55,8 @@ public class TransactionDetailViewModel extends BaseViewModel {
     private double mBtcExchangeRate;
     private String mFiatType;
 
-    @VisibleForTesting Tx mTransaction;
+    @VisibleForTesting
+    Tx mTransaction;
 
     public interface DataListener {
 
@@ -212,12 +213,12 @@ public class TransactionDetailViewModel extends BaseViewModel {
     }
 
     private void setTransactionNote(Tx transaction) {
-        String notes = mPayloadManager.getPayload().getNotes().get(transaction.getHash());
+        String notes = mPayloadManager.getPayload().getTransactionNotesMap().get(transaction.getHash());
         mDataListener.setDescription(notes);
     }
 
     public String getTransactionNote() {
-        return mPayloadManager.getPayload().getNotes().get(mTransaction.getHash());
+        return mPayloadManager.getPayload().getTransactionNotesMap().get(mTransaction.getHash());
     }
 
     @VisibleForTesting

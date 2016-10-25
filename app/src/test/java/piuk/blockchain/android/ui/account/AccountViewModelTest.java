@@ -337,7 +337,7 @@ public class AccountViewModelTest {
         // Arrange
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().contains(any())).thenReturn(true);
+        when(mockPayload.getLegacyAddressStringList().contains(any())).thenReturn(true);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         // Act
         subject.onAddressScanned("17UovdU9ZvepPe75igTQwxqNME1HbnvMB7");
@@ -352,7 +352,7 @@ public class AccountViewModelTest {
         // Arrange
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().contains(any())).thenReturn(false);
+        when(mockPayload.getLegacyAddressStringList().contains(any())).thenReturn(false);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         // Act
         subject.onAddressScanned("17UovdU9ZvepPe75igTQwxqNME1HbnvMB7");
@@ -394,7 +394,7 @@ public class AccountViewModelTest {
         when(mockECKey.toAddress(any(NetworkParameters.class))).thenReturn(mock(Address.class));
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().contains(any())).thenReturn(true);
+        when(mockPayload.getLegacyAddressStringList().contains(any())).thenReturn(true);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(accountDataManager.setPrivateKey(mockECKey, null)).thenReturn(Observable.just(true));
         // Act
@@ -414,7 +414,7 @@ public class AccountViewModelTest {
         when(mockECKey.toAddress(any(NetworkParameters.class))).thenReturn(mock(Address.class));
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().contains(any())).thenReturn(true);
+        when(mockPayload.getLegacyAddressStringList().contains(any())).thenReturn(true);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(accountDataManager.setPrivateKey(mockECKey, null)).thenReturn(Observable.just(false));
         // Act
@@ -433,7 +433,7 @@ public class AccountViewModelTest {
         when(mockECKey.toAddress(any(NetworkParameters.class))).thenReturn(mock(Address.class));
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().contains(any())).thenReturn(false);
+        when(mockPayload.getLegacyAddressStringList().contains(any())).thenReturn(false);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         // Act
         subject.handlePrivateKey(mockECKey, null);

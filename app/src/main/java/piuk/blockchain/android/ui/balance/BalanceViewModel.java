@@ -16,10 +16,9 @@ import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.ImportedAccount;
 import info.blockchain.wallet.payload.LegacyAddress;
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Tx;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,8 +41,6 @@ import rx.subscriptions.CompositeSubscription;
 @SuppressWarnings("WeakerAccess")
 public class BalanceViewModel extends BaseObservable implements ViewModel {
 
-    private static final String TAG_IMPORTED_ADDRESSES = "TAG_IMPORTED_ADDRESSES";
-    private static final String TAG_ALL = "TAG_ALL";
     private static final long ONE_MONTH = 28 * 24 * 60 * 60 * 1000L;
 
     private Context context;
@@ -205,7 +202,7 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
 
         //All accounts/addresses
         List<Account> allAccounts;
-        List<LegacyAddress> allLegacyAddresses = payloadManager.getPayload().getLegacyAddresses();
+        List<LegacyAddress> allLegacyAddresses = payloadManager.getPayload().getLegacyAddressList();
 
         //Only active accounts/addresses (exclude archived)
         List<Account> activeAccounts = new ArrayList<>();
@@ -234,7 +231,8 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
                 //Only V3 will display "All"
                 Account all = new Account();
                 all.setLabel(context.getResources().getString(R.string.all_accounts));
-                all.setTags(Collections.singletonList(TAG_ALL));
+//                all.setsetTags(Collections.singletonList(TAG_ALL));
+                all.setRealIdx(TransactionListDataManager.INDEX_ALL_REAL);
                 String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(all));
                 activeAccountAndAddressList.add(new ItemAccount(all.getLabel(), balance, null, null));
                 activeAccountAndAddressBiMap.put(all, spinnerIndex);
@@ -244,10 +242,10 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
 
                 //V2 "All" at top of accounts spinner if wallet contains multiple legacy addresses
                 ImportedAccount iAccount = new ImportedAccount(context.getString(R.string.total_funds),
-                        payloadManager.getPayload().getLegacyAddresses(),
-                        new ArrayList<>(),
+                        payloadManager.getPayload().getLegacyAddressList(),
                         MultiAddrFactory.getInstance().getLegacyBalance());
-                iAccount.setTags(Collections.singletonList(TAG_ALL));
+//                iAccount.setTags(Collections.singletonList(TAG_ALL));
+                iAccount.setRealIdx(TransactionListDataManager.INDEX_IMPORTED_ADDRESSES);
                 String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(iAccount));
                 activeAccountAndAddressList.add(new ItemAccount(iAccount.getLabel(), balance, null, null));
                 activeAccountAndAddressBiMap.put(iAccount, spinnerIndex);
@@ -273,10 +271,10 @@ public class BalanceViewModel extends BaseObservable implements ViewModel {
 
             //Only V3 - Consolidate and add Legacy addresses to "Imported Addresses" at bottom of accounts spinner
             ImportedAccount iAccount = new ImportedAccount(context.getString(R.string.imported_addresses),
-                    payloadManager.getPayload().getLegacyAddresses(),
-                    new ArrayList<>(),
+                    payloadManager.getPayload().getLegacyAddressList(),
                     MultiAddrFactory.getInstance().getLegacyBalance());
-            iAccount.setTags(Collections.singletonList(TAG_IMPORTED_ADDRESSES));
+//            iAccount.setTags(Collections.singletonList(TAG_IMPORTED_ADDRESSES));
+            iAccount.setRealIdx(TransactionListDataManager.INDEX_IMPORTED_ADDRESSES);
             String balance = getBalanceString(true, transactionListDataManager.getBtcBalance(iAccount));
             activeAccountAndAddressList.add(new ItemAccount(iAccount.getLabel(), balance, null, null));
             activeAccountAndAddressBiMap.put(iAccount, spinnerIndex);

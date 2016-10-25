@@ -48,7 +48,7 @@ public class WalletAccountHelper {
         accountList.addAll(getHdAccounts(isBtc));
 
         // V2
-        List<LegacyAddress> legacyAddresses = payloadManager.getPayload().getLegacyAddresses();
+        List<LegacyAddress> legacyAddresses = payloadManager.getPayload().getLegacyAddressList();
         for (LegacyAddress legacyAddress : legacyAddresses) {
 
             if (legacyAddress.getTag() == LegacyAddress.ARCHIVED_ADDRESS)
@@ -107,7 +107,7 @@ public class WalletAccountHelper {
     public List<ItemAccount> getAddressBookEntries() {
         List<ItemAccount> itemAccountList = new ArrayList<>();
 
-        List<AddressBookEntry> addressBookEntries = payloadManager.getPayload().getAddressBookEntries();
+        List<AddressBookEntry> addressBookEntries = payloadManager.getPayload().getAddressBookEntryList();
         for (AddressBookEntry addressBookEntry : addressBookEntries) {
 
             // If address has no label, we'll display address

@@ -264,10 +264,9 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
         hdAccountsIdx = correctedPosition;
 
         ImportedAccount iAccount = null;
-        if (payloadManager.getPayload().getLegacyAddresses().size() > 0) {
+        if (payloadManager.getPayload().getLegacyAddressList().size() > 0) {
             iAccount = new ImportedAccount(getString(R.string.imported_addresses),
-                    payloadManager.getPayload().getLegacyAddresses(),
-                    new ArrayList<>(),
+                    payloadManager.getPayload().getLegacyAddressList(),
                     MultiAddrFactory.getInstance().getLegacyBalance());
         }
 

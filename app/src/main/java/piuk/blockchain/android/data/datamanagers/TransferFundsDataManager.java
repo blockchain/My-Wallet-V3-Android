@@ -54,7 +54,7 @@ public class TransferFundsDataManager {
         return Observable.fromCallable(() -> {
                     BigInteger suggestedFeePerKb = DynamicFeeCache.getInstance().getSuggestedFee().defaultFeePerKb;
                     List<PendingTransaction> pendingTransactionList = new ArrayList<>();
-                    List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddresses();
+                    List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddressList();
 
                     long totalToSend = 0L;
                     long totalFee = 0L;

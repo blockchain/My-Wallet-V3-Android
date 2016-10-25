@@ -8,8 +8,8 @@ import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.HDWallet;
 import info.blockchain.wallet.payload.Payload;
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.payload.Transaction;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Transaction;
+import info.blockchain.wallet.transaction.Tx;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +33,7 @@ public class TransactionHelper {
      */
     @NonNull
     public String addressToLabel(String address) {
+
         HDWallet hdWallet = payloadManager.getPayload().getHdWallet();
         List<Account> accountList = new ArrayList<>();
         if (hdWallet != null && hdWallet.getAccounts() != null) {
@@ -47,18 +48,18 @@ public class TransactionHelper {
                 // Even though it looks like this shouldn't happen, it sometimes happens with
                 // transfers if user clicks to view details immediately.
                 // TODO - see if isOwnHDAddress could be updated to solve this
-                int accIndex = payloadManager.getPayload().getXpub2Account().get(xpub);
+                int accIndex = payloadManager.getXpubToAccountIndexMap().get(xpub);
                 String label = accountList.get(accIndex).getLabel();
                 if (label != null && !label.isEmpty())
                     return label;
             }
             // If address one of owned legacy addresses
-        } else if (payloadManager.getPayload().getLegacyAddressStrings().contains(address)
-                || payloadManager.getPayload().getWatchOnlyAddressStrings().contains(address)) {
+        } else if (payloadManager.getPayload().getLegacyAddressStringList().contains(address)
+                || payloadManager.getPayload().getWatchOnlyAddressStringList().contains(address)) {
 
             Payload payload = payloadManager.getPayload();
 
-            String label = payload.getLegacyAddresses().get(payload.getLegacyAddressStrings().indexOf(address)).getLabel();
+            String label = payload.getLegacyAddressList().get(payload.getLegacyAddressStringList().indexOf(address)).getLabel();
             if (label != null && !label.isEmpty()) {
                 return label;
             }
@@ -127,8 +128,8 @@ public class TransactionHelper {
                     outputMap.put(output.addr, output.value);
                 }
 
-            } else if (payloadManager.getPayload().getLegacyAddressStrings().contains(output.addr)
-                    || payloadManager.getPayload().getWatchOnlyAddressStrings().contains(output.addr)) {
+            } else if (payloadManager.getPayload().getLegacyAddressStringList().contains(output.addr)
+                    || payloadManager.getPayload().getWatchOnlyAddressStringList().contains(output.addr)) {
                 // If output address belongs to a legacy address we own - we have to check if it's change
                 // If it goes back to same address AND if it's not the total amount sent
                 // (inputs x and y could send to output y in which case y is not receiving change, but rather the total amount)
