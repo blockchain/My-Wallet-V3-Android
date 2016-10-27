@@ -31,11 +31,13 @@ android {
             resValue "string", "google_maps_key", "AIzaSyB_5WN2exwvF4pqQ6rW6JdkHcYWjZOim4w"
             multiDexEnabled false
             buildConfigField "boolean", "DOGFOOD", "false"
+            buildConfigField "boolean", "REPORT_CRASH", "true"
         }
         debug {
             resValue "string", "google_maps_key", "AIzaSyASTnx7wjsCTkMr_RtLQYTzMAf7A9SWIMw"
             multiDexEnabled true
             buildConfigField "boolean", "DOGFOOD", "false"
+            buildConfigField "boolean", "REPORT_CRASH", "false"
         }
         dogfood {
             signingConfig signingConfigs.debug
@@ -49,6 +51,7 @@ android {
             resValue "string", "google_maps_key", "AIzaSyB_5WN2exwvF4pqQ6rW6JdkHcYWjZOim4w"
             multiDexEnabled false
             buildConfigField "boolean", "DOGFOOD", "true"
+            buildConfigField "boolean", "REPORT_CRASH", "false"
         }
     }
 
@@ -100,7 +103,7 @@ android {
 
 ext {
     supportVersion = '25.0.0'
-    googleServicesVersion = '9.6.1'
+    googleServicesVersion = '9.8.0'
     rxJavaVersion = '1.2.1'
 }
 
@@ -114,6 +117,8 @@ dependencies {
     compile "com.android.support:preference-v7:$supportVersion"
     compile "com.android.support:preference-v14:$supportVersion"
 
+    // Enable crash reporting only for release version
+    releaseCompile "com.google.firebase:firebase-crash:$googleServicesVersion"
     compile "com.google.android.gms:play-services-maps:$googleServicesVersion"
     compile 'org.slf4j:slf4j-api:1.7.13'
     compile 'org.bitcoinj:bitcoinj-core:0.13.4'
@@ -175,3 +180,6 @@ repositories {
     jcenter()
     maven { url "https://jitpack.io" }
 }
+
+// This must remain at the bottom of this file until Google work out a better way to do this
+apply plugin: 'com.google.gms.google-services'

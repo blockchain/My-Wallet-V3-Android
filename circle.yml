@@ -21,6 +21,8 @@ dependencies:
     - if [ ! -d "/usr/local/android-sdk-linux/build-tools/25.0.0" ]; then echo y | android update sdk --no-ui --all --filter "build-tools-25.0.0"; fi
     # Android Support Repository, revision 39 / Local Maven repository for Support Libraries
     - if [ ! -d "/usr/local/android-sdk-linux/extras/android/m2repository/com/android/support/design/25.0.0" ]; then echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"; fi
+    # Google Support Repository, revision 38 / Local Maven repository for Google Play Services
+    - if [ ! -d "/usr/local/android-sdk-linux/extras/google/m2repository/com/google/android/gms/play-services/9.8.0" ]; then echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"; fi
     - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
   cache_directories:
@@ -31,6 +33,9 @@ dependencies:
     - '/usr/local/android-sdk-linux/extras/android/m2repository'
 
 test:
+  pre:
+    # Decode Firebase API key
+    - echo $FIREBASE_API_JSON | base64 --decode > app/google-services.json
   override:
     - ./gradlew assembleDevDebug testDevDebugUnitTest testDevDebugUnitTestCoverage coveralls --no-daemon -Dpre-dex=false -Porg.gradle.parallel=false -Pcom.android.build.threadPoolSize=1 --stacktrace
   post:
