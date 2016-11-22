@@ -65,6 +65,7 @@ public class BackupWalletStartingFragment extends Fragment {
             } else {
                 Intent intent = new Intent(getActivity(), PinEntryActivity.class);
                 intent.putExtra(KEY_VALIDATING_PIN_FOR_RESULT, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, REQUEST_CODE_VALIDATE_PIN);
             }
         });
@@ -75,7 +76,7 @@ public class BackupWalletStartingFragment extends Fragment {
     @Thunk
     void loadFragment(Fragment fragment) {
         getFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
                 .replace(R.id.content_frame, fragment)
                 .addToBackStack(null)
                 .commit();

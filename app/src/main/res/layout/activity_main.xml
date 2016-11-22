@@ -11,10 +11,10 @@
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-        android:fitsSystemWindows="true"
-        app:insetForeground="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:insetForeground="@color/white">
 
         <!-- This LinearLayout represents the contents of the screen  -->
         <LinearLayout
@@ -43,9 +43,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@android:color/white"
-            android:paddingTop="16dp"
-            app:insetForeground="@color/blockchain_blue"
             app:headerLayout="@layout/navigation_drawer_header"
+            app:insetForeground="@color/blockchain_dark_blue"
             app:menu="@menu/drawer_view" />
     </android.support.v4.widget.DrawerLayout>
 </layout>

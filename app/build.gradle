@@ -119,7 +119,7 @@ android {
 }
 
 ext {
-    supportVersion = '25.0.0'
+    supportVersion = '25.0.1'
     googleServicesVersion = '9.8.0'
     rxJavaVersion = '2.0.1'
 }
@@ -162,7 +162,7 @@ dependencies {
     // UI/Instrumentation Tests
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.3'
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile('com.android.support.test:runner:0.5') {
@@ -177,7 +177,7 @@ dependencies {
     testCompile 'org.slf4j:slf4j-simple:1.7.13'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
-    testCompile('org.robolectric:robolectric:3.1.2') {
+    testCompile('org.robolectric:robolectric:3.1.4') {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.protobuf'
     }

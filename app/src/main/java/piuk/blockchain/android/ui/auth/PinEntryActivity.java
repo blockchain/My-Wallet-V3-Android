@@ -284,6 +284,17 @@ public class PinEntryActivity extends BaseAuthActivity implements PinEntryViewMo
     }
 
     @Override
+    public void showAccountLockedDialog() {
+        new AlertDialog.Builder(this, R.style.AlertDialogStyle)
+                .setTitle(R.string.account_locked_title)
+                .setMessage(R.string.account_locked_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.exit, (dialogInterface, i) -> finish())
+                .create()
+                .show();
+    }
+
+    @Override
     public void showToast(@StringRes int message, @ToastCustom.ToastType String toastType) {
         ToastCustom.makeText(this, getString(message), ToastCustom.LENGTH_SHORT, toastType);
     }

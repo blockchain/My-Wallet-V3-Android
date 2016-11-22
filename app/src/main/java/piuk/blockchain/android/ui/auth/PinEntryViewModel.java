@@ -10,6 +10,7 @@ import android.support.annotation.VisibleForTesting;
 import android.view.View;
 import android.widget.TextView;
 
+import info.blockchain.wallet.exceptions.AccountLockedException;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
@@ -107,6 +108,8 @@ public class PinEntryViewModel extends BaseViewModel {
         void showFingerprintDialog(CharSequenceX pincode);
 
         void showKeyboard();
+
+        void showAccountLockedDialog();
 
     }
 
@@ -325,6 +328,9 @@ public class PinEntryViewModel extends BaseViewModel {
                                 //This shouldn't happen. HD fatal error - not safe to continue - don't clear credentials
                                 mDataListener.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR);
                                 mAppUtil.restartApp();
+
+                            } else if (throwable instanceof AccountLockedException) {
+                                mDataListener.showAccountLockedDialog();
                             }
 
                         }));
@@ -428,7 +434,7 @@ public class PinEntryViewModel extends BaseViewModel {
             textView.setBackgroundResource(R.drawable.rounded_view_blue_white_border);
         }
         mDataListener.setTitleVisibility(View.VISIBLE);
-        mDataListener.setTitleString(R.string.confirm_pin);
+        mDataListener.setTitleString(R.string.pin_entry);
     }
 
     public void incrementFailureCountAndRestart() {

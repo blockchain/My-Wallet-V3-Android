@@ -49,15 +49,13 @@
                     android:elevation="5dp"
                     android:gravity="center_vertical">
 
-                    <TextView
+                    <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/balance1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
+                        android:gravity="center_horizontal"
                         android:includeFontPadding="false"
-                        android:lineSpacingMultiplier="0"
                         android:text="@{viewModel.balance}"
                         android:textColor="@color/white"
                         android:textSize="28sp"
@@ -70,8 +68,8 @@
                         android:layout_below="@+id/balance1"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="-8dp"
-                        android:spinnerMode="dropdown"
                         android:dropDownVerticalOffset="8dp"
+                        android:spinnerMode="dropdown"
                         android:theme="@style/SpinnerWhite"
                         tools:text="All wallets" />
                 </RelativeLayout>

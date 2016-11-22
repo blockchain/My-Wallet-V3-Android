@@ -9,7 +9,6 @@ import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.util.CharSequenceX;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -189,7 +188,7 @@ public class SettingsViewModelTest {
         // Arrange
         CharSequenceX pincode = new CharSequenceX("");
         // Act
-        subject.pinCodeValidated(pincode);
+        subject.pinCodeValidatedForFingerprint(pincode);
         // Assert
         verify(activity).showFingerprintDialog(pincode);
     }
@@ -386,7 +385,7 @@ public class SettingsViewModelTest {
         verify(activity).showProgressDialog(anyInt());
         verify(activity).hideProgressDialog();
         //noinspection WrongConstant
-        verify(activity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
+        verify(activity).showWarningDialog(anyInt());
         verifyNoMoreInteractions(activity);
     }
 
@@ -400,8 +399,7 @@ public class SettingsViewModelTest {
         // Assert
         verify(activity).showProgressDialog(anyInt());
         verify(activity).hideProgressDialog();
-        //noinspection WrongConstant
-        verify(activity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
+        verify(activity).showWarningDialog(anyInt());
         verifyNoMoreInteractions(activity);
     }
 
@@ -511,46 +509,15 @@ public class SettingsViewModelTest {
     }
 
     @Test
-    public void validatePinSuccess() throws Exception {
+    public void pinCodeValidatedForChange() throws Exception {
         // Arrange
-        CharSequenceX charSequenceX = new CharSequenceX("1234");
-        when(accessState.validatePin(anyString())).thenReturn(Observable.just(charSequenceX));
+
         // Act
-        subject.validatePin(new CharSequenceX("1234"));
+        subject.pinCodeValidatedForChange();
         // Assert
-        verify(activity).showProgressDialog(anyInt());
-        verify(activity).hideProgressDialog();
-        verify(prefsUtil, times(2)).removeValue(anyString());
+        verify(prefsUtil).removeValue(PrefsUtil.KEY_PIN_FAILS);
+        verify(prefsUtil).removeValue(PrefsUtil.KEY_PIN_IDENTIFIER);
         verify(activity).goToPinEntryPage();
-        verifyNoMoreInteractions(activity);
-    }
-
-    @Ignore
-    @Test
-    public void validatePinFailed() throws Exception {
-//        // Arrange
-//        when(accessState.validatePin(anyString())).thenReturn(Observable.just(null));
-//        // Act
-//        subject.validatePin(new CharSequenceX("1234"));
-//        // Assert
-//        verify(activity).showProgressDialog(anyInt());
-//        verify(activity).hideProgressDialog();
-//        //noinspection WrongConstant
-//        verify(activity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
-//        verifyNoMoreInteractions(activity);
-    }
-
-    @Test
-    public void validatePinError() throws Exception {
-        // Arrange
-        when(accessState.validatePin(anyString())).thenReturn(Observable.error(new Throwable()));
-        // Act
-        subject.validatePin(new CharSequenceX("1234"));
-        // Assert
-        verify(activity).showProgressDialog(anyInt());
-        verify(activity).hideProgressDialog();
-        //noinspection WrongConstant
-        verify(activity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
         verifyNoMoreInteractions(activity);
     }
 

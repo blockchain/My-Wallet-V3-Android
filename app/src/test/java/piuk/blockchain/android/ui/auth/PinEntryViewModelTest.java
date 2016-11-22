@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import info.blockchain.wallet.exceptions.AccountLockedException;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
@@ -631,6 +632,21 @@ public class PinEntryViewModelTest {
         verify(mActivity).showProgressDialog(anyInt(), anyString());
         verify(mAuthDataManager).updatePayload(anyString(), anyString(), any(CharSequenceX.class));
         verify(mActivity).showWalletVersionNotSupportedDialog(anyString());
+    }
+
+    @Test
+    public void updatePayloadAccountLocked() throws Exception {
+        // Arrange
+        when(mAuthDataManager.updatePayload(anyString(), anyString(), any(CharSequenceX.class))).thenReturn(Completable.error(new AccountLockedException()));
+        Payload mockPayload = mock(Payload.class);
+        when(mockPayload.getSharedKey()).thenReturn("1234567890");
+        when(mPayloadManager.getPayload()).thenReturn(mockPayload);
+        // Act
+        mSubject.updatePayload(new CharSequenceX(""));
+        // Assert
+        verify(mActivity).showProgressDialog(anyInt(), anyString());
+        verify(mAuthDataManager).updatePayload(anyString(), anyString(), any(CharSequenceX.class));
+        verify(mActivity).showAccountLockedDialog();
     }
 
     @Test

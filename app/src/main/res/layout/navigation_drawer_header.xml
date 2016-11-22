@@ -4,7 +4,7 @@
     <RelativeLayout
         android:id="@+id/navigationHeader"
         android:layout_width="match_parent"
-        android:layout_height="136dp"
+        android:layout_height="152dp"
         android:background="@color/blockchain_blue">
 
         <ImageView

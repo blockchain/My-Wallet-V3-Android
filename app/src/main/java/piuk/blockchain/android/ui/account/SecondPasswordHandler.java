@@ -45,6 +45,8 @@ public class SecondPasswordHandler {
 
                         String secondPassword = passwordField.getText().toString();
 
+                        // TODO: 18/11/2016 Make this asynchronous, validating the password can take
+                        // a long time if the user has increased their PBKDF2 iterations
                         if (secondPassword.length() > 0 && payloadManager.validateSecondPassword(secondPassword)) {
                             listener.onSecondPasswordValidated(secondPassword);
 

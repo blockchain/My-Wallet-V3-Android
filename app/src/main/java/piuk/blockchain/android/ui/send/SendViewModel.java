@@ -591,10 +591,9 @@ public class SendViewModel extends BaseViewModel {
         updateMaxAvailable(balanceAfterFee);
 
         if (spendAll) {
-            dataListener.onSetSpendAllAmount(getTextFromSatoshis(balanceAfterFee));
             amountToSend = BigInteger.valueOf(balanceAfterFee);
+            dataListener.onSetSpendAllAmount(getTextFromSatoshis(balanceAfterFee));
         }
-
 
         validateCustomFee(amountToSend.add(customFee), sweepBundle.getSweepAmount());
 
@@ -899,8 +898,6 @@ public class SendViewModel extends BaseViewModel {
 
                 return false;
             }
-
-
         }
 
         return true;
@@ -1116,7 +1113,8 @@ public class SendViewModel extends BaseViewModel {
                     }
                 }
 
-                payment.submitPayment(sendModel.pendingTransaction.unspentOutputBundle,
+                payment.submitPayment(
+                        sendModel.pendingTransaction.unspentOutputBundle,
                         keys,
                         sendModel.pendingTransaction.receivingAddress,
                         changeAddress,
@@ -1148,7 +1146,7 @@ public class SendViewModel extends BaseViewModel {
 
     }
 
-    private void handleSuccessfulPayment(){
+    private void handleSuccessfulPayment() {
         if (sendModel.pendingTransaction.isHD()) {
             // increment change address counter
             ((Account) sendModel.pendingTransaction.sendingObject.accountObject).incChange();

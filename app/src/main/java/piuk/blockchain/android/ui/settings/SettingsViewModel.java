@@ -94,6 +94,8 @@ public class SettingsViewModel extends BaseViewModel {
         void goToPinEntryPage();
 
         void setLauncherShortcutVisibility(boolean visible);
+
+        void showWarningDialog(@StringRes int message);
     }
 
     SettingsViewModel(DataListener dataListener) {
@@ -115,11 +117,9 @@ public class SettingsViewModel extends BaseViewModel {
                             dataListener.setUpUi();
                             updateUi();
                         })
-                        .subscribe(updatedSettings -> {
-                            settings = updatedSettings;
-                        }, throwable -> {
-                            settings = new Settings();
-                        }));
+                        .subscribe(
+                                updatedSettings -> settings = updatedSettings,
+                                throwable -> settings = new Settings()));
     }
 
     private void updateUi() {
@@ -172,6 +172,12 @@ public class SettingsViewModel extends BaseViewModel {
 
                 if (type == Settings.NOTIFICATION_TYPE_SMS) {
                     dataListener.setSmsNotificationPref(true);
+                }
+
+                if (type == Settings.NOTIFICATION_TYPE_ALL) {
+                    dataListener.setSmsNotificationPref(true);
+                    dataListener.setEmailNotificationPref(true);
+                    break;
                 }
             }
         }
@@ -265,7 +271,7 @@ public class SettingsViewModel extends BaseViewModel {
      *
      * @param pinCode A {@link CharSequenceX} wrapping the validated PIN code
      */
-    void pinCodeValidated(CharSequenceX pinCode) {
+    void pinCodeValidatedForFingerprint(CharSequenceX pinCode) {
         dataListener.showFingerprintDialog(pinCode);
     }
 
@@ -391,9 +397,7 @@ public class SettingsViewModel extends BaseViewModel {
                                 } else {
                                     throw Exceptions.propagate(new Throwable("Update email failed"));
                                 }
-                            }, throwable -> {
-                                dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR);
-                            }));
+                            }, throwable -> dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
         }
     }
 
@@ -415,9 +419,7 @@ public class SettingsViewModel extends BaseViewModel {
                                 } else {
                                     throw Exceptions.propagate(new Throwable("Update SMS failed"));
                                 }
-                            }, throwable -> {
-                                showUpdateError();
-                            }));
+                            }, throwable -> dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
         }
     }
 
@@ -436,15 +438,9 @@ public class SettingsViewModel extends BaseViewModel {
                                 dataListener.showDialogSmsVerified();
                                 updateUi();
                             } else {
-                                showUpdateError();
+                                dataListener.showWarningDialog(R.string.verify_sms_failed);
                             }
-                        }, throwable -> {
-                            showUpdateError();
-                        }));
-    }
-
-    private void showUpdateError() {
-        dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR);
+                        }, throwable -> dataListener.showWarningDialog(R.string.verify_sms_failed)));
     }
 
     /**
@@ -461,9 +457,7 @@ public class SettingsViewModel extends BaseViewModel {
                             } else {
                                 throw Exceptions.propagate(new Throwable("Update TOR failed"));
                             }
-                        }, throwable -> {
-                            dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR);
-                        }));
+                        }, throwable -> dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
     }
 
     /**
@@ -483,9 +477,7 @@ public class SettingsViewModel extends BaseViewModel {
                                 } else {
                                     throw Exceptions.propagate(new Throwable("Update password hint failed"));
                                 }
-                            }, throwable -> {
-                                dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR);
-                            }));
+                            }, throwable -> dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
         }
     }
 
@@ -504,9 +496,7 @@ public class SettingsViewModel extends BaseViewModel {
                             } else {
                                 throw Exceptions.propagate(new Throwable("Update 2FA failed"));
                             }
-                        }, throwable -> {
-                            dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR);
-                        }));
+                        }, throwable -> dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
     }
 
     /**
@@ -525,39 +515,17 @@ public class SettingsViewModel extends BaseViewModel {
                             } else {
                                 throw Exceptions.propagate(new Throwable("Update notification failed"));
                             }
-                        }, throwable -> {
-                            dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR);
-                        }));
+                        }, throwable -> dataListener.showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
     }
 
     /**
-     * Validates a passed PIN number. If valid, takes the user to the PIN entry page to create a new
-     * PIN number.
-     *
-     * @param pin A {@link CharSequenceX} wrapping the PIN number
+     * PIN code validated, take user to PIN change page
      */
-    void validatePin(@NonNull CharSequenceX pin) {
-        dataListener.showProgressDialog(R.string.please_wait);
+    void pinCodeValidatedForChange() {
+        prefsUtil.removeValue(PrefsUtil.KEY_PIN_FAILS);
+        prefsUtil.removeValue(PrefsUtil.KEY_PIN_IDENTIFIER);
 
-        compositeDisposable.add(
-                accessState.validatePin(pin.toString())
-                        .doAfterTerminate(() -> dataListener.hideProgressDialog())
-                        .subscribe(sequenceX -> {
-                            if (sequenceX != null) {
-                                prefsUtil.removeValue(PrefsUtil.KEY_PIN_FAILS);
-                                prefsUtil.removeValue(PrefsUtil.KEY_PIN_IDENTIFIER);
-
-                                dataListener.goToPinEntryPage();
-                            } else {
-                                showInvalidPin();
-                            }
-                        }, throwable -> {
-                            showInvalidPin();
-                        }));
-    }
-
-    private void showInvalidPin() {
-        dataListener.showToast(R.string.invalid_pin, ToastCustom.TYPE_ERROR);
+        dataListener.goToPinEntryPage();
     }
 
     /**
@@ -586,9 +554,7 @@ public class SettingsViewModel extends BaseViewModel {
                             } else {
                                 showUpdatePasswordFailed(fallbackPassword);
                             }
-                        }, throwable -> {
-                            showUpdatePasswordFailed(fallbackPassword);
-                        }));
+                        }, throwable -> showUpdatePasswordFailed(fallbackPassword)));
     }
 
     private void showUpdatePasswordFailed(@NonNull CharSequenceX fallbackPassword) {
