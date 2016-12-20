@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/expandable_layout_base_height"
+        android:gravity="start">
+
+        <FrameLayout
+            android:id="@+id/tx_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true">
+
+            <View
+                android:id="@+id/top_seperator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="top"
+                android:background="@color/blockchain_light_grey" />
+
+            <View
+                android:id="@+id/tx_touch_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackground"
+                android:theme="@style/PlainTheme" />
+
+            <!-- DATE -->
+            <TextView
+                android:id="@+id/ts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif"
+                android:gravity="left"
+                android:maxLines="1"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="April 2015" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/expandable_layout_base_height"
+                android:layout_gravity="top"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <!-- WATCH ONLY AND RECEIVED/SENT/TRANSFERRED -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="37dp"
+                    android:layout_toLeftOf="@+id/result"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/direction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif"
+                        android:text="Sent"
+                        android:textColor="@color/blockchain_grey"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/watch_only"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/rounded_view_grey"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:maxLines="1"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/watch_only"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/double_spend_warning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/result"
+                    android:padding="8dp"
+                    android:tint="@color/blockchain_send_red"
+                    app:srcCompat="@drawable/ic_warning_white_24dp" />
+
+                <!-- VALUE -->
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/rounded_view_green"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:minWidth="120dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="0.123456" />
+
+            </RelativeLayout>
+        </FrameLayout>
+    </RelativeLayout>
+</layout>

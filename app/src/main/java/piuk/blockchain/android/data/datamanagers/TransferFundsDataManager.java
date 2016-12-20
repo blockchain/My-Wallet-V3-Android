@@ -26,7 +26,7 @@ import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.account.ItemAccount;
 import piuk.blockchain.android.ui.send.PendingTransaction;
 import piuk.blockchain.android.util.annotations.Thunk;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class TransferFundsDataManager {
 
@@ -54,7 +54,7 @@ public class TransferFundsDataManager {
         return Observable.fromCallable(() -> {
                     BigInteger suggestedFeePerKb = DynamicFeeCache.getInstance().getSuggestedFee().defaultFeePerKb;
                     List<PendingTransaction> pendingTransactionList = new ArrayList<>();
-                    List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddresses();
+                    List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddressList();
 
                     long totalToSend = 0L;
                     long totalFee = 0L;
@@ -71,7 +71,7 @@ public class TransferFundsDataManager {
                                 if (coins.getNotice() == null && sweepBundle.getSweepAmount().compareTo(SendCoins.bDust) == 1) {
                                     PendingTransaction pendingSpend = new PendingTransaction();
                                     pendingSpend.unspentOutputBundle = mPayment.getSpendableCoins(coins, sweepBundle.getSweepAmount(), suggestedFeePerKb);
-                                    pendingSpend.sendingObject = new ItemAccount(legacyAddress.getLabel(), "", "", legacyAddress);
+                                    pendingSpend.sendingObject = new ItemAccount(legacyAddress.getLabel(), "", "", null, legacyAddress);
                                     pendingSpend.bigIntFee = pendingSpend.unspentOutputBundle.getAbsoluteFee();
                                     pendingSpend.bigIntAmount = sweepBundle.getSweepAmount();
                                     pendingSpend.addressToReceiveIndex = addressToReceiveIndex;
@@ -85,15 +85,15 @@ public class TransferFundsDataManager {
 
                     return Triple.of(pendingTransactionList, totalToSend, totalFee);
                 }
-        ).compose(RxUtil.applySchedulers());
+        ).compose(RxUtil.applySchedulersToObservable());
     }
 
     /**
      * Check if there are any spendable legacy funds that need to be sent to a HD wallet. Constructs
      * a list of {@link PendingTransaction} objects with outputs set to the default HD account.
      *
-     * @return Returns a Map which bundles together the List of {@link PendingTransaction} objects,
-     * as well as a Pair which contains the total to send and the total fees, in that order.
+     * @return Returns a Triple object which bundles together the List of {@link PendingTransaction} objects,
+     * as well as the total to send and the total fees, in that order.
      */
     public Observable<Triple<List<PendingTransaction>, Long, Long>> getTransferableFundTransactionListForDefaultAccount() {
         return getTransferableFundTransactionList(mPayloadManager.getPayload().getHdWallet().getDefaultIndex());
@@ -113,7 +113,7 @@ public class TransferFundsDataManager {
                                           @NonNull List<PendingTransaction> pendingTransactions,
                                           @Nullable CharSequenceX secondPassword) {
         return getPaymentObservable(payment, pendingTransactions, secondPassword)
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     private Observable<String> getPaymentObservable(Payment payment, List<PendingTransaction> pendingTransactions, CharSequenceX secondPassword) {
@@ -147,7 +147,7 @@ public class TransferFundsDataManager {
                             new Payment.SubmitPaymentListener() {
                                 @Override
                                 public void onSuccess(String s) {
-                                    if (!subscriber.isUnsubscribed()) {
+                                    if (!subscriber.isDisposed()) {
                                         subscriber.onNext(s);
                                     }
 
@@ -160,27 +160,26 @@ public class TransferFundsDataManager {
 
                                     if (finalI == pendingTransactions.size() - 1) {
                                         savePayloadToServer()
-                                                .toBlocking()
-                                                .subscribe(aBoolean -> {
+                                                .blockingSubscribe(aBoolean -> {
                                                     // No-op
                                                 }, throwable -> {
                                                     // No-op
                                                 });
-                                        if (!subscriber.isUnsubscribed()) {
-                                            subscriber.onCompleted();
+                                        if (!subscriber.isDisposed()) {
+                                            subscriber.onComplete();
                                         }
                                     }
                                 }
 
                                 @Override
                                 public void onFail(String error) {
-                                    if (!subscriber.isUnsubscribed()) {
+                                    if (!subscriber.isDisposed()) {
                                         subscriber.onError(new Throwable(error));
                                     }
                                 }
                             });
                 } catch (Exception e) {
-                    if (!subscriber.isUnsubscribed()) {
+                    if (!subscriber.isDisposed()) {
                         subscriber.onError(e);
                     }
                 }
@@ -196,6 +195,6 @@ public class TransferFundsDataManager {
      */
     public Observable<Boolean> savePayloadToServer() {
         return Observable.fromCallable(() -> mPayloadManager.savePayloadToServer())
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 }

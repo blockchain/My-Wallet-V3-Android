@@ -1,5 +1,6 @@
 package piuk.blockchain.android.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import java.lang.annotation.Retention;
@@ -51,7 +53,7 @@ public class ViewUtils {
     }
 
     /**
-     * Returns a properly padded Framelayout which wraps an {@link AppCompatEditText}. Once wrapped,
+     * Returns a properly padded FrameLayout which wraps an {@link AppCompatEditText}. Once wrapped,
      * the view will conform to the Material Design guidelines for spacing within a Dialog.
      *
      * @param context  The current Activity or Fragment context
@@ -71,12 +73,12 @@ public class ViewUtils {
     }
 
     /**
-     * Sets an elevation value for a View using the appropriate method for a given API level. For now,
-     * {@link ViewCompat#setElevation(View, float)} only accesses stub methods but this may change
-     * in the future.
+     * Sets an elevation value for a View using the appropriate method for a given API level. For
+     * now, {@link ViewCompat#setElevation(View, float)} only accesses stub methods but this may
+     * change in the future.
      *
-     * @param view       The {@link View} to set elevation on
-     * @param elevation     A float value for elevation (in pixels, not dp)
+     * @param view      The {@link View} to set elevation on
+     * @param elevation A float value for elevation (in pixels, not dp)
      */
     public static void setElevation(View view, float elevation) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -93,5 +95,18 @@ public class ViewUtils {
     @IntDef({VISIBLE, INVISIBLE, GONE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Visibility {
+    }
+
+    /**
+     * Hides the keyboard in a specified {@link Activity}
+     *
+     * @param activity The Activity in which you want to hide the keyboard
+     */
+    public static void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

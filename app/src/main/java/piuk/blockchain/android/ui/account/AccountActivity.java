@@ -72,6 +72,8 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
         public void onReceive(Context context, final Intent intent) {
             if (BalanceFragment.ACTION_INTENT.equals(intent.getAction())) {
                 onUpdateAccountsList();
+                // Check if we need to hide/show the transfer funds icon in the Toolbar
+                viewModel.checkTransferableLegacyFunds(false);
             }
         }
     };
@@ -159,19 +161,23 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
         if (ContextCompat.checkSelfPermission(AccountActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             PermissionUtil.requestCameraPermissionFromActivity(binding.mainLayout, AccountActivity.this);
         } else {
-            new SecondPasswordHandler(this).validate(new SecondPasswordHandler.ResultListener() {
-                @Override
-                public void onNoSecondPassword() {
-                    viewModel.onScanButtonClicked();
-                }
-
-                @Override
-                public void onSecondPasswordValidated(String validateSecondPassword) {
-                    viewModel.setDoubleEncryptionPassword(new CharSequenceX(validateSecondPassword));
-                    viewModel.onScanButtonClicked();
-                }
-            });
+            onScanButtonClicked();
         }
+    }
+
+    private void onScanButtonClicked() {
+        new SecondPasswordHandler(this).validate(new SecondPasswordHandler.ResultListener() {
+            @Override
+            public void onNoSecondPassword() {
+                viewModel.onScanButtonClicked();
+            }
+
+            @Override
+            public void onSecondPasswordValidated(String validateSecondPassword) {
+                viewModel.setDoubleEncryptionPassword(new CharSequenceX(validateSecondPassword));
+                viewModel.onScanButtonClicked();
+            }
+        });
     }
 
     @Thunk
@@ -264,10 +270,9 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
         hdAccountsIdx = correctedPosition;
 
         ImportedAccount iAccount = null;
-        if (payloadManager.getPayload().getLegacyAddresses().size() > 0) {
+        if (payloadManager.getPayload().getLegacyAddressList().size() > 0) {
             iAccount = new ImportedAccount(getString(R.string.imported_addresses),
-                    payloadManager.getPayload().getLegacyAddresses(),
-                    new ArrayList<>(),
+                    payloadManager.getPayload().getLegacyAddressList(),
                     MultiAddrFactory.getInstance().getLegacyBalance());
         }
 
@@ -481,21 +486,22 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
             alertDialog.dismiss();
         });
 
-        alertDialog.show();
+        if (!isFinishing()) {
+            alertDialog.show();
 
-        // This corrects the layout size after view drawn
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        if (alertDialog.getWindow() != null) {
-            lp.copyFrom(alertDialog.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            alertDialog.getWindow().setAttributes(lp);
+            // This corrects the layout size after view drawn
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            if (alertDialog.getWindow() != null) {
+                lp.copyFrom(alertDialog.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                alertDialog.getWindow().setAttributes(lp);
+            }
         }
     }
 
     private void transferSpendableFunds() {
         ConfirmFundsTransferDialogFragment fragment = ConfirmFundsTransferDialogFragment.newInstance();
-        fragment.setOnDismissListener(() -> viewModel.checkTransferableLegacyFunds(false));
         fragment.show(getSupportFragmentManager(), ConfirmFundsTransferDialogFragment.TAG);
     }
 
@@ -508,7 +514,7 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                viewModel.onScanButtonClicked();
+                onScanButtonClicked();
             } else {
                 // Permission request was denied.
             }
@@ -542,5 +548,12 @@ public class AccountActivity extends BaseAuthActivity implements AccountViewMode
             progress.dismiss();
             progress = null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissProgressDialog();
+        viewModel.destroy();
     }
 }

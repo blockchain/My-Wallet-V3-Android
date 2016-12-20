@@ -10,7 +10,7 @@ public class ItemSendAddressViewModel extends BaseObservable implements ViewMode
     private ItemAccount addressItem;
 
     public ItemSendAddressViewModel(ItemAccount address) {
-        this.addressItem = address;
+        addressItem = address;
     }
 
     public String getLabel() {
@@ -18,11 +18,11 @@ public class ItemSendAddressViewModel extends BaseObservable implements ViewMode
     }
 
     public String getBalance() {
-        return addressItem.balance;
+        return addressItem.displayBalance;
     }
 
     public void setAddress(ItemAccount address) {
-        this.addressItem = address;
+        addressItem = address;
         notifyChange();
     }
 

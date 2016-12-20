@@ -2,85 +2,122 @@ package piuk.blockchain.android.data.websocket;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
-import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 
+import info.blockchain.api.PersistentUrls;
 import info.blockchain.wallet.payload.PayloadManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashSet;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import piuk.blockchain.android.R;
-import piuk.blockchain.android.ui.customviews.ToastCustom;
+import piuk.blockchain.android.data.rxjava.IgnorableDefaultObserver;
+import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.balance.BalanceFragment;
+import piuk.blockchain.android.ui.customviews.ToastCustom;
 import piuk.blockchain.android.ui.home.MainActivity;
 import piuk.blockchain.android.util.MonetaryUtil;
 import piuk.blockchain.android.util.NotificationsUtil;
-import piuk.blockchain.android.util.PrefsUtil;
+import piuk.blockchain.android.util.annotations.Thunk;
 
-public class WebSocketHandler {
 
-    private String guid;
+@SuppressWarnings("WeakerAccess")
+class WebSocketHandler {
+
+    @Thunk static final String TAG = WebSocketHandler.class.getSimpleName();
+
+    private final static long PING_INTERVAL = 20 * 1000L;
+    private final static long RETRY_INTERVAL = 5 * 1000L;
+
+    private boolean stoppedDeliberately = false;
     private String[] xpubs;
     private String[] addrs;
-    private final static long pingInterval = 20000L;//ping pong every 20 seconds
-    private final static long pongTimeout = 5000L;//pong timeout after 5 seconds
-    private WebSocket mConnection;
-    private HashSet<String> subHashSet = new HashSet<>();
-    private HashSet<String> onChangeHashSet = new HashSet<>();
-    private Timer pingTimer;
-    private boolean pingPongSuccess = false;
-    private PrefsUtil prefsUtil;
-    private MonetaryUtil monetaryUtil;
-    private PayloadManager payloadManager;
-    private Context context;
+    @Thunk String guid;
+    @Thunk WebSocket connection;
+    @Thunk HashSet<String> subHashSet = new HashSet<>();
+    @Thunk HashSet<String> onChangeHashSet = new HashSet<>();
+    @Thunk MonetaryUtil monetaryUtil;
+    @Thunk PayloadManager payloadManager;
+    @Thunk Context context;
+    @Thunk CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public WebSocketHandler(Context ctx, String guid, String[] xpubs, String[] addrs) {
-        this.context = ctx;
+    public WebSocketHandler(Context context,
+                            PayloadManager payloadManager,
+                            MonetaryUtil monetaryUtil,
+                            String guid,
+                            String[] xpubs,
+                            String[] addrs) {
+
+        this.context = context;
+        this.payloadManager = payloadManager;
+        this.monetaryUtil = monetaryUtil;
         this.guid = guid;
         this.xpubs = xpubs;
         this.addrs = addrs;
-        this.payloadManager = PayloadManager.getInstance();
-        this.prefsUtil = new PrefsUtil(context);
-        this.monetaryUtil = new MonetaryUtil(prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC));
     }
 
-    public void send(String message) {
-        //Make sure each message is only sent once per socket lifetime
+    /**
+     * Starts listening for updates to subscribed xpubs and addresses. Will attempt reconnection
+     * every 5 seconds if it cannot connect immediately.
+     */
+    public void start() {
+        stop();
+        stoppedDeliberately = false;
+        connectToWebSocket()
+                .doOnError(throwable -> attemptReconnection())
+                .subscribe(new IgnorableDefaultObserver<>());
+    }
+
+    /**
+     * Halts and disconnects the WebSocket service whilst preventing reconnection until {@link
+     * #start()} is called
+     */
+    public void stopPermanently() {
+        stoppedDeliberately = true;
+        stop();
+    }
+
+    private void stop() {
+        if (isConnected()) {
+            connection.disconnect();
+        }
+    }
+
+    private void send(String message) {
+        // Make sure each message is only sent once per socket lifetime
         if (!subHashSet.contains(message)) {
             try {
-                if (mConnection != null && mConnection.isOpen()) {
-//                    Log.i("WebSocketHandler", "Websocket subscribe:" +message);
-                    mConnection.sendText(message);
+                if (isConnected()) {
+                    connection.sendText(message);
                     subHashSet.add(message);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e(TAG, "send: ", e);
             }
-        } else {
-//            Log.d("WebSocketHandler", "Message sent already: "+message);
         }
     }
 
-    public synchronized void subscribe() {
-
+    private void subscribe() {
         if (guid == null) {
             return;
         }
-        // send("{\"op\":\"blocks_sub\"}");
         send("{\"op\":\"wallet_sub\",\"guid\":\"" + guid + "\"}");
 
         for (String xpub : xpubs) {
@@ -96,260 +133,216 @@ public class WebSocketHandler {
         }
     }
 
-    public synchronized void subscribeToXpub(String xpub) {
+    public void subscribeToXpub(String xpub) {
         if (xpub != null && !xpub.isEmpty()) {
             send("{\"op\":\"xpub_sub\", \"xpub\":\"" + xpub + "\"}");
         }
     }
 
-    public synchronized void subscribeToAddress(String address) {
-        if (address != null && !address.isEmpty())
+    public void subscribeToAddress(String address) {
+        if (address != null && !address.isEmpty()) {
             send("{\"op\":\"addr_sub\", \"addr\":\"" + address + "\"}");
-    }
-
-    public void stop() {
-
-        stopPingTimer();
-
-        if (mConnection != null && mConnection.isOpen()) {
-            mConnection.disconnect();
         }
     }
 
-    public void start() {
+    @Thunk
+    void attemptReconnection() {
+        if (compositeDisposable.size() == 0 && !stoppedDeliberately) {
+            compositeDisposable.add(
+                    getReconnectionObservable()
+                            .subscribe(
+                                    value -> Log.d(TAG, "attemptReconnection: " + value),
+                                    throwable -> Log.e(TAG, "attemptReconnection: ", throwable)
+                            ));
+        }
+    }
+
+    private Observable<Long> getReconnectionObservable() {
+        return Observable.interval(RETRY_INTERVAL, TimeUnit.MILLISECONDS)
+                .takeUntil((ObservableSource<Object>) aLong -> isConnected())
+                .doOnNext(tick -> start());
+    }
+
+    private boolean isConnected() {
+        return connection != null && connection.isOpen();
+    }
+
+    @Thunk
+    void updateBalancesAndTransactions() {
+        updateBalancesAndTxs().subscribe(new IgnorableDefaultObserver<>());
+    }
+
+    private Completable updateBalancesAndTxs() {
+        return Completable.fromCallable(() -> {
+            payloadManager.updateBalancesAndTransactions();
+            return Void.TYPE;
+        }).doAfterTerminate(() -> {
+            Intent intent = new Intent(BalanceFragment.ACTION_INTENT);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        }).compose(RxUtil.applySchedulersToCompletable());
+    }
+
+    private Completable connectToWebSocket() {
+        return Completable.fromCallable(() -> {
+            subHashSet.clear();
+
+            connection = new WebSocketFactory()
+                    .createSocket(PersistentUrls.getInstance().getCurrentWebsocketUrl())
+                    .addHeader("Origin", "https://blockchain.info")
+                    .setPingInterval(PING_INTERVAL)
+                    .addListener(new WebSocketAdapter() {
+                        @Override
+                        public void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws Exception {
+                            super.onConnected(websocket, headers);
+                            compositeDisposable.clear();
+                        }
+
+                        @Override
+                        public void onTextMessage(WebSocket websocket, String message) {
+                            JSONObject jsonObject;
+                            try {
+                                jsonObject = new JSONObject(message);
+                                attemptParseMessage(message, jsonObject);
+                            } catch (JSONException je) {
+                                Log.e(TAG, "onTextMessage: ", je);
+                            }
+                        }
+
+                        @Override
+                        public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer) throws Exception {
+                            super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);
+                            attemptReconnection();
+                        }
+
+                    }).connect();
+
+            subscribe();
+            // Necessary but meaningless return type for Completable
+            return Void.TYPE;
+        }).compose(RxUtil.applySchedulersToCompletable());
+    }
+
+    @Thunk
+    void attemptParseMessage(String message, JSONObject jsonObject) {
         try {
-            stop();
-            connect();
-            startPingTimer();
-        } catch (IOException | com.neovisionaries.ws.client.WebSocketException e) {
-            e.printStackTrace();
-        }
+            String op = (String) jsonObject.get("op");
+            if (op.equals("utx") && jsonObject.has("x")) {
+                JSONObject objX = (JSONObject) jsonObject.get("x");
 
-    }
+                long value = 0L;
+                long totalValue = 0L;
+                String inAddr = null;
 
-    private void startPingTimer() {
-
-        pingTimer = new Timer();
-        pingTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (mConnection != null) {
-                    if (mConnection.isOpen()) {
-                        pingPongSuccess = false;
-                        mConnection.sendPing();
-                        startPongTimer();
-                    } else {
-                        start();
+                if (objX.has("inputs")) {
+                    JSONArray inputArray = (JSONArray) objX.get("inputs");
+                    JSONObject inputObj;
+                    for (int j = 0; j < inputArray.length(); j++) {
+                        inputObj = (JSONObject) inputArray.get(j);
+                        if (inputObj.has("prev_out")) {
+                            JSONObject prevOutObj = (JSONObject) inputObj.get("prev_out");
+                            if (prevOutObj.has("value")) {
+                                value = prevOutObj.getLong("value");
+                            }
+                            if (prevOutObj.has("xpub")) {
+                                totalValue -= value;
+                            } else if (prevOutObj.has("addr")) {
+                                if (payloadManager.getPayload().containsLegacyAddress((String) prevOutObj.get("addr"))) {
+                                    totalValue -= value;
+                                } else if (inAddr == null) {
+                                    inAddr = (String) prevOutObj.get("addr");
+                                }
+                            }
+                        }
                     }
                 }
-            }
-        }, pingInterval, pingInterval);
-    }
 
-    private void stopPingTimer() {
-        if (pingTimer != null) pingTimer.cancel();
-    }
-
-    private void startPongTimer() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!pingPongSuccess) {
-                    //ping pong unsuccessful after x seconds - restart connection
-                    start();
-                }
-            }
-        }, pongTimeout);
-    }
-
-    /**
-     * Connect to the server.
-     */
-    private void connect() throws IOException, WebSocketException {
-        new ConnectionTask().execute();
-    }
-
-    private void updateBalancesAndTransactions() {
-
-        new Thread() {
-            public void run() {
-
-                Looper.prepare();
-
-                try {
-                    payloadManager.updateBalancesAndTransactions();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (objX.has("out")) {
+                    JSONArray outArray = (JSONArray) objX.get("out");
+                    JSONObject outObj;
+                    for (int j = 0; j < outArray.length(); j++) {
+                        outObj = (JSONObject) outArray.get(j);
+                        if (outObj.has("value")) {
+                            value = outObj.getLong("value");
+                        }
+                        if (outObj.has("xpub")) {
+                            totalValue += value;
+                        } else if (outObj.has("addr")) {
+                            if (payloadManager.getPayload().containsLegacyAddress((String) outObj.get("addr"))) {
+                                totalValue += value;
+                            }
+                        }
+                    }
                 }
 
-                Intent intent = new Intent(BalanceFragment.ACTION_INTENT);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                String title = context.getString(R.string.app_name);
+                if (totalValue > 0L) {
+                    String marquee = context.getString(R.string.received_bitcoin) + " " + monetaryUtil.getBTCFormat().format((double) totalValue / 1e8) + " BTC";
+                    String text = marquee;
+                    if (totalValue > 0) {
+                        text += " from " + inAddr;
+                    }
 
-                Looper.loop();
+                    triggerNotification(title, marquee, text);
+                }
 
+                updateBalancesAndTransactions();
+
+            } else if (op.equals("on_change")) {
+                final String localChecksum = payloadManager.getCheckSum();
+
+                boolean isSameChecksum = false;
+                if (jsonObject.has("checksum")) {
+                    final String remoteChecksum = (String) jsonObject.get("checksum");
+                    isSameChecksum = remoteChecksum.equals(localChecksum);
+                }
+
+                if (!onChangeHashSet.contains(message) && !isSameChecksum) {
+                    // Remote update to wallet data detected
+                    if (payloadManager.getTempPassword() != null) {
+                        // Download changed payload
+                        //noinspection ThrowableResultOfMethodCallIgnored
+                        downloadChangedPayload().blockingGet();
+                        showToast().subscribeOn(AndroidSchedulers.mainThread());
+                        updateBalancesAndTransactions();
+                    }
+
+                    onChangeHashSet.add(message);
+                }
             }
-        }.start();
-    }
-
-    private class ConnectionTask extends AsyncTask<Void, Void, Void> {
-
-        protected Void doInBackground(Void... args) {
-
-            try {
-                //Seems we make a new connection here, so we should clear our HashSet
-//                    Log.d("WebSocketHandler", "Reconnect of websocket..");
-                subHashSet.clear();
-
-                mConnection = new WebSocketFactory()
-                        .createSocket("wss://ws.blockchain.info/inv")
-                        .addHeader("Origin", "https://blockchain.info").recreate()
-                        .addListener(new WebSocketAdapter() {
-
-                            @Override
-                            public void onPongFrame(WebSocket websocket, WebSocketFrame frame) throws Exception {
-                                super.onPongFrame(websocket, frame);
-                                pingPongSuccess = true;
-                            }
-
-                            public void onTextMessage(WebSocket websocket, String message) {
-//                                    Log.d("WebSocket", message);
-
-                                if (guid == null) {
-                                    return;
-                                }
-
-                                try {
-                                    JSONObject jsonObject = null;
-                                    try {
-                                        jsonObject = new JSONObject(message);
-                                    } catch (JSONException je) {
-//                                            Log.i("WebSocketHandler", "JSONException:" + je.getMessage());
-                                        jsonObject = null;
-                                    }
-
-                                    if (jsonObject == null) {
-//                                            Log.i("WebSocketHandler", "jsonObject is null");
-                                        return;
-                                    }
-
-//                                        Log.i("WebSocketHandler", jsonObject.toString());
-
-                                    String op = (String) jsonObject.get("op");
-                                    if (op.equals("utx") && jsonObject.has("x")) {
-
-                                        JSONObject objX = (JSONObject) jsonObject.get("x");
-
-                                        long value = 0L;
-                                        long total_value = 0L;
-                                        long ts = 0L;
-                                        String in_addr = null;
-
-                                        if (objX.has("time")) {
-                                            ts = objX.getLong("time");
-                                        }
-
-                                        if (objX.has("inputs")) {
-                                            JSONArray inputArray = (JSONArray) objX.get("inputs");
-                                            JSONObject inputObj = null;
-                                            for (int j = 0; j < inputArray.length(); j++) {
-                                                inputObj = (JSONObject) inputArray.get(j);
-                                                if (inputObj.has("prev_out")) {
-                                                    JSONObject prevOutObj = (JSONObject) inputObj.get("prev_out");
-                                                    if (prevOutObj.has("value")) {
-                                                        value = prevOutObj.getLong("value");
-                                                    }
-                                                    if (prevOutObj.has("xpub")) {
-                                                        total_value -= value;
-                                                    } else if (prevOutObj.has("addr")) {
-                                                        if (payloadManager.getPayload().containsLegacyAddress((String) prevOutObj.get("addr"))) {
-                                                            total_value -= value;
-                                                        } else if (in_addr == null) {
-                                                            in_addr = (String) prevOutObj.get("addr");
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        if (objX.has("out")) {
-                                            JSONArray outArray = (JSONArray) objX.get("out");
-                                            JSONObject outObj = null;
-                                            for (int j = 0; j < outArray.length(); j++) {
-                                                outObj = (JSONObject) outArray.get(j);
-                                                if (outObj.has("value")) {
-                                                    value = outObj.getLong("value");
-                                                }
-                                                if (outObj.has("xpub")) {
-                                                    total_value += value;
-                                                } else if (outObj.has("addr")) {
-                                                    if (payloadManager.getPayload().containsLegacyAddress((String) outObj.get("addr"))) {
-                                                        total_value += value;
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        String title = context.getString(R.string.app_name);
-                                        if (total_value > 0L) {
-                                            String marquee = context.getString(R.string.received_bitcoin) + " " + monetaryUtil.getBTCFormat().format((double) total_value / 1e8) + " BTC";
-                                            String text = marquee;
-                                            if (total_value > 0) {
-                                                text += " from " + in_addr;
-                                            }
-
-                                            new NotificationsUtil(context).setNotification(title,
-                                                    marquee,
-                                                    text,
-                                                    R.drawable.ic_notification_transparent,
-                                                    R.drawable.ic_launcher,
-                                                    MainActivity.class,
-                                                    1000);
-                                        }
-
-                                        updateBalancesAndTransactions();
-
-                                    } else if (op.equals("on_change")) {
-
-                                        final String localChecksum = payloadManager.getCheckSum();
-
-                                        boolean isSameChecksum = false;
-                                        if (jsonObject.has("checksum")) {
-                                            final String remoteChecksum = (String) jsonObject.get("checksum");
-                                            isSameChecksum = remoteChecksum.equals(localChecksum);
-                                        }
-
-                                        if (!onChangeHashSet.contains(message) && !isSameChecksum) {
-
-                                            //Remote update to wallet data detected
-                                            if (payloadManager.getTempPassword() != null) {
-                                                //Download changed payload
-                                                payloadManager.initiatePayload(payloadManager.getPayload().getSharedKey(),
-                                                        payloadManager.getPayload().getGuid(),
-                                                        payloadManager.getTempPassword(), () -> {
-                                                        });
-                                                ToastCustom.makeText(context, context.getString(R.string.wallet_updated), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_GENERAL);
-                                                updateBalancesAndTransactions();
-                                            }
-
-                                            onChangeHashSet.add(message);
-                                        }
-
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        });
-                mConnection.connect();
-
-                subscribe();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
+        } catch (Exception e) {
+            Log.e(TAG, "attemptParseMessage: ", e);
         }
+    }
+
+    private Completable showToast() {
+        return Completable.fromRunnable(
+                () -> ToastCustom.makeText(
+                        context,
+                        context.getString(R.string.wallet_updated),
+                        ToastCustom.LENGTH_SHORT,
+                        ToastCustom.TYPE_GENERAL));
+    }
+
+    private Completable downloadChangedPayload() {
+        return Completable.fromCallable(() -> {
+            payloadManager.initiatePayload(
+                    payloadManager.getPayload().getSharedKey(),
+                    payloadManager.getPayload().getGuid(),
+                    payloadManager.getTempPassword(), () -> {
+                        // No-op, blocking call
+                    });
+            return Void.TYPE;
+        }).compose(RxUtil.applySchedulersToCompletable());
+    }
+
+    private void triggerNotification(String title, String marquee, String text) {
+        new NotificationsUtil(context).setNotification(
+                title,
+                marquee,
+                text,
+                R.drawable.ic_notification_transparent,
+                R.drawable.ic_launcher,
+                MainActivity.class,
+                1000);
     }
 }

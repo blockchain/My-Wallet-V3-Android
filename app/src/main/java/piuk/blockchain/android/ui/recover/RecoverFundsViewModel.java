@@ -83,7 +83,7 @@ public class RecoverFundsViewModel extends BaseViewModel {
         mDataListener.showProgressDialog(R.string.creating_wallet);
 
         mAuthDataManager.restoreHdWallet(email, password, recoveryPhrase)
-                .doOnTerminate(() -> mDataListener.dismissProgressDialog())
+                .doAfterTerminate(() -> mDataListener.dismissProgressDialog())
                 .subscribe(payload -> {
                     mDataListener.goToPinEntryPage();
                 }, throwable -> {

@@ -1,10 +1,10 @@
 package piuk.blockchain.android.data.services;
 
 import info.blockchain.api.TransactionDetails;
-import info.blockchain.wallet.payload.Transaction;
+import info.blockchain.wallet.transaction.Transaction;
 
 import piuk.blockchain.android.data.rxjava.RxUtil;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class TransactionDetailsService {
 
@@ -22,6 +22,6 @@ public class TransactionDetailsService {
      */
     public Observable<Transaction> getTransactionDetailsFromHash(String hash) {
         return Observable.fromCallable(() -> transactionDetails.getTransactionDetails(hash))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 }

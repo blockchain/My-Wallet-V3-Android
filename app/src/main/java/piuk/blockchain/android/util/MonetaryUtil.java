@@ -41,6 +41,10 @@ public class MonetaryUtil {
         btcFormat.setDecimalFormatSymbols(symbolsB);
     }
 
+    public void updateUnit(int unit) {
+        this.unit = unit;
+    }
+
     public NumberFormat getBTCFormat() {
         return btcFormat;
     }

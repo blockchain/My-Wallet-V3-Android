@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import info.blockchain.wallet.payload.PayloadManager;
 
@@ -38,22 +36,17 @@ public class SecondPasswordHandler {
             final AppCompatEditText passwordField = new AppCompatEditText(context);
             passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
-            FrameLayout frameLayout = new FrameLayout(context);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            int marginInPixels = (int) ViewUtils.convertDpToPixel(20, context);
-            params.setMargins(marginInPixels, 0, marginInPixels, 0);
-            frameLayout.addView(passwordField, params);
-
             new AlertDialog.Builder(context, R.style.AlertDialogStyle)
                     .setTitle(R.string.app_name)
                     .setMessage(R.string.enter_double_encryption_pw)
-                    .setView(frameLayout)
+                    .setView(ViewUtils.getAlertDialogEditTextLayout(context, passwordField))
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
 
                         String secondPassword = passwordField.getText().toString();
 
+                        // TODO: 18/11/2016 Make this asynchronous, validating the password can take
+                        // a long time if the user has increased their PBKDF2 iterations
                         if (secondPassword.length() > 0 && payloadManager.validateSecondPassword(secondPassword)) {
                             listener.onSecondPasswordValidated(secondPassword);
 

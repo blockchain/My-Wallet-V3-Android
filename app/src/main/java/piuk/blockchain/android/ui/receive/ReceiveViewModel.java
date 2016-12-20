@@ -2,6 +2,7 @@ package piuk.blockchain.android.ui.receive;
 
 import com.google.common.collect.HashBiMap;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -11,9 +12,11 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseIntArray;
+import android.webkit.MimeTypeMap;
 
 import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.LegacyAddress;
@@ -41,6 +44,7 @@ import piuk.blockchain.android.injection.Injector;
 import piuk.blockchain.android.ui.account.ItemAccount;
 import piuk.blockchain.android.ui.base.BaseViewModel;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
+import piuk.blockchain.android.util.AndroidUtils;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.BitcoinLinkGenerator;
 import piuk.blockchain.android.util.MonetaryUtil;
@@ -63,6 +67,7 @@ public class ReceiveViewModel extends BaseViewModel {
     @Inject ReceiveDataManager mDataManager;
     @Inject WalletAccountHelper mWalletAccountHelper;
     @Inject SSLVerifyUtil mSSLVerifyUtil;
+    @Inject Context mApplicationContext;
     @VisibleForTesting HashBiMap<Integer, Object> mAccountMap;
     @VisibleForTesting SparseIntArray mSpinnerIndexMap;
     private ReceiveCurrencyHelper mCurrencyHelper;
@@ -116,6 +121,11 @@ public class ReceiveViewModel extends BaseViewModel {
         return mCurrencyHelper;
     }
 
+    @NonNull
+    public PrefsUtil getPrefsUtil() {
+        return mPrefsUtil;
+    }
+
     public void updateSpinnerList() {
         mAccountMap.clear();
         mSpinnerIndexMap.clear();
@@ -141,7 +151,7 @@ public class ReceiveViewModel extends BaseViewModel {
         }
 
         // Legacy Addresses
-        List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddresses();
+        List<LegacyAddress> legacyAddresses = mPayloadManager.getPayload().getLegacyAddressList();
         for (LegacyAddress legacyAddress : legacyAddresses) {
 
             if (legacyAddress.getTag() == LegacyAddress.ARCHIVED_ADDRESS)
@@ -157,8 +167,8 @@ public class ReceiveViewModel extends BaseViewModel {
 
     public void generateQrCode(String uri) {
         mDataListener.showQrLoading();
-        mCompositeSubscription.clear();
-        mCompositeSubscription.add(
+        compositeDisposable.clear();
+        compositeDisposable.add(
                 mDataManager.generateQrCode(uri, DIMENSION_QR_CODE)
                         .subscribe(qrCode -> {
                             mDataListener.showQrCode(qrCode);
@@ -275,16 +285,28 @@ public class ReceiveViewModel extends BaseViewModel {
             emailIntent.setType("application/image");
             emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
 
-            Intent imageIntent = new Intent();
-            imageIntent.setAction(Intent.ACTION_SEND);
-            imageIntent.setType("image/png");
-            imageIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-
             if (getFormattedEmailLink(uri) != null) {
                 emailIntent.setData(getFormattedEmailLink(uri));
             } else {
                 mDataListener.showToast(mStringUtils.getString(R.string.unexpected_error), ToastCustom.TYPE_ERROR);
                 return null;
+            }
+
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            String type = mime.getMimeTypeFromExtension(ext);
+
+            Intent imageIntent = new Intent();
+            imageIntent.setAction(Intent.ACTION_SEND);
+            imageIntent.setType(type);
+
+            if (AndroidUtils.is23orHigher()) {
+                Uri uriForFile = FileProvider.getUriForFile(mApplicationContext, getAppUtil().getPackageName() + ".fileProvider", file);
+                imageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                imageIntent.putExtra(Intent.EXTRA_STREAM, uriForFile);
+            } else {
+                imageIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                imageIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }
 
             HashMap<String, Pair<ResolveInfo, Intent>> intentHashMap = new HashMap<>();

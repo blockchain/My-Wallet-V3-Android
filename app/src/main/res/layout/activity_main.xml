@@ -2,38 +2,47 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="piuk.blockchain.android.ui.home.MainViewModel" />
-    </data>
-
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-        android:fitsSystemWindows="true"
-        app:insetForeground="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:insetForeground="@color/white">
 
-        <!-- This LinearLayout represents the contents of the screen  -->
-        <LinearLayout
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <!-- The ActionBar displayed at the top -->
-            <include
-                layout="@layout/toolbar_general"
+            <!-- The Toolbar wrapped in an AppBar -->
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:elevation="0dp">
+
+                <include
+                    layout="@layout/toolbar_general"
+                    android:fitsSystemWindows="true" />
+
+            </android.support.design.widget.AppBarLayout>
 
             <!-- The main content view where fragments are loaded -->
             <FrameLayout
                 android:id="@+id/content_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@color/blockchain_pearl_white"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <!--The bottom navigation panel -->
+            <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
+
+        </android.support.design.widget.CoordinatorLayout>
 
         <!-- The navigation drawer that comes from the left -->
         <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
@@ -43,9 +52,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@android:color/white"
-            android:paddingTop="16dp"
-            app:insetForeground="@color/blockchain_blue"
             app:headerLayout="@layout/navigation_drawer_header"
+            app:insetForeground="@color/blockchain_dark_blue"
             app:menu="@menu/drawer_view" />
     </android.support.v4.widget.DrawerLayout>
 </layout>

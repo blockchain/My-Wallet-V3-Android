@@ -2,15 +2,15 @@ package piuk.blockchain.android.ui.base;
 
 import android.support.annotation.CallSuper;
 
+import io.reactivex.disposables.CompositeDisposable;
 import piuk.blockchain.android.injection.Injector;
-import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseViewModel {
 
-    public CompositeSubscription mCompositeSubscription;
+    public CompositeDisposable compositeDisposable;
 
     public BaseViewModel() {
-        mCompositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     public abstract void onViewReady();
@@ -22,7 +22,7 @@ public abstract class BaseViewModel {
          * 2) processes don't try to update a null View
          * 3) background processes don't leak memory
          */
-        mCompositeSubscription.clear();
+        compositeDisposable.clear();
 
         /**
          * Clear DataManagerComponent, thereby releasing all objects with a

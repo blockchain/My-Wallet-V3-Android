@@ -86,6 +86,13 @@ public class RecoverFundsActivity extends BaseAuthActivity implements RecoverFun
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissProgressDialog();
+        mViewModel.destroy();
+    }
+
+    @Override
     public void showProgressDialog(@StringRes int messageId) {
         dismissProgressDialog();
         mProgressDialog = new MaterialProgressDialog(this);

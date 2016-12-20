@@ -1,11 +1,12 @@
 package piuk.blockchain.android.data.services;
 
 import info.blockchain.api.PinStore;
+import info.blockchain.wallet.exceptions.InvalidCredentialsException;
 
 import org.json.JSONObject;
 
 import piuk.blockchain.android.data.rxjava.RxUtil;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class PinStoreService {
 
@@ -27,7 +28,7 @@ public class PinStoreService {
     public Observable<Boolean> setAccessKey(String key, String value, String pin) {
         return Observable.fromCallable(() -> pinStore.setAccess(key, value, pin))
                 .map(jsonObject -> jsonObject.has("success"))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     /**
@@ -38,7 +39,29 @@ public class PinStoreService {
      * @return      A {@link JSONObject} which may or may not contain the field "success"
      */
     public Observable<JSONObject> validateAccess(String key, String pin) {
-        return Observable.fromCallable(() -> pinStore.validateAccess(key, pin))
-                .compose(RxUtil.applySchedulers());
+        return createValidateAccessObservable(key, pin)
+                .compose(RxUtil.applySchedulersToObservable());
+    }
+
+    private Observable<JSONObject> createValidateAccessObservable(String key, String pin) {
+        return Observable.create(observableEmitter -> {
+            try {
+                JSONObject object = pinStore.validateAccess(key, pin);
+                if (!observableEmitter.isDisposed()) {
+                    observableEmitter.onNext(object);
+                    observableEmitter.onComplete();
+                }
+            } catch (Exception e) {
+                if (e.getMessage() != null && e.getMessage().contains("Incorrect PIN")) {
+                    if (!observableEmitter.isDisposed()) {
+                        observableEmitter.onError(new InvalidCredentialsException("Incorrect PIN"));
+                    }
+                } else {
+                    if (!observableEmitter.isDisposed()) {
+                        observableEmitter.onError(e);
+                    }
+                }
+            }
+        });
     }
 }

@@ -67,42 +67,47 @@ class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHolder> {
             return;
         }
 
+        AccountItem accountItem = items.get(position);
+
         // Normal account view
         holder.cardView.setOnClickListener(v -> {
-            if (listener != null) listener.onCardClicked(items.get(position).getCorrectPosition());
+            if (listener != null) listener.onCardClicked(accountItem.getCorrectPosition());
         });
 
-        holder.title.setText(items.get(position).getLabel());
+        holder.title.setText(accountItem.getLabel());
 
-        if (!items.get(position).getAddress().isEmpty()) {
-            holder.address.setText(items.get(position).getAddress());
+        if (!accountItem.getAddress().isEmpty()) {
+            holder.address.setVisibility(View.VISIBLE);
+            holder.address.setText(accountItem.getAddress());
         } else {
             holder.address.setVisibility(View.GONE);
         }
 
-        if (items.get(position).isArchived()) {
+        if (accountItem.isArchived()) {
             holder.amount.setText(R.string.archived_label);
             holder.amount.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.blockchain_transfer_blue));
         } else {
-            holder.amount.setText(items.get(position).getAmount());
+            holder.amount.setText(accountItem.getAmount());
             holder.amount.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.blockchain_receive_green));
         }
 
-        if (items.get(position).isWatchOnly()) {
+        if (accountItem.isWatchOnly()) {
             holder.tag.setText(holder.itemView.getContext().getString(R.string.watch_only));
             holder.tag.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.blockchain_send_red));
         }
 
-        if (items.get(position).isDefault()) {
+        if (accountItem.isDefault()) {
             holder.tag.setText(holder.itemView.getContext().getString(R.string.default_label));
             holder.tag.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.blockchain_grey));
         }
 
-        if (!items.get(position).isWatchOnly() && !items.get(position).isDefault()) {
-            holder.tag.setVisibility(View.INVISIBLE);
+        if (!accountItem.isWatchOnly() && !accountItem.isDefault()) {
+            holder.tag.setVisibility(View.GONE);
+        } else {
+            holder.tag.setVisibility(View.VISIBLE);
         }
 
-        Drawable drawable = items.get(position).getIcon();
+        Drawable drawable = accountItem.getIcon();
         if (drawable != null) {
             holder.icon.setImageDrawable(drawable);
         }

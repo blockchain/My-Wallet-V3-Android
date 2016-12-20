@@ -1,9 +1,11 @@
 package piuk.blockchain.android.data.rxjava;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.CompletableTransformer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by adambennett on 12/08/2016.
@@ -11,13 +13,22 @@ import rx.schedulers.Schedulers;
  * A class for basic RxJava utilities, ie Transformer classes
  */
 
-public class RxUtil {
+public final class RxUtil {
 
     /**
-     * Applies standard Schedulers to an Observable, ie IO for subscription, Main Thread for
+     * Applies standard Schedulers to an {@link Observable}, ie IO for subscription, Main Thread for
      * onNext/onComplete/onError
      */
-    public static <T> Observable.Transformer<T, T> applySchedulers() {
+    public static <T> ObservableTransformer<T, T> applySchedulersToObservable() {
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Applies standard Schedulers to a {@link io.reactivex.Completable}, ie IO for subscription,
+     * Main Thread for onNext/onComplete/onError
+     */
+    public static CompletableTransformer applySchedulersToCompletable() {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -25,12 +36,12 @@ public class RxUtil {
     /**
      * Allows you to call two different {@link Observable} objects based on result of a predicate.
      */
-    public static <T, R> Func1<? super T, ? extends Observable<? extends R>> ternary(
-            Func1<T, Boolean> predicate,
-            Func1<? super T, ? extends Observable<? extends R>> ifTrue,
-            Func1<? super T, ? extends Observable<? extends R>> ifFalse) {
-        return (item) -> predicate.call(item)
-                ? ifTrue.call(item)
-                : ifFalse.call(item);
+    public static <T, R> Function<? super T, ? extends Observable<? extends R>> ternary(
+            Function<T, Boolean> predicate,
+            Function<? super T, ? extends Observable<? extends R>> ifTrue,
+            Function<? super T, ? extends Observable<? extends R>> ifFalse) {
+        return (item) -> predicate.apply(item)
+                ? ifTrue.apply(item)
+                : ifFalse.apply(item);
     }
 }

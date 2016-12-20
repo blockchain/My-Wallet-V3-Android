@@ -58,7 +58,7 @@ public class LauncherViewModel extends BaseViewModel {
         // Store incoming URI if needed
         String action = mDataListener.getPageIntent().getAction();
         String scheme = mDataListener.getPageIntent().getScheme();
-        if (action != null && Intent.ACTION_VIEW.equals(action) && scheme.equals("bitcoin")) {
+        if (action != null && Intent.ACTION_VIEW.equals(action) && scheme != null && scheme.equals("bitcoin")) {
             mPrefsUtil.setValue(PrefsUtil.KEY_SCHEME_URL, mDataListener.getPageIntent().getData().toString());
         }
 

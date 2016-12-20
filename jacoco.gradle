@@ -16,8 +16,12 @@ task testDevDebugUnitTestCoverage(type: JacocoReport, dependsOn: "testDevDebugUn
             '**/*_Provide*Factory*.*',
             '**/Manifest*.*',
             '**/*Activity*.*',
+            '**/*Dialog.*',
             '**/*Fragment*.*',
+            '**/*ViewHolder*.*',
+            '**/*Adapter*.*',
             '**/*zxing**',
+            '**/*customviews**',
             '**/*databinding**'
     ]
     classDirectories = fileTree(

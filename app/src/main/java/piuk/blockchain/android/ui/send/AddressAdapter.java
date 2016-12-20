@@ -14,14 +14,45 @@ import piuk.blockchain.android.R;
 import piuk.blockchain.android.databinding.ItemAddressBinding;
 import piuk.blockchain.android.databinding.SpinnerItemBinding;
 import piuk.blockchain.android.ui.account.ItemAccount;
+import piuk.blockchain.android.util.MonetaryUtil;
 
 public class AddressAdapter extends ArrayAdapter<ItemAccount> {
 
     private boolean showText;
+    private boolean isBtc;
+    private MonetaryUtil monetaryUtil;
+    private String fiatUnits;
+    private double exchangeRate;
 
-    public AddressAdapter(Context context, int textViewResourceId, List<ItemAccount> accountList, boolean showText) {
+    /**
+     * Constructor that allows handling both BTC and Fiat
+     */
+    public AddressAdapter(Context context,
+                          int textViewResourceId,
+                          List<ItemAccount> accountList,
+                          boolean showText,
+                          boolean isBtc,
+                          MonetaryUtil monetaryUtil,
+                          String fiatUnits,
+                          double exchangeRate) {
         super(context, textViewResourceId, accountList);
         this.showText = showText;
+        this.isBtc = isBtc;
+        this.monetaryUtil = monetaryUtil;
+        this.fiatUnits = fiatUnits;
+        this.exchangeRate = exchangeRate;
+    }
+
+    /**
+     * BTC only constructor
+     */
+    public AddressAdapter(Context context,
+                          int textViewResourceId,
+                          List<ItemAccount> accountList,
+                          boolean showText) {
+        super(context, textViewResourceId, accountList);
+        this.showText = showText;
+        isBtc = true;
     }
 
     public void updateData(List<ItemAccount> accountList) {
@@ -51,7 +82,6 @@ public class AddressAdapter extends ArrayAdapter<ItemAccount> {
                     false);
 
             ItemAccount item = getItem(position);
-            assert item != null;
 
             if (item.tag == null || item.tag.isEmpty()) {
                 binding.tvTag.setVisibility(View.GONE);
@@ -59,7 +89,17 @@ public class AddressAdapter extends ArrayAdapter<ItemAccount> {
                 binding.tvTag.setText(item.tag);
             }
             binding.tvLabel.setText(item.label);
-            binding.tvBalance.setText(item.balance);
+
+            if (isBtc) {
+                binding.tvBalance.setText(item.displayBalance);
+            } else {
+                double btcBalance = item.absoluteBalance / 1e8;
+                double fiatBalance = exchangeRate * btcBalance;
+
+                String balance = monetaryUtil.getFiatFormat(fiatUnits).format(Math.abs(fiatBalance)) + " " + fiatUnits;
+                binding.tvBalance.setText(balance);
+            }
+
             return binding.getRoot();
 
         } else {
@@ -71,7 +111,6 @@ public class AddressAdapter extends ArrayAdapter<ItemAccount> {
 
             if (showText) {
                 ItemAccount item = getItem(position);
-                assert item != null;
                 binding.text.setText(item.label);
             }
             return binding.getRoot();

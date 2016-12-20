@@ -4,7 +4,7 @@ import info.blockchain.api.AddressInfo;
 import info.blockchain.wallet.payload.LegacyAddress;
 
 import piuk.blockchain.android.data.rxjava.RxUtil;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class AddressInfoService {
 
@@ -28,6 +28,6 @@ public class AddressInfoService {
     public Observable<Long> getAddressBalance(LegacyAddress address, String parameter) {
         return Observable.fromCallable(() -> addressInfo.getAddressInfo(address.getAddress(), parameter))
                 .flatMap(response -> Observable.fromCallable(() -> response.getLong(KEY_FINAL_BALANCE)))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 }

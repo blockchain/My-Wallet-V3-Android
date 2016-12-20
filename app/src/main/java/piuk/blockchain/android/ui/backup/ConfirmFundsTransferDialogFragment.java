@@ -51,8 +51,6 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
     private AppCompatButton mTransferButton;
     // Layouts
     private RelativeLayout mLoadingLayout;
-    // Dismiss Listener
-    private OnDismissListener mDismissListener;
 
     public static ConfirmFundsTransferDialogFragment newInstance() {
         ConfirmFundsTransferDialogFragment fragment = new ConfirmFundsTransferDialogFragment();
@@ -104,7 +102,10 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
         mLoadingLayout = (RelativeLayout) view.findViewById(R.id.loading_layout);
 
         AddressAdapter receiveToAdapter = new AddressAdapter(
-                getActivity(), R.layout.spinner_item, mViewModel.getReceiveToList(), true);
+                getActivity(),
+                R.layout.spinner_item,
+                mViewModel.getReceiveToList(),
+                true);
         receiveToAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         mToSpinner.setAdapter(receiveToAdapter);
         mToSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -218,7 +219,6 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
     public void dismissDialog() {
         Intent intent = new Intent(BalanceFragment.ACTION_INTENT);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
-        if (mDismissListener != null) mDismissListener.onDismiss();
         dismiss();
     }
 
@@ -231,15 +231,5 @@ public class ConfirmFundsTransferDialogFragment extends AppCompatDialogFragment
     public void onDestroy() {
         super.onDestroy();
         mViewModel.destroy();
-    }
-
-    public void setOnDismissListener(OnDismissListener listener) {
-        mDismissListener = listener;
-    }
-
-    public interface OnDismissListener {
-
-        void onDismiss();
-
     }
 }

@@ -8,8 +8,8 @@ import android.support.v4.util.Pair;
 
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.payload.Transaction;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Transaction;
+import info.blockchain.wallet.transaction.Tx;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,6 +26,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
 import piuk.blockchain.android.injection.Injector;
@@ -34,7 +35,6 @@ import piuk.blockchain.android.ui.customviews.ToastCustom;
 import piuk.blockchain.android.util.ExchangeRateFactory;
 import piuk.blockchain.android.util.MonetaryUtil;
 import piuk.blockchain.android.util.PrefsUtil;
-import rx.Observable;
 
 import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION_LIST_POSITION;
 
@@ -55,7 +55,8 @@ public class TransactionDetailViewModel extends BaseViewModel {
     private double mBtcExchangeRate;
     private String mFiatType;
 
-    @VisibleForTesting Tx mTransaction;
+    @VisibleForTesting
+    Tx mTransaction;
 
     public interface DataListener {
 
@@ -80,6 +81,8 @@ public class TransactionDetailViewModel extends BaseViewModel {
         void setDate(String date);
 
         void setDescription(String description);
+
+        void setIsDoubleSpend(boolean isDoubleSpend);
 
         void setTransactionColour(@ColorRes int colour);
 
@@ -116,7 +119,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
     }
 
     public void updateTransactionNote(String description) {
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 mTransactionListDataManager.updateTransactionNotes(mTransaction.getHash(), description)
                         .subscribe(aBoolean -> {
                             if (!aBoolean) {
@@ -146,7 +149,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
                 getTransactionValueString(mFiatType, transaction),
                 Pair::new);
 
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 zip.subscribe(o -> {
                     Transaction result = o.first;
                     String value = o.second;
@@ -166,6 +169,9 @@ public class TransactionDetailViewModel extends BaseViewModel {
                     }
 
                     String inputMapString = StringUtils.join(labelList.toArray(), "\n");
+                    if (inputMapString.isEmpty()) {
+                        inputMapString = mStringUtils.getString(R.string.transaction_detail_coinbase);
+                    }
                     mDataListener.setFromAddress(mTransactionHelper.addressToLabel(inputMapString));
 
                     // To Address
@@ -184,6 +190,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
                     mDataListener.setToAddresses(recipients);
                     mDataListener.setTransactionValueFiat(value);
                     mDataListener.onDataLoaded();
+                    mDataListener.setIsDoubleSpend(result.isDoubleSpend());
 
                 }, throwable -> {
                     // Show error state
@@ -212,12 +219,12 @@ public class TransactionDetailViewModel extends BaseViewModel {
     }
 
     private void setTransactionNote(Tx transaction) {
-        String notes = mPayloadManager.getPayload().getNotes().get(transaction.getHash());
+        String notes = mPayloadManager.getPayload().getTransactionNotesMap().get(transaction.getHash());
         mDataListener.setDescription(notes);
     }
 
     public String getTransactionNote() {
-        return mPayloadManager.getPayload().getNotes().get(mTransaction.getHash());
+        return mPayloadManager.getPayload().getTransactionNotesMap().get(mTransaction.getHash());
     }
 
     @VisibleForTesting

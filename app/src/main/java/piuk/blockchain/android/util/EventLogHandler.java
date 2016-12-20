@@ -6,8 +6,9 @@ import info.blockchain.wallet.util.WebUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class EventLogHandler {
 
@@ -34,7 +35,7 @@ public class EventLogHandler {
     }
 
     public void logBackupEvent(boolean active) {
-        // TODO: 20/12/2016 Disabled 
+        // TODO: 20/12/2016 Disabled
 //        logEvent(PrefsUtil.KEY_EVENT_BACKUP, URL_EVENT_BACKUP, active);
     }
 

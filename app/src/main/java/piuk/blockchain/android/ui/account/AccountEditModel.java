@@ -1,9 +1,14 @@
 package piuk.blockchain.android.ui.account;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.annotation.ColorRes;
+import android.support.annotation.FloatRange;
+import android.support.v4.content.ContextCompat;
 
 import piuk.blockchain.android.BR;
+import piuk.blockchain.android.util.ViewUtils;
 
 public class AccountEditModel extends BaseObservable {
 
@@ -37,7 +42,10 @@ public class AccountEditModel extends BaseObservable {
     private float archiveAlpha;
     private boolean archiveClickable;
 
-    public AccountEditModel() {
+    private Context context;
+
+    AccountEditModel(Context context) {
+        this.context = context;
     }
 
     @Bindable
@@ -45,8 +53,8 @@ public class AccountEditModel extends BaseObservable {
         return transferFundsVisibility;
     }
 
-    public void setTransferFundsVisibility(int visibility) {
-        this.transferFundsVisibility = visibility;
+    public void setTransferFundsVisibility(@ViewUtils.Visibility int visibility) {
+        transferFundsVisibility = visibility;
         notifyPropertyChanged(BR.transferFundsVisibility);
     }
 
@@ -55,7 +63,7 @@ public class AccountEditModel extends BaseObservable {
         return transferFundsAlpha;
     }
 
-    public void setTransferFundsAlpha(float transferFundsAlpha) {
+    public void setTransferFundsAlpha(@FloatRange(from = 0.0, to = 1.0) float transferFundsAlpha) {
         this.transferFundsAlpha = transferFundsAlpha;
         notifyPropertyChanged(BR.transferFundsAlpha);
     }
@@ -85,7 +93,7 @@ public class AccountEditModel extends BaseObservable {
         return labelAlpha;
     }
 
-    public void setLabelAlpha(float labelAlpha) {
+    public void setLabelAlpha(@FloatRange(from = 0.0, to = 1.0) float labelAlpha) {
         this.labelAlpha = labelAlpha;
         notifyPropertyChanged(BR.labelAlpha);
     }
@@ -115,8 +123,8 @@ public class AccountEditModel extends BaseObservable {
         return defaultAccountVisibility;
     }
 
-    public void setDefaultAccountVisibility(int visibility) {
-        this.defaultAccountVisibility = visibility;
+    public void setDefaultAccountVisibility(@ViewUtils.Visibility int visibility) {
+        defaultAccountVisibility = visibility;
         notifyPropertyChanged(BR.defaultAccountVisibility);
     }
 
@@ -135,8 +143,8 @@ public class AccountEditModel extends BaseObservable {
         return defaultTextColor;
     }
 
-    public void setDefaultTextColor(int defaultTextColor) {
-        this.defaultTextColor = defaultTextColor;
+    public void setDefaultTextColor(@ColorRes int defaultTextColor) {
+        this.defaultTextColor = ContextCompat.getColor(context, defaultTextColor);
         notifyPropertyChanged(BR.defaultTextColor);
     }
 
@@ -145,7 +153,7 @@ public class AccountEditModel extends BaseObservable {
         return defaultAlpha;
     }
 
-    public void setDefaultAlpha(float defaultAlpha) {
+    public void setDefaultAlpha(@FloatRange(from = 0.0, to = 1.0) float defaultAlpha) {
         this.defaultAlpha = defaultAlpha;
         notifyPropertyChanged(BR.defaultAlpha);
     }
@@ -165,8 +173,8 @@ public class AccountEditModel extends BaseObservable {
         return scanPrivateKeyVisibility;
     }
 
-    public void setScanPrivateKeyVisibility(int visibility) {
-        this.scanPrivateKeyVisibility = visibility;
+    public void setScanPrivateKeyVisibility(@ViewUtils.Visibility int visibility) {
+        scanPrivateKeyVisibility = visibility;
         notifyPropertyChanged(BR.scanPrivateKeyVisibility);
     }
 
@@ -175,7 +183,7 @@ public class AccountEditModel extends BaseObservable {
         return xprivAlpha;
     }
 
-    public void setXprivAlpha(float xprivAlpha) {
+    public void setXprivAlpha(@FloatRange(from = 0.0, to = 1.0) float xprivAlpha) {
         this.xprivAlpha = xprivAlpha;
         notifyPropertyChanged(BR.xprivAlpha);
     }
@@ -215,7 +223,7 @@ public class AccountEditModel extends BaseObservable {
         return xpubAlpha;
     }
 
-    public void setXpubAlpha(float xpubAlpha) {
+    public void setXpubAlpha(@FloatRange(from = 0.0, to = 1.0) float xpubAlpha) {
         this.xpubAlpha = xpubAlpha;
         notifyPropertyChanged(BR.xpubAlpha);
     }
@@ -235,8 +243,8 @@ public class AccountEditModel extends BaseObservable {
         return archiveVisibility;
     }
 
-    public void setArchiveVisibility(int visibility) {
-        this.archiveVisibility = visibility;
+    public void setArchiveVisibility(@ViewUtils.Visibility int visibility) {
+        archiveVisibility = visibility;
         notifyPropertyChanged(BR.archiveVisibility);
     }
 
@@ -265,7 +273,7 @@ public class AccountEditModel extends BaseObservable {
         return archiveAlpha;
     }
 
-    public void setArchiveAlpha(float archiveAlpha) {
+    public void setArchiveAlpha(@FloatRange(from = 0.0, to = 1.0) float archiveAlpha) {
         this.archiveAlpha = archiveAlpha;
         notifyPropertyChanged(BR.archiveAlpha);
     }

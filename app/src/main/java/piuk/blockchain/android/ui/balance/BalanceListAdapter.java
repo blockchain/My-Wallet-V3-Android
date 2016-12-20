@@ -1,8 +1,10 @@
 package piuk.blockchain.android.ui.balance;
 
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.style.RelativeSizeSpan;
@@ -12,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Tx;
 
 import java.util.List;
 
@@ -48,7 +50,7 @@ class BalanceListAdapter extends RecyclerView.Adapter<BalanceListAdapter.ViewHol
 
     @Override
     public BalanceListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.txs_layout_expandable, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.txs_layout, parent, false);
         return new ViewHolder(v);
     }
 
@@ -77,18 +79,20 @@ class BalanceListAdapter extends RecyclerView.Adapter<BalanceListAdapter.ViewHol
             if (dirText.equals(MultiAddrFactory.SENT))
                 holder.direction.setText(holder.direction.getContext().getResources().getString(R.string.SENT));
 
-            Spannable span1;
+            Spannable spannable;
             if (mIsBtc) {
-                span1 = Spannable.Factory.getInstance().newSpannable(
+                spannable = Spannable.Factory.getInstance().newSpannable(
                         mMonetaryUtil.getDisplayAmountWithFormatting(Math.abs(tx.getAmount())) + " " + getDisplayUnits());
-                span1.setSpan(
-                        new RelativeSizeSpan(0.67f), span1.length() - getDisplayUnits().length(), span1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannable.setSpan(
+                        new RelativeSizeSpan(0.67f), spannable.length() - getDisplayUnits().length(), spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else {
-                span1 = Spannable.Factory.getInstance().newSpannable(
+                spannable = Spannable.Factory.getInstance().newSpannable(
                         mMonetaryUtil.getFiatFormat(strFiat).format(Math.abs(fiatBalance)) + " " + strFiat);
-                span1.setSpan(
-                        new RelativeSizeSpan(0.67f), span1.length() - 3, span1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannable.setSpan(
+                        new RelativeSizeSpan(0.67f), spannable.length() - 3, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
+
+            holder.result.setText(spannable);
 
             int nbConfirmations = 3;
             if (tx.isMove()) {
@@ -125,7 +129,11 @@ class BalanceListAdapter extends RecyclerView.Adapter<BalanceListAdapter.ViewHol
                 holder.watchOnly.setVisibility(View.GONE);
             }
 
-            holder.result.setText(span1);
+            if (tx.isDoubleSpend()) {
+                holder.doubleSpend.setVisibility(View.VISIBLE);
+            } else {
+                holder.doubleSpend.setVisibility(View.GONE);
+            }
 
             holder.result.setOnClickListener(v -> {
                 onViewFormatUpdated(!mIsBtc);
@@ -164,6 +172,14 @@ class BalanceListAdapter extends RecyclerView.Adapter<BalanceListAdapter.ViewHol
 
     void onViewFormatUpdated(boolean isBTC) {
         mIsBtc = isBTC;
+        notifyAdapterDataSetChanged(null);
+    }
+
+    void notifyAdapterDataSetChanged(@Nullable Double btcExchangeRate) {
+        if (btcExchangeRate != null) {
+            mBtcExchangeRate = btcExchangeRate;
+        }
+        mMonetaryUtil.updateUnit(mPrefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC));
         notifyDataSetChanged();
     }
 
@@ -182,6 +198,7 @@ class BalanceListAdapter extends RecyclerView.Adapter<BalanceListAdapter.ViewHol
         TextView timeSince;
         TextView direction;
         TextView watchOnly;
+        AppCompatImageView doubleSpend;
 
         ViewHolder(View view) {
             super(view);
@@ -190,6 +207,7 @@ class BalanceListAdapter extends RecyclerView.Adapter<BalanceListAdapter.ViewHol
             timeSince = (TextView) view.findViewById(R.id.ts);
             direction = (TextView) view.findViewById(R.id.direction);
             watchOnly = (TextView) view.findViewById(R.id.watch_only);
+            doubleSpend = (AppCompatImageView) view.findViewById(R.id.double_spend_warning);
         }
     }
 }

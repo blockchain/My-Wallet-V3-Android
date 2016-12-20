@@ -1,0 +1,40 @@
+/**
+ * This loads Staging and Dev URLs from a file in the project root named 'urls.properties' which
+ * defines each respective URL and is hidden from VCS. The app will function correctly in production
+ * without it, but will crash if switched to another environment via the debug menu.
+ */
+
+// Base Server URL
+ext.devBaseServer = '"Base server dev URL not set"'
+ext.stagingBaseServer = '"Base server staging URL not set"'
+ext.testnetBaseServer = '"Base server TestNet URL not set"'
+
+// API URL
+ext.devApiServer = '"API dev URL not set"'
+ext.stagingApiServer = '"API dev URL not set"'
+ext.testnetApiServer = '"API TestNet URL not set"'
+
+// Websocket URL
+ext.devWebsocket = '"Websocket dev URL not set"'
+ext.stagingWebsocket = '"Websocket staging URL not set"'
+ext.testnetWebsocket = '"Websocket testnet URL not set"'
+
+
+def propsFile = rootProject.file('urls.properties')
+
+if (propsFile.exists()) {
+    def props = new Properties()
+    props.load(new FileInputStream(propsFile))
+
+    devBaseServer = new String(props['devBaseServer'])
+    stagingBaseServer = new String(props['stagingBaseServer'])
+    testnetBaseServer = new String(props['testnetBaseServer'])
+
+    devApiServer = new String(props['devApiServer'])
+    stagingApiServer = new String(props['stagingApiServer'])
+    testnetApiServer = new String(props['testnetApiServer'])
+
+    devWebsocket = new String(props['devWebsocket'])
+    stagingWebsocket = new String(props['stagingWebsocket'])
+    testnetWebsocket = new String(props['testnetWebsocket'])
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blockchain_pearl_white"
+    android:paddingTop="24dp">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/account_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        tools:text="My Bitcoin Wallet" />
+
+    <ImageView
+        android:id="@+id/imageview_qr"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_below="@+id/account_name"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/address_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageview_qr"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        tools:text="Bitcoin address" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address_info"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp">
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/action_copy"
+            style="?android:attr/buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copy_address"
+            android:textColor="@color/blockchain_blue"
+            android:theme="@style/PlainTheme" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/action_done"
+            style="?android:attr/buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/done"
+            android:textColor="@color/blockchain_blue"
+            android:theme="@style/PlainTheme" />
+    </LinearLayout>
+</RelativeLayout>

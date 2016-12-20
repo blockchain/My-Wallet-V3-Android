@@ -1,9 +1,8 @@
 package piuk.blockchain.android;
 
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
-import java.io.File;
+import piuk.blockchain.android.util.PrefsUtil;
 
 public class BaseEspressoTest {
 
@@ -13,11 +12,11 @@ public class BaseEspressoTest {
      * to avoid Espresso starting your activity automatically.
      */
     protected void clearState() {
-        File root = InstrumentationRegistry.getTargetContext().getFilesDir().getParentFile();
-        String[] sharedPreferencesFileNames = new File(root, "shared_prefs").list();
-        for (String fileName : sharedPreferencesFileNames) {
-            InstrumentationRegistry.getTargetContext().getSharedPreferences(fileName.replace(".xml", ""), Context.MODE_PRIVATE).edit().clear().commit();
-        }
+        new PrefsUtil(InstrumentationRegistry.getTargetContext()).clear();
+    }
+
+    protected void ignoreTapJacking() {
+        new PrefsUtil(InstrumentationRegistry.getTargetContext()).setValue("OVERLAY_TRUSTED", true);
     }
 
 }

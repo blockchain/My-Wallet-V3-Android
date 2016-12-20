@@ -2,8 +2,8 @@ package piuk.blockchain.android.ui.customviews;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.Looper;
 import android.support.annotation.StringDef;
+import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,21 +31,17 @@ public class ToastCustom {
     public static final int LENGTH_SHORT = 0;
     public static final int LENGTH_LONG = 1;
 
-    private static Toast toast = null;
-
+    @UiThread
     public static void makeText(final Context context, final CharSequence text, final int duration, final @ToastType String type) {
+        Toast toast = Toast.makeText(context, text, duration);
 
-        new Thread(() -> {
-            Looper.prepare();
+        LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflate.inflate(R.layout.transient_notification, null);
+        TextView tv = (TextView) v.findViewById(R.id.message);
+        tv.setText(text);
 
-            toast = Toast.makeText(context, text, duration);
-
-            LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflate.inflate(R.layout.transient_notification, null);
-            TextView tv = (TextView) v.findViewById(R.id.message);
-            tv.setText(text);
-
-            if (type.equals(TYPE_ERROR)) {
+        switch (type) {
+            case TYPE_ERROR:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                     tv.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_view_toast_error));
                 else
@@ -53,7 +49,8 @@ public class ToastCustom {
                     tv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_view_toast_error));
                 tv.setTextColor(ContextCompat.getColor(context, R.color.toast_error_text));
 
-            } else if (type.equals(TYPE_GENERAL)) {
+                break;
+            case TYPE_GENERAL:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                     tv.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_view_toast_warning));
                 else
@@ -61,18 +58,17 @@ public class ToastCustom {
                     tv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_view_toast_warning));
                 tv.setTextColor(ContextCompat.getColor(context, R.color.toast_warning_text));
 
-            } else if (type.equals(TYPE_OK)) {
+                break;
+            case TYPE_OK:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                     tv.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_view_toast_info));
                 else
                     //noinspection deprecation
                     tv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_view_toast_info));
                 tv.setTextColor(ContextCompat.getColor(context, R.color.toast_info_text));
-            }
-            toast.setView(v);
-            toast.show();
-
-            Looper.loop();
-        }).start();
+                break;
+        }
+        toast.setView(v);
+        toast.show();
     }
 }

@@ -151,6 +151,13 @@ public class TransactionDetailActivity extends BaseAuthActivity implements Trans
     }
 
     @Override
+    public void setIsDoubleSpend(boolean isDoubleSpend) {
+        if (isDoubleSpend) {
+            mBinding.doubleSpendWarning.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void showToast(@StringRes int message, @ToastCustom.ToastType String toastType) {
         ToastCustom.makeText(this, getString(message), ToastCustom.LENGTH_SHORT, toastType);
     }
@@ -172,7 +179,7 @@ public class TransactionDetailActivity extends BaseAuthActivity implements Trans
 
     @Override
     public boolean onSupportNavigateUp() {
-        super.onBackPressed();
+        onBackPressed();
         return true;
     }
 

@@ -83,6 +83,12 @@ public class LauncherActivity extends AppCompatActivity implements LauncherViewM
         startSingleActivity(PasswordRequiredActivity.class);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewModel.destroy();
+    }
+
     private void startSingleActivity(Class clazz) {
         Intent intent = new Intent(this, clazz);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

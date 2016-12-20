@@ -7,7 +7,6 @@ import android.os.Looper;
 import info.blockchain.api.Balance;
 import info.blockchain.api.DynamicFee;
 import info.blockchain.api.ExchangeTicker;
-import info.blockchain.api.PersistentUrls;
 import info.blockchain.api.Settings;
 import info.blockchain.api.Unspent;
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
@@ -22,20 +21,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.data.cache.DefaultAccountUnspentCache;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus;
 import piuk.blockchain.android.data.rxjava.RxUtil;
+import piuk.blockchain.android.data.websocket.WebSocketService;
 import piuk.blockchain.android.injection.Injector;
 import piuk.blockchain.android.ui.base.BaseViewModel;
+import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.EventLogHandler;
 import piuk.blockchain.android.util.ExchangeRateFactory;
 import piuk.blockchain.android.util.OSUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.RootUtil;
-import rx.Observable;
 
 @SuppressWarnings("WeakerAccess")
 public class MainViewModel extends BaseViewModel {
@@ -45,10 +46,9 @@ public class MainViewModel extends BaseViewModel {
     private OSUtil osUtil;
     @Inject protected PrefsUtil prefs;
     @Inject protected AppUtil appUtil;
+    @Inject protected AccessState accessState;
     @Inject protected PayloadManager payloadManager;
-
-    private long mBackPressed;
-    private static final int COOL_DOWN_MILLIS = 2 * 1000;
+    @Inject protected SwipeToReceiveHelper swipeToReceiveHelper;
 
     public interface DataListener {
         void onRooted();
@@ -63,39 +63,49 @@ public class MainViewModel extends BaseViewModel {
 
         void onStartBalanceFragment();
 
-        void onExitConfirmToast();
-
         void kickToLauncherPage();
 
         void showEmailVerificationDialog(String email);
+
+        void showAddEmailDialog();
+
+        void clearAllDynamicShortcuts();
     }
 
     public MainViewModel(Context context, DataListener dataListener) {
         Injector.getInstance().getDataManagerComponent().inject(this);
         this.context = context;
         this.dataListener = dataListener;
-        this.osUtil = new OSUtil(context);
-        this.appUtil.applyPRNGFixes();
+        osUtil = new OSUtil(context);
+        appUtil.applyPRNGFixes();
     }
 
     @Override
     public void onViewReady() {
-        checkBackendEnvironment();
         checkRooted();
         checkConnectivity();
         checkIfShouldShowEmailVerification();
+        startWebSocketService();
+    }
+
+    public void storeSwipeReceiveAddresses() {
+        swipeToReceiveHelper.updateAndStoreAddresses();
     }
 
     private void checkIfShouldShowEmailVerification() {
-        if (appUtil.isNewlyCreated()) {
-            mCompositeSubscription.add(
+        if (prefs.getValue(PrefsUtil.KEY_FIRST_RUN, true)) {
+            compositeDisposable.add(
                     getSettingsApi()
-                            .compose(RxUtil.applySchedulers())
+                            .compose(RxUtil.applySchedulersToObservable())
                             .subscribe(settings -> {
                                 if (!settings.isEmailVerified()) {
                                     appUtil.setNewlyCreated(false);
                                     String email = settings.getEmail();
-                                    dataListener.showEmailVerificationDialog(email);
+                                    if (email != null && !email.isEmpty()) {
+                                        dataListener.showEmailVerificationDialog(email);
+                                    } else {
+                                        dataListener.showAddEmailDialog();
+                                    }
                                 }
                             }, Throwable::printStackTrace));
         }
@@ -112,16 +122,15 @@ public class MainViewModel extends BaseViewModel {
     private void checkRooted() {
         if (new RootUtil().isDeviceRooted() &&
                 !prefs.getValue("disable_root_warning", false)) {
-            this.dataListener.onRooted();
+            dataListener.onRooted();
         }
     }
 
     private void checkConnectivity() {
-
         if (ConnectivityStatus.hasConnectivity(context)) {
             preLaunchChecks();
         } else {
-            this.dataListener.onConnectivityFail();
+            dataListener.onConnectivityFail();
         }
     }
 
@@ -133,9 +142,9 @@ public class MainViewModel extends BaseViewModel {
 
             new Thread(() -> {
                 Looper.prepare();
-                logEvents();
                 cacheDynamicFee();
                 cacheDefaultAccountUnspentData();
+                logEvents();
                 Looper.loop();
             }).start();
 
@@ -149,9 +158,12 @@ public class MainViewModel extends BaseViewModel {
                     e.printStackTrace();
                 }
 
-                dataListener.onFetchTransactionCompleted();
+                storeSwipeReceiveAddresses();
 
-                dataListener.onStartBalanceFragment();
+                if (dataListener != null) {
+                    dataListener.onFetchTransactionCompleted();
+                    dataListener.onStartBalanceFragment();
+                }
 
                 if (prefs.getValue(PrefsUtil.KEY_SCHEME_URL, "").length() > 0) {
                     String strUri = prefs.getValue(PrefsUtil.KEY_SCHEME_URL, "");
@@ -200,7 +212,6 @@ public class MainViewModel extends BaseViewModel {
         appUtil.deleteQR();
         context = null;
         dataListener = null;
-        stopWebSocketService();
         DynamicFeeCache.getInstance().destroy();
     }
 
@@ -232,57 +243,29 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void unpair() {
+        dataListener.clearAllDynamicShortcuts();
         payloadManager.wipe();
         MultiAddrFactory.getInstance().wipe();
         prefs.logOut();
         appUtil.restartApp();
+        accessState.setPIN(null);
     }
 
-    public void onBackPressed() {
-        if (mBackPressed + COOL_DOWN_MILLIS > System.currentTimeMillis()) {
-            AccessState.getInstance().logout(context);
-            return;
+    public boolean areLauncherShortcutsEnabled() {
+        return prefs.getValue(PrefsUtil.KEY_RECEIVE_SHORTCUTS_ENABLED, true);
+    }
+
+    private void startWebSocketService() {
+        Intent intent = new Intent(context, WebSocketService.class);
+
+        if (!osUtil.isServiceRunning(WebSocketService.class)) {
+            context.startService(intent);
         } else {
-            dataListener.onExitConfirmToast();
+            // Restarting this here ensures re-subscription after app restart - the service may remain
+            // running, but the subscription to the WebSocket won't be restarted unless onCreate called
+            context.stopService(intent);
+            context.startService(intent);
         }
-
-        mBackPressed = System.currentTimeMillis();
-    }
-
-    public void startWebSocketService() {
-        if (!osUtil.isServiceRunning(piuk.blockchain.android.data.websocket.WebSocketService.class)) {
-            context.startService(new Intent(context, piuk.blockchain.android.data.websocket.WebSocketService.class));
-        }
-    }
-
-    public void stopWebSocketService() {
-        if (!osUtil.isServiceRunning(piuk.blockchain.android.data.websocket.WebSocketService.class)) {
-            context.stopService(new Intent(context, piuk.blockchain.android.data.websocket.WebSocketService.class));
-        }
-    }
-
-    private void checkBackendEnvironment() {
-
-        PersistentUrls urls = PersistentUrls.getInstance();
-
-//        if (BuildConfig.DOGFOOD || BuildConfig.DEBUG) {
-//            PrefsUtil prefsUtil = new PrefsUtil(context);
-//            int currentEnvironment = prefsUtil.getValue(PrefsUtil.KEY_BACKEND_ENVIRONMENT, 0);
-
-//            switch (currentEnvironment) {
-//                case 0:
-        urls.setProductionEnvironment();
-//                    break;
-//                case 1:
-//                    urls.setDevelopmentEnvironment();
-//                    break;
-//                case 2:
-//                    urls.setStagingEnvironment();
-//                    break;
-//            }
-//        }else{
-        urls.setProductionEnvironment();
-//        }
     }
 
     private void logEvents() {
@@ -292,7 +275,7 @@ public class MainViewModel extends BaseViewModel {
         handler.logBackupEvent(payloadManager.getPayload().getHdWallet().isMnemonicVerified());
 
         try {
-            List<String> activeLegacyAddressStrings = PayloadManager.getInstance().getPayload().getActiveLegacyAddressStrings();
+            List<String> activeLegacyAddressStrings = PayloadManager.getInstance().getPayload().getLegacyAddressStringList();
             long balance = new Balance().getTotalBalance(activeLegacyAddressStrings);
             handler.logLegacyEvent(balance > 0L);
         } catch (Exception e) {

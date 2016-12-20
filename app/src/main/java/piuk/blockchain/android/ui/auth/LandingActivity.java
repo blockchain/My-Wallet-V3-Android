@@ -8,18 +8,17 @@ import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
 
-import info.blockchain.api.PersistentUrls;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import piuk.blockchain.android.R;
+import piuk.blockchain.android.data.api.DebugSettings;
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus;
 import piuk.blockchain.android.databinding.ActivityLandingBinding;
 import piuk.blockchain.android.ui.base.BaseAuthActivity;
+import piuk.blockchain.android.ui.customviews.ToastCustom;
 import piuk.blockchain.android.ui.pairing.PairOrCreateWalletActivity;
 import piuk.blockchain.android.util.AppUtil;
-import piuk.blockchain.android.util.PrefsUtil;
 
 
 public class LandingActivity extends BaseAuthActivity {
@@ -31,7 +30,7 @@ public class LandingActivity extends BaseAuthActivity {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({CREATE_FRAGMENT, LOGIN_FRAGMENT})
-    public @interface StartingFragment {
+    @interface StartingFragment {
     }
 
     public static final int CREATE_FRAGMENT = 0;
@@ -43,11 +42,20 @@ public class LandingActivity extends BaseAuthActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_landing);
         setTitle(R.string.app_name);
 
-        //TODO - Temporarily hide this option - WIP
-//        if(BuildConfig.DOGFOOD || BuildConfig.DEBUG) {
-//            binding.settingsBtn.setVisibility(View.VISIBLE);
-//        }
-        binding.settingsBtn.setVisibility(View.GONE);
+        DebugSettings debugSettings = new DebugSettings();
+
+        if (debugSettings.shouldShowDebugMenu()) {
+            ToastCustom.makeText(
+                    this,
+                    "Current environment: "
+                            + debugSettings.getCurrentEnvironment().getName(),
+                    ToastCustom.LENGTH_SHORT,
+                    ToastCustom.TYPE_GENERAL);
+
+            binding.buttonSettings.setVisibility(View.VISIBLE);
+            binding.buttonSettings.setOnClickListener(view ->
+                    new EnvironmentSwitcher(this, debugSettings).showEnvironmentSelectionDialog());
+        }
 
         binding.create.setOnClickListener(view -> startLandingActivity(CREATE_FRAGMENT));
         binding.login.setOnClickListener(view -> startLandingActivity(LOGIN_FRAGMENT));
@@ -102,37 +110,5 @@ public class LandingActivity extends BaseAuthActivity {
         // Test for screen overlays before user creates a new wallet or enters confidential information
         // consume event
         return new AppUtil(this).detectObscuredWindow(this, event) || super.dispatchTouchEvent(event);
-    }
-
-    public void onSettingsClicked(View view) {
-
-        PrefsUtil prefsUtil = new PrefsUtil(this);
-        int currentEnvironment = prefsUtil.getValue(PrefsUtil.KEY_BACKEND_ENVIRONMENT, 0);
-
-        PersistentUrls urls = PersistentUrls.getInstance();
-
-        String[] backends = {"Production", "Dev", "Staging"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select backend")
-                .setSingleChoiceItems(backends, currentEnvironment,
-                        (dialogInterface, i) -> {
-                            switch (i) {
-                                case 0:
-                                    urls.setProductionEnvironment();
-                                    prefsUtil.setValue(PrefsUtil.KEY_BACKEND_ENVIRONMENT, 0);
-                                    break;
-                                case 1:
-//                                    urls.setDevelopmentEnvironment();
-                                    prefsUtil.setValue(PrefsUtil.KEY_BACKEND_ENVIRONMENT, 1);
-                                    break;
-                                case 2:
-//                                    urls.setStagingEnvironment();
-                                    prefsUtil.setValue(PrefsUtil.KEY_BACKEND_ENVIRONMENT, 2);
-                                    break;
-                            }
-                        });
-
-        builder.create().show();
     }
 }

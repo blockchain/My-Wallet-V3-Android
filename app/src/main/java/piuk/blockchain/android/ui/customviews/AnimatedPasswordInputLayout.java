@@ -40,6 +40,7 @@ public class AnimatedPasswordInputLayout extends TextInputLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         setVectorDrawableIfRequired();
+        setPasswordVisibilityToggleEnabled(true);
         initListener();
     }
 

@@ -8,12 +8,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import io.reactivex.disposables.CompositeDisposable;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.util.SSLVerifyUtil;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * A base Activity for all activities which need auth timeouts & screenshot prevention
@@ -23,7 +23,7 @@ public class BaseAuthActivity extends AppCompatActivity {
 
     private AlertDialog mAlertDialog;
     private SSLVerifyUtil mSSLVerifyUtil = new SSLVerifyUtil(this);
-    private static CompositeSubscription mCompositeSubscription;
+    private static CompositeDisposable compositeDisposable;
 
     @CallSuper
     @Override
@@ -35,12 +35,12 @@ public class BaseAuthActivity extends AppCompatActivity {
             disallowScreenshots();
         }
 
-        mCompositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
 
         // Subscribe to SSL pinning events
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 mSSLVerifyUtil.getSslPinningSubject()
-                        .compose(RxUtil.applySchedulers())
+                        .compose(RxUtil.applySchedulersToObservable())
                         .subscribe(sslEvent -> {
                                     switch (sslEvent) {
                                         case ServerDown:
@@ -79,7 +79,7 @@ public class BaseAuthActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mCompositeSubscription.clear();
+        compositeDisposable.clear();
         if (mAlertDialog != null) {
             mAlertDialog.dismiss();
         }

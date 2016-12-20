@@ -1,6 +1,7 @@
 package piuk.blockchain.android.data.services;
 
 import info.blockchain.api.PinStore;
+import info.blockchain.wallet.exceptions.InvalidCredentialsException;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -8,8 +9,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.RxTest;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -31,41 +32,60 @@ public class PinStoreServiceTest extends RxTest {
     @Test
     public void setAccessKeySuccess() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         when(pinStore.setAccess(anyString(), anyString(), anyString())).thenReturn(new JSONObject(SUCCESS_RESPONSE));
         // Act
-        subject.setAccessKey("", "", "").toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.setAccessKey("", "", "").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(true, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(true, observer.values().get(0));
     }
 
     @Test
     public void setAccessKeyFailed() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         when(pinStore.setAccess(anyString(), anyString(), anyString())).thenReturn(new JSONObject());
         // Act
-        subject.setAccessKey("", "", "").toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.setAccessKey("", "", "").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(false, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(false, observer.values().get(0));
     }
 
     @Test
     public void validateAccess() throws Exception {
         // Arrange
-        TestSubscriber<JSONObject> subscriber = new TestSubscriber<>();
         JSONObject value = new JSONObject(SUCCESS_RESPONSE);
         when(pinStore.validateAccess(anyString(), anyString())).thenReturn(value);
         // Act
-        subject.validateAccess("", "").toBlocking().subscribe(subscriber);
+        TestObserver<JSONObject> observer = subject.validateAccess("", "").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(value, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(value, observer.values().get(0));
+    }
+
+    @Test
+    public void validateAccessException() throws Exception {
+        // Arrange
+        when(pinStore.validateAccess(anyString(), anyString())).thenThrow(Exception.class);
+        // Act
+        TestObserver<JSONObject> observer = subject.validateAccess("", "").test();
+        // Assert
+        observer.assertNotComplete();
+        observer.assertError(Throwable.class);
+    }
+
+    @Test
+    public void validateAccessInvalidCredentials() throws Exception {
+        // Arrange
+        when(pinStore.validateAccess(anyString(), anyString())).thenThrow(new Exception("Incorrect PIN"));
+        // Act
+        TestObserver<JSONObject> observer = subject.validateAccess("", "").test();
+        // Assert
+        observer.assertNotComplete();
+        observer.assertError(InvalidCredentialsException.class);
     }
 
     private static final String SUCCESS_RESPONSE = "{\n" +

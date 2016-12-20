@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,12 @@ import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.util.CharSequenceX;
 import info.blockchain.wallet.util.PasswordUtil;
 
+import io.reactivex.exceptions.Exceptions;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus;
 import piuk.blockchain.android.data.payload.PayloadBridge;
+import piuk.blockchain.android.data.websocket.WebSocketService;
 import piuk.blockchain.android.databinding.ActivityUpgradeWalletBinding;
 import piuk.blockchain.android.ui.account.SecondPasswordHandler;
 import piuk.blockchain.android.ui.base.BaseAuthActivity;
@@ -35,16 +38,15 @@ import piuk.blockchain.android.ui.customviews.ToastCustom;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.OSUtil;
 import piuk.blockchain.android.util.PrefsUtil;
-import rx.exceptions.Exceptions;
+import piuk.blockchain.android.util.annotations.Thunk;
 
 public class UpgradeWalletActivity extends BaseAuthActivity {
 
-    private AlertDialog alertDialog = null;
-    private CustomPagerAdapter mCustomPagerAdapter = null;
+    private static final String TAG = "UpgradeWalletActivity";
 
-    private PrefsUtil prefs;
-    private AppUtil appUtil;
-    private PayloadManager payloadManager;
+    @Thunk PrefsUtil prefs;
+    @Thunk AppUtil appUtil;
+    @Thunk PayloadManager payloadManager;
 
     private ActivityUpgradeWalletBinding binding;
 
@@ -69,7 +71,7 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
         binding.upgradePageHeader.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_fade_out));
         binding.upgradePageHeader.setText(getResources().getString(R.string.upgrade_page_1));
 
-        mCustomPagerAdapter = new CustomPagerAdapter(this);
+        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this);
         binding.pager.setAdapter(mCustomPagerAdapter);
         binding.pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -88,6 +90,13 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
             }
         });
 
+        if (payloadManager.getTempPassword() == null) {
+            // Force re-login
+            appUtil.clearCredentialsAndRestart();
+            ToastCustom.makeText(this, getString(R.string.upgrade_fail_info), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
+            return;
+        }
+
         if (PasswordUtil.getInstance().ddpw(payloadManager.getTempPassword()) || PasswordUtil.getInstance().getStrength(payloadManager.getTempPassword().toString()) < 50) {
 
             LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -103,7 +112,7 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
                         String password1 = ((EditText) pwLayout.findViewById(R.id.pw1)).getText().toString();
                         String password2 = ((EditText) pwLayout.findViewById(R.id.pw2)).getText().toString();
 
-                        if (password1.length() < 9 || password1.length() > 255 || password2 == null || password2.length() < 9 || password2.length() > 255) {
+                        if (password1.length() < 4 || password1.length() > 255 || password2.length() < 4 || password2.length() > 255) {
                             ToastCustom.makeText(UpgradeWalletActivity.this, getString(R.string.invalid_password), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
                         } else {
 
@@ -150,7 +159,8 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
         });
     }
 
-    private void doUpgrade(final CharSequenceX secondPassword) {
+    @Thunk
+    void doUpgrade(final CharSequenceX secondPassword) {
 
         onUpgradeStart();
 
@@ -177,12 +187,12 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
 
                                     @Override
                                     public void onUpgradeSuccess() {
-                                        if (new OSUtil(UpgradeWalletActivity.this).isServiceRunning(piuk.blockchain.android.data.websocket.WebSocketService.class)) {
+                                        if (new OSUtil(UpgradeWalletActivity.this).isServiceRunning(WebSocketService.class)) {
                                             stopService(new Intent(UpgradeWalletActivity.this,
-                                                    piuk.blockchain.android.data.websocket.WebSocketService.class));
+                                                    WebSocketService.class));
                                         }
                                         startService(new Intent(UpgradeWalletActivity.this,
-                                                piuk.blockchain.android.data.websocket.WebSocketService.class));
+                                                WebSocketService.class));
 
                                         payloadManager.getPayload().getHdWallet().getAccounts().get(0).setLabel(getResources().getString(R.string.default_wallet_name));
                                         onUpgradeCompleted();
@@ -196,7 +206,7 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
                     }
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "doInBackground: ", e);
                 }
 
                 return null;
@@ -214,7 +224,8 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
         });
     }
 
-    private void onUpgradeCompleted() {
+    @Thunk
+    void onUpgradeCompleted() {
 
         runOnUiThread(() -> {
             binding.upgradePageTitle.setText(getString(R.string.upgrade_success_heading));
@@ -222,8 +233,6 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
             binding.progressBar.setVisibility(View.GONE);
             binding.btnUpgradeComplete.setVisibility(View.VISIBLE);
             binding.btnUpgradeComplete.setOnClickListener(v -> {
-                if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
-
                 prefs.setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
                 AccessState.getInstance().setIsLoggedIn(true);
                 appUtil.restartAppWithVerifiedPin();
@@ -231,7 +240,8 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
         });
     }
 
-    private void onUpgradeFailed() {
+    @Thunk
+    void onUpgradeFailed() {
 
         appUtil.setNewlyCreated(false);
 
@@ -241,14 +251,12 @@ public class UpgradeWalletActivity extends BaseAuthActivity {
             binding.progressBar.setVisibility(View.GONE);
             binding.btnUpgradeComplete.setVisibility(View.VISIBLE);
             binding.btnUpgradeComplete.setText(getString(R.string.CLOSE));
-            binding.btnUpgradeComplete.setOnClickListener(v -> {
-                if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
-                onBackPressed();
-            });
+            binding.btnUpgradeComplete.setOnClickListener(v -> onBackPressed());
         });
     }
 
-    private void setSelectedPage(int position) {
+    @Thunk
+    void setSelectedPage(int position) {
 
         setBackGround(binding.pageBox0, R.drawable.rounded_view_dark_blue);
         setBackGround(binding.pageBox1, R.drawable.rounded_view_dark_blue);

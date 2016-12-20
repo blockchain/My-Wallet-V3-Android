@@ -3,7 +3,7 @@ package piuk.blockchain.android.data.services;
 import info.blockchain.api.WalletPayload;
 
 import piuk.blockchain.android.data.rxjava.RxUtil;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class WalletPayloadService {
 
@@ -22,7 +22,7 @@ public class WalletPayloadService {
      */
     public Observable<String> getEncryptedPayload(String guid, String sessionId) {
         return Observable.fromCallable(() -> walletPayload.getEncryptedPayload(guid, sessionId))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     /**
@@ -33,7 +33,7 @@ public class WalletPayloadService {
      */
     public Observable<String> getSessionId(String guid) {
         return Observable.fromCallable(() -> walletPayload.getSessionId(guid))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     /**
@@ -44,6 +44,6 @@ public class WalletPayloadService {
      */
     public Observable<String> getPairingEncryptionPassword(String guid) {
         return Observable.fromCallable(() -> walletPayload.getPairingEncryptionPassword(guid))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 }

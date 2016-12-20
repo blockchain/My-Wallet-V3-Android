@@ -1,24 +1,34 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply from: '../jacoco.gradle'
+apply from: 'environment.gradle'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
-    // Introduced to prevent crash during DEXing step since SDK 23, but also speeds up DEXing in general
     dexOptions {
-        javaMaxHeapSize "2g"
+        javaMaxHeapSize "3g"
     }
 
     defaultConfig {
         applicationId "piuk.blockchain.android"
-        targetSdkVersion 24
-        versionCode 226
-        versionName "6.1.35"
+        targetSdkVersion 25
+        versionCode 232
+        versionName "6.1.41"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "blockchain-$versionName"
+        // URLs for Staging, Dev and TestNet Support
+        buildConfigField "String", "DEV_BASE_SERVER", devBaseServer
+        buildConfigField "String", "STAGING_BASE_SERVER", stagingBaseServer
+        buildConfigField "String", "TESTNET_BASE_SERVER", testnetBaseServer
+        buildConfigField "String", "DEV_API_SERVER", devApiServer
+        buildConfigField "String", "STAGING_API_SERVER", stagingApiServer
+        buildConfigField "String", "TESTNET_API_SERVER", testnetApiServer
+        buildConfigField "String", "DEV_WEBSOCKET", devWebsocket
+        buildConfigField "String", "STAGING_WEBSOCKET", stagingWebsocket
+        buildConfigField "String", "TESTNET_WEBSOCKET", testnetWebsocket
     }
 
     buildTypes {
@@ -33,7 +43,7 @@ android {
             buildConfigField "boolean", "DOGFOOD", "false"
         }
         debug {
-            resValue "string", "google_maps_key", "AIzaSyASTnx7wjsCTkMr_RtLQYTzMAf7A9SWIMw"
+            resValue "string", "google_maps_key", "AIzaSyDOrXqr30C3vjiUM4HMeZO8HFpTIH8CVaM"
             multiDexEnabled true
             buildConfigField "boolean", "DOGFOOD", "false"
         }
@@ -75,6 +85,7 @@ android {
         fatal 'StopShip'
     }
     packagingOptions {
+        exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
@@ -99,8 +110,13 @@ android {
 }
 
 ext {
-    supportVersion = '24.2.1'
-    googleServicesVersion = '9.6.1'
+    supportVersion = '25.1.0'
+    googleServicesVersion = '10.0.1'
+    rxJavaVersion = '2.0.2'
+    rxAndroidVersion = '2.0.1'
+    daggerVersion = '2.8'
+    retrofitVersion = '2.1.0'
+    okHttpVersion = '3.5.0'
 }
 
 dependencies {
@@ -113,32 +129,41 @@ dependencies {
     compile "com.android.support:preference-v7:$supportVersion"
     compile "com.android.support:preference-v14:$supportVersion"
 
+    // Enable crash reporting only for release version
+    releaseCompile "com.google.firebase:firebase-crash:$googleServicesVersion"
+    compile "com.google.firebase:firebase-messaging:$googleServicesVersion"
     compile "com.google.android.gms:play-services-maps:$googleServicesVersion"
-    compile 'org.slf4j:slf4j-api:1.7.13'
     compile 'org.bitcoinj:bitcoinj-core:0.13.4'
     compile 'commons-io:commons-io:2.4'
-    compile 'commons-codec:commons-codec:1.10'
+    // Keep at 1.3 to match Android implementation
+    compile 'commons-codec:commons-codec:1.3'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.android.support:multidex:1.0.1'
     compile 'org.thoughtcrime.ssl.pinning:AndroidPinning:1.0.0'
     compile 'com.neovisionaries:nv-websocket-client:1.19'
     compile('com.google.zxing:core:3.3.0') { transitive = true }
-    compile 'com.getbase:floatingactionbutton:1.10.1'
-    compile 'com.mukesh:countrypicker:1.1.3'
+    compile 'com.github.mukeshsolanki:country-picker-android:1.1.6'
+    compile 'com.aurelhubert:ahbottomnavigation:2.0.2'
     // RxJava
-    compile 'io.reactivex:rxjava:1.1.10'
-    compile 'io.reactivex:rxandroid:1.2.1'
+    compile "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    // Retrofit
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+    // OkHttp
+    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     // Dagger2
-    compile 'com.google.dagger:dagger:2.7'
+    compile "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor 'com.google.guava:guava:19.0'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
     // Fingerprint authentication
-    compile 'com.mtramin:rxfingerprint:1.2.1'
+    compile 'com.mtramin:rxfingerprint:2.0.1'
 
     // UI/Instrumentation Tests
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.3'
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile('com.android.support.test:runner:0.5') {
@@ -150,10 +175,9 @@ dependencies {
 
     // Unit Tests
     testCompile 'org.json:json:20140107'
-    testCompile 'org.slf4j:slf4j-simple:1.7.13'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
-    testCompile('org.robolectric:robolectric:3.1.2') {
+    testCompile('org.robolectric:robolectric:3.1.4') {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.protobuf'
     }
@@ -165,11 +189,15 @@ buildscript {
     }
 
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
+        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
     }
 }
 
-// Required for RetroLambda
+// Required for RetroLambda && CountryPicker
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
+
+// This must remain at the bottom of this file until Google work out a better way to do this
+apply plugin: 'com.google.gms.google-services'

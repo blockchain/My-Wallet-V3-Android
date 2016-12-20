@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableLeft="?android:attr/listChoiceIndicatorSingle"
+    android:drawablePadding="8dp"
+    android:drawableRight="@null"
+    android:ellipsize="marquee"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="?android:attr/textColorAlertDialogListItem"
+    tools:text="Item" />

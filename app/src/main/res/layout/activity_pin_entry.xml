@@ -3,100 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/blockchain_blue"
-        android:orientation="vertical"
-        tools:context=".PinEntryView">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="16dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_settings_white_24dp"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/viewpager"
+            android:layout_below="@+id/button_settings"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/logo3x" />
+
+        <piuk.blockchain.android.ui.customviews.NonSwipeableViewPager
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="124dp"
-                android:layout_height="113dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:src="@drawable/logo3x" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="24dp">
-
-                    <TextView
-                        android:id="@+id/pinBox0"
-                        android:layout_width="60dip"
-                        android:layout_height="60dip"
-                        android:layout_margin="10dip"
-                        android:background="@drawable/rounded_view_blue_white_border" />
-
-                    <TextView
-                        android:id="@+id/pinBox1"
-                        android:layout_width="60dip"
-                        android:layout_height="60dip"
-                        android:layout_margin="10dip"
-                        android:background="@drawable/rounded_view_blue_white_border" />
-
-                    <TextView
-                        android:id="@+id/pinBox2"
-                        android:layout_width="60dip"
-                        android:layout_height="60dip"
-                        android:layout_margin="10dip"
-                        android:background="@drawable/rounded_view_blue_white_border" />
-
-                    <TextView
-                        android:id="@+id/pinBox3"
-                        android:layout_width="60dip"
-                        android:layout_height="60dip"
-                        android:layout_margin="10dip"
-                        android:background="@drawable/rounded_view_blue_white_border" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/titleBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dip"
-                    android:text="@string/pin_entry"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/fingerprint_logo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:elevation="5dp"
-                    android:tint="@color/white"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_fingerprint" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <include
-            android:id="@+id/keyboard_container"
-            layout="@layout/activity_pin_entry_keyboard_include"
-            android:visibility="invisible" />
-
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 </layout>

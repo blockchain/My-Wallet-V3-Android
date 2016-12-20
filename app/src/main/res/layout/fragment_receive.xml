@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.receive.ReceiveActivity">
+
+        <!-- include main content -->
+        <include
+            android:id="@+id/content"
+            layout="@layout/fragment_receive_content" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

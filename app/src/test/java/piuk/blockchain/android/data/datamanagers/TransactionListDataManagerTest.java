@@ -5,13 +5,11 @@ import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.LegacyAddress;
 import info.blockchain.wallet.payload.Payload;
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.payload.Transaction;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Transaction;
+import info.blockchain.wallet.transaction.Tx;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,13 +22,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.subjects.Subject;
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.RxTest;
 import piuk.blockchain.android.data.services.TransactionDetailsService;
 import piuk.blockchain.android.data.stores.TransactionListStore;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -47,9 +46,6 @@ public class TransactionListDataManagerTest extends RxTest {
     private TransactionListStore mTransactionList;
     private TransactionListDataManager mSubject;
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -61,22 +57,10 @@ public class TransactionListDataManagerTest extends RxTest {
     }
 
     @Test
-    public void generateTransactionListInvalidObject() throws Exception {
-        // Arrange
-        exception.expect(IllegalArgumentException.class);
-        // Act
-        mSubject.generateTransactionList(new Object());
-        // Assert
-
-    }
-
-    @Test
     public void generateTransactionListAccountTagAllPayloadUpgraded() throws Exception {
         // Arrange
         Account account = new Account();
-        account.setTags(new ArrayList<String>(){{
-            add("TAG_ALL");
-        }});
+        account.setRealIdx(TransactionListDataManager.INDEX_ALL_REAL);
         Payload mockPayload = mock(Payload.class);
         when(mockPayload.isUpgraded()).thenReturn(true);
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
@@ -90,9 +74,7 @@ public class TransactionListDataManagerTest extends RxTest {
     public void generateTransactionListAccountTagAllPayloadNotUpgraded() throws Exception {
         // Arrange
         Account account = new Account();
-        account.setTags(new ArrayList<String>(){{
-            add("TAG_ALL");
-        }});
+        account.setRealIdx(TransactionListDataManager.INDEX_ALL_REAL);
         Payload mockPayload = mock(Payload.class);
         when(mockPayload.isUpgraded()).thenReturn(false);
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
@@ -106,9 +88,7 @@ public class TransactionListDataManagerTest extends RxTest {
     public void generateTransactionListAccountImportedAddresses() throws Exception {
         // Arrange
         Account account = new Account();
-        account.setTags(new ArrayList<String>(){{
-            add("TAG_IMPORTED_ADDRESSES");
-        }});
+        account.setRealIdx(TransactionListDataManager.INDEX_IMPORTED_ADDRESSES);
         // Act
         mSubject.generateTransactionList(account);
         // Assert
@@ -160,6 +140,16 @@ public class TransactionListDataManagerTest extends RxTest {
     }
 
     @Test
+    public void getListUpdateSubject() throws Exception {
+        // Arrange
+
+        // Act
+        Subject value = mSubject.getListUpdateSubject();
+        // Assert
+        assertNotNull(value);
+    }
+
+    @Test
     public void insertTransactionIntoListAndReturnSorted() throws Exception {
         // Arrange
         Tx tx0 = new Tx("", "", "", 0D, 0L, new HashMap<>());
@@ -198,7 +188,7 @@ public class TransactionListDataManagerTest extends RxTest {
     @Test()
     public void getBtcBalanceInvalidObject() throws Exception {
         // Arrange
-        exception.expect(IllegalArgumentException.class);
+
         // Act
         double value = mSubject.getBtcBalance(new Object());
         // Assert
@@ -209,9 +199,7 @@ public class TransactionListDataManagerTest extends RxTest {
     public void getBtcBalanceAccountTagAllUpgraded() throws Exception {
         // Arrange
         Account account = new Account();
-        account.setTags(new ArrayList<String>() {{
-            add("TAG_ALL");
-        }});
+        account.setRealIdx(TransactionListDataManager.INDEX_ALL_REAL);
         Payload mockPayload = mock(Payload.class);
         when(mockPayload.isUpgraded()).thenReturn(true);
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
@@ -225,9 +213,7 @@ public class TransactionListDataManagerTest extends RxTest {
     public void getBtcBalanceAccountTagAllNotUpgraded() throws Exception {
         // Arrange
         Account account = new Account();
-        account.setTags(new ArrayList<String>() {{
-            add("TAG_ALL");
-        }});
+        account.setRealIdx(TransactionListDataManager.INDEX_ALL_REAL);
         Payload mockPayload = mock(Payload.class);
         when(mockPayload.isUpgraded()).thenReturn(false);
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
@@ -241,9 +227,7 @@ public class TransactionListDataManagerTest extends RxTest {
     public void getBtcBalanceAccountTagImported() throws Exception {
         // Arrange
         Account account = new Account();
-        account.setTags(new ArrayList<String>() {{
-            add("TAG_IMPORTED_ADDRESSES");
-        }});
+        account.setRealIdx(TransactionListDataManager.INDEX_IMPORTED_ADDRESSES);
         // Act
         double value = mSubject.getBtcBalance(account);
         // Assert
@@ -275,31 +259,29 @@ public class TransactionListDataManagerTest extends RxTest {
     @Test
     public void getTransactionFromHash() throws Exception {
         // Arrange
-        TestSubscriber<Transaction> subscriber = new TestSubscriber<>();
         Transaction mockTransaction = mock(Transaction.class);
         when(mTransactionDetails.getTransactionDetailsFromHash(anyString())).thenReturn(Observable.just(mockTransaction));
         // Act
-        mSubject.getTransactionFromHash("hash").toBlocking().subscribe(subscriber);
+        TestObserver<Transaction> observer = mSubject.getTransactionFromHash("hash").test();
         // Assert
-        assertEquals(mockTransaction, subscriber.getOnNextEvents().get(0));
-        subscriber.onCompleted();
-        subscriber.assertNoErrors();
+        assertEquals(mockTransaction, observer.values().get(0));
+        observer.onComplete();
+        observer.assertNoErrors();
     }
 
     @Test
     public void updateTransactionNotes() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getNotes()).thenReturn(new HashMap<>());
+        when(mockPayload.getTransactionNotesMap()).thenReturn(new HashMap<>());
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
         when(mPayloadManager.savePayloadToServer()).thenReturn(true);
         // Act
-        mSubject.updateTransactionNotes("hash", "notes").toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = mSubject.updateTransactionNotes("hash", "notes").test();
         // Assert
-        assertEquals(subscriber.getOnNextEvents().get(0), true);
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
+        assertEquals(true, observer.values().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
     }
 
 }

@@ -14,11 +14,27 @@ import piuk.blockchain.android.R;
 import piuk.blockchain.android.databinding.ItemBalanceAccountDropdownBinding;
 import piuk.blockchain.android.databinding.SpinnerBalanceHeaderBinding;
 import piuk.blockchain.android.ui.account.ItemAccount;
+import piuk.blockchain.android.util.MonetaryUtil;
 
 class BalanceHeaderAdapter extends ArrayAdapter<ItemAccount> {
 
-    BalanceHeaderAdapter(Context context, int textViewResourceId, List<ItemAccount> accountList) {
+    private boolean isBtc;
+    private final MonetaryUtil monetaryUtil;
+    private String fiatUnits;
+    private double exchangeRate;
+
+    BalanceHeaderAdapter(Context context,
+                         int textViewResourceId,
+                         List<ItemAccount> accountList,
+                         boolean isBtc,
+                         MonetaryUtil monetaryUtil,
+                         String fiatUnits,
+                         double exchangeRate) {
         super(context, textViewResourceId, accountList);
+        this.isBtc = isBtc;
+        this.monetaryUtil = monetaryUtil;
+        this.fiatUnits = fiatUnits;
+        this.exchangeRate = exchangeRate;
     }
 
     @Override
@@ -41,10 +57,18 @@ class BalanceHeaderAdapter extends ArrayAdapter<ItemAccount> {
                     false);
 
             ItemAccount item = getItem(position);
-            assert item != null;
 
             binding.accountName.setText(item.label);
-            binding.balance.setText(item.balance);
+
+            if (isBtc) {
+                binding.balance.setText(item.displayBalance);
+            } else {
+                double btcBalance = item.absoluteBalance / 1e8;
+                double fiatBalance = exchangeRate * btcBalance;
+
+                String balance = monetaryUtil.getFiatFormat(fiatUnits).format(Math.abs(fiatBalance)) + " " + fiatUnits;
+                binding.balance.setText(balance);
+            }
 
             return binding.getRoot();
 
@@ -56,10 +80,20 @@ class BalanceHeaderAdapter extends ArrayAdapter<ItemAccount> {
                     false);
 
             ItemAccount item = getItem(position);
-            assert item != null;
 
             binding.text.setText(item.label);
             return binding.getRoot();
         }
+    }
+
+    void notifyBtcChanged(boolean isBtc) {
+        this.isBtc = isBtc;
+        notifyDataSetChanged();
+    }
+
+    void notifyFiatUnitsChanged(String fiatUnits, double exchangeRate) {
+        this.fiatUnits = fiatUnits;
+        this.exchangeRate = exchangeRate;
+        notifyDataSetChanged();
     }
 }

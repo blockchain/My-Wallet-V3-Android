@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <translate android:fromYDelta="0%p" android:toYDelta="75%p"
+    <translate
+        android:duration="300"
         android:fillAfter="true"
-        android:duration="300"/>
+        android:fromYDelta="0%p"
+        android:toYDelta="75%p" />
 </set>

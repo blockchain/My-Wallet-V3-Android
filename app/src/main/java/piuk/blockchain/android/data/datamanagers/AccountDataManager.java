@@ -16,10 +16,10 @@ import org.bitcoinj.params.MainNetParams;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.exceptions.Exceptions;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.data.services.AddressInfoService;
-import rx.Observable;
-import rx.exceptions.Exceptions;
 
 import static piuk.blockchain.android.data.services.AddressInfoService.PARAMETER_FINAL_BALANCE;
 
@@ -45,7 +45,7 @@ public class AccountDataManager {
     public Observable<Account> createNewAccount(String accountLabel, @Nullable CharSequenceX secondPassword) {
         return Observable.fromCallable(() -> payloadManager.addAccount(accountLabel,
                 secondPassword != null ? secondPassword.toString() : null))
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     /**
@@ -58,8 +58,8 @@ public class AccountDataManager {
      */
     public Observable<Boolean> setPrivateKey(ECKey key, @Nullable CharSequenceX secondPassword) {
         Payload payload = payloadManager.getPayload();
-        int index = payload.getLegacyAddressStrings().indexOf(key.toAddress(MainNetParams.get()).toString());
-        LegacyAddress legacyAddress = payload.getLegacyAddresses().get(index);
+        int index = payload.getLegacyAddressStringList().indexOf(key.toAddress(MainNetParams.get()).toString());
+        LegacyAddress legacyAddress = payload.getLegacyAddressList().get(index);
         try {
             setKeyForLegacyAddress(legacyAddress, key, secondPassword);
         } catch (Exception e) {
@@ -102,7 +102,7 @@ public class AccountDataManager {
      */
     public Observable<Boolean> updateLegacyAddress(LegacyAddress legacyAddress) {
         return createUpdateLegacyAddressObservable(legacyAddress)
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     private Observable<Boolean> createUpdateLegacyAddressObservable(LegacyAddress address) {
@@ -115,12 +115,12 @@ public class AccountDataManager {
 
     private Observable<Boolean> savePayloadToServer() {
         return Observable.fromCallable(() -> payloadManager.savePayloadToServer())
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     private Observable<Long> addAddressAndUpdate(LegacyAddress address) {
         try {
-            List<String> legacyAddressList = payloadManager.getPayload().getLegacyAddressStrings();
+            List<String> legacyAddressList = payloadManager.getPayload().getLegacyAddressStringList();
             multiAddrFactory.refreshLegacyAddressData(legacyAddressList.toArray(new String[legacyAddressList.size()]), false);
         } catch (Exception e) {
             throw Exceptions.propagate(e);

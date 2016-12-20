@@ -30,6 +30,8 @@ interface PersistentPrefs {
     String KEY_EVENT_BACKUP = "event_backup";
     String KEY_ENCRYPTED_PIN_CODE = "encrypted_pin_code";
     String KEY_FINGERPRINT_ENABLED = "fingerprint_enabled";
+    String KEY_RECEIVE_SHORTCUTS_ENABLED = "receive_shortcuts_enabled";
+    String KEY_SWIPE_TO_RECEIVE_ENABLED = "swipe_to_receive_enabled";
 
     String getValue(String name, String value);
 
@@ -56,5 +58,7 @@ interface PersistentPrefs {
     void logOut();
 
     void logIn();
+
+    void clearPrefsAndKeepEnvironment();
 
 }

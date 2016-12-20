@@ -8,8 +8,8 @@ import android.support.v4.util.Pair;
 import info.blockchain.wallet.multiaddr.MultiAddrFactory;
 import info.blockchain.wallet.payload.Payload;
 import info.blockchain.wallet.payload.PayloadManager;
-import info.blockchain.wallet.payload.Transaction;
-import info.blockchain.wallet.payload.Tx;
+import info.blockchain.wallet.transaction.Transaction;
+import info.blockchain.wallet.transaction.Tx;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.RxTest;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
@@ -36,11 +38,8 @@ import piuk.blockchain.android.util.ExchangeRateFactory;
 import piuk.blockchain.android.util.MonetaryUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.StringUtils;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -144,7 +143,7 @@ public class TransactionDetailViewModelTest extends RxTest {
         Payload mockPayload = mock(Payload.class);
         when(mockIntent.hasExtra(KEY_TRANSACTION_LIST_POSITION)).thenReturn(true);
         when(mockIntent.getIntExtra(KEY_TRANSACTION_LIST_POSITION, -1)).thenReturn(0);
-        when(mockPayload.getNotes()).thenReturn(new HashMap<>());
+        when(mockPayload.getTransactionNotesMap()).thenReturn(new HashMap<>());
         when(mActivity.getPageIntent()).thenReturn(mockIntent);
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
         when(mTransactionListDataManager.getTransactionList()).thenReturn(mTxList);
@@ -178,7 +177,7 @@ public class TransactionDetailViewModelTest extends RxTest {
         Transaction mockTransaction = mock(Transaction.class);
         when(mockIntent.hasExtra(KEY_TRANSACTION_LIST_POSITION)).thenReturn(true);
         when(mockIntent.getIntExtra(KEY_TRANSACTION_LIST_POSITION, -1)).thenReturn(0);
-        when(mockPayload.getNotes()).thenReturn(new HashMap<>());
+        when(mockPayload.getTransactionNotesMap()).thenReturn(new HashMap<>());
         when(mActivity.getPageIntent()).thenReturn(mockIntent);
         when(mPayloadManager.getPayload()).thenReturn(mockPayload);
         when(mTransactionListDataManager.getTransactionList()).thenReturn(mTxList);
@@ -217,61 +216,58 @@ public class TransactionDetailViewModelTest extends RxTest {
     @Test
     public void getTransactionValueStringUsd() {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
         double price = 1000.00D;
         when(mExchangeRateFactory.getHistoricPrice(anyLong(), anyString(), anyLong())).thenReturn(Observable.just(price));
         when(mStringUtils.getString(anyInt())).thenReturn("Value when sent: ");
         when(mExchangeRateFactory.getSymbol(anyString())).thenReturn("$");
         // Act
-        mSubject.getTransactionValueString("USD", mTxSent).toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = mSubject.getTransactionValueString("USD", mTxSent).test();
         // Assert
-        assertEquals("Value when sent: $1 000.00", subscriber.getOnNextEvents().get(0));
-        subscriber.onCompleted();
-        subscriber.assertNoErrors();
+        assertEquals("Value when sent: $1 000.00", observer.values().get(0));
+        observer.onComplete();
+        observer.assertNoErrors();
     }
 
     @Test
     public void getTransactionValueStringNonUsd() {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
+
         // Act
-        mSubject.getTransactionValueString("GBP", mTxReceived).toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = mSubject.getTransactionValueString("GBP", mTxReceived).test();
         // Assert
-        assertNotNull(subscriber.getOnNextEvents().get(0));
-        subscriber.onCompleted();
-        subscriber.assertNoErrors();
+        assertNotNull(observer.values().get(0));
+        observer.onComplete();
+        observer.assertNoErrors();
     }
 
     @Test
     public void getTransactionValueStringReceived() {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
         double price = 1000.00D;
         when(mExchangeRateFactory.getHistoricPrice(anyLong(), anyString(), anyLong())).thenReturn(Observable.just(price));
         when(mStringUtils.getString(anyInt())).thenReturn("Value when received: ");
         when(mExchangeRateFactory.getSymbol(anyString())).thenReturn("$");
         // Act
-        mSubject.getTransactionValueString("USD", mTxReceived).toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = mSubject.getTransactionValueString("USD", mTxReceived).test();
         // Assert
-        assertEquals("Value when received: $1 000.00", subscriber.getOnNextEvents().get(0));
-        subscriber.onCompleted();
-        subscriber.assertNoErrors();
+        assertEquals("Value when received: $1 000.00", observer.values().get(0));
+        observer.onComplete();
+        observer.assertNoErrors();
     }
 
     @Test
     public void getTransactionValueStringTransferred() {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
         double price = 1000.00D;
         when(mExchangeRateFactory.getHistoricPrice(anyLong(), anyString(), anyLong())).thenReturn(Observable.just(price));
         when(mStringUtils.getString(anyInt())).thenReturn("Value when transferred: ");
         when(mExchangeRateFactory.getSymbol(anyString())).thenReturn("$");
         // Act
-        mSubject.getTransactionValueString("USD", mTxSent).toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = mSubject.getTransactionValueString("USD", mTxSent).test();
         // Assert
-        assertEquals("Value when transferred: $1 000.00", subscriber.getOnNextEvents().get(0));
-        subscriber.onCompleted();
-        subscriber.assertNoErrors();
+        assertEquals("Value when transferred: $1 000.00", observer.values().get(0));
+        observer.onComplete();
+        observer.assertNoErrors();
     }
 
     @Test
@@ -401,16 +397,6 @@ public class TransactionDetailViewModelTest extends RxTest {
         // Assert
         verify(mActivity).setTransactionColour(R.color.blockchain_receive_green);
         verifyNoMoreInteractions(mActivity);
-    }
-
-    @Test
-    public void destroy() throws Exception {
-        // Arrange
-
-        // Act
-        mSubject.destroy();
-        // Assert
-        assertFalse(mSubject.mCompositeSubscription.hasSubscriptions());
     }
 
     private class MockApplicationModule extends ApplicationModule {

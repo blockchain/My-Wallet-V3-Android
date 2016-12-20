@@ -19,12 +19,12 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.RxTest;
 import piuk.blockchain.android.data.services.AddressInfoService;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -51,88 +51,82 @@ public class AccountDataManagerTest extends RxTest {
     @Test
     public void createNewAccountSuccess() throws Exception {
         // Arrange
-        TestSubscriber<Account> subscriber = new TestSubscriber<>();
         Account mockAccount = mock(Account.class);
         when(payloadManager.addAccount(anyString(), anyString())).thenReturn(mockAccount);
         // Act
-        subject.createNewAccount("", null).toBlocking().subscribe(subscriber);
+        TestObserver<Account> observer = subject.createNewAccount("", null).test();
         // Assert
-        subscriber.assertNoErrors();
-        subscriber.assertCompleted();
-        assertEquals(mockAccount, subscriber.getOnNextEvents().get(0));
+        observer.assertNoErrors();
+        observer.assertComplete();
+        assertEquals(mockAccount, observer.values().get(0));
     }
 
     @Test
     public void createNewAccountDecryptionFailure() throws Exception {
         // Arrange
-        TestSubscriber<Account> subscriber = new TestSubscriber<>();
         when(payloadManager.addAccount(anyString(), anyString())).thenThrow(new DecryptionException());
         // Act
-        subject.createNewAccount("", new CharSequenceX("password")).toBlocking().subscribe(subscriber);
+        TestObserver<Account> observer = subject.createNewAccount("", new CharSequenceX("password")).test();
         // Assert
-        subscriber.assertError(DecryptionException.class);
-        subscriber.assertNotCompleted();
-        subscriber.assertNoValues();
+        observer.assertError(DecryptionException.class);
+        observer.assertNotComplete();
+        observer.assertNoValues();
     }
 
     @Test
     public void createNewAccountFatalException() throws Exception {
         // Arrange
-        TestSubscriber<Account> subscriber = new TestSubscriber<>();
         when(payloadManager.addAccount(anyString(), anyString())).thenThrow(new Exception());
         // Act
-        subject.createNewAccount("", new CharSequenceX("password")).toBlocking().subscribe(subscriber);
+        TestObserver<Account> observer = subject.createNewAccount("", new CharSequenceX("password")).test();
         // Assert
-        subscriber.assertError(Exception.class);
-        subscriber.assertNotCompleted();
-        subscriber.assertNoValues();
+        observer.assertError(Exception.class);
+        observer.assertNotComplete();
+        observer.assertNoValues();
     }
 
     @Test
     public void createNewAccountThrowsException() throws Exception {
         // Arrange
-        TestSubscriber<Account> subscriber = new TestSubscriber<>();
         doThrow(new Exception())
                 .when(payloadManager).addAccount(
                 anyString(), anyString());
         // Act
-        subject.createNewAccount("", new CharSequenceX("password")).toBlocking().subscribe(subscriber);
+        TestObserver<Account> observer = subject.createNewAccount("", new CharSequenceX("password")).test();
         // Assert
-        subscriber.assertError(Exception.class);
-        subscriber.assertNotCompleted();
-        subscriber.assertNoValues();
+        observer.assertError(Exception.class);
+        observer.assertNotComplete();
+        observer.assertNoValues();
     }
 
     @Test
     public void setPrivateKeySuccessNoDoubleEncryption() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().indexOf(any())).thenReturn(0);
+        when(mockPayload.getLegacyAddressStringList().indexOf(any())).thenReturn(0);
         when(mockPayload.isDoubleEncrypted()).thenReturn(false);
-        when(mockPayload.getLegacyAddresses().get(anyInt())).thenReturn(mock(LegacyAddress.class));
+        when(mockPayload.getLegacyAddressList().get(anyInt())).thenReturn(mock(LegacyAddress.class));
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(payloadManager.savePayloadToServer()).thenReturn(true);
         ECKey mockECKey = mock(ECKey.class);
         when(mockECKey.toAddress(any(NetworkParameters.class))).thenReturn(mock(Address.class));
         // Act
-        subject.setPrivateKey(mockECKey, null).toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.setPrivateKey(mockECKey, null).test();
         // Assert
-        subscriber.assertNoErrors();
-        subscriber.assertCompleted();
-        assertEquals(true, subscriber.getOnNextEvents().get(0));
+        observer.assertNoErrors();
+        observer.assertComplete();
+        assertEquals(true, observer.values().get(0).booleanValue());
     }
 
     @Test
     public void setPrivateKeySuccessWithDoubleEncryption() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         Payload mockPayload = Mockito.mock(Payload.class, RETURNS_DEEP_STUBS);
         //noinspection SuspiciousMethodCalls
-        when(mockPayload.getLegacyAddressStrings().indexOf(any())).thenReturn(0);
+        when(mockPayload.getLegacyAddressStringList().indexOf(any())).thenReturn(0);
         when(mockPayload.isDoubleEncrypted()).thenReturn(true);
-        when(mockPayload.getLegacyAddresses().get(anyInt())).thenReturn(mock(LegacyAddress.class));
+        when(mockPayload.getLegacyAddressList().get(anyInt())).thenReturn(mock(LegacyAddress.class));
         when(mockPayload.getSharedKey()).thenReturn("shared key");
         when(mockPayload.getOptions().getIterations()).thenReturn(10);
         when(payloadManager.getPayload()).thenReturn(mockPayload);
@@ -141,62 +135,59 @@ public class AccountDataManagerTest extends RxTest {
         when(mockECKey.toAddress(any(NetworkParameters.class))).thenReturn(mock(Address.class));
         when(mockECKey.getPrivKeyBytes()).thenReturn(new byte[0]);
         // Act
-        subject.setPrivateKey(mockECKey, new CharSequenceX("password")).toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.setPrivateKey(mockECKey, new CharSequenceX("password")).test();
         // Assert
-        subscriber.assertNoErrors();
-        subscriber.assertCompleted();
-        assertEquals(true, subscriber.getOnNextEvents().get(0));
+        observer.assertNoErrors();
+        observer.assertComplete();
+        assertEquals(true, observer.values().get(0).booleanValue());
     }
 
     @Test
     public void updateLegacyAddressSuccess() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         LegacyAddress mockLegacyAddress = mock(LegacyAddress.class);
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getLegacyAddressStrings()).thenReturn(new ArrayList<>());
+        when(mockPayload.getLegacyAddressStringList()).thenReturn(new ArrayList<>());
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(payloadManager.addLegacyAddress(mockLegacyAddress)).thenReturn(true);
         when(addressInfoService.getAddressBalance(any(LegacyAddress.class), anyString())).thenReturn(Observable.just(0L));
         // Act
-        subject.updateLegacyAddress(mockLegacyAddress).toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.updateLegacyAddress(mockLegacyAddress).test();
         // Assert
-        subscriber.assertNoErrors();
-        subscriber.assertCompleted();
-        assertEquals(true, subscriber.getOnNextEvents().get(0));
+        observer.assertNoErrors();
+        observer.assertComplete();
+        assertEquals(true, observer.values().get(0).booleanValue());
     }
 
     @Test
     public void updateLegacyAddressFailure() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         LegacyAddress mockLegacyAddress = mock(LegacyAddress.class);
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getLegacyAddressStrings()).thenReturn(new ArrayList<>());
+        when(mockPayload.getLegacyAddressStringList()).thenReturn(new ArrayList<>());
         when(payloadManager.getPayload()).thenReturn(mockPayload);
         when(payloadManager.addLegacyAddress(mockLegacyAddress)).thenReturn(false);
         // Act
-        subject.updateLegacyAddress(mockLegacyAddress).toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.updateLegacyAddress(mockLegacyAddress).test();
         // Assert
-        subscriber.assertNoErrors();
-        subscriber.assertCompleted();
-        assertEquals(false, subscriber.getOnNextEvents().get(0));
+        observer.assertNoErrors();
+        observer.assertComplete();
+        assertEquals(false, observer.values().get(0).booleanValue());
     }
 
     @Test
     public void updateLegacyAddressSuccessThrowsException() throws Exception {
         // Arrange
-        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
         LegacyAddress mockLegacyAddress = mock(LegacyAddress.class);
         Payload mockPayload = mock(Payload.class);
-        when(mockPayload.getLegacyAddressStrings()).thenReturn(new ArrayList<>());
+        when(mockPayload.getLegacyAddressStringList()).thenReturn(new ArrayList<>());
         when(payloadManager.addLegacyAddress(mockLegacyAddress)).thenReturn(true);
         // Act
-        subject.updateLegacyAddress(mockLegacyAddress).toBlocking().subscribe(subscriber);
+        TestObserver<Boolean> observer = subject.updateLegacyAddress(mockLegacyAddress).test();
         // Assert
-        subscriber.assertError(Throwable.class);
-        subscriber.assertNotCompleted();
-        subscriber.assertNoValues();
+        observer.assertError(Throwable.class);
+        observer.assertNotComplete();
+        observer.assertNoValues();
     }
 
 }

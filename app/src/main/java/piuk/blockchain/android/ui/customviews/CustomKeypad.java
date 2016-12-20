@@ -1,11 +1,19 @@
 package piuk.blockchain.android.ui.customviews;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -13,22 +21,45 @@ import java.util.ArrayList;
 
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.util.ViewUtils;
+import piuk.blockchain.android.util.annotations.Thunk;
 
-public class CustomKeypad implements View.OnClickListener {
+@SuppressWarnings("WeakerAccess")
+public class CustomKeypad extends LinearLayout implements View.OnClickListener {
 
-    private Context context = null;
-
-    private TableLayout numpad;
     private ArrayList<EditText> viewList;
     private String decimalSeparator = ".";
+    @Thunk TableLayout numpad;
+    @Thunk CustomKeypadCallback callback;
 
-    public CustomKeypad(Context ctx, TableLayout pnumpad) {
+    public CustomKeypad(Context context) {
+        super(context);
+        init();
+    }
 
-        context = ctx;
+    public CustomKeypad(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
-        numpad = pnumpad;
-        numpad.setVisibility(View.GONE);
+    public CustomKeypad(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public CustomKeypad(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    private void init() {
+        setOrientation(LinearLayout.HORIZONTAL);
+        setGravity(Gravity.BOTTOM);
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.view_numeric_keyboard, this, true);
+
+        numpad = (TableLayout) findViewById(R.id.numericPad);
         numpad.findViewById(R.id.button1).setOnClickListener(this);
         numpad.findViewById(R.id.button2).setOnClickListener(this);
         numpad.findViewById(R.id.button3).setOnClickListener(this);
@@ -53,22 +84,64 @@ public class CustomKeypad implements View.OnClickListener {
         view.setTextIsSelectable(true);
         view.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                View view1 = ((Activity) context).getCurrentFocus();
+                View view1 = ((Activity) getContext()).getCurrentFocus();
                 if (view1 != null) {
-                    InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(view1.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
-                numpad.setVisibility(View.VISIBLE);
+                setNumpadVisibility(View.VISIBLE);
             }
         });
         view.setOnClickListener(v -> {
             ((TextView) numpad.findViewById(R.id.decimal_point)).setText(decimalSeparator);
-            numpad.setVisibility(View.VISIBLE);
+            setNumpadVisibility(View.VISIBLE);
         });
     }
 
+    public void setCallback(CustomKeypadCallback callback) {
+        this.callback = callback;
+    }
+
     public void setNumpadVisibility(@ViewUtils.Visibility int visibility) {
-        numpad.setVisibility(visibility);
+        if (visibility == View.VISIBLE) {
+            showKeyboard();
+        } else {
+            hideKeyboard();
+        }
+    }
+
+    private void showKeyboard() {
+        if (!isVisible()) {
+            Animation bottomUp = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
+            startAnimation(bottomUp);
+            bottomUp.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (callback != null) callback.onKeypadOpenCompleted();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            setVisibility(View.VISIBLE);
+            if (callback != null) callback.onKeypadOpen();
+        }
+    }
+
+    private void hideKeyboard() {
+        if (isVisible()) {
+            Animation topDown = AnimationUtils.loadAnimation(getContext(), R.anim.top_down);
+            startAnimation(topDown);
+            setVisibility(View.GONE);
+            if (callback != null) callback.onKeypadClose();
+        }
     }
 
     @Override
@@ -80,12 +153,10 @@ public class CustomKeypad implements View.OnClickListener {
                 pad = decimalSeparator;
                 break;
             case R.id.buttonDeleteBack:
-
-                deleteFromFocussedView();
+                deleteFromFocusedView();
                 return;
-
             case R.id.buttonDone:
-                numpad.setVisibility(View.GONE);
+                setNumpadVisibility(View.GONE);
                 break;
             default:
                 pad = v.getTag().toString().substring(0, 1);
@@ -94,14 +165,12 @@ public class CustomKeypad implements View.OnClickListener {
 
         // Append tapped #
         if (pad != null) {
-            appendToFocussedView(pad);
+            appendToFocusedView(pad);
         }
     }
 
-    private void appendToFocussedView(String pad) {
-
+    private void appendToFocusedView(String pad) {
         for (final EditText view : viewList) {
-
             if (view.hasFocus()) {
 
                 //Don't allow multiple decimals
@@ -124,8 +193,7 @@ public class CustomKeypad implements View.OnClickListener {
         }
     }
 
-    private void deleteFromFocussedView() {
-
+    private void deleteFromFocusedView() {
         for (final EditText view : viewList) {
             if (view.hasFocus() && view.getText().length() > 0) {
                 view.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
@@ -139,6 +207,6 @@ public class CustomKeypad implements View.OnClickListener {
     }
 
     public boolean isVisible() {
-        return (numpad.getVisibility() == View.VISIBLE);
+        return (getVisibility() == View.VISIBLE);
     }
 }

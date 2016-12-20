@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <dimen name="pinentry_num_text_size">20sp</dimen>
+    <dimen name="pinentry_alpha_text_size">12sp</dimen>
+    <dimen name="pinentry_padding">6dp</dimen>
+    <dimen name="pinentry_hint_size">18sp</dimen>
+
+    <dimen name="swipe_receive_qr_size">180dp</dimen>
+</resources>

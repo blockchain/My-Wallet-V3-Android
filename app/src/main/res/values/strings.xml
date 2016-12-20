@@ -13,6 +13,7 @@
 
     <string name="send_bitcoin">Send</string>
     <string name="receive_bitcoin">Receive</string>
+    <string name="transactions">Transactions</string>
 
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
@@ -62,7 +63,10 @@
     <string name="create_pin">Create PIN</string>
     <string name="confirm_pin">Confirm PIN</string>
     <string name="create_pin_failed">PIN creation failed. Please pair device again.</string>
+    <string name="change_pin_new_matches_current">You can\'t use your current PIN as your new PIN</string>
     <string name="pairing_failed">Pairing failed. Please try again.</string>
+    <string name="account_locked_title">Account locked</string>
+    <string name="account_locked_message">Your account has been locked temporarily as a precaution. Please check your email for more information and try again later.</string>
 
     <string name="check_connectivity_exit">Blockchain Wallet cannot obtain an Internet connection. Please check the connectivity on your device and try again.</string>
     <string name="dialog_continue">Continue</string>
@@ -261,6 +265,7 @@
     <string name="decrypting_wallet">Decrypting Wallet…</string>
     <string name="password_unchanged">Password unchanged</string>
     <string name="password_changed">Password changed</string>
+    <string name="password_changed_explanation">Your password has been changed, please re-pair your wallet</string>
     <string name="verify_email2">Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds. We will not use your email address for marketing purposes.</string>
     <string name="disable_root_warning">Disable rooted device warning</string>
 
@@ -398,11 +403,13 @@
 
     <string name="request_camera_permission">Camera access is required.</string>
     <string name="request_location_permission">Location access is required.</string>
+    <string name="request_write_storage_permission">Write external storage is required.</string>
     <string name="not_specified">not specified</string>
     <string name="update_failed">Failed to update.</string>
     <string name="verify_mobile">Verify Mobile</string>
     <string name="select_country">Select Country</string>
     <string name="verify_sms_summary">We have sent your mobile phone an SMS message with a verification code. Enter the code to verify your mobile phone number.</string>
+    <string name="verify_sms_failed">Code invalid, please try again</string>
     <string name="mobile_description">Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access.</string>
 
     <string name="enable_fingerprint">Fingerprint Unlock</string>
@@ -480,10 +487,15 @@
     <string name="transaction_detail_value_at_time_sent">Value when sent:\u0020</string>
     <string name="transaction_detail_value">Value:\u0020</string>
     <string name="transaction_details_unknown">Unknown</string>
+    <string name="transaction_detail_coinbase">No Inputs (Newly Generated Coins)</string>
+    <string name="transaction_detail_double_spend">May be at risk for a double spend.</string>
 
     <!-- SECURITY CENTRE -->
     <string name="security_centre_email_title">Check your email</string>
     <string name="security_centre_email_message">We sent an email to %1$s. Look for an email from Blockchain and click the verification link to complete your wallet setup.</string>
+    <string name="security_centre_add_email_title">Email Address</string>
+    <string name="security_centre_add_email_message">Add and verify your email address to receive alerts, prevent suspicious activity, and recover your Wallet ID if forgotten.</string>
+    <string name="security_centre_add_email_positive_button">Add</string>
     <string name="security_centre_backup_title">Backup your funds</string>
     <string name="security_centre_backup_message">For your security, we do not keep any passwords on file. Backup your wallet to ensure your bitcoins are safe in case you lose your password. </string>
     <string name="security_centre_backup_positive_button">Backup</string>
@@ -520,6 +532,22 @@
     <string name="fingerprint_no_fingerprints_added">No fingerprints have been registered to this device yet. Do you want to register a fingerprint now?</string>
     <string name="fingerprint_key_invalidated_description">Either the fingerprints stored on this device have changed or the keyguard has been disabled</string>
     <string name="fingerprint_key_invalidated_brief">Keys invalidated, PIN code required</string>
-    <string name="fingerprint_fatal_error_description">There was a problem setting up fingerprint login. Please try again later</string>
+    <string name="fingerprint_fatal_error_register_description">There have been too many failed attempts in the last 30 minutes. Please attempt setup again later.</string>
+    <string name="fingerprint_fatal_error_authenticate_description">There have been too many failed attempts. Please log in using your PIN instead.</string>
     <string name="fingerprint_fatal_error_brief">Unexpected error</string>
+
+    <!-- LAUNCHER SHORTCUTS -->
+    <string name="shortcut_receive_copy_short">Copy Address</string>
+    <string name="shortcut_receive_copy_long">Copy receive address to another app</string>
+    <string name="shortcut_receive_qr_short">Show Receive QR</string>
+    <string name="shortcut_receive_qr_long">View QR code for receive address</string>
+    <string name="shortcut_receive_qr_error">Sorry, there was an error generating the QR code</string>
+    <string name="shortcut_settings_enable">Launcher Shortcuts</string>
+    <string name="shortcut_settings_summary">Enable this option to reveal a receive address when you long-press on the app icon in the launcher, making receiving bitcoin even faster.</string>
+
+    <!-- SWIPE TO RECEIVE -->
+    <string name="swipe_receive_hint">Swipe to receive</string>
+    <string name="swipe_receive_preference_summary">Enable this option to reveal a receive address when you swipe left on the PIN screen, making receiving bitcoin even faster. Five addresses will be loaded consecutively, after which logging in is required to show new addresses.</string>
+    <string name="swipe_receive_no_addresses">No more addresses can be loaded right now. Log in to the app to load more.</string>
+
 </resources>

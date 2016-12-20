@@ -8,18 +8,20 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import piuk.blockchain.android.R;
+import piuk.blockchain.android.data.connectivity.ConnectivityStatus;
+import piuk.blockchain.android.data.websocket.WebSocketService;
 import piuk.blockchain.android.databinding.ActivityAccountEditBinding;
 import piuk.blockchain.android.databinding.AlertGenericWarningBinding;
 import piuk.blockchain.android.databinding.AlertShowExtendedPublicKeyBinding;
@@ -32,14 +34,16 @@ import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.PermissionUtil;
 import piuk.blockchain.android.util.ViewUtils;
+import piuk.blockchain.android.util.annotations.Thunk;
 
 public class AccountEditActivity extends BaseAuthActivity implements AccountEditViewModel.DataListener {
 
-    private final int ADDRESS_LABEL_MAX_LENGTH = 17;
-    private final int SCAN_PRIVX = 302;
+    private static final int ADDRESS_LABEL_MAX_LENGTH = 17;
+    private static final int SCAN_PRIVX = 302;
 
+    @Thunk AccountEditViewModel viewModel;
+    @Thunk AlertDialog transactionSuccessDialog;
     private ActivityAccountEditBinding binding;
-    private AccountEditViewModel viewModel;
     private MaterialProgressDialog progress;
 
     @Override
@@ -47,71 +51,93 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_account_edit);
-        viewModel = new AccountEditViewModel(new AccountEditModel(), this, this);
+        viewModel = new AccountEditViewModel(new AccountEditModel(this), this);
         binding.setViewModel(viewModel);
 
-        setupToolbar();
-        viewModel.setDataFromIntent(getIntent());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setupToolbar() {
         binding.toolbarContainer.toolbarGeneral.setTitle(getResources().getString(R.string.edit));
         setSupportActionBar(binding.toolbarContainer.toolbarGeneral);
+
+        binding.transferContainer.setOnClickListener(v -> {
+            if (viewModel.transferFundsClickable()) {
+                new SecondPasswordHandler(this).validate(new SecondPasswordHandler.ResultListener() {
+                    @Override
+                    public void onNoSecondPassword() {
+                        viewModel.onClickTransferFunds();
+                    }
+
+                    @Override
+                    public void onSecondPasswordValidated(String validateSecondPassword) {
+                        viewModel.setSecondPassword(validateSecondPassword);
+                        viewModel.onClickTransferFunds();
+                    }
+                });
+            }
+        });
+
+        viewModel.onViewReady();
     }
 
     @Override
-    public void onPromptAccountLabel() {
+    public void promptAccountLabel(@Nullable String label) {
         final AppCompatEditText etLabel = new AppCompatEditText(this);
         etLabel.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etLabel.setFilters(new InputFilter[]{new InputFilter.LengthFilter(ADDRESS_LABEL_MAX_LENGTH)});
+        if (label != null && label.length() <= ADDRESS_LABEL_MAX_LENGTH) {
+            etLabel.setText(label);
+            etLabel.setSelection(label.length());
+        }
 
-        FrameLayout frameLayout = new FrameLayout(this);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int marginInPixels = (int) ViewUtils.convertDpToPixel(20, this);
-        params.setMargins(marginInPixels, 0, marginInPixels, 0);
-
-        frameLayout.addView(etLabel, params);
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(R.string.name)
                 .setMessage(R.string.assign_display_name)
-                .setView(frameLayout)
+                .setView(ViewUtils.getAlertDialogEditTextLayout(this, etLabel))
                 .setCancelable(false)
-                .setPositiveButton(R.string.save_name, (dialog, whichButton) ->
-                        viewModel.updateAccountLabel(etLabel.getText().toString()))
+                .setPositiveButton(R.string.save_name, (dialog, whichButton) -> {
+                    if (!ConnectivityStatus.hasConnectivity(this)) {
+                        onConnectivityLost();
+                    } else {
+                        viewModel.updateAccountLabel(etLabel.getText().toString());
+                    }
+                })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
-    @Override
-    public void onConnectivityLoss() {
+    private void onConnectivityLost() {
         ToastCustom.makeText(AccountEditActivity.this, getString(R.string.check_connectivity_exit), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
     }
 
     @Override
-    public void onToast(String errorMessage, String type) {
-        ToastCustom.makeText(AccountEditActivity.this, errorMessage, ToastCustom.LENGTH_LONG, type);
+    public void showToast(@StringRes int message, @ToastCustom.ToastType String type) {
+        ToastCustom.makeText(this, getString(message), ToastCustom.LENGTH_SHORT, type);
     }
 
     @Override
-    public void onSetResult(int resultCode) {
+    public void setActivityResult(int resultCode) {
         setResult(resultCode);
     }
 
     @Override
-    public void onStartScanActivity() {
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
+    @Override
+    public void sendBroadcast(String key, String data) {
+        Intent intent = new Intent(WebSocketService.ACTION_INTENT);
+        intent.putExtra(key, data);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewModel.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void startScanActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             PermissionUtil.requestCameraPermissionFromActivity(binding.mainLayout, this);
         } else {
@@ -125,7 +151,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onPromptPrivateKey(String message) {
+    public void promptPrivateKey(String message) {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(R.string.privx_required)
                 .setMessage(message)
@@ -134,20 +160,20 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
                         new SecondPasswordHandler(this).validate(new SecondPasswordHandler.ResultListener() {
                             @Override
                             public void onNoSecondPassword() {
-                                onStartScanActivity();
+                                startScanActivity();
                             }
 
                             @Override
                             public void onSecondPasswordValidated(String validateSecondPassword) {
                                 viewModel.setSecondPassword(validateSecondPassword);
-                                onStartScanActivity();
+                                startScanActivity();
                             }
                         }))
                 .setNegativeButton(android.R.string.cancel, null).show();
     }
 
     @Override
-    public void onShowPaymentDetails(PaymentConfirmationDetails details, PendingTransaction pendingTransaction) {
+    public void showPaymentDetails(PaymentConfirmationDetails details, PendingTransaction pendingTransaction) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         FragmentSendConfirmBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this),
@@ -206,7 +232,8 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
         });
 
         dialogBinding.confirmSend.setOnClickListener(v -> {
-            viewModel.submitPayment(alertDialog, pendingTransaction);
+            viewModel.submitPayment(pendingTransaction);
+            alertDialog.dismiss();
         });
 
         alertDialog.show();
@@ -214,7 +241,6 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
         if (details.isLargeTransaction) {
             onShowLargeTransactionWarning(alertDialog);
         }
-
     }
 
     private void onShowLargeTransactionWarning(AlertDialog alertDialog) {
@@ -240,33 +266,37 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
         });
 
         dialogBinding.confirmChange.setText(getResources().getString(R.string.accept_higher_fee));
-        dialogBinding.confirmChange.setOnClickListener(v -> {
-            alertDialogFee.dismiss();
-        });
+        dialogBinding.confirmChange.setOnClickListener(v -> alertDialogFee.dismiss());
 
         alertDialogFee.show();
     }
 
     @Override
-    public void onPromptArchive(String title, String message) {
+    public void promptArchive(String title, String message) {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.yes, (dialog, whichButton) -> viewModel.archiveAccount())
+                .setPositiveButton(R.string.yes, (dialog, whichButton) -> {
+                    if (!ConnectivityStatus.hasConnectivity(this)) {
+                        onConnectivityLost();
+                    } else {
+                        viewModel.archiveAccount();
+                    }
+                })
                 .setNegativeButton(R.string.no, null)
                 .show();
     }
 
     @Override
-    public void onPromptBIP38Password(final String data) {
+    public void promptBIP38Password(final String data) {
         final AppCompatEditText password = new AppCompatEditText(this);
         password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.bip38_password_entry)
-                .setView(password)
+                .setView(ViewUtils.getAlertDialogEditTextLayout(this, password))
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) ->
                         viewModel.importBIP38Address(data, password.getText().toString()))
@@ -274,7 +304,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onPrivateKeyImportMismatch() {
+    public void privateKeyImportMismatch() {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(getString(R.string.warning))
                 .setMessage(getString(R.string.private_key_successfully_imported) + "\n\n" + getString(R.string.private_key_not_matching_address))
@@ -284,7 +314,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onPrivateKeyImportSuccess() {
+    public void privateKeyImportSuccess() {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(R.string.success)
                 .setMessage(R.string.private_key_successfully_imported)
@@ -292,7 +322,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onShowXpubSharingWarning() {
+    public void showXpubSharingWarning() {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(R.string.warning)
                 .setMessage(R.string.xpub_sharing_warning)
@@ -303,7 +333,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onShowAddressDetails(String heading, String note, String copy, Bitmap bitmap, String qrString) {
+    public void showAddressDetails(String heading, String note, String copy, Bitmap bitmap, String qrString) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
         AlertShowExtendedPublicKeyBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this),
                 R.layout.alert_show_extended_public_key, null, false);
@@ -348,7 +378,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                onStartScanActivity();
+                startScanActivity();
             } else {
                 // Permission request was denied.
             }
@@ -358,22 +388,30 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onShowTransactionSuccess() {
+    public void showTransactionSuccess() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.modal_transaction_success, null);
+        dialogBuilder.setView(dialogView)
+                .setPositiveButton(getString(R.string.done), (dialog, which) -> dialog.dismiss())
+                .setOnDismissListener(dialogInterface -> finish())
+                .create()
+                .show();
 
-        runOnUiThread(() -> {
-
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.modal_transaction_success, null);
-            final AlertDialog alertDialog = dialogBuilder.setView(dialogView).create();
-            alertDialog.setOnDismissListener(dialogInterface -> finish());
-            alertDialog.show();
-        });
+        dialogView.postDelayed(dialogRunnable, 5 * 1000);
     }
 
+    private final Runnable dialogRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (transactionSuccessDialog != null && transactionSuccessDialog.isShowing()) {
+                transactionSuccessDialog.dismiss();
+            }
+        }
+    };
+
     @Override
-    public void onShowProgressDialog(String title, String message) {
-        onDismissProgressDialog();
+    public void showProgressDialog(@StringRes int message) {
+        dismissProgressDialog();
 
         progress = new MaterialProgressDialog(this);
         progress.setMessage(message);
@@ -381,7 +419,7 @@ public class AccountEditActivity extends BaseAuthActivity implements AccountEdit
     }
 
     @Override
-    public void onDismissProgressDialog() {
+    public void dismissProgressDialog() {
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
             progress = null;

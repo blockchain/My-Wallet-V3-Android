@@ -27,7 +27,12 @@ public class WalletAccountHelper {
     private String fiatUnit;
     private String btcUnit;
 
-    public WalletAccountHelper(PayloadManager payloadManager, PrefsUtil prefsUtil, StringUtils stringUtils, ExchangeRateFactory exchangeRateFactory) {
+    public WalletAccountHelper(
+            PayloadManager payloadManager,
+            PrefsUtil prefsUtil,
+            StringUtils stringUtils,
+            ExchangeRateFactory exchangeRateFactory,
+            MultiAddrFactory multiAddrFactory) {
         this.payloadManager = payloadManager;
         this.stringUtils = stringUtils;
         int btcUnit = prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC);
@@ -36,7 +41,7 @@ public class WalletAccountHelper {
         fiatUnit = prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY);
         btcExchangeRate = exchangeRateFactory.getLastPrice(fiatUnit);
 
-        addressBalanceHelper = new AddressBalanceHelper(monetaryUtil);
+        addressBalanceHelper = new AddressBalanceHelper(monetaryUtil, multiAddrFactory);
     }
 
     @NonNull
@@ -48,7 +53,7 @@ public class WalletAccountHelper {
         accountList.addAll(getHdAccounts(isBtc));
 
         // V2
-        List<LegacyAddress> legacyAddresses = payloadManager.getPayload().getLegacyAddresses();
+        List<LegacyAddress> legacyAddresses = payloadManager.getPayload().getLegacyAddressList();
         for (LegacyAddress legacyAddress : legacyAddresses) {
 
             if (legacyAddress.getTag() == LegacyAddress.ARCHIVED_ADDRESS)
@@ -71,6 +76,7 @@ public class WalletAccountHelper {
                     labelOrAddress,
                     addressBalanceHelper.getAddressBalance(legacyAddress, isBtc, btcExchangeRate, fiatUnit, btcUnit),
                     tag,
+                    addressBalanceHelper.getAddressAbsoluteBalance(legacyAddress),
                     legacyAddress));
 
         }
@@ -95,6 +101,7 @@ public class WalletAccountHelper {
                             account.getLabel(),
                             addressBalanceHelper.getAccountBalance(account, isBtc, btcExchangeRate, fiatUnit, btcUnit),
                             null,
+                            addressBalanceHelper.getAccountAbsoluteBalance(account),
                             account));
                 }
             }
@@ -107,13 +114,13 @@ public class WalletAccountHelper {
     public List<ItemAccount> getAddressBookEntries() {
         List<ItemAccount> itemAccountList = new ArrayList<>();
 
-        List<AddressBookEntry> addressBookEntries = payloadManager.getPayload().getAddressBookEntries();
+        List<AddressBookEntry> addressBookEntries = payloadManager.getPayload().getAddressBookEntryList();
         for (AddressBookEntry addressBookEntry : addressBookEntries) {
 
             // If address has no label, we'll display address
             String labelOrAddress = addressBookEntry.getLabel() == null || addressBookEntry.getLabel().length() == 0 ? addressBookEntry.getAddress() : addressBookEntry.getLabel();
 
-            itemAccountList.add(new ItemAccount(labelOrAddress, "", stringUtils.getString(R.string.address_book_label), addressBookEntry));
+            itemAccountList.add(new ItemAccount(labelOrAddress, "", stringUtils.getString(R.string.address_book_label), null, addressBookEntry));
         }
 
         return itemAccountList;

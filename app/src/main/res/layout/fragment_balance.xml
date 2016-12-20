@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,107 +9,65 @@
             type="piuk.blockchain.android.ui.balance.BalanceViewModel" />
     </data>
 
-    <RelativeLayout
+    <!-- MAIN CONTENT -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- MAIN CONTENT -->
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_container"
+        <FrameLayout
+            android:id="@+id/balance_main_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/blockchain_pearl_white">
 
-            <FrameLayout
-                android:id="@+id/balance_main_content"
+            <include
+                android:id="@+id/no_transaction_message"
+                layout="@layout/include_no_transaction_message" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvTransactions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/blockchain_pearl_white">
+                android:clickable="true"
+                android:clipToPadding="false"
+                android:divider="@drawable/list_divider"
+                android:paddingTop="@dimen/balance_bar_height"
+                tools:listitem="@layout/txs_layout" />
 
-                <include
-                    android:id="@+id/no_transaction_message"
-                    layout="@layout/include_no_transaction_message" />
+            <!-- Balance -->
+            <RelativeLayout
+                android:id="@+id/balance_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/balance_bar_height"
+                android:background="@color/blockchain_blue"
+                android:elevation="5dp"
+                android:gravity="center_vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvTransactions"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/balance1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:clipToPadding="false"
-                    android:divider="@drawable/list_divider"
-                    android:paddingTop="96dp"
-                    tools:listitem="@layout/txs_layout_expandable" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_horizontal"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.balance}"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    tools:text="10.0000002 BTC" />
 
-                <!-- Balance -->
-                <RelativeLayout
-                    android:id="@+id/balance_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:background="@color/blockchain_blue"
-                    android:elevation="5dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/balance1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:text="@{viewModel.balance}"
-                        android:textColor="@color/white"
-                        android:textSize="30sp"
-                        tools:text="10.0000002 BTC" />
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/accounts_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/balance1"
-                        android:layout_centerHorizontal="true"
-                        android:theme="@style/SpinnerWhite"
-                        tools:text="All wallets" />
-                </RelativeLayout>
-
-                <!--Shadow for FAB-->
-                <LinearLayout
-                    android:id="@+id/balance_main_content_shadow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.5"
-                    android:background="@color/black"
-                    android:orientation="horizontal"
-                    android:visibility="invisible" />
-
-            </FrameLayout>
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:elevation="5dp"
-            fab:fab_addButtonColorNormal="@color/blockchain_blue"
-            fab:fab_addButtonColorPressed="@color/blockchain_dark_blue"
-            fab:fab_addButtonPlusIconColor="@color/white"
-            fab:fab_labelStyle="@style/menu_labels_style" />
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/fab_debug"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:elevation="5dp"
-            fab:fab_addButtonColorNormal="@color/blockchain_send_red"
-            fab:fab_addButtonColorPressed="@color/blockchain_red_50"
-            fab:fab_addButtonPlusIconColor="@color/white"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            fab:fab_labelsPosition="right" />
-
-    </RelativeLayout>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/accounts_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/balance1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-8dp"
+                    android:dropDownVerticalOffset="8dp"
+                    android:spinnerMode="dropdown"
+                    android:theme="@style/SpinnerWhite"
+                    tools:text="All wallets" />
+            </RelativeLayout>
+        </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

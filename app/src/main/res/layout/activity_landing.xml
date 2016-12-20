@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,70 +23,72 @@
                 <ImageView
                     android:layout_width="165dp"
                     android:layout_height="151dp"
-                    android:src="@drawable/logo3x"
-                    android:gravity="center_horizontal" />
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/logo3x" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="50"
-                android:orientation="vertical"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/blockchain_blue">
+                android:layout_weight="50"
+                android:background="@color/blockchain_blue"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/create"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_view_white2"
+                    android:elevation="5dp"
                     android:paddingLeft="32dp"
                     android:paddingRight="32dp"
                     android:text="@string/CREATE"
-                    android:textSize="20sp"
-                    android:elevation="5dp"
-                    android:background="@drawable/rounded_view_white2"
                     android:textColor="@color/blockchain_blue"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="16dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/LOGIN"
-                    android:textSize="20sp"
                     android:background="@color/blockchain_blue"
-                    android:gravity="center"
                     android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/LOGIN"
                     android:textColor="@color/white"
-                    android:padding="12dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/recover_funds"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/recover_funds"
-                    android:textSize="20sp"
                     android:background="@color/blockchain_blue"
-                    android:gravity="center"
                     android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/recover_funds"
                     android:textColor="@color/white"
-                    android:padding="12dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/settings_btn"
-            android:visibility="gone"
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/button_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="?selectableItemBackgroundBorderless"
             android:padding="16dp"
-            android:onClick="onSettingsClicked"
-            android:src="@drawable/ic_settings_white_24dp" />
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_settings_white_24dp"
+            tools:visibility="visible" />
 
     </RelativeLayout>
 </layout>

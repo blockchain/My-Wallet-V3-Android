@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.exceptions.Exceptions;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.datamanagers.TransferFundsDataManager;
 import piuk.blockchain.android.injection.Injector;
@@ -28,8 +29,6 @@ import piuk.blockchain.android.util.MonetaryUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.android.util.annotations.Thunk;
-import rx.Subscriber;
-import rx.exceptions.Exceptions;
 
 @SuppressWarnings("WeakerAccess")
 public class ConfirmFundsTransferViewModel extends BaseViewModel {
@@ -86,7 +85,7 @@ public class ConfirmFundsTransferViewModel extends BaseViewModel {
 
     private void updateToAddress(int indexOfReceiveAccount) {
         mDataListener.setPaymentButtonEnabled(false);
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 mFundsDataManager.getTransferableFundTransactionList(indexOfReceiveAccount)
                         .subscribe(triple -> {
                             mPendingTransactions = triple.getLeft();
@@ -142,31 +141,20 @@ public class ConfirmFundsTransferViewModel extends BaseViewModel {
         boolean archiveAll = mDataListener.getIfArchiveChecked();
         mDataListener.setPaymentButtonEnabled(false);
         mDataListener.showProgressDialog();
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 mFundsDataManager.sendPayment(new Payment(), mPendingTransactions, secondPassword)
-                        .subscribe(new Subscriber<String>() {
-                            @Override
-                            public void onCompleted() {
-                                mDataListener.hideProgressDialog();
-                                mDataListener.showToast(R.string.transfer_confirmed, ToastCustom.TYPE_OK);
-                                if (archiveAll) {
-                                    archiveAll();
-                                } else {
-                                    mDataListener.dismissDialog();
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                mDataListener.hideProgressDialog();
-                                mDataListener.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR);
+                        .subscribe(s -> {
+                            mDataListener.hideProgressDialog();
+                            mDataListener.showToast(R.string.transfer_confirmed, ToastCustom.TYPE_OK);
+                            if (archiveAll) {
+                                archiveAll();
+                            } else {
                                 mDataListener.dismissDialog();
                             }
-
-                            @Override
-                            public void onNext(String s) {
-                                // Emits Tx hash - don't need to do anything with this
-                            }
+                        }, throwable -> {
+                            mDataListener.hideProgressDialog();
+                            mDataListener.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR);
+                            mDataListener.dismissDialog();
                         }));
     }
 
@@ -197,7 +185,7 @@ public class ConfirmFundsTransferViewModel extends BaseViewModel {
             ((LegacyAddress) spend.sendingObject.accountObject).setTag(LegacyAddress.ARCHIVED_ADDRESS);
         }
 
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 mFundsDataManager.savePayloadToServer()
                         .subscribe(aBoolean -> {
                             if (aBoolean) {

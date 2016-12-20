@@ -78,7 +78,7 @@ public class SecurityPromptDialog extends AppCompatDialogFragment {
     }
 
     public void showDialog(FragmentManager manager) {
-        this.show(manager, TAG);
+        show(manager, TAG);
     }
 
     @Nullable

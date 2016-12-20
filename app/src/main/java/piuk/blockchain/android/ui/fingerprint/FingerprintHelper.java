@@ -12,9 +12,9 @@ import info.blockchain.wallet.util.CharSequenceX;
 
 import java.io.UnsupportedEncodingException;
 
+import io.reactivex.disposables.CompositeDisposable;
 import piuk.blockchain.android.data.fingerprint.FingerprintAuth;
 import piuk.blockchain.android.util.PrefsUtil;
-import rx.subscriptions.CompositeSubscription;
 
 // This will likely be used in different packages soon
 @SuppressWarnings("WeakerAccess")
@@ -23,7 +23,7 @@ public class FingerprintHelper {
     private Context applicationContext;
     private PrefsUtil prefsUtil;
     private FingerprintAuth fingerprintAuth;
-    @VisibleForTesting CompositeSubscription compositeSubscription;
+    @VisibleForTesting CompositeDisposable compositeDisposable;
 
     public FingerprintHelper(Context applicationContext,
                              PrefsUtil prefsUtil,
@@ -32,7 +32,7 @@ public class FingerprintHelper {
         this.applicationContext = applicationContext;
         this.prefsUtil = prefsUtil;
         this.fingerprintAuth = fingerprintAuth;
-        compositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     /**
@@ -126,7 +126,7 @@ public class FingerprintHelper {
      * @param callback {@link AuthCallback}
      */
     public void authenticateFingerprint(AuthCallback callback) {
-        compositeSubscription.add(
+        compositeDisposable.add(
                 fingerprintAuth.authenticate(applicationContext)
                         .subscribe(fingerprintAuthenticationResult -> {
                             switch (fingerprintAuthenticationResult.getResult()) {
@@ -153,7 +153,7 @@ public class FingerprintHelper {
      * @param callback        {@link AuthCallback}
      */
     public void encryptString(String key, String stringToEncrypt, AuthCallback callback) {
-        compositeSubscription.add(
+        compositeDisposable.add(
                 fingerprintAuth.encrypt(applicationContext, key, stringToEncrypt)
                         .subscribe(encryptionResult -> {
                             switch (encryptionResult.getResult()) {
@@ -181,7 +181,7 @@ public class FingerprintHelper {
      * @param callback        {@link AuthCallback}
      */
     public void decryptString(String key, String encryptedString, AuthCallback callback) {
-        compositeSubscription.add(
+        compositeDisposable.add(
                 fingerprintAuth.decrypt(applicationContext, key, encryptedString)
                         .subscribe(decryptionResult -> {
                             switch (decryptionResult.getResult()) {
@@ -213,7 +213,7 @@ public class FingerprintHelper {
      * fingerprint sensor will keep listening in the background for touch events and leak memory.
      */
     void releaseFingerprintReader() {
-        compositeSubscription.clear();
+        compositeDisposable.clear();
     }
 
     public interface AuthCallback {

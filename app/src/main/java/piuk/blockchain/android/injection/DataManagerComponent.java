@@ -12,10 +12,12 @@ import piuk.blockchain.android.ui.home.MainViewModel;
 import piuk.blockchain.android.ui.launcher.LauncherViewModel;
 import piuk.blockchain.android.ui.pairing.ManualPairingViewModel;
 import piuk.blockchain.android.ui.pairing.PairingViewModel;
+import piuk.blockchain.android.ui.receive.ReceiveQrViewModel;
 import piuk.blockchain.android.ui.receive.ReceiveViewModel;
 import piuk.blockchain.android.ui.recover.RecoverFundsViewModel;
 import piuk.blockchain.android.ui.send.SendViewModel;
 import piuk.blockchain.android.ui.settings.SettingsViewModel;
+import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveViewModel;
 import piuk.blockchain.android.ui.transactions.TransactionDetailViewModel;
 
 /**
@@ -59,4 +61,7 @@ public interface DataManagerComponent {
 
     void inject(FingerprintDialogViewModel fingerprintDialogViewModel);
 
+    void inject(ReceiveQrViewModel receiveQrViewModel);
+
+    void inject(SwipeToReceiveViewModel swipeToReceiveViewModel);
 }

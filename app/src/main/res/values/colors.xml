@@ -41,6 +41,7 @@
     <color name="barcode_result_view">#b0000000</color>
 
     <color name="alert_green">#00C853</color>
+    <color name="alert_red">#af4f4e</color>
 
     <color name="warning_color">#f4511e</color>
 </resources>

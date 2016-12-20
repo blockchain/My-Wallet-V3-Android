@@ -144,6 +144,7 @@ public class MapActivity extends BaseAuthActivity implements LocationListener, O
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.map = map;
 
         map.setMyLocationEnabled(true);
         map.setOnMarkerClickListener(marker -> {
@@ -398,7 +399,9 @@ public class MapActivity extends BaseAuthActivity implements LocationListener, O
 
     private void drawData(final boolean fetch, final Double lat, final Double lng, final boolean doListView) {
 
-        map.clear();
+        if (map != null) {
+            map.clear();
+        }
 
         final Handler handler = new Handler(Looper.getMainLooper());
 

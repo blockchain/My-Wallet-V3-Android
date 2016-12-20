@@ -16,7 +16,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <uses-sdk tools:overrideLibrary="com.mtramin.rxfingerprint" />
-    
+
     <application
         android:name=".BlockchainApplication"
         android:allowBackup="false"
@@ -41,7 +41,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-
         </activity>
 
         <activity
@@ -110,13 +109,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:name=".ui.send.SendActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <activity
-            android:name=".ui.receive.ReceiveActivity"
+            android:name=".ui.receive.ReceiveQrActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:theme="@style/AppTheme.ReceiveQrWindow" />
 
         <activity
             android:name=".ui.transactions.TransactionDetailActivity"
@@ -127,24 +122,43 @@
             android:name=".ui.transactions.TransactionDetailWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <service android:name=".data.websocket.WebSocketService" />
+        <service
+            android:name=".data.websocket.WebSocketService"
+            android:stopWithTask="true" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
-        <!--
-        debug: AIzaSyASTnx7wjsCTkMr_RtLQYTzMAf7A9SWIMw
-        release: AIzaSyB_5WN2exwvF4pqQ6rW6JdkHcYWjZOim4w
-        -->
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <receiver android:name=".data.connectivity.NetworkStateReceiver">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <service
+            android:name=".data.notifications.FcmCallbackService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </receiver>
+        </service>
+
+        <service
+            android:name=".data.notifications.InstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

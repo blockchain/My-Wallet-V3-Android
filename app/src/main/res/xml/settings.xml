@@ -53,6 +53,18 @@
         <SwitchPreferenceCompat
             android:title="@string/tor_requests"
             android:key="tor" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:title="@string/shortcut_settings_enable"
+            android:key="receive_shortcuts_enabled"
+            android:persistent="true"
+            android:summary="@string/shortcut_settings_summary"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:title="@string/swipe_receive_hint"
+            android:key="swipe_to_receive_enabled"
+            android:persistent="true"
+            android:summary="@string/swipe_receive_preference_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory

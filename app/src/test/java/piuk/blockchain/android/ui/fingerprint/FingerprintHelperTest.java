@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 
 import piuk.blockchain.android.data.fingerprint.FingerprintAuth;
 import piuk.blockchain.android.util.PrefsUtil;
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -295,7 +295,7 @@ public class FingerprintHelperTest {
         // Act
         subject.releaseFingerprintReader();
         // Assert
-        assertEquals(false, subject.compositeSubscription.hasSubscriptions());
+        assertEquals(0, subject.compositeDisposable.size());
     }
 
 }

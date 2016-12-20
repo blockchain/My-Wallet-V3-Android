@@ -8,13 +8,15 @@ import info.blockchain.api.ExchangeTicker;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.injection.Injector;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * This class obtains info on the currencies communicated via https://blockchain.info/ticker
@@ -113,8 +115,16 @@ public class ExchangeRateFactory {
      */
     public Observable<Double> getHistoricPrice(long satoshis, String currency, long timeInMillis) {
         return Observable.fromCallable(() -> new ExchangeTicker().getHistoricPrice(satoshis, currency, timeInMillis))
-                .map(Double::parseDouble)
-                .compose(RxUtil.applySchedulers());
+                .flatMap(this::parseStringValue)
+                .compose(RxUtil.applySchedulersToObservable());
+    }
+
+    private Observable<Double> parseStringValue(String value) {
+        return Observable.fromCallable(() -> {
+            NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+            Number number = format.parse(value);
+            return number.doubleValue();
+        });
     }
 
     /**

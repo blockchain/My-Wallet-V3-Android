@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.RxTest;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -34,16 +34,15 @@ public class AddressInfoServiceTest extends RxTest {
     @Test
     public void getAddressBalanceSuccess() throws Exception {
         // Arrange
-        TestSubscriber<Long> subscriber = new TestSubscriber<>();
         LegacyAddress mockAddress = mock(LegacyAddress.class);
         when(mockAddress.getAddress()).thenReturn("1234567890");
         when(addressInfo.getAddressInfo(anyString(), anyString())).thenReturn((new JSONObject(VALID_JSON)));
         // Act
-        subject.getAddressBalance(mockAddress, PARAMETER_FINAL_BALANCE).toBlocking().subscribe(subscriber);
+        TestObserver<Long> observer = subject.getAddressBalance(mockAddress, PARAMETER_FINAL_BALANCE).test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(1000L, subscriber.getOnNextEvents().get(0).longValue());
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(1000L, observer.values().get(0).longValue());
     }
 
     private static final String VALID_JSON = "{\n" +

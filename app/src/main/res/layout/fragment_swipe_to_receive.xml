@@ -1,0 +1,95 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blockchain_blue"
+        android:orientation="vertical">
+
+        <!-- MAIN LAYOUT -->
+        <RelativeLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/qr_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="48dp">
+
+                <ProgressBar
+                    android:id="@+id/progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/blockchain_pearl_white"
+                    android:indeterminateTintMode="src_atop" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/qr_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="@dimen/swipe_receive_qr_size"
+                    android:maxWidth="@dimen/swipe_receive_qr_size"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="32dp"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/receiving_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/qr_layout"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textColor="@color/blockchain_pearl_white"
+                android:textSize="20sp"
+                tools:text="My Bitcoin Wallet" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/receiving_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receiving_account"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:inputType="none"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/blockchain_pearl_white"
+                android:textIsSelectable="true"
+                android:textSize="14sp"
+                tools:text="A bitcoin address" />
+
+        </RelativeLayout>
+
+        <!-- NO AVAILABLE ADDRESSES LAYOUT -->
+
+        <RelativeLayout
+            android:id="@+id/error_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/swipe_receive_no_addresses"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/blockchain_pearl_white" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

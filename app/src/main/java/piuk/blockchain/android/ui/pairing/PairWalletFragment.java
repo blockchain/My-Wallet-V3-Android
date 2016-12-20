@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import info.blockchain.api.BaseApi;
+import info.blockchain.api.PersistentUrls;
 
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.databinding.FragmentPairWalletBinding;
@@ -25,7 +25,6 @@ import piuk.blockchain.android.util.PermissionUtil;
 public class PairWalletFragment extends Fragment implements FragmentCompat.OnRequestPermissionsResultCallback {
 
     private FragmentPairWalletBinding binding;
-    private static final String walletUrl = BaseApi.PROTOCOL + BaseApi.SERVER_ADDRESS + "wallet";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class PairWalletFragment extends Fragment implements FragmentCompat.OnReq
 
         getActivity().setTitle(getResources().getString(R.string.pair_your_wallet));
 
-        binding.pairingFirstStep.setText(getString(R.string.pair_wallet_step_1, walletUrl));
+        binding.pairingFirstStep.setText(getString(R.string.pair_wallet_step_1, PersistentUrls.getInstance().getCurrentBaseServerUrl() + "wallet"));
 
         binding.commandScan.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {

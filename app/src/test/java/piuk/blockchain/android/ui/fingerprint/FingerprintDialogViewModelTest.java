@@ -16,6 +16,7 @@ import org.robolectric.annotation.Config;
 
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
+import piuk.blockchain.android.R;
 import piuk.blockchain.android.injection.ApiModule;
 import piuk.blockchain.android.injection.ApplicationModule;
 import piuk.blockchain.android.injection.DataManagerModule;
@@ -188,7 +189,7 @@ public class FingerprintDialogViewModelTest {
     }
 
     @Test
-    public void onFatalError() throws Exception {
+    public void onFatalErrorWhilstRegistering() throws Exception {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_BUNDLE_STAGE, FingerprintDialog.Stage.REGISTER_FINGERPRINT);
         String pincode = "1234";
@@ -204,6 +205,31 @@ public class FingerprintDialogViewModelTest {
         // Assert
         verify(activity).setIcon(anyInt());
         verify(activity).setStatusText(anyInt());
+        verify(activity).setDescriptionText(R.string.fingerprint_fatal_error_register_description);
+        verify(activity).setStatusTextColor(anyInt());
+        verify(activity).onFatalError();
+        verify(fingerprintHelper).clearEncryptedData(PrefsUtil.KEY_ENCRYPTED_PIN_CODE);
+        verify(fingerprintHelper).setFingerprintUnlockEnabled(false);
+    }
+
+    @Test
+    public void onFatalErrorWhilstAuthenticating() throws Exception {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_BUNDLE_STAGE, FingerprintDialog.Stage.AUTHENTICATE);
+        String pincode = "1234";
+        bundle.putString(KEY_BUNDLE_PIN_CODE, pincode);
+        when(activity.getBundle()).thenReturn(bundle);
+        doAnswer(invocation -> {
+            ((FingerprintHelper.AuthCallback) invocation.getArguments()[2]).onFatalError();
+            return null;
+        }).when(fingerprintHelper).decryptString(
+                anyString(), anyString(), any(FingerprintHelper.AuthCallback.class));
+        // Act
+        subject.onViewReady();
+        // Assert
+        verify(activity).setIcon(anyInt());
+        verify(activity).setStatusText(anyInt());
+        verify(activity).setDescriptionText(R.string.fingerprint_fatal_error_authenticate_description);
         verify(activity).setStatusTextColor(anyInt());
         verify(activity).onFatalError();
         verify(fingerprintHelper).clearEncryptedData(PrefsUtil.KEY_ENCRYPTED_PIN_CODE);

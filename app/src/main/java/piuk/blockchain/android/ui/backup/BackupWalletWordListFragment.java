@@ -68,6 +68,8 @@ public class BackupWalletWordListFragment extends Fragment {
 
             if (currentWordIndex >= 0) {
                 binding.previousWordAction.setVisibility(View.VISIBLE);
+            } else {
+                binding.previousWordAction.setVisibility(View.GONE);
             }
 
             if (currentWordIndex < mnemonic.length) {

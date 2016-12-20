@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.RxTest;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -32,40 +32,37 @@ public class WalletPayloadServiceTest extends RxTest {
     @Test
     public void getEncryptedPayload() throws Exception {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
         when(walletPayload.getEncryptedPayload(anyString(), anyString())).thenReturn(STRING_TO_RETURN);
         // Act
-        subject.getEncryptedPayload("guid", "1234567890").toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = subject.getEncryptedPayload("guid", "1234567890").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(STRING_TO_RETURN, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(STRING_TO_RETURN, observer.values().get(0));
     }
 
     @Test
     public void getSessionId() throws Exception {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
         when(walletPayload.getSessionId(anyString())).thenReturn(STRING_TO_RETURN);
         // Act
-        subject.getSessionId("guid").toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = subject.getSessionId("guid").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(STRING_TO_RETURN, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(STRING_TO_RETURN, observer.values().get(0));
     }
 
     @Test
     public void getPairingEncryptionPassword() throws Exception {
         // Arrange
-        TestSubscriber<String> subscriber = new TestSubscriber<>();
         when(walletPayload.getPairingEncryptionPassword(anyString())).thenReturn(STRING_TO_RETURN);
         // Act
-        subject.getPairingEncryptionPassword("guid").toBlocking().subscribe(subscriber);
+        TestObserver<String> observer = subject.getPairingEncryptionPassword("guid").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(STRING_TO_RETURN, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(STRING_TO_RETURN, observer.values().get(0));
     }
 
 }

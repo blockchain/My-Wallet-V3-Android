@@ -8,10 +8,10 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.RxTest;
-import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
@@ -32,36 +32,36 @@ public class ReceiveDataManagerTest extends RxTest {
     @Test
     public void generateQrCode() throws Exception {
         // Arrange
-        TestSubscriber<Bitmap> subscriber = new TestSubscriber<>();
+
         // Act
-        mSubject.generateQrCode(TEST_URI, 100).toBlocking().subscribe(subscriber);
+        TestObserver<Bitmap> observer = mSubject.generateQrCode(TEST_URI, 100).test();
         // Assert
-        Bitmap bitmap = subscriber.getOnNextEvents().get(0);
+        Bitmap bitmap = observer.values().get(0);
         assertNotNull(bitmap);
         assertEquals(100, bitmap.getWidth());
         assertEquals(100, bitmap.getHeight());
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
+        observer.assertComplete();
+        observer.assertNoErrors();
     }
 
     @Test
     public void generateQrCodeNullUri() throws Exception {
         // Arrange
-        TestSubscriber<Bitmap> subscriber = new TestSubscriber<>();
+
         // Act
-        mSubject.generateQrCode(null, 100).toBlocking().subscribe(subscriber);
+        TestObserver<Bitmap> observer = mSubject.generateQrCode(null, 100).test();
         // Assert
-        subscriber.assertError(Throwable.class);
+        observer.assertError(Throwable.class);
     }
 
     @Test
     public void generateQrCodeInvalidDimensions() throws Exception {
         // Arrange
-        TestSubscriber<Bitmap> subscriber = new TestSubscriber<>();
+
         // Act
-        mSubject.generateQrCode(TEST_URI, -1).toBlocking().subscribe(subscriber);
+        TestObserver<Bitmap> observer = mSubject.generateQrCode(TEST_URI, -1).test();
         // Assert
-        subscriber.assertError(Throwable.class);
+        observer.assertError(Throwable.class);
     }
 
 }

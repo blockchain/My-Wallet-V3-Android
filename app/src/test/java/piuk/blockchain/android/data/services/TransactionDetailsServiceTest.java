@@ -1,15 +1,15 @@
 package piuk.blockchain.android.data.services;
 
 import info.blockchain.api.TransactionDetails;
-import info.blockchain.wallet.payload.Transaction;
+import info.blockchain.wallet.transaction.Transaction;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.RxTest;
-import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -32,15 +32,14 @@ public class TransactionDetailsServiceTest extends RxTest {
     @Test
     public void getTransactionDetailsFromHash() throws Exception {
         // Arrange
-        TestSubscriber<Transaction> subscriber = new TestSubscriber<>();
         Transaction mockTransaction = mock(Transaction.class);
         when(transactionDetails.getTransactionDetails(anyString())).thenReturn(mockTransaction);
         // Act
-        subject.getTransactionDetailsFromHash("hash").toBlocking().subscribe(subscriber);
+        TestObserver<Transaction> observer = subject.getTransactionDetailsFromHash("hash").test();
         // Assert
-        subscriber.assertCompleted();
-        subscriber.assertNoErrors();
-        assertEquals(mockTransaction, subscriber.getOnNextEvents().get(0));
+        observer.assertComplete();
+        observer.assertNoErrors();
+        assertEquals(mockTransaction, observer.values().get(0));
     }
 
 }

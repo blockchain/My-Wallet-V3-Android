@@ -19,6 +19,7 @@ import org.bitcoinj.params.MainNetParams;
 
 import javax.inject.Inject;
 
+import io.reactivex.exceptions.Exceptions;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.datamanagers.AccountDataManager;
@@ -30,7 +31,6 @@ import piuk.blockchain.android.ui.customviews.ToastCustom;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.annotations.Thunk;
-import rx.exceptions.Exceptions;
 
 @SuppressWarnings("WeakerAccess")
 public class AccountViewModel extends BaseViewModel {
@@ -45,6 +45,7 @@ public class AccountViewModel extends BaseViewModel {
     @Inject TransferFundsDataManager fundsDataManager;
     @Inject PrefsUtil prefsUtil;
     @Inject AppUtil appUtil;
+    @Inject PrivateKeyFactory privateKeyFactory;
     @VisibleForTesting CharSequenceX doubleEncryptionPassword;
 
     AccountViewModel(DataListener dataListener) {
@@ -90,7 +91,7 @@ public class AccountViewModel extends BaseViewModel {
      * account. Prompt user when done calculating.
      */
     void checkTransferableLegacyFunds(boolean isAutoPopup) {
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 fundsDataManager.getTransferableFundTransactionListForDefaultAccount()
                         .subscribe(triple -> {
                             if (payloadManager.getPayload().isUpgraded() && !triple.getLeft().isEmpty()) {
@@ -103,9 +104,7 @@ public class AccountViewModel extends BaseViewModel {
                                 dataListener.onSetTransferLegacyFundsMenuItemVisible(false);
                             }
                             dataListener.dismissProgressDialog();
-                        }, throwable -> {
-                            dataListener.onSetTransferLegacyFundsMenuItemVisible(false);
-                        }));
+                        }, throwable -> dataListener.onSetTransferLegacyFundsMenuItemVisible(false)));
     }
 
     /**
@@ -115,7 +114,7 @@ public class AccountViewModel extends BaseViewModel {
      */
     void createNewAccount(String accountLabel) {
         dataListener.showProgressDialog(R.string.please_wait);
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 accountDataManager.createNewAccount(accountLabel, doubleEncryptionPassword)
                         .subscribe(account -> {
                             dataListener.dismissProgressDialog();
@@ -145,7 +144,7 @@ public class AccountViewModel extends BaseViewModel {
      */
     void updateLegacyAddress(LegacyAddress address) {
         dataListener.showProgressDialog(R.string.saving_address);
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 accountDataManager.updateLegacyAddress(address)
                         .subscribe(success -> {
                             if (success) {
@@ -202,7 +201,7 @@ public class AccountViewModel extends BaseViewModel {
      */
     void onAddressScanned(String data) {
         try {
-            String format = PrivateKeyFactory.getInstance().getFormat(data);
+            String format = privateKeyFactory.getFormat(data);
             if (format != null) {
                 // Private key scanned
                 if (!format.equals(PrivateKeyFactory.BIP38)) {
@@ -236,9 +235,12 @@ public class AccountViewModel extends BaseViewModel {
     }
 
     private void importWatchOnlyAddress(String address) {
-        if (!FormatsUtil.getInstance().isValidBitcoinAddress(correctAddressFormatting(address))) {
+        
+        address = correctAddressFormatting(address);
+
+        if (!FormatsUtil.getInstance().isValidBitcoinAddress(address)) {
             dataListener.showToast(R.string.invalid_bitcoin_address, ToastCustom.TYPE_ERROR);
-        } else if (payloadManager.getPayload().getLegacyAddressStrings().contains(address)) {
+        } else if (payloadManager.getPayload().getLegacyAddressStringList().contains(address)) {
             dataListener.showToast(R.string.address_already_in_wallet, ToastCustom.TYPE_ERROR);
         } else {
             // Do some things
@@ -262,7 +264,7 @@ public class AccountViewModel extends BaseViewModel {
     private void importNonBip38Address(String format, String data, @Nullable CharSequenceX secondPassword) {
         dataListener.showProgressDialog(R.string.please_wait);
         try {
-            ECKey key = PrivateKeyFactory.getInstance().getKey(format, data);
+            ECKey key = privateKeyFactory.getKey(format, data);
 
             handlePrivateKey(key, secondPassword);
         } catch (Exception e) {
@@ -275,13 +277,13 @@ public class AccountViewModel extends BaseViewModel {
     @VisibleForTesting
     void handlePrivateKey(ECKey key, @Nullable CharSequenceX secondPassword) {
         if (key != null && key.hasPrivKey()
-                && payloadManager.getPayload().getLegacyAddressStrings().contains(key.toAddress(MainNetParams.get()).toString())) {
+                && payloadManager.getPayload().getLegacyAddressStringList().contains(key.toAddress(MainNetParams.get()).toString())) {
 
             // A private key to an existing address has been scanned
             setPrivateECKey(key, secondPassword);
 
         } else if (key != null && key.hasPrivKey()
-                && !payloadManager.getPayload().getLegacyAddressStrings().contains(key.toAddress(MainNetParams.get()).toString())) {
+                && !payloadManager.getPayload().getLegacyAddressStringList().contains(key.toAddress(MainNetParams.get()).toString())) {
             LegacyAddress legacyAddress =
                     new LegacyAddress(
                             null,
@@ -305,7 +307,7 @@ public class AccountViewModel extends BaseViewModel {
     }
 
     private void setPrivateECKey(ECKey key, @Nullable CharSequenceX secondPassword) {
-        mCompositeSubscription.add(
+        compositeDisposable.add(
                 accountDataManager.setPrivateKey(key, secondPassword)
                         .subscribe(success -> {
                             if (success) {
@@ -314,8 +316,6 @@ public class AccountViewModel extends BaseViewModel {
                             } else {
                                 throw Exceptions.propagate(new Throwable("Save unsuccessful"));
                             }
-                        }, throwable -> {
-                            dataListener.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR);
-                        }));
+                        }, throwable -> dataListener.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR)));
     }
 }

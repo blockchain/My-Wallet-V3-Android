@@ -2,13 +2,13 @@ package piuk.blockchain.android.data.datamanagers;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import piuk.blockchain.android.ui.zxing.Contents;
-import piuk.blockchain.android.ui.zxing.encode.QRCodeEncoder;
 
 import android.graphics.Bitmap;
 
+import io.reactivex.Observable;
 import piuk.blockchain.android.data.rxjava.RxUtil;
-import rx.Observable;
+import piuk.blockchain.android.ui.zxing.Contents;
+import piuk.blockchain.android.ui.zxing.encode.QRCodeEncoder;
 
 public class ReceiveDataManager {
 
@@ -22,7 +22,7 @@ public class ReceiveDataManager {
      */
     public Observable<Bitmap> generateQrCode(String uri, int dimensions) {
         return generateQrCodeObservable(uri, dimensions)
-                .compose(RxUtil.applySchedulers());
+                .compose(RxUtil.applySchedulersToObservable());
     }
 
     private Observable<Bitmap> generateQrCodeObservable(String uri, int dimensions) {

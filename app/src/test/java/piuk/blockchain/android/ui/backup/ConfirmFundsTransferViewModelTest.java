@@ -2,6 +2,7 @@ package piuk.blockchain.android.ui.backup;
 
 import android.app.Application;
 
+import info.blockchain.wallet.multiaddr.MultiAddrFactory;
 import info.blockchain.wallet.payload.Account;
 import info.blockchain.wallet.payload.LegacyAddress;
 import info.blockchain.wallet.payload.Payload;
@@ -23,6 +24,7 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.data.datamanagers.TransferFundsDataManager;
@@ -39,16 +41,14 @@ import piuk.blockchain.android.util.ExchangeRateFactory;
 import piuk.blockchain.android.util.MonetaryUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.StringUtils;
-import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -151,10 +151,10 @@ public class ConfirmFundsTransferViewModelTest {
     @Test
     public void sendPaymentAndArchive() throws Exception {
         // Arrange
-        when(mFundsDataManager.sendPayment(any(Payment.class), anyList(), any(CharSequenceX.class))).thenReturn(Observable.just("hash"));
+        when(mFundsDataManager.sendPayment(any(Payment.class), anyListOf(PendingTransaction.class), any(CharSequenceX.class))).thenReturn(Observable.just("hash"));
         when(mActivity.getIfArchiveChecked()).thenReturn(true);
         PendingTransaction transaction = new PendingTransaction();
-        transaction.sendingObject = new ItemAccount("", "", null, null);
+        transaction.sendingObject = new ItemAccount("", "", null, null, null);
         transaction.sendingObject.accountObject = new LegacyAddress();
         mSubject.mPendingTransactions = new ArrayList<PendingTransaction>() {{
             add(transaction);
@@ -176,7 +176,7 @@ public class ConfirmFundsTransferViewModelTest {
     @Test
     public void sendPaymentNoArchive() throws Exception {
         // Arrange
-        when(mFundsDataManager.sendPayment(any(Payment.class), anyList(), any(CharSequenceX.class))).thenReturn(Observable.just("hash"));
+        when(mFundsDataManager.sendPayment(any(Payment.class), anyListOf(PendingTransaction.class), any(CharSequenceX.class))).thenReturn(Observable.just("hash"));
         when(mActivity.getIfArchiveChecked()).thenReturn(false);
         // Act
         mSubject.sendPayment(new CharSequenceX("password"));
@@ -194,7 +194,7 @@ public class ConfirmFundsTransferViewModelTest {
     @Test
     public void sendPaymentError() throws Exception {
         // Arrange
-        when(mFundsDataManager.sendPayment(any(Payment.class), anyList(), any(CharSequenceX.class))).thenReturn(Observable.error(new Throwable()));
+        when(mFundsDataManager.sendPayment(any(Payment.class), anyListOf(PendingTransaction.class), any(CharSequenceX.class))).thenReturn(Observable.error(new Throwable()));
         when(mActivity.getIfArchiveChecked()).thenReturn(false);
         // Act
         mSubject.sendPayment(new CharSequenceX("password"));
@@ -243,7 +243,7 @@ public class ConfirmFundsTransferViewModelTest {
     public void archiveAllSuccessful() throws Exception {
         // Arrange
         PendingTransaction transaction = new PendingTransaction();
-        transaction.sendingObject = new ItemAccount("", "", null, null);
+        transaction.sendingObject = new ItemAccount("", "", null, null, null);
         transaction.sendingObject.accountObject = new LegacyAddress();
         mSubject.mPendingTransactions = new ArrayList<PendingTransaction>() {{
             add(transaction);
@@ -264,7 +264,7 @@ public class ConfirmFundsTransferViewModelTest {
     public void archiveAllUnsuccessful() throws Exception {
         // Arrange
         PendingTransaction transaction = new PendingTransaction();
-        transaction.sendingObject = new ItemAccount("", "", null, null);
+        transaction.sendingObject = new ItemAccount("", "", null, null, null);
         transaction.sendingObject.accountObject = new LegacyAddress();
         mSubject.mPendingTransactions = new ArrayList<PendingTransaction>() {{
             add(transaction);
@@ -285,7 +285,7 @@ public class ConfirmFundsTransferViewModelTest {
     public void archiveAllThrowsException() throws Exception {
         // Arrange
         PendingTransaction transaction = new PendingTransaction();
-        transaction.sendingObject = new ItemAccount("", "", null, null);
+        transaction.sendingObject = new ItemAccount("", "", null, null, null);
         transaction.sendingObject.accountObject = new LegacyAddress();
         mSubject.mPendingTransactions = new ArrayList<PendingTransaction>() {{
             add(transaction);
@@ -300,16 +300,6 @@ public class ConfirmFundsTransferViewModelTest {
         verify(mActivity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
         verify(mActivity).dismissDialog();
         verifyNoMoreInteractions(mActivity);
-    }
-
-    @Test
-    public void destroy() throws Exception {
-        // Arrange
-
-        // Act
-        mSubject.destroy();
-        // Assert
-        assertFalse(mSubject.mCompositeSubscription.hasSubscriptions());
     }
 
     private class MockApplicationModule extends ApplicationModule {
@@ -341,7 +331,7 @@ public class ConfirmFundsTransferViewModelTest {
         }
 
         @Override
-        protected WalletAccountHelper provideWalletAccountHelper(PayloadManager payloadManager, PrefsUtil prefsUtil, StringUtils stringUtils, ExchangeRateFactory exchangeRateFactory) {
+        protected WalletAccountHelper provideWalletAccountHelper(PayloadManager payloadManager, PrefsUtil prefsUtil, StringUtils stringUtils, ExchangeRateFactory exchangeRateFactory, MultiAddrFactory multiAddrFactory) {
             return mWalletAccountHelper;
         }
     }

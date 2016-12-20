@@ -15,6 +15,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import io.reactivex.Observable;
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.data.access.AccessState;
@@ -28,10 +29,8 @@ import piuk.blockchain.android.util.AESUtilWrapper;
 import piuk.blockchain.android.util.AppUtil;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.StringUtils;
-import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -206,16 +205,6 @@ public class RecoverFundsViewModelTest {
         AppUtil util = mSubject.getAppUtil();
         // Assert
         assertEquals(util, mAppUtil);
-    }
-
-    @Test
-    public void destroy() throws Exception {
-        // Arrange
-
-        // Act
-        mSubject.destroy();
-        // Assert
-        assertFalse(mSubject.mCompositeSubscription.hasSubscriptions());
     }
 
     private class MockApplicationModule extends ApplicationModule {

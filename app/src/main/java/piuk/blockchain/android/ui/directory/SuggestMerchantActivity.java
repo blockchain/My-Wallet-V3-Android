@@ -109,6 +109,7 @@ public class SuggestMerchantActivity extends BaseAuthActivity implements OnMapRe
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.map = map;
 
         map.getUiSettings().setZoomControlsEnabled(true);
 
@@ -286,17 +287,18 @@ public class SuggestMerchantActivity extends BaseAuthActivity implements OnMapRe
     }
 
     private void zoomToLocation(double x, double y) {
+        if (map != null) {
+            mapView.setVisibility(View.VISIBLE);
+            mapContainer.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.GONE);
+            map.clear();
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(y, x), 13));
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(y, x)).zoom(17).build();
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            map.addMarker(new MarkerOptions().position(new LatLng(y, x)));
 
-        mapView.setVisibility(View.VISIBLE);
-        mapContainer.setVisibility(View.VISIBLE);
-        progress.setVisibility(View.GONE);
-        map.clear();
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(y, x), 13));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(y, x)).zoom(17).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        map.addMarker(new MarkerOptions().position(new LatLng(y, x)));
-
-        populateAddressViews(new LatLng(y, x));
+            populateAddressViews(new LatLng(y, x));
+        }
     }
 
     private void populateAddressViews(LatLng latLng) {

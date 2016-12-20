@@ -15,6 +15,7 @@ import piuk.blockchain.android.R;
 public class ShareReceiveIntentAdapter extends RecyclerView.Adapter<ShareReceiveIntentAdapter.ViewHolder> {
 
     private final List<ReceiveViewModel.SendPaymentCodeData> mData;
+    private OnItemClickedListener itemClickedListener;
     private Context mContext;
 
     public ShareReceiveIntentAdapter(List<ReceiveViewModel.SendPaymentCodeData> repoDataArrayList) {
@@ -37,12 +38,19 @@ public class ShareReceiveIntentAdapter extends RecyclerView.Adapter<ShareReceive
         holder.mTitleTextView.setText(data.getTitle());
         holder.mImageView.setImageDrawable(data.getLogo());
 
-        holder.mRootView.setOnClickListener(view -> mContext.startActivity(data.getIntent()));
+        holder.mRootView.setOnClickListener(view -> {
+            if (itemClickedListener != null) itemClickedListener.onItemClicked();
+            mContext.startActivity(data.getIntent());
+        });
     }
 
     @Override
     public int getItemCount() {
         return mData != null ? mData.size() : 0;
+    }
+
+    public void setItemClickedListener(OnItemClickedListener itemClickedListener) {
+        this.itemClickedListener = itemClickedListener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,5 +65,11 @@ public class ShareReceiveIntentAdapter extends RecyclerView.Adapter<ShareReceive
             mImageView = (ImageView) itemView.findViewById(R.id.share_app_image);
             mTitleTextView = (TextView) itemView.findViewById(R.id.share_app_title);
         }
+    }
+
+    interface OnItemClickedListener {
+
+        void onItemClicked();
+
     }
 }

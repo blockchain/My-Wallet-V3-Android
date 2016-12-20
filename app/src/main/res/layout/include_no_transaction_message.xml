@@ -3,67 +3,30 @@
 
     <LinearLayout
         android:id="@+id/no_tx_message"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="96dp"
         android:layout_width="match_parent"
-        android:clickable="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="96dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/your_transactions"
-            android:gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:alpha="0.8"
+            android:gravity="center_horizontal"
+            android:text="@string/your_transactions"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/transaction_occur_when"
-            android:gravity="center_horizontal"
-            android:background="@drawable/underline"
-            android:alpha="0.8"
             android:layout_marginTop="8dp"
+            android:alpha="0.8"
+            android:background="@drawable/underline"
+            android:gravity="center_horizontal"
+            android:text="@string/transaction_occur_when"
             android:textSize="12sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/click"
-                android:alpha="0.5"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_margin="8dp"
-                android:padding="8dp"
-                android:background="@drawable/round_view_blue"
-                android:src="@drawable/ic_add_white_24dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:stateListAnimator="@anim/fab_anim" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/to_start_sending_and_receiving_btc"
-                android:gravity="center_horizontal"
-                android:alpha="0.5"
-                android:textSize="14sp" />
-
-        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -131,10 +131,14 @@ public class FingerprintDialogViewModel extends BaseViewModel implements Fingerp
         fingerprintHelper.setFingerprintUnlockEnabled(false);
     }
 
-    // Most likely too many attempts, temporarily locked out
+    // Too many attempts - show message appropriate to stage
     @Override
     public void onFatalError() {
-        setFailureState(R.string.fingerprint_fatal_error_brief, R.string.fingerprint_fatal_error_description);
+        if (currentStage.equals(FingerprintDialog.Stage.REGISTER_FINGERPRINT)) {
+            setFailureState(R.string.fingerprint_fatal_error_brief, R.string.fingerprint_fatal_error_register_description);
+        } else {
+            setFailureState(R.string.fingerprint_fatal_error_brief, R.string.fingerprint_fatal_error_authenticate_description);
+        }
         dataListener.onFatalError();
 
         fingerprintHelper.clearEncryptedData(PrefsUtil.KEY_ENCRYPTED_PIN_CODE);

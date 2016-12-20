@@ -23,21 +23,4 @@ public class ConnectivityStatus {
         return ret;
     }
 
-    public static boolean hasWiFi(Context ctx) {
-        boolean ret = false;
-
-        ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            if (activeNetwork != null) {
-                if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                    ret = true;
-                }
-            }
-        }
-
-        return ret;
-    }
-
 }

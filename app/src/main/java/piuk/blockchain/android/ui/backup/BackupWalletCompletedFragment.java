@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,20 +22,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.reactivex.disposables.CompositeDisposable;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.datamanagers.TransferFundsDataManager;
 import piuk.blockchain.android.databinding.AlertPromptTransferFundsBinding;
 import piuk.blockchain.android.databinding.FragmentBackupCompleteBinding;
 import piuk.blockchain.android.util.PrefsUtil;
 import piuk.blockchain.android.util.ViewUtils;
-import rx.subscriptions.CompositeSubscription;
 
 public class BackupWalletCompletedFragment extends Fragment {
 
     public static final String TAG = BackupWalletCompletedFragment.class.getSimpleName();
     private static final String KEY_CHECK_TRANSFER = "check_transfer";
 
-    private CompositeSubscription mCompositeSubscription;
+    private CompositeDisposable compositeDisposable;
 
     public static BackupWalletCompletedFragment newInstance(boolean checkTransfer) {
         Bundle args = new Bundle();
@@ -50,7 +49,7 @@ public class BackupWalletCompletedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentBackupCompleteBinding dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_backup_complete, container, false);
-        mCompositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
 
         ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && supportActionBar != null) {
@@ -80,7 +79,7 @@ public class BackupWalletCompletedFragment extends Fragment {
         if (getArguments() != null && getArguments().getBoolean(KEY_CHECK_TRANSFER)) {
             TransferFundsDataManager fundsHelper =
                     new TransferFundsDataManager(PayloadManager.getInstance(), new Unspent(), new Payment());
-            mCompositeSubscription.add(
+            compositeDisposable.add(
                     fundsHelper.getTransferableFundTransactionListForDefaultAccount()
                             .subscribe(triple -> {
                                 if (!triple.getLeft().isEmpty()) {
@@ -116,7 +115,7 @@ public class BackupWalletCompletedFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        mCompositeSubscription.clear();
+        compositeDisposable.clear();
         super.onDestroy();
     }
 }
