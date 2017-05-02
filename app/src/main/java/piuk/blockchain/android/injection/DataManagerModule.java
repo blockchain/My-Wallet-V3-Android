@@ -173,7 +173,7 @@ public class DataManagerModule {
     protected BuyDataManager provideBuyDataManager(OnboardingDataManager onboardingDataManager,
                                                    SettingsDataManager settingsDataManager,
                                                    PayloadDataManager payloadDataManager) {
-        return new BuyDataManager(
+        return BuyDataManager.getInstance(
                 onboardingDataManager,
                 settingsDataManager,
                 payloadDataManager);
