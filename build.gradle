@@ -3,12 +3,12 @@
 buildscript {
     ext {
         supportVersion = '25.3.1'
-        googleServicesVersion = '10.2.4'
+        googleServicesVersion = '10.2.6'
         rxJavaVersion = '2.1.0'
         rxAndroidVersion = '2.0.1'
         daggerVersion = '2.10'
         retrofitVersion = '2.2.0'
-        okHttpVersion = '3.6.0'
+        okHttpVersion = '3.8.0'
         mockitoVersion = '2.7.21'
         kotlinVersion = '1.1.2-3'
     }

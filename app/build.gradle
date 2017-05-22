@@ -103,16 +103,11 @@ android {
     }
     sourceSets {
         test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 }
 
 afterEvaluate {
-    // Ensure no Kotlin code is present in the production app... for now.
-    android.sourceSets.all { sourceSet ->
-        if (!sourceSet.name.startsWith("test")) {
-            sourceSet.kotlin.setSrcDirs([])
-        }
-    }
     // Ensure correct JSON file is being used when signing the app
     assembleProdRelease.dependsOn checkFirebaseConfig
 }
@@ -124,6 +119,9 @@ dependencies {
 //    compile (group: 'info.blockchain', name: 'api-client', version: '0.1.13-SNAPSHOT') {
 //        exclude group: 'org.json', module: 'json'
 //    }
+    // Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    // Support Libs
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
     compile "com.android.support:cardview-v7:$supportVersion"
@@ -192,7 +190,6 @@ dependencies {
         exclude group: 'com.google.protobuf'
     }
     // Unit Tests in Kotlin
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     testCompile 'org.amshove.kluent:kluent:1.19'
     testCompile("com.nhaarman:mockito-kotlin:1.4.0") {
