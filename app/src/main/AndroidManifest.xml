@@ -41,10 +41,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
+                <!-- Accepts URIs that begin with "https://blockchain.info/invite” -->
                 <data
                     android:host="blockchain.info"
                     android:pathPrefix="/invite"
                     android:scheme="https" />
+                
+                <!-- Accepts URIs that begin with "https://blockchain.info/wallet” -->
+                <data android:scheme="https"
+                    android:host="blockchain.info"
+                    android:pathPrefix="/wallet" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
