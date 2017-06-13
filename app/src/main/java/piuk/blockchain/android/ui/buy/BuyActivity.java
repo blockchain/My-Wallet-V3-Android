@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -153,9 +154,17 @@ public class BuyActivity extends BaseAuthActivity implements BuyViewModel.DataLi
         }
     }
 
-    public static void start(Context context, Bundle webViewState) {
-        Intent starter = new Intent(context, BuyActivity.class);
-        starter.putExtra(WEB_VIEW_STATE_KEY, webViewState);
-        context.startActivity(starter);
+    public static void start(Context context, Bundle webViewState, boolean isDoubleEncrypted) {
+        if (isDoubleEncrypted) {
+            new AlertDialog.Builder(context, R.style.AlertDialogStyle)
+                    .setTitle(R.string.buy_second_password_alert_title)
+                    .setMessage(R.string.buy_second_password_alert_message)
+                    .setNegativeButton(R.string.ok_cap, null)
+                    .show();
+        } else {
+            Intent starter = new Intent(context, BuyActivity.class);
+            starter.putExtra(WEB_VIEW_STATE_KEY, webViewState);
+            context.startActivity(starter);
+        }
     }
 }

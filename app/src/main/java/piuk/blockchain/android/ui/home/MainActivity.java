@@ -137,7 +137,7 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
             } else if (intent.getAction().equals(ACTION_RECEIVE) && getActivity() != null) {
                 binding.bottomNavigation.setCurrentItem(2);
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
-                BuyActivity.start(MainActivity.this, getWebViewState());
+                BuyActivity.start(MainActivity.this, getWebViewState(), isDoubleEncrypted());
             }
         }
     };
@@ -378,6 +378,10 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
         startSendFragment(strResult, scanRoute);
     }
 
+    boolean isDoubleEncrypted() {
+        return viewModel.payloadDataManager.isDoubleEncrypted();
+    }
+
     Bundle getWebViewState() {
         Bundle state = new Bundle();
         buyWebView.saveState(state);
@@ -393,7 +397,7 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
                 startActivityForResult(new Intent(MainActivity.this, AccountActivity.class), ACCOUNT_EDIT);
                 break;
             case R.id.nav_buy:
-                BuyActivity.start(this, getWebViewState());
+                BuyActivity.start(this, getWebViewState(), isDoubleEncrypted());
                 break;
             case R.id.nav_contacts:
                 ContactsListActivity.start(this, null);
