@@ -108,7 +108,6 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
     public static final String EXTRA_MDID = "mdid";
     public static final String EXTRA_FCTX_ID = "fctx_id";
 
-    public static final String WEB_VIEW_STATE_KEY = "web_view_state";
     public static final int SCAN_URI = 2007;
     public static final int ACCOUNT_EDIT = 2008;
 
@@ -138,7 +137,7 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
             } else if (intent.getAction().equals(ACTION_RECEIVE) && getActivity() != null) {
                 binding.bottomNavigation.setCurrentItem(2);
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
-                startActivity(putWebViewState(new Intent(MainActivity.this, BuyActivity.class)));
+                BuyActivity.start(MainActivity.this, getWebViewState(), isDoubleEncrypted());
             }
         }
     };
@@ -379,11 +378,14 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
         startSendFragment(strResult, scanRoute);
     }
 
-    @Thunk
-    Intent putWebViewState(Intent intent) {
+    boolean isDoubleEncrypted() {
+        return viewModel.payloadDataManager.isDoubleEncrypted();
+    }
+
+    Bundle getWebViewState() {
         Bundle state = new Bundle();
         buyWebView.saveState(state);
-        return intent.putExtra(WEB_VIEW_STATE_KEY, state);
+        return state;
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
@@ -395,7 +397,7 @@ public class MainActivity extends BaseAuthActivity implements BalanceFragment.On
                 startActivityForResult(new Intent(MainActivity.this, AccountActivity.class), ACCOUNT_EDIT);
                 break;
             case R.id.nav_buy:
-                startActivity(putWebViewState(new Intent(MainActivity.this, BuyActivity.class)));
+                BuyActivity.start(this, getWebViewState(), isDoubleEncrypted());
                 break;
             case R.id.nav_contacts:
                 ContactsListActivity.start(this, null);

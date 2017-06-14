@@ -699,6 +699,8 @@
     <string name="onboarding_available_now">Available now</string>
     <string name="onboarding_buy_details">Buy bitcoin directly from your mobile wallet. It\'s simple, seamless, and secure.</string>
     <string name="onboarding_buy_performance_warning">The buy experience may be a little slow on your device. Thanks in advance for your patience.</string>
+    <string name="buy_second_password_alert_title">Buy Unavailable</string>
+    <string name="buy_second_password_alert_message">Second password cannot be active while buying bitcoin, please disable it to continue.</string>
 
     <!-- 2FA Pairing -->
     <string name="two_factor_dialog_title">Enter 2FA code</string>

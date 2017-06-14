@@ -1,8 +1,11 @@
 package piuk.blockchain.android.ui.buy;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -21,6 +24,7 @@ import piuk.blockchain.android.util.AndroidUtils;
 public class BuyActivity extends BaseAuthActivity implements BuyViewModel.DataListener, FrontendJavascript<String> {
 
     public static final String TAG = BuyActivity.class.getSimpleName();
+    public static final String WEB_VIEW_STATE_KEY = "web_view_state";
 
     private FrontendJavascriptManager frontendJavascriptManager;
     private WebViewLoginDetails webViewLoginDetails;
@@ -50,7 +54,7 @@ public class BuyActivity extends BaseAuthActivity implements BuyViewModel.DataLi
 
         binding.webview.addJavascriptInterface(frontendJavascriptManager, FrontendJavascriptManager.JS_INTERFACE_NAME);
         binding.webview.getSettings().setJavaScriptEnabled(true);
-        binding.webview.restoreState(getIntent().getParcelableExtra(MainActivity.WEB_VIEW_STATE_KEY));
+        binding.webview.restoreState(getIntent().getParcelableExtra(WEB_VIEW_STATE_KEY));
         viewModel.onViewReady();
     }
 
@@ -147,6 +151,20 @@ public class BuyActivity extends BaseAuthActivity implements BuyViewModel.DataLi
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
             progress = null;
+        }
+    }
+
+    public static void start(Context context, Bundle webViewState, boolean isDoubleEncrypted) {
+        if (isDoubleEncrypted) {
+            new AlertDialog.Builder(context, R.style.AlertDialogStyle)
+                    .setTitle(R.string.buy_second_password_alert_title)
+                    .setMessage(R.string.buy_second_password_alert_message)
+                    .setNegativeButton(R.string.ok_cap, null)
+                    .show();
+        } else {
+            Intent starter = new Intent(context, BuyActivity.class);
+            starter.putExtra(WEB_VIEW_STATE_KEY, webViewState);
+            context.startActivity(starter);
         }
     }
 }
