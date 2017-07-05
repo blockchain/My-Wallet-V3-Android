@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting;
 import info.blockchain.wallet.api.data.WalletOptions;
 import info.blockchain.wallet.crypto.AESUtil;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
+import info.blockchain.wallet.exceptions.ServerConnectionException;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.payload.data.Wallet;
 
@@ -264,8 +265,8 @@ public class AuthDataManager {
                                 decryptionKey,
                                 AESUtil.PIN_PBKDF2_ITERATIONS);
                     } else {
-                        // Invalid PIN
-                        throw new InvalidCredentialsException("Validate access failed");
+                        // Server error
+                        throw new ServerConnectionException(response.code()+" "+response.message());
                     }
                 });
     }
