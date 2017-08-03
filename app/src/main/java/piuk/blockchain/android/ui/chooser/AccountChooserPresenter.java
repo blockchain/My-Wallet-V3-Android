@@ -1,5 +1,7 @@
 package piuk.blockchain.android.ui.chooser;
 
+import android.util.Log;
+
 import info.blockchain.wallet.contacts.data.Contact;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.data.contacts.ContactsPredicates;
@@ -93,17 +96,23 @@ public class AccountChooserPresenter extends BasePresenter<AccountChooserView> {
 
     @SuppressWarnings({"ConstantConditions", "Convert2streamapi"})
     private Single<List<Contact>> parseContactsList() {
-        return contactsDataManager.getContactList()
-                .filter(ContactsPredicates.filterByConfirmed())
-                .toList()
-                .doOnSuccess(contacts -> {
-                    if (!contacts.isEmpty()) {
-                        itemAccounts.add(new ItemAccount(stringUtils.getString(R.string.contacts_title), null, null, null, null));
-                        for (Contact contact : contacts) {
-                            itemAccounts.add(new ItemAccount(null, null, null, null, contact, null));
+
+        if (!BuildConfig.CONTACTS_ENABLED) {
+            return Single.just(new ArrayList<>());
+        } else {
+
+            return contactsDataManager.getContactList()
+                    .filter(ContactsPredicates.filterByConfirmed())
+                    .toList()
+                    .doOnSuccess(contacts -> {
+                        if (!contacts.isEmpty()) {
+                            itemAccounts.add(new ItemAccount(stringUtils.getString(R.string.contacts_title), null, null, null, null));
+                            for (Contact contact : contacts) {
+                                itemAccounts.add(new ItemAccount(null, null, null, null, contact, null));
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

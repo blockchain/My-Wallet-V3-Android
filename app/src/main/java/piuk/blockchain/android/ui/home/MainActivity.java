@@ -459,6 +459,11 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         } else if (getCurrentFragment() instanceof ReceiveFragment) {
             binding.bottomNavigation.setCurrentItem(2);
         }
+
+        if (!BuildConfig.CONTACTS_ENABLED) {
+            MenuItem contactsMenuItem = binding.navigationView.getMenu().findItem(R.id.nav_contacts);
+            contactsMenuItem.setVisible(false);
+        }
     }
 
     @Override
