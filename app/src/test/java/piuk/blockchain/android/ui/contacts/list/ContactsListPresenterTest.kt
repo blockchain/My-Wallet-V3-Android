@@ -27,6 +27,7 @@ import piuk.blockchain.android.data.rxjava.RxBus
 import piuk.blockchain.android.ui.base.UiState
 import piuk.blockchain.android.ui.customviews.ToastCustom
 import java.util.*
+import kotlin.NoSuchElementException
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -71,20 +72,31 @@ class ContactsListPresenterTest {
 
     @Test
     @Throws(Exception::class)
-    fun handleLinkFailure() {
+    fun handleLinkFailure_general() {
         // Arrange
         val uri = "METADATA_URI"
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
         whenever(mockContactsManager.acceptInvitation(uri)).thenReturn(Observable.error { Throwable() })
+        whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
+        whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(Collections.emptyList()))
+        whenever(mockContactsManager.getContactsWithUnreadPaymentRequests())
+                .thenReturn(Observable.fromIterable(listOf<Contact>()))
         // Act
         subject.handleLink(uri)
         // Assert
         verify(mockActivity).showProgressDialog()
         verify(mockActivity).dismissProgressDialog()
         verify(mockActivity).showToast(any(), eq(ToastCustom.TYPE_ERROR))
-        verifyNoMoreInteractions(mockActivity)
+
         verify(mockContactsManager).acceptInvitation(uri)
+        verify(mockActivity).setUiState(UiState.LOADING)
+        verify(mockContactsManager).fetchContacts()
+        verify(mockContactsManager).getContactList()
+        verify(mockContactsManager).getContactsWithUnreadPaymentRequests()
+        verify(mockActivity).onContactsLoaded(ArrayList<ContactsListItem>())
+        verify(mockActivity).setUiState(UiState.EMPTY)
+        verifyNoMoreInteractions(mockActivity)
         verifyNoMoreInteractions(mockContactsManager)
     }
 
@@ -429,11 +441,14 @@ class ContactsListPresenterTest {
             this.sender = sender
             this.recipient = recipient
         }
+        whenever(mockContactsManager.publishXpub())
+                .thenReturn(Completable.complete())
         whenever(mockContactsManager.createInvitation(sender, recipient))
                 .thenReturn(Observable.just(sender))
         // Act
         subject.createLink()
         // Assert
+        verify(mockContactsManager).publishXpub()
         verify(mockContactsManager).createInvitation(sender, recipient)
         verifyNoMoreInteractions(mockContactsManager)
         verify(mockActivity).showProgressDialog()
@@ -455,11 +470,14 @@ class ContactsListPresenterTest {
             this.sender = sender
             this.recipient = recipient
         }
+        whenever(mockContactsManager.publishXpub())
+                .thenReturn(Completable.complete())
         whenever(mockContactsManager.createInvitation(sender, recipient))
                 .thenReturn(Observable.error { Throwable() })
         // Act
         subject.createLink()
         // Assert
+        verify(mockContactsManager).publishXpub()
         verify(mockContactsManager).createInvitation(sender, recipient)
         verifyNoMoreInteractions(mockContactsManager)
         verify(mockActivity).showProgressDialog()

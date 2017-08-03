@@ -6,6 +6,7 @@ import io.reactivex.Observable
 import org.amshove.kluent.shouldEqual
 import org.junit.Before
 import org.junit.Test
+import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.data.access.AccessState
 import piuk.blockchain.android.data.contacts.models.PaymentRequestType
 import piuk.blockchain.android.data.contacts.ContactsDataManager
@@ -50,23 +51,25 @@ class AccountChooserPresenterTest {
     @Test
     @Throws(Exception::class)
     fun onViewReadyRequestTypeContact() {
-        // Arrange
-        whenever(mockActivity.paymentRequestType).thenReturn(PaymentRequestType.CONTACT)
-        val contact0 = Contact()
-        contact0.mdid = "mdid"
-        val contact1 = Contact()
-        contact1.mdid = "mdid"
-        val contact2 = Contact()
-        whenever(mockContactsManager.getContactList())
-                .thenReturn(Observable.just(contact0, contact1, contact2))
-        // Act
-        subject.onViewReady()
-        // Assert
-        verify(mockContactsManager).getContactList()
-        val captor = argumentCaptor<List<ItemAccount>>()
-        verify(mockActivity).updateUi(captor.capture())
-        // Value is 3 as only 2 confirmed contacts plus header
-        captor.firstValue.size shouldEqual 3
+        if (BuildConfig.CONTACTS_ENABLED) {
+            // Arrange
+            whenever(mockActivity.paymentRequestType).thenReturn(PaymentRequestType.CONTACT)
+            val contact0 = Contact()
+            contact0.mdid = "mdid"
+            val contact1 = Contact()
+            contact1.mdid = "mdid"
+            val contact2 = Contact()
+            whenever(mockContactsManager.getContactList())
+                    .thenReturn(Observable.just(contact0, contact1, contact2))
+            // Act
+            subject.onViewReady()
+            // Assert
+            verify(mockContactsManager).getContactList()
+            val captor = argumentCaptor<List<ItemAccount>>()
+            verify(mockActivity).updateUi(captor.capture())
+            // Value is 3 as only 2 confirmed contacts plus header
+            captor.firstValue.size shouldEqual 3
+        }
     }
 
     @Test
@@ -82,7 +85,9 @@ class AccountChooserPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(mockContactsManager).getContactList()
+        if (BuildConfig.CONTACTS_ENABLED) {
+            verify(mockContactsManager).getContactList()
+        }
         verify(mockActivity).showNoContacts()
     }
 
@@ -131,13 +136,21 @@ class AccountChooserPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(mockContactsManager).getContactList()
+        if (BuildConfig.CONTACTS_ENABLED) {
+            verify(mockContactsManager).getContactList()
+        }
         verify(mockWalletAccountHelper).getHdAccounts(any())
         verify(mockWalletAccountHelper).getLegacyAddresses(any())
         val captor = argumentCaptor<List<ItemAccount>>()
         verify(mockActivity).updateUi(captor.capture())
         // Value includes 3 headers, 3 accounts, 3 legacy addresses, 2 confirmed contacts
-        captor.firstValue.size shouldEqual 11
+        if (BuildConfig.CONTACTS_ENABLED) {
+            captor.firstValue.size shouldEqual 11
+        } else {
+            captor.firstValue.size shouldEqual 8
+        }
+
+        println(BuildConfig.CONTACTS_ENABLED)
     }
 
 }

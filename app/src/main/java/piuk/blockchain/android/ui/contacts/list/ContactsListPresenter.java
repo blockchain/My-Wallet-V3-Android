@@ -201,6 +201,7 @@ public class ContactsListPresenter extends BasePresenter<ContactsListView> {
                         .subscribe(
                                 notificationPayload -> refreshContacts(),
                                 Timber::e));
+        new NoSuchElementException("");
     }
 
     @VisibleForTesting
