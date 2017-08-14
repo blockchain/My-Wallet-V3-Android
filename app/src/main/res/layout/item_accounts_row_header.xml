@@ -15,9 +15,8 @@
             fontPath="fonts/Montserrat-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
+            android:layout_centerVertical="true"
+            android:padding="16dp"
             android:text="@string/imported_addresses"
             android:textColor="@color/primary_navy_medium"
             android:textSize="16sp" />
@@ -26,8 +25,8 @@
             android:id="@+id/imageview_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:padding="16dp"
             android:tint="@color/primary_navy_medium"
             app:srcCompat="@drawable/vector_add" />

@@ -562,6 +562,7 @@ public class AccountEditPresenter extends BasePresenter<AccountEditView> {
             for (LegacyAddress legacyAddress : payloadDataManager.getWallet().getLegacyAddressList()) {
                 if (legacyAddress.getAddress().equals(foundAddressString)) {
                     importAddressPrivateKey(key, legacyAddress, false);
+                    break;
                 }
             }
         } else {
@@ -691,11 +692,10 @@ public class AccountEditPresenter extends BasePresenter<AccountEditView> {
     }
 
     private void remoteSaveUnmatchedPrivateKey(final LegacyAddress legacyAddress) {
-        Wallet updatedPayload = payloadDataManager.getWallet();
-        List<LegacyAddress> updatedLegacyAddresses = updatedPayload.getLegacyAddressList();
-        updatedLegacyAddresses.add(legacyAddress);
-        payloadDataManager.getWallet().getLegacyAddressList().clear();
-        payloadDataManager.getWallet().getLegacyAddressList().addAll(updatedLegacyAddresses);
+        List<LegacyAddress> addressesCopy = new ArrayList<>(payloadDataManager.getLegacyAddresses());
+        addressesCopy.add(legacyAddress);
+        payloadDataManager.getLegacyAddresses().clear();
+        payloadDataManager.getLegacyAddresses().addAll(addressesCopy);
 
         getCompositeDisposable().add(
                 payloadDataManager.syncPayloadWithServer()
