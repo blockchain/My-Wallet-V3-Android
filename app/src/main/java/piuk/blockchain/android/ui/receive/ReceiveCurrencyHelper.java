@@ -32,7 +32,7 @@ public class ReceiveCurrencyHelper {
      * @return The saved BTC unit
      */
     public String getBtcUnit() {
-        return monetaryUtil.getBTCUnit(prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC));
+        return monetaryUtil.getBtcUnit(prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC));
     }
 
     /**
@@ -60,7 +60,7 @@ public class ReceiveCurrencyHelper {
      * @return A region formatted BTC string for the saved unit
      */
     public String getFormattedBtcString(double amount) {
-        return monetaryUtil.getBTCFormat().format(getDenominatedBtcAmount(amount));
+        return monetaryUtil.getBtcFormat().format(getDenominatedBtcAmount(amount));
     }
 
     /**

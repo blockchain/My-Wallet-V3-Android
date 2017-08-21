@@ -303,7 +303,7 @@ class WebSocketHandler extends WebSocketListener {
 
                 String title = context.getString(R.string.app_name);
                 if (totalValue > 0L) {
-                    String marquee = context.getString(R.string.received_bitcoin) + " " + monetaryUtil.getBTCFormat().format((double) totalValue / 1e8) + " BTC";
+                    String marquee = context.getString(R.string.received_bitcoin) + " " + monetaryUtil.getBtcFormat().format((double) totalValue / 1e8) + " BTC";
                     String text = marquee;
                     if (totalValue > 0) {
                         text += " from " + inAddr;

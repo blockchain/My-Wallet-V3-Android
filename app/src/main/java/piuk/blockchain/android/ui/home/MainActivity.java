@@ -77,7 +77,6 @@ import piuk.blockchain.android.ui.receive.ReceiveFragment;
 import piuk.blockchain.android.ui.send.SendFragment;
 import piuk.blockchain.android.ui.settings.SettingsActivity;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
-import piuk.blockchain.android.ui.upgrade.UpgradeWalletActivity;
 import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.android.util.AndroidUtils;
 import piuk.blockchain.android.util.AppUtil;
@@ -393,9 +392,6 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             case R.id.nav_contacts:
                 startActivityForResult(new Intent(this, ContactsListActivity.class), CONTACTS_EDIT);
                 break;
-            case R.id.nav_upgrade:
-                startActivity(new Intent(this, UpgradeWalletActivity.class));
-                break;
             case R.id.nav_map:
                 startMerchantActivity();
                 break;
@@ -431,18 +427,6 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     public void resetNavigationDrawer() {
         // Called onResume from BalanceFragment
         toolbar.setTitle("");
-        MenuItem backUpMenuItem = binding.navigationView.getMenu().findItem(R.id.nav_backup);
-        MenuItem upgradeMenuItem = binding.navigationView.getMenu().findItem(R.id.nav_upgrade);
-
-        if (getPresenter().getPayloadManager().isNotUpgraded()) {
-            //Legacy
-            upgradeMenuItem.setVisible(true);
-            backUpMenuItem.setVisible(false);
-        } else {
-            //HD
-            upgradeMenuItem.setVisible(false);
-            backUpMenuItem.setVisible(true);
-        }
 
         binding.navigationView.setNavigationItemSelectedListener(
                 menuItem -> {

@@ -20,13 +20,13 @@ android {
     defaultConfig {
         applicationId "piuk.blockchain.android"
         targetSdkVersion 26
-        versionCode 268
-        versionName "6.7.0-rc1"
+        versionCode 269
+        versionName "6.7.0-rc2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "blockchain-$versionName"
         // Flag to hide or show the Contacts feature
-        buildConfigBoolean "CONTACTS_ENABLED", false
+        buildConfigBoolean "CONTACTS_ENABLED", true
         manifestPlaceholders = [ FABRIC_API_KEY : buildProperties.secrets['fabricApiKey'].string ]
     }
     buildTypes {

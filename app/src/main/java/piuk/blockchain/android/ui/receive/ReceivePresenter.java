@@ -434,7 +434,7 @@ public class ReceivePresenter extends BasePresenter<ReceiveView> {
         BigInteger satoshis = getSatoshisFromText(getView().getBtcAmount());
 
         details.btcAmount = getTextFromSatoshis(satoshis.longValue());
-        details.btcUnit = monetaryUtil.getBTCUnit(btcUnit);
+        details.btcUnit = monetaryUtil.getBtcUnit(btcUnit);
         details.fiatUnit = fiatUnit;
 
         details.fiatAmount = (monetaryUtil.getFiatFormat(fiatUnit)

@@ -13,7 +13,7 @@ interface BalanceView : View {
 
     val isContactsEnabled: Boolean
 
-    fun getIfShouldShowBuy(): Boolean
+    val shouldShowBuy: Boolean
 
     fun onTransactionsUpdated(displayObjects: List<Any>)
 

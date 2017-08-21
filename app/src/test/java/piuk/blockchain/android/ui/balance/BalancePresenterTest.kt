@@ -3,7 +3,6 @@ package piuk.blockchain.android.ui.balance
 import com.nhaarman.mockito_kotlin.*
 import info.blockchain.wallet.contacts.data.Contact
 import info.blockchain.wallet.contacts.data.FacilitatedTransaction
-import info.blockchain.wallet.contacts.data.PaymentRequest
 import info.blockchain.wallet.multiaddress.TransactionSummary
 import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
@@ -728,7 +727,7 @@ class BalancePresenterTest {
         )).thenReturn(Observable.just(address))
         whenever(contactsDataManager.sendPaymentRequestResponse(
                 eq(mdid),
-                any<PaymentRequest>(),
+                any(),
                 eq(fctxId))
         ).thenReturn(Completable.complete())
         whenever(view.isContactsEnabled).thenReturn(true)
@@ -740,7 +739,7 @@ class BalancePresenterTest {
         verify(contactsDataManager).getContactsWithUnreadPaymentRequests()
         verify(contactsDataManager).refreshFacilitatedTransactions()
         verify(contactsDataManager).getTransactionDisplayMap()
-        verify(contactsDataManager).sendPaymentRequestResponse(eq(mdid), any<PaymentRequest>(), eq(fctxId))
+        verify(contactsDataManager).sendPaymentRequestResponse(eq(mdid), any(), eq(fctxId))
         verifyNoMoreInteractions(contactsDataManager)
         verify(payloadDataManager).getNextReceiveAddressAndReserve(
                 correctedPosition,
@@ -783,14 +782,14 @@ class BalancePresenterTest {
         )).thenReturn(Observable.just(address))
         whenever(contactsDataManager.sendPaymentRequestResponse(
                 eq(mdid),
-                any<PaymentRequest>(),
+                any(),
                 eq(fctxId))
         ).thenReturn(Completable.error { Throwable() })
         // Act
         subject.onAccountChosen(accountPosition, fctxId)
         // Assert
         verify(contactsDataManager).getContactFromFctxId(fctxId)
-        verify(contactsDataManager).sendPaymentRequestResponse(eq(mdid), any<PaymentRequest>(), eq(fctxId))
+        verify(contactsDataManager).sendPaymentRequestResponse(eq(mdid), any(), eq(fctxId))
         verifyNoMoreInteractions(contactsDataManager)
         verify(payloadDataManager).getNextReceiveAddressAndReserve(
                 correctedPosition,
@@ -988,15 +987,30 @@ class BalancePresenterTest {
     }
 
     @Test
+    fun `getBitcoinClicked API less than 19`() {
+        // Arrange
+        whenever(view.shouldShowBuy).thenReturn(false)
+        // Act
+        subject.getBitcoinClicked()
+        // Assert
+        verify(view).startReceiveFragment()
+        verify(view).shouldShowBuy
+        verifyNoMoreInteractions(view)
+        verifyZeroInteractions(buyDataManager)
+    }
+
+    @Test
     fun `getBitcoinClicked canBuy returns true`() {
         // Arrange
         whenever(buyDataManager.canBuy).thenReturn(Observable.just(true))
+        whenever(view.shouldShowBuy).thenReturn(true)
         // Act
         subject.getBitcoinClicked()
         // Assert
         verify(buyDataManager).canBuy
         verifyNoMoreInteractions(buyDataManager)
         verify(view).startBuyActivity()
+        verify(view).shouldShowBuy
         verifyNoMoreInteractions(view)
     }
 
@@ -1004,12 +1018,14 @@ class BalancePresenterTest {
     fun `getBitcoinClicked canBuy returns false`() {
         // Arrange
         whenever(buyDataManager.canBuy).thenReturn(Observable.just(false))
+        whenever(view.shouldShowBuy).thenReturn(true)
         // Act
         subject.getBitcoinClicked()
         // Assert
         verify(buyDataManager).canBuy
         verifyNoMoreInteractions(buyDataManager)
         verify(view).startReceiveFragment()
+        verify(view).shouldShowBuy
         verifyNoMoreInteractions(view)
     }
 

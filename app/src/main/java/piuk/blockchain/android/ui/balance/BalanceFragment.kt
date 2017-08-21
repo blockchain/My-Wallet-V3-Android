@@ -49,6 +49,8 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
 
     override val isContactsEnabled: Boolean
         get() = BuildConfig.CONTACTS_ENABLED
+    override val shouldShowBuy: Boolean
+        get() = AndroidUtils.is19orHigher()
 
     @Inject lateinit var balancePresenter: BalancePresenter
     // Adapters
@@ -387,8 +389,6 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
             progressDialog = null
         }
     }
-
-    override fun getIfShouldShowBuy() = AndroidUtils.is19orHigher()
 
     override fun createPresenter() = balancePresenter
 

@@ -140,6 +140,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                     .subscribe(() -> {
                         if (getView().isBuySellPermitted()) {
                             initBuyService();
+                        } else {
+                            getView().setBuySellEnabled(false);
                         }
                         initContactsService();
                     }, throwable -> {

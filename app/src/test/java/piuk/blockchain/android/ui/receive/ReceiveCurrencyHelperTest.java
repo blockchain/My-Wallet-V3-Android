@@ -40,7 +40,7 @@ public class ReceiveCurrencyHelperTest {
     public void getBtcUnit() throws Exception {
         // Arrange
         when(mPrefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)).thenReturn(1);
-        when(mMonetaryUtil.getBTCUnit(1)).thenReturn("mBTC");
+        when(mMonetaryUtil.getBtcUnit(1)).thenReturn("mBTC");
         // Act
         String value = mSubject.getBtcUnit();
         // Assert
@@ -73,7 +73,7 @@ public class ReceiveCurrencyHelperTest {
         // Arrange
         when(mPrefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)).thenReturn(0);
         NumberFormat format = DecimalFormat.getInstance(Locale.US);
-        when(mMonetaryUtil.getBTCFormat()).thenReturn(format);
+        when(mMonetaryUtil.getBtcFormat()).thenReturn((DecimalFormat) format);
         when(mMonetaryUtil.getDenominatedAmount(anyDouble())).thenReturn(13.37);
         // Act
         String value = mSubject.getFormattedBtcString(13.37D);
@@ -86,7 +86,7 @@ public class ReceiveCurrencyHelperTest {
         // Arrange
         when(mPrefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)).thenReturn("USD");
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        when(mMonetaryUtil.getFiatFormat(anyString())).thenReturn(format);
+        when(mMonetaryUtil.getFiatFormat(anyString())).thenReturn((DecimalFormat) format);
         /// Act
         String value = mSubject.getFormattedFiatString(13.37D);
         // Assert

@@ -1,15 +1,23 @@
 package piuk.blockchain.android.ui.buy;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.webkit.CookieManager;
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -33,7 +41,9 @@ import piuk.blockchain.android.ui.customviews.ToastCustom;
 import piuk.blockchain.android.ui.home.MainActivity;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
 import piuk.blockchain.android.util.AndroidUtils;
+import piuk.blockchain.android.util.PermissionUtil;
 import piuk.blockchain.android.util.ViewUtils;
+import piuk.blockchain.android.util.annotations.Thunk;
 import timber.log.Timber;
 
 import static piuk.blockchain.android.ui.base.UiState.CONTENT;
@@ -50,6 +60,7 @@ public class BuyActivity extends BaseMvpActivity<BuyView, BuyPresenter>
     private WebViewLoginDetails webViewLoginDetails;
     private MaterialProgressDialog progress;
     private ActivityBuyBinding binding;
+    @Thunk PermissionRequest permissionRequest;
 
     private boolean frontendInitialized = false;
     private boolean didBuyBitcoin = false;
@@ -63,7 +74,7 @@ public class BuyActivity extends BaseMvpActivity<BuyView, BuyPresenter>
         context.startActivity(intent);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,10 +92,49 @@ public class BuyActivity extends BaseMvpActivity<BuyView, BuyPresenter>
         frontendJavascriptManager = new FrontendJavascriptManager(this, binding.webview);
 
         binding.webview.setWebViewClient(new WebViewClient());
+        binding.webview.setWebChromeClient(new WebChromeClient() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onPermissionRequest(PermissionRequest request) {
+                permissionRequest = request;
+                requestScanPermissions();
+            }
+        });
         binding.webview.addJavascriptInterface(frontendJavascriptManager, FrontendJavascriptManager.JS_INTERFACE_NAME);
         binding.webview.getSettings().setJavaScriptEnabled(true);
         binding.webview.loadUrl(getPresenter().getCurrentServerUrl() + "wallet/#/intermediate");
         onViewReady();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void grantPermissionToWebView() {
+        permissionRequest.grant(permissionRequest.getResources());
+    }
+
+    @Thunk
+    void requestScanPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            PermissionUtil.requestCameraPermissionFromActivity(binding.getRoot(), this);
+        } else {
+            grantPermissionToWebView();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                grantPermissionToWebView();
+            } else {
+                // Permission request was denied.
+            }
+        }
+    }
+
+    @Override
+    public boolean shouldShowRequestPermissionRationale(@NonNull String permission) {
+        return true;
     }
 
     @Override

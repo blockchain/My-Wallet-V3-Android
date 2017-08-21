@@ -276,7 +276,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
     }
 
     private String getDisplayUnits() {
-        return (String) mMonetaryUtil.getBTCUnits()[mPrefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)];
+        return mMonetaryUtil.getBtcUnits()[mPrefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)];
     }
 
 }

@@ -1,5 +1,6 @@
 package piuk.blockchain.android.ui.balance
 
+import android.annotation.SuppressLint
 import android.support.annotation.VisibleForTesting
 import info.blockchain.wallet.contacts.data.FacilitatedTransaction
 import info.blockchain.wallet.contacts.data.PaymentRequest
@@ -57,6 +58,7 @@ class BalancePresenter @Inject constructor(
     private val displayList: MutableList<Any> = mutableListOf()
     private val monetaryUtil: MonetaryUtil by unsafeLazy { MonetaryUtil(getBtcUnitType()) }
 
+    @SuppressLint("VisibleForTests")
     override fun onViewReady() {
         subscribeToEvents()
         storeSwipeReceiveAddresses()
@@ -307,15 +309,19 @@ class BalancePresenter @Inject constructor(
     }
 
     internal fun getBitcoinClicked() {
-        buyDataManager.canBuy
-                .compose(RxUtil.addObservableToCompositeDisposable(this))
-                .subscribe({
-                    if (it) {
-                        view.startBuyActivity()
-                    } else {
-                        view.startReceiveFragment()
-                    }
-                }, { Timber.e(it) })
+        if (view.shouldShowBuy) {
+            buyDataManager.canBuy
+                    .compose(RxUtil.addObservableToCompositeDisposable(this))
+                    .subscribe({
+                        if (it) {
+                            view.startBuyActivity()
+                        } else {
+                            view.startReceiveFragment()
+                        }
+                    }, { Timber.e(it) })
+        } else {
+            view.startReceiveFragment()
+        }
     }
 
     internal fun disableAnnouncement() {
@@ -576,7 +582,7 @@ class BalancePresenter @Inject constructor(
         buyDataManager.canBuy
                 .compose(RxUtil.addObservableToCompositeDisposable(this))
                 .subscribe({ buyAllowed ->
-                    if (buyAllowed && view.getIfShouldShowBuy() && isOnboardingComplete()) {
+                    if (buyAllowed && view.shouldShowBuy && isOnboardingComplete()) {
                         if (!prefsUtil.getValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_DISMISSED, false)
                                 && txList.isNotEmpty()) {
                             prefsUtil.setValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_SEEN, true)
@@ -592,7 +598,7 @@ class BalancePresenter @Inject constructor(
 
     private fun showAnnouncement() {
         // Don't add the announcement to an empty UI state, don't add it if there already is one
-        if (displayList.isNotEmpty() && displayList.filter { it is AnnouncementData }.isEmpty()) {
+        if (displayList.isNotEmpty() && displayList.none { it is AnnouncementData }) {
             // In the future, the announcement data may be parsed from an endpoint. For now, here is fine
             val announcementData = AnnouncementData(
                     title = R.string.onboarding_available_now,
@@ -608,9 +614,9 @@ class BalancePresenter @Inject constructor(
         }
     }
 
-    fun dismissAnnouncement() {
+    private fun dismissAnnouncement() {
         prefsUtil.setValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_DISMISSED, true)
-        if (displayList.filter { it is AnnouncementData }.isNotEmpty()) {
+        if (displayList.any { it is AnnouncementData }) {
             displayList.removeAll { it is AnnouncementData }
             view.onTransactionsUpdated(displayList)
         }
@@ -640,7 +646,7 @@ class BalancePresenter @Inject constructor(
 
     private fun getLastPrice(fiat: String) = exchangeRateFactory.getLastPrice(fiat)
 
-    private fun getDisplayUnits() = monetaryUtil.btcUnits[getBtcUnitType()].toString()
+    private fun getDisplayUnits() = monetaryUtil.getBtcUnits()[getBtcUnitType()]
 
     private fun getBtcUnitType() =
             prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)

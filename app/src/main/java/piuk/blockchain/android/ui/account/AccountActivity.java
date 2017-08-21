@@ -317,7 +317,7 @@ public class AccountActivity extends BaseMvpActivity<AccountView, AccountPresent
         // Archived addresses/xPubs aren't parsed, so balance will be null
         Long amount = addressBalance != null ? addressBalance.longValue() : 0L;
 
-        String unit = (String) monetaryUtil.getBTCUnits()[prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)];
+        String unit = monetaryUtil.getBtcUnits()[prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)];
 
         return monetaryUtil.getDisplayAmount(amount) + " " + unit;
     }
@@ -325,7 +325,7 @@ public class AccountActivity extends BaseMvpActivity<AccountView, AccountPresent
     private String getAddressBalance(int index) {
         String address = legacy.get(index).getAddress();
         Long amount = getPresenter().getBalanceFromAddress(address).longValue();
-        String unit = (String) monetaryUtil.getBTCUnits()[prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)];
+        String unit = monetaryUtil.getBtcUnits()[prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)];
 
         return monetaryUtil.getDisplayAmount(amount) + " " + unit;
     }

@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_upgrade"
-        android:icon="@drawable/ic_warning_white_24dp"
-        android:title="@string/upgrade_wallet" />
-
-    <item
       android:id="@+id/nav_buy"
       android:icon="@drawable/vector_buy"
       android:title="@string/onboarding_buy_bitcoin" />

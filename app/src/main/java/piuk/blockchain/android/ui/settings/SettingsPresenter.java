@@ -221,7 +221,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
      */
     @NonNull
     private String getDisplayUnits() {
-        return (String) monetaryUtil.getBTCUnits()[getBtcUnitsPosition()];
+        return monetaryUtil.getBtcUnits()[getBtcUnitsPosition()];
     }
 
     /**
@@ -229,7 +229,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
      */
     @NonNull
     CharSequence[] getBtcUnits() {
-        return monetaryUtil.getBTCUnits();
+        return monetaryUtil.getBtcUnits();
     }
 
     /**

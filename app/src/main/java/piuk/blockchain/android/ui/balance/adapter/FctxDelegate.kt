@@ -224,7 +224,7 @@ class FctxDelegate<in T>(
     }
 
     private fun getDisplayUnits(): String =
-            monetaryUtil.btcUnits[prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)].toString()
+            monetaryUtil.getBtcUnits()[prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC)]
 
     private class FctxViewHolder internal constructor(
             itemView: View

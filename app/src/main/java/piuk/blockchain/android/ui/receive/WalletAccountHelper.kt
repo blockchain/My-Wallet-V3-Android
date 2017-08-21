@@ -21,7 +21,7 @@ class WalletAccountHelper(
 ) {
     private val btcUnitType: Int by unsafeLazy { prefsUtil.getValue(PrefsUtil.KEY_BTC_UNITS, MonetaryUtil.UNIT_BTC) }
     private val monetaryUtil: MonetaryUtil by unsafeLazy { MonetaryUtil(btcUnitType) }
-    private val btcUnit: String by unsafeLazy { monetaryUtil.getBTCUnit(btcUnitType) }
+    private val btcUnit: String by unsafeLazy { monetaryUtil.getBtcUnit(btcUnitType) }
     private val fiatUnit: String by unsafeLazy { prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY) }
     private val btcExchangeRate: Double by unsafeLazy { exchangeRateFactory.getLastPrice(fiatUnit) }
 

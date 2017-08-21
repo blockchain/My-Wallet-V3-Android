@@ -2,6 +2,7 @@ package piuk.blockchain.android.ui.contacts.payments
 
 import android.support.annotation.VisibleForTesting
 import info.blockchain.wallet.contacts.data.Contact
+import info.blockchain.wallet.contacts.data.PaymentCurrency
 import info.blockchain.wallet.contacts.data.PaymentRequest
 import info.blockchain.wallet.contacts.data.RequestForPaymentRequest
 import io.reactivex.Completable
@@ -58,14 +59,14 @@ class ContactConfirmRequestPresenter @Inject internal constructor(
         val completable: Completable
 
         if (paymentRequestType == PaymentRequestType.SEND) {
-            val request = RequestForPaymentRequest(satoshis, view.note)
+            val request = RequestForPaymentRequest(satoshis, view.note, PaymentCurrency.BITCOIN)
             // Request that the other person receives payment, ie you send
             completable = contactsDataManager.requestReceivePayment(recipient!!.mdid, request)
                     .doAfterTerminate { view.dismissProgressDialog() }
                     .doOnComplete { Logging.logCustom(ContactsEvent(ContactEventType.RPR)) }
                     .compose(RxUtil.addCompletableToCompositeDisposable(this))
         } else {
-            val paymentRequest = PaymentRequest(satoshis, view.note)
+            val paymentRequest = PaymentRequest(satoshis, view.note, PaymentCurrency.BITCOIN)
             // Request that the other person sends payment, ie you receive
             completable = payloadDataManager.getNextReceiveAddress(accountPosition)
                     .doOnNext { address -> paymentRequest.address = address }
