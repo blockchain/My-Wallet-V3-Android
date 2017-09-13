@@ -26,7 +26,7 @@ class BalanceAdapter(
         delegatesManager.addAdapterDelegate(HeaderDelegate())
         delegatesManager.addAdapterDelegate(summaryDelegate)
         delegatesManager.addAdapterDelegate(fctxDelegate)
-        delegatesManager.addAdapterDelegate(AnnouncementDelegate())
+        setHasStableIds(true)
     }
 
     /**

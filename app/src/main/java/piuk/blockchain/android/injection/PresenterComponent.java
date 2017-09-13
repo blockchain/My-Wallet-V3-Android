@@ -22,6 +22,7 @@ import piuk.blockchain.android.ui.contacts.detail.ContactDetailFragment;
 import piuk.blockchain.android.ui.contacts.list.ContactsListActivity;
 import piuk.blockchain.android.ui.contacts.payments.ContactConfirmRequestFragment;
 import piuk.blockchain.android.ui.createwallet.CreateWalletActivity;
+import piuk.blockchain.android.ui.dashboard.DashboardFragment;
 import piuk.blockchain.android.ui.fingerprint.FingerprintDialog;
 import piuk.blockchain.android.ui.home.MainActivity;
 import piuk.blockchain.android.ui.launcher.LauncherActivity;
@@ -116,4 +117,6 @@ public interface PresenterComponent {
     void inject(@NotNull LandingActivity landingActivity);
 
     void inject(@NotNull SendFragmentNew sendFragment);
+
+    void inject(@NotNull DashboardFragment dashboardFragment);
 }

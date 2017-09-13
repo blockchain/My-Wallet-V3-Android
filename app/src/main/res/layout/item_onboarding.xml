@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progress_bar_onboarding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <include
+        android:id="@+id/onboarding_complete_layout"
+        layout="@layout/include_onboarding_complete" />
+
+    <include
+        android:id="@+id/onboarding_viewpager_layout"
+        layout="@layout/include_onboarding_viewpager" />
+
+</FrameLayout>

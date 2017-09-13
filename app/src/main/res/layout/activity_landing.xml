@@ -100,7 +100,7 @@
         android:id="@+id/buttonSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackgroundBorderless"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/action_settings"
         android:padding="16dp"
         android:tint="@color/primary_navy_medium"

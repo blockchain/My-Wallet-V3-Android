@@ -17,8 +17,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_balance.*
 import kotlinx.android.synthetic.main.include_no_transaction_message.*
-import kotlinx.android.synthetic.main.include_onboarding_complete.*
-import kotlinx.android.synthetic.main.include_onboarding_viewpager.*
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel
@@ -31,8 +29,6 @@ import piuk.blockchain.android.ui.base.UiState
 import piuk.blockchain.android.ui.customviews.BottomSpacerDecoration
 import piuk.blockchain.android.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.android.ui.home.MainActivity
-import piuk.blockchain.android.ui.onboarding.OnboardingPagerAdapter
-import piuk.blockchain.android.ui.onboarding.OnboardingPagerContent
 import piuk.blockchain.android.ui.receive.ReceiveFragment
 import piuk.blockchain.android.ui.shortcuts.LauncherShortcutHelper
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity
@@ -41,11 +37,10 @@ import piuk.blockchain.android.util.MonetaryUtil
 import piuk.blockchain.android.util.ViewUtils
 import piuk.blockchain.android.util.extensions.*
 import piuk.blockchain.android.util.helperfunctions.OnItemSelectedListener
-import piuk.blockchain.android.util.helperfunctions.OnPageChangeListener
 import piuk.blockchain.android.util.helperfunctions.setOnTabSelectedListener
 import javax.inject.Inject
 
-class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), BalanceView, BalanceListClickListener {
+class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceView, BalanceListClickListener {
 
     override val isContactsEnabled: Boolean
         get() = BuildConfig.CONTACTS_ENABLED
@@ -56,7 +51,6 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
     // Adapters
     private var accountsAdapter: BalanceHeaderAdapter? = null
     private var balanceAdapter: BalanceAdapter? = null
-    private var onboardingPagerAdapter: OnboardingPagerAdapter? = null
 
     private var progressDialog: MaterialProgressDialog? = null
     private var interactionListener: OnFragmentInteractionListener? = null
@@ -97,9 +91,6 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
         textview_balance.setOnClickListener { presenter.invertViewType() }
         button_get_bitcoin.setOnClickListener { presenter.getBitcoinClicked() }
 
-        if (!presenter.isOnboardingComplete()) {
-            initOnboardingPager()
-        }
         setUiState(UiState.LOADING)
 
         tabs.apply {
@@ -221,18 +212,6 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
         }
     }
 
-    override fun onLoadOnboardingPages(pages: List<OnboardingPagerContent>) {
-        if (onboardingPagerAdapter != null) {
-            onboardingPagerAdapter!!.notifyPagesChanged(pages)
-
-            pager_onboarding.post({
-                progress_bar.gone()
-            })
-
-            indicator.setViewPager(pager_onboarding)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         tabs.getTabAt(0)?.select()
@@ -263,12 +242,10 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
     }
 
     override fun showFctxRequiringAttention(number: Int) {
-        activity?.let {
-            (activity as MainActivity).setMessagesCount(number)
-        }
+        activity?.let { (activity as MainActivity).setMessagesCount(number) }
     }
 
-    override fun showToast(message: Int, toastType: String) = context.toast(message, toastType)
+    override fun showToast(message: Int, toastType: String) = toast(message, toastType)
 
     override fun showPayOrDeclineDialog(fctxId: String, amount: String, name: String, note: String?) {
         val message: String = if (!note.isNullOrEmpty()) {
@@ -384,11 +361,13 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
     }
 
     override fun startBuyActivity() {
-        LocalBroadcastManager.getInstance(activity).sendBroadcast(Intent(MainActivity.ACTION_BUY))
+        LocalBroadcastManager.getInstance(activity)
+                .sendBroadcast(Intent(MainActivity.ACTION_BUY))
     }
 
     override fun startReceiveFragment() {
-        LocalBroadcastManager.getInstance(activity).sendBroadcast(Intent(MainActivity.ACTION_RECEIVE))
+        LocalBroadcastManager.getInstance(activity)
+                .sendBroadcast(Intent(MainActivity.ACTION_RECEIVE))
     }
 
     override fun showProgressDialog() {
@@ -432,58 +411,6 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
     private fun onEmptyState() {
         setShowRefreshing(false)
         no_transaction_include.visible()
-
-        if (!presenter.isOnboardingComplete()) {
-            framelayout_onboarding.visible()
-        } else {
-            framelayout_onboarding.gone()
-        }
-    }
-
-    @Suppress("CascadeIf")
-    private fun initOnboardingPager() {
-        if (onboardingPagerAdapter == null) {
-            onboardingPagerAdapter = OnboardingPagerAdapter(context)
-            pager_onboarding.adapter = onboardingPagerAdapter
-            pager_onboarding.addOnPageChangeListener(OnPageChangeListener { position, positionOffset ->
-                val count = onboardingPagerAdapter?.count ?: 0
-                if (position == count - 1) {
-                    // Last page
-                    onboarding_complete_layout.visible()
-                    pager_onboarding.setPagingEnabled(false)
-                    presenter.setOnboardingComplete(true)
-                } else if (position == count - 2) {
-                    // Second last page
-                    onboarding_complete_layout.visible()
-                    viewPagerIndicator.alpha = 1 - positionOffset
-                    onboarding_complete_layout.alpha = positionOffset
-                    presenter.setOnboardingComplete(false)
-                } else {
-                    viewPagerIndicator.visible()
-                    onboarding_complete_layout.invisible()
-                    viewPagerIndicator.alpha = 1.0f
-                    presenter.setOnboardingComplete(false)
-                }
-            })
-        }
-
-        btn_skip_all.setOnClickListener { dismissOnboarding() }
-        onboarding_close.setOnClickListener { dismissOnboarding() }
-
-        button_start_over.setOnClickListener {
-            onboarding_complete_layout.invisible()
-            pager_onboarding.currentItem = 0
-            pager_onboarding.setPagingEnabled(true)
-            viewPagerIndicator.visible()
-            viewPagerIndicator.alpha = 1.0f
-            presenter.setOnboardingComplete(false)
-        }
-    }
-
-    private fun dismissOnboarding() {
-        framelayout_onboarding.gone()
-        presenter.setOnboardingComplete(true)
-        onboardingPagerAdapter = null
     }
 
     private fun onContentLoaded() {
@@ -498,7 +425,7 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
                 ethExchangeRate,
                 isBtc,
                 this
-        ).apply { setHasStableIds(true) }
+        )
 
         val layoutManager = LinearLayoutManager(context)
         recyclerview.layoutManager = layoutManager
@@ -559,8 +486,11 @@ class BalanceFragment    : BaseFragment<BalanceView, BalancePresenter>(), Balanc
 
         @JvmStatic
         fun newInstance(broadcastingPayment: Boolean): BalanceFragment {
-            val args = Bundle().apply { putBoolean(ARGUMENT_BROADCASTING_PAYMENT, broadcastingPayment) }
-            return BalanceFragment().apply { arguments = args }
+            return BalanceFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARGUMENT_BROADCASTING_PAYMENT, broadcastingPayment)
+                }
+            }
         }
 
     }

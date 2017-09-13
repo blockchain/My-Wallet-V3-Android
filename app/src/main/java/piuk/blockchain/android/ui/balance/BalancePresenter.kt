@@ -50,7 +50,6 @@ class BalancePresenter @Inject constructor(
         private val stringUtils: StringUtils,
         private val prefsUtil: PrefsUtil,
         private val rxBus: RxBus,
-        private val appUtil: AppUtil,
         private val currencyState: CurrencyState
 ) : BasePresenter<BalanceView>() {
 
@@ -313,14 +312,6 @@ class BalancePresenter @Inject constructor(
                         { view.showToast(R.string.contacts_pending_transaction_cancel_failure, ToastCustom.TYPE_ERROR) })
     }
 
-    internal fun isOnboardingComplete() =
-            // If wallet isn't newly created, don't show onboarding
-            prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false) || !appUtil.isNewlyCreated
-
-    internal fun setOnboardingComplete(completed: Boolean) {
-        prefsUtil.setValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, completed)
-    }
-
     internal fun getBitcoinClicked() {
         if (view.shouldShowBuy) {
             buyDataManager.canBuy
@@ -335,10 +326,6 @@ class BalancePresenter @Inject constructor(
         } else {
             view.startReceiveFragment()
         }
-    }
-
-    internal fun disableAnnouncement() {
-        prefsUtil.setValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_DISMISSED, true)
     }
 
     @VisibleForTesting
@@ -456,7 +443,6 @@ class BalancePresenter @Inject constructor(
                     .doOnNext {
                         displayList.removeAll { it is Displayable }
                         displayList.addAll(it)
-//                        checkLatestAnnouncement(displayList)
 
                         when {
                             displayList.isEmpty() -> view.setUiState(UiState.EMPTY)
@@ -505,13 +491,7 @@ class BalancePresenter @Inject constructor(
                             currencyState.isDisplayingCryptoCurrency
                     )
                 }.toObservable()
-//                .andThen(getOnboardingStatusObservable())
     }
-
-    private fun getOnboardingStatusObservable() = buyDataManager.canBuy
-            .compose(RxUtil.addObservableToCompositeDisposable(this))
-            .doOnNext { view.onLoadOnboardingPages(getOnboardingPages(it)) }
-            .doOnError { Timber.e(it) }
 
     private fun getFacilitatedTransactionsObservable() = if (view.isContactsEnabled) {
         contactsDataManager.fetchContacts()
@@ -605,109 +585,11 @@ class BalancePresenter @Inject constructor(
         return value
     }
 
-    private fun getOnboardingPages(isBuyAllowed: Boolean): List<OnboardingPagerContent> {
-        val pages = mutableListOf<OnboardingPagerContent>()
-        if (isBuyAllowed) {
-            // Buy bitcoin prompt
-            pages.add(
-                    OnboardingPagerContent(
-                            stringUtils.getString(R.string.onboarding_current_price),
-                            getFormattedPriceString(),
-                            stringUtils.getString(R.string.onboarding_buy_content),
-                            stringUtils.getString(R.string.onboarding_buy_bitcoin),
-                            MainActivity.ACTION_BUY,
-                            R.color.primary_blue_accent,
-                            R.drawable.vector_buy_offset
-                    ))
-        }
-
-        // Receive bitcoin
-        pages.add(
-                OnboardingPagerContent(
-                        stringUtils.getString(R.string.onboarding_receive_bitcoin),
-                        "",
-                        stringUtils.getString(R.string.onboarding_receive_content),
-                        stringUtils.getString(R.string.receive_bitcoin),
-                        MainActivity.ACTION_RECEIVE,
-                        R.color.secondary_teal_medium,
-                        R.drawable.vector_receive_offset
-                ))
-
-        // QR Codes
-        pages.add(
-                OnboardingPagerContent(
-                        stringUtils.getString(R.string.onboarding_qr_codes),
-                        "",
-                        stringUtils.getString(R.string.onboarding_qr_codes_content),
-                        stringUtils.getString(R.string.onboarding_scan_address),
-                        MainActivity.ACTION_SEND,
-                        R.color.primary_navy_medium,
-                        R.drawable.vector_qr_offset
-                ))
-        return pages
-    }
-
-    private fun checkLatestAnnouncement(txList: MutableList<Any>) {
-        // If user hasn't completed onboarding, ignore announcements
-        buyDataManager.canBuy
-                .compose(RxUtil.addObservableToCompositeDisposable(this))
-                .subscribe({ buyAllowed ->
-                    if (buyAllowed && view.shouldShowBuy && isOnboardingComplete()) {
-                        if (!prefsUtil.getValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_DISMISSED, false)
-                                && txList.isNotEmpty()) {
-                            prefsUtil.setValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_SEEN, true)
-                            showAnnouncement()
-                        } else {
-                            dismissAnnouncement()
-                        }
-                    } else {
-                        dismissAnnouncement()
-                    }
-                }, { Timber.e(it) })
-    }
-
-    private fun showAnnouncement() {
-        // Don't add the announcement to an empty UI state, don't add it if there already is one
-        if (displayList.isNotEmpty() && displayList.none { it is AnnouncementData }) {
-            // In the future, the announcement data may be parsed from an endpoint. For now, here is fine
-            val announcementData = AnnouncementData(
-                    title = R.string.onboarding_available_now,
-                    description = R.string.onboarding_buy_details,
-                    link = R.string.onboarding_buy_bitcoin,
-                    image = R.drawable.vector_wallet_offset,
-                    emoji = "🎉",
-                    closeFunction = { dismissAnnouncement() },
-                    linkFunction = { view.startBuyActivity() }
-            )
-            displayList.add(0, announcementData)
-            view.onTransactionsUpdated(displayList)
-        }
-    }
-
-    private fun dismissAnnouncement() {
-        prefsUtil.setValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_DISMISSED, true)
-        if (displayList.any { it is AnnouncementData }) {
-            displayList.removeAll { it is AnnouncementData }
-            view.onTransactionsUpdated(displayList)
-        }
-    }
-
-    private fun getFormattedPriceString(): String {
-        val lastPrice = getLastBtcPrice(getFiatCurrency())
-        val fiatSymbol = exchangeRateFactory.getSymbol(getFiatCurrency())
-        val format = DecimalFormat().apply { minimumFractionDigits = 2 }
-
-        return stringUtils.getFormattedString(
-                R.string.current_price_btc,
-                "$fiatSymbol${format.format(lastPrice)}"
-        )
-    }
-
-    private fun getBtcBalanceString(isBTC: Boolean, btcBalance: Long): String {
+    private fun getBtcBalanceString(isBtc: Boolean, btcBalance: Long): String {
         val strFiat = getFiatCurrency()
         val fiatBalance = exchangeRateFactory.getLastBtcPrice(strFiat) * (btcBalance / 1e8)
 
-        return if (isBTC) {
+        return if (isBtc) {
             "${monetaryUtil.getDisplayAmountWithFormatting(btcBalance)} ${getBtcDisplayUnits()}"
         } else {
             "${monetaryUtil.getFiatFormat(strFiat).format(fiatBalance)} $strFiat"

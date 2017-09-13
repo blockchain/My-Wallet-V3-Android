@@ -2,6 +2,8 @@ package piuk.blockchain.android.injection;
 
 import android.content.Context;
 
+import info.blockchain.api.statistics.Statistics;
+import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.FeeApi;
 import info.blockchain.wallet.api.WalletApi;
 import info.blockchain.wallet.ethereum.EthAccountApi;
@@ -16,6 +18,7 @@ import piuk.blockchain.android.data.access.AccessState;
 import piuk.blockchain.android.data.auth.AuthDataManager;
 import piuk.blockchain.android.data.auth.AuthService;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
+import piuk.blockchain.android.data.charts.ChartsDataManager;
 import piuk.blockchain.android.data.contacts.ContactsDataManager;
 import piuk.blockchain.android.data.contacts.ContactsService;
 import piuk.blockchain.android.data.contacts.datastore.ContactsMapStore;
@@ -209,6 +212,15 @@ public class DataManagerModule {
                 contactsService,
                 contactsMapStore,
                 pendingTransactionListStore,
+                rxBus);
+    }
+
+    @Provides
+    @PresenterScope
+    protected ChartsDataManager provideChartsDataManager(RxBus rxBus) {
+        return new ChartsDataManager(new Statistics(
+                BlockchainFramework.getRetrofitApiInstance(),
+                BlockchainFramework.getApiCode()),
                 rxBus);
     }
 

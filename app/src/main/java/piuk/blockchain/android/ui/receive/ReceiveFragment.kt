@@ -521,7 +521,7 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
     override fun getQrBitmap(): Bitmap = (image_qr.drawable as BitmapDrawable).bitmap
 
     override fun showToast(@StringRes message: Int, @ToastCustom.ToastType toastType: String) {
-        activity.toast(message, toastType)
+        toast(message, toastType)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -549,7 +549,7 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
                 .setPositiveButton(R.string.yes) { _, _ ->
                     val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("Send address", edittext_receiving_address.getTextString())
-                    activity.toast(R.string.copied_to_clipboard)
+                    toast(R.string.copied_to_clipboard)
                     clipboard.primaryClip = clip
                 }
                 .setNegativeButton(R.string.no, null)
@@ -572,7 +572,7 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
     }
 
     private fun onExitConfirmToast() {
-        activity.toast(R.string.exit_confirm)
+        toast(R.string.exit_confirm)
     }
 
     override fun onPause() {

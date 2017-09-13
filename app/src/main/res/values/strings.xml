@@ -785,4 +785,19 @@
     <string name="eth_to_field_helper_no_dropdown">Enter ether address</string>
     <string name="invalid_ether_address">Invalid Ether address</string>
 
+    <!-- DASHBOARD -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="dashboard_time_span_week">Week</string>
+    <string name="dashboard_time_span_month">Month</string>
+    <string name="dashboard_time_span_year">Year</string>
+    <string name="dashboard_bitcoin_price">Bitcoin price</string>
+    <string name="dashboard_ether_price">Ether price</string>
+    <string name="dashboard_charts_error">Error loading chart data</string>
+    <string name="dashboard_charts_price_error">Error fetching price data</string>
+
+    <!-- ETHEREUM ONBOARDING -->
+    <string name="onboarding_ether_title">Now Supporting Ether</string>
+    <string name="onboarding_ether_description">You asked, we listened. We\'re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!</string>
+    <string name="onboarding_ether_cta">Get Started with Ether</string>
+
 </resources>

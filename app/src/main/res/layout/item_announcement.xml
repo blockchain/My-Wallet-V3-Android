@@ -33,8 +33,8 @@
                 android:layout_alignParentRight="true"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:tint="@color/primary_gray"
-                android:src="@drawable/ic_clear_white_24dp" />
+                android:src="@drawable/ic_clear_white_24dp"
+                android:tint="@color/primary_gray" />
 
             <ImageView
                 android:id="@+id/imageview_icon"
@@ -51,7 +51,6 @@
                 android:layout_below="@+id/imageview_close"
                 android:layout_toRightOf="@id/imageview_icon"
                 android:orientation="vertical"
-                android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
                 <LinearLayout
@@ -66,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-                        android:textColor="@color/primary_blue_accent"
+                        android:textColor="@color/primary_navy_medium"
                         tools:ignore="MissingPrefix"
                         tools:text="@string/onboarding_available_now" />
 
@@ -95,9 +94,8 @@
                 android:layout_toRightOf="@+id/imageview_icon"
                 android:gravity="center_horizontal|bottom"
                 android:paddingBottom="16dp"
-                android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:textColor="@color/primary_blue_accent"
+                android:textColor="@color/primary_navy_medium"
                 tools:ignore="MissingPrefix"
                 tools:text="@string/onboarding_buy_bitcoin" />
 

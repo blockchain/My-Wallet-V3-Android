@@ -12,7 +12,11 @@ import android.support.v7.widget.RecyclerView
  * @param newList The new, updated list of items
  * @param compare A function which returns [Boolean], handling the comparison of the objects
  */
-fun <T> RecyclerView.Adapter<*>.autoNotify(oldList: List<T>, newList: List<T>, compare: (T, T) -> Boolean) {
+fun <T> RecyclerView.Adapter<*>.autoNotify(
+        oldList: List<T>,
+        newList: List<T>,
+        compare: (T, T) -> Boolean
+) {
 
     val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
 

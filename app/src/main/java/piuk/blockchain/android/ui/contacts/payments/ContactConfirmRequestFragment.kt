@@ -103,7 +103,7 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
     }
 
     override fun showToast(@StringRes message: Int, @ToastCustom.ToastType toastType: String) {
-        activity.toast(message, toastType)
+        toast(message, toastType)
     }
 
     override fun onRequestSuccessful(

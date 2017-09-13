@@ -74,6 +74,7 @@ import piuk.blockchain.android.ui.contacts.payments.ContactConfirmRequestFragmen
 import piuk.blockchain.android.ui.contacts.success.ContactRequestSuccessFragment;
 import piuk.blockchain.android.ui.customviews.MaterialProgressDialog;
 import piuk.blockchain.android.ui.customviews.ToastCustom;
+import piuk.blockchain.android.ui.dashboard.DashboardFragment;
 import piuk.blockchain.android.ui.launcher.LauncherActivity;
 import piuk.blockchain.android.ui.pairing_code.PairingCodeActivity;
 import piuk.blockchain.android.ui.receive.ReceiveFragment;
@@ -140,7 +141,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             if (intent.getAction().equals(ACTION_SEND) && getActivity() != null) {
                 requestScan();
             } else if (intent.getAction().equals(ACTION_RECEIVE) && getActivity() != null) {
-                binding.bottomNavigation.setCurrentItem(2);
+                binding.bottomNavigation.setCurrentItem(3);
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
                 BuyActivity.start(MainActivity.this);
             }
@@ -158,9 +159,12 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                     }
                     break;
                 case 1:
-                    onStartBalanceFragment(paymentMade);
+                    startDashboardFragment();
                     break;
                 case 2:
+                    onStartBalanceFragment(paymentMade);
+                    break;
+                case 3:
                     startReceiveFragment();
                     break;
             }
@@ -224,11 +228,12 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
         // Create items
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.send_bitcoin, R.drawable.vector_send, R.color.white);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.overview, R.drawable.vector_transactions, R.color.white);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.receive_bitcoin, R.drawable.vector_receive, R.color.white);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.dashboard_title, R.drawable.vector_home, R.color.white);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.overview, R.drawable.vector_transactions, R.color.white);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.receive_bitcoin, R.drawable.vector_receive, R.color.white);
 
         // Add items
-        binding.bottomNavigation.addItems(Arrays.asList(item1, item2, item3));
+        binding.bottomNavigation.addItems(Arrays.asList(item1, item2, item3, item4));
 
         // Styling
         binding.bottomNavigation.setAccentColor(ContextCompat.getColor(this, R.color.primary_blue_accent));
@@ -238,9 +243,9 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         Typeface typeface = TypefaceUtils.load(getAssets(), "fonts/Montserrat-Regular.ttf");
         binding.bottomNavigation.setTitleTypeface(typeface);
 
-        // Select transactions by default
-        binding.bottomNavigation.setCurrentItem(1);
+        // Select Dashboard by default
         binding.bottomNavigation.setOnTabSelectedListener(tabSelectedListener);
+        binding.bottomNavigation.setCurrentItem(1);
 
         handleIncomingIntent();
         applyFontToNavDrawer();
@@ -341,6 +346,9 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             ((SendFragmentNew) getCurrentFragment()).onBackPressed();
         } else if (getCurrentFragment() instanceof ReceiveFragment) {
             ((ReceiveFragment) getCurrentFragment()).onBackPressed();
+        } else //noinspection StatementWithEmptyBody
+            if (getCurrentFragment() instanceof DashboardFragment) {
+            // Ignore
         } else if (getCurrentFragment() instanceof ContactConfirmRequestFragment) {
             // Remove Notes fragment from stack
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -768,6 +776,11 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     private void startReceiveFragment() {
         ReceiveFragment receiveFragment = ReceiveFragment.newInstance(getSelectedAccountFromFragments());
         addFragmentToBackStack(receiveFragment);
+    }
+
+    private void startDashboardFragment() {
+        DashboardFragment fragment = DashboardFragment.newInstance();
+        addFragmentToBackStack(fragment);
     }
 
     private int getSelectedAccountFromFragments() {

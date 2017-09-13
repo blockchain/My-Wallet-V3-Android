@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/onboarding_layout"
+    <piuk.blockchain.android.ui.customviews.LockableViewPager
+        android:id="@+id/pager_onboarding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="240dp" />
 
-        <piuk.blockchain.android.ui.customviews.LockableViewPager
-            android:id="@+id/pager_onboarding"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center">
+
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="240dp" />
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            app:ci_animator="@anim/viewpager_indicator"
+            app:ci_drawable="@drawable/selecteditem_dot"
+            app:ci_drawable_unselected="@drawable/nonselecteditem_dot"
+            app:ci_height="8dp"
+            app:ci_width="8dp" />
 
-        <RelativeLayout
-            android:id="@+id/viewPagerIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:gravity="center">
+        <TextView
+            android:id="@+id/btn_skip_all"
+            fontPath="fonts/Montserrat-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.8"
+            android:background="?attr/selectableItemBackground"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/onboarding_skip_all"
+            android:textSize="16sp"
+            android:theme="@style/PlainTheme"
+            tools:ignore="MissingPrefix" />
 
-            <me.relex.circleindicator.CircleIndicator
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="24dp"
-                android:layout_centerInParent="true"
-                app:ci_animator="@anim/viewpager_indicator"
-                app:ci_drawable="@drawable/selecteditem_dot"
-                app:ci_drawable_unselected="@drawable/nonselecteditem_dot"
-                app:ci_height="10dp"
-                app:ci_width="10dp" />
-
-            <TextView
-                android:id="@+id/btn_skip_all"
-                fontPath="fonts/Montserrat-Regular.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:alpha="0.8"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="@string/onboarding_skip_all"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-</layout>
+    </RelativeLayout>
+</LinearLayout>

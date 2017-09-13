@@ -71,6 +71,4 @@ interface BalanceView : View {
 
     fun startReceiveFragment()
 
-    fun onLoadOnboardingPages(pages: List<OnboardingPagerContent>)
-
 }

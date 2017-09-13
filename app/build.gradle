@@ -208,6 +208,8 @@ dependencies {
     debugCompile 'org.slf4j:slf4j-simple:1.7.22'
     // ViewPager Indicator
     compile 'me.relex:circleindicator:1.2.2@aar'
+    // Charts
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     // Crash reporting
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true
@@ -219,8 +221,8 @@ dependencies {
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile "org.mockito:mockito-core:$mockitoVersion"
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
-    androidTestCompile 'com.android.support.test:rules:1.0.0'
-    androidTestCompile('com.android.support.test:runner:1.0.0') {
+    androidTestCompile 'com.android.support.test:rules:1.0.1'
+    androidTestCompile('com.android.support.test:runner:1.0.1') {
         exclude module: 'support-annotations'
     }
     androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0') {
@@ -247,6 +249,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://jitpack.io" }
     }
 
     dependencies {

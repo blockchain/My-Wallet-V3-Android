@@ -88,7 +88,7 @@ class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPr
     }
 
     override fun showToast(message: Int, toastType: String) {
-        activity.toast(message, toastType)
+        toast(message, toastType)
     }
 
     override fun onDestroyView() {

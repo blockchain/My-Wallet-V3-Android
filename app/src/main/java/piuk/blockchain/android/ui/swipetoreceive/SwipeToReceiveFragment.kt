@@ -116,7 +116,7 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
                 .setPositiveButton(R.string.yes, { _, _ ->
                     val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("Send address", edittext_address.text.toString())
-                    activity.toast(R.string.copied_to_clipboard)
+                    toast(R.string.copied_to_clipboard)
                     clipboard.primaryClip = clip
                 })
                 .setNegativeButton(R.string.no, null)

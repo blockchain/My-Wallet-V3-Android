@@ -47,7 +47,6 @@ class BalancePresenterTest {
     private var accessState: AccessState = mock()
     private var currencyState: CurrencyState = mock()
     private var rxBus: RxBus = mock()
-    private var appUtil: AppUtil = mock()
     private var ethDataManager: EthDataManager = mock()
 
     @Before
@@ -64,7 +63,6 @@ class BalancePresenterTest {
                 stringUtils,
                 prefsUtil,
                 rxBus,
-                appUtil,
                 currencyState
         )
         subject.initView(view)
@@ -954,45 +952,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    fun `isOnboardingComplete true stored in prefs`() {
-        // Arrange
-        whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false)).thenReturn(true)
-        // Act
-        val result = subject.isOnboardingComplete()
-        // Assert
-        verify(prefsUtil).getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false)
-        verifyNoMoreInteractions(prefsUtil)
-        verifyZeroInteractions(appUtil)
-        result `should equal to` true
-    }
-
-    @Test
-    fun `isOnboardingComplete is not newly created`() {
-        // Arrange
-        whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false)).thenReturn(false)
-        whenever(appUtil.isNewlyCreated).thenReturn(false)
-        // Act
-        val result = subject.isOnboardingComplete()
-        // Assert
-        verify(prefsUtil).getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false)
-        verifyNoMoreInteractions(prefsUtil)
-        verify(appUtil).isNewlyCreated
-        verifyNoMoreInteractions(appUtil)
-        result `should equal to` true
-    }
-
-    @Test
-    fun setOnboardingComplete() {
-        // Arrange
-
-        // Act
-        subject.setOnboardingComplete(true)
-        // Assert
-        verify(prefsUtil).setValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, true)
-        verifyNoMoreInteractions(prefsUtil)
-    }
-
-    @Test
     fun `getBitcoinClicked API less than 19`() {
         // Arrange
         whenever(view.shouldShowBuy).thenReturn(false)
@@ -1033,17 +992,6 @@ class BalancePresenterTest {
         verify(view).startReceiveFragment()
         verify(view).shouldShowBuy
         verifyNoMoreInteractions(view)
-    }
-
-    @Test
-    fun disableAnnouncement() {
-        // Arrange
-
-        // Act
-        subject.disableAnnouncement()
-        // Assert
-        verify(prefsUtil).setValue(PrefsUtil.KEY_LATEST_ANNOUNCEMENT_DISMISSED, true)
-        verifyNoMoreInteractions(prefsUtil)
     }
 
     @Test

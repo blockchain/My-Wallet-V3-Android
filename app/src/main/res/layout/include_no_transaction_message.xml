@@ -15,84 +15,53 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:background="@color/primary_gray_lightest"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/framelayout_onboarding"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:layout_gravity="center"
+            android:layout_marginBottom="56dp"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:paddingLeft="72dp"
+            android:paddingRight="72dp">
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp" />
-
-            <include
-                android:id="@+id/onboarding_complete_layout"
-                layout="@layout/include_onboarding_complete" />
-
-            <include
-                android:id="@+id/onboarding_viewpager_layout"
-                layout="@layout/include_onboarding_viewpager" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:paddingBottom="56dp">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/no_tx_title"
+                style="@style/Base.DialogWindowTitle.AppCompat"
+                fontPath="fonts/Montserrat-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="56dp"
-                android:layout_marginTop="24dp"
-                android:orientation="vertical"
-                android:paddingLeft="72dp"
-                android:paddingRight="72dp">
+                android:gravity="center_horizontal"
+                android:text="@string/your_transactions"
+                android:textColor="@color/primary_navy_medium"
+                android:textSize="18sp"
+                tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/no_tx_title"
-                    style="@style/Base.DialogWindowTitle.AppCompat"
-                    fontPath="fonts/Montserrat-Regular.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/your_transactions"
-                    android:textColor="@color/primary_navy_medium"
-                    android:textSize="18sp"
-                    tools:ignore="MissingPrefix" />
+            <TextView
+                android:id="@+id/description"
+                fontPath="fonts/Montserrat-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/transaction_occur_when"
+                android:textColor="@color/primary_gray_dark"
+                android:textSize="14sp"
+                tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/description"
-                    fontPath="fonts/Montserrat-Regular.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/transaction_occur_when"
-                    android:textColor="@color/primary_gray_dark"
-                    android:textSize="14sp"
-                    tools:ignore="MissingPrefix" />
+            <Button
+                android:id="@+id/button_get_bitcoin"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="@string/onboarding_get_bitcoin"
+                android:theme="@style/ButtonLightBlueTheme" />
 
-                <Button
-                    android:id="@+id/button_get_bitcoin"
-                    style="@style/ButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/onboarding_get_bitcoin"
-                    android:theme="@style/ButtonLightBlueTheme" />
-
-            </LinearLayout>
-        </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
