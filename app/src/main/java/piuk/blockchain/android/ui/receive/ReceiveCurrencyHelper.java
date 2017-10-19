@@ -103,7 +103,7 @@ public class ReceiveCurrencyHelper {
      * @param amount The amount of Ether in ETH
      * @return A region formatted ETH string for the saved unit
      */
-    public String getFormattedEthString(double amount) {
+    public String getFormattedEthString(BigDecimal amount) {
         return monetaryUtil.getEthFormat().format(amount);
     }
 
@@ -149,7 +149,7 @@ public class ReceiveCurrencyHelper {
         if (currencyState.getCryptoCurrency() == CryptoCurrencies.BTC) {
             return getFormattedBtcString(cryptoAmount);
         } else {
-            return getFormattedEthString(cryptoAmount);
+            return getFormattedEthString(BigDecimal.valueOf(cryptoAmount));
         }
     }
     public String getFormattedFiatStringFromCrypto(double cryptoAmount) {

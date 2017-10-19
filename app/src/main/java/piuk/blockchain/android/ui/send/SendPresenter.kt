@@ -879,7 +879,7 @@ class SendPresenter @Inject constructor(
 
         val availableEth = Convert.fromWei(maxAvailable.toString(), Convert.Unit.ETHER)
         if (spendAll) {
-            view?.updateCryptoAmount(availableEth.toString())
+            view?.updateCryptoAmount(currencyHelper.getFormattedEthString(availableEth))
             pendingTransaction.bigIntAmount = availableEth.toBigInteger()
         } else {
             pendingTransaction.bigIntAmount =
@@ -893,8 +893,7 @@ class SendPresenter @Inject constructor(
             val fiatBalanceFormatted = monetaryUtil.getFiatFormat(currencyHelper.fiatUnit).format(fiatBalance)
             view.updateMaxAvailable("${stringUtils.getString(R.string.max_available)} $fiatBalanceFormatted ${currencyHelper.fiatUnit}")
         } else {
-            val number = DecimalFormat.getInstance().apply { maximumFractionDigits = 18 }
-                    .run { format(availableEth) }
+            val number = currencyHelper.getFormattedEthString(availableEth)
             view.updateMaxAvailable("${stringUtils.getString(R.string.max_available)} $number")
         }
 
@@ -938,6 +937,8 @@ class SendPresenter @Inject constructor(
             try {
                 amount = monetaryUtil.getDisplayAmount(amount.toLong())
                 view?.updateCryptoAmount(amount)
+                val fiat = currencyHelper.getFormattedFiatStringFromCrypto(amount.toDouble())
+                view?.updateFiatAmount(fiat)
             } catch (e: Exception) {
                 //ignore
             }
@@ -967,8 +968,8 @@ class SendPresenter @Inject constructor(
         }
 
         when (format) {
-            PrivateKeyFactory.BIP38 -> spendFromWatchOnlyNonBIP38(format, scanData)
-            else -> view?.showBIP38PassphrasePrompt(scanData)//BIP38 needs passphrase
+            PrivateKeyFactory.BIP38 -> view?.showBIP38PassphrasePrompt(scanData)//BIP38 needs passphrase
+            else -> spendFromWatchOnlyNonBIP38(format, scanData)
         }
     }
 
