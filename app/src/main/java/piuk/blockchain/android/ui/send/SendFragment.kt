@@ -135,12 +135,6 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView, NumericK
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        menu?.clear()
-        inflater?.inflate(R.menu.menu_send, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -250,24 +244,10 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView, NumericK
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item!!.itemId) {
-            R.id.action_qr -> {
-                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    PermissionUtil.requestCameraPermissionFromFragment(view!!.rootView, this)
-                } else {
-                    startScanActivity(MainActivity.SCAN_URI)
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun startScanActivity(code: Int) {
         if (!AppUtil(activity).isCameraOpen) {
             val intent = Intent(activity, CaptureActivity::class.java)
-            activity.startActivityForResult(intent, code)
+            startActivityForResult(intent, code)
         } else {
             showSnackbar(R.string.camera_unavailable, Snackbar.LENGTH_LONG)
         }

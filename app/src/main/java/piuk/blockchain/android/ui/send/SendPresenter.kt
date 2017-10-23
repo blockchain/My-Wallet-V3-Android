@@ -15,6 +15,7 @@ import info.blockchain.wallet.payload.data.LegacyAddress
 import info.blockchain.wallet.payment.Payment
 import info.blockchain.wallet.util.FormatsUtil
 import info.blockchain.wallet.util.PrivateKeyFactory
+import info.blockchain.wallet.util.Tools
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -221,7 +222,11 @@ class SendPresenter @Inject constructor(
 
         getBtcChangeAddress()!!
                 .compose(RxUtil.addObservableToCompositeDisposable(this))
-                .doOnError { view.showSnackbar(R.string.transaction_failed, Snackbar.LENGTH_INDEFINITE) }
+                .doOnError {
+                    view.dismissProgressDialog()
+                    view.dismissConfirmationDialog()
+                    view.showSnackbar(R.string.transaction_failed, Snackbar.LENGTH_INDEFINITE)
+                }
                 .map { pendingTransaction.changeAddress = it }
                 .flatMap { getBtcKeys() }
                 .flatMap {
@@ -245,6 +250,8 @@ class SendPresenter @Inject constructor(
                     handleSuccessfulPayment(hash, CryptoCurrencies.BTC)
                 }) {
                     Timber.e(it)
+                    view.dismissProgressDialog()
+                    view.dismissConfirmationDialog()
                     view.showSnackbar(R.string.transaction_failed, Snackbar.LENGTH_INDEFINITE)
 
                     Logging.logCustom(PaymentSentEvent()
@@ -263,7 +270,13 @@ class SendPresenter @Inject constructor(
             Observable.just(payloadDataManager.getHDKeysForSigning(account, pendingTransaction.unspentOutputBundle))
         } else {
             val legacyAddress = pendingTransaction.sendingObject.accountObject as LegacyAddress
-            Observable.just(mutableListOf(payloadDataManager.getAddressECKey(legacyAddress, verifiedSecondPassword)))
+
+            if (legacyAddress.tag == PendingTransaction.WATCH_ONLY_SPEND_TAG) {
+                var eckey = Tools.getECKeyFromKeyAndAddress(legacyAddress.privateKey, legacyAddress.getAddress());
+                Observable.just(mutableListOf(eckey))
+            } else {
+                Observable.just(mutableListOf(payloadDataManager.getAddressECKey(legacyAddress, verifiedSecondPassword)))
+            }
         }
     }
 
@@ -879,7 +892,7 @@ class SendPresenter @Inject constructor(
 
         val availableEth = Convert.fromWei(maxAvailable.toString(), Convert.Unit.ETHER)
         if (spendAll) {
-            view?.updateCryptoAmount(availableEth.toString())
+            view?.updateCryptoAmount(currencyHelper.getFormattedEthString(availableEth))
             pendingTransaction.bigIntAmount = availableEth.toBigInteger()
         } else {
             pendingTransaction.bigIntAmount =
@@ -893,8 +906,7 @@ class SendPresenter @Inject constructor(
             val fiatBalanceFormatted = monetaryUtil.getFiatFormat(currencyHelper.fiatUnit).format(fiatBalance)
             view.updateMaxAvailable("${stringUtils.getString(R.string.max_available)} $fiatBalanceFormatted ${currencyHelper.fiatUnit}")
         } else {
-            val number = DecimalFormat.getInstance().apply { maximumFractionDigits = 18 }
-                    .run { format(availableEth) }
+            val number = currencyHelper.getFormattedEthString(availableEth)
             view.updateMaxAvailable("${stringUtils.getString(R.string.max_available)} $number")
         }
 
@@ -938,6 +950,8 @@ class SendPresenter @Inject constructor(
             try {
                 amount = monetaryUtil.getDisplayAmount(amount.toLong())
                 view?.updateCryptoAmount(amount)
+                val fiat = currencyHelper.getFormattedFiatStringFromCrypto(amount.toDouble())
+                view?.updateFiatAmount(fiat)
             } catch (e: Exception) {
                 //ignore
             }
@@ -967,8 +981,8 @@ class SendPresenter @Inject constructor(
         }
 
         when (format) {
-            PrivateKeyFactory.BIP38 -> spendFromWatchOnlyNonBIP38(format, scanData)
-            else -> view?.showBIP38PassphrasePrompt(scanData)//BIP38 needs passphrase
+            PrivateKeyFactory.BIP38 -> view?.showBIP38PassphrasePrompt(scanData)//BIP38 needs passphrase
+            else -> spendFromWatchOnlyNonBIP38(format, scanData)
         }
     }
 
@@ -1002,6 +1016,7 @@ class SendPresenter @Inject constructor(
             tempLegacyAddress.setPrivateKeyFromBytes(key.privKeyBytes)
             tempLegacyAddress.address = key.toAddress(environmentSettings.networkParameters).toString()
             tempLegacyAddress.label = legacyAddress.label
+            tempLegacyAddress.tag = PendingTransaction.WATCH_ONLY_SPEND_TAG
             pendingTransaction.sendingObject.accountObject = tempLegacyAddress
 
             showPaymentReview()
@@ -1101,6 +1116,7 @@ class SendPresenter @Inject constructor(
     }
 
     internal fun selectSendingAccount(data: Intent?) {
+        
         try {
             val type: Class<*> = Class.forName(data?.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_OBJECT_TYPE))
             val any = ObjectMapper().readValue(data?.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM), type)

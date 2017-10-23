@@ -12,6 +12,8 @@ import piuk.blockchain.android.ui.account.ItemAccount;
 
 public class PendingTransaction {
 
+    public static final int WATCH_ONLY_SPEND_TAG = -5;
+
     public SpendableUnspentOutputs unspentOutputBundle;
     public ItemAccount sendingObject;
     public ItemAccount receivingObject;
@@ -73,6 +75,7 @@ public class PendingTransaction {
                 ", receivingObject=" + receivingObject +
                 ", note='" + note + '\'' +
                 ", receivingAddress='" + receivingAddress + '\'' +
+                ", changeAddress='" + changeAddress + '\'' +
                 ", bigIntFee=" + bigIntFee +
                 ", bigIntAmount=" + bigIntAmount +
                 ", addressToReceiveIndex=" + addressToReceiveIndex +
