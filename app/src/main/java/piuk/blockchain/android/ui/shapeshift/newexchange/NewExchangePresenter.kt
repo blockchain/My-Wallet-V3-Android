@@ -93,7 +93,7 @@ class NewExchangePresenter @Inject constructor(
         view.updateUi(
                 selectedCurrency,
                 if (selectedCurrency == CryptoCurrencies.BTC) getBtcLabel() else getEthLabel(),
-                if (selectedCurrency == CryptoCurrencies.ETHER) getBtcLabel() else getEthLabel(),
+                if (selectedCurrency == CryptoCurrencies.ETHER) getEthLabel() else getBtcLabel(),
                 monetaryUtil.getFiatDisplayString(0.0, currencyHelper.fiatUnit, Locale.getDefault())
         )
 
