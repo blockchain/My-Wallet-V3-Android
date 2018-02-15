@@ -114,7 +114,7 @@ class AccountPresenter @Inject internal constructor(
                     view.broadcastIntent(intent)
                 }
                 .flatMapCompletable {
-                    bchDataManager.createAccount()
+                    bchDataManager.createAccount(it.xpub)
                     metadataManager.saveToMetadata(
                             bchDataManager.serializeForSaving(),
                             BitcoinCashWallet.METADATA_TYPE_EXTERNAL

@@ -185,20 +185,22 @@ class BchDataManager(
      * point. This assumes that a new [info.blockchain.wallet.payload.data.Account] has already
      * been added to the user's Payload, otherwise xPubs could get out of sync.
      */
-    fun createAccount() {
-        bchDataStore.bchWallet!!.addAccount()
+    fun createAccount(bitcoinXpub: String) {
+
+        if (bchDataStore.bchWallet!!.isWatchOnly) {
+            bchDataStore.bchWallet!!.addWatchOnlyAccount(bitcoinXpub)
+        } else {
+            bchDataStore.bchWallet!!.addAccount()
+        }
+
         val defaultLabel = stringUtils.getString(R.string.bch_default_account_label)
         val count = bchDataStore.bchWallet!!.accountTotal
         bchDataStore.bchMetadata!!.addAccount(
                 GenericMetadataAccount(
                         """$defaultLabel $count""",
                         false
-                )
+                ).apply { xpub = bitcoinXpub }
         )
-
-        payloadDataManager.accounts.forEachIndexed { i, account ->
-            bchDataStore.bchMetadata!!.accounts[i].xpub = account.xpub
-        }
     }
 
     fun getActiveXpubs(): List<String> =

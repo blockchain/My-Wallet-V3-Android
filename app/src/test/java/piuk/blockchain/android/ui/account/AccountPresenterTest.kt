@@ -176,15 +176,17 @@ class AccountPresenterTest {
     @Throws(Exception::class)
     fun createNewAccountSuccessful() {
         // Arrange
+        val account: Account = mock()
+        whenever(account.xpub).thenReturn("xpub")
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
-                .thenReturn(Observable.just(Account()))
+                .thenReturn(Observable.just(account))
         whenever(bchDataManager.serializeForSaving()).thenReturn("")
         whenever(metadataManager.saveToMetadata(any(), anyInt())).thenReturn(Completable.complete())
         // Act
         subject.createNewAccount("")
         // Assert
         verify(payloadDataManager).createNewAccount(anyString(), isNull())
-        verify(bchDataManager).createAccount()
+        verify(bchDataManager).createAccount("xpub")
         verify(bchDataManager).serializeForSaving()
         verify(metadataManager).saveToMetadata(any(), anyInt())
         verify(activity).showProgressDialog(anyInt())
