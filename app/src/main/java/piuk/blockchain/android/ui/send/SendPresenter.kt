@@ -638,7 +638,7 @@ class SendPresenter @Inject constructor(
                 CryptoCurrencies.BTC -> if (FormatsUtil.isValidBitcoinAddress(address)) pendingTransaction.receivingAddress = address
                 CryptoCurrencies.ETHER -> if (FormatsUtil.isValidEthereumAddress(address)) pendingTransaction.receivingAddress = address
                 CryptoCurrencies.BCH -> {
-                    if (FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, address)
+                    if (FormatsUtil.isValidBitcoinCashAddress(address)
                             || FormatsUtil.isValidBitcoinAddress(address))
                         pendingTransaction.receivingAddress = address
                 }
@@ -649,7 +649,7 @@ class SendPresenter @Inject constructor(
 
     private fun getFullBitcoinCashAddressFormat(cashAddress: String): String {
         return if (!cashAddress.startsWith(environmentSettings.bitcoinCashNetworkParameters.bech32AddressPrefix) &&
-                FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, cashAddress)) {
+                FormatsUtil.isValidBitcoinCashAddress(cashAddress)) {
             environmentSettings.bitcoinCashNetworkParameters.bech32AddressPrefix +
                     environmentSettings.bitcoinCashNetworkParameters.bech32AddressSeparator.toChar() +
                     cashAddress
@@ -1227,7 +1227,7 @@ class SendPresenter @Inject constructor(
 
         scanData = FormatsUtil.getURIFromPoorlyFormedBIP21(scanData)
 
-        if (FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, scanData)) {
+        if (FormatsUtil.isValidBitcoinCashAddress(scanData)) {
             onBitcoinCashChosen()
             address = scanData
         } else if (FormatsUtil.isBitcoinUri(scanData)) {
@@ -1393,7 +1393,7 @@ class SendPresenter @Inject constructor(
 
         var cashAddress = legacyAddress.address;
 
-        if (!FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, legacyAddress.address) &&
+        if (!FormatsUtil.isValidBitcoinCashAddress(legacyAddress.address) &&
                 FormatsUtil.isValidBitcoinAddress(legacyAddress.address)) {
             cashAddress = Address.fromBase58(
                     environmentSettings.bitcoinCashNetworkParameters,
@@ -1441,7 +1441,7 @@ class SendPresenter @Inject constructor(
 
         var cashAddress = legacyAddress.address;
 
-        if (!FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, legacyAddress.address) &&
+        if (!FormatsUtil.isValidBitcoinCashAddress(legacyAddress.address) &&
                 FormatsUtil.isValidBitcoinAddress(legacyAddress.address)) {
             cashAddress = Address.fromBase58(
                     environmentSettings.bitcoinCashNetworkParameters,
@@ -1667,7 +1667,7 @@ class SendPresenter @Inject constructor(
     }
 
     private fun isValidBitcoincashAddress() =
-            Observable.just(FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, pendingTransaction.receivingAddress))
+            Observable.just(FormatsUtil.isValidBitcoinCashAddress(pendingTransaction.receivingAddress))
 
     private fun validateBitcoinCashTransaction(): Pair<Boolean, Int> {
         var validated = true

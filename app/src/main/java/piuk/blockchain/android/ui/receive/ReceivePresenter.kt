@@ -286,7 +286,7 @@ class ReceivePresenter @Inject internal constructor(
             when {
                 FormatsUtil.isValidBitcoinAddress(it) ->
                     view.showBottomSheet(getBitcoinUri(it, view.getBtcAmount()))
-                FormatsUtil.isValidEthereumAddress(it) || FormatsUtil.isValidBitcoinCashAddress(environmentSettings.bitcoinCashNetworkParameters, it) ->
+                FormatsUtil.isValidEthereumAddress(it) || FormatsUtil.isValidBitcoinCashAddress(it) ->
                     view.showBottomSheet(it)
                 else ->
                     throw IllegalStateException("Unknown address format $selectedAddress")
