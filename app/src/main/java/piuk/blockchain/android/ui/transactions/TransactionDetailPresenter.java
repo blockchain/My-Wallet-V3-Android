@@ -6,7 +6,6 @@ import android.support.annotation.VisibleForTesting;
 
 import info.blockchain.wallet.contacts.data.FacilitatedTransaction;
 import info.blockchain.wallet.multiaddress.MultiAddressFactory;
-import info.blockchain.wallet.multiaddress.TransactionSummary;
 import info.blockchain.wallet.multiaddress.TransactionSummary.Direction;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -23,10 +22,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import info.blockchain.wallet.util.FormatsUtil;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import piuk.blockchain.android.R;
@@ -260,9 +259,12 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
                 label = payloadDataManager.addressToLabel(item.getKey());
                 unit = getDisplayUnitsBtc();
             } else {
+                Timber.d("vos key: "+item.getKey());
                 label = bchDataManager.getLabelFromBchAddress(item.getKey());
+                Timber.d("vos label: "+label);
                 unit = getDisplayUnitsBch();
-                if (label == null) label = item.getKey();
+
+                if (label == null) label = FormatsUtil.toShortCashAddress(item.getKey());
             }
 
             TransactionDetailModel transactionDetailModel = new TransactionDetailModel(

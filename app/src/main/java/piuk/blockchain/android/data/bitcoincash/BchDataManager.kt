@@ -21,6 +21,7 @@ import piuk.blockchain.android.util.MetadataUtils
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.annotations.Mockable
 import piuk.blockchain.android.util.annotations.WebRequest
+import timber.log.Timber
 import java.math.BigInteger
 
 @Mockable
@@ -373,6 +374,8 @@ class BchDataManager(
      */
     fun getLabelFromBchAddress(address: String): String? {
         val xpub = bchDataStore.bchWallet?.getXpubFromAddress(address)
+
+        Timber.d("vos xpub: " + xpub)
 
         return bchDataStore.bchMetadata?.accounts?.find { it.xpub == xpub }?.label
     }
