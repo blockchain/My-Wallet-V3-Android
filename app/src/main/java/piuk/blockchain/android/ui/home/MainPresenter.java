@@ -178,7 +178,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
     }
 
-    public void doTestnetCheck() {
+    void doTestnetCheck() {
         if (environmentSettings.getEnvironment().equals(Environment.TESTNET)) {
             currencyState.setCryptoCurrency(CryptoCurrencies.BTC);
             getView().showTestnetWarning();
@@ -441,7 +441,6 @@ public class MainPresenter extends BasePresenter<MainView> {
                         .subscribe(isEnabled -> {
                             getView().setBuySellEnabled(isEnabled);
                             if (isEnabled) {
-                                checkBuyAndSellEnabled();
                                 buyDataManager.watchPendingTrades()
                                         .compose(RxUtil.applySchedulersToObservable())
                                         .subscribe(getView()::onTradeCompleted, Throwable::printStackTrace);
@@ -453,14 +452,6 @@ public class MainPresenter extends BasePresenter<MainView> {
                             Timber.e(throwable);
                             getView().setBuySellEnabled(false);
                         }));
-    }
-
-    private void checkBuyAndSellEnabled() {
-        buyDataManager.isSfoxAllowed()
-                .compose(RxUtil.addObservableToCompositeDisposable(this))
-                .subscribe(allowed -> {
-                    if (allowed) getView().updateNavDrawerToBuyAndSell();
-                }, Timber::e);
     }
 
     private void dismissAnnouncementIfOnboardingCompleted() {
@@ -485,7 +476,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         currencyState.setCryptoCurrency(cryptoCurrency);
     }
 
-    public void routeToBuySell() {
+    void routeToBuySell() {
         buyDataManager.isCoinifyAllowed()
                 .compose(RxUtil.addObservableToCompositeDisposable(this))
                 .subscribe(coinifyAllowed -> {

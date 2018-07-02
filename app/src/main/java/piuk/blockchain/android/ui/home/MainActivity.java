@@ -704,13 +704,6 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         buyWebView.addJavascriptInterface(frontendJavascriptManager, FrontendJavascriptManager.JS_INTERFACE_NAME);
     }
 
-    @Override
-    public void updateNavDrawerToBuyAndSell() {
-        Menu menu = binding.navigationView.getMenu();
-        MenuItem buy = menu.findItem(R.id.nav_buy);
-        buy.setTitle(R.string.onboarding_buy_and_sell_bitcoin);
-    }
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void checkTradesIfReady() {
         if (initialized && webViewLoginDetails != null && isBuySellPermitted()) {

@@ -47,8 +47,6 @@ interface MainView extends View {
 
     void hideShapeshift();
 
-    void updateNavDrawerToBuyAndSell();
-
     void showTestnetWarning();
 
     void onStartLegacyBuySell();

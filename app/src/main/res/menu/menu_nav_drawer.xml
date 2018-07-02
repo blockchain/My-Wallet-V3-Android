@@ -4,7 +4,7 @@
     <item
         android:id="@+id/nav_buy"
         android:icon="@drawable/vector_buy"
-        android:title="@string/onboarding_buy_bitcoin"
+        android:title="@string/buy_sell"
         android:visible="false" />
 
     <item

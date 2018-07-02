@@ -118,7 +118,7 @@ class ExchangeService @Inject constructor(
         val receiveEvents = rxBus.register(WebSocketReceiveEvent::class.java)
 
         return getPendingTradeAddresses()
-                .doOnNext { address -> Timber.d("watchPendingTrades: watching receive address: %s", address) }
+                .doOnNext { Timber.d("watchPendingTrades: watching receive address: %s", it) }
                 .flatMap { address ->
                     receiveEvents
                             .filter { event -> event.address == address }
