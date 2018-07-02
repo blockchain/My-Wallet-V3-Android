@@ -140,7 +140,7 @@ class BuySellBuildOrderActivity :
         RxView.clicks(buttonReviewOrder)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribeBy(onNext = {
-                    ViewUtils.hideKeyboard(this)
+                    closeKeyPad()
                     presenter.onConfirmClicked()
                 })
 
