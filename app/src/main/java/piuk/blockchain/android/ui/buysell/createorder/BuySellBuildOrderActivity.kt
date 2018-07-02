@@ -50,6 +50,7 @@ import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.NumericKeyboardCallback
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.disableSoftKeyboard
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.gone
@@ -138,7 +139,10 @@ class BuySellBuildOrderActivity :
         textViewLimits.setOnClickListener { presenter.onMaxClicked() }
         RxView.clicks(buttonReviewOrder)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribeBy(onNext = { presenter.onConfirmClicked() })
+                .subscribeBy(onNext = {
+                    ViewUtils.hideKeyboard(this)
+                    presenter.onConfirmClicked()
+                })
 
         onViewReady()
     }
@@ -282,9 +286,23 @@ class BuySellBuildOrderActivity :
         val spannable = getFormattedLimit(status)
 
         spannable.setSpan(
+                ForegroundColorSpan(getResolvedColor(R.color.primary_gray_medium)),
+                0,
+                start,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannable.setSpan(
                 ForegroundColorSpan(getResolvedColor(R.color.primary_blue_accent)),
                 start,
                 end,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannable.setSpan(
+                ForegroundColorSpan(getResolvedColor(R.color.primary_gray_medium)),
+                end,
+                text.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 

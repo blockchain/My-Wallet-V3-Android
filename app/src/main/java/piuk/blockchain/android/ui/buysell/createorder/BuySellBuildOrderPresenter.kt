@@ -145,17 +145,29 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     internal fun onMaxClicked() {
-        view.updateReceiveAmount(maximumInAmounts.toString())
+        if (isSell) {
+            val maxAmount = when {
+                maxBitcoinAmount < maximumInAmounts.toBigDecimal() -> maxBitcoinAmount
+                else -> maximumInAmounts.toBigDecimal()
+            }
+            view.updateReceiveAmount(maxAmount.toString())
+        } else {
+            view.updateSendAmount(maximumInAmounts.toString())
+        }
     }
 
     internal fun onMinClicked() {
         val updateAmount = minimumInAmount.toString()
-        view.updateReceiveAmount(updateAmount)
-        // For some reason, the TextWatcher won't be triggered from the above method, so here we
-        // emit the value manually instead.
-        receiveSubject.onNext("0")
-        // This allows multiple clicks as it won't be debounced
-        receiveSubject.onNext(updateAmount)
+        if (isSell) {
+            view.updateReceiveAmount(updateAmount)
+            // For some reason, the TextWatcher won't be triggered from the above method, so here we
+            // emit the value manually instead.
+            receiveSubject.onNext("0")
+            // This allows multiple clicks as it won't be debounced
+            receiveSubject.onNext(updateAmount)
+        } else {
+            view.updateSendAmount(updateAmount)
+        }
     }
 
     internal fun onConfirmClicked() {
@@ -398,7 +410,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             view.renderLimitStatus(
                     LimitStatus.ErrorTooLow(
                             R.string.buy_sell_amount_too_low,
-                            "$minimumInAmount $selectedCurrency"
+                            "${fiatFormat.format(minimumInAmount)} $selectedCurrency"
                     )
             )
             // Attempting to buy more than allowed via Bank
@@ -407,7 +419,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             view.renderLimitStatus(
                     LimitStatus.ErrorTooHigh(
                             R.string.buy_sell_remaining_buy_limit,
-                            "$maximumInAmounts $selectedCurrency"
+                            "${fiatFormat.format(maximumInAmounts)} $selectedCurrency"
                     )
             )
             // Attempting to buy more than allowed via Card
@@ -416,7 +428,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             view.renderLimitStatus(
                     LimitStatus.ErrorTooHigh(
                             R.string.buy_sell_remaining_buy_limit,
-                            "$maximumInAmounts $selectedCurrency"
+                            "${fiatFormat.format(maximumInAmounts)} $selectedCurrency"
                     )
             )
             // Attempting to sell more than allowed
@@ -425,7 +437,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             view.renderLimitStatus(
                     LimitStatus.ErrorTooHigh(
                             R.string.buy_sell_remaining_sell_limit,
-                            "$maximumInAmounts $selectedCurrency"
+                            "${fiatFormat.format(maximumInAmounts)} $selectedCurrency"
                     )
             )
             // Attempting to sell less than allowed
@@ -434,7 +446,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             view.renderLimitStatus(
                     LimitStatus.ErrorTooLow(
                             R.string.buy_sell_remaining_sell_minimum_limit,
-                            "$minimumInAmount $selectedCurrency"
+                            "$minimumInAmount BTC"
                     )
             )
             // All good, reload previously stated limits
