@@ -590,12 +590,12 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     private fun renderWaitTime(delayEnd: String) {
-        val expiryDateGmt = delayEnd.fromIso8601()
+        val expiryDateUtc = delayEnd.fromIso8601()
         val calendar = Calendar.getInstance()
         val timeZone = calendar.timeZone
-        val offset = timeZone.getOffset(expiryDateGmt!!.time)
+        val offset = timeZone.getOffset(expiryDateUtc!!.time)
 
-        val endTimeLong = expiryDateGmt.time + offset
+        val endTimeLong = expiryDateUtc.time + offset
         val remaining = (endTimeLong - System.currentTimeMillis()) / 1000
         var hours = TimeUnit.SECONDS.toHours(remaining)
         if (hours == 0L) hours = 1L

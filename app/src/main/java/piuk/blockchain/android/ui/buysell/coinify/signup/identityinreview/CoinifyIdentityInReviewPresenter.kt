@@ -39,6 +39,7 @@ class CoinifyIdentityInReviewPresenter @Inject constructor(
                         Completable.complete()
                     }
                 }
+                .doOnEvent { view.dismissLoading() }
                 .subscribeBy(
                         onError = {
                             Timber.e(it)
@@ -60,34 +61,26 @@ class CoinifyIdentityInReviewPresenter @Inject constructor(
 
     @VisibleForTesting
     fun filterReviewStatus(kycList: List<KycResponse>) {
-
-        if (kycList.any { it.state == ReviewState.Completed }) {
-            // Unlikely to see this result - after supplying docs status will be pending
-            // otherwise we will go straight to overview
-            view.onShowCompleted()
-        } else if (kycList.any { it.state == ReviewState.Reviewing }) {
-            // Unlikely to see this result - after supplying docs status will be pending
-            // otherwise we will go straight to overview
-            view.onShowReviewing()
-        } else if (kycList.any { it.state == ReviewState.Pending }) {
-            // Please supply proof
-            // Very likely that the back button was pressed
-            view.onShowPending()
-        } else if (kycList.any { it.state == ReviewState.DocumentsRequested }) {
-            // Unlikely to see this result
-            view.onShowDocumentsRequested()
-        } else if (kycList.any { it.state == ReviewState.Expired }) {
-            // Unlikely to see this result - User would be redirected to supply docs again before getting to this fragment
-            view.onShowExpired()
-        } else if (kycList.any { it.state == ReviewState.Failed }) {
-            // We get stuck with the below cases
-            // Can't create new account with same email
-            // redirectUrl isn't valid - Same issue on web
-            view.onShowFailed()
-        } else if (kycList.any { it.state == ReviewState.Rejected }) {
-            view.onShowRejected()
-        } else {
-            view.onFinish()
+        when {
+        // Unlikely to see this result - after supplying docs status will be pending
+        // otherwise we will go straight to overview
+            kycList.any { it.state == ReviewState.Completed } -> view.onShowCompleted()
+        // Unlikely to see this result - after supplying docs status will be pending
+        // otherwise we will go straight to overview
+            kycList.any { it.state == ReviewState.Reviewing } -> view.onShowReviewing()
+        // Please supply proof
+        // Very likely that the back button was pressed
+            kycList.any { it.state == ReviewState.Pending } -> view.onShowPending()
+        // Unlikely to see this result
+            kycList.any { it.state == ReviewState.DocumentsRequested } -> view.onShowDocumentsRequested()
+        // Unlikely to see this result - User would be redirected to supply docs again before getting to this fragment
+            kycList.any { it.state == ReviewState.Expired } -> view.onShowExpired()
+        // We get stuck with the below cases
+        // Can't create new account with same email
+        // redirectUrl isn't valid - Same issue on web
+            kycList.any { it.state == ReviewState.Failed } -> view.onShowFailed()
+            kycList.any { it.state == ReviewState.Rejected } -> view.onShowRejected()
+            else -> view.onFinish()
         }
     }
 
@@ -100,9 +93,5 @@ class CoinifyIdentityInReviewPresenter @Inject constructor(
             exchangeService.getExchangeMetaData()
                     .applySchedulers()
                     .addToCompositeDisposable(this)
-                    .map {
-                        it.coinify?.run {
-                            Optional.of(this)
-                        } ?: Optional.absent()
-                    }
+                    .map { it.coinify?.run { Optional.of(this) } ?: Optional.absent() }
 }

@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.*
+import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.buttonContinue
+import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.textviewReviewMessage
+import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.textviewReviewStatus
+import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.textviewReviewTitle
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
@@ -66,8 +69,11 @@ class CoinifyIdentityInReviewFragment :
         textviewReviewStatus.invisible()
     }
 
-    override fun onShowCompleted() {
+    override fun dismissLoading() {
         dismissProgressDialog()
+    }
+
+    override fun onShowCompleted() {
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_completed)
@@ -77,7 +83,6 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowReviewing() {
-        dismissProgressDialog()
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_reviewing)
@@ -87,7 +92,6 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowPending() {
-        dismissProgressDialog()
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_pending)
@@ -97,7 +101,6 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowRejected() {
-        dismissProgressDialog()
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_rejected)
@@ -109,7 +112,6 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowExpired() {
-        dismissProgressDialog()
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_expired)
@@ -121,7 +123,6 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowFailed() {
-        dismissProgressDialog()
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_failed)
@@ -133,7 +134,6 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowDocumentsRequested() {
-        dismissProgressDialog()
         textviewReviewStatus.text = getString(
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_docs_requested)

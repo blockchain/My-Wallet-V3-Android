@@ -13,6 +13,8 @@ import java.util.*
  * the documented format at some point. If the [String] is for some reason not parsable due to
  * otherwise incorrect formatting, the resulting [Date] will be null.
  *
+ * The returned times will always be in UTC.
+ *
  * @return A [Date] object or null if the [String] isn't formatted correctly.
  */
 @SuppressLint("SimpleDateFormat")

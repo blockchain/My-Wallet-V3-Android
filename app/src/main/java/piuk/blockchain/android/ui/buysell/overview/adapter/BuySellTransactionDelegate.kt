@@ -21,6 +21,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.visible
+import java.util.*
 
 internal class BuySellTransactionDelegate(
         private val listener: CoinifyTxFeedListener
@@ -70,7 +71,14 @@ internal class BuySellTransactionDelegate(
         ) {
 
             root.setOnClickListener { listener.onTransactionClicked(transactionId) }
-            date.text = dateUtil.formatted(transaction.time.time / 1000)
+
+            val time = transaction.time
+            val calendar = Calendar.getInstance()
+            val timeZone = calendar.timeZone
+            val offset = timeZone.getOffset(time.time)
+            val offsetTime = time.time + offset
+
+            date.text = dateUtil.formatted(offsetTime / 1000)
             result.text = transaction.displayAmount
             direction.setText(transaction.tradeStateString)
 
