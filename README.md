@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/blockchain/My-Wallet-V3-Android/tree/master.svg?style=svg)](https://circleci.com/gh/blockchain/My-Wallet-V3-Android/tree/master)
 
+[![Coverage Status](https://coveralls.io/repos/github/blockchain/My-Wallet-V3-Android/badge.svg?branch=master)](https://coveralls.io/github/blockchain/My-Wallet-V3-Android?branch=master)
+
 Next-generation HD (BIP32, BIP39, BIP44) bitcoin, ethereum and bitcoin cash wallet. 
 
 ## Getting started
