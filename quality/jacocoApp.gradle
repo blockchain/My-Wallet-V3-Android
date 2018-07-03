@@ -1,7 +1,16 @@
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 
-task testEnvProdMinApi21DebugUnitTestCoverage(type: JacocoReport, dependsOn: "testEnvProdMinApi21DebugUnitTest") {
+jacoco {
+    toolVersion = '0.8.1'
+}
+
+tasks.withType(Test) {
+    // Required for correct coverage of Robolectric tests
+    jacoco.includeNoLocationClasses = true
+}
+
+task testCoverage(type: JacocoReport, dependsOn: "testEnvProdMinApi21DebugUnitTest") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports on the Debug build."
 
@@ -47,18 +56,10 @@ task testEnvProdMinApi21DebugUnitTestCoverage(type: JacocoReport, dependsOn: "te
     classDirectories = files([javaDebugTree], [kotlinDebugTree])
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
+    executionData = files("${project.buildDir}/jacoco/testEnvProdMinApi21DebugUnitTest.exec")
 
-    executionData = files("${project.buildDir}/jacocoApp/testEnvProdMinApi21DebugUnitTest.exec")
     reports {
         xml.enabled = true
         html.enabled = true
     }
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacocoApp/testEnvProdMinApi21DebugUnitTestCoverage/testEnvProdMinApi21DebugUnitTestCoverage.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'testEnvProdMinApi21DebugUnitTestCoverage'
 }

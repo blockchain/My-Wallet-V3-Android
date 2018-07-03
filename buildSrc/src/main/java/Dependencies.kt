@@ -78,6 +78,7 @@ object Versions {
     const val robolectric = "3.8"
     const val json = "20140107"
     const val espresso = "3.0.1"
+    const val jacoco = "0.8.1"
 
 }
 
@@ -185,5 +186,6 @@ object Libraries {
     const val espresso = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
     const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.retrofit}"
     const val okHttpMock = "com.squareup.okhttp3:mockwebserver:${Versions.okHttp}"
+    const val jacoco = "org.jacoco:org.jacoco.core:${Versions.jacoco}"
 
 }

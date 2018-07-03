@@ -1,5 +1,14 @@
 apply plugin: 'jacoco'
 
+jacoco {
+    toolVersion = '0.8.1'
+}
+
+tasks.withType(Test) {
+    // Required for correct coverage of Robolectric tests
+    jacoco.includeNoLocationClasses = true
+}
+
 task testCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports on the Debug build."
@@ -40,8 +49,8 @@ task testCoverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     classDirectories = files([javaDebugTree], [kotlinDebugTree])
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-
     executionData = files("${project.buildDir}/jacocoApp/testDebugUnitTest.exec")
+
     reports {
         xml.enabled = true
         html.enabled = true
