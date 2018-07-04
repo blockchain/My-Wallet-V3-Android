@@ -56,7 +56,7 @@ task testCoverage(type: JacocoReport, dependsOn: "testEnvProdMinApi21DebugUnitTe
     classDirectories = files([javaDebugTree], [kotlinDebugTree])
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${project.buildDir}/jacoco/testEnvProdMinApi21DebugUnitTest.exec")
+    executionData = fileTree(dir: "$project.buildDir", includes: ["jacoco/*.exec"])
 
     reports {
         xml.enabled = true
