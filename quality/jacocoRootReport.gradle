@@ -55,7 +55,7 @@ def coverageClassDirectories = [
 ]
 
 task jacocoRootReport(type: JacocoReport) {
-    dependsOn "wallet:jacocoTestReport"
+    dependsOn "wallet:testCoverage"
     dependsOn "core:testCoverage"
     dependsOn "coreui:testCoverage"
     dependsOn "buysell:testCoverage"
@@ -70,7 +70,7 @@ task jacocoRootReport(type: JacocoReport) {
     sourceDirectories = files(coverageSourceDirs)
 
     executionData = files(
-            tasks.getByPath("wallet:jacocoTestReport").executionData,
+            tasks.getByPath("wallet:testCoverage").executionData,
             tasks.getByPath("core:testCoverage").executionData,
             tasks.getByPath("coreui:testCoverage").executionData,
             tasks.getByPath("buysell:testCoverage").executionData,

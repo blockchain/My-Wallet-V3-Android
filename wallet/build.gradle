@@ -1,8 +1,7 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
 apply from: 'integTest.gradle'
+apply from: '../quality/jacocoWallet.gradle'
 apply from: '../quality/ktlint.gradle'
 
 buildscript {
@@ -79,14 +78,6 @@ dependencies {
 test {
     testLogging {
         events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-    }
-}
-
-jacocoTestReport {
-    dependsOn("test")
-    reports {
-        xml.enabled = true
-        html.enabled = true
     }
 }
 
