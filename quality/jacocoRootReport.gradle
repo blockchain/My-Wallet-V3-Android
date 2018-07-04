@@ -50,8 +50,8 @@ def coverageClassDirectories = [
         fileTree(dir: 'coreui/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'core/build/intermediates/classes/debug', excludes: excludedDirs),
         fileTree(dir: 'core/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'wallet/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'wallet/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'wallet/build/classes/java/main', excludes: excludedDirs),
+        fileTree(dir: 'wallet/build/classes/kotlin/main', excludes: excludedDirs),
 ]
 
 task jacocoRootReport(type: JacocoReport) {
