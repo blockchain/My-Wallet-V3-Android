@@ -26,7 +26,7 @@ public abstract class MockedResponseTest {
     public MockInterceptor mockInterceptor = MockInterceptor.getInstance();
 
     @Before
-    public void setUp() throws Exception {
+    public void initBlockchainFramework() throws Exception {
         //Initialize framework
         BlockchainFramework.init(new FrameworkInterface() {
             @Override
