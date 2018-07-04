@@ -92,6 +92,7 @@ task jacocoRootReport(type: JacocoReport) {
 
 coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+    sourceDirs = files(coverageSourceDirs).toList()
 }
 
 tasks.coveralls {
