@@ -41,17 +41,17 @@ def coverageSourceDirs = [
 
 def coverageClassDirectories = [
         fileTree(dir: 'app/build/intermediates/classes/envProdMinApi21Debug', excludes: excludedDirs),
-        fileTree(dir: 'app/tmp/kotlin-classes/envProdMinApi21Debug', excludes: excludedDirs),
+        fileTree(dir: 'app/build/tmp/kotlin-classes/envProdMinApi21Debug', excludes: excludedDirs),
         fileTree(dir: 'buysell/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'buysell/tmp/kotlin-classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'buysell/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'buysellui/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'buysellui/tmp/kotlin-classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'buysellui/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'coreui/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'coreui/tmp/kotlin-classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'coreui/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'core/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'core/tmp/kotlin-classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'core/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'wallet/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'wallet/tmp/kotlin-classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'wallet/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
 ]
 
 task jacocoRootReport(type: JacocoReport) {
