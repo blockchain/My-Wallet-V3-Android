@@ -105,7 +105,7 @@ class ContactsDataManager @Inject constructor(
                     )
                 }
                 .toList()
-                .toCompletable()
+                .ignoreElement()
                 .applySchedulers()
     }
 

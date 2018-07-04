@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mockito
-import org.web3j.protocol.core.methods.request.RawTransaction
+import org.web3j.crypto.RawTransaction
 import piuk.blockchain.android.RxTest
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore

@@ -3,14 +3,15 @@ package piuk.blockchain.android.ui.buysell.payment.bank.addaccount
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.ui.buysell.confirmation.sell.CoinifySellConfirmationActivity.Companion.REQUEST_CODE_CONFIRM_MAKE_SELL_PAYMENT
 import piuk.blockchain.android.ui.buysell.createorder.models.SellConfirmationDisplayModel
 import piuk.blockchain.android.ui.buysell.payment.bank.addaddress.AddAddressActivity
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
+import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import javax.inject.Inject
@@ -39,6 +40,21 @@ class AddBankAccountActivity : BaseMvpActivity<AddBankAccountView, AddBankAccoun
         setupToolbar(toolBar, R.string.buy_sell_add_account_title)
 
         buttonConfirm.setOnClickListener { presenter.onConfirmClicked() }
+
+        editTextIban.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                consume { editTextBic.requestFocus() }
+            } else false
+        }
+
+        editTextBic.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                consume {
+                    ViewUtils.hideKeyboard(this)
+                    presenter.onConfirmClicked()
+                }
+            } else false
+        }
 
         onViewReady()
     }

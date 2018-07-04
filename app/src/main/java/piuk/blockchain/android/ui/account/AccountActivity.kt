@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.annotation.StringRes
@@ -24,9 +23,16 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.widget.CheckBox
 import com.google.zxing.BarcodeFormat
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.BasePermissionListener
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
 import info.blockchain.wallet.payload.data.LegacyAddress
-import kotlinx.android.synthetic.main.activity_accounts.*
-import kotlinx.android.synthetic.main.toolbar_general.*
+import kotlinx.android.synthetic.main.activity_accounts.currency_header
+import kotlinx.android.synthetic.main.activity_accounts.linear_layout_root
+import kotlinx.android.synthetic.main.activity_accounts.recyclerview_accounts
+import kotlinx.android.synthetic.main.toolbar_general.toolbar_general
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.AccountPresenter.Companion.ADDRESS_LABEL_MAX_LENGTH
@@ -35,19 +41,19 @@ import piuk.blockchain.android.ui.account.adapter.AccountAdapter
 import piuk.blockchain.android.ui.account.adapter.AccountHeadersListener
 import piuk.blockchain.android.ui.backup.transfer.ConfirmFundsTransferDialogFragment
 import piuk.blockchain.android.ui.balance.BalanceFragment
-import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.ui.zxing.Intents
-import piuk.blockchain.android.util.PermissionUtil
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
+import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.toast
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -165,14 +171,25 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
     }
 
     private fun importAddress() {
-        if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED) {
-            PermissionUtil.requestCameraPermissionFromActivity(linear_layout_root, this)
-        } else {
-            onScanButtonClicked()
+        val deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+                .with(linear_layout_root, R.string.request_camera_permission)
+                .withButton(android.R.string.ok) { importAddress() }
+                .build()
+
+        val grantedPermissionListener = object : BasePermissionListener() {
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                onScanButtonClicked()
+            }
         }
+
+        val compositePermissionListener =
+                CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
+
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(compositePermissionListener)
+                .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
+                .check()
     }
 
     private fun onRowClick(cryptoCurrency: CryptoCurrencies, position: Int) {
@@ -185,13 +202,12 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
         )
     }
 
-    private fun getAccountPosition(cryptoCurrency: CryptoCurrencies, position: Int): Int {
-        return if (cryptoCurrency == CryptoCurrencies.BTC) {
-            if (position < presenter.accountSize) position else -1
-        } else {
-            return position
-        }
-    }
+    private fun getAccountPosition(cryptoCurrency: CryptoCurrencies, position: Int): Int =
+            if (cryptoCurrency == CryptoCurrencies.BTC) {
+                if (position < presenter.accountSize) position else -1
+            } else {
+                position
+            }
 
     private fun onScanButtonClicked() {
         SecondPasswordHandler(this).validate(object : SecondPasswordHandler.ResultListener {
@@ -265,7 +281,8 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK
             && requestCode == IMPORT_PRIVATE_REQUEST_CODE
-            && data != null && data.getStringExtra(CaptureActivity.SCAN_RESULT) != null) {
+            && data != null && data.getStringExtra(CaptureActivity.SCAN_RESULT) != null
+        ) {
 
             val strResult = data.getStringExtra(CaptureActivity.SCAN_RESULT)
             presenter.onAddressScanned(strResult)
@@ -383,22 +400,6 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
 
     override fun onSetTransferLegacyFundsMenuItemVisible(visible: Boolean) {
         transferFundsMenuItem?.isVisible = visible
-    }
-
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-    ) {
-        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                onScanButtonClicked()
-            } else {
-                // Permission request was denied.
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
     }
 
     override fun showProgressDialog(@StringRes message: Int) {

@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Ekran Görüntülerini Etkinleştir</string>
 
     <string name="information">Bilgi</string>
-    <string name="transaction_detail_verify">Blockchain.info üzerinde doğrulayın</string>
+    <string name="transaction_detail_verify">Blockchain.com üzerinde doğrulayın</string>
     <string name="transaction_detail_share_chooser">İşlem ayrıntılarını paylaş</string>
     <string name="transaction_detail_contact_note">Not</string>
     <string name="security_centre_email_check">E-postayı kontrol edin</string>

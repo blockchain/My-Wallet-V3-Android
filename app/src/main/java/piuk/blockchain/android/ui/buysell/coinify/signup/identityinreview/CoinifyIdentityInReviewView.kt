@@ -6,6 +6,8 @@ interface CoinifyIdentityInReviewView: View {
 
     fun onShowLoading()
 
+    fun dismissLoading()
+
     fun onFinish()
 
     fun onShowCompleted()

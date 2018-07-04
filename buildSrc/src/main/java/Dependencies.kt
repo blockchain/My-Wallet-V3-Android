@@ -6,28 +6,30 @@ object Versions {
     const val minSdk = 17
     const val targetSdk = 27
     const val compileSdk = 27
-    const val versionCode = 306
-    const val versionName = "6.11.1"
+    const val versionCode = 307
+    const val versionName = "6.12.0-packaging-test"
     const val buildTools = "27.0.3"
 
     // Build tools and languages
     const val androidPlugin = "3.1.3"
-    const val kotlin = "1.2.50"
-    const val googleServicesPlugin = "3.2.1"
+    const val kotlin = "1.2.51"
+    const val googleServicesPlugin = "4.0.1"
     const val coveralls = "2.8.2"
     const val buildProperties = "0.4"
     const val ktlint = "0.24.0"
 
     // Support Libraries
     const val supportLibs = "27.1.1"
-    const val googleServices = "11.8.0"
+    const val googleServices = "15.0.1"
+    const val firebaseMessaging = "17.0.0"
+    const val firebaseCore = "16.0.1"
     const val constraintLayout = "1.0.2"
-    const val supportTesting = "1.0.1"
+    const val supportTesting = "1.0.2"
     const val multidex = "1.0.2"
 
     // Networking, RxJava
     const val retrofit = "2.4.0"
-    const val okHttp = "3.9.1"
+    const val okHttp = "3.10.0"
     const val okIo = "1.14.1"
     const val moshi = "1.6.0"
     const val jacksonCore = "2.9.5"
@@ -39,9 +41,10 @@ object Versions {
     const val rxFingerprint = "2.2.1"
 
     // Utils, Ethereum
-    const val web3j = "2.2.1"
+    const val web3j = "3.3.1-android"
     const val spongycastle = "1.53.0.0"
     const val jjwt = "0.9.0"
+    const val lambdaWorks = "1.0.0"
     // Keep at 1.3 to match Android
     const val commonsCodec = "1.3"
     const val commonsLang = "3.4"
@@ -112,8 +115,9 @@ object Libraries {
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
 
     // Google & Firebase
+    const val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
     const val firebaseMessaging =
-            "com.google.firebase:firebase-messaging:${Versions.googleServices}"
+            "com.google.firebase:firebase-messaging:${Versions.firebaseMessaging}"
     const val googlePlayServicesBase =
             "com.google.android.gms:play-services-base:${Versions.googleServices}"
 
@@ -141,9 +145,10 @@ object Libraries {
     const val rxFingerprint = "com.mtramin:rxfingerprint:${Versions.rxFingerprint}"
 
     // Utils, Ethereum
-    const val web3j = "org.web3j:core-android:${Versions.web3j}"
+    const val web3j = "org.web3j:core:${Versions.web3j}"
     const val spongyCastle = "com.madgag.spongycastle:prov:${Versions.spongycastle}"
     const val jjwt = "io.jsonwebtoken:jjwt:${Versions.jjwt}"
+    const val lambdaWorks = "com.lambdaworks:codec:${Versions.lambdaWorks}"
     const val commonsCodec = "commons-codec:commons-codec:${Versions.commonsCodec}"
     const val commonsLang = "org.apache.commons:commons-lang3:${Versions.commonsLang}"
     const val commonsCli = "commons-cli:commons-cli:${Versions.commonsCli}"

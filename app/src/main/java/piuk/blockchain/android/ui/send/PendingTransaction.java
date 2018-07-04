@@ -9,8 +9,8 @@ import info.blockchain.wallet.payment.SpendableUnspentOutputs;
 
 import java.math.BigInteger;
 
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
 import piuk.blockchain.android.ui.account.ItemAccount;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
 
 public class PendingTransaction {
 
@@ -44,12 +44,11 @@ public class PendingTransaction {
 
     @JsonIgnore
     public boolean isWatchOnly() {
-
         boolean watchOnly = false;
 
-        if(sendingObject.getAccountObject() instanceof LegacyAddress) {
-            LegacyAddress legacyAddress = (LegacyAddress)sendingObject.getAccountObject();
-            watchOnly = legacyAddress.isWatchOnly() && (legacyAddress.getPrivateKey() == null ||  legacyAddress.getPrivateKey().isEmpty());
+        if (sendingObject.getAccountObject() instanceof LegacyAddress) {
+            LegacyAddress legacyAddress = (LegacyAddress) sendingObject.getAccountObject();
+            watchOnly = legacyAddress.isWatchOnly() && (legacyAddress.getPrivateKey() == null || legacyAddress.getPrivateKey().isEmpty());
         }
 
         return watchOnly;

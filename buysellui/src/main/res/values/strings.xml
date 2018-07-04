@@ -13,7 +13,6 @@
     <string name="buy_sell_overview_error_loading_transactions">Error fetching transactions</string>
     <string name="buy_sell_overview_empty_list">Your order history will show here</string>
     <string name="buy_sell_overview_in_review_title">Identity verification\nin review</string>
-    <string name="buy_sell_overview_in_review_message">Our Buy &amp; Sell Partner Coinify will email you a status update within 48 hours.</string>
     <string name="buy_sell_overview_in_review_button">Buy now with card</string>
     <string name="buy_sell_overview_sell_unavailable">Your identity verification is still in review, so you cannot sell bitcoin at this time.</string>
     <string name="buy_sell_overview_next_recurring_order">Your next recurring order</string>
@@ -70,7 +69,7 @@
     <string name="buy_sell_review_status_thanks">Thanks for completing the Identity Verification Process</string>
     <string name="buy_sell_review_in_progress">Identity Verification Process In Progress</string>
     <string name="buy_sell_review_failed">Identity Verification Process Unsuccessful</string>
-    <string name="buy_sell_review_status_message">Our Buy &amp; Sell Partner Coinify will email you a status updated within 48 hours.</string>
+    <string name="buy_sell_review_status_message">Our Buy &amp; Sell Partner Coinify will email you a status update within 48 hours.</string>
     <string name="buy_sell_review_status_failed">Please contact our Buy &amp; Sell Partner Coinify</string>
     <string name="buy_sell_review_status">Status: %1$s</string>
     <string name="buy_sell_review_status_in_review">In Review</string>
@@ -174,7 +173,7 @@
 
     <!-- Coinify Verification -->
     <string name="buy_sell_get_to_know_you_title">Let\’s Get to Know You</string>
-    <string name="buy_sell_get_to_know_you_message">We need to learn a bit about you before we can open your exchange account.</string>
+    <string name="buy_sell_get_to_know_you_message">We need to learn a bit about you before we can open your buy and sell account.</string>
     <string name="buy_sell_cannot_open_file">Cannot open file chooser</string>
     <string name="buy_sell_choose_file">Choose file</string>
 

@@ -50,6 +50,7 @@
                     android:id="@+id/edit_text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="textPersonName|textCapWords"
                     android:maxLength="64" />
 
@@ -71,6 +72,7 @@
                     android:id="@+id/edit_text_street_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="textPostalAddress|textCapWords"
                     android:maxLength="64" />
 
@@ -92,6 +94,7 @@
                     android:id="@+id/edit_text_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="textPostalAddress|textCapWords"
                     android:maxLength="64" />
 
@@ -113,6 +116,7 @@
                     android:id="@+id/edit_text_postcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
                     android:inputType="textPostalAddress|textCapCharacters"
                     android:maxLength="16" />
 

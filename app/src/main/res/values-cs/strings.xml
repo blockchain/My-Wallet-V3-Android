@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Povolit snímky obrazovky</string>
 
     <string name="information">Informace</string>
-    <string name="transaction_detail_verify">Ověřit na Blockchain.info</string>
+    <string name="transaction_detail_verify">Ověřit na Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Sdílet podrobnosti transakce</string>
     <string name="transaction_detail_contact_note">Poznámka</string>
     <string name="security_centre_email_check">Ověřit e-mail</string>

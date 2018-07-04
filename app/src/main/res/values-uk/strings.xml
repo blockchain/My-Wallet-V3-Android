@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Активувати скріншоти</string>
 
     <string name="information">Інформація</string>
-    <string name="transaction_detail_verify">Підтвердити на Blockchain.info</string>
+    <string name="transaction_detail_verify">Підтвердити на Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Поділитись подробицями транзакцій</string>
     <string name="transaction_detail_contact_note">Примітка</string>
     <string name="security_centre_email_check">Перевірити електронну пошту</string>

@@ -287,9 +287,9 @@ class CoinifyOverviewPresenter @Inject constructor(
                 onSuccess = {
                     if (!it.isEmpty()) {
                         it.map {
-                            val subscription = it.first ?: return@subscribeBy
-
+                            val subscription = it.first
                             val trade = it.second
+
                             val calendar = Calendar.getInstance()
                                     .apply { time = trade.createTime.fromIso8601()!! }
                             val dayOfWeek = calendar.getDisplayName(
@@ -368,7 +368,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                             ExchangeService.METADATA_TYPE_EXCHANGE
                     )
                 }
-                .subscribeBy(onError = {Timber.e(it) })
+                .subscribeBy(onError = { Timber.e(it) })
     }
 
     //region Model helper functions
@@ -401,8 +401,12 @@ class CoinifyOverviewPresenter @Inject constructor(
                 }
         val titleString = stringUtils.getFormattedString(titleStringRes, stateString)
         // Date
-        val dateString =
-                (coinifyTrade.updateTime.fromIso8601() ?: Date()).toFormattedString(view.locale)
+        val time = coinifyTrade.updateTime.fromIso8601() ?: Date()
+        val calendar = Calendar.getInstance()
+        val timeZone = calendar.timeZone
+        val offset = timeZone.getOffset(time.time)
+        val offsetTime = time.time + offset
+        val dateString = Date(offsetTime).toFormattedString(view.locale)
         // Amounts
         val sent = coinifyTrade.transferIn.receiveAmount
         val sentWithFee = coinifyTrade.transferIn.sendAmount

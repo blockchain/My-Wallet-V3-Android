@@ -7,13 +7,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.ShortcutManager
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatEditText
@@ -21,26 +19,31 @@ import android.text.InputFilter
 import android.text.InputType
 import android.view.View
 import android.widget.ImageView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.BasePermissionListener
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.websocket.WebSocketService
 import piuk.blockchain.android.databinding.ActivityAccountEditBinding
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.android.ui.confirm.ConfirmPaymentDialog
 import piuk.blockchain.android.ui.shortcuts.LauncherShortcutHelper
 import piuk.blockchain.android.ui.zxing.CaptureActivity
-import piuk.blockchain.androidcoreui.utils.AndroidUtils
-import piuk.blockchain.androidcoreui.utils.AppUtil
-import piuk.blockchain.android.util.PermissionUtil
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
+import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import piuk.blockchain.androidcoreui.utils.AndroidUtils
+import piuk.blockchain.androidcoreui.utils.AppUtil
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.toast
+import timber.log.Timber
 import javax.inject.Inject
 
 class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresenter>(),
@@ -72,7 +75,7 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
         presenter.accountModel = AccountEditModel(this)
         binding.viewModel = accountEditPresenter
 
-        setupToolbar(binding.toolbarContainer!!.toolbarGeneral, R.string.edit)
+        setupToolbar(binding.toolbarContainer.toolbarGeneral, R.string.edit)
 
         binding.tvTransfer.setOnClickListener {
             if (presenter.transferFundsClickable()) {
@@ -135,18 +138,33 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
     }
 
     override fun startScanActivity() {
-        if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED) {
-            PermissionUtil.requestCameraPermissionFromActivity(binding.mainLayout, this)
-        } else {
-            if (!appUtil.isCameraOpen) {
-                val intent = Intent(this, CaptureActivity::class.java)
-                startActivityForResult(intent, SCAN_PRIVX)
-            } else {
-                toast(R.string.camera_unavailable, ToastCustom.TYPE_ERROR)
+        val deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+                .with(binding.mainLayout, R.string.request_camera_permission)
+                .withButton(android.R.string.ok) { startScanActivity() }
+                .build()
+
+        val grantedPermissionListener = object : BasePermissionListener() {
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                startCameraIfAvailable()
             }
+        }
+
+        val compositePermissionListener =
+                CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
+
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(compositePermissionListener)
+                .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
+                .check()
+    }
+
+    private fun startCameraIfAvailable() {
+        if (!appUtil.isCameraOpen) {
+            val intent = Intent(this, CaptureActivity::class.java)
+            startActivityForResult(intent, SCAN_PRIVX)
+        } else {
+            toast(R.string.camera_unavailable, ToastCustom.TYPE_ERROR)
         }
     }
 
@@ -295,22 +313,6 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
                 presenter.handleIncomingScanIntent(data)
             }
         } ?: toast(R.string.unexpected_error, ToastCustom.TYPE_ERROR)
-    }
-
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-    ) {
-        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startScanActivity()
-            } else {
-                // Permission request was denied.
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
     }
 
     override fun showTransactionSuccess() {

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.view.inputmethod.EditorInfo
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.confirmation.sell.CoinifySellConfirmationActivity
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_add_address.constraint_layout_add
 import kotlinx.android.synthetic.main.activity_add_address.edit_text_city as editTextCity
 import kotlinx.android.synthetic.main.activity_add_address.edit_text_country as editTextCountry
 import kotlinx.android.synthetic.main.activity_add_address.edit_text_name as editTextName
-import kotlinx.android.synthetic.main.activity_add_address.edit_text_name as editTextStreet
+import kotlinx.android.synthetic.main.activity_add_address.edit_text_street_name as editTextStreet
 import kotlinx.android.synthetic.main.activity_add_address.edit_text_postcode as editTextPostCode
 import kotlinx.android.synthetic.main.activity_add_address.text_input_layout_country as inputLayoutCountry
 import kotlinx.android.synthetic.main.toolbar_general.toolbar_general as toolBar
@@ -61,6 +62,30 @@ class AddAddressActivity : BaseMvpActivity<AddAddressView, AddAddressPresenter>(
                     presenter.onCountryCodeChanged(code)
                 }
             }).show()
+        }
+
+        editTextName.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                consume { editTextStreet.requestFocus() }
+            } else false
+        }
+
+        editTextStreet.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                consume { editTextCity.requestFocus() }
+            } else false
+        }
+
+        editTextCity.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                consume { editTextPostCode.requestFocus() }
+            } else false
+        }
+
+        editTextPostCode.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                consume { ViewUtils.hideKeyboard(this) }
+            } else false
         }
 
         onViewReady()

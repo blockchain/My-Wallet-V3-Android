@@ -404,7 +404,7 @@
     <string name="enable_screenshots">เปิดใช้งานภาพถ่ายหน้าจอ</string>
 
     <string name="information">ข้อมูล</string>
-    <string name="transaction_detail_verify">ยืนยันบน Blockchain.info</string>
+    <string name="transaction_detail_verify">ยืนยันบน Blockchain.com</string>
     <string name="transaction_detail_share_chooser">แชร์รายละเอียดธุรกรรม</string>
     <string name="transaction_detail_contact_note">หมายเหตุ</string>
     <string name="security_centre_email_check">ตรวจสอบอีเมล</string>

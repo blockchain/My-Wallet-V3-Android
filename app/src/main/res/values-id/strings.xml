@@ -404,7 +404,7 @@
     <string name="enable_screenshots">Aktifkan Screenshot</string>
 
     <string name="information">Informasi</string>
-    <string name="transaction_detail_verify">Verifikasi Blockchain.info</string>
+    <string name="transaction_detail_verify">Verifikasi Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Bagikan perincian transaksi</string>
     <string name="transaction_detail_contact_note">Catatan</string>
     <string name="security_centre_email_check">Periksa email</string>

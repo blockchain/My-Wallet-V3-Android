@@ -57,6 +57,7 @@ public class ApiModule {
         CertificatePinner certificatePinner = new CertificatePinner.Builder()
                 .add("api.blockchain.info", "sha256/Z87j23nY+/WSTtsgE/O4ZcDVhevBohFPgPMU6rV2iSw=")
                 .add("blockchain.info", "sha256/Z87j23nY+/WSTtsgE/O4ZcDVhevBohFPgPMU6rV2iSw=")
+                .add("blockchain.com", "sha256/Z87j23nY+/WSTtsgE/O4ZcDVhevBohFPgPMU6rV2iSw=")
                 .build();
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder()

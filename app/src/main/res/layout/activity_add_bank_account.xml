@@ -48,6 +48,7 @@
                     android:id="@+id/edit_text_iban"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapCharacters"
                     android:maxLength="34" />
 
@@ -69,6 +70,7 @@
                     android:id="@+id/edit_text_bic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionGo"
                     android:inputType="textCapCharacters"
                     android:maxLength="11" />
 

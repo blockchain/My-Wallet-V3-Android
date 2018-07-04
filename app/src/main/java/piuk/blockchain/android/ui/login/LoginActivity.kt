@@ -3,23 +3,29 @@ package piuk.blockchain.android.ui.login
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.toolbar_general.*
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.BasePermissionListener
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
+import kotlinx.android.synthetic.main.activity_login.button_manual_pair
+import kotlinx.android.synthetic.main.activity_login.button_scan
+import kotlinx.android.synthetic.main.activity_login.mainLayout
+import kotlinx.android.synthetic.main.activity_login.pairingFirstStep
+import kotlinx.android.synthetic.main.toolbar_general.toolbar_general
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.auth.PinEntryActivity
+import piuk.blockchain.android.ui.zxing.CaptureActivity
+import piuk.blockchain.androidcore.data.api.EnvironmentConfig
+import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.androidcoreui.utils.AppUtil
-import piuk.blockchain.android.util.PermissionUtil
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcoreui.utils.extensions.toast
-import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import timber.log.Timber
 import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -41,22 +47,12 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
 
         setupToolbar(toolbar_general, R.string.pair_your_wallet)
 
-        pairingFirstStep.text = getString(R.string.pair_wallet_step_1, environmentConfig.explorerUrl + "wallet")
+        pairingFirstStep.text =
+                getString(R.string.pair_wallet_step_1, environmentConfig.explorerUrl + "wallet")
 
         button_manual_pair.setOnClickListener { onClickManualPair() }
-        button_scan.setOnClickListener { onClickQRPair() }
+        button_scan.setOnClickListener { requestCameraPermissionIfNeeded() }
     }
-
-    override fun createPresenter() = loginPresenter
-
-    override fun getView() = this
-
-    override fun startLogoutTimer() {
-        // No-op
-    }
-
-    override fun onSupportNavigateUp() =
-            consume { onBackPressed() }
 
     override fun showToast(message: Int, toastType: String) = toast(message, toastType)
 
@@ -66,18 +62,6 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
             if (data?.getStringExtra(CaptureActivity.SCAN_RESULT) != null) {
                 presenter.pairWithQR(data.getStringExtra(CaptureActivity.SCAN_RESULT))
             }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startScanActivity()
-            } else {
-                // Permission request was denied.
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
 
@@ -105,12 +89,34 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
         startActivity(intent)
     }
 
-    private fun onClickQRPair() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            PermissionUtil.requestCameraPermissionFromActivity(mainLayout, this)
-        } else {
-            startScanActivity()
+    override fun onSupportNavigateUp() = consume { onBackPressed() }
+
+    override fun createPresenter() = loginPresenter
+
+    override fun getView() = this
+
+    override fun startLogoutTimer() = Unit
+
+    private fun requestCameraPermissionIfNeeded() {
+        val deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+                .with(mainLayout, R.string.request_camera_permission)
+                .withButton(android.R.string.ok) { requestCameraPermissionIfNeeded() }
+                .build()
+
+        val grantedPermissionListener = object : BasePermissionListener() {
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                startScanActivity()
+            }
         }
+
+        val compositePermissionListener =
+                CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
+
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(compositePermissionListener)
+                .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
+                .check()
     }
 
     private fun onClickManualPair() {

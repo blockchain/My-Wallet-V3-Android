@@ -403,7 +403,7 @@
     <string name="enable_screenshots">スクリーンショットを有効にする</string>
 
     <string name="information">情報</string>
-    <string name="transaction_detail_verify">Blockchain.infoで認証</string>
+    <string name="transaction_detail_verify">Blockchain.com で認証</string>
     <string name="transaction_detail_share_chooser">取引情報をシェア</string>
     <string name="transaction_detail_contact_note">メモ</string>
     <string name="security_centre_email_check">メールを確認</string>

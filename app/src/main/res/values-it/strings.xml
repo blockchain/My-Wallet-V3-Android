@@ -405,7 +405,7 @@
     <string name="enable_screenshots">Attiva gli screenshot</string>
 
     <string name="information">Informazioni</string>
-    <string name="transaction_detail_verify">Verifica su Blockchain.info</string>
+    <string name="transaction_detail_verify">Verifica su Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Condividi i dettagli della transazione</string>
     <string name="transaction_detail_contact_note">Nota</string>
     <string name="security_centre_email_check">Controlla l\'email</string>

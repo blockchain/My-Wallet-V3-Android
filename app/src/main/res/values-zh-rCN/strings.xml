@@ -455,7 +455,7 @@
     <string name="transaction_details_unknown">未知</string>
     <string name="transaction_detail_coinbase">没有输入值 (新生成的币)</string>
     <string name="transaction_detail_double_spend">可能面临重复支付的风险。</string>
-    <string name="transaction_detail_verify">在Blockchain.info进行验证</string>
+    <string name="transaction_detail_verify">在Blockchain.com进行验证</string>
     <string name="transaction_detail_share_chooser">分享交易详细信息</string>
     <string name="transaction_detail_contact_note">注释</string>
 

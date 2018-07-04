@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Разрешить скриншоты</string>
 
     <string name="information">Информация</string>
-    <string name="transaction_detail_verify">Верифицировать на Blockchain.info</string>
+    <string name="transaction_detail_verify">Верифицировать на Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Поделиться данными сделки</string>
     <string name="transaction_detail_contact_note">Примечание</string>
     <string name="security_centre_email_check">Проверьте почту</string>

@@ -27,7 +27,7 @@ import org.bitcoinj.params.BitcoinMainNetParams
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
-import org.web3j.protocol.core.methods.request.RawTransaction
+import org.web3j.crypto.RawTransaction
 import org.web3j.utils.Convert
 import piuk.blockchain.android.R
 import piuk.blockchain.android.RxTest

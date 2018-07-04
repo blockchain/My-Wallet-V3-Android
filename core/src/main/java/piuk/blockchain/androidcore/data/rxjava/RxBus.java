@@ -76,7 +76,7 @@ public class RxBus {
                 subjectsMap.remove(type);
             }
         } else {
-            Timber.e("unregister of type " + type.getSimpleName() + " failed, as no PublishSubject with a matching type was found");
+            Timber.w("unregister of type " + type.getSimpleName() + " failed, as no PublishSubject with a matching type was found");
         }
     }
 

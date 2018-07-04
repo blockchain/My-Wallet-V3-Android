@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Habilitar capturas de pantalla</string>
 
     <string name="information">Información</string>
-    <string name="transaction_detail_verify">Verifique en Blockchain.info</string>
+    <string name="transaction_detail_verify">Verifique en Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Compartir información de transacción</string>
     <string name="transaction_detail_contact_note">Nota</string>
     <string name="security_centre_email_check">Revise su correo electrónico</string>

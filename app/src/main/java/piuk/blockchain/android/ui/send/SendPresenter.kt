@@ -24,7 +24,7 @@ import io.reactivex.subjects.PublishSubject
 import org.apache.commons.lang3.tuple.Pair
 import org.bitcoinj.core.Address
 import org.bitcoinj.core.ECKey
-import org.web3j.protocol.core.methods.request.RawTransaction
+import org.web3j.crypto.RawTransaction
 import org.web3j.utils.Convert
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.bitcoincash.BchDataManager

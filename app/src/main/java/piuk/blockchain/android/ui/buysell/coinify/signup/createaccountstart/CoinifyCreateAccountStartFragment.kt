@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_coinify_create_account_start.*
+import kotlinx.android.synthetic.main.fragment_coinify_create_account_start.buysellWelcomeButton
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
 import piuk.blockchain.androidcoreui.utils.extensions.inflate

@@ -401,7 +401,7 @@
     <string name="enable_screenshots">스크린샷 사용 설정</string>
 
     <string name="information">정보</string>
-    <string name="transaction_detail_verify">Blockchain.info에서 확인하기</string>
+    <string name="transaction_detail_verify">Blockchain.com 에서 확인하기</string>
     <string name="transaction_detail_share_chooser">거래 상세 내용 공유</string>
     <string name="transaction_detail_contact_note">설명</string>
     <string name="security_centre_email_check">이메일 확인</string>

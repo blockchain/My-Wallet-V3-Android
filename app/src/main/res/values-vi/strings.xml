@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Kích hoạt Chụp màn hình</string>
 
     <string name="information">Thông tin</string>
-    <string name="transaction_detail_verify">Xác minh trên Blockchain.info</string>
+    <string name="transaction_detail_verify">Xác minh trên Blockchain.com</string>
     <string name="transaction_detail_share_chooser">Chia sẻ thông tin giao dịch</string>
     <string name="transaction_detail_contact_note">Lưu ý</string>
     <string name="security_centre_email_check">Kiểm tra email</string>

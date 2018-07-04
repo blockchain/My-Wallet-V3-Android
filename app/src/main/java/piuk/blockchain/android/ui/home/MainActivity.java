@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.pm.ShortcutManager;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -40,13 +39,17 @@ import android.widget.FrameLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.single.BasePermissionListener;
+import com.karumi.dexter.listener.single.CompositePermissionListener;
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
 
 import info.blockchain.wallet.util.FormatsUtil;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +85,6 @@ import piuk.blockchain.android.ui.settings.SettingsActivity;
 import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
 import piuk.blockchain.android.ui.zxing.CaptureActivity;
-import piuk.blockchain.android.util.PermissionUtil;
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType;
@@ -551,29 +553,32 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
     @Thunk
     void requestScan() {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            PermissionUtil.requestCameraPermissionFromActivity(binding.getRoot(), MainActivity.this);
-        } else {
-            startScanActivity();
-        }
+        SnackbarOnDeniedPermissionListener deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+                .with(binding.getRoot(), R.string.request_camera_permission)
+                .withButton(android.R.string.ok, v -> requestScan())
+                .build();
+
+        BasePermissionListener grantedPermissionListener = new BasePermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                startScanActivity();
+            }
+        };
+
+        CompositePermissionListener compositePermissionListener =
+                new CompositePermissionListener(deniedPermissionListener, grantedPermissionListener);
+
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(compositePermissionListener)
+                .withErrorListener(error -> Timber.wtf("Dexter permissions error " + error))
+                .check();
     }
 
     private void startSingleActivity(Class clazz) {
         Intent intent = new Intent(MainActivity.this, clazz);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startScanActivity();
-            } else {
-                // Permission request was denied.
-            }
-        }
     }
 
     @Thunk
@@ -697,13 +702,6 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
         frontendJavascriptManager = new FrontendJavascriptManager(this, buyWebView);
         buyWebView.addJavascriptInterface(frontendJavascriptManager, FrontendJavascriptManager.JS_INTERFACE_NAME);
-    }
-
-    @Override
-    public void updateNavDrawerToBuyAndSell() {
-        Menu menu = binding.navigationView.getMenu();
-        MenuItem buy = menu.findItem(R.id.nav_buy);
-        buy.setTitle(R.string.onboarding_buy_and_sell_bitcoin);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

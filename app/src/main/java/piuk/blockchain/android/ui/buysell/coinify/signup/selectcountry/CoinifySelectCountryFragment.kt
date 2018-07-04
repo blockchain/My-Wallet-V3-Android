@@ -5,16 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_coinify_select_country.*
+import com.jakewharton.rxbinding2.view.RxView
+import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.android.synthetic.main.fragment_coinify_select_country.buyandsellChooseCountryContinueButton
+import kotlinx.android.synthetic.main.fragment_coinify_select_country.countryPicker
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
-class CoinifySelectCountryFragment: BaseFragment<CoinifySelectCountryView, CoinifySelectCountryPresenter>(),
+class CoinifySelectCountryFragment :
+    BaseFragment<CoinifySelectCountryView, CoinifySelectCountryPresenter>(),
     CoinifySelectCountryView {
 
     @Inject
@@ -34,9 +38,9 @@ class CoinifySelectCountryFragment: BaseFragment<CoinifySelectCountryView, Coini
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buyandsellChooseCountryContinueButton.setOnClickListener {
-            presenter.collectDataAndContinue(countryPicker.currentItemPosition)
-        }
+        RxView.clicks(buyandsellChooseCountryContinueButton)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribeBy(onNext = { presenter.collectDataAndContinue(countryPicker.currentItemPosition) })
 
         onViewReady()
     }
@@ -77,9 +81,7 @@ class CoinifySelectCountryFragment: BaseFragment<CoinifySelectCountryView, Coini
 
     companion object {
 
-        @JvmStatic
-        fun newInstance(): CoinifySelectCountryFragment {
-            return CoinifySelectCountryFragment()
-        }
+        fun newInstance(): CoinifySelectCountryFragment = CoinifySelectCountryFragment()
+
     }
 }

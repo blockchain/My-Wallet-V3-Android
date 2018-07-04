@@ -43,7 +43,7 @@ dependencies {
     api Libraries.kotlin
     api files('libs/bitcoinj-core-0.15-SNAPSHOT.jar')
     api files('libs/api-client-0.1.16-SNAPSHOT.jar')
-    api Libraries.web3j
+    api(Libraries.web3j) { exclude module: 'jackson' }
     implementation Libraries.spongyCastle
     compileOnly Libraries.json
     // Networking
@@ -55,10 +55,11 @@ dependencies {
     implementation Libraries.retrofitRxJavaAdapter
     implementation Libraries.okHttpInterceptor
     // Utils
-    implementation Libraries.jjwt
+    implementation(Libraries.jjwt) { exclude module: 'jackson' }
     implementation Libraries.okIo
     implementation Libraries.commonsIo
     implementation Libraries.commonsCli
+    implementation Libraries.lambdaWorks
     api Libraries.commonsCodec
     api Libraries.commonsLang
     api Libraries.urlBuilder

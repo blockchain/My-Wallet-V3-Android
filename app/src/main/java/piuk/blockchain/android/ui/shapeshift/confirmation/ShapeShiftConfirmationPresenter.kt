@@ -11,7 +11,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.bitcoinj.core.ECKey
-import org.web3j.protocol.core.methods.request.RawTransaction
+import org.web3j.crypto.RawTransaction
 import org.web3j.utils.Convert
 import piuk.blockchain.android.R
 import piuk.blockchain.androidcoreui.utils.logging.Logging

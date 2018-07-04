@@ -403,7 +403,7 @@
     <string name="enable_screenshots">Screenshots inschakelen</string>
 
     <string name="information">Informatie</string>
-    <string name="transaction_detail_verify">Bij Blockchain.info verifiëren</string>
+    <string name="transaction_detail_verify">Bij Blockchain.com verifiëren</string>
     <string name="transaction_detail_share_chooser">Transactiegegevens delen</string>
     <string name="transaction_detail_contact_note">Let op</string>
     <string name="security_centre_email_check">Controleer e-mail</string>

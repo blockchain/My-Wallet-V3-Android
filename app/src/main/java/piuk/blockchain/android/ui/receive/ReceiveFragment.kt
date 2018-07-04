@@ -8,14 +8,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.CoordinatorLayout
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -28,20 +26,50 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.BasePermissionListener
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.contacts.data.Contact
 import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.alert_watch_only_spend.view.*
-import kotlinx.android.synthetic.main.fragment_receive.*
-import kotlinx.android.synthetic.main.include_amount_row.*
-import kotlinx.android.synthetic.main.include_amount_row.view.*
-import kotlinx.android.synthetic.main.include_from_row.*
-import kotlinx.android.synthetic.main.include_from_row.view.*
-import kotlinx.android.synthetic.main.include_to_row.*
-import kotlinx.android.synthetic.main.view_expanding_currency_header.*
+import kotlinx.android.synthetic.main.alert_watch_only_spend.view.confirm_cancel
+import kotlinx.android.synthetic.main.alert_watch_only_spend.view.confirm_continue
+import kotlinx.android.synthetic.main.alert_watch_only_spend.view.confirm_dont_ask_again
+import kotlinx.android.synthetic.main.fragment_receive.amount_container
+import kotlinx.android.synthetic.main.fragment_receive.button_request
+import kotlinx.android.synthetic.main.fragment_receive.coordinator_layout_receive
+import kotlinx.android.synthetic.main.fragment_receive.currency_header
+import kotlinx.android.synthetic.main.fragment_receive.custom_keyboard
+import kotlinx.android.synthetic.main.fragment_receive.divider1
+import kotlinx.android.synthetic.main.fragment_receive.divider3
+import kotlinx.android.synthetic.main.fragment_receive.divider4
+import kotlinx.android.synthetic.main.fragment_receive.divider_to
+import kotlinx.android.synthetic.main.fragment_receive.from_container
+import kotlinx.android.synthetic.main.fragment_receive.image_qr
+import kotlinx.android.synthetic.main.fragment_receive.progressbar
+import kotlinx.android.synthetic.main.fragment_receive.scrollview
+import kotlinx.android.synthetic.main.fragment_receive.textview_receiving_address
+import kotlinx.android.synthetic.main.fragment_receive.textview_whats_this
+import kotlinx.android.synthetic.main.fragment_receive.to_container
+import kotlinx.android.synthetic.main.include_amount_row.amountCrypto
+import kotlinx.android.synthetic.main.include_amount_row.amountFiat
+import kotlinx.android.synthetic.main.include_amount_row.currencyCrypto
+import kotlinx.android.synthetic.main.include_amount_row.currencyFiat
+import kotlinx.android.synthetic.main.include_amount_row.view.amountCrypto
+import kotlinx.android.synthetic.main.include_amount_row.view.amountFiat
+import kotlinx.android.synthetic.main.include_from_row.fromAddressTextView
+import kotlinx.android.synthetic.main.include_from_row.fromArrowImage
+import kotlinx.android.synthetic.main.include_from_row.view.fromAddressTextView
+import kotlinx.android.synthetic.main.include_from_row.view.fromArrowImage
+import kotlinx.android.synthetic.main.include_to_row.constraint_layout_to_row
+import kotlinx.android.synthetic.main.include_to_row.toAddressTextView
+import kotlinx.android.synthetic.main.include_to_row.toArrowImage
+import kotlinx.android.synthetic.main.view_expanding_currency_header.textview_selected_currency
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
@@ -55,7 +83,6 @@ import piuk.blockchain.android.ui.contacts.IntroducingContactsPromptDialog
 import piuk.blockchain.android.ui.customviews.callbacks.OnTouchOutsideViewListener
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.util.EditTextFormatUtil
-import piuk.blockchain.android.util.PermissionUtil
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
@@ -497,8 +524,8 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
 
         // Set receiving account
         if (resultCode == Activity.RESULT_OK
-                && requestCode == REQUEST_CODE_RECEIVE_BITCOIN
-                && data != null
+            && requestCode == REQUEST_CODE_RECEIVE_BITCOIN
+            && data != null
         ) {
 
             try {
@@ -519,8 +546,8 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
             }
 
         } else if (resultCode == Activity.RESULT_OK
-                && requestCode == REQUEST_CODE_RECEIVE_BITCOIN_CASH
-                && data != null
+            && requestCode == REQUEST_CODE_RECEIVE_BITCOIN_CASH
+            && data != null
         ) {
 
             try {
@@ -542,10 +569,9 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
 
             // Choose contact for request
         } else if (resultCode == Activity.RESULT_OK
-                && requestCode == REQUEST_CODE_CHOOSE_CONTACT
-                && data != null
+            && requestCode == REQUEST_CODE_CHOOSE_CONTACT
+            && data != null
         ) {
-
             try {
                 val contact: Contact = data.getStringExtra(EXTRA_SELECTED_ITEM).toKotlinObject()
                 presenter.selectedContactId = contact.id
@@ -590,45 +616,32 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
                     .setTitle(R.string.app_name)
                     .setMessage(R.string.receive_address_to_share)
                     .setCancelable(false)
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        if (ContextCompat.checkSelfPermission(
-                                        this,
-                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            PermissionUtil.requestWriteStoragePermissionFromFragment(
-                                    this.findViewById(
-                                            R.id.coordinator_layout
-                                    ), this@ReceiveFragment
-                            )
-                        } else {
-                            presenter.onShowBottomSheetSelected()
-                        }
-                    }
+                    .setPositiveButton(R.string.yes) { _, _ -> requestStoragePermissionIfNeeded() }
                     .setNegativeButton(R.string.no, null)
                     .show()
         }
     }
 
-    override fun shouldShowRequestPermissionRationale(permission: String): Boolean {
-        return permission == Manifest.permission.WRITE_EXTERNAL_STORAGE
-                || super.shouldShowRequestPermissionRationale(permission)
-    }
+    private fun requestStoragePermissionIfNeeded() {
+        val deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+                .with(coordinator_layout_receive, R.string.request_write_storage_permission)
+                .withButton(android.R.string.ok) { requestStoragePermissionIfNeeded() }
+                .build()
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-    ) {
-        if (requestCode == PermissionUtil.PERMISSION_REQUEST_WRITE_STORAGE) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        val grantedPermissionListener = object : BasePermissionListener() {
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                 presenter.onShowBottomSheetSelected()
-            } else {
-                // Permission request was denied.
             }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
+
+        val compositePermissionListener =
+                CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
+
+        Dexter.withActivity(requireActivity())
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(compositePermissionListener)
+                .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
+                .check()
     }
 
     override fun showWatchOnlyWarning() {

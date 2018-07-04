@@ -3,8 +3,11 @@ package piuk.blockchain.android.ui.send
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.*
-import android.content.pm.PackageManager
+import android.content.BroadcastReceiver
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -22,21 +25,54 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.BasePermissionListener
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.alert_watch_only_spend.view.*
-import kotlinx.android.synthetic.main.fragment_send.*
-import kotlinx.android.synthetic.main.include_amount_row.*
-import kotlinx.android.synthetic.main.include_amount_row.view.*
-import kotlinx.android.synthetic.main.include_from_row.view.*
-import kotlinx.android.synthetic.main.include_to_row_editable.*
-import kotlinx.android.synthetic.main.include_to_row_editable.view.*
-import kotlinx.android.synthetic.main.view_expanding_currency_header.*
+import kotlinx.android.synthetic.main.alert_watch_only_spend.view.confirm_cancel
+import kotlinx.android.synthetic.main.alert_watch_only_spend.view.confirm_continue
+import kotlinx.android.synthetic.main.alert_watch_only_spend.view.confirm_dont_ask_again
+import kotlinx.android.synthetic.main.fragment_send.amountContainer
+import kotlinx.android.synthetic.main.fragment_send.arbitraryWarning
+import kotlinx.android.synthetic.main.fragment_send.buttonContinue
+import kotlinx.android.synthetic.main.fragment_send.coordinator_layout
+import kotlinx.android.synthetic.main.fragment_send.currency_header
+import kotlinx.android.synthetic.main.fragment_send.edittextCustomFee
+import kotlinx.android.synthetic.main.fragment_send.fromContainer
+import kotlinx.android.synthetic.main.fragment_send.keyboard
+import kotlinx.android.synthetic.main.fragment_send.max
+import kotlinx.android.synthetic.main.fragment_send.progressBarMaxAvailable
+import kotlinx.android.synthetic.main.fragment_send.scrollView
+import kotlinx.android.synthetic.main.fragment_send.spinnerPriority
+import kotlinx.android.synthetic.main.fragment_send.textInputLayout
+import kotlinx.android.synthetic.main.fragment_send.textviewFeeAbsolute
+import kotlinx.android.synthetic.main.fragment_send.textviewFeeTime
+import kotlinx.android.synthetic.main.fragment_send.textviewFeeType
+import kotlinx.android.synthetic.main.fragment_send.toContainer
+import kotlinx.android.synthetic.main.include_amount_row.amountCrypto
+import kotlinx.android.synthetic.main.include_amount_row.amountFiat
+import kotlinx.android.synthetic.main.include_amount_row.view.amountCrypto
+import kotlinx.android.synthetic.main.include_amount_row.view.amountFiat
+import kotlinx.android.synthetic.main.include_amount_row.view.currencyCrypto
+import kotlinx.android.synthetic.main.include_amount_row.view.currencyFiat
+import kotlinx.android.synthetic.main.include_from_row.view.fromAddressTextView
+import kotlinx.android.synthetic.main.include_from_row.view.fromArrowImage
+import kotlinx.android.synthetic.main.include_to_row_editable.toAddressEditTextView
+import kotlinx.android.synthetic.main.include_to_row_editable.toArrow
+import kotlinx.android.synthetic.main.include_to_row_editable.view.toAddressEditTextView
+import kotlinx.android.synthetic.main.include_to_row_editable.view.toArrow
+import kotlinx.android.synthetic.main.view_expanding_currency_header.textview_selected_currency
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus
 import piuk.blockchain.android.data.logging.EventService
 import piuk.blockchain.android.injection.Injector
@@ -48,11 +84,9 @@ import piuk.blockchain.android.ui.chooser.AccountMode
 import piuk.blockchain.android.ui.confirm.ConfirmPaymentDialog
 import piuk.blockchain.android.ui.customviews.callbacks.OnTouchOutsideViewListener
 import piuk.blockchain.android.ui.home.MainActivity
-import piuk.blockchain.android.ui.home.MainActivity.SCAN_URI
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.util.AppRate
-import piuk.blockchain.androidcoreui.utils.AppUtil
-import piuk.blockchain.android.util.PermissionUtil
+import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
@@ -61,8 +95,14 @@ import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.NumericKeyboardCallback
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import piuk.blockchain.androidcoreui.utils.AppUtil
 import piuk.blockchain.androidcoreui.utils.ViewUtils
-import piuk.blockchain.androidcoreui.utils.extensions.*
+import piuk.blockchain.androidcoreui.utils.extensions.getTextString
+import piuk.blockchain.androidcoreui.utils.extensions.gone
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.invisible
+import piuk.blockchain.androidcoreui.utils.extensions.toast
+import piuk.blockchain.androidcoreui.utils.extensions.visible
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -296,22 +336,6 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         }
     }
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-    ) {
-        if (requestCode == PermissionUtil.PERMISSION_REQUEST_CAMERA) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startScanActivity(SCAN_URI)
-            } else {
-                // Permission request was denied.
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-    }
-
     private fun setupReceivingView() {
         //Avoid OntouchListener - causes paste issues on some Samsung devices
         toContainer.toAddressEditTextView.setOnClickListener {
@@ -319,12 +343,12 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
             presenter.clearReceivingObject()
         }
         //LongClick listener required to clear receive address in memory when user long clicks to paste
-        toContainer.toAddressEditTextView.setOnLongClickListener({ v ->
+        toContainer.toAddressEditTextView.setOnLongClickListener { v ->
             toContainer.toAddressEditTextView.setText("")
             presenter.clearReceivingObject()
             v.performClick()
             false
-        })
+        }
 
         //TextChanged listener required to invalidate receive address in memory when user
         //chooses to edit address populated via QR
@@ -554,12 +578,16 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
                     .setActionTextColor(ContextCompat.getColor(this, R.color.primary_blue_accent))
 
             if (extraInfo != null) {
-                snackbar.setAction(
-                        R.string.more,
-                        { showSnackbar(extraInfo, null, Snackbar.LENGTH_INDEFINITE) })
+                snackbar.setAction(R.string.more) {
+                    showSnackbar(
+                            extraInfo,
+                            null,
+                            Snackbar.LENGTH_INDEFINITE
+                    )
+                }
             } else {
                 if (duration == Snackbar.LENGTH_INDEFINITE) {
-                    snackbar.setAction(R.string.ok_cap, {})
+                    snackbar.setAction(R.string.ok_cap, null)
                 }
             }
 
@@ -574,14 +602,12 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
                     R.string.eth_support_contract_not_allowed,
                     Snackbar.LENGTH_INDEFINITE
             ).setActionTextColor(ContextCompat.getColor(this, R.color.primary_blue_accent))
-                    .setAction(
-                            R.string.learn_more,
-                            {
-                                showSnackbar(
-                                        R.string.eth_support_only_eth,
-                                        Snackbar.LENGTH_INDEFINITE
-                                )
-                            })
+                    .setAction(R.string.learn_more) {
+                        showSnackbar(
+                                R.string.eth_support_only_eth,
+                                Snackbar.LENGTH_INDEFINITE
+                        )
+                    }
                     .show()
         }
     }
@@ -833,22 +859,32 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
                             )
                     )
                     .setCancelable(false)
-                    .setPositiveButton(R.string.dialog_continue) { _, _ ->
-                        if (ContextCompat.checkSelfPermission(
-                                    this,
-                                    Manifest.permission.CAMERA
-                            ) != PackageManager.PERMISSION_GRANTED) {
-                            PermissionUtil.requestCameraPermissionFromActivity(
-                                    coordinator_layout,
-                                    activity
-                            )
-                        } else {
-                            startScanActivity(SCAN_PRIVX)
-                        }
-                    }
+                    .setPositiveButton(R.string.dialog_continue) { _, _ -> requestScanPermissions() }
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
         }
+    }
+
+    private fun requestScanPermissions() {
+        val deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+                .with(coordinator_layout, R.string.request_camera_permission)
+                .withButton(android.R.string.ok) { requestScanPermissions() }
+                .build()
+
+        val grantedPermissionListener = object : BasePermissionListener() {
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                startScanActivity(SCAN_PRIVX)
+            }
+        }
+
+        val compositePermissionListener =
+                CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
+
+        Dexter.withActivity(requireActivity())
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(compositePermissionListener)
+                .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
+                .check()
     }
 
     override fun showSecondPasswordDialog() {
@@ -917,7 +953,7 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         buttonContinue.isEnabled = false
         textInputLayout.hint = getString(R.string.fee_options_sat_byte_hint)
 
-        edittextCustomFee.setOnFocusChangeListener({ _, hasFocus ->
+        edittextCustomFee.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus || !edittextCustomFee.text.toString().isEmpty()) {
                 textInputLayout.hint = getString(
                         R.string.fee_options_sat_byte_inline_hint,
@@ -929,7 +965,7 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
             } else {
                 textInputLayout.hint = getString(R.string.fee_options_sat_byte_hint)
             }
-        })
+        }
 
         RxTextView.textChanges(edittextCustomFee)
                 .skip(1)

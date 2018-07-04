@@ -15,7 +15,7 @@ import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import org.bitcoinj.core.ECKey
 import org.spongycastle.util.encoders.Hex
-import org.web3j.protocol.core.methods.request.RawTransaction
+import org.web3j.crypto.RawTransaction
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore

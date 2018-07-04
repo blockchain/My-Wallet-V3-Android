@@ -48,6 +48,7 @@ class ISignThisActivity : BaseAuthActivity() {
 
     @Thunk
     fun handleUrl(url: String?) {
+        Timber.d("URL loaded $url")
         if (url?.contains(TRADE_COMPLETE_PARTIAL_URL) == true && url.contains(paymentId)) {
             if (!paymentComplete) {
                 paymentComplete = true

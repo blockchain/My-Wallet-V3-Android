@@ -20642,7 +20642,7 @@
         errorLine1="    &lt;string name=&quot;project_id&quot; translatable=&quot;false&quot;>fir-production&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~">
         <location
-            file="build/generated/res/google-services/envProdMinApi16/debug/values/values.xml"
+            file="build/generated/res/google-services/envProdMinApi17/debug/values/values.xml"
             line="10"
             column="13"/>
     </issue>
