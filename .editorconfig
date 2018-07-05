@@ -1,5 +1,10 @@
-root = true
+# http://editorconfig.org
+root=true
 
 [*.{kt,kts}]
-# Clears our most common ktlint error, because ktlintFormat won't fix it and doing it by hand is unreasonable
+
+# true (recommended) / false
+insert_final_newline=true
+# possible values: number (e.g. 120) (package name, imports & comments are ignored), "off"
+# it's automatically set to 100 on `ktlint --android ...` (per Android Kotlin Style Guide)
 max_line_length=off
