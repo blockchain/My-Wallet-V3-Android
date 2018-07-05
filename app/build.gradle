@@ -195,6 +195,7 @@ dependencies {
         exclude group: 'com.google.protobuf'
     }
     testImplementation Libraries.json
+    testImplementation project(':testutils')
 }
 
 buildscript {

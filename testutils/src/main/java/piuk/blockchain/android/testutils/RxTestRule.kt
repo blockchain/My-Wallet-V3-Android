@@ -33,6 +33,7 @@ class RxInit {
     }
 
     fun main(scheduler: Scheduler) {
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.trampoline() }
         RxAndroidPlugins.setMainThreadSchedulerHandler { _ -> scheduler }
     }
 

@@ -9,8 +9,9 @@ import io.reactivex.Single
 import org.amshove.kluent.any
 import org.amshove.kluent.mock
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.android.RxTest
+import piuk.blockchain.android.testutils.rxInit
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager
 import piuk.blockchain.androidbuysell.models.CoinifyData
 import piuk.blockchain.androidbuysell.models.ExchangeData
@@ -18,24 +19,28 @@ import piuk.blockchain.androidbuysell.models.coinify.CoinifyTrade
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
-class CoinifyAwaitingBankTransferPresenterTest: RxTest() {
+class CoinifyAwaitingBankTransferPresenterTest {
 
     private lateinit var subject: CoinifyAwaitingBankTransferPresenter
     private val exchangeService: ExchangeService = mock()
     private val coinifyDataManager: CoinifyDataManager = mock()
     private val view: CoinifyAwaitingBankTransferView = mock()
 
+    @Suppress("unused")
+    @get:Rule
+    val initSchedulers = rxInit {
+        mainTrampoline()
+        ioTrampoline()
+    }
 
     @Before
     @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = CoinifyAwaitingBankTransferPresenter(exchangeService, coinifyDataManager)
         subject.initView(view)
     }
 
     @Test
-    @Throws(Exception::class)
     fun `cancel trade completes successfully`() {
         // Arrange
         val token = "TOKEN"
@@ -62,7 +67,6 @@ class CoinifyAwaitingBankTransferPresenterTest: RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `cancel trade fails`() {
         // Arrange
         val token = "TOKEN"
