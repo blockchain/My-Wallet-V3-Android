@@ -17,11 +17,11 @@ fun <T> profile(func: () -> T): T {
     val finishTime = System.nanoTime()
     val timeTaken = finishTime - startTime
     Timber.d(
-            "Function ${func.javaClass.name.replace(
-                    "$",
-                    "."
-            ).replace(Regex(".[0-9]"), "()")
-            } took $timeTaken nanoseconds to execute"
+        "Function ${func.javaClass.name.replace(
+            "$",
+            "."
+        ).replace(Regex(".[0-9]"), "()")
+        } took $timeTaken nanoseconds to execute"
     )
     return returnValue
 }

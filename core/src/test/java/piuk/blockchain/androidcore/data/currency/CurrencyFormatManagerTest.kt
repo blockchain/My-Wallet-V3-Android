@@ -7,7 +7,7 @@ import org.junit.Before
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import java.math.BigDecimal
-import java.util.*
+import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -24,15 +24,15 @@ class CurrencyFormatManagerTest {
     @Before
     fun setUp() {
         subject = CurrencyFormatManager(
-                currencyState,
-                exchangeRateDataManager,
-                prefsUtil,
-                currencyFormatUtil,
-                locale
+            currencyState,
+            exchangeRateDataManager,
+            prefsUtil,
+            currencyFormatUtil,
+            locale
         )
     }
 
-    //region Current selected crypto currency state methods
+    // region Current selected crypto currency state methods
     @Test
     fun `getCryptoMaxDecimalLength BTC`() {
         // Arrange
@@ -118,11 +118,17 @@ class CurrencyFormatManagerTest {
 
         // Act
         // Assert
-        assertTrue(BigDecimal.valueOf(0.00000001).compareTo(
-                subject.getConvertedCoinValue(BigDecimal.valueOf(1L))) == 0)
+        assertTrue(
+            BigDecimal.valueOf(0.00000001).compareTo(
+                subject.getConvertedCoinValue(BigDecimal.valueOf(1L))
+            ) == 0
+        )
 
-        assertTrue(BigDecimal.valueOf(1.0).compareTo(
-                subject.getConvertedCoinValue(BigDecimal.valueOf(1e8.toLong()))) == 0)
+        assertTrue(
+            BigDecimal.valueOf(1.0).compareTo(
+                subject.getConvertedCoinValue(BigDecimal.valueOf(1e8.toLong()))
+            ) == 0
+        )
     }
 
     @Test
@@ -132,13 +138,23 @@ class CurrencyFormatManagerTest {
 
         // Act
         // Assert
-        assertTrue(BigDecimal.valueOf(0.00000001).compareTo(
-                subject.getConvertedCoinValue(coinValue = BigDecimal.valueOf(1L),
-                        convertBtcDenomination = BTCDenomination.SATOSHI)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(0.00000001).compareTo(
+                subject.getConvertedCoinValue(
+                    coinValue = BigDecimal.valueOf(1L),
+                    convertBtcDenomination = BTCDenomination.SATOSHI
+                )
+            ) == 0
+        )
 
-        assertTrue(BigDecimal.valueOf(1.0).compareTo(
-                subject.getConvertedCoinValue(BigDecimal.valueOf(1e8.toLong()),
-                        convertBtcDenomination = BTCDenomination.SATOSHI)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(1.0).compareTo(
+                subject.getConvertedCoinValue(
+                    BigDecimal.valueOf(1e8.toLong()),
+                    convertBtcDenomination = BTCDenomination.SATOSHI
+                )
+            ) == 0
+        )
     }
 
     @Test
@@ -148,13 +164,23 @@ class CurrencyFormatManagerTest {
 
         // Act
         // Assert
-        assertTrue(BigDecimal.valueOf(1L).compareTo(
-                subject.getConvertedCoinValue(coinValue = BigDecimal.valueOf(1L),
-                        convertBtcDenomination = BTCDenomination.BTC)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(1L).compareTo(
+                subject.getConvertedCoinValue(
+                    coinValue = BigDecimal.valueOf(1L),
+                    convertBtcDenomination = BTCDenomination.BTC
+                )
+            ) == 0
+        )
 
-        assertTrue(BigDecimal.valueOf(100_000_000L).compareTo(
-                subject.getConvertedCoinValue(BigDecimal.valueOf(100_000_000L),
-                        convertBtcDenomination = BTCDenomination.BTC)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(100_000_000L).compareTo(
+                subject.getConvertedCoinValue(
+                    BigDecimal.valueOf(100_000_000L),
+                    convertBtcDenomination = BTCDenomination.BTC
+                )
+            ) == 0
+        )
     }
 
     @Test
@@ -164,13 +190,23 @@ class CurrencyFormatManagerTest {
 
         // Act
         // Assert
-        assertTrue(BigDecimal.valueOf(1L).compareTo(
-                subject.getConvertedCoinValue(coinValue = BigDecimal.valueOf(1L),
-                        convertEthDenomination = ETHDenomination.ETH)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(1L).compareTo(
+                subject.getConvertedCoinValue(
+                    coinValue = BigDecimal.valueOf(1L),
+                    convertEthDenomination = ETHDenomination.ETH
+                )
+            ) == 0
+        )
 
-        assertTrue(BigDecimal.valueOf(100_000_000L).compareTo(
-                subject.getConvertedCoinValue(BigDecimal.valueOf(100_000_000L),
-                        convertEthDenomination = ETHDenomination.ETH)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(100_000_000L).compareTo(
+                subject.getConvertedCoinValue(
+                    BigDecimal.valueOf(100_000_000L),
+                    convertEthDenomination = ETHDenomination.ETH
+                )
+            ) == 0
+        )
     }
 
     @Test
@@ -180,13 +216,23 @@ class CurrencyFormatManagerTest {
 
         // Act
         // Assert
-        assertTrue(BigDecimal.valueOf(1L).compareTo(
-                subject.getConvertedCoinValue(coinValue = BigDecimal.valueOf(1000000000000000000L),
-                        convertEthDenomination = ETHDenomination.WEI)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(1L).compareTo(
+                subject.getConvertedCoinValue(
+                    coinValue = BigDecimal.valueOf(1000000000000000000L),
+                    convertEthDenomination = ETHDenomination.WEI
+                )
+            ) == 0
+        )
 
-        assertTrue(BigDecimal.valueOf(0.000000000000000001).compareTo(
-                subject.getConvertedCoinValue(BigDecimal.valueOf(1L),
-                        convertEthDenomination = ETHDenomination.WEI)) == 0)
+        assertTrue(
+            BigDecimal.valueOf(0.000000000000000001).compareTo(
+                subject.getConvertedCoinValue(
+                    BigDecimal.valueOf(1L),
+                    convertEthDenomination = ETHDenomination.WEI
+                )
+            ) == 0
+        )
     }
 
     @Test
@@ -197,8 +243,8 @@ class CurrencyFormatManagerTest {
 
         // Act
         // Assert
-        assertEquals("something",subject.getFormattedSelectedCoinValue(BigDecimal.valueOf(1L)))
+        assertEquals("something", subject.getFormattedSelectedCoinValue(BigDecimal.valueOf(1L)))
     }
 
-    //endregion
+    // endregion
 }

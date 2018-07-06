@@ -7,27 +7,26 @@ import org.bitcoinj.core.Address
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
+import piuk.blockchain.android.util.StringUtils
+import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.android.util.StringUtils
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import timber.log.Timber
 import java.math.BigInteger
 import javax.inject.Inject
-import kotlin.collections.LinkedHashMap
 
 @Mockable
 @PresenterScope
 class SwipeToReceiveHelper @Inject constructor(
-        private val payloadDataManager: PayloadDataManager,
-        private val prefsUtil: PrefsUtil,
-        private val ethDataManager: EthDataManager,
-        private val bchDataManager: BchDataManager,
-        private val stringUtils: StringUtils,
-        private val environmentSettings: EnvironmentConfig
+    private val payloadDataManager: PayloadDataManager,
+    private val prefsUtil: PrefsUtil,
+    private val ethDataManager: EthDataManager,
+    private val bchDataManager: BchDataManager,
+    private val stringUtils: StringUtils,
+    private val environmentSettings: EnvironmentConfig
 ) {
 
     /**
@@ -47,12 +46,12 @@ class SwipeToReceiveHelper @Inject constructor(
 
             for (i in 0 until numOfAddresses) {
                 val receiveAddress =
-                        payloadDataManager.getReceiveAddressAtPosition(defaultAccount, i) ?:
-                        // Likely not initialized yet
-                        break
+                    payloadDataManager.getReceiveAddressAtPosition(defaultAccount, i)
+                    // Likely not initialized yet
+                    ?: break
 
                 stringBuilder.append(receiveAddress)
-                        .append(",")
+                    .append(",")
             }
 
             storeBitcoinAddresses(stringBuilder.toString())
@@ -77,9 +76,9 @@ class SwipeToReceiveHelper @Inject constructor(
 
             for (i in 0 until numOfAddresses) {
                 val receiveAddress =
-                        bchDataManager.getReceiveAddressAtPosition(defaultAccountPosition, i) ?:
-                        // Likely not initialized yet
-                        break
+                    bchDataManager.getReceiveAddressAtPosition(defaultAccountPosition, i)
+                    // Likely not initialized yet
+                    ?: break
 
                 stringBuilder.append(receiveAddress).append(",")
             }
@@ -109,15 +108,15 @@ class SwipeToReceiveHelper @Inject constructor(
      */
     fun getNextAvailableBitcoinAddressSingle(): Single<String> {
         return getBalanceOfAddresses(getBitcoinReceiveAddresses())
-                .map { map ->
-                    for ((address, value) in map) {
-                        val balance = value.finalBalance
-                        if (balance.compareTo(BigInteger.ZERO) == 0) {
-                            return@map address
-                        }
+            .map { map ->
+                for ((address, value) in map) {
+                    val balance = value.finalBalance
+                    if (balance.compareTo(BigInteger.ZERO) == 0) {
+                        return@map address
                     }
-                    return@map ""
-                }.singleOrError()
+                }
+                return@map ""
+            }.singleOrError()
     }
 
     /**
@@ -126,18 +125,18 @@ class SwipeToReceiveHelper @Inject constructor(
      */
     fun getNextAvailableBitcoinCashAddressSingle(): Single<String> {
         return getBalanceOfBchAddresses(getBitcoinCashReceiveAddresses())
-                .map { map ->
-                    for ((address, value) in map) {
-                        val balance = value.finalBalance
-                        if (balance.compareTo(BigInteger.ZERO) == 0) {
-                            return@map Address.fromBase58(
-                                    environmentSettings.bitcoinCashNetworkParameters,
-                                    address
-                            ).toCashAddress()
-                        }
+            .map { map ->
+                for ((address, value) in map) {
+                    val balance = value.finalBalance
+                    if (balance.compareTo(BigInteger.ZERO) == 0) {
+                        return@map Address.fromBase58(
+                            environmentSettings.bitcoinCashNetworkParameters,
+                            address
+                        ).toCashAddress()
                     }
-                    return@map ""
-                }.singleOrError()
+                }
+                return@map ""
+            }.singleOrError()
     }
 
     /**
@@ -173,7 +172,7 @@ class SwipeToReceiveHelper @Inject constructor(
      * Returns the previously stored Ethereum address or null if not stored
      */
     fun getEthReceiveAddress(): String? =
-            prefsUtil.getValue(KEY_SWIPE_RECEIVE_ETH_ADDRESS, null)
+        prefsUtil.getValue(KEY_SWIPE_RECEIVE_ETH_ADDRESS, null)
 
     /**
      * Returns the Bitcoin account name associated with the receive addresses.
@@ -184,8 +183,8 @@ class SwipeToReceiveHelper @Inject constructor(
      * Returns the Bitcoin Cash account name associated with the receive addresses.
      */
     fun getBitcoinCashAccountName(): String = prefsUtil.getValue(
-            KEY_SWIPE_RECEIVE_BCH_ACCOUNT_NAME,
-            stringUtils.getString(R.string.bch_default_account_label)
+        KEY_SWIPE_RECEIVE_BCH_ACCOUNT_NAME,
+        stringUtils.getString(R.string.bch_default_account_label)
     )
 
     /**
@@ -194,15 +193,15 @@ class SwipeToReceiveHelper @Inject constructor(
     fun getEthAccountName(): String = stringUtils.getString(R.string.eth_default_account_label)
 
     private fun getIfSwipeEnabled(): Boolean =
-            prefsUtil.getValue(PrefsUtil.KEY_SWIPE_TO_RECEIVE_ENABLED, true)
+        prefsUtil.getValue(PrefsUtil.KEY_SWIPE_TO_RECEIVE_ENABLED, true)
 
     private fun getBalanceOfAddresses(addresses: List<String>): Observable<LinkedHashMap<String, Balance>> =
-            payloadDataManager.getBalanceOfAddresses(addresses)
-                    .applySchedulers()
+        payloadDataManager.getBalanceOfAddresses(addresses)
+            .applySchedulers()
 
     private fun getBalanceOfBchAddresses(addresses: List<String>): Observable<LinkedHashMap<String, Balance>> =
-            payloadDataManager.getBalanceOfBchAddresses(addresses)
-                    .applySchedulers()
+        payloadDataManager.getBalanceOfBchAddresses(addresses)
+            .applySchedulers()
 
     private fun storeBitcoinAddresses(addresses: String) {
         prefsUtil.setValue(KEY_SWIPE_RECEIVE_ADDRESSES, addresses)
@@ -231,5 +230,4 @@ class SwipeToReceiveHelper @Inject constructor(
         const val KEY_SWIPE_RECEIVE_ACCOUNT_NAME = "swipe_receive_account_name"
         const val KEY_SWIPE_RECEIVE_BCH_ACCOUNT_NAME = "swipe_receive_bch_account_name"
     }
-
 }

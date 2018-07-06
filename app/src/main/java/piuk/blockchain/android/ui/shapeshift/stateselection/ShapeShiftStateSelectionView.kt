@@ -8,5 +8,4 @@ interface ShapeShiftStateSelectionView : View {
     fun onError(@StringRes message: Int)
 
     fun finishActivityWithResult(resultCode: Int)
-
 }

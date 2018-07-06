@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
 import android.view.View
-import kotlinx.android.synthetic.main.toolbar_general.toolbar_general
+import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.details.models.BuySellDetailsModel
@@ -37,12 +37,12 @@ import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_v
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.view_divider_bank_disclaimer as dividerBankDisclaimer
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.view_divider_total as dividerTotal
 
-
 class CoinifyTransactionDetailActivity :
     BaseMvpActivity<CoinifyTransactionDetailView, CoinifyTransactionDetailPresenter>(),
     CoinifyTransactionDetailView {
 
-    @Inject lateinit var presenter: CoinifyTransactionDetailPresenter
+    @Inject
+    lateinit var presenter: CoinifyTransactionDetailPresenter
     override val orderDetails by unsafeLazy { intent.getParcelableExtra(EXTRA_DETAILS_MODEL) as BuySellDetailsModel }
     private var progressDialog: MaterialProgressDialog? = null
 
@@ -52,19 +52,19 @@ class CoinifyTransactionDetailActivity :
 
     private val bankSellInProgressViewsToShow by unsafeLazy {
         listOf<View>(
-                dividerBankDisclaimer,
-                textViewBankDisclaimer
+            dividerBankDisclaimer,
+            textViewBankDisclaimer
         )
     }
     private val bankSellInProgressViewsToHide by unsafeLazy {
         listOf<View>(
-                dividerTotal,
-                textViewTotalTitle,
-                textViewTotalDetail,
-                textViewPaymentFeeTitle,
-                textViewPaymentFeeDetail,
-                textViewAmountTitle,
-                textViewAmountDetail
+            dividerTotal,
+            textViewTotalTitle,
+            textViewTotalDetail,
+            textViewPaymentFeeTitle,
+            textViewPaymentFeeDetail,
+            textViewAmountTitle,
+            textViewAmountDetail
         )
     }
 
@@ -72,7 +72,10 @@ class CoinifyTransactionDetailActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coinify_transaction_detail)
         // Check Intent for validity
-        require(intent.hasExtra(EXTRA_DETAILS_MODEL)) { "Intent does not contain BuySellDetailsModel, please start this Activity via the static factory method start()." }
+        require(intent.hasExtra(EXTRA_DETAILS_MODEL)) {
+            "Intent does not contain BuySellDetailsModel. " +
+                "Please start this Activity via the static factory method start()."
+        }
 
         renderUi(orderDetails)
 
@@ -101,15 +104,15 @@ class CoinifyTransactionDetailActivity :
             ConstraintSet().apply {
                 clone(constraintLayoutRoot)
                 connect(
-                        // Target
-                        R.id.text_view_order_amount,
-                        // constraintTop
-                        ConstraintSet.TOP,
-                        // @+id/
-                        R.id.button_finish_payment,
-                        // _toBottomOf
-                        ConstraintSet.BOTTOM,
-                        16
+                    // Target
+                    R.id.text_view_order_amount,
+                    // constraintTop
+                    ConstraintSet.TOP,
+                    // @+id/
+                    R.id.button_finish_payment,
+                    // _toBottomOf
+                    ConstraintSet.BOTTOM,
+                    16
                 )
                 applyTo(constraintLayoutRoot)
             }
@@ -141,10 +144,10 @@ class CoinifyTransactionDetailActivity :
     }
 
     override fun launchCardPayment(
-            redirectUrl: String,
-            paymentId: String,
-            fromCurrency: String,
-            cost: Double
+        redirectUrl: String,
+        paymentId: String,
+        fromCurrency: String,
+        cost: Double
     ) {
         ISignThisActivity.start(this, redirectUrl, paymentId, fromCurrency, cost)
         finish()
@@ -159,14 +162,12 @@ class CoinifyTransactionDetailActivity :
     companion object {
 
         private const val EXTRA_DETAILS_MODEL =
-                "piuk.blockchain.android.ui.buysell.details.EXTRA_DETAILS_MODEL"
+            "piuk.blockchain.android.ui.buysell.details.EXTRA_DETAILS_MODEL"
 
         internal fun start(context: Context, buySellDetailsModel: BuySellDetailsModel) {
             Intent(context, CoinifyTransactionDetailActivity::class.java).apply {
                 putExtra(EXTRA_DETAILS_MODEL, buySellDetailsModel)
             }.run { context.startActivity(this) }
         }
-
     }
-
 }

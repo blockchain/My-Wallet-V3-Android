@@ -31,5 +31,4 @@ class AccessTokenStore @Inject constructor() : TokenStore, PersistentStore<AuthR
     }
 
     private fun getElement(): AuthResponse = (token as Optional.Some).element
-
 }

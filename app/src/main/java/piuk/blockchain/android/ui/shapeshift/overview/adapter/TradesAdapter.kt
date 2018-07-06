@@ -10,21 +10,21 @@ import java.math.BigDecimal
 import kotlin.properties.Delegates
 
 class TradesAdapter(
-        activity: Activity,
-        btcExchangeRate: Double,
-        ethExchangeRate: Double,
-        bchExchangeRate: Double,
-        showCrypto: Boolean,
-        listClickListener: TradesListClickListener
+    activity: Activity,
+    btcExchangeRate: Double,
+    ethExchangeRate: Double,
+    bchExchangeRate: Double,
+    showCrypto: Boolean,
+    listClickListener: TradesListClickListener
 ) : DelegationAdapter<Any>(AdapterDelegatesManager(), emptyList()) {
 
     private val tradesDelegate = TradesDisplayableDelegate<Any>(
-            activity,
-            btcExchangeRate,
-            ethExchangeRate,
-            bchExchangeRate,
-            showCrypto,
-            listClickListener
+        activity,
+        btcExchangeRate,
+        ethExchangeRate,
+        bchExchangeRate,
+        showCrypto,
+        listClickListener
     )
 
     init {
@@ -51,10 +51,10 @@ class TradesAdapter(
 
     fun updateTradeList(trades: List<Any>) {
         val mutableList = trades.toMutableList()
-        mutableList.add(0, ShapeshiftNewExchangeDisplayable())//Header delegate
+        mutableList.add(0, ShapeshiftNewExchangeDisplayable()) // Header delegate
 
         if (trades.isNotEmpty()) {
-            mutableList.add(1, ShapeshiftHeaderDisplayable())//Row title delegate
+            mutableList.add(1, ShapeshiftHeaderDisplayable()) // Row title delegate
         }
 
         items = mutableList
@@ -80,9 +80,9 @@ class TradesAdapter(
 
     fun updateTrade(trade: Trade, tradeResponse: TradeStatusResponse) {
         val matchingTrade = items.filterIsInstance(Trade::class.java)
-                .find { it.quote.deposit == tradeResponse.address }
-        matchingTrade?.quote?.withdrawalAmount = trade.quote.withdrawalAmount ?:
-                tradeResponse.incomingCoin ?: BigDecimal.ZERO
+            .find { it.quote.deposit == tradeResponse.address }
+        matchingTrade?.quote?.withdrawalAmount = trade.quote.withdrawalAmount
+            ?: tradeResponse.incomingCoin ?: BigDecimal.ZERO
         matchingTrade?.quote?.pair = tradeResponse.pair ?: trade.quote.pair
 
         notifyDataSetChanged()
@@ -96,7 +96,6 @@ interface TradesListClickListener {
     fun onValueClicked(isBtc: Boolean)
 
     fun onNewExchangeClicked()
-
 }
 
 class ShapeshiftNewExchangeDisplayable

@@ -17,7 +17,7 @@ import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import java.util.*
+import java.util.Locale
 
 class ChartsPresenterTest {
 
@@ -33,10 +33,10 @@ class ChartsPresenterTest {
     fun setUp() {
 
         subject = ChartsPresenter(
-                chartsDataManager,
-                exchangeRateFactory,
-                prefsUtil,
-                currencyFormatManager
+            chartsDataManager,
+            exchangeRateFactory,
+            prefsUtil,
+            currencyFormatManager
         )
 
         subject.initView(view)
@@ -51,10 +51,10 @@ class ChartsPresenterTest {
         whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn(fiat)
+            .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBtcPrice(fiat)).thenReturn(13950.0)
         whenever(chartsDataManager.getMonthPrice(CryptoCurrencies.BTC, fiat))
-                .thenReturn(Observable.just(chartData))
+            .thenReturn(Observable.just(chartData))
         // Act
         subject.onViewReady()
         // Assert
@@ -72,8 +72,8 @@ class ChartsPresenterTest {
         verify(exchangeRateFactory).getLastBtcPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
         verify(prefsUtil, atLeastOnce()).getValue(
-                PrefsUtil.KEY_SELECTED_FIAT,
-                PrefsUtil.DEFAULT_CURRENCY
+            PrefsUtil.KEY_SELECTED_FIAT,
+            PrefsUtil.DEFAULT_CURRENCY
         )
         verifyNoMoreInteractions(prefsUtil)
     }
@@ -86,10 +86,10 @@ class ChartsPresenterTest {
         whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn(fiat)
+            .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBtcPrice(fiat)).thenReturn(13950.0)
         whenever(chartsDataManager.getMonthPrice(CryptoCurrencies.BTC, fiat))
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         // Act
         subject.onViewReady()
         // Assert
@@ -106,8 +106,8 @@ class ChartsPresenterTest {
         verify(exchangeRateFactory).getLastBtcPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
         verify(prefsUtil, atLeastOnce()).getValue(
-                PrefsUtil.KEY_SELECTED_FIAT,
-                PrefsUtil.DEFAULT_CURRENCY
+            PrefsUtil.KEY_SELECTED_FIAT,
+            PrefsUtil.DEFAULT_CURRENCY
         )
         verifyNoMoreInteractions(prefsUtil)
     }
@@ -121,10 +121,10 @@ class ChartsPresenterTest {
         whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn(fiat)
+            .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBtcPrice(fiat)).thenReturn(13950.0)
         whenever(chartsDataManager.getDayPrice(CryptoCurrencies.BTC, fiat))
-                .thenReturn(Observable.just(chartData))
+            .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.DAY
         // Assert
@@ -142,8 +142,8 @@ class ChartsPresenterTest {
         verify(exchangeRateFactory).getLastBtcPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
         verify(prefsUtil, atLeastOnce()).getValue(
-                PrefsUtil.KEY_SELECTED_FIAT,
-                PrefsUtil.DEFAULT_CURRENCY
+            PrefsUtil.KEY_SELECTED_FIAT,
+            PrefsUtil.DEFAULT_CURRENCY
         )
         verifyNoMoreInteractions(prefsUtil)
     }
@@ -157,10 +157,10 @@ class ChartsPresenterTest {
         whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn(fiat)
+            .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastEthPrice(fiat)).thenReturn(1281.78)
         whenever(chartsDataManager.getWeekPrice(CryptoCurrencies.ETHER, fiat))
-                .thenReturn(Observable.just(chartData))
+            .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.WEEK
         // Assert
@@ -178,8 +178,8 @@ class ChartsPresenterTest {
         verify(exchangeRateFactory).getLastEthPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
         verify(prefsUtil, atLeastOnce()).getValue(
-                PrefsUtil.KEY_SELECTED_FIAT,
-                PrefsUtil.DEFAULT_CURRENCY
+            PrefsUtil.KEY_SELECTED_FIAT,
+            PrefsUtil.DEFAULT_CURRENCY
         )
         verifyNoMoreInteractions(prefsUtil)
     }
@@ -193,10 +193,10 @@ class ChartsPresenterTest {
         whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn(fiat)
+            .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastEthPrice(fiat)).thenReturn(1281.78)
         whenever(chartsDataManager.getYearPrice(CryptoCurrencies.ETHER, fiat))
-                .thenReturn(Observable.just(chartData))
+            .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.YEAR
         // Assert
@@ -214,8 +214,8 @@ class ChartsPresenterTest {
         verify(exchangeRateFactory).getLastEthPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
         verify(prefsUtil, atLeastOnce()).getValue(
-                PrefsUtil.KEY_SELECTED_FIAT,
-                PrefsUtil.DEFAULT_CURRENCY
+            PrefsUtil.KEY_SELECTED_FIAT,
+            PrefsUtil.DEFAULT_CURRENCY
         )
         verifyNoMoreInteractions(prefsUtil)
     }
@@ -229,10 +229,10 @@ class ChartsPresenterTest {
         whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn(fiat)
+            .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBchPrice(fiat)).thenReturn(1281.78)
         whenever(chartsDataManager.getAllTimePrice(CryptoCurrencies.BCH, fiat))
-                .thenReturn(Observable.just(chartData))
+            .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.ALL_TIME
         // Assert
@@ -250,10 +250,9 @@ class ChartsPresenterTest {
         verify(exchangeRateFactory).getLastBchPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
         verify(prefsUtil, atLeastOnce()).getValue(
-                PrefsUtil.KEY_SELECTED_FIAT,
-                PrefsUtil.DEFAULT_CURRENCY
+            PrefsUtil.KEY_SELECTED_FIAT,
+            PrefsUtil.DEFAULT_CURRENCY
         )
         verifyNoMoreInteractions(prefsUtil)
     }
-
 }

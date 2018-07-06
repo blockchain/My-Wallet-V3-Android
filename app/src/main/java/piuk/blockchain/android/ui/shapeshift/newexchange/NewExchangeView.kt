@@ -1,12 +1,11 @@
 package piuk.blockchain.android.ui.shapeshift.newexchange
 
 import android.support.annotation.StringRes
-
+import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
-import java.util.*
+import java.util.Locale
 
 interface NewExchangeView : View {
 
@@ -17,11 +16,11 @@ interface NewExchangeView : View {
     val isBuyPermitted: Boolean
 
     fun updateUi(
-            fromCurrency: CryptoCurrencies,
-            toCurrency: CryptoCurrencies,
-            fromLabel: String,
-            toLabel: String,
-            fiatHint: String
+        fromCurrency: CryptoCurrencies,
+        toCurrency: CryptoCurrencies,
+        fromLabel: String,
+        toLabel: String,
+        fiatHint: String
     )
 
     fun removeAllFocus()
@@ -59,5 +58,4 @@ interface NewExchangeView : View {
     fun launchConfirmationPage(shapeShiftData: ShapeShiftData)
 
     fun showNoFunds(canBuy: Boolean)
-
 }

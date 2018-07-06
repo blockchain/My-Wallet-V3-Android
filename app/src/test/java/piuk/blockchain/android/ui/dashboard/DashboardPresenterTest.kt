@@ -28,7 +28,7 @@ import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import java.math.BigInteger
-import java.util.*
+import java.util.Locale
 
 class DashboardPresenterTest : RxTest() {
 
@@ -52,25 +52,25 @@ class DashboardPresenterTest : RxTest() {
         super.setUp()
 
         subject = DashboardPresenter(
-                prefsUtil,
-                exchangeRateFactory,
-                ethDataManager,
-                bchDataManager,
-                payloadDataManager,
-                transactionListDataManager,
-                stringUtils,
-                accessState,
-                buyDataManager,
-                rxBus,
-                swipeToReceiveHelper,
-                currencyFormatManager
+            prefsUtil,
+            exchangeRateFactory,
+            ethDataManager,
+            bchDataManager,
+            payloadDataManager,
+            transactionListDataManager,
+            stringUtils,
+            accessState,
+            buyDataManager,
+            rxBus,
+            swipeToReceiveHelper,
+            currencyFormatManager
         )
 
         subject.initView(view)
 
         whenever(view.locale).thenReturn(Locale.US)
         whenever(bchDataManager.getWalletTransactions(50, 0))
-                .thenReturn(Observable.just(emptyList()))
+            .thenReturn(Observable.just(emptyList()))
     }
 
     @Test
@@ -83,7 +83,7 @@ class DashboardPresenterTest : RxTest() {
         whenever(exchangeRateFactory.updateTickers()).thenReturn(Completable.complete())
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("USD")
+            .thenReturn("USD")
         whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
         whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
         whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
@@ -92,7 +92,7 @@ class DashboardPresenterTest : RxTest() {
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
         whenever(rxBus.register(MetadataEvent::class.java)).thenReturn(metadataObservable)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false))
-                .thenReturn(true)
+            .thenReturn(true)
         whenever(accessState.isNewlyCreated).thenReturn(false)
 
         // doOnSuccess { updateAllBalances() }
@@ -113,27 +113,27 @@ class DashboardPresenterTest : RxTest() {
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
         whenever(currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromEthValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
         whenever(bchDataManager.getWalletTransactions(any(), any()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
         // No bch or sfox announcements
         whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
-                .thenReturn(true)
+            .thenReturn(true)
         whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(false))
 
         // Act
@@ -187,7 +187,7 @@ class DashboardPresenterTest : RxTest() {
         whenever(exchangeRateFactory.updateTickers()).thenReturn(Completable.complete())
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("USD")
+            .thenReturn("USD")
         whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
         whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
         whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
@@ -196,7 +196,7 @@ class DashboardPresenterTest : RxTest() {
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
         whenever(rxBus.register(MetadataEvent::class.java)).thenReturn(metadataObservable)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false))
-                .thenReturn(false)
+            .thenReturn(false)
         whenever(accessState.isNewlyCreated).thenReturn(false)
 
         // doOnSuccess { updateAllBalances() }
@@ -217,27 +217,27 @@ class DashboardPresenterTest : RxTest() {
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
         whenever(currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromEthValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
         whenever(bchDataManager.getWalletTransactions(any(), any()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
         // No bch or sfox announcements
         whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
-                .thenReturn(true)
+            .thenReturn(true)
         whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(false))
 
         // Act
@@ -288,7 +288,7 @@ class DashboardPresenterTest : RxTest() {
         whenever(exchangeRateFactory.updateTickers()).thenReturn(Completable.complete())
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("USD")
+            .thenReturn("USD")
         whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
         whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
         whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
@@ -297,7 +297,7 @@ class DashboardPresenterTest : RxTest() {
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
         whenever(rxBus.register(MetadataEvent::class.java)).thenReturn(metadataObservable)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false))
-                .thenReturn(true)
+            .thenReturn(true)
         whenever(accessState.isNewlyCreated).thenReturn(false)
 
         // doOnSuccess { updateAllBalances() }
@@ -318,30 +318,30 @@ class DashboardPresenterTest : RxTest() {
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
         whenever(currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromEthValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
         whenever(bchDataManager.getWalletTransactions(any(), any()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
         // No bch or sfox announcements
         whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
-                .thenReturn(false)
+            .thenReturn(false)
         whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(true))
         whenever(prefsUtil.getValue(DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED, false))
-                .thenReturn(false)
+            .thenReturn(false)
 
         // Act
         subject.onViewReady()
@@ -371,8 +371,8 @@ class DashboardPresenterTest : RxTest() {
         // BCH
         verify(prefsUtil).getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false)
         verify(
-                prefsUtil,
-                atLeastOnce()
+            prefsUtil,
+            atLeastOnce()
         ).setValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, true)
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).scrollToTop()
@@ -380,8 +380,8 @@ class DashboardPresenterTest : RxTest() {
         verify(buyDataManager).isSfoxAllowed
         verify(prefsUtil).getValue(DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED, false)
         verify(prefsUtil, atLeastOnce()).setValue(
-                DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED,
-                true
+            DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED,
+            true
         )
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).scrollToTop()
@@ -406,7 +406,7 @@ class DashboardPresenterTest : RxTest() {
         whenever(exchangeRateFactory.updateTickers()).thenReturn(Completable.complete())
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("USD")
+            .thenReturn("USD")
         whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
         whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
         whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
@@ -415,7 +415,7 @@ class DashboardPresenterTest : RxTest() {
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
         whenever(rxBus.register(MetadataEvent::class.java)).thenReturn(metadataObservable)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false))
-                .thenReturn(true)
+            .thenReturn(true)
         whenever(accessState.isNewlyCreated).thenReturn(false)
 
         // doOnSuccess { updateAllBalances() }
@@ -436,27 +436,27 @@ class DashboardPresenterTest : RxTest() {
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
         whenever(currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromEthValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
         whenever(bchDataManager.getWalletTransactions(any(), any()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
         // No bch or sfox announcements
         whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
-                .thenReturn(false)
+            .thenReturn(false)
         whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(false))
 
         // Act
@@ -487,8 +487,8 @@ class DashboardPresenterTest : RxTest() {
         // BCH
         verify(prefsUtil).getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false)
         verify(
-                prefsUtil,
-                atLeastOnce()
+            prefsUtil,
+            atLeastOnce()
         ).setValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, true)
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).scrollToTop()
@@ -515,7 +515,7 @@ class DashboardPresenterTest : RxTest() {
         whenever(exchangeRateFactory.updateTickers()).thenReturn(Completable.complete())
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("USD")
+            .thenReturn("USD")
         whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
         whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
         whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
@@ -524,7 +524,7 @@ class DashboardPresenterTest : RxTest() {
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
         whenever(rxBus.register(MetadataEvent::class.java)).thenReturn(metadataObservable)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false))
-                .thenReturn(true)
+            .thenReturn(true)
         whenever(accessState.isNewlyCreated).thenReturn(false)
 
         // doOnSuccess { updateAllBalances() }
@@ -545,22 +545,22 @@ class DashboardPresenterTest : RxTest() {
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
         whenever(currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromEthValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
-                .thenReturn("$2.00")
+            .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
         whenever(bchDataManager.getWalletTransactions(any(), any()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         // Act
         subject.updateBalances()
@@ -603,5 +603,4 @@ class DashboardPresenterTest : RxTest() {
         // Assert
         verify(rxBus).unregister(eq(MetadataEvent::class.java), anyOrNull())
     }
-
 }

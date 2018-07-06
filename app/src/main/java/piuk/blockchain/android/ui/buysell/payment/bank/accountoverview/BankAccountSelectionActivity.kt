@@ -33,12 +33,15 @@ class BankAccountSelectionActivity :
     BankAccountSelectionView,
     BankAccountSelectionListener {
 
-    @Inject lateinit var presenter: BankAccountSelectionPresenter
+    @Inject
+    lateinit var presenter: BankAccountSelectionPresenter
     private var progressDialog: MaterialProgressDialog? = null
     private val dataViews by unsafeLazy { listOf(recyclerView, textViewDescription) }
     private val failureViews by unsafeLazy { listOf(textViewFailureMessage, buttonRetry) }
     private val accountAdapter by unsafeLazy { BankAccountSelectionAdapter(this) }
-    private val displayModel by unsafeLazy { intent.getParcelableExtra(EXTRA_DISPLAY_MODEL) as SellConfirmationDisplayModel }
+    private val displayModel by unsafeLazy {
+        intent.getParcelableExtra(EXTRA_DISPLAY_MODEL) as SellConfirmationDisplayModel
+    }
     private var actionSelected = false
 
     init {
@@ -114,13 +117,13 @@ class BankAccountSelectionActivity :
 
     override fun onBankAccountLongPressed(bankAccountId: Int) {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.buy_sell_account_selection_delete_title)
-                .setMessage(R.string.buy_sell_account_selection_delete_message)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    presenter.deleteBankAccount(bankAccountId)
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
+            .setTitle(R.string.buy_sell_account_selection_delete_title)
+            .setMessage(R.string.buy_sell_account_selection_delete_message)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                presenter.deleteBankAccount(bankAccountId)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     override fun onSupportNavigateUp(): Boolean = consume { finish() }
@@ -132,17 +135,16 @@ class BankAccountSelectionActivity :
     companion object {
 
         private const val EXTRA_DISPLAY_MODEL =
-                "piuk.blockchain.android.ui.buysell.payment.bank.accountoverview.EXTRA_DISPLAY_MODEL"
+            "piuk.blockchain.android.ui.buysell.payment.bank.accountoverview.EXTRA_DISPLAY_MODEL"
 
         fun startForResult(
-                activity: Activity,
-                displayModel: SellConfirmationDisplayModel,
-                requestCode: Int
+            activity: Activity,
+            displayModel: SellConfirmationDisplayModel,
+            requestCode: Int
         ) {
             Intent(activity, BankAccountSelectionActivity::class.java)
-                    .putExtra(EXTRA_DISPLAY_MODEL, displayModel)
-                    .run { activity.startActivityForResult(this, requestCode) }
+                .putExtra(EXTRA_DISPLAY_MODEL, displayModel)
+                .run { activity.startActivityForResult(this, requestCode) }
         }
-
     }
 }

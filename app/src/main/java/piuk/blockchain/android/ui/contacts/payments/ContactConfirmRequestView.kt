@@ -24,9 +24,9 @@ interface ContactConfirmRequestView : View {
     fun dismissProgressDialog()
 
     fun onRequestSuccessful(
-            paymentRequestType: PaymentRequestType,
-            contactName: String,
-            btcAmount: String
+        paymentRequestType: PaymentRequestType,
+        contactName: String,
+        btcAmount: String
     )
 
     fun updateTotalBtc(total: String)
@@ -36,5 +36,4 @@ interface ContactConfirmRequestView : View {
     fun updateAccountName(name: String)
 
     fun updatePaymentType(paymentRequestType: PaymentRequestType)
-
 }

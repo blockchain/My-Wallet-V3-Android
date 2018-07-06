@@ -4,7 +4,8 @@ import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.util.*
+import java.util.Currency
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -63,7 +64,7 @@ class CurrencyFormatUtil @Inject constructor() {
     fun getEthMaxFractionDigits() = maxEthDecimalLength
 
     fun formatFiat(fiatBalance: BigDecimal, fiatUnit: String): String =
-            getFiatFormat(fiatUnit).format(fiatBalance)
+        getFiatFormat(fiatUnit).format(fiatBalance)
 
     /**
      * TODO: This is seriously slow and causes noticeable UI lag. We should move fetching the
@@ -91,22 +92,22 @@ class CurrencyFormatUtil @Inject constructor() {
     }
 
     fun getFiatSymbol(currencyCode: String, locale: Locale): String =
-            Currency.getInstance(currencyCode).getSymbol(locale)
+        Currency.getInstance(currencyCode).getSymbol(locale)
 
     fun formatBtc(btc: BigDecimal): String = btcFormat.format(btc.toNaturalNumber()).toWebZero()
 
     fun formatSatoshi(satoshi: Long): String =
-            btcFormat.format(satoshi.div(BTC_DEC).toNaturalNumber()).toWebZero()
+        btcFormat.format(satoshi.div(BTC_DEC).toNaturalNumber()).toWebZero()
 
     fun formatBch(bch: BigDecimal): String = formatBtc(bch)
 
     fun formatEth(eth: BigDecimal): String = ethFormat.format(eth.toNaturalNumber()).toWebZero()
 
     fun formatEthShort(eth: BigDecimal): String =
-            ethShortFormat.format(eth.toNaturalNumber()).toWebZero()
+        ethShortFormat.format(eth.toNaturalNumber()).toWebZero()
 
     fun formatWei(wei: Long): String =
-            ethFormat.format(wei.div(ETH_DEC).toNaturalNumber()).toWebZero()
+        ethFormat.format(wei.div(ETH_DEC).toNaturalNumber()).toWebZero()
 
     fun formatBtcWithUnit(btc: BigDecimal): String {
         val amountFormatted = btcFormat.format(btc.toNaturalNumber()).toWebZero()
@@ -140,9 +141,9 @@ class CurrencyFormatUtil @Inject constructor() {
      * @return A [NumberFormat] object with the correct decimal fractions for the chosen Fiat format
      * @see ExchangeRateFactory.getCurrencyLabels
      */
-    //TODO This should be private but is exposed for CurrencyFormatManager for now until usage removed
+    // TODO This should be private but is exposed for CurrencyFormatManager for now until usage removed
     fun getFiatFormat(currencyCode: String) =
-            fiatFormat.apply { currency = Currency.getInstance(currencyCode) }
+        fiatFormat.apply { currency = Currency.getInstance(currencyCode) }
 
     companion object {
         private const val BTC_DEC = 1e8

@@ -44,8 +44,8 @@ class AdapterDelegatesManager<T> {
      * objects. If no delegate is found to handle the particular object type, this function will
      * throw a [NullPointerException].
      *
-     * @param items     The list of items currently being displayed by the adapter
-     * @param position  The position of the current item
+     * @param items The list of items currently being displayed by the adapter
+     * @param position The position of the current item
      *
      * @return The item View type as an [Int]
      */
@@ -65,8 +65,8 @@ class AdapterDelegatesManager<T> {
      * This must be called by the adapter. If a suitable [AdapterDelegate] is not found, this
      * function will throw a [NullPointerException].
      *
-     * @param parent    The [ViewGroup] parent of the [RecyclerView]
-     * @param viewType  The View type of the current object
+     * @param parent The [ViewGroup] parent of the [RecyclerView]
+     * @param viewType The View type of the current object
      *
      * @return An appropriate [RecyclerView.ViewHolder] for the item at the current position
      */
@@ -74,7 +74,7 @@ class AdapterDelegatesManager<T> {
         if (parent == null) throw NullPointerException("ViewGroup parent was null")
 
         val delegate = getDelegateForViewType(viewType)
-                ?: throw NullPointerException("No delegate found for view type $viewType")
+            ?: throw NullPointerException("No delegate found for view type $viewType")
 
         return delegate.onCreateViewHolder(parent)
     }
@@ -84,16 +84,23 @@ class AdapterDelegatesManager<T> {
      * found. This must be called by the adapter. If a suitable [AdapterDelegate] is not found, this
      * function will throw a [NullPointerException].
      *
-     * @param items         The list of items to be displayed by the adapter
-     * @param position      The position of the current item
-     * @param viewHolder    The [RecyclerView.ViewHolder] for the current item
-     * @param payloads      A list of payloads, sometimes provided by the [RecyclerView]
+     * @param items The list of items to be displayed by the adapter
+     * @param position The position of the current item
+     * @param viewHolder The [RecyclerView.ViewHolder] for the current item
+     * @param payloads A list of payloads, sometimes provided by the [RecyclerView]
      */
-    fun onBindViewHolder(items: List<T>, position: Int, viewHolder: RecyclerView.ViewHolder?, payloads: List<*>?) {
+    fun onBindViewHolder(
+        items: List<T>,
+        position: Int,
+        viewHolder: RecyclerView.ViewHolder?,
+        payloads: List<*>?
+    ) {
         if (viewHolder == null) throw NullPointerException("ViewHolder was null")
 
         val delegate = getDelegateForViewType(viewHolder.itemViewType)
-                ?: throw NullPointerException("No delegate found for item at position $position for view type  ${viewHolder.itemViewType}")
+            ?: throw NullPointerException(
+                "No delegate found for item at position $position for view type  ${viewHolder.itemViewType}"
+            )
 
         delegate.onBindViewHolder(items, position, viewHolder, payloads ?: arrayList)
     }
@@ -103,12 +110,12 @@ class AdapterDelegatesManager<T> {
      * found. This must be called by the adapter. If a suitable [AdapterDelegate] is not found, this
      * function will throw a [NullPointerException].
      *
-     * @param items         The list of items to be displayed by the adapter
-     * @param position      The position of the current item
-     * @param viewHolder    The [RecyclerView.ViewHolder] for the current item
+     * @param items The list of items to be displayed by the adapter
+     * @param position The position of the current item
+     * @param viewHolder The [RecyclerView.ViewHolder] for the current item
      */
     fun onBindViewHolder(items: List<T>, position: Int, viewHolder: RecyclerView.ViewHolder?) =
-            onBindViewHolder(items, position, viewHolder, arrayList)
+        onBindViewHolder(items, position, viewHolder, arrayList)
 
     /**
      * Returns the [AdapterDelegate] for a given view type
@@ -133,5 +140,4 @@ class AdapterDelegatesManager<T> {
         }
         return delegates.keyAt(index)
     }
-
 }

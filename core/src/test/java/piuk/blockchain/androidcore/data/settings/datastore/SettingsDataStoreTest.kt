@@ -43,5 +43,4 @@ class SettingsDataStoreTest : RxTest() {
         verify(memoryStore).store(mockSettings)
         testObserver.assertValue { it == mockSettings }
     }
-
 }

@@ -16,11 +16,11 @@ import piuk.blockchain.androidcoreui.utils.CustomTypefaceSpan
  * and if null is passed the default system font will be applied instead.
  */
 fun CharSequence.applyFont(typeface: Typeface?): SpannableStringBuilder =
-        SpannableStringBuilder(this).apply {
-            setSpan(
-                    CustomTypefaceSpan(typeface),
-                    0,
-                    this.length,
-                    Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-            )
-        }
+    SpannableStringBuilder(this).apply {
+        setSpan(
+            CustomTypefaceSpan(typeface),
+            0,
+            this.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+    }

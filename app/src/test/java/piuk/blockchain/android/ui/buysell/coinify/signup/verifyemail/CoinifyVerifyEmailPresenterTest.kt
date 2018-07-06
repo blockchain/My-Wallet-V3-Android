@@ -27,7 +27,7 @@ import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import java.util.concurrent.TimeUnit
 
-class CoinifyVerifyEmailPresenterTest: RxTest() {
+class CoinifyVerifyEmailPresenterTest : RxTest() {
 
     private lateinit var subject: CoinifyVerifyEmailPresenter
 
@@ -44,16 +44,16 @@ class CoinifyVerifyEmailPresenterTest: RxTest() {
     @Before
     fun setup() {
         subject =
-                CoinifyVerifyEmailPresenter(
-                        settingsDataManager,
-                        walletOptionsDataManager,
-                        payloadDataManager,
-                        exchangeService,
-                        coinifyDataManager,
-                        metadataManager,
-                        currencyState,
-                        stringUtils
-                )
+            CoinifyVerifyEmailPresenter(
+                settingsDataManager,
+                walletOptionsDataManager,
+                payloadDataManager,
+                exchangeService,
+                coinifyDataManager,
+                metadataManager,
+                currencyState,
+                stringUtils
+            )
         subject.initView(view)
     }
 
@@ -106,7 +106,7 @@ class CoinifyVerifyEmailPresenterTest: RxTest() {
     fun `onViewReady unexpected error`() {
         // Arrange
         whenever(settingsDataManager.fetchSettings())
-                .thenReturn(Observable.error(Throwable("Forced fail")))
+            .thenReturn(Observable.error(Throwable("Forced fail")))
 
         // Act
         subject.onViewReady()
@@ -151,16 +151,22 @@ class CoinifyVerifyEmailPresenterTest: RxTest() {
         whenever(mockTraderResponse.trader).thenReturn(mockTrader)
         whenever(mockTraderResponse.offlineToken).thenReturn("token")
 
-        whenever(coinifyDataManager.getEmailTokenAndSignUp(any(), any(),
-                any(), any(), any(), any())).thenReturn(Observable.just(mockTraderResponse)
-                .singleOrError())
+        whenever(
+            coinifyDataManager.getEmailTokenAndSignUp(
+                any(), any(),
+                any(), any(), any(), any()
+            )
+        ).thenReturn(
+            Observable.just(mockTraderResponse)
+                .singleOrError()
+        )
         whenever(exchangeService.getExchangeMetaData())
-                .thenReturn(Observable.just(mockExchangeData))
+            .thenReturn(Observable.just(mockExchangeData))
         whenever(metadataManager.saveToMetadata(any(), any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
 
         whenever(coinifyDataManager.startKycReview(any()))
-                .thenReturn(Observable.just(mockKycResponse).singleOrError())
+            .thenReturn(Observable.just(mockKycResponse).singleOrError())
 
         // Act
         subject.onContinueClicked("UK")

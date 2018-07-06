@@ -30,13 +30,13 @@ import javax.inject.Inject
 @Mockable
 @PresenterScope
 class BchDataManager @Inject constructor(
-        private val payloadDataManager: PayloadDataManager,
-        private val bchDataStore: BchDataStore,
-        private val environmentSettings: EnvironmentConfig,
-        private val blockExplorer: BlockExplorer,
-        private val stringUtils: StringUtils,
-        private val metadataManager: MetadataManager,
-        rxBus: RxBus
+    private val payloadDataManager: PayloadDataManager,
+    private val bchDataStore: BchDataStore,
+    private val environmentSettings: EnvironmentConfig,
+    private val blockExplorer: BlockExplorer,
+    private val stringUtils: StringUtils,
+    private val metadataManager: MetadataManager,
+    rxBus: RxBus
 ) {
 
     private val rxPinning = RxPinning(rxBus)
@@ -53,35 +53,39 @@ class BchDataManager @Inject constructor(
      * @return An [Completable]
      */
     fun initBchWallet(defaultLabel: String): Completable =
-            rxPinning.call {
-                val accountTotal = payloadDataManager.accounts.size
+        rxPinning.call {
+            val accountTotal = payloadDataManager.accounts.size
 
-                fetchMetadata(defaultLabel, accountTotal)
-                        .map { optional ->
-                            if (optional.isPresent) {
-                                MetadataPair(optional.get(), false)
-                            } else {
-                                MetadataPair(createMetadata(defaultLabel, accountTotal), true)
-                            }
-                        }.map { pair ->
-                            bchDataStore.bchMetadata = pair.metadata
-                            restoreBchWallet(pair.metadata)
-                            pair.needsSave
-                        }.flatMap { needsSave ->
-                            if (needsSave) {
-                                metadataManager.saveToMetadata(bchDataStore.bchMetadata!!.toJson(), BitcoinCashWallet.METADATA_TYPE_EXTERNAL).toObservable<Boolean>()
-                            } else {
-                                Observable.just(true)
-                            }
-                        }.map { correctBtcOffsetIfNeed(stringUtils.getString(R.string.default_wallet_name)) }
-                        .flatMapCompletable { needsSave ->
-                            if (needsSave) {
-                                payloadDataManager.syncPayloadWithServer()
-                            } else {
-                                Completable.complete()
-                            }
-                        }
-            }.applySchedulers()
+            fetchMetadata(defaultLabel, accountTotal)
+                .map { optional ->
+                    if (optional.isPresent) {
+                        MetadataPair(optional.get(), false)
+                    } else {
+                        MetadataPair(createMetadata(defaultLabel, accountTotal), true)
+                    }
+                }.map { pair ->
+                    bchDataStore.bchMetadata = pair.metadata
+                    restoreBchWallet(pair.metadata)
+                    pair.needsSave
+                }.flatMap { needsSave ->
+                    if (needsSave) {
+                        metadataManager.saveToMetadata(
+                            bchDataStore.bchMetadata!!.toJson(),
+                            BitcoinCashWallet.METADATA_TYPE_EXTERNAL
+                        ).toObservable<Boolean>()
+                    } else {
+                        Observable.just(true)
+                    }
+                }
+                .map { correctBtcOffsetIfNeed(stringUtils.getString(R.string.default_wallet_name)) }
+                .flatMapCompletable { needsSave ->
+                    if (needsSave) {
+                        payloadDataManager.syncPayloadWithServer()
+                    } else {
+                        Completable.complete()
+                    }
+                }
+        }.applySchedulers()
 
     /**
      * Refreshes bitcoin cash metadata. Useful if another platform performed any changes to wallet state.
@@ -90,42 +94,46 @@ class BchDataManager @Inject constructor(
      * Note that this clears the balances and transactions from [BitcoinCashWallet]
      */
     fun refreshMetadataCompletable(): Completable =
-            initBchWallet(stringUtils.getString(R.string.bch_default_account_label))
+        initBchWallet(stringUtils.getString(R.string.bch_default_account_label))
 
     fun serializeForSaving(): String = bchDataStore.bchMetadata!!.toJson()
 
     @VisibleForTesting
-    internal fun fetchMetadata(defaultLabel: String, accountTotal: Int): Observable<Optional<GenericMetadataWallet>> {
+    internal fun fetchMetadata(
+        defaultLabel: String,
+        accountTotal: Int
+    ): Observable<Optional<GenericMetadataWallet>> {
 
         return metadataManager.fetchMetadata(BitcoinCashWallet.METADATA_TYPE_EXTERNAL)
-                .applySchedulers()
-                .map { optional ->
+            .applySchedulers()
+            .map { optional ->
 
-                    if (optional.isPresent) {
-                        val walletJson = optional.get()
-                        //Fetch wallet
-                        val metaData = GenericMetadataWallet.fromJson(walletJson)
+                if (optional.isPresent) {
+                    val walletJson = optional.get()
+                    // Fetch wallet
+                    val metaData = GenericMetadataWallet.fromJson(walletJson)
 
-                        //Sanity check (Add missing metadata accounts)
-                        metaData?.accounts?.run {
-                            val bchAccounts = getMetadataAccounts(defaultLabel, size, accountTotal)
-                            addAll(bchAccounts)
-                        }
-
-                        if (bchDataStore.bchMetadata == null || !listContentEquals(
-                                        bchDataStore.bchMetadata!!.accounts,
-                                        metaData.accounts
-                                )) {
-                            bchDataStore.bchMetadata = metaData
-                        } else {
-                            // metadata list unchanged
-                        }
-
-                        Optional.of(metaData)
-                    } else {
-                        Optional.absent()
+                    // Sanity check (Add missing metadata accounts)
+                    metaData?.accounts?.run {
+                        val bchAccounts = getMetadataAccounts(defaultLabel, size, accountTotal)
+                        addAll(bchAccounts)
                     }
+
+                    if (bchDataStore.bchMetadata == null || !listContentEquals(
+                            bchDataStore.bchMetadata!!.accounts,
+                            metaData.accounts
+                        )
+                    ) {
+                        bchDataStore.bchMetadata = metaData
+                    } else {
+                        // metadata list unchanged
+                    }
+
+                    Optional.of(metaData)
+                } else {
+                    Optional.absent()
                 }
+            }
     }
 
     @VisibleForTesting
@@ -139,8 +147,8 @@ class BchDataManager @Inject constructor(
     }
 
     fun listContentEquals(
-            listA: MutableList<GenericMetadataAccount>,
-            listB: MutableList<GenericMetadataAccount>
+        listA: MutableList<GenericMetadataAccount>,
+        listB: MutableList<GenericMetadataAccount>
     ): Boolean {
 
         listA.forEach { accountA ->
@@ -157,19 +165,19 @@ class BchDataManager @Inject constructor(
     }
 
     private fun getMetadataAccounts(
-            defaultLabel: String,
-            startingAccountIndex: Int,
-            accountTotal: Int
+        defaultLabel: String,
+        startingAccountIndex: Int,
+        accountTotal: Int
     ): ArrayList<GenericMetadataAccount> {
         val bchAccounts = arrayListOf<GenericMetadataAccount>()
         ((startingAccountIndex + 1)..accountTotal)
-                .map {
-                    return@map when (it) {
-                        in 2..accountTotal -> "$defaultLabel $it"
-                        else -> defaultLabel
-                    }
+            .map {
+                return@map when (it) {
+                    in 2..accountTotal -> "$defaultLabel $it"
+                    else -> defaultLabel
                 }
-                .forEach { bchAccounts.add(GenericMetadataAccount(it, false)) }
+            }
+            .forEach { bchAccounts.add(GenericMetadataAccount(it, false)) }
 
         return bchAccounts
     }
@@ -181,11 +189,11 @@ class BchDataManager @Inject constructor(
     internal fun restoreBchWallet(walletMetadata: GenericMetadataWallet) {
         if (!payloadDataManager.isDoubleEncrypted) {
             bchDataStore.bchWallet = BitcoinCashWallet.restore(
-                    blockExplorer,
-                    environmentSettings.bitcoinCashNetworkParameters,
-                    BitcoinCashWallet.BITCOIN_COIN_PATH,
-                    payloadDataManager.mnemonic,
-                    ""
+                blockExplorer,
+                environmentSettings.bitcoinCashNetworkParameters,
+                BitcoinCashWallet.BITCOIN_COIN_PATH,
+                payloadDataManager.mnemonic,
+                ""
             )
 
             // BCH Metadata does not store xpub - get from btc wallet since PATH is the same
@@ -196,8 +204,8 @@ class BchDataManager @Inject constructor(
         } else {
 
             bchDataStore.bchWallet = BitcoinCashWallet.createWatchOnly(
-                    blockExplorer,
-                    environmentSettings.bitcoinCashNetworkParameters
+                blockExplorer,
+                environmentSettings.bitcoinCashNetworkParameters
             )
 
             // NB! A watch-only account xpub != account xpub, they do however derive the same addresses.
@@ -225,16 +233,16 @@ class BchDataManager @Inject constructor(
 
         if (difference > 0) {
             (startingAccountIndex until bchAccountSize)
-                    .forEach {
-                        val accountNumber = it + 1
+                .forEach {
+                    val accountNumber = it + 1
 
-                        val acc =
-                                payloadDataManager.wallet!!.hdWallets[0].addAccount("$defaultBtcLabel $accountNumber")
+                    val acc =
+                        payloadDataManager.wallet!!.hdWallets[0].addAccount("$defaultBtcLabel $accountNumber")
 
-                        bchDataStore.bchMetadata!!.accounts[it].apply {
-                            this.xpub = acc.xpub
-                        }
+                    bchDataStore.bchMetadata!!.accounts[it].apply {
+                        this.xpub = acc.xpub
                     }
+                }
         }
 
         return difference > 0
@@ -246,11 +254,11 @@ class BchDataManager @Inject constructor(
     fun decryptWatchOnlyWallet(mnemonic: List<String>) {
 
         bchDataStore.bchWallet = BitcoinCashWallet.restore(
-                blockExplorer,
-                environmentSettings.bitcoinCashNetworkParameters,
-                BitcoinCashWallet.BITCOIN_COIN_PATH,
-                mnemonic,
-                ""
+            blockExplorer,
+            environmentSettings.bitcoinCashNetworkParameters,
+            BitcoinCashWallet.BITCOIN_COIN_PATH,
+            mnemonic,
+            ""
         )
 
         payloadDataManager.accounts.forEachIndexed { i, account ->
@@ -274,64 +282,64 @@ class BchDataManager @Inject constructor(
         val defaultLabel = stringUtils.getString(R.string.bch_default_account_label)
         val count = bchDataStore.bchWallet!!.accountTotal
         bchDataStore.bchMetadata!!.addAccount(
-                GenericMetadataAccount(
-                        """$defaultLabel $count""",
-                        false
-                ).apply { xpub = bitcoinXpub }
+            GenericMetadataAccount(
+                """$defaultLabel $count""",
+                false
+            ).apply { xpub = bitcoinXpub }
         )
     }
 
     fun getActiveXpubs(): List<String> =
-            bchDataStore.bchMetadata?.accounts?.filterNot { it.isArchived }?.map { it.xpub }
-                    ?: emptyList()
+        bchDataStore.bchMetadata?.accounts?.filterNot { it.isArchived }?.map { it.xpub }
+            ?: emptyList()
 
     fun getActiveXpubsAndImportedAddresses(): List<String> = getActiveXpubs().toMutableList()
-            .apply { addAll(getLegacyAddressStringList()) }
+        .apply { addAll(getLegacyAddressStringList()) }
 
     fun getLegacyAddressStringList(): List<String> = payloadDataManager.legacyAddressStringList
 
     fun getWatchOnlyAddressStringList(): List<String> =
-            payloadDataManager.watchOnlyAddressStringList
+        payloadDataManager.watchOnlyAddressStringList
 
     fun updateAllBalances(): Completable {
         val legacyAddresses = payloadDataManager.legacyAddresses
-                .filterNot { it.isWatchOnly || it.tag == LegacyAddress.ARCHIVED_ADDRESS }
-                .map { it.address }
+            .filterNot { it.isWatchOnly || it.tag == LegacyAddress.ARCHIVED_ADDRESS }
+            .map { it.address }
         val all = getActiveXpubs().plus(legacyAddresses)
         return rxPinning.call { bchDataStore.bchWallet!!.updateAllBalances(legacyAddresses, all) }
-                .applySchedulers()
+            .applySchedulers()
     }
 
     fun getAddressBalance(address: String): BigInteger =
-            bchDataStore.bchWallet?.getAddressBalance(address) ?: BigInteger.ZERO
+        bchDataStore.bchWallet?.getAddressBalance(address) ?: BigInteger.ZERO
 
     fun getWalletBalance(): BigInteger =
-            bchDataStore.bchWallet?.getWalletBalance() ?: BigInteger.ZERO
+        bchDataStore.bchWallet?.getWalletBalance() ?: BigInteger.ZERO
 
     fun getImportedAddressBalance(): BigInteger =
-            bchDataStore.bchWallet?.getImportedAddressBalance() ?: BigInteger.ZERO
+        bchDataStore.bchWallet?.getImportedAddressBalance() ?: BigInteger.ZERO
 
     fun getAddressTransactions(
-            address: String,
-            limit: Int,
-            offset: Int
+        address: String,
+        limit: Int,
+        offset: Int
     ): Observable<List<TransactionSummary>> =
-            rxPinning.call<List<TransactionSummary>> {
-                Observable.fromCallable { fetchAddressTransactions(address, limit, offset) }
-            }.applySchedulers()
+        rxPinning.call<List<TransactionSummary>> {
+            Observable.fromCallable { fetchAddressTransactions(address, limit, offset) }
+        }.applySchedulers()
 
     fun getWalletTransactions(limit: Int, offset: Int): Observable<List<TransactionSummary>> =
-            rxPinning.call<List<TransactionSummary>> {
-                Observable.fromCallable { fetchWalletTransactions(limit, offset) }
-            }.applySchedulers()
+        rxPinning.call<List<TransactionSummary>> {
+            Observable.fromCallable { fetchWalletTransactions(limit, offset) }
+        }.applySchedulers()
 
     fun getImportedAddressTransactions(
-            limit: Int,
-            offset: Int
+        limit: Int,
+        offset: Int
     ): Observable<List<TransactionSummary>> =
-            rxPinning.call<List<TransactionSummary>> {
-                Observable.fromCallable { fetchImportedAddressTransactions(limit, offset) }
-            }.applySchedulers()
+        rxPinning.call<List<TransactionSummary>> {
+            Observable.fromCallable { fetchImportedAddressTransactions(limit, offset) }
+        }.applySchedulers()
 
     /**
      * Returns all non-archived accounts
@@ -342,7 +350,7 @@ class BchDataManager @Inject constructor(
     }
 
     fun getAccountMetadataList(): List<GenericMetadataAccount> =
-            bchDataStore.bchMetadata?.accounts ?: emptyList()
+        bchDataStore.bchMetadata?.accounts ?: emptyList()
 
     fun getAccountList(): List<DeterministicAccount> = bchDataStore.bchWallet!!.accounts
 
@@ -353,23 +361,23 @@ class BchDataManager @Inject constructor(
     }
 
     fun getDefaultDeterministicAccount(): DeterministicAccount? =
-            bchDataStore.bchWallet?.accounts?.get(getDefaultAccountPosition())
+        bchDataStore.bchWallet?.accounts?.get(getDefaultAccountPosition())
 
     fun getDefaultGenericMetadataAccount(): GenericMetadataAccount? =
-            getAccountMetadataList()[getDefaultAccountPosition()]
+        getAccountMetadataList()[getDefaultAccountPosition()]
 
     /**
      * Allows you to generate a BCH receive address at an arbitrary number of positions on the chain
      * from the next valid unused address. For example, the passing 5 as the position will generate
      * an address which correlates with the next available address + 5 positions.
      *
-     * @param accountIndex  The index of the [GenericMetadataAccount] you wish to generate an address from
+     * @param accountIndex The index of the [GenericMetadataAccount] you wish to generate an address from
      * @param addressIndex Represents how many positions on the chain beyond what is already used that
      * you wish to generate
      * @return A Bitcoin Cash receive address in Base58 format
      */
     fun getReceiveAddressAtPosition(accountIndex: Int, addressIndex: Int): String? =
-            bchDataStore.bchWallet?.getReceiveAddressAtPosition(accountIndex, addressIndex)
+        bchDataStore.bchWallet?.getReceiveAddressAtPosition(accountIndex, addressIndex)
 
     /**
      * Generates a Base58 Bitcoin Cash receive address for an account at a given position. The
@@ -379,9 +387,9 @@ class BchDataManager @Inject constructor(
      * @return A Bitcoin Cash receive address in Base58 format
      */
     fun getNextReceiveAddress(accountIndex: Int): Observable<String> =
-            Observable.fromCallable {
-                bchDataStore.bchWallet!!.getNextReceiveAddress(accountIndex)
-            }
+        Observable.fromCallable {
+            bchDataStore.bchWallet!!.getNextReceiveAddress(accountIndex)
+        }
 
     /**
      * Generates a bech32 Bitcoin Cash receive address for an account at a given position. The
@@ -391,9 +399,9 @@ class BchDataManager @Inject constructor(
      * @return A Bitcoin Cash receive address in bech32 format
      */
     fun getNextReceiveCashAddress(accountIndex: Int): Observable<String> =
-            Observable.fromCallable {
-                bchDataStore.bchWallet!!.getNextReceiveCashAddress(accountIndex)
-            }
+        Observable.fromCallable {
+            bchDataStore.bchWallet!!.getNextReceiveCashAddress(accountIndex)
+        }
 
     /**
      * Generates a Base58 Bitcoin Cash change address for an account at a given position. The
@@ -403,9 +411,9 @@ class BchDataManager @Inject constructor(
      * @return A Bitcoin Cash change address in Base58 format
      */
     fun getNextChangeAddress(accountIndex: Int): Observable<String> =
-            Observable.fromCallable {
-                bchDataStore.bchWallet!!.getNextChangeAddress(accountIndex)
-            }
+        Observable.fromCallable {
+            bchDataStore.bchWallet!!.getNextChangeAddress(accountIndex)
+        }
 
     /**
      * Generates a bech32 Bitcoin Cash change address for an account at a given position. The
@@ -415,34 +423,34 @@ class BchDataManager @Inject constructor(
      * @return A Bitcoin Cash change address in bech32 format
      */
     fun getNextChangeCashAddress(accountIndex: Int): Observable<String> =
-            Observable.fromCallable {
-                bchDataStore.bchWallet!!.getNextChangeCashAddress(accountIndex)
-            }
+        Observable.fromCallable {
+            bchDataStore.bchWallet!!.getNextChangeCashAddress(accountIndex)
+        }
 
     /**
      * Allows you to generate a BCH change address at an arbitrary number of positions on the chain
      * from the next valid unused address. For example, the passing 5 as the position will generate
      * an address which correlates with the next available address + 5 positions.
      *
-     * @param accountIndex  The index of the [Account] you wish to generate an address from
+     * @param accountIndex The index of the [Account] you wish to generate an address from
      * @param addressIndex Represents how many positions on the chain beyond what is already used that
      * you wish to generate
      * @return A Bitcoin Cash change address in Base58 format
      */
     fun getChangeAddressAtPosition(accountIndex: Int, addressIndex: Int): Observable<String> =
-            Observable.fromCallable {
-                bchDataStore.bchWallet!!.getChangeAddressAtPosition(accountIndex, addressIndex)
-            }
+        Observable.fromCallable {
+            bchDataStore.bchWallet!!.getChangeAddressAtPosition(accountIndex, addressIndex)
+        }
 
     fun incrementNextReceiveAddress(xpub: String): Completable =
-            Completable.fromCallable {
-                bchDataStore.bchWallet!!.incrementNextReceiveAddress(xpub)
-            }
+        Completable.fromCallable {
+            bchDataStore.bchWallet!!.incrementNextReceiveAddress(xpub)
+        }
 
     fun incrementNextChangeAddress(xpub: String): Completable =
-            Completable.fromCallable {
-                bchDataStore.bchWallet!!.incrementNextChangeAddress(xpub)
-            }
+        Completable.fromCallable {
+            bchDataStore.bchWallet!!.incrementNextChangeAddress(xpub)
+        }
 
     fun isOwnAddress(address: String) = bchDataStore.bchWallet?.isOwnAddress(address) ?: false
 
@@ -458,60 +466,60 @@ class BchDataManager @Inject constructor(
         return bchDataStore.bchMetadata?.accounts?.find { it.xpub == xpub }?.label
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Web requests that require wrapping in Observables
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     @WebRequest
     private fun fetchAddressTransactions(
-            address: String,
-            limit: Int,
-            offset: Int
+        address: String,
+        limit: Int,
+        offset: Int
     ): MutableList<TransactionSummary> =
-            bchDataStore.bchWallet!!.getTransactions(
-                    null,//legacy list
-                    mutableListOf(),//watch-only list
-                    getActiveXpubsAndImportedAddresses(),
-                    address,
-                    limit,
-                    offset
-            )
+        bchDataStore.bchWallet!!.getTransactions(
+            null, // legacy list
+            mutableListOf(), // watch-only list
+            getActiveXpubsAndImportedAddresses(),
+            address,
+            limit,
+            offset
+        )
 
     @WebRequest
     private fun fetchWalletTransactions(limit: Int, offset: Int): MutableList<TransactionSummary> =
-            bchDataStore.bchWallet!!.getTransactions(
-                    null,//legacy list
-                    mutableListOf(),//watch-only list
-                    getActiveXpubsAndImportedAddresses(),
-                    null,
-                    limit,
-                    offset
-            )
+        bchDataStore.bchWallet!!.getTransactions(
+            null, // legacy list
+            mutableListOf(), // watch-only list
+            getActiveXpubsAndImportedAddresses(),
+            null,
+            limit,
+            offset
+        )
 
     @WebRequest
     private fun fetchImportedAddressTransactions(
-            limit: Int,
-            offset: Int
+        limit: Int,
+        offset: Int
     ): MutableList<TransactionSummary> =
-            bchDataStore.bchWallet!!.getTransactions(
-                    payloadDataManager.legacyAddressStringList,//legacy list
-                    mutableListOf(),//watch-only list
-                    getActiveXpubsAndImportedAddresses(),
-                    null,
-                    limit,
-                    offset
-            )
+        bchDataStore.bchWallet!!.getTransactions(
+            payloadDataManager.legacyAddressStringList, // legacy list
+            mutableListOf(), // watch-only list
+            getActiveXpubsAndImportedAddresses(),
+            null,
+            limit,
+            offset
+        )
 
     fun getXpubFromAddress(address: String) =
-            bchDataStore.bchWallet!!.getXpubFromAddress(address)
+        bchDataStore.bchWallet!!.getXpubFromAddress(address)
 
     fun getHDKeysForSigning(
-            account: DeterministicAccount,
-            unspentOutputs: List<UnspentOutput>
+        account: DeterministicAccount,
+        unspentOutputs: List<UnspentOutput>
     ) = bchDataStore.bchWallet!!.getHDKeysForSigning(account, unspentOutputs)
 
     fun subtractAmountFromAddressBalance(account: String, amount: BigInteger) =
-            bchDataStore.bchWallet!!.subtractAmountFromAddressBalance(account, amount)
+        bchDataStore.bchWallet!!.subtractAmountFromAddressBalance(account, amount)
 
-    private data class MetadataPair(val metadata : GenericMetadataWallet, val needsSave: Boolean)
+    private data class MetadataPair(val metadata: GenericMetadataWallet, val needsSave: Boolean)
 }

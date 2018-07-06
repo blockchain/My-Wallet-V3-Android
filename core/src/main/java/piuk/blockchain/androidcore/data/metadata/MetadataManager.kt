@@ -31,9 +31,9 @@ import javax.inject.Inject
 @Mockable
 @PresenterScope
 class MetadataManager @Inject constructor(
-        private val payloadDataManager: PayloadDataManager,
-        private val metadataUtils: MetadataUtils,
-        rxBus: RxBus
+    private val payloadDataManager: PayloadDataManager,
+    private val metadataUtils: MetadataUtils,
+    rxBus: RxBus
 ) {
     private val rxPinning = RxPinning(rxBus)
 
@@ -42,14 +42,16 @@ class MetadataManager @Inject constructor(
     fun decryptAndSetupMetadata(secondPassword: String): Completable {
         payloadDataManager.decryptHDWallet(secondPassword)
         return payloadDataManager.generateNodes()
-                .andThen(initMetadataNodesObservable())
+            .andThen(initMetadataNodesObservable())
     }
 
-    fun fetchMetadata(metadataType: Int): Observable<Optional<String>> = rxPinning.call<Optional<String>> {
-        payloadDataManager.getMetadataNodeFactory().map { nodeFactory ->
-            metadataUtils.getMetadataNode(nodeFactory.metadataNode, metadataType).metadataOptional
-        }
-    }.applySchedulers()
+    fun fetchMetadata(metadataType: Int): Observable<Optional<String>> =
+        rxPinning.call<Optional<String>> {
+            payloadDataManager.getMetadataNodeFactory().map { nodeFactory ->
+                metadataUtils.getMetadataNode(nodeFactory.metadataNode, metadataType)
+                    .metadataOptional
+            }
+        }.applySchedulers()
 
     fun saveToMetadata(data: String, metadataType: Int): Completable = rxPinning.call {
         payloadDataManager.getMetadataNodeFactory().flatMapCompletable {
@@ -62,7 +64,8 @@ class MetadataManager @Inject constructor(
     fun saveToMetadata(saveable: Saveable): Completable = rxPinning.call {
         payloadDataManager.getMetadataNodeFactory().flatMapCompletable {
             Completable.fromCallable {
-                metadataUtils.getMetadataNode(it.metadataNode, saveable.metadataType).putMetadata(saveable.toJson())
+                metadataUtils.getMetadataNode(it.metadataNode, saveable.metadataType)
+                    .putMetadata(saveable.toJson())
             }
         }.applySchedulers()
     }
@@ -74,23 +77,23 @@ class MetadataManager @Inject constructor(
      */
     private fun initMetadataNodesObservable(): Completable = rxPinning.call {
         payloadDataManager.loadNodes()
-                .map { loaded ->
-                    if (!loaded) {
-                        if (payloadDataManager.isDoubleEncrypted) {
-                            throw InvalidCredentialsException("Unable to derive metadata keys, payload is double encrypted")
-                        } else {
-                            true
-                        }
+            .map { loaded ->
+                if (!loaded) {
+                    if (payloadDataManager.isDoubleEncrypted) {
+                        throw InvalidCredentialsException("Unable to derive metadata keys, payload is double encrypted")
                     } else {
-                        false
+                        true
                     }
+                } else {
+                    false
                 }
-                .flatMap { needsGeneration ->
-                    if (needsGeneration) {
-                        payloadDataManager.generateAndReturnNodes()
-                    } else {
-                        payloadDataManager.getMetadataNodeFactory()
-                    }
-                }.flatMapCompletable { Completable.complete() }
+            }
+            .flatMap { needsGeneration ->
+                if (needsGeneration) {
+                    payloadDataManager.generateAndReturnNodes()
+                } else {
+                    payloadDataManager.getMetadataNodeFactory()
+                }
+            }.flatMapCompletable { Completable.complete() }
     }.applySchedulers()
 }

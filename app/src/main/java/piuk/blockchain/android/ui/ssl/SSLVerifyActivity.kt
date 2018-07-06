@@ -45,22 +45,21 @@ class SSLVerifyActivity : BaseMvpActivity<SSLVerifyView, SSLVerifyPresenter>(), 
     override fun showWarningPrompt() {
 
         val builder = AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setMessage(warningMessage)
-                .setCancelable(false)
+            .setMessage(warningMessage)
+            .setCancelable(false)
 
         if (allowRetry) {
             builder.setPositiveButton(
-                    R.string.retry
+                R.string.retry
             ) { _, _ -> presenter.validateSSL() }
         }
 
         builder.setNegativeButton(
-                R.string.exit
+            R.string.exit
         ) { _, _ -> finish() }
 
         val dialog = builder.create()
         dialog.show()
-
     }
 
     companion object {
@@ -85,6 +84,5 @@ class SSLVerifyActivity : BaseMvpActivity<SSLVerifyView, SSLVerifyPresenter>(), 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
-
     }
 }

@@ -11,7 +11,8 @@ class InvalidatableLazy<T>(private val initializer: () -> T) : Lazy<T> {
     /**
      * Backing property for [value].
      */
-    @Volatile private var _value: Any? = UninitializedValue
+    @Volatile
+    private var _value: Any? = UninitializedValue
     private val lock = this
 
     /**
@@ -40,11 +41,10 @@ class InvalidatableLazy<T>(private val initializer: () -> T) : Lazy<T> {
             }
         }
 
-
     override fun isInitialized(): Boolean = _value !== UninitializedValue
 
     override fun toString(): String =
-            if (isInitialized()) value.toString() else "Lazy value not initialized yet."
+        if (isInitialized()) value.toString() else "Lazy value not initialized yet."
 
     operator fun setValue(any: Any, property: KProperty<*>, t: T) {
         _value = t

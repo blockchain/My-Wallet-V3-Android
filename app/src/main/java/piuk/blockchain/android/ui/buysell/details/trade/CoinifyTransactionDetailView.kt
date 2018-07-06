@@ -9,10 +9,10 @@ interface CoinifyTransactionDetailView : View {
     val orderDetails: BuySellDetailsModel
 
     fun launchCardPayment(
-            redirectUrl: String,
-            paymentId: String,
-            fromCurrency: String,
-            cost: Double
+        redirectUrl: String,
+        paymentId: String,
+        fromCurrency: String,
+        cost: Double
     )
 
     fun showProgressDialog()

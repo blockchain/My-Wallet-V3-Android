@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.buysell.coinify.signup.identityinreview
 
 import piuk.blockchain.androidcoreui.ui.base.View
 
-interface CoinifyIdentityInReviewView: View {
+interface CoinifyIdentityInReviewView : View {
 
     fun onShowLoading()
 

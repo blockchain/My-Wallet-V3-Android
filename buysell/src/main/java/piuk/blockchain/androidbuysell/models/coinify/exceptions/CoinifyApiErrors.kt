@@ -6,12 +6,12 @@ import com.squareup.moshi.Moshi
 import retrofit2.Response
 
 private data class CoinifyErrorResponse(
-        // Contains a machine-readable error code, e.g. api_key_required
-        val error: String,
-        // Contains a human-readable error message
-        @field:Json(name = "error_description") val errorDescription: String,
-        // Contains a URI with more information about the specific error.
-        @field:Json(name = "error_uri") val errorUri: String?
+    // Contains a machine-readable error code, e.g. api_key_required
+    val error: String,
+    // Contains a human-readable error message
+    @field:Json(name = "error_description") val errorDescription: String,
+    // Contains a URI with more information about the specific error.
+    @field:Json(name = "error_uri") val errorUri: String?
 )
 
 class CoinifyApiException private constructor(message: String) : Throwable(message) {
@@ -50,13 +50,12 @@ class CoinifyApiException private constructor(message: String) : Throwable(messa
             val errorUri = coinifyErrorResponse.errorUri
 
             return CoinifyApiException("$httpErrorCode: $error - $errorDescription")
-                    .apply {
-                        _httpErrorCode = httpErrorCode
-                        _error = error
-                        _errorDescription = errorDescription
-                        _errorUri = errorUri
-                    }
+                .apply {
+                    _httpErrorCode = httpErrorCode
+                    _error = error
+                    _errorDescription = errorDescription
+                    _errorUri = errorUri
+                }
         }
-
     }
 }

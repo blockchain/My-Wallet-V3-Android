@@ -17,7 +17,7 @@ import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.utils.logging.Logging
 import timber.log.Timber
-import java.util.*
+import java.util.Currency
 import kotlin.math.absoluteValue
 import kotlinx.android.synthetic.main.activity_isignthis_payment.web_view_isignthis as webView
 import kotlinx.android.synthetic.main.toolbar_general.toolbar_general as toolBar
@@ -65,11 +65,11 @@ class ISignThisActivity : BaseAuthActivity() {
         val cost = intent.getDoubleExtra(EXTRA_COST, -1.0)
         val fromCurrency = intent.getStringExtra(EXTRA_FROM_CURRENCY).toUpperCase()
         Logging.logPurchase(
-                PurchaseEvent().putCurrency(Currency.getInstance("BTC"))
-                        .putItemPrice(cost.absoluteValue.toBigDecimal())
-                        .putItemName(fromCurrency)
-                        .putItemType(Logging.ITEM_TYPE_CRYPTO)
-                        .putSuccess(successful)
+            PurchaseEvent().putCurrency(Currency.getInstance("BTC"))
+                .putItemPrice(cost.absoluteValue.toBigDecimal())
+                .putItemName(fromCurrency)
+                .putItemType(Logging.ITEM_TYPE_CRYPTO)
+                .putSuccess(successful)
         )
 
         CoinifyPaymentCompleteActivity.start(this, paymentState)
@@ -83,22 +83,22 @@ class ISignThisActivity : BaseAuthActivity() {
     companion object {
 
         private const val EXTRA_REDIRECT_URL =
-                "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_REDIRECT_URL"
+            "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_REDIRECT_URL"
         private const val EXTRA_PAYMENT_ID =
-                "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_PAYMENT_ID"
+            "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_PAYMENT_ID"
         private const val EXTRA_FROM_CURRENCY =
-                "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_FROM_CURRENCY"
+            "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_FROM_CURRENCY"
         private const val EXTRA_COST =
-                "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_COST"
+            "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_COST"
 
         private const val TRADE_COMPLETE_PARTIAL_URL = "https://www.coinify.com/trade/"
 
         fun start(
-                activity: Activity,
-                redirectUrl: String,
-                paymentId: String,
-                fromCurrency: String,
-                cost: Double
+            activity: Activity,
+            redirectUrl: String,
+            paymentId: String,
+            fromCurrency: String,
+            cost: Double
         ) {
             Intent(activity, ISignThisActivity::class.java).apply {
                 putExtra(EXTRA_REDIRECT_URL, redirectUrl)
@@ -107,6 +107,5 @@ class ISignThisActivity : BaseAuthActivity() {
                 putExtra(EXTRA_COST, cost)
             }.run { activity.startActivity(this) }
         }
-
     }
 }

@@ -16,7 +16,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      * @return An [<] containing the user's settings
      */
     fun getSettingsObservable(): Observable<Settings> =
-            Observable.defer { getSettings() }
+        Observable.defer { getSettings() }
 
     /**
      * Fetches the latest [Settings] object for the user.
@@ -29,7 +29,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
     /**
      * Initializes the [SettingsManager] with the user's GUID and SharedKey.
      *
-     * @param guid      The user's GUID
+     * @param guid The user's GUID
      * @param sharedKey The shared key
      */
     internal fun initSettings(guid: String, sharedKey: String) {
@@ -44,7 +44,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateEmail(email: String): Observable<ResponseBody> =
-            settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_EMAIL, email)
+        settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_EMAIL, email)
 
     /**
      * Update the user's phone number
@@ -54,7 +54,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateSms(sms: String): Observable<ResponseBody> =
-            settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_SMS, sms)
+        settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_SMS, sms)
 
     /**
      * Verify the user's phone number with a verification code
@@ -64,7 +64,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun verifySms(code: String): Observable<ResponseBody> =
-            settingsApi.updateSetting(SettingsManager.METHOD_VERIFY_SMS, code)
+        settingsApi.updateSetting(SettingsManager.METHOD_VERIFY_SMS, code)
 
     /**
      * Update the user's Tor blocking preference
@@ -74,8 +74,8 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateTor(blocked: Boolean): Observable<ResponseBody> = settingsApi.updateSetting(
-            SettingsManager.METHOD_UPDATE_BLOCK_TOR_IPS,
-            if (blocked) 1 else 0
+        SettingsManager.METHOD_UPDATE_BLOCK_TOR_IPS,
+        if (blocked) 1 else 0
     )
 
     /**
@@ -87,10 +87,10 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateNotifications(notificationType: Int): Observable<ResponseBody> =
-            settingsApi.updateSetting(
-                    SettingsManager.METHOD_UPDATE_NOTIFICATION_TYPE,
-                    notificationType
-            )
+        settingsApi.updateSetting(
+            SettingsManager.METHOD_UPDATE_NOTIFICATION_TYPE,
+            notificationType
+        )
 
     /**
      * Enable or disable all notifications
@@ -101,10 +101,10 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun enableNotifications(enable: Boolean): Observable<ResponseBody> =
-            settingsApi.updateSetting(
-                    SettingsManager.METHOD_UPDATE_NOTIFICATION_ON,
-                    if (enable) SettingsManager.NOTIFICATION_ON else SettingsManager.NOTIFICATION_OFF
-            )
+        settingsApi.updateSetting(
+            SettingsManager.METHOD_UPDATE_NOTIFICATION_ON,
+            if (enable) SettingsManager.NOTIFICATION_ON else SettingsManager.NOTIFICATION_OFF
+        )
 
     /**
      * Update the user's two factor status
@@ -115,7 +115,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateTwoFactor(authType: Int): Observable<ResponseBody> =
-            settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_AUTH_TYPE, authType)
+        settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_AUTH_TYPE, authType)
 
     /**
      * Update the user's btc unit preference
@@ -125,7 +125,7 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateBtcUnit(btcUnit: String): Observable<ResponseBody> =
-            settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_BTC_CURRENCY, btcUnit)
+        settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_BTC_CURRENCY, btcUnit)
 
     /**
      * Update the user's fiat unit preference
@@ -135,5 +135,5 @@ class SettingsService @Inject constructor(private val settingsApi: SettingsManag
      */
     @WebRequest
     internal fun updateFiatUnit(fiatUnit: String): Observable<ResponseBody> =
-            settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_CURRENCY, fiatUnit)
+        settingsApi.updateSetting(SettingsManager.METHOD_UPDATE_CURRENCY, fiatUnit)
 }

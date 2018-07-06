@@ -12,9 +12,9 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class SwipeToReceivePresenter @Inject constructor(
-        private val dataManager: QrCodeDataManager,
-        private val swipeToReceiveHelper: SwipeToReceiveHelper,
-        private val stringUtils: StringUtils
+    private val dataManager: QrCodeDataManager,
+    private val swipeToReceiveHelper: SwipeToReceiveHelper,
+    private val stringUtils: StringUtils
 ) : BasePresenter<SwipeToReceiveView>() {
 
     internal var currencyPosition by Delegates.observable(0) { _, _, new ->
@@ -23,9 +23,9 @@ class SwipeToReceivePresenter @Inject constructor(
     }
 
     private val currencyList = listOf(
-            CryptoCurrencies.BTC,
-            CryptoCurrencies.ETHER,
-            CryptoCurrencies.BCH
+        CryptoCurrencies.BTC,
+        CryptoCurrencies.ETHER,
+        CryptoCurrencies.BCH
     )
 
     private val bitcoinAddress: Single<String>
@@ -41,10 +41,10 @@ class SwipeToReceivePresenter @Inject constructor(
 
     private fun onCurrencySelected(cryptoCurrency: CryptoCurrencies) {
         view.displayCoinType(
-                stringUtils.getFormattedString(
-                        R.string.swipe_receive_request,
-                        cryptoCurrency.unit
-                )
+            stringUtils.getFormattedString(
+                R.string.swipe_receive_request,
+                cryptoCurrency.unit
+            )
         )
         view.setUiState(UiState.LOADING)
 
@@ -77,27 +77,25 @@ class SwipeToReceivePresenter @Inject constructor(
             view.setUiState(UiState.EMPTY)
         } else {
             single.doOnSuccess { require(it.isNotEmpty()) { "Returned address is empty, no more addresses available" } }
-                    .doOnSuccess {
-                        view.displayReceiveAddress(
-                                it.replace("bitcoincash:", "")
-                                        .replace("bitcoin:", "")
-                        )
-                    }
-                    .flatMapObservable { dataManager.generateQrCode(it, DIMENSION_QR_CODE) }
-                    .addToCompositeDisposable(this)
-                    .subscribe(
-                            {
-                                view.displayQrCode(it)
-                                view.setUiState(UiState.CONTENT)
-                            },
-                            { _ -> view.setUiState(UiState.FAILURE) })
+                .doOnSuccess {
+                    view.displayReceiveAddress(
+                        it.replace("bitcoincash:", "")
+                            .replace("bitcoin:", "")
+                    )
+                }
+                .flatMapObservable { dataManager.generateQrCode(it, DIMENSION_QR_CODE) }
+                .addToCompositeDisposable(this)
+                .subscribe(
+                    {
+                        view.displayQrCode(it)
+                        view.setUiState(UiState.CONTENT)
+                    },
+                    { _ -> view.setUiState(UiState.FAILURE) })
         }
     }
 
     companion object {
 
         private const val DIMENSION_QR_CODE = 600
-
     }
-
 }

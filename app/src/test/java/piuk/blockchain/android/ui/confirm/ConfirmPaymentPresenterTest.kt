@@ -78,5 +78,4 @@ class ConfirmPaymentPresenterTest {
         verify(mockActivity).setUiState(UiState.CONTENT)
         verifyNoMoreInteractions(mockActivity)
     }
-
 }

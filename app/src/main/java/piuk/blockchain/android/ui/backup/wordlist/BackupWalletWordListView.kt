@@ -8,5 +8,4 @@ interface BackupWalletWordListView : View {
     fun getPageBundle(): Bundle?
 
     fun finish()
-
 }

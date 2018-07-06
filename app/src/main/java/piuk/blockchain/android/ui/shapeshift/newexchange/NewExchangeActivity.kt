@@ -49,7 +49,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.visible
 import timber.log.Timber
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresenter>(),
@@ -57,7 +57,8 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     NumericKeyboardCallback {
 
     @Suppress("MemberVisibilityCanBePrivate", "unused")
-    @Inject lateinit var newExchangePresenter: NewExchangePresenter
+    @Inject
+    lateinit var newExchangePresenter: NewExchangePresenter
 
     override val locale: Locale = Locale.getDefault()
     override val shapeShiftApiKey: String = BuildConfig.SHAPE_SHIFT_API_KEY
@@ -68,7 +69,7 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     private val bchSymbol = CryptoCurrencies.BCH.symbol.toUpperCase()
     private val compositeDisposable = CompositeDisposable()
     private val defaultDecimalSeparator =
-            DecimalFormatSymbols.getInstance().decimalSeparator.toString()
+        DecimalFormatSymbols.getInstance().decimalSeparator.toString()
     private val editTexts by unsafeLazy {
         listOf(edittext_from_crypto, edittext_to_crypto, edittext_to_fiat, edittext_from_fiat)
     }
@@ -100,10 +101,10 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
 
         imageview_switch_currency.setOnClickListener {
             imageview_switch_currency.createSpringAnimation(
-                    SpringAnimation.ROTATION,
-                    imageview_switch_currency.rotation + ROTATION,
-                    SpringForce.STIFFNESS_LOW,
-                    SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
+                SpringAnimation.ROTATION,
+                imageview_switch_currency.rotation + ROTATION,
+                SpringForce.STIFFNESS_LOW,
+                SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
             ).start()
 
             presenter.onSwitchCurrencyClicked()
@@ -116,11 +117,11 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     }
 
     override fun updateUi(
-            fromCurrency: CryptoCurrencies,
-            toCurrency: CryptoCurrencies,
-            fromLabel: String,
-            toLabel: String,
-            fiatHint: String
+        fromCurrency: CryptoCurrencies,
+        toCurrency: CryptoCurrencies,
+        fromLabel: String,
+        toLabel: String,
+        fiatHint: String
     ) {
         // Titles
         textview_to_address.text = toLabel
@@ -146,19 +147,19 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
 
     override fun launchAccountChooserActivityTo() {
         AccountChooserActivity.startForResult(
-                this,
-                AccountMode.ShapeShift,
-                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT_FROM_SEND,
-                getString(R.string.to)
+            this,
+            AccountMode.ShapeShift,
+            REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT_FROM_SEND,
+            getString(R.string.to)
         )
     }
 
     override fun launchAccountChooserActivityFrom() {
         AccountChooserActivity.startForResult(
-                this,
-                AccountMode.ShapeShift,
-                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT_FROM_SEND,
-                getString(R.string.from)
+            this,
+            AccountMode.ShapeShift,
+            REQUEST_CODE_CHOOSE_SENDING_ACCOUNT_FROM_SEND,
+            getString(R.string.from)
         )
     }
 
@@ -167,10 +168,10 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
         if (resultCode == Activity.RESULT_OK && data != null) {
 
             val clazz =
-                    Class.forName(data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_OBJECT_TYPE))
+                Class.forName(data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_OBJECT_TYPE))
             val any = ObjectMapper().readValue(
-                    data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM),
-                    clazz
+                data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM),
+                clazz
             )
             when (any) {
                 is Account -> {
@@ -211,7 +212,7 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     override fun showProgressDialog(@StringRes message: Int) {
         dismissProgressDialog()
         progressDialog = MaterialProgressDialog(
-                this
+            this
         ).apply {
             setCancelable(false)
             setMessage(message)
@@ -291,31 +292,31 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
 
     override fun showNoFunds(canBuy: Boolean) {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.shapeshift_no_funds_title)
-                .setMessage(R.string.shapeshift_no_funds_message)
-                .setCancelable(true)
-                .setNeutralButton(R.string.onboarding_get_bitcoin_cash) { _, _ ->
+            .setTitle(R.string.shapeshift_no_funds_title)
+            .setMessage(R.string.shapeshift_no_funds_message)
+            .setCancelable(true)
+            .setNeutralButton(R.string.onboarding_get_bitcoin_cash) { _, _ ->
+                LocalBroadcastManager.getInstance(this)
+                    .sendBroadcastSync(Intent(MainActivity.ACTION_RECEIVE_BCH))
+                finish()
+            }
+            .setNegativeButton(R.string.onboarding_get_bitcoin) { _, _ ->
+                if (canBuy) {
                     LocalBroadcastManager.getInstance(this)
-                            .sendBroadcastSync(Intent(MainActivity.ACTION_RECEIVE_BCH))
-                    finish()
-                }
-                .setNegativeButton(R.string.onboarding_get_bitcoin) { _, _ ->
-                    if (canBuy) {
-                        LocalBroadcastManager.getInstance(this)
-                                .sendBroadcastSync(Intent(MainActivity.ACTION_BUY))
-                    } else {
-                        LocalBroadcastManager.getInstance(this)
-                                .sendBroadcastSync(Intent(MainActivity.ACTION_RECEIVE))
-                    }
-                    finish()
-                }
-                .setPositiveButton(R.string.onboarding_get_eth) { _, _ ->
+                        .sendBroadcastSync(Intent(MainActivity.ACTION_BUY))
+                } else {
                     LocalBroadcastManager.getInstance(this)
-                            .sendBroadcastSync(Intent(MainActivity.ACTION_RECEIVE_ETH))
-                    finish()
+                        .sendBroadcastSync(Intent(MainActivity.ACTION_RECEIVE))
                 }
-                .setOnCancelListener { finish() }
-                .show()
+                finish()
+            }
+            .setPositiveButton(R.string.onboarding_get_eth) { _, _ ->
+                LocalBroadcastManager.getInstance(this)
+                    .sendBroadcastSync(Intent(MainActivity.ACTION_RECEIVE_ETH))
+                finish()
+            }
+            .setOnCancelListener { finish() }
+            .show()
     }
 
     override fun onKeypadClose() {
@@ -324,8 +325,8 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
         shapeshift_scrollview.apply {
             setPadding(0, 0, 0, 0)
             layoutParams = CoordinatorLayout.LayoutParams(
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT,
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT
+                CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                CoordinatorLayout.LayoutParams.MATCH_PARENT
             ).apply { setMargins(0, height, 0, 0) }
 
             postDelayed({ smoothScrollTo(0, 0) }, 100)
@@ -342,8 +343,8 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
         shapeshift_scrollview.apply {
             setPadding(0, 0, 0, shapeshift_keyboard.height)
             layoutParams = CoordinatorLayout.LayoutParams(
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT,
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT
+                CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                CoordinatorLayout.LayoutParams.MATCH_PARENT
             ).apply { setMargins(0, height, 0, 0) }
 
             scrollTo(0, bottom)
@@ -372,18 +373,18 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
 
     private fun setupListeners() {
         mapOf(
-                edittext_to_crypto to presenter.toCryptoSubject,
-                edittext_from_crypto to presenter.fromCryptoSubject,
-                edittext_to_fiat to presenter.toFiatSubject,
-                edittext_from_fiat to presenter.fromFiatSubject
+            edittext_to_crypto to presenter.toCryptoSubject,
+            edittext_from_crypto to presenter.fromCryptoSubject,
+            edittext_to_fiat to presenter.toFiatSubject,
+            edittext_from_fiat to presenter.fromFiatSubject
         ).map {
             it.key.setOnClickListener { clearEditTexts() }
             return@map getTextWatcherObservable(it.key, it.value)
         }.map {
-                    // Resume if any formatting errors occur
-                    it.onErrorResumeNext(it).subscribe()
-                    // Dispose subscriptions onDestroy as strong reference held to View
-                }.forEach { compositeDisposable.addAll(it) }
+            // Resume if any formatting errors occur
+            it.onErrorResumeNext(it).subscribe()
+            // Dispose subscriptions onDestroy as strong reference held to View
+        }.forEach { compositeDisposable.addAll(it) }
     }
 
     private fun setupKeypad() {
@@ -398,22 +399,22 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     }
 
     private fun getTextWatcherObservable(
-            editText: EditText,
-            publishSubject: PublishSubject<String>
+        editText: EditText,
+        publishSubject: PublishSubject<String>
     ): Observable<String> = RxTextView.textChanges(editText)
-            // Logging
-            .doOnError(Timber::e)
-            .doOnTerminate { Timber.wtf("Text watcher terminated unexpectedly $editText") }
-            // Skip first event emitted when subscribing
-            .skip(1)
-            // Convert to String
-            .map { it.toString() }
-            // Ignore elements emitted by non-user events (ie presenter updates) and those
-            // emitted from changes to paired EditText (ie edit fiat, edit crypto)
-            .doOnNext { if (currentFocus == editText) publishSubject.onNext(it) }
-            // Scheduling
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+        // Logging
+        .doOnError(Timber::e)
+        .doOnTerminate { Timber.wtf("Text watcher terminated unexpectedly $editText") }
+        // Skip first event emitted when subscribing
+        .skip(1)
+        // Convert to String
+        .map { it.toString() }
+        // Ignore elements emitted by non-user events (ie presenter updates) and those
+        // emitted from changes to paired EditText (ie edit fiat, edit crypto)
+        .doOnNext { if (currentFocus == editText) publishSubject.onNext(it) }
+        // Scheduling
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
 
     private fun showFromBtc() {
         textview_unit_from.text = btcSymbol
@@ -463,7 +464,5 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
         fun start(context: Context) {
             context.startActivity(Intent(context, NewExchangeActivity::class.java))
         }
-
     }
-
 }

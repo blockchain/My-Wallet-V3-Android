@@ -33,5 +33,4 @@ class CustomTypefaceSpan(private val newType: Typeface?) : TypefaceSpan("") {
 
         paint.typeface = typeface
     }
-
 }

@@ -13,6 +13,5 @@ import javax.inject.Inject
 class EthereumAccountWrapper @Inject constructor() {
 
     fun deriveECKey(masterKey: DeterministicKey, accountIndex: Int): ECKey =
-            EthereumAccount.deriveECKey(masterKey, accountIndex)
-
+        EthereumAccount.deriveECKey(masterKey, accountIndex)
 }

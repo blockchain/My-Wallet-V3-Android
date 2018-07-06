@@ -28,7 +28,6 @@ class CoinifyDataManagerTest : RxTest() {
     private val authService: AuthService = mock()
     private val accessTokenStore: AccessTokenStore = mock()
 
-
     @Before
     @Throws(Exception::class)
     override fun setUp() {
@@ -46,32 +45,32 @@ class CoinifyDataManagerTest : RxTest() {
         whenever(invalidStoredResponse.accessToken).thenReturn(invalidToken)
         whenever(accessTokenStore.requiresRefresh()).thenReturn(false)
         whenever(accessTokenStore.getAccessToken())
-                .thenReturn(Observable.just(Optional.Some(invalidStoredResponse)))
+            .thenReturn(Observable.just(Optional.Some(invalidStoredResponse)))
         // Initial response - unauthenticated
         val responseBody =
-                ResponseBody.create(MediaType.parse("application/json"), UNAUTHENTICATED_JSON)
+            ResponseBody.create(MediaType.parse("application/json"), UNAUTHENTICATED_JSON)
         whenever(coinifyService.getTrader(accessToken = invalidToken))
-                .thenReturn(
-                        Single.error(
-                                CoinifyApiException.fromResponseBody(
-                                        Response.error<Trader>(401, responseBody)
-                                )
-                        )
+            .thenReturn(
+                Single.error(
+                    CoinifyApiException.fromResponseBody(
+                        Response.error<Trader>(401, responseBody)
+                    )
                 )
+            )
         // Re-authenticate
         val newlyRefreshedToken = "NEWLY_REFRESHED_TOKEN"
         val newlyRefreshedResponse: AuthResponse = mock()
         whenever(newlyRefreshedResponse.accessToken).thenReturn(newlyRefreshedToken)
         whenever(
-                coinifyService.auth(authRequest = AuthRequest(GrantType.OfflineToken, offlineToken))
+            coinifyService.auth(authRequest = AuthRequest(GrantType.OfflineToken, offlineToken))
         ).thenReturn(Single.just(newlyRefreshedResponse))
         // Store new token
         whenever(accessTokenStore.store(newlyRefreshedResponse))
-                .thenReturn(Observable.just(newlyRefreshedResponse))
+            .thenReturn(Observable.just(newlyRefreshedResponse))
         // Re-attempt getTrader with new token, return successfully
         val trader: Trader = mock()
         whenever(coinifyService.getTrader(accessToken = newlyRefreshedToken))
-                .thenReturn(Single.just(trader))
+            .thenReturn(Single.just(trader))
         // Act
         val testObserver = subject.getTrader(offlineToken).test()
         // Assert
@@ -90,11 +89,9 @@ class CoinifyDataManagerTest : RxTest() {
     private companion object {
 
         private const val UNAUTHENTICATED_JSON = "" +
-                "{\n" +
-                "  \"error\": \"unauthenticated\",\n" +
-                "  \"error_description\": \"Invalid access token\"\n" +
-                "}"
-
+            "{\n" +
+            "  \"error\": \"unauthenticated\",\n" +
+            "  \"error_description\": \"Invalid access token\"\n" +
+            "}"
     }
-
 }

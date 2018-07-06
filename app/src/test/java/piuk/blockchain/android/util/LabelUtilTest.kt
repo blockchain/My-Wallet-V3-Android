@@ -107,7 +107,7 @@ class LabelUtilTest {
         whenever(mockPayloadManager.accounts).thenReturn(listOf(account))
         whenever(mockBchDataManager.getAccountMetadataList()).thenReturn(emptyList())
         whenever(mockPayloadManager.legacyAddresses)
-                .thenReturn(mutableListOf(legacyAddress0, legacyAddress1))
+            .thenReturn(mutableListOf(legacyAddress0, legacyAddress1))
         // Act
         val result = LabelUtil.isExistingLabel(mockPayloadManager, mockBchDataManager, newLabel)
         // Assert
@@ -117,5 +117,4 @@ class LabelUtilTest {
         verify(mockBchDataManager).getAccountMetadataList()
         result shouldEqual false
     }
-
 }

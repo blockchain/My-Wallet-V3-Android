@@ -21,7 +21,8 @@ class WalletOptionsDataManagerTest : RxTest() {
 
     private val authService: AuthService = mock()
     private var walletOptionsState = WalletOptionsState()
-    private val mockSettingsDataManager: SettingsDataManager = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+    private val mockSettingsDataManager: SettingsDataManager =
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
     private val explorerUrl: String = "https://blockchain.info/"
 
     @Before
@@ -30,10 +31,10 @@ class WalletOptionsDataManagerTest : RxTest() {
         super.setUp()
         walletOptionsState.wipe()
         subject = WalletOptionsDataManager(
-                authService,
-                walletOptionsState,
-                mockSettingsDataManager,
-                explorerUrl
+            authService,
+            walletOptionsState,
+            mockSettingsDataManager,
+            explorerUrl
         )
     }
 
@@ -44,7 +45,7 @@ class WalletOptionsDataManagerTest : RxTest() {
         val showShapeshiftFlag = false
 
         // Arrange
-        //Shapeshift flag
+        // Shapeshift flag
         val walletOptions: WalletOptions = mock()
         val shapeshift: ShapeShiftOptions = mock()
         val flagmap = hashMapOf("showShapeshift" to showShapeshiftFlag)
@@ -52,12 +53,12 @@ class WalletOptionsDataManagerTest : RxTest() {
         whenever(walletOptions.shapeshift).thenReturn(shapeshift)
         whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
 
-        //Country code
+        // Country code
         val settings: Settings = mock()
         whenever(settings.countryCode).thenReturn("GB")
         whenever(mockSettingsDataManager.getSettings()).thenReturn(Observable.just(settings))
 
-        //State code - none
+        // State code - none
 
         // Act
         val testObserver = subject.showShapeshift("", "").test()
@@ -73,7 +74,7 @@ class WalletOptionsDataManagerTest : RxTest() {
         val showShapeshiftFlag = true
 
         // Arrange
-        //Shapeshift flag
+        // Shapeshift flag
         val walletOptions: WalletOptions = mock()
         val shapeshift: ShapeShiftOptions = mock()
         val flagmap = hashMapOf("showShapeshift" to showShapeshiftFlag)
@@ -81,12 +82,12 @@ class WalletOptionsDataManagerTest : RxTest() {
         whenever(walletOptions.shapeshift).thenReturn(shapeshift)
         whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
 
-        //Country code
+        // Country code
         val settings: Settings = mock()
         whenever(settings.countryCode).thenReturn("GB")
         whenever(mockSettingsDataManager.getSettings()).thenReturn(Observable.just(settings))
 
-        //State code - none
+        // State code - none
 
         // Act
         val testObserver = subject.showShapeshift("", "").test()
@@ -102,7 +103,7 @@ class WalletOptionsDataManagerTest : RxTest() {
         val showShapeshiftFlag = true
 
         // Arrange
-        //Shapeshift flag
+        // Shapeshift flag
         val walletOptions: WalletOptions = mock()
         val shapeshift: ShapeShiftOptions = mock()
         val flagmap = hashMapOf("showShapeshift" to showShapeshiftFlag)
@@ -110,14 +111,14 @@ class WalletOptionsDataManagerTest : RxTest() {
         whenever(walletOptions.shapeshift).thenReturn(shapeshift)
         whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
 
-        //Country code
+        // Country code
         val settings: Settings = mock()
         whenever(settings.countryCode).thenReturn("DE")
         whenever(mockSettingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-        //Blacklist me
+        // Blacklist me
         whenever(shapeshift.countriesBlacklist).thenReturn(listOf("GB", "DE"))
 
-        //State code - none
+        // State code - none
 
         // Act
         val testObserver = subject.showShapeshift("", "").test()
@@ -125,7 +126,6 @@ class WalletOptionsDataManagerTest : RxTest() {
         assertEquals(false, testObserver.values()[0])
         testObserver.assertComplete()
     }
-
 
     @Test
     @Throws(Exception::class)
@@ -165,10 +165,12 @@ class WalletOptionsDataManagerTest : RxTest() {
     fun `checkForceUpgrade ignore minSdk despite versionCode unsupported`() {
         // Arrange
         val walletOptions: WalletOptions = mock()
-        whenever(walletOptions.androidUpgrade).thenReturn(mapOf(
+        whenever(walletOptions.androidUpgrade).thenReturn(
+            mapOf(
                 "minSdk" to 18,
                 "minVersionCode" to 361
-        ))
+            )
+        )
         val versionCode = 360
         val sdk = 16
         whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
@@ -185,10 +187,12 @@ class WalletOptionsDataManagerTest : RxTest() {
     fun `checkForceUpgrade versionCode supported, minSdk lower than supplied`() {
         // Arrange
         val walletOptions: WalletOptions = mock()
-        whenever(walletOptions.androidUpgrade).thenReturn(mapOf(
+        whenever(walletOptions.androidUpgrade).thenReturn(
+            mapOf(
                 "minSdk" to 18,
                 "minVersionCode" to 360
-        ))
+            )
+        )
         val versionCode = 360
         val sdk = 21
         whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
@@ -205,10 +209,12 @@ class WalletOptionsDataManagerTest : RxTest() {
     fun `checkForceUpgrade should force upgrade`() {
         // Arrange
         val walletOptions: WalletOptions = mock()
-        whenever(walletOptions.androidUpgrade).thenReturn(mapOf(
+        whenever(walletOptions.androidUpgrade).thenReturn(
+            mapOf(
                 "minSdk" to 16,
                 "minVersionCode" to 361
-        ))
+            )
+        )
         val versionCode = 360
         val sdk = 16
         whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))

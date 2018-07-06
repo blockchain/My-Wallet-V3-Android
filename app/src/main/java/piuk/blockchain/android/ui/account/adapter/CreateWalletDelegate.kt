@@ -14,29 +14,29 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class CreateWalletDelegate<in T>(
-        val listener: AccountHeadersListener
+    val listener: AccountHeadersListener
 ) : AdapterDelegate<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            HeaderViewHolder(parent.inflate(R.layout.item_accounts_row_header))
+        HeaderViewHolder(parent.inflate(R.layout.item_accounts_row_header))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         val headerViewHolder = holder as HeaderViewHolder
         headerViewHolder.bind(items[position] as AccountItem, listener)
     }
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            if (items[position] is AccountItem) {
-                (items[position] as AccountItem).type == AccountItem.TYPE_CREATE_NEW_WALLET_BUTTON
-                        || (items[position] as AccountItem).type == AccountItem.TYPE_WALLET_HEADER
-            } else {
-                false
-            }
+        if (items[position] is AccountItem) {
+            (items[position] as AccountItem).type == AccountItem.TYPE_CREATE_NEW_WALLET_BUTTON ||
+                (items[position] as AccountItem).type == AccountItem.TYPE_WALLET_HEADER
+        } else {
+            false
+        }
 
     private class HeaderViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -45,8 +45,8 @@ class CreateWalletDelegate<in T>(
         private val plus: ImageView = itemView.imageview_plus
 
         internal fun bind(
-                item: AccountItem,
-                listener: AccountHeadersListener
+            item: AccountItem,
+            listener: AccountHeadersListener
         ) {
             header.setText(R.string.wallets)
             plus.visible()
@@ -59,5 +59,4 @@ class CreateWalletDelegate<in T>(
             }
         }
     }
-
 }

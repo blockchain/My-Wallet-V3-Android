@@ -12,16 +12,16 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import javax.inject.Inject
 
 class CoinifyTransactionDetailPresenter @Inject constructor(
-        private val coinifyDataManager: CoinifyDataManager,
-        private val exchangeService: ExchangeService
+    private val coinifyDataManager: CoinifyDataManager,
+    private val exchangeService: ExchangeService
 ) : BasePresenter<CoinifyTransactionDetailView>() {
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
-                .addToCompositeDisposable(this)
-                .applySchedulers()
-                .singleOrError()
-                .map { it.coinify!!.token }
+            .addToCompositeDisposable(this)
+            .applySchedulers()
+            .singleOrError()
+            .map { it.coinify!!.token }
 
     override fun onViewReady() = Unit
 
@@ -29,19 +29,19 @@ class CoinifyTransactionDetailPresenter @Inject constructor(
         val orderDetails = view.orderDetails
 
         tokenSingle.flatMap { coinifyDataManager.getTradeStatus(it, orderDetails.tradeId) }
-                .doOnSubscribe { view.showProgressDialog() }
-                .doAfterTerminate { view.dismissProgressDialog() }
-                .subscribeBy(
-                        onSuccess = {
-                            val details = it.transferIn.details as CardDetails
-                            view.launchCardPayment(
-                                    details.redirectUrl,
-                                    details.paymentId,
-                                    it.inCurrency,
-                                    it.inAmount
-                            )
-                        },
-                        onError = { view.showErrorToast(R.string.unexpected_error) }
-                )
+            .doOnSubscribe { view.showProgressDialog() }
+            .doAfterTerminate { view.dismissProgressDialog() }
+            .subscribeBy(
+                onSuccess = {
+                    val details = it.transferIn.details as CardDetails
+                    view.launchCardPayment(
+                        details.redirectUrl,
+                        details.paymentId,
+                        it.inCurrency,
+                        it.inAmount
+                    )
+                },
+                onError = { view.showErrorToast(R.string.unexpected_error) }
+            )
     }
 }

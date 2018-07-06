@@ -32,11 +32,11 @@ interface AccountEditView : View {
     fun showXpubSharingWarning()
 
     fun showAddressDetails(
-            heading: String?,
-            note: String?,
-            copy: String?,
-            bitmap: Bitmap?,
-            qrString: String?
+        heading: String?,
+        note: String?,
+        copy: String?,
+        bitmap: Bitmap?,
+        qrString: String?
     )
 
     fun showPaymentDetails(details: PaymentConfirmationDetails)
@@ -54,5 +54,4 @@ interface AccountEditView : View {
     fun hideMerchantCopy()
 
     fun finishPage()
-
 }

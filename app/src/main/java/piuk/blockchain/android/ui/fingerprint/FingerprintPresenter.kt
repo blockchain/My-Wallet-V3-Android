@@ -11,11 +11,13 @@ import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanBePrivate")
 class FingerprintPresenter @Inject constructor(
-        private val fingerprintHelper: FingerprintHelper
+    private val fingerprintHelper: FingerprintHelper
 ) : BasePresenter<FingerprintView>(), FingerprintHelper.AuthCallback {
 
-    @VisibleForTesting var currentStage: FingerprintStage? = null
-    @VisibleForTesting var pincode: String? = null
+    @VisibleForTesting
+    var currentStage: FingerprintStage? = null
+    @VisibleForTesting
+    var pincode: String? = null
 
     override fun onViewReady() {
         val stageString = view.getBundle()?.getString(KEY_BUNDLE_STAGE)
@@ -65,8 +67,8 @@ class FingerprintPresenter @Inject constructor(
      */
     override fun onKeyInvalidated() {
         setFailureState(
-                R.string.fingerprint_key_invalidated_brief,
-                R.string.fingerprint_key_invalidated_description
+            R.string.fingerprint_key_invalidated_brief,
+            R.string.fingerprint_key_invalidated_description
         )
         view.setCancelButtonText(R.string.fingerprint_use_pin)
         view.onFatalError()
@@ -79,12 +81,12 @@ class FingerprintPresenter @Inject constructor(
     override fun onFatalError() {
         when (currentStage) {
             FingerprintStage.REGISTER_FINGERPRINT -> setFailureState(
-                    R.string.fingerprint_fatal_error_brief,
-                    R.string.fingerprint_fatal_error_register_description
+                R.string.fingerprint_fatal_error_brief,
+                R.string.fingerprint_fatal_error_register_description
             )
             else -> setFailureState(
-                    R.string.fingerprint_fatal_error_brief,
-                    R.string.fingerprint_fatal_error_authenticate_description
+                R.string.fingerprint_fatal_error_brief,
+                R.string.fingerprint_fatal_error_authenticate_description
             )
         }
         view.onFatalError()
@@ -115,5 +117,4 @@ class FingerprintPresenter @Inject constructor(
         super.onViewDestroyed()
         fingerprintHelper.releaseFingerprintReader()
     }
-
 }

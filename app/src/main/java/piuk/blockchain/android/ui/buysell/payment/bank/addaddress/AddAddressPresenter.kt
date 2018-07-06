@@ -18,19 +18,19 @@ import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class AddAddressPresenter @Inject constructor(
-        private val coinifyDataManager: CoinifyDataManager,
-        private val exchangeService: ExchangeService,
-        private val buyDataManager: BuyDataManager
+    private val coinifyDataManager: CoinifyDataManager,
+    private val exchangeService: ExchangeService,
+    private val buyDataManager: BuyDataManager
 ) : BasePresenter<AddAddressView>() {
 
     private val countryCodeMap by unsafeLazy {
         Locale.getISOCountries().associateBy(
-                { Locale("en", it).displayCountry },
-                { it }
+            { Locale("en", it).displayCountry },
+            { it }
         ).toSortedMap()
     }
 
@@ -38,16 +38,16 @@ class AddAddressPresenter @Inject constructor(
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
-                .addToCompositeDisposable(this)
-                .applySchedulers()
-                .singleOrError()
-                .map { it.coinify!!.token }
+            .addToCompositeDisposable(this)
+            .applySchedulers()
+            .singleOrError()
+            .map { it.coinify!!.token }
 
     override fun onViewReady() {
         buyDataManager.countryCode
-                .applySchedulers()
-                .addToCompositeDisposable(this)
-                .subscribeBy(onNext = { selectCountry(it) })
+            .applySchedulers()
+            .addToCompositeDisposable(this)
+            .subscribeBy(onNext = { selectCountry(it) })
     }
 
     internal fun onCountryCodeChanged(code: String) {
@@ -60,41 +60,41 @@ class AddAddressPresenter @Inject constructor(
 
         tokenSingle.flatMap { token ->
             coinifyDataManager.getTrader(token)
-                    .flatMap {
-                        coinifyDataManager.addBankAccount(
-                                token,
-                                BankAccount(
-                                        account = Account(
-                                                it.defaultCurrency,
-                                                null,
-                                                view.bic,
-                                                view.iban
-                                        ),
-                                        bank = Bank(address = Address(countryCode = countryCode)),
-                                        holder = Holder(
-                                                view.accountHolderName, Address(
-                                                street = view.streetAndNumber,
-                                                zipcode = view.postCode,
-                                                city = view.city,
-                                                countryCode = countryCode
-                                        )
-                                        )
+                .flatMap {
+                    coinifyDataManager.addBankAccount(
+                        token,
+                        BankAccount(
+                            account = Account(
+                                it.defaultCurrency,
+                                null,
+                                view.bic,
+                                view.iban
+                            ),
+                            bank = Bank(address = Address(countryCode = countryCode)),
+                            holder = Holder(
+                                view.accountHolderName, Address(
+                                    street = view.streetAndNumber,
+                                    zipcode = view.postCode,
+                                    city = view.city,
+                                    countryCode = countryCode
                                 )
+                            )
                         )
-                    }
+                    )
+                }
         }.doOnSubscribe { view.showProgressDialog() }
-                .doOnEvent { _, _ -> view.dismissProgressDialog() }
-                .doOnError { Timber.e(it) }
-                .subscribeBy(
-                        onSuccess = { view.goToConfirmation(it.id!!) },
-                        onError = {
-                            if (it is CoinifyApiException) {
-                                view.showErrorDialog(it.getErrorDescription())
-                            } else {
-                                view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR)
-                            }
-                        }
-                )
+            .doOnEvent { _, _ -> view.dismissProgressDialog() }
+            .doOnError { Timber.e(it) }
+            .subscribeBy(
+                onSuccess = { view.goToConfirmation(it.id!!) },
+                onError = {
+                    if (it is CoinifyApiException) {
+                        view.showErrorDialog(it.getErrorDescription())
+                    } else {
+                        view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR)
+                    }
+                }
+            )
     }
 
     private fun isDataValid(): Boolean {
@@ -126,8 +126,8 @@ class AddAddressPresenter @Inject constructor(
 
     private fun selectCountry(countryCode: String) {
         val countryName = countryCodeMap
-                .filterValues { it == countryCode }.keys
-                .firstOrNull() ?: "UK"
+            .filterValues { it == countryCode }.keys
+            .firstOrNull() ?: "UK"
 
         view.showCountrySelected(countryName)
     }

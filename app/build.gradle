@@ -117,7 +117,7 @@ android {
         fatal 'StopShip'
         htmlReport true
         htmlOutput file("build/reports/lint-report.html")
-        abortOnError false
+        abortOnError true
         baseline file("lint-baseline.xml")
     }
     packagingOptions {

@@ -37,9 +37,9 @@ class CoinifyVerifyEmailFragment :
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_coinify_verify_email)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +79,7 @@ class CoinifyVerifyEmailFragment :
     override fun onShowVerifiedEmail(emailAddress: String) {
         verifyEmailTitle.text = getString(R.string.buy_sell_verified_email_title)
         verifyEmailMessage2.text =
-                getString(R.string.buy_sell_verified_email_message, getString(R.string.coinify))
+            getString(R.string.buy_sell_verified_email_message, getString(R.string.coinify))
 
         verifiedEmailAddress.text = emailAddress
         verifiedEmailAddress.visible()
@@ -141,10 +141,10 @@ class CoinifyVerifyEmailFragment :
 
     override fun showErrorDialog(errorDescription: String) {
         AlertDialog.Builder(requireContext(), R.style.AlertDialogStyle)
-                .setTitle(R.string.app_name)
-                .setMessage(errorDescription)
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage(errorDescription)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     override fun onAttach(context: Context?) {
@@ -169,7 +169,7 @@ class CoinifyVerifyEmailFragment :
 
         private const val COINIFY_TERMS_LINK = "https://coinify.com/legal/"
         private const val COUNTRY_CODE =
-                "piuk.blockchain.android.ui.buysell.coinify.signup.verify_email.COUNTRY_CODE"
+            "piuk.blockchain.android.ui.buysell.coinify.signup.verify_email.COUNTRY_CODE"
 
         @JvmStatic
         fun newInstance(countryCode: String): CoinifyVerifyEmailFragment {

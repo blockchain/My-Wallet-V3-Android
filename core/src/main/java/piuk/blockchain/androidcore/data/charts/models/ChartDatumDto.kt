@@ -13,5 +13,4 @@ class ChartDatumDto(priceDatum: PriceDatum) {
 
     val timestamp: Long = priceDatum.timestamp
     val price: Double = priceDatum.price!!
-
 }

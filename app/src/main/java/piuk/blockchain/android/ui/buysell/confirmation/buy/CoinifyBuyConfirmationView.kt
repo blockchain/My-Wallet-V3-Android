@@ -4,7 +4,7 @@ import piuk.blockchain.android.ui.buysell.createorder.models.BuyConfirmationDisp
 import piuk.blockchain.android.ui.buysell.createorder.models.OrderType
 import piuk.blockchain.android.ui.buysell.details.models.AwaitingFundsModel
 import piuk.blockchain.androidcoreui.ui.base.View
-import java.util.*
+import java.util.Locale
 
 interface CoinifyBuyConfirmationView : View {
 
@@ -25,10 +25,10 @@ interface CoinifyBuyConfirmationView : View {
     fun dismissProgressDialog()
 
     fun launchCardPaymentWebView(
-            redirectUrl: String,
-            paymentId: String,
-            fromCurrency: String,
-            cost: Double
+        redirectUrl: String,
+        paymentId: String,
+        fromCurrency: String,
+        cost: Double
     )
 
     fun showErrorDialog(errorMessage: String)

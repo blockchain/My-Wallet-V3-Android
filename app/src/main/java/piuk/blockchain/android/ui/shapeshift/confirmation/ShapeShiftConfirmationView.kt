@@ -1,9 +1,9 @@
 package piuk.blockchain.android.ui.shapeshift.confirmation
 
 import android.support.annotation.StringRes
-import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
-import java.util.*
+import piuk.blockchain.androidcoreui.ui.base.View
+import java.util.Locale
 
 interface ShapeShiftConfirmationView : View {
 
@@ -42,5 +42,4 @@ interface ShapeShiftConfirmationView : View {
     fun showQuoteExpiredDialog()
 
     fun launchProgressPage(depositAddress: String)
-
 }

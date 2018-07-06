@@ -6,5 +6,4 @@ sealed class BankAccountState {
     object Failure : BankAccountState()
     data class Data(val displayData: List<BankAccountDisplayable>) : BankAccountState()
     object DeleteAccountFailure : BankAccountState()
-
 }

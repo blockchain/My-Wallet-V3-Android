@@ -17,23 +17,25 @@ enum class CoinPairings(val pairCode: String) {
     companion object {
 
         fun getPair(fromCurrency: CryptoCurrencies, toCurrency: CryptoCurrencies): CoinPairings =
-                when (fromCurrency) {
-                    CryptoCurrencies.BTC -> when (toCurrency) {
-                        CryptoCurrencies.ETHER -> BTC_TO_ETH
-                        CryptoCurrencies.BCH -> BTC_TO_BCH
-                        else -> throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
-                    }
-                    CryptoCurrencies.ETHER -> when (toCurrency) {
-                        CryptoCurrencies.BTC -> ETH_TO_BTC
-                        CryptoCurrencies.BCH -> ETH_TO_BCH
-                        else -> throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
-                    }
-                    CryptoCurrencies.BCH -> when (toCurrency) {
-                        CryptoCurrencies.BTC -> BCH_TO_BTC
-                        CryptoCurrencies.ETHER -> BCH_TO_ETH
-                        else -> throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
-                    }
+            when (fromCurrency) {
+                CryptoCurrencies.BTC -> when (toCurrency) {
+                    CryptoCurrencies.ETHER -> BTC_TO_ETH
+                    CryptoCurrencies.BCH -> BTC_TO_BCH
+                    else ->
+                        throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
                 }
-
+                CryptoCurrencies.ETHER -> when (toCurrency) {
+                    CryptoCurrencies.BTC -> ETH_TO_BTC
+                    CryptoCurrencies.BCH -> ETH_TO_BCH
+                    else ->
+                        throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
+                }
+                CryptoCurrencies.BCH -> when (toCurrency) {
+                    CryptoCurrencies.BTC -> BCH_TO_BTC
+                    CryptoCurrencies.ETHER -> BCH_TO_ETH
+                    else ->
+                        throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
+                }
+            }
     }
 }

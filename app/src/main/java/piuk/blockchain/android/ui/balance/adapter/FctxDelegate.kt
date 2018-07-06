@@ -12,17 +12,17 @@ import piuk.blockchain.android.data.contacts.models.ContactTransactionModel
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.android.util.StringUtils
-import piuk.blockchain.androidcoreui.utils.extensions.getContext
-import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import piuk.blockchain.androidcoreui.utils.extensions.getContext
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
 
 @Suppress("UNUSED_PARAMETER", "unused")
 class FctxDelegate<in T>(
-        activity: Activity,
-        private var btcExchangeRate: Double,
-        private var isBtc: Boolean,
-        private val listClickListener: TxFeedClickListener
+    activity: Activity,
+    private var btcExchangeRate: Double,
+    private var isBtc: Boolean,
+    private val listClickListener: TxFeedClickListener
 ) : AdapterDelegate<T> {
 
     private val dateUtil = DateUtil(activity)
@@ -30,16 +30,16 @@ class FctxDelegate<in T>(
     private val prefsUtil = PrefsUtil(activity)
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            items[position] is ContactTransactionModel
+        items[position] is ContactTransactionModel
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            FctxViewHolder(parent.inflate(R.layout.item_balance))
+        FctxViewHolder(parent.inflate(R.layout.item_balance))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
 
 //        val viewHolder = holder as FctxViewHolder
@@ -184,12 +184,12 @@ class FctxDelegate<in T>(
 //    }
 
     private fun getResolvedColor(viewHolder: RecyclerView.ViewHolder, @ColorRes color: Int) =
-            ContextCompat.getColor(viewHolder.getContext(), color)
+        ContextCompat.getColor(viewHolder.getContext(), color)
 
     private fun getDisplaySpannable(
-            btcAmount: Double,
-            fiatAmount: Double,
-            fiatString: String
+        btcAmount: Double,
+        fiatAmount: Double,
+        fiatString: String
     ): Spannable {
 
         val spannable: Spannable
@@ -211,17 +211,17 @@ class FctxDelegate<in T>(
 //                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 //        }
         spannable = Spannable.Factory.getInstance().newSpannable(
-                "fix me"
+            "fix me"
         )
 
         return spannable
     }
 
     private fun getDisplayUnits(): String =
-            CryptoCurrencies.BTC.name
+        CryptoCurrencies.BTC.name
 
     private class FctxViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
 //        internal var result: TextView = itemView.result
@@ -237,7 +237,5 @@ class FctxDelegate<in T>(
 //            watchOnly.gone()
 //            note.visible()
 //        }
-
     }
-
 }

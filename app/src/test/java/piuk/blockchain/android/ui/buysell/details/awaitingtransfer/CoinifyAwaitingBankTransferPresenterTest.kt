@@ -18,13 +18,12 @@ import piuk.blockchain.androidbuysell.models.coinify.CoinifyTrade
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
-class CoinifyAwaitingBankTransferPresenterTest: RxTest() {
+class CoinifyAwaitingBankTransferPresenterTest : RxTest() {
 
     private lateinit var subject: CoinifyAwaitingBankTransferPresenter
     private val exchangeService: ExchangeService = mock()
     private val coinifyDataManager: CoinifyDataManager = mock()
     private val view: CoinifyAwaitingBankTransferView = mock()
-
 
     @Before
     @Throws(Exception::class)
@@ -73,7 +72,7 @@ class CoinifyAwaitingBankTransferPresenterTest: RxTest() {
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
         val tradeId = 12345
         whenever(coinifyDataManager.cancelTrade(token, tradeId))
-                .thenReturn(Single.error { Throwable() })
+            .thenReturn(Single.error { Throwable() })
         // Act
         subject.cancelTrade(tradeId)
         // Assert

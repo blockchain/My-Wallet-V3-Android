@@ -16,9 +16,9 @@ class ContactRequestSuccessFragment : Fragment() {
     private var listener: ContactsRequestSuccessListener? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_contact_request_success)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,7 +32,8 @@ class ContactRequestSuccessFragment : Fragment() {
             when (requestType) {
                 PaymentRequestType.REQUEST -> updateUiForRequest(contactName, btcAmount)
                 PaymentRequestType.SEND -> updateUiForSend(contactName)
-                PaymentRequestType.CONTACT -> throw IllegalArgumentException("This case is not handled by this fragment")
+                PaymentRequestType.CONTACT ->
+                    throw IllegalArgumentException("This case is not handled by this fragment")
             }
         }
 
@@ -42,13 +43,13 @@ class ContactRequestSuccessFragment : Fragment() {
     private fun updateUiForSend(contactName: String) {
         textview_title.setText(R.string.contacts_request_success_tx_started_title)
         textview_description.text =
-                getString(R.string.contacts_request_success_tx_started_description, contactName)
+            getString(R.string.contacts_request_success_tx_started_description, contactName)
     }
 
     private fun updateUiForRequest(contactName: String, btcAmount: String) {
         textview_title.setText(R.string.contacts_request_success_sent_title)
         textview_description.text =
-                getString(R.string.contacts_request_success_sent_description, btcAmount, contactName)
+            getString(R.string.contacts_request_success_sent_description, btcAmount, contactName)
     }
 
     override fun onAttach(context: Context?) {
@@ -68,7 +69,6 @@ class ContactRequestSuccessFragment : Fragment() {
     interface ContactsRequestSuccessListener {
 
         fun onRequestSuccessDismissed()
-
     }
 
     companion object {
@@ -79,9 +79,9 @@ class ContactRequestSuccessFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(
-                requestType: PaymentRequestType,
-                contactName: String,
-                btcAmount: String
+            requestType: PaymentRequestType,
+            contactName: String,
+            btcAmount: String
         ): ContactRequestSuccessFragment {
             val args = Bundle().apply {
                 putSerializable(ARGUMENT_REQUEST_TYPE, requestType)
@@ -91,5 +91,4 @@ class ContactRequestSuccessFragment : Fragment() {
             return ContactRequestSuccessFragment().apply { arguments = args }
         }
     }
-
 }

@@ -35,9 +35,9 @@ import javax.inject.Inject
 @Mockable
 @PresenterScope
 class CoinifyDataManager @Inject constructor(
-        private val coinifyService: CoinifyService,
-        private val authService: AuthService,
-        private val accessTokenStore: AccessTokenStore
+    private val coinifyService: CoinifyService,
+    private val authService: AuthService,
+    private val accessTokenStore: AccessTokenStore
 ) {
 
     /**
@@ -60,26 +60,26 @@ class CoinifyDataManager @Inject constructor(
      * added here.
      */
     fun getEmailTokenAndSignUp(
-            guid: String,
-            sharedKey: String,
-            trustedEmail: String,
-            currencyCode: String,
-            countryCode: String,
-            partnerId: Int
+        guid: String,
+        sharedKey: String,
+        trustedEmail: String,
+        currencyCode: String,
+        countryCode: String,
+        partnerId: Int
     ): Single<TraderResponse> =
-            authService.getSignedJwt(guid, sharedKey, "coinify")
-                    .flatMap { emailToken ->
-                        coinifyService.signUp(
-                                signUpDetails = SignUpDetails.basicSignUp(
-                                        trustedEmail,
-                                        currencyCode,
-                                        countryCode,
-                                        partnerId,
-                                        emailToken
-                                )
-                        )
-                    }
-                    .applySchedulers()
+        authService.getSignedJwt(guid, sharedKey, "coinify")
+            .flatMap { emailToken ->
+                coinifyService.signUp(
+                    signUpDetails = SignUpDetails.basicSignUp(
+                        trustedEmail,
+                        currencyCode,
+                        countryCode,
+                        partnerId,
+                        emailToken
+                    )
+                )
+            }
+            .applySchedulers()
 
     /**
      * Returns a [Trader] object containing details about the currently authenticated Coinify
@@ -90,8 +90,8 @@ class CoinifyDataManager @Inject constructor(
      * @return A [Trader] object wrapped in a [Single].
      */
     fun getTrader(offlineToken: String): Single<Trader> =
-            authenticate(offlineToken) { coinifyService.getTrader(accessToken = it.accessToken) }
-                    .applySchedulers()
+        authenticate(offlineToken) { coinifyService.getTrader(accessToken = it.accessToken) }
+            .applySchedulers()
 
     /**
      * Returns a stream of [Subscription] objects for an associated trader's offline token.
@@ -101,10 +101,10 @@ class CoinifyDataManager @Inject constructor(
      * @return A stream of [Subscription] objects wrapped in a [Observable].
      */
     fun getSubscriptions(offlineToken: String): Observable<Subscription> =
-            authenticate(offlineToken) {
-                coinifyService.getSubscriptions(accessToken = it.accessToken)
-            }.applySchedulers()
-                    .flattenAsObservable { it }
+        authenticate(offlineToken) {
+            coinifyService.getSubscriptions(accessToken = it.accessToken)
+        }.applySchedulers()
+            .flattenAsObservable { it }
 
     /**
      * Returns a steam of [CoinifyTrade] objects for the currently authenticated Coinify user.
@@ -114,9 +114,9 @@ class CoinifyDataManager @Inject constructor(
      * @return A stream of [CoinifyTrade] object wrapped in an [Observable].
      */
     fun getTrades(offlineToken: String): Observable<CoinifyTrade> =
-            authenticate(offlineToken) { coinifyService.getTrades(accessToken = it.accessToken) }
-                    .flattenAsObservable { it }
-                    .applySchedulers()
+        authenticate(offlineToken) { coinifyService.getTrades(accessToken = it.accessToken) }
+            .flattenAsObservable { it }
+            .applySchedulers()
 
     /**
      * Returns a [CoinifyTrade] object given the correct trade ID.
@@ -127,9 +127,9 @@ class CoinifyDataManager @Inject constructor(
      * @return A [CoinifyTrade] object wrapped in an [Single].
      */
     fun getTradeStatus(offlineToken: String, tradeId: Int): Single<CoinifyTrade> =
-            authenticate(offlineToken) {
-                coinifyService.getTradeStatus(accessToken = it.accessToken, tradeId = tradeId)
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getTradeStatus(accessToken = it.accessToken, tradeId = tradeId)
+        }.applySchedulers()
 
     /**
      * Starts the KYC process for an authenticated user and returns a [KycResponse] object,
@@ -140,8 +140,8 @@ class CoinifyDataManager @Inject constructor(
      * @return A [KycResponse] wrapped in a [Single].
      */
     fun startKycReview(offlineToken: String): Single<KycResponse> =
-            authenticate(offlineToken) { coinifyService.startKycReview(accessToken = it.accessToken) }
-                    .applySchedulers()
+        authenticate(offlineToken) { coinifyService.startKycReview(accessToken = it.accessToken) }
+            .applySchedulers()
 
     /**
      * Returns a [KycResponse] object for an associated KYC review ID. This allows you to get the
@@ -153,9 +153,9 @@ class CoinifyDataManager @Inject constructor(
      * @return A [KycResponse] wrapped in a [Single].
      */
     fun getKycReviewStatus(offlineToken: String, id: Int): Single<KycResponse> =
-            authenticate(offlineToken) {
-                coinifyService.getKycReviewStatus(id = id, accessToken = it.accessToken)
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getKycReviewStatus(id = id, accessToken = it.accessToken)
+        }.applySchedulers()
 
     /**
      * Returns a list of [KycResponse] objects for an associated trader's offline token.
@@ -166,9 +166,9 @@ class CoinifyDataManager @Inject constructor(
      * @return A list of [KycResponse] wrapped in a [Single].
      */
     fun getKycReviews(offlineToken: String): Single<List<KycResponse>> =
-            authenticate(offlineToken) {
-                coinifyService.getKycReviews(accessToken = it.accessToken)
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getKycReviews(accessToken = it.accessToken)
+        }.applySchedulers()
 
     /**
      * Returns a [Quote] object containing the exchange rates for the selected currencies. Currencies
@@ -193,21 +193,21 @@ class CoinifyDataManager @Inject constructor(
      * @see [https://en.wikipedia.org/wiki/ISO_4217].
      */
     fun getQuote(
-            offlineToken: String,
-            baseAmount: Double,
-            baseCurrency: String,
-            quoteCurrency: String
+        offlineToken: String,
+        baseAmount: Double,
+        baseCurrency: String,
+        quoteCurrency: String
     ): Single<Quote> =
-            authenticate(offlineToken) {
-                coinifyService.getQuote(
-                        quoteRequest = QuoteRequest(
-                                baseCurrency,
-                                quoteCurrency,
-                                baseAmount
-                        ),
-                        accessToken = it.accessToken
-                )
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getQuote(
+                quoteRequest = QuoteRequest(
+                    baseCurrency,
+                    quoteCurrency,
+                    baseAmount
+                ),
+                accessToken = it.accessToken
+            )
+        }.applySchedulers()
 
     /**
      * Returns a steam of [PaymentMethod] objects - in practise there will be 2-4 objects streamed.
@@ -224,18 +224,18 @@ class CoinifyDataManager @Inject constructor(
      * @see [https://en.wikipedia.org/wiki/ISO_4217].
      */
     fun getPaymentMethods(
-            offlineToken: String,
-            inCurrency: String? = null,
-            outCurrency: String? = null
+        offlineToken: String,
+        inCurrency: String? = null,
+        outCurrency: String? = null
     ): Observable<PaymentMethod> =
-            authenticate(offlineToken) {
-                coinifyService.getPaymentMethods(
-                        inCurrency = inCurrency,
-                        outCurrency = outCurrency,
-                        accessToken = it.accessToken
-                )
-            }.flattenAsObservable { it }
-                    .applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getPaymentMethods(
+                inCurrency = inCurrency,
+                outCurrency = outCurrency,
+                accessToken = it.accessToken
+            )
+        }.flattenAsObservable { it }
+            .applySchedulers()
 
     /**
      * Creates a new trade with Coinify and returns a [CoinifyTrade] object wrapped in a [Single].
@@ -248,12 +248,12 @@ class CoinifyDataManager @Inject constructor(
      * @return A [CoinifyTrade] object wrapped in a [Single].
      */
     fun createNewTrade(
-            offlineToken: String,
-            tradeRequest: CoinifyTradeRequest
+        offlineToken: String,
+        tradeRequest: CoinifyTradeRequest
     ): Single<CoinifyTrade> = authenticate(offlineToken) {
         coinifyService.createTrade(
-                tradeRequest = tradeRequest,
-                accessToken = it.accessToken
+            tradeRequest = tradeRequest,
+            accessToken = it.accessToken
         )
     }.applySchedulers()
 
@@ -266,12 +266,12 @@ class CoinifyDataManager @Inject constructor(
      * @return A [CoinifyTrade] object wrapped in a [Single].
      */
     fun cancelTrade(
-            offlineToken: String,
-            tradeId: Int
+        offlineToken: String,
+        tradeId: Int
     ): Single<CoinifyTrade> = authenticate(offlineToken) {
         coinifyService.cancelTrade(
-                id = tradeId,
-                accessToken = it.accessToken
+            id = tradeId,
+            accessToken = it.accessToken
         )
     }.applySchedulers()
 
@@ -283,9 +283,9 @@ class CoinifyDataManager @Inject constructor(
      * @return A [List] of [BankAccount] objects wrapped in an [Single].
      */
     fun getBankAccounts(offlineToken: String): Single<List<BankAccount>> =
-            authenticate(offlineToken) {
-                coinifyService.getBankAccounts(accessToken = it.accessToken)
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getBankAccounts(accessToken = it.accessToken)
+        }.applySchedulers()
 
     /**
      * Returns the specified [BankAccount] object associated with an authenticated user and account
@@ -298,12 +298,12 @@ class CoinifyDataManager @Inject constructor(
      * @return A [BankAccount] object wrapped in a [Single].
      */
     fun getBankAccount(offlineToken: String, accountId: Int): Single<BankAccount> =
-            authenticate(offlineToken) {
-                coinifyService.getBankAccount(
-                        accountId = accountId,
-                        accessToken = it.accessToken
-                )
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.getBankAccount(
+                accountId = accountId,
+                accessToken = it.accessToken
+            )
+        }.applySchedulers()
 
     /**
      * Deletes the specified [BankAccount] object associated with an authenticated user and account
@@ -316,13 +316,13 @@ class CoinifyDataManager @Inject constructor(
      * @return A [Completable] object signifying success or failure.
      */
     fun deleteBankAccount(offlineToken: String, accountId: Int): Completable =
-            authenticate(offlineToken) {
-                coinifyService.deleteBankAccount(
-                        accountId = accountId,
-                        accessToken = it.accessToken
-                ).toSingle { Any() }
-            }.ignoreElement()
-                    .applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.deleteBankAccount(
+                accountId = accountId,
+                accessToken = it.accessToken
+            ).toSingle { Any() }
+        }.ignoreElement()
+            .applySchedulers()
 
     /**
      * Adds the specified [BankAccount] object to the list of [BankAccount] objects associated
@@ -335,12 +335,12 @@ class CoinifyDataManager @Inject constructor(
      * @return A newly added [BankAccount] object wrapped in a [Single], with added timestamps.
      */
     fun addBankAccount(offlineToken: String, bankAccount: BankAccount): Single<BankAccount> =
-            authenticate(offlineToken) {
-                coinifyService.addBankAccount(
-                        bankAccount = bankAccount,
-                        accessToken = it.accessToken
-                )
-            }.applySchedulers()
+        authenticate(offlineToken) {
+            coinifyService.addBankAccount(
+                bankAccount = bankAccount,
+                accessToken = it.accessToken
+            )
+        }.applySchedulers()
 
     /**
      * Invalidates the [AccessTokenStore] so that on logging out or switching accounts, no data
@@ -359,40 +359,40 @@ class CoinifyDataManager @Inject constructor(
      * @return A valid [AuthResponse] object wrapped in an [Single].
      */
     private fun <T> authenticate(
-            offlineToken: String,
-            singleFunction: (AuthResponse) -> Single<T>
+        offlineToken: String,
+        singleFunction: (AuthResponse) -> Single<T>
     ): Single<T> =
-            if (accessTokenStore.requiresRefresh()) {
-                refreshToken(offlineToken)
-            } else {
-                accessTokenStore.getAccessToken()
-                        .map { (it as Optional.Some).element }
-                        .singleOrError()
-            }.flatMap { authResponse ->
-                singleFunction(authResponse)
-                        .onErrorResumeNext(refreshTokenAndRetry(offlineToken, singleFunction))
-            }
+        if (accessTokenStore.requiresRefresh()) {
+            refreshToken(offlineToken)
+        } else {
+            accessTokenStore.getAccessToken()
+                .map { (it as Optional.Some).element }
+                .singleOrError()
+        }.flatMap { authResponse ->
+            singleFunction(authResponse)
+                .onErrorResumeNext(refreshTokenAndRetry(offlineToken, singleFunction))
+        }
 
     private fun refreshToken(offlineToken: String) =
-            coinifyService.auth(authRequest = AuthRequest(GrantType.OfflineToken, offlineToken))
-                    .subscribeOn(Schedulers.io())
-                    .flatMapObservable(accessTokenStore::store)
-                    .singleOrError()
+        coinifyService.auth(authRequest = AuthRequest(GrantType.OfflineToken, offlineToken))
+            .subscribeOn(Schedulers.io())
+            .flatMapObservable(accessTokenStore::store)
+            .singleOrError()
 
     private fun unauthenticated(it: Throwable) =
-            (it as? CoinifyApiException?)?.getErrorCode() == CoinifyErrorCodes.Unauthenticated
+        (it as? CoinifyApiException?)?.getErrorCode() == CoinifyErrorCodes.Unauthenticated
 
     private fun <T> refreshTokenAndRetry(
-            offlineToken: String,
-            singleToResume: (AuthResponse) -> Single<T>
+        offlineToken: String,
+        singleToResume: (AuthResponse) -> Single<T>
     ): Function<Throwable, out Single<T>> =
-            Function {
-                if (unauthenticated(it)) {
-                    clearAccessToken()
-                    return@Function refreshToken(offlineToken)
-                            .flatMap { singleToResume(it) }
-                } else {
-                    return@Function Single.error(it)
-                }
+        Function {
+            if (unauthenticated(it)) {
+                clearAccessToken()
+                return@Function refreshToken(offlineToken)
+                    .flatMap { singleToResume(it) }
+            } else {
+                return@Function Single.error(it)
             }
+        }
 }

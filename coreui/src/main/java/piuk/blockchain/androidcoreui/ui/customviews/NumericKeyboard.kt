@@ -21,9 +21,9 @@ import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class NumericKeyboard @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener {
 
     val isVisible: Boolean
@@ -77,10 +77,10 @@ class NumericKeyboard @JvmOverloads constructor(
                 val view1 = (context as Activity).currentFocus
                 if (view1 != null) {
                     val inputManager =
-                            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputManager.hideSoftInputFromWindow(
-                            view1.windowToken,
-                            InputMethodManager.HIDE_NOT_ALWAYS
+                        view1.windowToken,
+                        InputMethodManager.HIDE_NOT_ALWAYS
                     )
                 }
                 setNumpadVisibility(View.VISIBLE)
@@ -153,7 +153,11 @@ class NumericKeyboard @JvmOverloads constructor(
                     view.setText(view.getTextString().replace(selectedText, pad))
                 } else {
                     val currentString = view.text.toString()
-                    val newString = "${currentString.substring(0, startSelection)}$pad${currentString.substring(endSelection, currentString.length)}"
+                    val newString =
+                        "${currentString.substring(0, startSelection)}$pad${currentString.substring(
+                            endSelection,
+                            currentString.length
+                        )}"
                     view.setText(newString)
                 }
 
@@ -176,5 +180,4 @@ class NumericKeyboard @JvmOverloads constructor(
             }
         }
     }
-
 }

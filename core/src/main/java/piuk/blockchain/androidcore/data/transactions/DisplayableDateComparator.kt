@@ -1,7 +1,7 @@
 package piuk.blockchain.androidcore.data.transactions
 
 import piuk.blockchain.androidcore.data.transactions.models.Displayable
-import java.util.*
+import java.util.Comparator
 
 class DisplayableDateComparator : Comparator<Displayable> {
 
@@ -17,5 +17,4 @@ class DisplayableDateComparator : Comparator<Displayable> {
             else -> equal
         }
     }
-
 }

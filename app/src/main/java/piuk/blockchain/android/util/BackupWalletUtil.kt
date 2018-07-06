@@ -44,5 +44,4 @@ class BackupWalletUtil @Inject constructor(private val payloadDataManager: Paylo
         Timber.e(e)
         null
     }
-
 }

@@ -43,15 +43,22 @@ class FingerprintAuthImpl : FingerprintAuth {
     /**
      * Encrypts a String and stores its private key in the Android Keystore using a specific keyword
      */
-    override fun encrypt(applicationContext: Context, key: String, stringToEncrypt: String): Observable<FingerprintEncryptionResult> {
+    override fun encrypt(
+        applicationContext: Context,
+        key: String,
+        stringToEncrypt: String
+    ): Observable<FingerprintEncryptionResult> {
         return RxFingerprint.encrypt(applicationContext, key, stringToEncrypt)
     }
 
     /**
      * Decrypts a supplied String after authentication
      */
-    override fun decrypt(applicationContext: Context, key: String, stringToDecrypt: String): Observable<FingerprintDecryptionResult> {
+    override fun decrypt(
+        applicationContext: Context,
+        key: String,
+        stringToDecrypt: String
+    ): Observable<FingerprintDecryptionResult> {
         return RxFingerprint.decrypt(applicationContext, key, stringToDecrypt)
     }
-
 }

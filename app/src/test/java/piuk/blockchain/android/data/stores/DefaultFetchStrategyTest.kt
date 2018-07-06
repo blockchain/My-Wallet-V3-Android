@@ -27,9 +27,9 @@ class DefaultFetchStrategyTest : RxTest() {
         webSource = Observable.just(value)
         whenever(memoryStore.store(value)).thenReturn(Observable.just(value))
         subject = DefaultFetchStrategy(
-                webSource,
-                memorySource,
-                memoryStore
+            webSource,
+            memorySource,
+            memoryStore
         )
         // Act
         val testObserver = subject.fetch().test()
@@ -46,9 +46,9 @@ class DefaultFetchStrategyTest : RxTest() {
         webSource = Observable.error { AssertionError("This should not be called") }
         whenever(memoryStore.store(value)).thenReturn(Observable.just(value))
         subject = DefaultFetchStrategy(
-                webSource,
-                memorySource,
-                memoryStore
+            webSource,
+            memorySource,
+            memoryStore
         )
         // Act
         val testObserver = subject.fetch().test()
@@ -56,5 +56,4 @@ class DefaultFetchStrategyTest : RxTest() {
         verifyZeroInteractions(memoryStore)
         testObserver.values()[0] `should equal to` value
     }
-
 }

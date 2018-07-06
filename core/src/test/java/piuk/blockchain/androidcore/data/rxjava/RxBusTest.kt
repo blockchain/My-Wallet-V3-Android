@@ -141,5 +141,4 @@ class RxBusTest : RxTest() {
         testObserver.assertNoErrors()
         testObserver.assertNoValues()
     }
-
 }

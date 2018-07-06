@@ -12,8 +12,8 @@ import java.security.Security
 import javax.inject.Inject
 
 class PrngHelper @Inject constructor(
-        private val context: Context,
-        private val accessState: AccessState
+    private val context: Context,
+    private val accessState: AccessState
 ) : PrngFixer {
 
     override fun applyPRNGFixes() {
@@ -33,6 +33,5 @@ class PrngHelper @Inject constructor(
                 accessState.logout(context)
             }
         }
-
     }
 }

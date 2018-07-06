@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.backup.completed.BackupWalletCompletedFragment
 import piuk.blockchain.android.ui.backup.start.BackupWalletStartingFragment
-import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
 class BackupWalletActivity : BaseAuthActivity() {
 
@@ -22,8 +22,8 @@ class BackupWalletActivity : BaseAuthActivity() {
 
         if (isBackedUp()) {
             startFragment(
-                    BackupWalletCompletedFragment.newInstance(false),
-                    BackupWalletCompletedFragment.TAG
+                BackupWalletCompletedFragment.newInstance(false),
+                BackupWalletCompletedFragment.TAG
             )
         } else {
             startFragment(BackupWalletStartingFragment(), BackupWalletStartingFragment.TAG)
@@ -32,9 +32,9 @@ class BackupWalletActivity : BaseAuthActivity() {
 
     private fun startFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .addToBackStack(tag)
-                .commit()
+            .replace(R.id.content_frame, fragment)
+            .addToBackStack(tag)
+            .commit()
     }
 
     override fun onBackPressed() {
@@ -48,11 +48,11 @@ class BackupWalletActivity : BaseAuthActivity() {
     override fun enforceFlagSecure() = true
 
     override fun onSupportNavigateUp() =
-            consume { onBackPressed() }
+        consume { onBackPressed() }
 
-    private fun isBackedUp() = PayloadManager.getInstance().payload != null
-            && PayloadManager.getInstance().payload.hdWallets != null
-            && PayloadManager.getInstance().payload.hdWallets[0].isMnemonicVerified
+    private fun isBackedUp() = PayloadManager.getInstance().payload != null &&
+        PayloadManager.getInstance().payload.hdWallets != null &&
+        PayloadManager.getInstance().payload.hdWallets[0].isMnemonicVerified
 
     companion object {
 

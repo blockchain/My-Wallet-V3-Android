@@ -106,10 +106,10 @@ fun EditText.disableSoftKeyboard() {
  * @param dampingRatio The damping ratio of the animation, see [SpringForce]
  */
 fun View.createSpringAnimation(
-        property: DynamicAnimation.ViewProperty,
-        finalPosition: Float,
-        stiffness: Float,
-        dampingRatio: Float
+    property: DynamicAnimation.ViewProperty,
+    finalPosition: Float,
+    stiffness: Float,
+    dampingRatio: Float
 ) = SpringAnimation(this, property).apply {
     spring = SpringForce(finalPosition).apply {
         this.stiffness = stiffness

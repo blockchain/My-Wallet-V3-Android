@@ -2,8 +2,6 @@ package piuk.blockchain.androidbuysell.services
 
 import info.blockchain.wallet.api.data.Settings
 import info.blockchain.wallet.api.data.WalletOptions
-import io.reactivex.Observable
-
 import io.reactivex.subjects.ReplaySubject
 import piuk.blockchain.androidbuysell.models.ExchangeData
 import piuk.blockchain.androidcore.utils.annotations.Mockable

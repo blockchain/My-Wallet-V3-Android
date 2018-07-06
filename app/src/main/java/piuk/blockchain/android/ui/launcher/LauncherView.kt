@@ -24,5 +24,4 @@ interface LauncherView : View {
     fun onStartOnboarding(emailOnly: Boolean)
 
     fun showToast(@StringRes message: Int, @ToastCustom.ToastType toastType: String)
-
 }

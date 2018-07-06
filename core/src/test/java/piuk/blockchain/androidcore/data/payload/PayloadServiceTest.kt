@@ -21,7 +21,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
 import piuk.blockchain.androidcore.RxTest
-import java.util.*
+import java.util.LinkedHashMap
 
 @Suppress("IllegalIdentifier")
 class PayloadServiceTest : RxTest() {
@@ -60,7 +60,7 @@ class PayloadServiceTest : RxTest() {
         val password = "PASSWORD"
         val mockWallet: Wallet = mock()
         whenever(mockPayloadManager.recoverFromMnemonic(mnemonic, walletName, email, password))
-                .thenReturn(mockWallet)
+            .thenReturn(mockWallet)
         // Act
         val testObserver = subject.restoreHdWallet(mnemonic, walletName, email, password).test()
         // Assert
@@ -123,7 +123,7 @@ class PayloadServiceTest : RxTest() {
         val secondPassword = "SECOND_PASSWORD"
         val defaultAccountName = "DEFAULT_ACCOUNT_NAME"
         whenever(mockPayloadManager.upgradeV2PayloadToV3(secondPassword, defaultAccountName))
-                .thenReturn(true)
+            .thenReturn(true)
         // Act
         val testObserver = subject.upgradeV2toV3(secondPassword, defaultAccountName).test()
         // Assert
@@ -139,7 +139,7 @@ class PayloadServiceTest : RxTest() {
         val secondPassword = "SECOND_PASSWORD"
         val defaultAccountName = "DEFAULT_ACCOUNT_NAME"
         whenever(mockPayloadManager.upgradeV2PayloadToV3(secondPassword, defaultAccountName))
-                .thenReturn(false)
+            .thenReturn(false)
         // Act
         val testObserver = subject.upgradeV2toV3(secondPassword, defaultAccountName).test()
         // Assert
@@ -234,13 +234,16 @@ class PayloadServiceTest : RxTest() {
     fun getBalanceOfAddresses() {
         // Arrange
         val addresses = listOf("address_one", "address_two", "address_three")
-        val map = mapOf(Pair(
-                "address_one", Balance()),
-                Pair("address_two", Balance()),
-                Pair("address_three", Balance()))
+        val map = mapOf(
+            Pair(
+                "address_one", Balance()
+            ),
+            Pair("address_two", Balance()),
+            Pair("address_three", Balance())
+        )
         val linkedMap = LinkedHashMap(map)
         whenever(mockPayloadManager.getBalanceOfAddresses(addresses))
-                .thenReturn(linkedMap)
+            .thenReturn(linkedMap)
         // Act
         val testObserver = subject.getBalanceOfAddresses(addresses).test()
         // Assert
@@ -255,13 +258,16 @@ class PayloadServiceTest : RxTest() {
     fun getBalanceOfBchAddresses() {
         // Arrange
         val addresses = listOf("address_one", "address_two", "address_three")
-        val map = mapOf(Pair(
-                "address_one", Balance()),
-                Pair("address_two", Balance()),
-                Pair("address_three", Balance()))
+        val map = mapOf(
+            Pair(
+                "address_one", Balance()
+            ),
+            Pair("address_two", Balance()),
+            Pair("address_three", Balance())
+        )
         val linkedMap = LinkedHashMap(map)
         whenever(mockPayloadManager.getBalanceOfBchAddresses(addresses))
-                .thenReturn(linkedMap)
+            .thenReturn(linkedMap)
         // Act
         val testObserver = subject.getBalanceOfBchAddresses(addresses).test()
         // Assert
@@ -313,7 +319,7 @@ class PayloadServiceTest : RxTest() {
         val secondPassword = "SECOND_PASSWORD"
         val mockLegacyAddress: LegacyAddress = mock()
         whenever(mockPayloadManager.setKeyForLegacyAddress(mockEcKey, secondPassword))
-                .thenReturn(mockLegacyAddress)
+            .thenReturn(mockLegacyAddress)
         // Act
         val testObserver = subject.setKeyForLegacyAddress(mockEcKey, secondPassword).test()
         // Assert
@@ -383,7 +389,7 @@ class PayloadServiceTest : RxTest() {
         val mockKey: DeterministicKey = mock()
         val response = ResponseBody.create(MediaType.parse("application/json"), "{}")
         whenever(mockPayloadManager.metadataNodeFactory.sharedMetadataNode)
-                .thenReturn(mockKey)
+            .thenReturn(mockKey)
         whenever(mockPayloadManager.registerMdid(mockKey)).thenReturn(Observable.just(response))
         // Act
         val testObserver = subject.registerMdid().test()
@@ -401,7 +407,7 @@ class PayloadServiceTest : RxTest() {
         val mockKey: DeterministicKey = mock()
         val response = ResponseBody.create(MediaType.parse("application/json"), "{}")
         whenever(mockPayloadManager.metadataNodeFactory.sharedMetadataNode)
-                .thenReturn(mockKey)
+            .thenReturn(mockKey)
         whenever(mockPayloadManager.unregisterMdid(mockKey)).thenReturn(Observable.just(response))
         // Act
         val testObserver = subject.unregisterMdid().test()
@@ -411,5 +417,4 @@ class PayloadServiceTest : RxTest() {
         verifyNoMoreInteractions(mockPayloadManager)
         testObserver.assertComplete()
     }
-
 }

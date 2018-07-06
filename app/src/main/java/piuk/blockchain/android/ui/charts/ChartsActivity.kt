@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_graphs.*
 import piuk.blockchain.android.R
+import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.androidcore.data.charts.TimeSpan
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
-import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
+import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
 class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
 
@@ -33,10 +33,10 @@ class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         val adapter = ChartsFragmentPagerAdapter(
-                supportFragmentManager,
-                bitcoin,
-                ether,
-                bitcoinCash
+            supportFragmentManager,
+            bitcoin,
+            ether,
+            bitcoinCash
         )
 
         viewpager.run {
@@ -70,14 +70,13 @@ class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
             }
             context.startActivity(intent)
         }
-
     }
 
     private class ChartsFragmentPagerAdapter internal constructor(
-            fragmentManager: FragmentManager,
-            private val bitcoin: ChartsFragment,
-            private val ether: ChartsFragment,
-            private val bitcoinCash: ChartsFragment
+        fragmentManager: FragmentManager,
+        private val bitcoin: ChartsFragment,
+        private val ether: ChartsFragment,
+        private val bitcoinCash: ChartsFragment
     ) : FragmentPagerAdapter(fragmentManager) {
 
         override fun getItem(position: Int) = when (position) {
@@ -92,8 +91,6 @@ class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
         companion object {
 
             private val NUM_ITEMS = 3
-
         }
     }
-
 }

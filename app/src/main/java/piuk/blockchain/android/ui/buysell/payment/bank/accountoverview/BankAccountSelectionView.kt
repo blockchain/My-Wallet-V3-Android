@@ -6,5 +6,4 @@ import piuk.blockchain.androidcoreui.ui.base.View
 interface BankAccountSelectionView : View {
 
     fun renderUiState(uiState: BankAccountState)
-
 }

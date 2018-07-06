@@ -9,8 +9,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class BackupWalletCompletedPresenter @Inject constructor(
-        private val transferFundsDataManager: TransferFundsDataManager,
-        private val prefsUtil: PrefsUtil
+    private val transferFundsDataManager: TransferFundsDataManager,
+    private val prefsUtil: PrefsUtil
 ) : BasePresenter<BackupWalletCompletedView>() {
 
     override fun onViewReady() {
@@ -24,12 +24,11 @@ class BackupWalletCompletedPresenter @Inject constructor(
 
     internal fun checkTransferableFunds() {
         transferFundsDataManager.transferableFundTransactionListForDefaultAccount
-                .addToCompositeDisposable(this)
-                .subscribe({ triple ->
-                    if (!triple.left.isEmpty()) {
-                        view.showTransferFundsPrompt()
-                    }
-                }, { Timber.e(it) })
+            .addToCompositeDisposable(this)
+            .subscribe({ triple ->
+                if (!triple.left.isEmpty()) {
+                    view.showTransferFundsPrompt()
+                }
+            }, { Timber.e(it) })
     }
-
 }

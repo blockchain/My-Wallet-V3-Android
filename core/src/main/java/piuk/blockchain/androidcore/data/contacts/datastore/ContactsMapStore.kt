@@ -17,5 +17,4 @@ class ContactsMapStore @Inject constructor() : SimpleDataStore {
     override fun clearData() {
         displayMap.clear()
     }
-
 }

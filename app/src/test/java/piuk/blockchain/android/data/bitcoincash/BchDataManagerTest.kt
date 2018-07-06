@@ -22,11 +22,11 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import piuk.blockchain.android.RxTest
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
+import piuk.blockchain.androidcore.data.metadata.MetadataManager
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -49,17 +49,17 @@ class BchDataManagerTest : RxTest() {
         super.setUp()
 
         whenever(environmentSettings.bitcoinCashNetworkParameters).thenReturn(
-                BitcoinCashMainNetParams.get()
+            BitcoinCashMainNetParams.get()
         )
 
         subject = BchDataManager(
-                payloadDataManager,
-                bchDataStore,
-                environmentSettings,
-                blockExplorer,
-                stringUtils,
-                metadataManager,
-                rxBus
+            payloadDataManager,
+            bchDataStore,
+            environmentSettings,
+            blockExplorer,
+            stringUtils,
+            metadataManager,
+            rxBus
         )
     }
 
@@ -73,7 +73,13 @@ class BchDataManagerTest : RxTest() {
         account.label = "account label"
         metaData.addAccount(account)
 
-        whenever(metadataManager.fetchMetadata(any())).thenReturn(Observable.just(Optional.fromNullable(metaData.toJson())))
+        whenever(metadataManager.fetchMetadata(any())).thenReturn(
+            Observable.just(
+                Optional.fromNullable(
+                    metaData.toJson()
+                )
+            )
+        )
 
         return metaData.toJson()
     }
@@ -242,11 +248,15 @@ class BchDataManagerTest : RxTest() {
         whenever(btcAccount1.xpub).thenReturn(xpub1)
         whenever(btcAccount2.xpub).thenReturn(xpub2)
 
-
         val metaData: GenericMetadataWallet = mock()
         val bchMetaDataAccount1: GenericMetadataAccount = mock()
         val bchMetaDataAccount2: GenericMetadataAccount = mock()
-        whenever(metaData.accounts).thenReturn(mutableListOf(bchMetaDataAccount1, bchMetaDataAccount2))
+        whenever(metaData.accounts).thenReturn(
+            mutableListOf(
+                bchMetaDataAccount1,
+                bchMetaDataAccount2
+            )
+        )
 
         // Act
         subject.restoreBchWallet(metaData)
@@ -272,7 +282,6 @@ class BchDataManagerTest : RxTest() {
         val btcAccount: Account = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
         whenever(payloadDataManager.accounts).thenReturn(mutableListOf(btcAccount))
         whenever(btcAccount.xpub).thenReturn(xpub)
-
 
         val metaData: GenericMetadataWallet = mock()
         val bchMetaDataAccount: GenericMetadataAccount = mock()
@@ -304,11 +313,15 @@ class BchDataManagerTest : RxTest() {
         whenever(btcAccount1.xpub).thenReturn(xpub1)
         whenever(btcAccount2.xpub).thenReturn(xpub2)
 
-
         val metaData: GenericMetadataWallet = mock()
         val bchMetaDataAccount1: GenericMetadataAccount = mock()
         val bchMetaDataAccount2: GenericMetadataAccount = mock()
-        whenever(metaData.accounts).thenReturn(mutableListOf(bchMetaDataAccount1, bchMetaDataAccount2))
+        whenever(metaData.accounts).thenReturn(
+            mutableListOf(
+                bchMetaDataAccount1,
+                bchMetaDataAccount2
+            )
+        )
 
         // Act
         subject.restoreBchWallet(metaData)
@@ -380,7 +393,6 @@ class BchDataManagerTest : RxTest() {
         val bchAccounts = mutableListOf(bchAccount, bchAccount)
         whenever(bchDataStore.bchMetadata?.accounts).thenReturn(bchAccounts)
 
-
         val mockWallet: Wallet = mock()
         val mockHdWallet: HDWallet = mock()
         whenever(btcAccount.xpub).thenReturn("xpub 2")
@@ -416,9 +428,9 @@ class BchDataManagerTest : RxTest() {
         whenever(payloadDataManager.accounts).thenReturn(btcAccounts)
 
         val bchAccount: GenericMetadataAccount = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
-        val bchAccounts = mutableListOf(bchAccount, bchAccount, bchAccount, bchAccount, bchAccount, bchAccount)
+        val bchAccounts =
+            mutableListOf(bchAccount, bchAccount, bchAccount, bchAccount, bchAccount, bchAccount)
         whenever(bchDataStore.bchMetadata?.accounts).thenReturn(bchAccounts)
-
 
         val mockWallet: Wallet = mock()
         val mockHdWallet: HDWallet = mock()

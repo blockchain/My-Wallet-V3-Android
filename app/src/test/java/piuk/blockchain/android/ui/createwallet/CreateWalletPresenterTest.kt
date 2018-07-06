@@ -26,13 +26,15 @@ class CreateWalletPresenterTest {
     private var view: CreateWalletView = mock()
     private var appUtil: AppUtil = mock()
     private var accessState: AccessState = mock()
-    private var payloadDataManager: PayloadDataManager = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+    private var payloadDataManager: PayloadDataManager =
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
     private var prefsUtil: PrefsUtil = mock()
     private var prngFixer: PrngFixer = mock()
 
     @Before
     fun setUp() {
-        subject = CreateWalletPresenter(payloadDataManager, prefsUtil, appUtil, accessState, prngFixer)
+        subject =
+            CreateWalletPresenter(payloadDataManager, prefsUtil, appUtil, accessState, prngFixer)
         subject.initView(view)
     }
 
@@ -59,7 +61,7 @@ class CreateWalletPresenterTest {
         // Arrange
         val intent: Intent = mock()
         whenever(intent.getStringExtra(RecoverFundsActivity.RECOVERY_PHRASE))
-                .thenReturn("all all all all all all all all all all all all")
+            .thenReturn("all all all all all all all all all all all all")
         // Act
         subject.parseExtras(intent)
         // Assert
@@ -126,7 +128,11 @@ class CreateWalletPresenterTest {
         val sharedKey = "SHARED_KEY"
         val guid = "GUID"
         whenever(view.getDefaultAccountName()).thenReturn(accountName)
-        whenever(payloadDataManager.createHdWallet(any(), any(), any())).thenReturn(Observable.just(Wallet()))
+        whenever(payloadDataManager.createHdWallet(any(), any(), any())).thenReturn(
+            Observable.just(
+                Wallet()
+            )
+        )
         whenever(payloadDataManager.wallet!!.guid).thenReturn(guid)
         whenever(payloadDataManager.wallet!!.sharedKey).thenReturn(sharedKey)
         // Act
@@ -159,7 +165,7 @@ class CreateWalletPresenterTest {
         val guid = "GUID"
         whenever(view.getDefaultAccountName()).thenReturn(accountName)
         whenever(payloadDataManager.restoreHdWallet(any(), any(), any(), any()))
-                .thenReturn(Observable.just(Wallet()))
+            .thenReturn(Observable.just(Wallet()))
         whenever(payloadDataManager.wallet!!.guid).thenReturn(guid)
         whenever(payloadDataManager.wallet!!.sharedKey).thenReturn(sharedKey)
         // Act
@@ -167,7 +173,9 @@ class CreateWalletPresenterTest {
         subject.recoveryPhrase = "all all all all all all all all all all all all"
         subject.validateCredentials(email, pw1, pw2)
         // Assert
-        val observer = payloadDataManager.restoreHdWallet(email, pw1, accountName, subject.recoveryPhrase).test()
+        val observer =
+            payloadDataManager.restoreHdWallet(email, pw1, accountName, subject.recoveryPhrase)
+                .test()
         observer.assertComplete()
         observer.assertNoErrors()
 
@@ -228,5 +236,4 @@ class CreateWalletPresenterTest {
         verify(view).showWeakPasswordDialog(any(), any())
         verifyNoMoreInteractions(view)
     }
-
 }

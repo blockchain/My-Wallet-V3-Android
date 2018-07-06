@@ -12,13 +12,13 @@ import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
-import java.util.*
+import java.util.HashMap
 import javax.inject.Inject
 
 @Mockable
 class PaymentService @Inject constructor(
-        private val environmentSettings: EnvironmentConfig,
-        private val payment: Payment
+    private val environmentSettings: EnvironmentConfig,
+    private val payment: Payment
 ) {
 
     /**
@@ -26,21 +26,21 @@ class PaymentService @Inject constructor(
      * successful
      *
      * @param unspentOutputBundle UTXO object
-     * @param keys                A List of elliptic curve keys
-     * @param toAddress           The Bitcoin address to send the funds to
-     * @param changeAddress       A change address
-     * @param bigIntFee           The specified fee amount
-     * @param bigIntAmount        The actual transaction amount
+     * @param keys A List of elliptic curve keys
+     * @param toAddress The Bitcoin address to send the funds to
+     * @param changeAddress A change address
+     * @param bigIntFee The specified fee amount
+     * @param bigIntAmount The actual transaction amount
      * @return An [Observable] wrapping a [String] where the String is the transaction hash
      */
     @WebRequest
     internal fun submitPayment(
-            unspentOutputBundle: SpendableUnspentOutputs,
-            keys: List<ECKey>,
-            toAddress: String,
-            changeAddress: String,
-            bigIntFee: BigInteger,
-            bigIntAmount: BigInteger
+        unspentOutputBundle: SpendableUnspentOutputs,
+        keys: List<ECKey>,
+        toAddress: String,
+        changeAddress: String,
+        bigIntFee: BigInteger,
+        bigIntAmount: BigInteger
     ): Observable<String> {
 
         return Observable.create { observableOnSubscribe ->
@@ -48,11 +48,11 @@ class PaymentService @Inject constructor(
             receivers[toAddress] = bigIntAmount
 
             val tx = payment.makeSimpleTransaction(
-                    environmentSettings.bitcoinNetworkParameters,
-                    unspentOutputBundle.spendableOutputs,
-                    receivers,
-                    bigIntFee,
-                    changeAddress
+                environmentSettings.bitcoinNetworkParameters,
+                unspentOutputBundle.spendableOutputs,
+                receivers,
+                bigIntFee,
+                changeAddress
             )
 
             payment.signSimpleTransaction(environmentSettings.bitcoinNetworkParameters, tx, keys)
@@ -77,21 +77,21 @@ class PaymentService @Inject constructor(
      * successful
      *
      * @param unspentOutputBundle UTXO object
-     * @param keys                A List of elliptic curve keys
-     * @param toAddress           The Bitcoin Cash address to send the funds to
-     * @param changeAddress       A change address
-     * @param bigIntFee           The specified fee amount
-     * @param bigIntAmount        The actual transaction amount
+     * @param keys A List of elliptic curve keys
+     * @param toAddress The Bitcoin Cash address to send the funds to
+     * @param changeAddress A change address
+     * @param bigIntFee The specified fee amount
+     * @param bigIntAmount The actual transaction amount
      * @return An [Observable] wrapping a [String] where the String is the transaction hash
      */
     @WebRequest
     internal fun submitBchPayment(
-            unspentOutputBundle: SpendableUnspentOutputs,
-            keys: List<ECKey>,
-            toAddress: String,
-            changeAddress: String,
-            bigIntFee: BigInteger,
-            bigIntAmount: BigInteger
+        unspentOutputBundle: SpendableUnspentOutputs,
+        keys: List<ECKey>,
+        toAddress: String,
+        changeAddress: String,
+        bigIntFee: BigInteger,
+        bigIntAmount: BigInteger
     ): Observable<String> {
 
         return Observable.create { observableOnSubscribe ->
@@ -99,11 +99,11 @@ class PaymentService @Inject constructor(
             receivers[toAddress] = bigIntAmount
 
             val tx = payment.makeSimpleTransaction(
-                    environmentSettings.bitcoinCashNetworkParameters,
-                    unspentOutputBundle.spendableOutputs,
-                    receivers,
-                    bigIntFee,
-                    changeAddress
+                environmentSettings.bitcoinCashNetworkParameters,
+                unspentOutputBundle.spendableOutputs,
+                receivers,
+                bigIntFee,
+                changeAddress
             )
 
             payment.signBCHTransaction(environmentSettings.bitcoinCashNetworkParameters, tx, keys)
@@ -172,17 +172,17 @@ class PaymentService @Inject constructor(
      * of inputs necessary to allow a successful payment by selecting from the largest inputs
      * first.
      *
-     * @param unspentCoins  The addresses' [UnspentOutputs]
+     * @param unspentCoins The addresses' [UnspentOutputs]
      * @param paymentAmount The amount you wish to send, as a [BigInteger]
-     * @param feePerKb      The current fee per kB, as a [BigInteger]
+     * @param feePerKb The current fee per kB, as a [BigInteger]
      * @return An [SpendableUnspentOutputs] object, which wraps a list of spendable outputs
      * for the given inputs
      */
     @Throws(UnsupportedEncodingException::class)
     internal fun getSpendableCoins(
-            unspentCoins: UnspentOutputs,
-            paymentAmount: BigInteger,
-            feePerKb: BigInteger
+        unspentCoins: UnspentOutputs,
+        paymentAmount: BigInteger,
+        feePerKb: BigInteger
     ): SpendableUnspentOutputs = payment.getSpendableCoins(unspentCoins, paymentAmount, feePerKb)
 
     /**
@@ -191,47 +191,46 @@ class PaymentService @Inject constructor(
      * necessary to sweep those coins.
      *
      * @param unspentCoins An [UnspentOutputs] object that you wish to sweep
-     * @param feePerKb     The current fee per kB on the network
+     * @param feePerKb The current fee per kB on the network
      * @return A [Pair] object, where left = the sweepable amount as a [BigInteger],
      * right = the absolute fee needed to sweep those coins, also as a [BigInteger]
      */
     internal fun getMaximumAvailable(
-            unspentCoins: UnspentOutputs,
-            feePerKb: BigInteger
+        unspentCoins: UnspentOutputs,
+        feePerKb: BigInteger
     ): Pair<BigInteger, BigInteger> = payment.getMaximumAvailable(unspentCoins, feePerKb)
 
     /**
      * Returns true if the `absoluteFee` is adequate for the number of inputs/outputs in the
      * transaction.
      *
-     * @param inputs      The number of inputs
-     * @param outputs     The number of outputs
+     * @param inputs The number of inputs
+     * @param outputs The number of outputs
      * @param absoluteFee The absolute fee as a [BigInteger]
      * @return True if the fee is adequate, false if not
      */
     internal fun isAdequateFee(inputs: Int, outputs: Int, absoluteFee: BigInteger): Boolean =
-            payment.isAdequateFee(inputs, outputs, absoluteFee)
+        payment.isAdequateFee(inputs, outputs, absoluteFee)
 
     /**
      * Returns the estimated size of the transaction in kB.
      *
-     * @param inputs  The number of inputs
+     * @param inputs The number of inputs
      * @param outputs The number of outputs
      * @return The estimated size of the transaction in kB
      */
     internal fun estimateSize(inputs: Int, outputs: Int): Int =
-            payment.estimatedSize(inputs, outputs)
+        payment.estimatedSize(inputs, outputs)
 
     /**
      * Returns an estimated absolute fee in satoshis (as a [BigInteger] for a given number of
      * inputs and outputs.
      *
-     * @param inputs   The number of inputs
-     * @param outputs  The number of outputs
+     * @param inputs The number of inputs
+     * @param outputs The number of outputs
      * @param feePerKb The current fee per kB om the network
      * @return A [BigInteger] representing the absolute fee
      */
     internal fun estimateFee(inputs: Int, outputs: Int, feePerKb: BigInteger): BigInteger =
-            payment.estimatedFee(inputs, outputs, feePerKb)
-
+        payment.estimatedFee(inputs, outputs, feePerKb)
 }

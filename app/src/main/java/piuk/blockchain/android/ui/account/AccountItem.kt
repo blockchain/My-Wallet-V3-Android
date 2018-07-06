@@ -11,14 +11,16 @@ class AccountItem {
     var correctedPosition: Int = -1
     var type: Int = 0
 
-    internal constructor(correctedPosition: Int,
-                         label: String?,
-                         address: String?,
-                         amount: String,
-                         isArchived: Boolean,
-                         isWatchOnly: Boolean,
-                         isDefault: Boolean,
-                         type: Int) {
+    internal constructor(
+        correctedPosition: Int,
+        label: String?,
+        address: String?,
+        amount: String,
+        isArchived: Boolean,
+        isWatchOnly: Boolean,
+        isDefault: Boolean,
+        type: Int
+    ) {
         this.correctedPosition = correctedPosition
         this.label = label
         this.address = address

@@ -31,13 +31,13 @@ class CombinedEthModel(private val ethAddressResponseMap: EthAddressResponseMap)
     }
 
     fun getAddressResponse(address: String): EthAddressResponse? =
-            ethAddressResponseMap.ethAddressResponseMap.values.first { it.account == address }
+        ethAddressResponseMap.ethAddressResponseMap.values.first { it.account == address }
 
     /**
      * Main eth account
      */
     fun getAddressResponse(): EthAddressResponse? =
-            ethAddressResponseMap.ethAddressResponseMap.values.first()
+        ethAddressResponseMap.ethAddressResponseMap.values.first()
 
     fun getChecksumAddress(address: String): String? {
         for ((key, value) in ethAddressResponseMap.ethAddressResponseMap) {
@@ -49,7 +49,7 @@ class CombinedEthModel(private val ethAddressResponseMap: EthAddressResponseMap)
     }
 
     fun getAccounts(): List<String> =
-            ethAddressResponseMap.ethAddressResponseMap.values.map { it.account }
+        ethAddressResponseMap.ethAddressResponseMap.values.map { it.account }
 
     fun getNonce(): BigInteger {
         return BigInteger.valueOf(getAddressResponse()!!.nonce.toLong())

@@ -13,5 +13,4 @@ interface LoginView : View {
     fun dismissProgressDialog()
 
     fun startPinEntryActivity()
-
 }

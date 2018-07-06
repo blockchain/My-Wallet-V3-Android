@@ -12,20 +12,21 @@ import kotlinx.android.synthetic.main.activity_shapeshift_state_selection.*
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.android.util.americanStatesMap
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 
-
-class ShapeShiftStateSelectionActivity : BaseMvpActivity<ShapeShiftStateSelectionView, ShapeShiftStateSelectionPresenter>(),
-        ShapeShiftStateSelectionView {
+class ShapeShiftStateSelectionActivity :
+    BaseMvpActivity<ShapeShiftStateSelectionView, ShapeShiftStateSelectionPresenter>(),
+    ShapeShiftStateSelectionView {
 
     @Suppress("MemberVisibilityCanPrivate")
-    @Inject lateinit var shapeShiftStateSelectionPresenter: ShapeShiftStateSelectionPresenter
+    @Inject
+    lateinit var shapeShiftStateSelectionPresenter: ShapeShiftStateSelectionPresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -43,7 +44,8 @@ class ShapeShiftStateSelectionActivity : BaseMvpActivity<ShapeShiftStateSelectio
         val states = americanStatesMap.keys.toTypedArray().sortedArray().toMutableList()
         states.add(getString(R.string.shapeshift_select_state))
 
-        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, states) {
+        val adapter = object :
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, states) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                 val v = super.getView(position, convertView, parent)
 
@@ -58,7 +60,6 @@ class ShapeShiftStateSelectionActivity : BaseMvpActivity<ShapeShiftStateSelectio
             override fun getCount(): Int {
                 return super.getCount() - 1 // Dont display last item. It is used as hint.
             }
-
         }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -66,7 +67,12 @@ class ShapeShiftStateSelectionActivity : BaseMvpActivity<ShapeShiftStateSelectio
         spinnerState.setSelection(0)
 
         spinnerState.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: android.view.View,
+                position: Int,
+                id: Long
+            ) {
 
                 if (position == adapter.count) return
 
@@ -85,7 +91,7 @@ class ShapeShiftStateSelectionActivity : BaseMvpActivity<ShapeShiftStateSelectio
     }
 
     override fun onSupportNavigateUp() =
-            consume { onBackPressed() }
+        consume { onBackPressed() }
 
     override fun onError(message: Int) {
         stateSelectError.visible()
@@ -104,13 +110,17 @@ class ShapeShiftStateSelectionActivity : BaseMvpActivity<ShapeShiftStateSelectio
 
     companion object {
 
-        //TODO we need a request code handler/incrementer to avoid potential collisions
+        // TODO we need a request code handler/incrementer to avoid potential collisions
         const val STATE_SELECTION_REQUEST_CODE = 54021
 
         @JvmStatic
         fun start(context: Activity, requestCode: Int) {
-            context.startActivityForResult(Intent(context, ShapeShiftStateSelectionActivity::class.java), requestCode)
+            context.startActivityForResult(
+                Intent(
+                    context,
+                    ShapeShiftStateSelectionActivity::class.java
+                ), requestCode
+            )
         }
-
     }
 }

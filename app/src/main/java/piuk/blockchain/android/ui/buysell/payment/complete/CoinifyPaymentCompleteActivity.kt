@@ -15,7 +15,6 @@ import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
 import kotlinx.android.synthetic.main.activity_card_payment_complete.button_close as buttonClose
-import kotlinx.android.synthetic.main.activity_card_payment_complete.constraint_layout_payment_status as constraintLayout
 import kotlinx.android.synthetic.main.activity_card_payment_complete.image_view_tick as imageViewTick
 import kotlinx.android.synthetic.main.activity_card_payment_complete.konfetti_view_success as konfetti
 import kotlinx.android.synthetic.main.activity_card_payment_complete.text_view_failure_message as textViewFailureMessage
@@ -28,18 +27,18 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
     private val state by unsafeLazy { intent.getSerializableExtra(EXTRA_PAYMENT_STATE) as PaymentState }
     private val colors by unsafeLazy {
         arrayOf(
-                getResolvedColor(R.color.secondary_yellow_medium),
-                getResolvedColor(R.color.primary_blue_light),
-                getResolvedColor(R.color.secondary_pink_light),
-                getResolvedColor(R.color.secondary_red_light),
-                getResolvedColor(R.color.product_green_medium)
+            getResolvedColor(R.color.secondary_yellow_medium),
+            getResolvedColor(R.color.primary_blue_light),
+            getResolvedColor(R.color.secondary_pink_light),
+            getResolvedColor(R.color.secondary_red_light),
+            getResolvedColor(R.color.product_green_medium)
         ).toIntArray()
     }
     private val successViews by unsafeLazy {
         listOf(
-                konfetti,
-                textViewSuccessTitle,
-                textViewSuccessMessage
+            konfetti,
+            textViewSuccessTitle,
+            textViewSuccessMessage
         )
     }
     private val failureViews by unsafeLazy {
@@ -93,10 +92,10 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         updateVisibility(false)
         textViewFailureMessage.setText(R.string.buy_sell_card_order_cancelled_message)
         imageViewTick.setImageDrawable(
-                ContextCompat.getDrawable(
-                        this,
-                        R.drawable.shapeshift_progress_failed
-                )
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.shapeshift_progress_failed
+            )
         )
     }
 
@@ -104,10 +103,10 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         updateVisibility(false)
         textViewFailureMessage.setText(R.string.buy_sell_card_order_expired_message)
         imageViewTick.setImageDrawable(
-                ContextCompat.getDrawable(
-                        this,
-                        R.drawable.shapeshift_progress_failed
-                )
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.shapeshift_progress_failed
+            )
         )
     }
 
@@ -115,10 +114,10 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         updateVisibility(false)
         textViewFailureMessage.setText(R.string.buy_sell_card_order_failed_message)
         imageViewTick.setImageDrawable(
-                ContextCompat.getDrawable(
-                        this,
-                        R.drawable.shapeshift_progress_failed
-                )
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.shapeshift_progress_failed
+            )
         )
     }
 
@@ -126,38 +125,38 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         updateVisibility(false)
         textViewFailureMessage.setText(R.string.buy_sell_card_order_reviewing_message)
         imageViewTick.setImageDrawable(
-                ContextCompat.getDrawable(
-                        this,
-                        R.drawable.shapeshift_drawable_in_progress
-                )
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.shapeshift_drawable_in_progress
+            )
         )
     }
 
     private fun streamFromTop(colors: IntArray) {
         konfetti.build()
-                .addColors(*colors)
-                .setDirection(0.0, 359.0)
-                .setSpeed(4f, 7f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(Size(12), Size(16, 6f))
-                .setPosition(-50f, konfetti.width + 50f, -50f, -50f)
-                .streamFor(300, 5000L)
+            .addColors(*colors)
+            .setDirection(0.0, 359.0)
+            .setSpeed(4f, 7f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000)
+            .addShapes(Shape.RECT, Shape.CIRCLE)
+            .addSizes(Size(12), Size(16, 6f))
+            .setPosition(-50f, konfetti.width + 50f, -50f, -50f)
+            .streamFor(300, 5000L)
     }
 
     private fun burstFromCenter(colors: IntArray, x: Float, y: Float) {
         if (!canIHaveMoreConfetti()) return
         konfetti.build()
-                .addColors(*colors)
-                .setDirection(0.0, 359.0)
-                .setSpeed(4f, 7f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(Size(12), Size(16, 6f))
-                .setPosition(x, y)
-                .burst(100)
+            .addColors(*colors)
+            .setDirection(0.0, 359.0)
+            .setSpeed(4f, 7f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000)
+            .addShapes(Shape.RECT, Shape.CIRCLE)
+            .addSizes(Size(12), Size(16, 6f))
+            .setPosition(x, y)
+            .burst(100)
     }
 
     private fun canIHaveMoreConfetti(): Boolean = konfetti.getActiveSystems().size <= 3
@@ -167,17 +166,15 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
     companion object {
 
         private const val EXTRA_PAYMENT_STATE =
-                "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_REDIRECT_URL"
+            "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_REDIRECT_URL"
 
         fun start(
-                activity: Activity,
-                paymentState: PaymentState
+            activity: Activity,
+            paymentState: PaymentState
         ) {
             Intent(activity, CoinifyPaymentCompleteActivity::class.java).apply {
                 putExtra(EXTRA_PAYMENT_STATE, paymentState)
             }.run { activity.startActivity(this) }
         }
-
     }
-
 }

@@ -3,12 +3,7 @@ package piuk.blockchain.android.ui.buysell.overview.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.item_balance.view.date
-import kotlinx.android.synthetic.main.item_balance.view.direction
-import kotlinx.android.synthetic.main.item_balance.view.double_spend_warning
-import kotlinx.android.synthetic.main.item_balance.view.result
-import kotlinx.android.synthetic.main.item_balance.view.tx_note
-import kotlinx.android.synthetic.main.item_balance.view.watch_only
+import kotlinx.android.synthetic.main.item_balance.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellDisplayable
@@ -21,23 +16,23 @@ import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.visible
-import java.util.*
+import java.util.Calendar
 
 internal class BuySellTransactionDelegate(
-        private val listener: CoinifyTxFeedListener
+    private val listener: CoinifyTxFeedListener
 ) : AdapterDelegate<BuySellDisplayable> {
 
     override fun isForViewType(items: List<BuySellDisplayable>, position: Int): Boolean =
-            items[position] is BuySellTransaction
+        items[position] is BuySellTransaction
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            BuySellTransactionViewHolder(parent.inflate(R.layout.item_balance))
+        BuySellTransactionViewHolder(parent.inflate(R.layout.item_balance))
 
     override fun onBindViewHolder(
-            items: List<BuySellDisplayable>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<BuySellDisplayable>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         holder as BuySellTransactionViewHolder
 
@@ -46,7 +41,7 @@ internal class BuySellTransactionDelegate(
     }
 
     private class BuySellTransactionViewHolder(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         // Utils
@@ -65,9 +60,9 @@ internal class BuySellTransactionDelegate(
         }
 
         fun bind(
-                transaction: BuySellTransaction,
-                listener: CoinifyTxFeedListener,
-                transactionId: Int
+            transaction: BuySellTransaction,
+            listener: CoinifyTxFeedListener,
+            transactionId: Int
         ) {
 
             root.setOnClickListener { listener.onTransactionClicked(transactionId) }
@@ -118,7 +113,5 @@ internal class BuySellTransactionDelegate(
             direction.setTextColor(getContext().getResolvedColor(R.color.product_red_medium))
             result.setBackgroundResource(R.drawable.rounded_view_failed)
         }
-
     }
-
 }

@@ -1,6 +1,12 @@
 package piuk.blockchain.androidcore.data.payload
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.atLeastOnce
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.isNull
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.api.data.Balance
 import info.blockchain.wallet.metadata.MetadataNodeFactory
 import info.blockchain.wallet.payload.PayloadManager
@@ -41,10 +47,10 @@ class PayloadDataManagerTest : RxTest() {
         super.setUp()
 
         subject = PayloadDataManager(
-                payloadService,
-                privateKeyFactory,
-                payloadManager,
-                rxBus
+            payloadService,
+            privateKeyFactory,
+            payloadManager,
+            rxBus
         )
     }
 
@@ -55,7 +61,7 @@ class PayloadDataManagerTest : RxTest() {
         val payload = "{}"
         val password = "PASSWORD"
         whenever(payloadService.initializeFromPayload(payload, password))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.initializeFromPayload(payload, password).test()
         // Assert
@@ -74,7 +80,7 @@ class PayloadDataManagerTest : RxTest() {
         val password = "PASSWORD"
         val mockWallet: Wallet = mock()
         whenever(payloadService.restoreHdWallet(mnemonic, walletName, email, password))
-                .thenReturn(Observable.just(mockWallet))
+            .thenReturn(Observable.just(mockWallet))
         // Act
         val testObserver = subject.restoreHdWallet(mnemonic, walletName, email, password).test()
         // Assert
@@ -93,7 +99,7 @@ class PayloadDataManagerTest : RxTest() {
         val walletName = "WALLET_NAME"
         val mockWallet: Wallet = mock()
         whenever(payloadService.createHdWallet(password, walletName, email))
-                .thenReturn(Observable.just(mockWallet))
+            .thenReturn(Observable.just(mockWallet))
         // Act
         val testObserver = subject.createHdWallet(password, walletName, email).test()
         // Assert
@@ -111,7 +117,7 @@ class PayloadDataManagerTest : RxTest() {
         val guid = "GUID"
         val password = "PASSWORD"
         whenever(payloadService.initializeAndDecrypt(sharedKey, guid, password))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.initializeAndDecrypt(sharedKey, guid, password).test()
         // Assert
@@ -141,7 +147,7 @@ class PayloadDataManagerTest : RxTest() {
         val secondPassword = "SECOND_PASSWORD"
         val defaultAccountName = "DEFAULT_ACCOUNT_NAME"
         whenever(payloadService.upgradeV2toV3(secondPassword, defaultAccountName))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.upgradeV2toV3(secondPassword, defaultAccountName).test()
         // Assert
@@ -209,7 +215,7 @@ class PayloadDataManagerTest : RxTest() {
         val txHash = "TX_HASH"
         val note = "note"
         whenever(payloadService.updateTransactionNotes(txHash, note))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.updateTransactionNotes(txHash, note).test()
         // Assert
@@ -225,7 +231,7 @@ class PayloadDataManagerTest : RxTest() {
         val address = "ADDRESS"
         val hashMap: LinkedHashMap<String, Balance> = LinkedHashMap(mapOf(Pair(address, Balance())))
         whenever(payloadService.getBalanceOfAddresses(listOf(address)))
-                .thenReturn(Observable.just(hashMap))
+            .thenReturn(Observable.just(hashMap))
         // Act
         val testObserver = subject.getBalanceOfAddresses(listOf(address)).test()
         // Assert
@@ -242,7 +248,7 @@ class PayloadDataManagerTest : RxTest() {
         val address = "ADDRESS"
         val hashMap: LinkedHashMap<String, Balance> = LinkedHashMap(mapOf(Pair(address, Balance())))
         whenever(payloadService.getBalanceOfBchAddresses(listOf(address)))
-                .thenReturn(Observable.just(hashMap))
+            .thenReturn(Observable.just(hashMap))
         // Act
         val testObserver = subject.getBalanceOfBchAddresses(listOf(address)).test()
         // Assert
@@ -313,9 +319,10 @@ class PayloadDataManagerTest : RxTest() {
         val accounts = listOf(mockAccount)
         whenever(payloadManager.payload.hdWallets[0].accounts).thenReturn(accounts)
         whenever(payloadManager.getNextReceiveAddressAndReserve(mockAccount, addressLabel))
-                .thenReturn(address)
+            .thenReturn(address)
         // Act
-        val testObserver = subject.getNextReceiveAddressAndReserve(accountIndex, addressLabel).test()
+        val testObserver =
+            subject.getNextReceiveAddressAndReserve(accountIndex, addressLabel).test()
         testScheduler.triggerActions()
         // Assert
         verify(payloadManager).getNextReceiveAddressAndReserve(mockAccount, addressLabel)
@@ -366,7 +373,7 @@ class PayloadDataManagerTest : RxTest() {
         val secondPassword = "SECOND_PASSWORD"
         val mockEcKey: ECKey = mock()
         whenever(payloadManager.getAddressECKey(mockLegacyAddress, secondPassword))
-                .thenReturn(mockEcKey)
+            .thenReturn(mockEcKey)
         // Act
         val result = subject.getAddressECKey(mockLegacyAddress, secondPassword)
         // Assert
@@ -381,7 +388,7 @@ class PayloadDataManagerTest : RxTest() {
         // Arrange
         val mockAccount: Account = mock()
         whenever(payloadService.createNewAccount(ArgumentMatchers.anyString(), isNull<String>()))
-                .thenReturn(Observable.just(mockAccount))
+            .thenReturn(Observable.just(mockAccount))
         // Act
         val observer = subject.createNewAccount("", null).test()
         // Assert
@@ -398,7 +405,7 @@ class PayloadDataManagerTest : RxTest() {
         val mockECKey: ECKey = mock()
         val mockLegacyAddress: LegacyAddress = mock()
         whenever(payloadService.setKeyForLegacyAddress(eq(mockECKey), isNull<String>()))
-                .thenReturn(Observable.just(mockLegacyAddress))
+            .thenReturn(Observable.just(mockLegacyAddress))
         // Act
         val observer = subject.setKeyForLegacyAddress(mockECKey, null).test()
         // Assert
@@ -416,7 +423,7 @@ class PayloadDataManagerTest : RxTest() {
         val password = "PASSWORD"
         val mockLegacyAddress: LegacyAddress = mock()
         whenever(payloadService.setKeyForLegacyAddress(mockECKey, password))
-                .thenReturn(Observable.just(mockLegacyAddress))
+            .thenReturn(Observable.just(mockLegacyAddress))
         // Act
         val observer = subject.setKeyForLegacyAddress(mockECKey, password).test()
         // Assert
@@ -476,7 +483,7 @@ class PayloadDataManagerTest : RxTest() {
         val mockAccount: Account = mock()
         val accounts = listOf(mockAccount)
         whenever(payloadManager.payload.hdWallets.first().accounts)
-                .thenReturn(accounts)
+            .thenReturn(accounts)
         // Act
         val result = subject.accounts
         // Assert
@@ -529,7 +536,7 @@ class PayloadDataManagerTest : RxTest() {
         val address = "ADDRESS"
         val balance = BigInteger.TEN
         whenever(payloadManager.getAddressBalance(address))
-                .thenReturn(balance)
+            .thenReturn(balance)
         // Act
         val result = subject.getAddressBalance(address)
         // Assert
@@ -546,7 +553,7 @@ class PayloadDataManagerTest : RxTest() {
         val position = 1337
         val address = "ADDRESS"
         whenever(payloadManager.getReceiveAddressAtPosition(mockAccount, position))
-                .thenReturn(address)
+            .thenReturn(address)
         // Act
         val result = subject.getReceiveAddressAtPosition(mockAccount, position)
         // Assert
@@ -563,7 +570,7 @@ class PayloadDataManagerTest : RxTest() {
         val position = 1337
         val address = "ADDRESS"
         whenever(payloadManager.getReceiveAddressAtArbitraryPosition(mockAccount, position))
-                .thenReturn(address)
+            .thenReturn(address)
         // Act
         val result = subject.getReceiveAddressAtArbitraryPosition(mockAccount, position)
         // Assert
@@ -616,7 +623,7 @@ class PayloadDataManagerTest : RxTest() {
         val xPub = "X_PUB"
         val address = "ADDRESS"
         whenever(payloadManager.getXpubFromAddress(address))
-                .thenReturn(xPub)
+            .thenReturn(xPub)
         // Act
         val result = subject.getXpubFromAddress(address)
         // Assert
@@ -632,7 +639,7 @@ class PayloadDataManagerTest : RxTest() {
         val xPub = "X_PUB"
         val index = 42
         whenever(payloadManager.getXpubFromAccountIndex(index))
-                .thenReturn(xPub)
+            .thenReturn(xPub)
         // Act
         val result = subject.getXpubFromIndex(index)
         // Assert
@@ -672,7 +679,7 @@ class PayloadDataManagerTest : RxTest() {
     fun generateNodes() {
         // Arrange
         whenever(payloadService.generateNodes())
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.generateNodes().test()
         // Assert
@@ -773,9 +780,9 @@ class PayloadDataManagerTest : RxTest() {
         val index = 42
         val mockAccount: Account = mock()
         whenever(payloadManager.payload.hdWallets.first().defaultAccountIdx)
-                .thenReturn(index)
+            .thenReturn(index)
         whenever(payloadManager.payload.hdWallets.first().getAccount(index))
-                .thenReturn(mockAccount)
+            .thenReturn(mockAccount)
         // Act
         val result = subject.defaultAccount
         // Assert
@@ -790,7 +797,7 @@ class PayloadDataManagerTest : RxTest() {
         val index = 42
         val mockAccount: Account = mock()
         whenever(payloadManager.payload.hdWallets.first().getAccount(index))
-                .thenReturn(mockAccount)
+            .thenReturn(mockAccount)
         // Act
         val result = subject.getAccount(index)
         // Assert
@@ -819,8 +826,13 @@ class PayloadDataManagerTest : RxTest() {
         val mockAccount: Account = mock()
         val mockOutputs: SpendableUnspentOutputs = mock()
         val mockEcKey: ECKey = mock()
-        whenever(payloadManager.payload.hdWallets.first().getHDKeysForSigning(mockAccount, mockOutputs))
-                .thenReturn(listOf(mockEcKey))
+        whenever(
+            payloadManager.payload.hdWallets.first().getHDKeysForSigning(
+                mockAccount,
+                mockOutputs
+            )
+        )
+            .thenReturn(listOf(mockEcKey))
         // Act
         val result = subject.getHDKeysForSigning(mockAccount, mockOutputs)
         // Assert
@@ -903,7 +915,7 @@ class PayloadDataManagerTest : RxTest() {
         val account2 = Account().apply { isArchived = true }
         val account3 = Account()
         whenever(payloadManager.payload.hdWallets.first().accounts)
-                .thenReturn(listOf(account0, account1, account2, account3))
+            .thenReturn(listOf(account0, account1, account2, account3))
         // Act
         val result = subject.getPositionOfAccountFromActiveList(index)
         // Assert
@@ -920,11 +932,10 @@ class PayloadDataManagerTest : RxTest() {
         val account2 = Account().apply { isArchived = true }
         val account3 = Account()
         whenever(payloadManager.payload.hdWallets.first().accounts)
-                .thenReturn(listOf(account0, account1, account2, account3))
+            .thenReturn(listOf(account0, account1, account2, account3))
         // Act
         val result = subject.getPositionOfAccountInActiveList(index)
         // Assert
         result shouldEqual 1
     }
-
 }

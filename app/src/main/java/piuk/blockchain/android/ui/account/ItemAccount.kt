@@ -15,11 +15,11 @@ class ItemAccount {
     var tag: String? = null
     var absoluteBalance: Long? = null
 
-    //TODO Get rid of this Any
-    //Ultimately this is used to sign txs
+    // TODO Get rid of this Any
+    // Ultimately this is used to sign txs
     var accountObject: Any? = null
 
-    //Address/Xpub to fetch balance/tx list
+    // Address/Xpub to fetch balance/tx list
     var address: String? = null
     var type: TYPE = TYPE.SINGLE_ACCOUNT
 
@@ -28,18 +28,24 @@ class ItemAccount {
     }
 
     override fun toString(): String {
-        return "ItemAccount(label=$label, displayBalance=$displayBalance, tag=$tag, absoluteBalance=$absoluteBalance, accountObject=$accountObject, address=$address, type=$type)"
+        return "ItemAccount(label=$label, " +
+            "displayBalance=$displayBalance, " +
+            "tag=$tag, " +
+            "absoluteBalance=$absoluteBalance, " +
+            "accountObject=$accountObject, " +
+            "address=$address, " +
+            "type=$type)"
     }
 
     @JvmOverloads
     constructor(
-            label: String?,
-            displayBalance: String?,
-            tag: String?,
-            absoluteBalance: Long?,
-            accountObject: Any? = null,
-            address: String?,
-            type: TYPE = TYPE.SINGLE_ACCOUNT
+        label: String?,
+        displayBalance: String?,
+        tag: String?,
+        absoluteBalance: Long?,
+        accountObject: Any? = null,
+        address: String?,
+        type: TYPE = TYPE.SINGLE_ACCOUNT
     ) {
         this.label = label
         this.displayBalance = displayBalance
@@ -53,5 +59,4 @@ class ItemAccount {
     constructor(label: String?) {
         this.label = label
     }
-
 }

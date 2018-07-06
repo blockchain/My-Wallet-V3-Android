@@ -19,7 +19,8 @@ import javax.inject.Inject
 class BuySellLauncherActivity : BaseMvpActivity<BuySellLauncherView, BuySellLauncherPresenter>(),
     BuySellLauncherView {
 
-    @Inject lateinit var presenter: BuySellLauncherPresenter
+    @Inject
+    lateinit var presenter: BuySellLauncherPresenter
     private var progressDialog: MaterialProgressDialog? = null
 
     init {

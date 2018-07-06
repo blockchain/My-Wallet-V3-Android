@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.buttonContinue
-import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.textviewReviewMessage
-import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.textviewReviewStatus
-import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.textviewReviewTitle
+import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
@@ -23,7 +20,8 @@ class CoinifyIdentityInReviewFragment :
     BaseFragment<CoinifyIdentityInReviewView, CoinifyIdentityInReviewPresenter>(),
     CoinifyIdentityInReviewView {
 
-    @Inject lateinit var presenter: CoinifyIdentityInReviewPresenter
+    @Inject
+    lateinit var presenter: CoinifyIdentityInReviewPresenter
     private var progressDialog: MaterialProgressDialog? = null
     private var signUpListener: CoinifyFlowListener? = null
 
@@ -32,9 +30,9 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.dialog_fragment_coinify_id_in_review)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,8 +73,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowCompleted() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_completed)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_completed)
         )
         textviewReviewMessage.visible()
         textviewReviewStatus.visible()
@@ -84,8 +82,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowReviewing() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_reviewing)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_reviewing)
         )
         textviewReviewMessage.visible()
         textviewReviewStatus.visible()
@@ -93,8 +91,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowPending() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_pending)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_pending)
         )
         textviewReviewMessage.visible()
         textviewReviewStatus.visible()
@@ -102,8 +100,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowRejected() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_rejected)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_rejected)
         )
         textviewReviewTitle.setText(R.string.buy_sell_review_failed)
         textviewReviewMessage.text = getString(R.string.buy_sell_review_status_failed)
@@ -113,8 +111,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowExpired() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_expired)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_expired)
         )
         textviewReviewTitle.setText(R.string.buy_sell_review_failed)
         textviewReviewMessage.text = getString(R.string.buy_sell_review_status_failed)
@@ -124,8 +122,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowFailed() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_failed)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_failed)
         )
         textviewReviewTitle.setText(R.string.buy_sell_review_failed)
         textviewReviewMessage.text = getString(R.string.buy_sell_review_status_failed)
@@ -135,8 +133,8 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowDocumentsRequested() {
         textviewReviewStatus.text = getString(
-                R.string.buy_sell_review_status,
-                getString(R.string.buy_sell_review_status_in_docs_requested)
+            R.string.buy_sell_review_status,
+            getString(R.string.buy_sell_review_status_in_docs_requested)
         )
         textviewReviewMessage.visible()
         textviewReviewStatus.visible()
@@ -170,7 +168,6 @@ class CoinifyIdentityInReviewFragment :
     companion object {
 
         internal fun newInstance(): CoinifyIdentityInReviewFragment =
-                CoinifyIdentityInReviewFragment()
-
+            CoinifyIdentityInReviewFragment()
     }
 }

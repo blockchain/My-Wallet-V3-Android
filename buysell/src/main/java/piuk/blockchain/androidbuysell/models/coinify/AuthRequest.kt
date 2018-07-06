@@ -11,8 +11,8 @@ import piuk.blockchain.androidcore.utils.annotations.Mockable
  * to get a temporary access token from the Coinify endpoint.
  */
 internal data class AuthRequest(
-        @field:Json(name = "grant_type") val grantType: GrantType,
-        @field:Json(name = "offline_token") val offlineToken: String
+    @field:Json(name = "grant_type") val grantType: GrantType,
+    @field:Json(name = "offline_token") val offlineToken: String
 )
 
 enum class GrantType(val type: String) {
@@ -35,14 +35,13 @@ class GrantTypeAdapter {
 
     @ToJson
     fun toJson(grantType: GrantType) = grantType.toString()
-
 }
 
 @Mockable
 data class AuthResponse(
-        @field:Json(name = "access_token") val accessToken: String,
-        @field:Json(name = "token_type") val tokenType: String,
-        // Expiry time in seconds, usually 1200
-        @field:Json(name = "expires_in") val expiresIn: Int,
-        @field:Json(name = "refresh_token") val refreshToken: String? = null
+    @field:Json(name = "access_token") val accessToken: String,
+    @field:Json(name = "token_type") val tokenType: String,
+    // Expiry time in seconds, usually 1200
+    @field:Json(name = "expires_in") val expiresIn: Int,
+    @field:Json(name = "refresh_token") val refreshToken: String? = null
 )

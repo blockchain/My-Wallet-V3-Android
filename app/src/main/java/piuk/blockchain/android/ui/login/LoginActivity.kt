@@ -9,11 +9,8 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.BasePermissionListener
 import com.karumi.dexter.listener.single.CompositePermissionListener
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
-import kotlinx.android.synthetic.main.activity_login.button_manual_pair
-import kotlinx.android.synthetic.main.activity_login.button_scan
-import kotlinx.android.synthetic.main.activity_login.mainLayout
-import kotlinx.android.synthetic.main.activity_login.pairingFirstStep
-import kotlinx.android.synthetic.main.toolbar_general.toolbar_general
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.auth.PinEntryActivity
@@ -31,9 +28,12 @@ import javax.inject.Inject
 @Suppress("MemberVisibilityCanBePrivate")
 class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
 
-    @Inject lateinit var loginPresenter: LoginPresenter
-    @Inject lateinit var appUtil: AppUtil
-    @Inject lateinit var environmentConfig: EnvironmentConfig
+    @Inject
+    lateinit var loginPresenter: LoginPresenter
+    @Inject
+    lateinit var appUtil: AppUtil
+    @Inject
+    lateinit var environmentConfig: EnvironmentConfig
 
     private var progressDialog: MaterialProgressDialog? = null
 
@@ -48,7 +48,7 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
         setupToolbar(toolbar_general, R.string.pair_your_wallet)
 
         pairingFirstStep.text =
-                getString(R.string.pair_wallet_step_1, environmentConfig.explorerUrl + "wallet")
+            getString(R.string.pair_wallet_step_1, environmentConfig.explorerUrl + "wallet")
 
         button_manual_pair.setOnClickListener { onClickManualPair() }
         button_scan.setOnClickListener { requestCameraPermissionIfNeeded() }
@@ -68,7 +68,7 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
     override fun showProgressDialog(message: Int) {
         dismissProgressDialog()
         progressDialog = MaterialProgressDialog(
-                this
+            this
         ).apply {
             setCancelable(false)
             setMessage(getString(message))
@@ -99,9 +99,9 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
 
     private fun requestCameraPermissionIfNeeded() {
         val deniedPermissionListener = SnackbarOnDeniedPermissionListener.Builder
-                .with(mainLayout, R.string.request_camera_permission)
-                .withButton(android.R.string.ok) { requestCameraPermissionIfNeeded() }
-                .build()
+            .with(mainLayout, R.string.request_camera_permission)
+            .withButton(android.R.string.ok) { requestCameraPermissionIfNeeded() }
+            .build()
 
         val grantedPermissionListener = object : BasePermissionListener() {
             override fun onPermissionGranted(response: PermissionGrantedResponse?) {
@@ -110,13 +110,13 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
         }
 
         val compositePermissionListener =
-                CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
+            CompositePermissionListener(deniedPermissionListener, grantedPermissionListener)
 
         Dexter.withActivity(this)
-                .withPermission(Manifest.permission.CAMERA)
-                .withListener(compositePermissionListener)
-                .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
-                .check()
+            .withPermission(Manifest.permission.CAMERA)
+            .withListener(compositePermissionListener)
+            .withErrorListener { error -> Timber.wtf("Dexter permissions error $error") }
+            .check()
     }
 
     private fun onClickManualPair() {

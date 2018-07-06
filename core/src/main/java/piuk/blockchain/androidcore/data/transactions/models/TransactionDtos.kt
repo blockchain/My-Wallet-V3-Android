@@ -28,9 +28,9 @@ abstract class Displayable {
 
 @Mockable
 data class EthDisplayable(
-        private val combinedEthModel: CombinedEthModel,
-        private val ethTransaction: EthTransaction,
-        private val blockHeight: Long
+    private val combinedEthModel: CombinedEthModel,
+    private val ethTransaction: EthTransaction,
+    private val blockHeight: Long
 ) : Displayable() {
 
     override val cryptoCurrency: CryptoCurrencies
@@ -38,7 +38,7 @@ data class EthDisplayable(
     override val direction: TransactionSummary.Direction
         get() = when {
             combinedEthModel.getAccounts()[0] == ethTransaction.to
-                    && combinedEthModel.getAccounts()[0] == ethTransaction.from -> TransactionSummary.Direction.TRANSFERRED
+                && combinedEthModel.getAccounts()[0] == ethTransaction.from -> TransactionSummary.Direction.TRANSFERRED
             combinedEthModel.getAccounts().contains(ethTransaction.from) -> TransactionSummary.Direction.SENT
             else -> TransactionSummary.Direction.RECEIVED
         }
@@ -67,7 +67,7 @@ data class EthDisplayable(
 
 @Mockable
 data class BtcDisplayable(
-        private val transactionSummary: TransactionSummary
+    private val transactionSummary: TransactionSummary
 ) : Displayable() {
 
     override val cryptoCurrency: CryptoCurrencies
@@ -94,12 +94,11 @@ data class BtcDisplayable(
         get() = transactionSummary.isDoubleSpend
     override val isPending: Boolean
         get() = transactionSummary.isPending
-
 }
 
 @Mockable
 data class BchDisplayable(
-        private val transactionSummary: TransactionSummary
+    private val transactionSummary: TransactionSummary
 ) : Displayable() {
 
     override val cryptoCurrency: CryptoCurrencies
@@ -126,5 +125,4 @@ data class BchDisplayable(
         get() = transactionSummary.isDoubleSpend
     override val isPending: Boolean
         get() = transactionSummary.isPending
-
 }

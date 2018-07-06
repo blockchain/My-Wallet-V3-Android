@@ -9,16 +9,16 @@ import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import javax.inject.Inject
 
 class LandingPresenter @Inject constructor(
-        private val environmentSettings: EnvironmentConfig,
-        private val promptManager: PromptManager
+    private val environmentSettings: EnvironmentConfig,
+    private val promptManager: PromptManager
 ) : BasePresenter<LandingView>() {
 
     override fun onViewReady() {
         if (environmentSettings.shouldShowDebugMenu()) {
             with(view) {
                 showToast(
-                        "Current environment: ${environmentSettings.environment.getName()}",
-                        ToastCustom.TYPE_GENERAL
+                    "Current environment: ${environmentSettings.environment.getName()}",
+                    ToastCustom.TYPE_GENERAL
                 )
                 showDebugMenu()
             }
@@ -27,7 +27,7 @@ class LandingPresenter @Inject constructor(
 
     internal fun initPreLoginPrompts(context: Context) {
         promptManager.getPreLoginPrompts(context)
-                .flatMap { Observable.fromIterable(it) }
-                .forEach { view.showWarningPrompt(it) }
+            .flatMap { Observable.fromIterable(it) }
+            .forEach { view.showWarningPrompt(it) }
     }
 }

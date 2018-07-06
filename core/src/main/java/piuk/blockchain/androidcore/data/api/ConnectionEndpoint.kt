@@ -8,5 +8,4 @@ interface ConnectionEndpoint {
 
     @GET(".")
     fun pingExplorer(): Observable<ResponseBody>
-
 }

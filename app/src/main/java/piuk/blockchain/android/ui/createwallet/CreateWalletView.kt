@@ -6,9 +6,9 @@ import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
 interface CreateWalletView : View {
 
-    fun setTitleText(text : Int)
+    fun setTitleText(text: Int)
 
-    fun setNextText(text : Int)
+    fun setNextText(text: Int)
 
     fun setEntropyStrength(score: Int)
 
@@ -24,5 +24,5 @@ interface CreateWalletView : View {
 
     fun dismissProgressDialog()
 
-    fun  getDefaultAccountName(): String
+    fun getDefaultAccountName(): String
 }

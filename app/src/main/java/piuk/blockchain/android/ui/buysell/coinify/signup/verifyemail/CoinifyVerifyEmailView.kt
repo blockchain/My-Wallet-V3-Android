@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.buysell.coinify.signup.verifyemail
 
 import piuk.blockchain.androidcoreui.ui.base.View
 
-interface CoinifyVerifyEmailView: View {
+interface CoinifyVerifyEmailView : View {
 
     fun onStartSignUpSuccess()
 

@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatDialogFragment
 import info.blockchain.wallet.api.data.Settings
 import io.reactivex.Observable
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.payload.PayloadDataManager
-import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.android.ui.auth.LandingActivity
 import piuk.blockchain.android.ui.auth.PinEntryActivity
 import piuk.blockchain.android.ui.backup.BackupWalletActivity
@@ -16,17 +14,19 @@ import piuk.blockchain.android.ui.home.SecurityPromptDialog
 import piuk.blockchain.android.ui.settings.SettingsActivity
 import piuk.blockchain.android.ui.settings.SettingsFragment
 import piuk.blockchain.android.ui.settings.SettingsFragment.EXTRA_SHOW_ADD_EMAIL_DIALOG
-import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.android.util.RootUtil
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager
+import piuk.blockchain.androidcore.injection.PresenterScope
+import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.annotations.Mockable
 import javax.inject.Inject
 
 @Mockable
 @PresenterScope
 class PromptManager @Inject constructor(
-        private val prefsUtil: PrefsUtil,
-        private val payloadDataManager: PayloadDataManager,
-        private val transactionListDataManager: TransactionListDataManager
+    private val prefsUtil: PrefsUtil,
+    private val payloadDataManager: PayloadDataManager,
+    private val transactionListDataManager: TransactionListDataManager
 ) {
 
     fun getPreLoginPrompts(context: Context): Observable<List<AlertDialog>> {
@@ -38,8 +38,8 @@ class PromptManager @Inject constructor(
     }
 
     fun getCustomPrompts(
-            context: Context,
-            settings: Settings
+        context: Context,
+        settings: Settings
     ): Observable<List<AppCompatDialogFragment>> {
         val list = mutableListOf<AppCompatDialogFragment>()
 
@@ -98,8 +98,8 @@ class PromptManager @Inject constructor(
     }
 
     private fun isVerifyEmailReminderAllowed(settings: Settings): Boolean {
-        val isCorrectTime = getTimeOfLastSecurityPrompt() == 0L
-                || System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
+        val isCorrectTime = getTimeOfLastSecurityPrompt() == 0L ||
+            System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
         return !isFirstRun() && !settings.isEmailVerified && !settings.email.isEmpty() && isCorrectTime
     }
 
@@ -107,8 +107,8 @@ class PromptManager @Inject constructor(
         // On third visit onwards, prompt 2FA
         val isEnoughVisits = (!getIfNeverPrompt2Fa() && getAppVisitCount() >= 3)
         val isNeeded = !settings.isSmsVerified && settings.authType == Settings.AUTH_TYPE_OFF
-        val isCorrectTime = getTimeOfLastSecurityPrompt() == 0L
-                || System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
+        val isCorrectTime = getTimeOfLastSecurityPrompt() == 0L ||
+            System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
 
         if (isEnoughVisits && isNeeded && isCorrectTime) {
             storeTimeOfLastSecurityPrompt()
@@ -118,12 +118,12 @@ class PromptManager @Inject constructor(
     }
 
     private fun isBackedUpReminderAllowed(): Boolean {
-        val isAllowed = !isFirstRun()
-                && !getIfNeverPromptBackup()
-                && !payloadDataManager.isBackedUp && hasTransactions()
+        val isAllowed = !isFirstRun() &&
+            !getIfNeverPromptBackup() &&
+            !payloadDataManager.isBackedUp && hasTransactions()
 
-        val isCorrectTime = getTimeOfLastSecurityPrompt() == 0L
-                || System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
+        val isCorrectTime = getTimeOfLastSecurityPrompt() == 0L ||
+            System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
 
         if (isAllowed && isCorrectTime) {
             storeTimeOfLastSecurityPrompt()
@@ -137,43 +137,43 @@ class PromptManager @Inject constructor(
         return System.currentTimeMillis() - getTimeOfLastSecurityPrompt() >= ONE_MONTH
     }
 
-    //********************************************************************************************//
-    //*                              Default Prompts                                             *//
-    //********************************************************************************************//
+    // ********************************************************************************************//
+    // *                              Default Prompts                                             *//
+    // ********************************************************************************************//
 
     private fun getRootWarningDialog(context: Context): AlertDialog {
         return AlertDialog.Builder(context, R.style.AlertDialogStyle)
-                .setMessage(R.string.device_rooted)
-                .setCancelable(false)
-                .setPositiveButton(R.string.dialog_continue, null)
-                .create()
+            .setMessage(R.string.device_rooted)
+            .setCancelable(false)
+            .setPositiveButton(R.string.dialog_continue, null)
+            .create()
     }
 
     private fun getConnectivityDialog(context: Context): AlertDialog {
         return AlertDialog.Builder(context, R.style.AlertDialogStyle)
-                .setMessage(R.string.check_connectivity_exit)
-                .setCancelable(false)
-                .setPositiveButton(R.string.dialog_continue) { _, _ ->
-                    if (getGuid().isEmpty()) {
-                        LandingActivity.start(context)
-                    } else {
-                        PinEntryActivity.start(context)
-                    }
-                }.create()
+            .setMessage(R.string.check_connectivity_exit)
+            .setCancelable(false)
+            .setPositiveButton(R.string.dialog_continue) { _, _ ->
+                if (getGuid().isEmpty()) {
+                    LandingActivity.start(context)
+                } else {
+                    PinEntryActivity.start(context)
+                }
+            }.create()
     }
 
-    //********************************************************************************************//
-    //*                         Custom Security Prompts                                          *//
-    //********************************************************************************************//
+    // ********************************************************************************************//
+    // *                         Custom Security Prompts                                          *//
+    // ********************************************************************************************//
 
     private fun getVerifyEmailCustomDialog(context: Context): SecurityPromptDialog {
         val securityPromptDialog = SecurityPromptDialog.newInstance(
-                R.string.security_centre_add_email_title,
-                context.getString(R.string.security_centre_add_email_message),
-                R.drawable.vector_email,
-                R.string.security_centre_add_email_positive_button,
-                true,
-                false
+            R.string.security_centre_add_email_title,
+            context.getString(R.string.security_centre_add_email_message),
+            R.drawable.vector_email,
+            R.string.security_centre_add_email_positive_button,
+            true,
+            false
         )
         securityPromptDialog.setPositiveButtonListener {
             securityPromptDialog.dismiss()
@@ -189,12 +189,12 @@ class PromptManager @Inject constructor(
 
     private fun get2FACustomDialog(context: Context): SecurityPromptDialog {
         val securityPromptDialog = SecurityPromptDialog.newInstance(
-                R.string.two_fa,
-                context.getString(R.string.security_centre_two_fa_message),
-                R.drawable.vector_mobile,
-                R.string.enable,
-                true,
-                true
+            R.string.two_fa,
+            context.getString(R.string.security_centre_two_fa_message),
+            R.drawable.vector_mobile,
+            R.string.enable,
+            true,
+            true
         )
         securityPromptDialog.setPositiveButtonListener {
             securityPromptDialog.dismiss()
@@ -218,12 +218,12 @@ class PromptManager @Inject constructor(
 
     private fun getBackupCustomDialog(context: Context): SecurityPromptDialog {
         val securityPromptDialog = SecurityPromptDialog.newInstance(
-                R.string.security_centre_backup_title,
-                context.getString(R.string.security_centre_backup_message),
-                R.drawable.vector_lock,
-                R.string.security_centre_backup_positive_button,
-                true,
-                isLastBackupReminder()
+            R.string.security_centre_backup_title,
+            context.getString(R.string.security_centre_backup_message),
+            R.drawable.vector_lock,
+            R.string.security_centre_backup_positive_button,
+            true,
+            isLastBackupReminder()
         )
         securityPromptDialog.setPositiveButtonListener {
             securityPromptDialog.dismiss()
@@ -246,6 +246,5 @@ class PromptManager @Inject constructor(
     companion object {
 
         private const val ONE_MONTH = 28 * 24 * 60 * 60 * 1000L
-
     }
 }

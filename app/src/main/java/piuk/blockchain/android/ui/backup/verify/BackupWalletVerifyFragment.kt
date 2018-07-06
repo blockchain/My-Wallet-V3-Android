@@ -20,9 +20,10 @@ import piuk.blockchain.androidcoreui.utils.extensions.toast
 import javax.inject.Inject
 
 class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPresenter>(),
-        BackupVerifyView {
+    BackupVerifyView {
 
-    @Inject lateinit var backupVerifyPresenter: BackupVerifyPresenter
+    @Inject
+    lateinit var backupVerifyPresenter: BackupVerifyPresenter
 
     private var progressDialog: MaterialProgressDialog? = null
 
@@ -31,9 +32,9 @@ class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPr
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_backup_wallet_verify)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,9 +43,9 @@ class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPr
 
         button_verify.setOnClickListener {
             presenter.onVerifyClicked(
-                    edittext_first_word.text.toString(),
-                    edittext_second_word.text.toString(),
-                    edittext_third_word.text.toString()
+                edittext_first_word.text.toString(),
+                edittext_second_word.text.toString(),
+                edittext_third_word.text.toString()
             )
         }
     }
@@ -64,7 +65,7 @@ class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPr
 
     override fun showProgressDialog() {
         progressDialog = MaterialProgressDialog(
-                activity
+            activity
         ).apply {
             setMessage("${getString(R.string.please_wait)}…")
             setCancelable(false)
@@ -80,8 +81,8 @@ class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPr
 
     override fun showCompletedFragment() {
         popAllAndStartFragment(
-                BackupWalletCompletedFragment.newInstance(true),
-                BackupWalletCompletedFragment.TAG
+            BackupWalletCompletedFragment.newInstance(true),
+            BackupWalletCompletedFragment.TAG
         )
     }
 
@@ -108,10 +109,9 @@ class BackupWalletVerifyFragment : BaseFragment<BackupVerifyView, BackupVerifyPr
         fragmentManager?.run {
             popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .addToBackStack(tag)
-                    .commit()
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(tag)
+                .commit()
         }
     }
-
 }

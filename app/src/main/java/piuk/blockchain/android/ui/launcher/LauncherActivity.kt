@@ -20,7 +20,8 @@ import javax.inject.Inject
 class LauncherActivity : BaseMvpActivity<LauncherView, LauncherPresenter>(), LauncherView {
 
     @Suppress("MemberVisibilityCanBePrivate")
-    @Inject lateinit var launcherPresenter: LauncherPresenter
+    @Inject
+    lateinit var launcherPresenter: LauncherPresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -52,13 +53,13 @@ class LauncherActivity : BaseMvpActivity<LauncherView, LauncherPresenter>(), Lau
 
     override fun onCorruptPayload() {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.app_name)
-                .setMessage(getString(R.string.not_sane_error))
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    presenter.clearCredentialsAndRestart()
-                }
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage(getString(R.string.not_sane_error))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                presenter.clearCredentialsAndRestart()
+            }
+            .show()
     }
 
     override fun onRequestUpgrade() {
@@ -90,7 +91,7 @@ class LauncherActivity : BaseMvpActivity<LauncherView, LauncherPresenter>(), Lau
     }
 
     private class DelayStartRunnable internal constructor(
-            private val activity: LauncherActivity
+        private val activity: LauncherActivity
     ) : Runnable {
 
         override fun run() {
@@ -98,7 +99,5 @@ class LauncherActivity : BaseMvpActivity<LauncherView, LauncherPresenter>(), Lau
                 activity.onViewReady()
             }
         }
-
     }
-
 }

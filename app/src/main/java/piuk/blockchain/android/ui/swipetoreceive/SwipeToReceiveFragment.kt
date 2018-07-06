@@ -1,6 +1,11 @@
 package piuk.blockchain.android.ui.swipetoreceive
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -20,7 +25,11 @@ import piuk.blockchain.android.data.websocket.WebSocketService
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.base.UiState
-import piuk.blockchain.androidcoreui.utils.extensions.*
+import piuk.blockchain.androidcoreui.utils.extensions.gone
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.invisible
+import piuk.blockchain.androidcoreui.utils.extensions.toast
+import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.androidcoreui.utils.helperfunctions.setOnPageChangeListener
 import javax.inject.Inject
 
@@ -29,7 +38,8 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
     SwipeToReceiveView {
 
     @Suppress("MemberVisibilityCanBePrivate")
-    @Inject lateinit var swipeToReceivePresenter: SwipeToReceivePresenter
+    @Inject
+    lateinit var swipeToReceivePresenter: SwipeToReceivePresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -45,9 +55,9 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_swipe_to_receive)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,12 +75,12 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
         }
 
         val adapter = ImageAdapter(
-                context!!,
-                listOf(
-                        R.drawable.vector_bitcoin,
-                        R.drawable.vector_eth,
-                        R.drawable.vector_bitcoin_cash
-                )
+            context!!,
+            listOf(
+                R.drawable.vector_bitcoin,
+                R.drawable.vector_eth,
+                R.drawable.vector_bitcoin_cash
+            )
         )
 
         viewpager_icons.run {
@@ -84,8 +94,8 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
                     when (it) {
                         0 -> imageview_left_arrow.invisible()
                         1 -> listOf(
-                                imageview_left_arrow,
-                                imageview_right_arrow
+                            imageview_left_arrow,
+                            imageview_right_arrow
                         ).forEach { it.visible() }
                         2 -> imageview_right_arrow.invisible()
                     }
@@ -132,8 +142,8 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
         super.onStart()
         context?.run {
             LocalBroadcastManager.getInstance(this).registerReceiver(
-                    broadcastReceiver,
-                    IntentFilter(WebSocketService.ACTION_INTENT)
+                broadcastReceiver,
+                IntentFilter(WebSocketService.ACTION_INTENT)
             )
         }
     }
@@ -166,18 +176,18 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
         val address = textview_address.text
         activity?.run {
             AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                    .setTitle(R.string.app_name)
-                    .setMessage(R.string.receive_address_to_clipboard)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.yes, { _, _ ->
-                        val clipboard =
-                                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        val clip = ClipData.newPlainText("Send address", address)
-                        toast(R.string.copied_to_clipboard)
-                        clipboard.primaryClip = clip
-                    })
-                    .setNegativeButton(R.string.no, null)
-                    .show()
+                .setTitle(R.string.app_name)
+                .setMessage(R.string.receive_address_to_clipboard)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes, { _, _ ->
+                    val clipboard =
+                        getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText("Send address", address)
+                    toast(R.string.copied_to_clipboard)
+                    clipboard.primaryClip = clip
+                })
+                .setNegativeButton(R.string.no, null)
+                .show()
         }
     }
 
@@ -185,7 +195,6 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
 
         @JvmStatic
         fun newInstance(): SwipeToReceiveFragment = SwipeToReceiveFragment()
-
     }
 
     private class ImageAdapter(var context: Context, var drawables: List<Int>) : PagerAdapter() {
@@ -206,7 +215,5 @@ class SwipeToReceiveFragment : BaseFragment<SwipeToReceiveView, SwipeToReceivePr
         override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
             container.removeView(any as LinearLayout)
         }
-
     }
-
 }

@@ -3,7 +3,7 @@ package piuk.blockchain.android.ui.buysell.launcher
 import android.support.annotation.StringRes
 import piuk.blockchain.androidcoreui.ui.base.View
 
-interface BuySellLauncherView: View {
+interface BuySellLauncherView : View {
 
     fun onStartCoinifySignUp()
 
@@ -16,5 +16,4 @@ interface BuySellLauncherView: View {
     fun displayProgressDialog()
 
     fun dismissProgressDialog()
-
 }

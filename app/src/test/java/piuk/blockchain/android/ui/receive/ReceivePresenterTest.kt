@@ -32,18 +32,18 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
-import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
+import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
+import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import retrofit2.Retrofit
 import java.math.BigDecimal
-import java.util.*
+import java.util.Locale
 
 class ReceivePresenterTest {
 
@@ -65,15 +65,15 @@ class ReceivePresenterTest {
         initFramework()
 
         subject = ReceivePresenter(
-                prefsUtil,
-                qrCodeDataManager,
-                walletAccountHelper,
-                payloadDataManager,
-                ethDataStore,
-                bchDataManager,
-                environmentSettings,
-                currencyState,
-                currencyFormatManager
+            prefsUtil,
+            qrCodeDataManager,
+            walletAccountHelper,
+            payloadDataManager,
+            ethDataStore,
+            bchDataManager,
+            environmentSettings,
+            currencyState,
+            currencyFormatManager
         )
         subject.initView(activity)
     }
@@ -85,7 +85,7 @@ class ReceivePresenterTest {
         whenever(environmentSettings.environment).thenReturn(Environment.PRODUCTION)
         whenever(activity.isContactsEnabled).thenReturn(true)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_CONTACTS_INTRODUCTION_COMPLETE, false))
-                .thenReturn(true)
+            .thenReturn(true)
         // Act
         subject.onViewReady()
         // Assert
@@ -103,7 +103,7 @@ class ReceivePresenterTest {
         whenever(environmentSettings.environment).thenReturn(Environment.PRODUCTION)
         whenever(activity.isContactsEnabled).thenReturn(true)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_CONTACTS_INTRODUCTION_COMPLETE, false))
-                .thenReturn(false)
+            .thenReturn(false)
         // Act
         subject.onViewReady()
         // Assert
@@ -175,7 +175,7 @@ class ReceivePresenterTest {
         val legacyAddress = LegacyAddress().apply { this.address = address }
         whenever(activity.getBtcAmount()).thenReturn("0")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         // Act
         subject.onLegacyAddressSelected(legacyAddress)
         // Assert
@@ -203,7 +203,7 @@ class ReceivePresenterTest {
         }
         whenever(activity.getBtcAmount()).thenReturn("0")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         // Act
         subject.onLegacyAddressSelected(legacyAddress)
         // Assert
@@ -230,9 +230,9 @@ class ReceivePresenterTest {
             this.address = address
         }
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(environmentSettings.bitcoinCashNetworkParameters)
-                .thenReturn(BitcoinCashMainNetParams.get())
+            .thenReturn(BitcoinCashMainNetParams.get())
         // Act
         subject.onLegacyBchAddressSelected(legacyAddress)
         // Assert
@@ -260,9 +260,9 @@ class ReceivePresenterTest {
             this.label = label
         }
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(environmentSettings.bitcoinCashNetworkParameters)
-                .thenReturn(BitcoinCashMainNetParams.get())
+            .thenReturn(BitcoinCashMainNetParams.get())
         // Act
         subject.onLegacyBchAddressSelected(legacyAddress)
         // Assert
@@ -286,9 +286,9 @@ class ReceivePresenterTest {
         val account = Account().apply { this.label = label }
         whenever(activity.getBtcAmount()).thenReturn("0")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(payloadDataManager.getNextReceiveAddress(account))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         // Act
@@ -321,7 +321,7 @@ class ReceivePresenterTest {
         val account = Account().apply { this.label = label }
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(payloadDataManager.getNextReceiveAddress(account))
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         // Act
         subject.onAccountSelected(account)
@@ -353,7 +353,7 @@ class ReceivePresenterTest {
         whenever(combinedEthModel.getAddressResponse()).thenReturn(ethResponse)
         whenever(ethResponse.account).thenReturn(ethAccount)
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
         // Act
         subject.onEthSelected()
@@ -386,19 +386,19 @@ class ReceivePresenterTest {
             this.xpub = xPub
         }
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(bchDataManager.updateAllBalances())
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(bchDataManager.getAccountMetadataList())
-                .thenReturn(listOf(account))
+            .thenReturn(listOf(account))
         whenever(bchDataManager.getNextReceiveAddress(0))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(bchDataManager.getWalletTransactions(50, 0))
-                .thenReturn(Observable.just(emptyList()))
+            .thenReturn(Observable.just(emptyList()))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
         whenever(environmentSettings.bitcoinCashNetworkParameters)
-                .thenReturn(BitcoinCashMainNetParams.get())
+            .thenReturn(BitcoinCashMainNetParams.get())
         // Act
         subject.onBchAccountSelected(account)
         // Assert
@@ -436,20 +436,20 @@ class ReceivePresenterTest {
             this.xpub = xPub
         }
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(bchDataManager.getDefaultGenericMetadataAccount()).thenReturn(account)
         whenever(bchDataManager.updateAllBalances())
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(bchDataManager.getAccountMetadataList())
-                .thenReturn(listOf(account))
+            .thenReturn(listOf(account))
         whenever(bchDataManager.getNextReceiveAddress(0))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(bchDataManager.getWalletTransactions(50, 0))
-                .thenReturn(Observable.just(emptyList()))
+            .thenReturn(Observable.just(emptyList()))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
         whenever(environmentSettings.bitcoinCashNetworkParameters)
-                .thenReturn(BitcoinCashMainNetParams.get())
+            .thenReturn(BitcoinCashMainNetParams.get())
         // Act
         subject.onSelectBchDefault()
         // Assert
@@ -482,12 +482,12 @@ class ReceivePresenterTest {
         val label = "LABEL"
         val account = Account().apply { this.label = label }
         whenever(payloadDataManager.getAccount(accountPosition))
-                .thenReturn(account)
+            .thenReturn(account)
         whenever(activity.getBtcAmount()).thenReturn("0")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(payloadDataManager.getNextReceiveAddress(account))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         // Act
@@ -521,12 +521,12 @@ class ReceivePresenterTest {
         val label = "LABEL"
         val account = Account().apply { this.label = label }
         whenever(payloadDataManager.defaultAccount)
-                .thenReturn(account)
+            .thenReturn(account)
         whenever(activity.getBtcAmount()).thenReturn("0")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         whenever(payloadDataManager.getNextReceiveAddress(account))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         // Act
@@ -560,7 +560,7 @@ class ReceivePresenterTest {
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
         subject.selectedAddress = address
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
         // Act
         subject.onBitcoinAmountChanged(amount)
         // Assert
@@ -581,7 +581,7 @@ class ReceivePresenterTest {
         subject.selectedAccount = account
         whenever(payloadDataManager.accounts).thenReturn(listOf(account))
         whenever(payloadDataManager.getPositionOfAccountInActiveList(0))
-                .thenReturn(10)
+            .thenReturn(10)
         // Act
         val result = subject.getSelectedAccountPosition()
         // Assert
@@ -637,37 +637,37 @@ class ReceivePresenterTest {
         subject.selectedAccount = account
         whenever(payloadDataManager.accounts).thenReturn(listOf(account))
         whenever(payloadDataManager.getPositionOfAccountInActiveList(0))
-                .thenReturn(10)
+            .thenReturn(10)
         subject.selectedAccount = account
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         whenever(payloadDataManager.wallet!!.hdWallets[0].accounts.indexOf(account))
-                .thenReturn(accountPosition)
+            .thenReturn(accountPosition)
         whenever(activity.getContactName())
-                .thenReturn(contactName)
+            .thenReturn(contactName)
         whenever(payloadDataManager.getAccount(accountPosition))
-                .thenReturn(account)
+            .thenReturn(account)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("GBP")
+            .thenReturn("GBP")
         whenever(activity.getBtcAmount()).thenReturn("1.0")
         whenever(activity.locale).thenReturn(Locale.UK)
 
         whenever(
-                currencyFormatManager.getFormattedSelectedCoinValue(
-                        BigDecimal.valueOf(100000000L),
-                        null,
-                        BTCDenomination.SATOSHI
-                )
+            currencyFormatManager.getFormattedSelectedCoinValue(
+                BigDecimal.valueOf(100000000L),
+                null,
+                BTCDenomination.SATOSHI
+            )
         )
-                .thenReturn("1.0")
+            .thenReturn("1.0")
 
         whenever(
-                currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(
-                        BigDecimal.valueOf(100000000L),
-                        null,
-                        BTCDenomination.SATOSHI
-                )
+            currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(
+                BigDecimal.valueOf(100000000L),
+                null,
+                BTCDenomination.SATOSHI
+            )
         )
-                .thenReturn("3,426.00")
+            .thenReturn("3,426.00")
 
         whenever(currencyFormatManager.getFiatSymbol("GBP", Locale.UK)).thenReturn("£")
 
@@ -720,7 +720,7 @@ class ReceivePresenterTest {
     fun `onShowBottomSheetSelected unknown`() {
         // Arrange
         whenever(environmentSettings.bitcoinCashNetworkParameters).thenReturn(
-                BitcoinCashMainNetParams.get()
+            BitcoinCashMainNetParams.get()
         )
         subject.selectedAddress = "I am not a valid address"
         // Act
@@ -734,13 +734,13 @@ class ReceivePresenterTest {
     fun updateFiatTextField() {
         // Arrange
         whenever(
-                currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
-                        "1.0",
-                        null,
-                        BTCDenomination.BTC
-                )
+            currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
+                "1.0",
+                null,
+                BTCDenomination.BTC
+            )
         )
-                .thenReturn("2.00")
+            .thenReturn("2.00")
         // Act
         subject.updateFiatTextField("1.0")
         // Assert
@@ -753,7 +753,7 @@ class ReceivePresenterTest {
     fun updateBtcTextField() {
         // Arrange
         whenever(currencyFormatManager.getFormattedSelectedCoinValueFromFiatString("2.0"))
-                .thenReturn("0.5")
+            .thenReturn("0.5")
         // Act
         subject.updateBtcTextField("2.0")
         // Assert
@@ -800,5 +800,4 @@ class ReceivePresenterTest {
             }
         })
     }
-
 }

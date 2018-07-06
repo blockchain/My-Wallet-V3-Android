@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.charts
 
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.ui.base.View
-import java.util.*
+import java.util.Locale
 
 interface ChartsView : View {
 
@@ -15,5 +15,4 @@ interface ChartsView : View {
     fun updateSelectedCurrency(cryptoCurrency: CryptoCurrencies)
 
     fun updateCurrentPrice(fiatSymbol: String, price: Double)
-
 }

@@ -5,7 +5,7 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import javax.inject.Inject
 
 class BackupWalletStartingPresenter @Inject constructor(
-        private val payloadDataManager: PayloadDataManager
+    private val payloadDataManager: PayloadDataManager
 ) : BasePresenter<BackupWalletStartingView>() {
 
     override fun onViewReady() {
@@ -15,5 +15,4 @@ class BackupWalletStartingPresenter @Inject constructor(
     internal fun isDoubleEncrypted() = payloadDataManager.isDoubleEncrypted
 
     // TODO: Refactor the second password handler so that it can be called from here
-
 }

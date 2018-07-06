@@ -62,5 +62,4 @@ object Logging {
     fun logException(throwable: Throwable) {
         if (shouldLog) Crashlytics.logException(throwable)
     }
-
 }

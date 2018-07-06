@@ -7,7 +7,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
 import kotlin.properties.Delegates
 
 internal class CoinifyOverviewAdapter(
-        listener: CoinifyTxFeedListener
+    listener: CoinifyTxFeedListener
 ) : DelegationAdapter<BuySellDisplayable>(AdapterDelegatesManager(), emptyList()) {
 
     init {
@@ -32,7 +32,6 @@ internal class CoinifyOverviewAdapter(
      * layouts.
      */
     override fun getItemId(position: Int): Long = items[position].hashCode().toLong()
-
 }
 
 interface CoinifyTxFeedListener {
@@ -46,5 +45,4 @@ interface CoinifyTxFeedListener {
     fun onKycReviewClicked()
 
     fun onSubscriptionClicked(subscriptionId: Int)
-
 }

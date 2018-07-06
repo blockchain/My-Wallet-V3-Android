@@ -25,8 +25,8 @@ import javax.inject.Inject
 
 @Mockable
 class ShapeShiftDetailPresenter @Inject constructor(
-        private val shapeShiftDataManager: ShapeShiftDataManager,
-        private val stringUtils: StringUtils
+    private val shapeShiftDataManager: ShapeShiftDataManager,
+    private val stringUtils: StringUtils
 ) : BasePresenter<ShapeShiftDetailView>() {
 
     private val decimalFormat by unsafeLazy {
@@ -40,48 +40,48 @@ class ShapeShiftDetailPresenter @Inject constructor(
     override fun onViewReady() {
         // Find trade first in list
         shapeShiftDataManager.findTrade(view.depositAddress)
-                .applySchedulers()
-                .addToCompositeDisposable(this)
-                .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
-                .doOnError {
-                    view.showToast(R.string.shapeshift_trade_not_found, ToastCustom.TYPE_ERROR)
-                    view.finishPage()
+            .applySchedulers()
+            .addToCompositeDisposable(this)
+            .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
+            .doOnError {
+                view.showToast(R.string.shapeshift_trade_not_found, ToastCustom.TYPE_ERROR)
+                view.finishPage()
+            }
+            // Display information that we have stored
+            .doOnSuccess {
+                updateUiAmounts(it)
+                handleTrade(it)
+            }
+            // Get trade info from ShapeShift only if necessary
+            .flatMapObservable {
+                if (requiresMoreInfoForUi(it)) {
+                    shapeShiftDataManager.getTradeStatus(view.depositAddress)
+                        .doOnNext { handleTradeResponse(it) }
+                } else {
+                    Observable.just(it)
                 }
-                // Display information that we have stored
-                .doOnSuccess {
-                    updateUiAmounts(it)
-                    handleTrade(it)
-                }
-                // Get trade info from ShapeShift only if necessary
-                .flatMapObservable {
-                    if (requiresMoreInfoForUi(it)) {
-                        shapeShiftDataManager.getTradeStatus(view.depositAddress)
-                                .doOnNext { handleTradeResponse(it) }
-                    } else {
-                        Observable.just(it)
+            }
+            .doOnTerminate { view.dismissProgressDialog() }
+            // Start polling for results anyway
+            .flatMap {
+                Observable.interval(10, TimeUnit.SECONDS, Schedulers.io())
+                    .flatMap { shapeShiftDataManager.getTradeStatus(view.depositAddress) }
+                    .applySchedulers()
+                    .addToCompositeDisposable(this)
+                    .doOnNext { handleTradeResponse(it) }
+                    .takeUntil { isInFinalState(it.status) }
+            }
+            .subscribe(
+                {
+                    // Doesn't particularly matter if completion is interrupted here
+                    with(it) {
+                        updateMetadata(address, transaction, status)
                     }
+                },
+                {
+                    Timber.e(it)
                 }
-                .doOnTerminate { view.dismissProgressDialog() }
-                // Start polling for results anyway
-                .flatMap {
-                    Observable.interval(10, TimeUnit.SECONDS, Schedulers.io())
-                            .flatMap { shapeShiftDataManager.getTradeStatus(view.depositAddress) }
-                            .applySchedulers()
-                            .addToCompositeDisposable(this)
-                            .doOnNext { handleTradeResponse(it) }
-                            .takeUntil { isInFinalState(it.status) }
-                }
-                .subscribe(
-                        {
-                            // Doesn't particularly matter if completion is interrupted here
-                            with(it) {
-                                updateMetadata(address, transaction, status)
-                            }
-                        },
-                        {
-                            Timber.e(it)
-                        }
-                )
+            )
     }
 
     private fun handleTradeResponse(tradeStatusResponse: TradeStatusResponse) {
@@ -107,9 +107,9 @@ class ShapeShiftDetailPresenter @Inject constructor(
 
     private fun requiresMoreInfoForUi(trade: Trade): Boolean =
     // Web isn't currently storing the deposit amount for some reason
-            trade.quote.depositAmount == null
-                    || trade.quote.pair.isNullOrEmpty()
-                    || trade.quote.pair == "_"
+        trade.quote.depositAmount == null ||
+            trade.quote.pair.isNullOrEmpty() ||
+            trade.quote.pair == "_"
 
     private fun updateUiAmounts(trade: Trade) {
         with(trade) {
@@ -127,10 +127,10 @@ class ShapeShiftDetailPresenter @Inject constructor(
         }
     }
 
-    //region View Updates
+    // region View Updates
     private fun updateDeposit(fromCurrency: CryptoCurrencies, depositAmount: BigDecimal) {
         val label =
-                stringUtils.getFormattedString(R.string.shapeshift_deposit_title, fromCurrency.unit)
+            stringUtils.getFormattedString(R.string.shapeshift_deposit_title, fromCurrency.unit)
         val amount = "${depositAmount.toLocalisedString()} ${fromCurrency.symbol.toUpperCase()}"
 
         view.updateDeposit(label, amount)
@@ -138,24 +138,24 @@ class ShapeShiftDetailPresenter @Inject constructor(
 
     private fun updateReceive(toCurrency: CryptoCurrencies, receiveAmount: BigDecimal) {
         val label =
-                stringUtils.getFormattedString(R.string.shapeshift_receive_title, toCurrency.unit)
+            stringUtils.getFormattedString(R.string.shapeshift_receive_title, toCurrency.unit)
         val amount = "${receiveAmount.toLocalisedString()} ${toCurrency.symbol.toUpperCase()}"
 
         view.updateReceive(label, amount)
     }
 
     private fun updateExchangeRate(
-            exchangeRate: BigDecimal,
-            fromCurrency: CryptoCurrencies,
-            toCurrency: CryptoCurrencies
+        exchangeRate: BigDecimal,
+        fromCurrency: CryptoCurrencies,
+        toCurrency: CryptoCurrencies
     ) {
         val formattedExchangeRate = exchangeRate.setScale(8, RoundingMode.HALF_DOWN)
-                .toLocalisedString()
+            .toLocalisedString()
         val formattedString = stringUtils.getFormattedString(
-                R.string.shapeshift_exchange_rate_formatted,
-                fromCurrency.symbol,
-                formattedExchangeRate,
-                toCurrency.symbol
+            R.string.shapeshift_exchange_rate_formatted,
+            fromCurrency.symbol,
+            formattedExchangeRate,
+            toCurrency.symbol
         )
 
         view.updateExchangeRate(formattedString)
@@ -170,25 +170,25 @@ class ShapeShiftDetailPresenter @Inject constructor(
     private fun updateOrderId(displayString: String) {
         view.updateOrderId(displayString)
     }
-    //endregion
+    // endregion
 
     private fun updateMetadata(address: String, hashOut: String?, status: Trade.STATUS) {
         shapeShiftDataManager.findTrade(address)
-                .map {
-                    it.apply {
-                        this.status = status
-                        this.hashOut = hashOut
-                    }
+            .map {
+                it.apply {
+                    this.status = status
+                    this.hashOut = hashOut
                 }
-                .flatMapCompletable { shapeShiftDataManager.updateTrade(it) }
-                .addToCompositeDisposable(this)
-                .subscribe(
-                        { Timber.d("Update metadata entry complete") },
-                        { Timber.e(it) }
-                )
+            }
+            .flatMapCompletable { shapeShiftDataManager.updateTrade(it) }
+            .addToCompositeDisposable(this)
+            .subscribe(
+                { Timber.d("Update metadata entry complete") },
+                { Timber.e(it) }
+            )
     }
 
-    //region UI State
+    // region UI State
     private fun handleTrade(trade: Trade) {
         val (to, from) = getToFromPair(trade.quote.pair)
         if (to == from) {
@@ -207,59 +207,59 @@ class ShapeShiftDetailPresenter @Inject constructor(
 
     private fun onNoDeposit() {
         val state = TradeDetailUiState(
-                R.string.shapeshift_sending_title,
-                R.string.shapeshift_sending_title,
-                stringUtils.getFormattedString(R.string.shapeshift_step_number, 1),
-                R.drawable.shapeshift_progress_airplane,
-                R.color.black
+            R.string.shapeshift_sending_title,
+            R.string.shapeshift_sending_title,
+            stringUtils.getFormattedString(R.string.shapeshift_step_number, 1),
+            R.drawable.shapeshift_progress_airplane,
+            R.color.black
         )
         view.updateUi(state)
     }
 
     private fun onReceived() {
         val state = TradeDetailUiState(
-                R.string.shapeshift_in_progress_title,
-                R.string.shapeshift_in_progress_summary,
-                stringUtils.getFormattedString(R.string.shapeshift_step_number, 2),
-                R.drawable.shapeshift_progress_exchange,
-                R.color.black
+            R.string.shapeshift_in_progress_title,
+            R.string.shapeshift_in_progress_summary,
+            stringUtils.getFormattedString(R.string.shapeshift_step_number, 2),
+            R.drawable.shapeshift_progress_exchange,
+            R.color.black
         )
         view.updateUi(state)
     }
 
     private fun onComplete() {
         val state = TradeDetailUiState(
-                R.string.shapeshift_complete_title,
-                R.string.shapeshift_complete_title,
-                stringUtils.getFormattedString(R.string.shapeshift_step_number, 3),
-                R.drawable.shapeshift_progress_complete,
-                R.color.black
+            R.string.shapeshift_complete_title,
+            R.string.shapeshift_complete_title,
+            stringUtils.getFormattedString(R.string.shapeshift_step_number, 3),
+            R.drawable.shapeshift_progress_complete,
+            R.color.black
         )
         view.updateUi(state)
     }
 
     private fun onFailed() {
         val state = TradeDetailUiState(
-                R.string.shapeshift_failed_title,
-                R.string.shapeshift_failed_summary,
-                stringUtils.getString(R.string.shapeshift_failed_explanation),
-                R.drawable.shapeshift_progress_failed,
-                R.color.product_gray_hint
+            R.string.shapeshift_failed_title,
+            R.string.shapeshift_failed_summary,
+            stringUtils.getString(R.string.shapeshift_failed_explanation),
+            R.drawable.shapeshift_progress_failed,
+            R.color.product_gray_hint
         )
         view.updateUi(state)
     }
 
     private fun onRefunded() {
         val state = TradeDetailUiState(
-                R.string.shapeshift_refunded_title,
-                R.string.shapeshift_refunded_summary,
-                stringUtils.getString(R.string.shapeshift_refunded_explanation),
-                R.drawable.shapeshift_progress_failed,
-                R.color.product_gray_hint
+            R.string.shapeshift_refunded_title,
+            R.string.shapeshift_refunded_summary,
+            stringUtils.getString(R.string.shapeshift_refunded_explanation),
+            R.drawable.shapeshift_progress_failed,
+            R.color.product_gray_hint
         )
         view.updateUi(state)
     }
-    //endregion
+    // endregion
 
     private fun isInFinalState(status: Trade.STATUS) = when (status) {
         Trade.STATUS.NO_DEPOSITS, Trade.STATUS.RECEIVED -> false
@@ -279,16 +279,16 @@ class ShapeShiftDetailPresenter @Inject constructor(
                 // Refunded trade pairs
                 return when {
                     pair.equals("eth_eth", true) -> ToFromPair(
-                            CryptoCurrencies.ETHER,
-                            CryptoCurrencies.ETHER
+                        CryptoCurrencies.ETHER,
+                        CryptoCurrencies.ETHER
                     )
                     pair.equals("bch_bch", true) -> ToFromPair(
-                            CryptoCurrencies.BCH,
-                            CryptoCurrencies.BCH
+                        CryptoCurrencies.BCH,
+                        CryptoCurrencies.BCH
                     )
                     pair.equals("btc_btc", true) -> ToFromPair(
-                            CryptoCurrencies.BTC,
-                            CryptoCurrencies.BTC
+                        CryptoCurrencies.BTC,
+                        CryptoCurrencies.BTC
                     )
                     else -> throw IllegalStateException("Attempt to get invalid pair $pair")
                 }
@@ -299,5 +299,4 @@ class ShapeShiftDetailPresenter @Inject constructor(
     private fun BigDecimal.toLocalisedString(): String = decimalFormat.format(this)
 
     private data class ToFromPair(val to: CryptoCurrencies, val from: CryptoCurrencies)
-
 }

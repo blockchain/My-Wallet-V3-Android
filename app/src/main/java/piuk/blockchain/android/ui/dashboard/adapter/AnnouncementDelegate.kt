@@ -19,26 +19,27 @@ class AnnouncementDelegate<in T> : AdapterDelegate<T> {
     override fun isForViewType(items: List<T>, position: Int) = items[position] is AnnouncementData
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            AnnouncementViewHolder(parent.inflate(R.layout.item_announcement))
+        AnnouncementViewHolder(parent.inflate(R.layout.item_announcement))
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         val announcement = items[position] as AnnouncementData
         val context = (holder as AnnouncementViewHolder).itemView.context
 
         if (AndroidUtils.is21orHigher()) {
-            holder.title.text = "${context.getString(announcement.title)} ${announcement.emoji ?: ""}"
+            holder.title.text =
+                "${context.getString(announcement.title)} ${announcement.emoji ?: ""}"
         } else {
             holder.title.setText(announcement.title)
         }
         holder.description.setText(announcement.description)
         holder.image.setImageDrawable(
-                ContextCompat.getDrawable(holder.image.context, announcement.image)
+            ContextCompat.getDrawable(holder.image.context, announcement.image)
         )
         holder.link.setText(announcement.link)
 
@@ -47,7 +48,7 @@ class AnnouncementDelegate<in T> : AdapterDelegate<T> {
     }
 
     private class AnnouncementViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal val title: TextView = itemView.textview_title
@@ -56,5 +57,4 @@ class AnnouncementDelegate<in T> : AdapterDelegate<T> {
         internal val close: ImageView = itemView.imageview_close
         internal val link: TextView = itemView.textview_link
     }
-
 }

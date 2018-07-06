@@ -35,7 +35,8 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
     FragmentManager.OnBackStackChangedListener,
     CoinifyFlowListener {
 
-    @Inject lateinit var presenter: CoinifySignUpPresenter
+    @Inject
+    lateinit var presenter: CoinifySignUpPresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -124,10 +125,10 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
 
     private fun animateProgressBar(progress: Int) {
         ObjectAnimator.ofInt(
-                buysellSignupProgressBar,
-                "progress",
-                buysellSignupProgressBar.progress,
-                progress * 10
+            buysellSignupProgressBar,
+            "progress",
+            buysellSignupProgressBar.progress,
+            progress * 10
         ).apply {
             duration = 300
             interpolator = DecelerateInterpolator()
@@ -201,10 +202,10 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
 
     override fun onStartVerifyIdentification(redirectUrl: String, externalKycId: String) {
         CoinifyKycActivity.startForResult(
-                this,
-                redirectUrl,
-                externalKycId,
-                REQUEST_CODE_COINIFY_KYC_WEB_VIEW
+            this,
+            redirectUrl,
+            externalKycId,
+            REQUEST_CODE_COINIFY_KYC_WEB_VIEW
         )
     }
 
@@ -233,22 +234,22 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
 
     private fun onStartSignUpSuccess() {
         BuySellSignUpSuccessDialog.newInstance()
-                .show(supportFragmentManager, BuySellSignUpSuccessDialog.SUCCESS_FRAGMENT_ID)
+            .show(supportFragmentManager, BuySellSignUpSuccessDialog.SUCCESS_FRAGMENT_ID)
     }
 
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.content_frame, fragment, CURRENT_FRAGMENT_TAG)
-                .commitAllowingStateLoss()
+            .commitAllowingStateLoss()
     }
 
     private fun addFragmentToBackStack(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
-                .addToBackStack(fragment.javaClass.name)
-                .add(R.id.content_frame, fragment, CURRENT_FRAGMENT_TAG)
-                .commitAllowingStateLoss()
+            .addToBackStack(fragment.javaClass.name)
+            .add(R.id.content_frame, fragment, CURRENT_FRAGMENT_TAG)
+            .commitAllowingStateLoss()
     }
 
     override fun onBackPressed() {
@@ -269,7 +270,7 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
     companion object {
 
         private const val CURRENT_FRAGMENT_TAG =
-                "piuk.blockchain.android.ui.buysell.coinify.signup.CoinifySignUpActivity.CURRENT_FRAGMENT_TAG"
+            "piuk.blockchain.android.ui.buysell.coinify.signup.CoinifySignUpActivity.CURRENT_FRAGMENT_TAG"
         private const val REQUEST_CODE_COINIFY_KYC_WEB_VIEW = 8765
 
         fun start(context: Context) {

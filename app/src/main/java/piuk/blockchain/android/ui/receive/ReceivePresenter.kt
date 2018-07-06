@@ -30,26 +30,30 @@ import timber.log.Timber
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.text.DecimalFormat
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 @Suppress("MemberVisibilityCanPrivate")
 class ReceivePresenter @Inject internal constructor(
-        private val prefsUtil: PrefsUtil,
-        private val qrCodeDataManager: QrCodeDataManager,
-        private val walletAccountHelper: WalletAccountHelper,
-        private val payloadDataManager: PayloadDataManager,
-        private val ethDataStore: EthDataStore,
-        private val bchDataManager: BchDataManager,
-        private val environmentSettings: EnvironmentConfig,
-        private val currencyState: CurrencyState,
-        private val currencyFormatManager: CurrencyFormatManager
+    private val prefsUtil: PrefsUtil,
+    private val qrCodeDataManager: QrCodeDataManager,
+    private val walletAccountHelper: WalletAccountHelper,
+    private val payloadDataManager: PayloadDataManager,
+    private val ethDataStore: EthDataStore,
+    private val bchDataManager: BchDataManager,
+    private val environmentSettings: EnvironmentConfig,
+    private val currencyState: CurrencyState,
+    private val currencyFormatManager: CurrencyFormatManager
 ) : BasePresenter<ReceiveView>() {
 
-    @VisibleForTesting internal var selectedAddress: String? = null
-    @VisibleForTesting internal var selectedContactId: String? = null
-    @VisibleForTesting internal var selectedAccount: Account? = null
-    @VisibleForTesting internal var selectedBchAccount: GenericMetadataAccount? = null
+    @VisibleForTesting
+    internal var selectedAddress: String? = null
+    @VisibleForTesting
+    internal var selectedContactId: String? = null
+    @VisibleForTesting
+    internal var selectedAccount: Account? = null
+    @VisibleForTesting
+    internal var selectedBchAccount: GenericMetadataAccount? = null
 
     fun getMaxCryptoDecimalLength() = currencyFormatManager.getSelectedCoinMaxFractionDigits()
 
@@ -87,8 +91,8 @@ class ReceivePresenter @Inject internal constructor(
     internal fun isValidAmount(btcAmount: String) = btcAmount.toSafeLong(Locale.getDefault()) > 0
 
     internal fun shouldShowDropdown() =
-            walletAccountHelper.getAccountItems().size +
-                    walletAccountHelper.getAddressBookEntries().size > 1
+        walletAccountHelper.getAccountItems().size +
+            walletAccountHelper.getAddressBookEntries().size > 1
 
     internal fun onLegacyAddressSelected(legacyAddress: LegacyAddress) {
         if (legacyAddress.isWatchOnly && shouldWarnWatchOnly()) {
@@ -98,11 +102,11 @@ class ReceivePresenter @Inject internal constructor(
         selectedAccount = null
         selectedBchAccount = null
         view.updateReceiveLabel(
-                if (!legacyAddress.label.isNullOrEmpty()) {
-                    legacyAddress.label
-                } else {
-                    legacyAddress.address
-                }
+            if (!legacyAddress.label.isNullOrEmpty()) {
+                legacyAddress.label
+            } else {
+                legacyAddress.address
+            }
         )
 
         legacyAddress.address.let {
@@ -116,8 +120,8 @@ class ReceivePresenter @Inject internal constructor(
         // Here we are assuming that the legacy address is in Base58. This may change in the future
         // if we decide to allow importing BECH32 paper wallets.
         val address = Address.fromBase58(
-                environmentSettings.bitcoinCashNetworkParameters,
-                legacyAddress.address
+            environmentSettings.bitcoinCashNetworkParameters,
+            legacyAddress.address
         )
         val bech32 = address.toCashAddress()
         val bech32Display = bech32.removeBchUri()
@@ -129,11 +133,11 @@ class ReceivePresenter @Inject internal constructor(
         selectedAccount = null
         selectedBchAccount = null
         view.updateReceiveLabel(
-                if (!legacyAddress.label.isNullOrEmpty()) {
-                    legacyAddress.label
-                } else {
-                    bech32Display
-                }
+            if (!legacyAddress.label.isNullOrEmpty()) {
+                legacyAddress.label
+            } else {
+                bech32Display
+            }
         )
 
         selectedAddress = bech32
@@ -149,19 +153,19 @@ class ReceivePresenter @Inject internal constructor(
         view.updateReceiveLabel(account.label)
 
         payloadDataManager.updateAllTransactions()
-                .doOnSubscribe { view.showQrLoading() }
-                .onErrorComplete()
-                .andThen(payloadDataManager.getNextReceiveAddress(account))
-                .addToCompositeDisposable(this)
-                .doOnNext {
-                    selectedAddress = it
-                    view.updateReceiveAddress(it)
-                    generateQrCode(getBitcoinUri(it, view.getBtcAmount()))
-                }
-                .doOnError { Timber.e(it) }
-                .subscribe(
-                        { /* No-op */ },
-                        { view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR) })
+            .doOnSubscribe { view.showQrLoading() }
+            .onErrorComplete()
+            .andThen(payloadDataManager.getNextReceiveAddress(account))
+            .addToCompositeDisposable(this)
+            .doOnNext {
+                selectedAddress = it
+                view.updateReceiveAddress(it)
+                generateQrCode(getBitcoinUri(it, view.getBtcAmount()))
+            }
+            .doOnError { Timber.e(it) }
+            .subscribe(
+                { /* No-op */ },
+                { view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR) })
     }
 
     internal fun onEthSelected() {
@@ -195,39 +199,39 @@ class ReceivePresenter @Inject internal constructor(
         selectedBchAccount = account
         view.updateReceiveLabel(account.label)
         val position =
-                bchDataManager.getAccountMetadataList().indexOfFirst { it.xpub == account.xpub }
+            bchDataManager.getAccountMetadataList().indexOfFirst { it.xpub == account.xpub }
 
         bchDataManager.updateAllBalances()
-                .doOnSubscribe { view.showQrLoading() }
-                .andThen(
-                        bchDataManager.getWalletTransactions(50, 0)
-                                .onErrorReturn { emptyList() }
-                )
-                .flatMap { bchDataManager.getNextReceiveAddress(position) }
-                .addToCompositeDisposable(this)
-                .doOnNext {
-                    val address =
-                            Address.fromBase58(environmentSettings.bitcoinCashNetworkParameters, it)
-                    val bech32 = address.toCashAddress()
-                    selectedAddress = bech32
-                    view.updateReceiveAddress(bech32.removeBchUri())
-                    generateQrCode(bech32)
-                }
-                .doOnError { Timber.e(it) }
-                .subscribe(
-                        { /* No-op */ },
-                        { view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR) }
-                )
+            .doOnSubscribe { view.showQrLoading() }
+            .andThen(
+                bchDataManager.getWalletTransactions(50, 0)
+                    .onErrorReturn { emptyList() }
+            )
+            .flatMap { bchDataManager.getNextReceiveAddress(position) }
+            .addToCompositeDisposable(this)
+            .doOnNext {
+                val address =
+                    Address.fromBase58(environmentSettings.bitcoinCashNetworkParameters, it)
+                val bech32 = address.toCashAddress()
+                selectedAddress = bech32
+                view.updateReceiveAddress(bech32.removeBchUri())
+                generateQrCode(bech32)
+            }
+            .doOnError { Timber.e(it) }
+            .subscribe(
+                { /* No-op */ },
+                { view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR) }
+            )
     }
 
     internal fun onSelectDefault(defaultAccountPosition: Int) {
         compositeDisposable.clear()
         onAccountSelected(
-                if (defaultAccountPosition > -1) {
-                    payloadDataManager.getAccount(defaultAccountPosition)
-                } else {
-                    payloadDataManager.defaultAccount
-                }
+            if (defaultAccountPosition > -1) {
+                payloadDataManager.getAccount(defaultAccountPosition)
+            } else {
+                payloadDataManager.defaultAccount
+            }
         )
     }
 
@@ -250,9 +254,9 @@ class ReceivePresenter @Inject internal constructor(
             -1
         } else {
             val position = payloadDataManager.accounts.asIterable()
-                    .indexOfFirst { it.xpub == selectedAccount?.xpub }
+                .indexOfFirst { it.xpub == selectedAccount?.xpub }
             payloadDataManager.getPositionOfAccountInActiveList(
-                    if (position > -1) position else payloadDataManager.defaultAccountIndex
+                if (position > -1) position else payloadDataManager.defaultAccountIndex
             )
         }
     }
@@ -279,8 +283,8 @@ class ReceivePresenter @Inject internal constructor(
         this.fiatUnit = fiatUnit
 
         fiatAmount = currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(
-                coinValue = satoshis.toBigDecimal(),
-                convertBtcDenomination = BTCDenomination.SATOSHI
+            coinValue = satoshis.toBigDecimal(),
+            convertBtcDenomination = BTCDenomination.SATOSHI
         )
 
         fiatSymbol = currencyFormatManager.getFiatSymbol(fiatUnit, view.locale)
@@ -292,8 +296,8 @@ class ReceivePresenter @Inject internal constructor(
                 FormatsUtil.isValidBitcoinAddress(it) ->
                     view.showBottomSheet(getBitcoinUri(it, view.getBtcAmount()))
                 FormatsUtil.isValidEthereumAddress(it) || FormatsUtil.isValidBitcoinCashAddress(
-                        environmentSettings.bitcoinCashNetworkParameters,
-                        it
+                    environmentSettings.bitcoinCashNetworkParameters,
+                    it
                 ) ->
                     view.showBottomSheet(it)
                 else ->
@@ -307,28 +311,26 @@ class ReceivePresenter @Inject internal constructor(
         when (currencyState.cryptoCurrency) {
             CryptoCurrencies.ETHER ->
                 view.updateFiatTextField(
-                        currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
-                                coinInputText = bitcoin,
-                                convertEthDenomination = ETHDenomination.ETH
-                        )
+                    currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
+                        coinInputText = bitcoin,
+                        convertEthDenomination = ETHDenomination.ETH
+                    )
                 )
             else ->
                 view.updateFiatTextField(
-                        currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
-                                coinInputText = bitcoin,
-                                convertBtcDenomination = BTCDenomination.BTC
-                        )
+                    currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
+                        coinInputText = bitcoin,
+                        convertBtcDenomination = BTCDenomination.BTC
+                    )
                 )
         }
-
-
     }
 
     internal fun updateBtcTextField(fiat: String) {
         view.updateBtcTextField(
-                currencyFormatManager.getFormattedSelectedCoinValueFromFiatString(
-                        fiat
-                )
+            currencyFormatManager.getFormattedSelectedCoinValueFromFiatString(
+                fiat
+            )
         )
     }
 
@@ -341,10 +343,10 @@ class ReceivePresenter @Inject internal constructor(
 
         return if (amountLong > 0L) {
             BitcoinURI.convertToBitcoinURI(
-                    Address.fromBase58(environmentSettings.bitcoinNetworkParameters, address),
-                    Coin.valueOf(amountLong),
-                    "",
-                    ""
+                Address.fromBase58(environmentSettings.bitcoinNetworkParameters, address),
+                Coin.valueOf(amountLong),
+                "",
+                ""
             )
         } else {
             "bitcoin:$address"
@@ -355,10 +357,10 @@ class ReceivePresenter @Inject internal constructor(
         view.showQrLoading()
         compositeDisposable.clear()
         qrCodeDataManager.generateQrCode(uri, DIMENSION_QR_CODE)
-                .addToCompositeDisposable(this)
-                .subscribe(
-                        { view.showQrCode(it) },
-                        { view.showQrCode(null) })
+            .addToCompositeDisposable(this)
+            .subscribe(
+                { view.showQrCode(it) },
+                { view.showQrCode(null) })
     }
 
     /**
@@ -368,9 +370,9 @@ class ReceivePresenter @Inject internal constructor(
      */
     private fun getTextFromSatoshis(satoshis: Long): String {
         var displayAmount = currencyFormatManager.getFormattedSelectedCoinValue(
-                satoshis.toBigDecimal(),
-                null,
-                BTCDenomination.SATOSHI
+            satoshis.toBigDecimal(),
+            null,
+            BTCDenomination.SATOSHI
         )
         displayAmount = displayAmount.replace(".", getDefaultDecimalSeparator())
         return displayAmount
@@ -405,14 +407,14 @@ class ReceivePresenter @Inject internal constructor(
         }
 
         return BigDecimal.valueOf(amount)
-                .multiply(BigDecimal.valueOf(100000000))
-                .toBigInteger()
+            .multiply(BigDecimal.valueOf(100000000))
+            .toBigInteger()
     }
 
     private fun stripSeparator(text: String): String {
         return text.trim { it <= ' ' }
-                .replace(" ", "")
-                .replace(getDefaultDecimalSeparator(), ".")
+            .replace(" ", "")
+            .replace(getDefaultDecimalSeparator(), ".")
     }
 
     private fun shouldWarnWatchOnly() = prefsUtil.getValue(KEY_WARN_WATCH_ONLY_SPEND, true)
@@ -421,9 +423,8 @@ class ReceivePresenter @Inject internal constructor(
 
     companion object {
 
-        @VisibleForTesting const val KEY_WARN_WATCH_ONLY_SPEND = "warn_watch_only_spend"
+        @VisibleForTesting
+        const val KEY_WARN_WATCH_ONLY_SPEND = "warn_watch_only_spend"
         private const val DIMENSION_QR_CODE = 600
-
     }
-
 }

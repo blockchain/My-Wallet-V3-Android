@@ -17,22 +17,25 @@ import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
-class BackupWalletCompletedFragment : BaseFragment<BackupWalletCompletedView, BackupWalletCompletedPresenter>(),
-        BackupWalletCompletedView {
+class BackupWalletCompletedFragment :
+    BaseFragment<BackupWalletCompletedView, BackupWalletCompletedPresenter>(),
+    BackupWalletCompletedView {
 
-    @Inject lateinit var backupWalletCompletedPresenter: BackupWalletCompletedPresenter
+    @Inject
+    lateinit var backupWalletCompletedPresenter: BackupWalletCompletedPresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_backup_complete)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,11 +63,11 @@ class BackupWalletCompletedFragment : BaseFragment<BackupWalletCompletedView, Ba
 
     override fun showTransferFundsPrompt() {
         val alertDialog = AlertDialog.Builder(context!!, R.style.AlertDialogStyle)
-                .setTitle(R.string.transfer_funds)
-                .setMessage(getString(R.string.transfer_recommend))
-                .setPositiveButton(R.string.transfer) { _, _ -> showTransferFundsConfirmationDialog() }
-                .setNegativeButton(R.string.not_now, null)
-                .create()
+            .setTitle(R.string.transfer_funds)
+            .setMessage(getString(R.string.transfer_recommend))
+            .setPositiveButton(R.string.transfer) { _, _ -> showTransferFundsConfirmationDialog() }
+            .setNegativeButton(R.string.not_now, null)
+            .create()
 
         alertDialog.show()
 
@@ -81,9 +84,9 @@ class BackupWalletCompletedFragment : BaseFragment<BackupWalletCompletedView, Ba
         activity?.run {
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, BackupWalletStartingFragment())
-                    .addToBackStack(BackupWalletStartingFragment.TAG)
-                    .commit()
+                .replace(R.id.content_frame, BackupWalletStartingFragment())
+                .addToBackStack(BackupWalletStartingFragment.TAG)
+                .commit()
         }
     }
 
@@ -104,7 +107,5 @@ class BackupWalletCompletedFragment : BaseFragment<BackupWalletCompletedView, Ba
             fragment.arguments = Bundle().apply { putBoolean(KEY_CHECK_TRANSFER, checkTransfer) }
             return fragment
         }
-
     }
-
 }

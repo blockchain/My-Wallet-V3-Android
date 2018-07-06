@@ -39,13 +39,13 @@ class SwipeToReceivePresenterTest {
         // Arrange
         whenever(swipeToReceiveHelper.getBitcoinReceiveAddresses()).thenReturn(emptyList())
         whenever(swipeToReceiveHelper.getNextAvailableBitcoinAddressSingle())
-                .thenReturn(Single.just(""))
+            .thenReturn(Single.just(""))
         whenever(swipeToReceiveHelper.getBitcoinAccountName()).thenReturn("Bitcoin account")
         whenever(
-                stringUtils.getFormattedString(
-                        R.string.swipe_receive_request,
-                        CryptoCurrencies.BTC.unit
-                )
+            stringUtils.getFormattedString(
+                R.string.swipe_receive_request,
+                CryptoCurrencies.BTC.unit
+            )
         ).thenReturn("BTC")
         // Act
         subject.onViewReady()
@@ -64,12 +64,12 @@ class SwipeToReceivePresenterTest {
         whenever(swipeToReceiveHelper.getBitcoinReceiveAddresses()).thenReturn(addresses)
         whenever(swipeToReceiveHelper.getBitcoinAccountName()).thenReturn("Account")
         whenever(swipeToReceiveHelper.getNextAvailableBitcoinAddressSingle())
-                .thenReturn(Single.just(""))
+            .thenReturn(Single.just(""))
         whenever(
-                stringUtils.getFormattedString(
-                        R.string.swipe_receive_request,
-                        CryptoCurrencies.BTC.unit
-                )
+            stringUtils.getFormattedString(
+                R.string.swipe_receive_request,
+                CryptoCurrencies.BTC.unit
+            )
         ).thenReturn("BTC")
         // Act
         subject.onViewReady()
@@ -89,11 +89,16 @@ class SwipeToReceivePresenterTest {
         whenever(swipeToReceiveHelper.getBitcoinReceiveAddresses()).thenReturn(addresses)
         whenever(swipeToReceiveHelper.getBitcoinAccountName()).thenReturn("Account")
         whenever(swipeToReceiveHelper.getNextAvailableBitcoinAddressSingle())
-                .thenReturn(Single.just("addr0"))
-        whenever(stringUtils.getFormattedString(R.string.swipe_receive_request, CryptoCurrencies.BTC.unit))
-                .thenReturn("BTC")
+            .thenReturn(Single.just("addr0"))
+        whenever(
+            stringUtils.getFormattedString(
+                R.string.swipe_receive_request,
+                CryptoCurrencies.BTC.unit
+            )
+        )
+            .thenReturn("BTC")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.just(bitmap))
+            .thenReturn(Observable.just(bitmap))
         // Act
         subject.onViewReady()
         // Assert
@@ -117,11 +122,16 @@ class SwipeToReceivePresenterTest {
         whenever(swipeToReceiveHelper.getEthReceiveAddress()).thenReturn(address)
         whenever(swipeToReceiveHelper.getEthAccountName()).thenReturn("Account")
         whenever(swipeToReceiveHelper.getEthReceiveAddressSingle())
-                .thenReturn(Single.just(address))
-        whenever(stringUtils.getFormattedString(R.string.swipe_receive_request, CryptoCurrencies.ETHER.unit))
-                .thenReturn("ETH")
+            .thenReturn(Single.just(address))
+        whenever(
+            stringUtils.getFormattedString(
+                R.string.swipe_receive_request,
+                CryptoCurrencies.ETHER.unit
+            )
+        )
+            .thenReturn("ETH")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.just(bitmap))
+            .thenReturn(Observable.just(bitmap))
         // Act
         subject.currencyPosition = 1
         // Assert
@@ -145,11 +155,16 @@ class SwipeToReceivePresenterTest {
         whenever(swipeToReceiveHelper.getBitcoinCashReceiveAddresses()).thenReturn(addresses)
         whenever(swipeToReceiveHelper.getBitcoinCashAccountName()).thenReturn("Account")
         whenever(swipeToReceiveHelper.getNextAvailableBitcoinCashAddressSingle())
-                .thenReturn(Single.just("addr0"))
-        whenever(stringUtils.getFormattedString(R.string.swipe_receive_request, CryptoCurrencies.BCH.unit))
-                .thenReturn("BCH")
+            .thenReturn(Single.just("addr0"))
+        whenever(
+            stringUtils.getFormattedString(
+                R.string.swipe_receive_request,
+                CryptoCurrencies.BCH.unit
+            )
+        )
+            .thenReturn("BCH")
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
-                .thenReturn(Observable.just(bitmap))
+            .thenReturn(Observable.just(bitmap))
         // Act
         subject.currencyPosition = 2
         // Assert
@@ -163,5 +178,4 @@ class SwipeToReceivePresenterTest {
         verify(activity).displayReceiveAddress("addr0")
         verifyNoMoreInteractions(activity)
     }
-
 }

@@ -12,7 +12,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import javax.inject.Inject
 
 class CoinifyInvalidCountryFragment : BaseFragment<CoinifyInvalidCountryView,
-        CoinifyInvalidCountryPresenter>(), CoinifyInvalidCountryView {
+    CoinifyInvalidCountryPresenter>(), CoinifyInvalidCountryView {
 
     @Inject
     lateinit var presenter: CoinifyInvalidCountryPresenter
@@ -26,9 +26,9 @@ class CoinifyInvalidCountryFragment : BaseFragment<CoinifyInvalidCountryView,
     override fun getMvpView() = this
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_coinify_invalid_country)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +48,5 @@ class CoinifyInvalidCountryFragment : BaseFragment<CoinifyInvalidCountryView,
     companion object {
 
         fun newInstance(): CoinifyInvalidCountryFragment = CoinifyInvalidCountryFragment()
-
     }
 }

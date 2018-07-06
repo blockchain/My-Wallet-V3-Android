@@ -7,7 +7,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
 import kotlin.properties.Delegates
 
 internal class BankAccountSelectionAdapter(
-        listener: BankAccountSelectionListener
+    listener: BankAccountSelectionListener
 ) : DelegationAdapter<BankAccountDisplayable>(AdapterDelegatesManager(), emptyList()) {
 
     init {
@@ -29,7 +29,6 @@ internal class BankAccountSelectionAdapter(
      * layouts.
      */
     override fun getItemId(position: Int): Long = items[position].hashCode().toLong()
-
 }
 
 interface BankAccountSelectionListener {
@@ -39,5 +38,4 @@ interface BankAccountSelectionListener {
     fun onBankAccountLongPressed(bankAccountId: Int)
 
     fun onAddAccountSelected()
-
 }

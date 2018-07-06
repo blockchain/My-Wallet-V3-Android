@@ -1,6 +1,5 @@
 package piuk.blockchain.androidcore.data.currency
 
-
 enum class CryptoCurrencies(val symbol: String, val unit: String) {
     BTC("BTC", "Bitcoin"),
     ETHER("ETH", "Ether"),
@@ -9,7 +8,6 @@ enum class CryptoCurrencies(val symbol: String, val unit: String) {
     companion object {
 
         fun fromString(text: String): CryptoCurrencies? =
-                CryptoCurrencies.values().firstOrNull { it.symbol.equals(text, ignoreCase = true) }
-
+            CryptoCurrencies.values().firstOrNull { it.symbol.equals(text, ignoreCase = true) }
     }
 }

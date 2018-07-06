@@ -49,32 +49,38 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import timber.log.Timber
 import java.math.BigInteger
-import java.util.*
+import java.util.ArrayList
+import java.util.Locale
 import javax.inject.Inject
 
 // TODO: This page is pretty nasty and could do with a proper refactor
 class AccountEditPresenter @Inject internal constructor(
-        private val prefsUtil: PrefsUtil,
-        private val stringUtils: StringUtils,
-        private val payloadDataManager: PayloadDataManager,
-        private val bchDataManager: BchDataManager,
-        private val metadataManager: MetadataManager,
-        private val sendDataManager: SendDataManager,
-        private val privateKeyFactory: PrivateKeyFactory,
-        private val swipeToReceiveHelper: SwipeToReceiveHelper,
-        private val dynamicFeeCache: DynamicFeeCache,
-        private val environmentSettings: EnvironmentConfig,
-        private val currencyFormatManager: CurrencyFormatManager
+    private val prefsUtil: PrefsUtil,
+    private val stringUtils: StringUtils,
+    private val payloadDataManager: PayloadDataManager,
+    private val bchDataManager: BchDataManager,
+    private val metadataManager: MetadataManager,
+    private val sendDataManager: SendDataManager,
+    private val privateKeyFactory: PrivateKeyFactory,
+    private val swipeToReceiveHelper: SwipeToReceiveHelper,
+    private val dynamicFeeCache: DynamicFeeCache,
+    private val environmentSettings: EnvironmentConfig,
+    private val currencyFormatManager: CurrencyFormatManager
 ) : BasePresenter<AccountEditView>() {
 
     // Visible for data binding
     internal lateinit var accountModel: AccountEditModel
 
-    @VisibleForTesting internal var legacyAddress: LegacyAddress? = null
-    @VisibleForTesting internal var account: Account? = null
-    @VisibleForTesting internal var bchAccount: GenericMetadataAccount? = null
-    @VisibleForTesting internal var secondPassword: String? = null
-    @VisibleForTesting internal var pendingTransaction: PendingTransaction? = null
+    @VisibleForTesting
+    internal var legacyAddress: LegacyAddress? = null
+    @VisibleForTesting
+    internal var account: Account? = null
+    @VisibleForTesting
+    internal var bchAccount: GenericMetadataAccount? = null
+    @VisibleForTesting
+    internal var secondPassword: String? = null
+    @VisibleForTesting
+    internal var pendingTransaction: PendingTransaction? = null
     private var accountIndex: Int = 0
 
     override fun onViewReady() {
@@ -83,7 +89,7 @@ class AccountEditPresenter @Inject internal constructor(
         accountIndex = intent.getIntExtra(EXTRA_ACCOUNT_INDEX, -1)
         val addressIndex = intent.getIntExtra(EXTRA_ADDRESS_INDEX, -1)
         val cryptoCurrency: CryptoCurrencies =
-                intent.getSerializableExtra(EXTRA_CRYPTOCURRENCY) as CryptoCurrencies
+            intent.getSerializableExtra(EXTRA_CRYPTOCURRENCY) as CryptoCurrencies
 
         check(accountIndex >= 0 || addressIndex >= 0) { "Both accountIndex and addressIndex are less than 0" }
         check(cryptoCurrency != CryptoCurrencies.ETHER) { "Ether is not supported on this page" }
@@ -114,7 +120,6 @@ class AccountEditPresenter @Inject internal constructor(
                 updateArchivedUi(account!!.isArchived, ::isArchivableBtc)
                 setDefault(isDefaultBtc(account))
             }
-
         } else if (addressIndex >= 0) {
             if (addressIndex >= payloadDataManager.legacyAddresses.size) {
                 view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR)
@@ -132,10 +137,10 @@ class AccountEditPresenter @Inject internal constructor(
                 labelHeader = stringUtils.getString(R.string.name)
                 xpubDescriptionVisibility = View.GONE
                 xpubText = stringUtils.getString(R.string.address)
-                defaultAccountVisibility = View.GONE//No default for V2
+                defaultAccountVisibility = View.GONE // No default for V2
                 updateArchivedUi(
-                        legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS,
-                        ::isArchivableBtc
+                    legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS,
+                    ::isArchivableBtc
                 )
 
                 if (legacyAddress!!.isWatchOnly) {
@@ -149,10 +154,10 @@ class AccountEditPresenter @Inject internal constructor(
 
             // Subtract fee
             val balanceAfterFee = payloadDataManager.getAddressBalance(
-                    legacyAddress!!.address
+                legacyAddress!!.address
             ).toLong() - sendDataManager.estimatedFee(
-                    1, 1,
-                    BigInteger.valueOf(dynamicFeeCache.btcFeeOptions!!.regularFee * 1000)
+                1, 1,
+                BigInteger.valueOf(dynamicFeeCache.btcFeeOptions!!.regularFee * 1000)
             ).toLong()
 
             if (balanceAfterFee > Payment.DUST.toLong() && !legacyAddress!!.isWatchOnly) {
@@ -188,7 +193,7 @@ class AccountEditPresenter @Inject internal constructor(
     }
 
     internal fun areLauncherShortcutsEnabled(): Boolean =
-            prefsUtil.getValue(PrefsUtil.KEY_RECEIVE_SHORTCUTS_ENABLED, true)
+        prefsUtil.getValue(PrefsUtil.KEY_RECEIVE_SHORTCUTS_ENABLED, true)
 
     private fun setDefault(isDefault: Boolean) {
         if (isDefault) {
@@ -208,10 +213,10 @@ class AccountEditPresenter @Inject internal constructor(
     }
 
     private fun isDefaultBtc(account: Account?): Boolean =
-            payloadDataManager.defaultAccount === account
+        payloadDataManager.defaultAccount === account
 
     private fun isDefaultBch(account: GenericMetadataAccount?): Boolean =
-            bchDataManager.getDefaultGenericMetadataAccount() === account
+        bchDataManager.getDefaultGenericMetadataAccount() === account
 
     private fun updateArchivedUi(isArchived: Boolean, archivable: () -> Boolean) {
         if (isArchived) {
@@ -271,28 +276,28 @@ class AccountEditPresenter @Inject internal constructor(
         view.showProgressDialog(R.string.please_wait)
 
         getPendingTransactionForLegacyAddress(legacyAddress)
-                .addToCompositeDisposable(this)
-                .doAfterTerminate { view.dismissProgressDialog() }
-                .doOnError { Timber.e(it) }
-                .doOnNext { pendingTransaction = it }
-                .subscribe(
-                        { pendingTransaction ->
-                            if (pendingTransaction != null
-                                    && pendingTransaction.bigIntAmount.compareTo(BigInteger.ZERO) == 1
-                            ) {
-                                val details = getTransactionDetailsForDisplay(pendingTransaction)
-                                view.showPaymentDetails(details)
-                            } else {
-                                view.showToast(R.string.insufficient_funds, ToastCustom.TYPE_ERROR)
-                            }
-                        },
-                        {
-                            view.showToast(
-                                    R.string.insufficient_funds,
-                                    ToastCustom.TYPE_ERROR
-                            )
-                        }
-                )
+            .addToCompositeDisposable(this)
+            .doAfterTerminate { view.dismissProgressDialog() }
+            .doOnError { Timber.e(it) }
+            .doOnNext { pendingTransaction = it }
+            .subscribe(
+                { pendingTransaction ->
+                    if (pendingTransaction != null &&
+                        pendingTransaction.bigIntAmount.compareTo(BigInteger.ZERO) == 1
+                    ) {
+                        val details = getTransactionDetailsForDisplay(pendingTransaction)
+                        view.showPaymentDetails(details)
+                    } else {
+                        view.showToast(R.string.insufficient_funds, ToastCustom.TYPE_ERROR)
+                    }
+                },
+                {
+                    view.showToast(
+                        R.string.insufficient_funds,
+                        ToastCustom.TYPE_ERROR
+                    )
+                }
+            )
     }
 
     internal fun transferFundsClickable(): Boolean = accountModel.transferFundsClickable
@@ -300,9 +305,9 @@ class AccountEditPresenter @Inject internal constructor(
     private fun getTransactionDetailsForDisplay(pendingTransaction: PendingTransaction?): PaymentConfirmationDetails {
         val details = PaymentConfirmationDetails()
         details.fromLabel = pendingTransaction!!.sendingObject.label
-        if (pendingTransaction.receivingObject != null
-                && pendingTransaction.receivingObject.label != null
-                && !pendingTransaction.receivingObject.label!!.isEmpty()
+        if (pendingTransaction.receivingObject != null &&
+            pendingTransaction.receivingObject.label != null &&
+            !pendingTransaction.receivingObject.label!!.isEmpty()
         ) {
             details.toLabel = pendingTransaction.receivingObject.label
         } else {
@@ -314,48 +319,48 @@ class AccountEditPresenter @Inject internal constructor(
 
         with(details) {
             cryptoAmount =
-                    currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntAmount.toBigDecimal())
+                currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntAmount.toBigDecimal())
             cryptoFee =
-                    currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee.toBigDecimal())
+                currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee.toBigDecimal())
             btcSuggestedFee =
-                    currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee.toBigDecimal())
+                currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee.toBigDecimal())
             cryptoUnit = btcUnit
             this.fiatUnit = fiatUnit
 
             cryptoTotal = currencyFormatManager.getFormattedSelectedCoinValue(
-                    pendingTransaction.bigIntAmount.add(pendingTransaction.bigIntFee).toBigDecimal()
+                pendingTransaction.bigIntAmount.add(pendingTransaction.bigIntFee).toBigDecimal()
             )
 
             fiatFee = currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(
-                    pendingTransaction.bigIntFee.toBigDecimal()
+                pendingTransaction.bigIntFee.toBigDecimal()
             )
             fiatAmount = currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(
-                    pendingTransaction.bigIntAmount.toBigDecimal()
+                pendingTransaction.bigIntAmount.toBigDecimal()
             )
 
             val totalFiat = pendingTransaction.bigIntAmount.add(pendingTransaction.bigIntFee)
             fiatTotal =
-                    currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(totalFiat.toBigDecimal())
+                currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(totalFiat.toBigDecimal())
 
             fiatSymbol = currencyFormatManager.getFiatSymbol(fiatUnit, Locale.getDefault())
             isLargeTransaction = isLargeTransaction(pendingTransaction)
             hasConsumedAmounts = pendingTransaction.unspentOutputBundle.consumedAmount
-                    .compareTo(BigInteger.ZERO) == 1
+                .compareTo(BigInteger.ZERO) == 1
         }
         return details
     }
 
     private fun isLargeTransaction(pendingTransaction: PendingTransaction): Boolean {
         val txSize = sendDataManager.estimateSize(
-                pendingTransaction.unspentOutputBundle.spendableOutputs.size,
-                2
-        )//assume change
+            pendingTransaction.unspentOutputBundle.spendableOutputs.size,
+            2
+        ) // assume change
         val relativeFee =
-                pendingTransaction.bigIntFee.toDouble() / pendingTransaction.bigIntAmount.toDouble() * 100.0
+            pendingTransaction.bigIntFee.toDouble() / pendingTransaction.bigIntAmount.toDouble() * 100.0
 
-        return (pendingTransaction.bigIntFee.toLong() > SendModel.LARGE_TX_FEE
-                && txSize > SendModel.LARGE_TX_SIZE
-                && relativeFee > SendModel.LARGE_TX_PERCENTAGE)
+        return (pendingTransaction.bigIntFee.toLong() > SendModel.LARGE_TX_FEE &&
+            txSize > SendModel.LARGE_TX_SIZE &&
+            relativeFee > SendModel.LARGE_TX_PERCENTAGE)
     }
 
     internal fun submitPayment() {
@@ -368,7 +373,7 @@ class AccountEditPresenter @Inject internal constructor(
 
         try {
             val walletKey = payloadDataManager.getAddressECKey(legacyAddress, secondPassword)
-                    ?: throw NullPointerException("ECKey was null")
+                ?: throw NullPointerException("ECKey was null")
             keys.add(walletKey)
         } catch (e: Exception) {
             view.dismissProgressDialog()
@@ -376,46 +381,46 @@ class AccountEditPresenter @Inject internal constructor(
             return
         }
         sendDataManager.submitBtcPayment(
-                pendingTransaction!!.unspentOutputBundle,
-                keys,
-                pendingTransaction!!.receivingAddress,
-                changeAddress,
-                pendingTransaction!!.bigIntFee,
-                pendingTransaction!!.bigIntAmount
+            pendingTransaction!!.unspentOutputBundle,
+            keys,
+            pendingTransaction!!.receivingAddress,
+            changeAddress,
+            pendingTransaction!!.bigIntFee,
+            pendingTransaction!!.bigIntAmount
         ).addToCompositeDisposable(this)
-                .doAfterTerminate { view.dismissProgressDialog() }
-                .doOnError { Timber.e(it) }
-                .subscribe(
-                        {
-                            legacyAddress.tag = LegacyAddress.ARCHIVED_ADDRESS
-                            updateArchivedUi(true, ::isArchivableBtc)
+            .doAfterTerminate { view.dismissProgressDialog() }
+            .doOnError { Timber.e(it) }
+            .subscribe(
+                {
+                    legacyAddress.tag = LegacyAddress.ARCHIVED_ADDRESS
+                    updateArchivedUi(true, ::isArchivableBtc)
 
-                            view.showTransactionSuccess()
+                    view.showTransactionSuccess()
 
-                            // Update V2 balance immediately after spend - until refresh from server
-                            val spentAmount =
-                                    pendingTransaction!!.bigIntAmount.toLong() + pendingTransaction!!.bigIntFee.toLong()
+                    // Update V2 balance immediately after spend - until refresh from server
+                    val spentAmount =
+                        pendingTransaction!!.bigIntAmount.toLong() + pendingTransaction!!.bigIntFee.toLong()
 
-                            if (pendingTransaction!!.sendingObject.accountObject is Account) {
-                                payloadDataManager.subtractAmountFromAddressBalance(
-                                        (pendingTransaction!!.sendingObject.accountObject as Account).xpub,
-                                        spentAmount
-                                )
-                            } else {
-                                payloadDataManager.subtractAmountFromAddressBalance(
-                                        (pendingTransaction!!.sendingObject.accountObject as LegacyAddress).address,
-                                        spentAmount
-                                )
-                            }
+                    if (pendingTransaction!!.sendingObject.accountObject is Account) {
+                        payloadDataManager.subtractAmountFromAddressBalance(
+                            (pendingTransaction!!.sendingObject.accountObject as Account).xpub,
+                            spentAmount
+                        )
+                    } else {
+                        payloadDataManager.subtractAmountFromAddressBalance(
+                            (pendingTransaction!!.sendingObject.accountObject as LegacyAddress).address,
+                            spentAmount
+                        )
+                    }
 
-                            payloadDataManager.syncPayloadWithServer()
-                                    .emptySubscribe()
+                    payloadDataManager.syncPayloadWithServer()
+                        .emptySubscribe()
 
-                            accountModel.transferFundsVisibility = View.GONE
-                            view.setActivityResult(Activity.RESULT_OK)
-                        },
-                        { view.showToast(R.string.send_failed, ToastCustom.TYPE_ERROR) }
-                )
+                    accountModel.transferFundsVisibility = View.GONE
+                    view.setActivityResult(Activity.RESULT_OK)
+                },
+                { view.showToast(R.string.send_failed, ToastCustom.TYPE_ERROR) }
+            )
     }
 
     internal fun updateAccountLabel(newLabel: String) {
@@ -446,23 +451,23 @@ class AccountEditPresenter @Inject internal constructor(
                     revertLabel = bchAccount!!.label ?: ""
                     bchAccount!!.label = labelCopy
                     walletSync = metadataManager.saveToMetadata(
-                            bchDataManager.serializeForSaving(),
-                            BitcoinCashWallet.METADATA_TYPE_EXTERNAL
+                        bchDataManager.serializeForSaving(),
+                        BitcoinCashWallet.METADATA_TYPE_EXTERNAL
                     )
                 }
             }
 
             walletSync.addToCompositeDisposable(this)
-                    .doOnError { Timber.e(it) }
-                    .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
-                    .doAfterTerminate { view.dismissProgressDialog() }
-                    .subscribe(
-                            {
-                                accountModel.label = labelCopy
-                                view.setActivityResult(Activity.RESULT_OK)
-                            },
-                            { revertLabelAndShowError(revertLabel) }
-                    )
+                .doOnError { Timber.e(it) }
+                .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
+                .doAfterTerminate { view.dismissProgressDialog() }
+                .subscribe(
+                    {
+                        accountModel.label = labelCopy
+                        view.setActivityResult(Activity.RESULT_OK)
+                    },
+                    { revertLabelAndShowError(revertLabel) }
+                )
         } else {
             view.showToast(R.string.label_cant_be_empty, ToastCustom.TYPE_ERROR)
         }
@@ -473,7 +478,7 @@ class AccountEditPresenter @Inject internal constructor(
 
     // Can't archive default account
     private fun isArchivableBch(): Boolean =
-            bchDataManager.getDefaultGenericMetadataAccount() !== bchAccount
+        bchDataManager.getDefaultGenericMetadataAccount() !== bchAccount
 
     private fun revertLabelAndShowError(revertLabel: String) {
         // Remote save not successful - revert
@@ -504,29 +509,29 @@ class AccountEditPresenter @Inject internal constructor(
             revertDefault = bchDataManager.getDefaultAccountPosition()
             bchDataManager.setDefaultAccountPosition(accountIndex)
             walletSync = metadataManager.saveToMetadata(
-                    bchDataManager.serializeForSaving(),
-                    BitcoinCashWallet.METADATA_TYPE_EXTERNAL
+                bchDataManager.serializeForSaving(),
+                BitcoinCashWallet.METADATA_TYPE_EXTERNAL
             )
         }
 
         walletSync.addToCompositeDisposable(this)
-                .doOnSubscribe { getView().showProgressDialog(R.string.please_wait) }
-                .doOnError { Timber.e(it) }
-                .doAfterTerminate { getView().dismissProgressDialog() }
-                .subscribe(
-                        {
-                            if (account != null) {
-                                setDefault(isDefaultBtc(account))
-                            } else {
-                                setDefault(isDefaultBch(bchAccount))
-                            }
+            .doOnSubscribe { getView().showProgressDialog(R.string.please_wait) }
+            .doOnError { Timber.e(it) }
+            .doAfterTerminate { getView().dismissProgressDialog() }
+            .subscribe(
+                {
+                    if (account != null) {
+                        setDefault(isDefaultBtc(account))
+                    } else {
+                        setDefault(isDefaultBch(bchAccount))
+                    }
 
-                            updateSwipeToReceiveAddresses()
-                            getView().updateAppShortcuts()
-                            getView().setActivityResult(Activity.RESULT_OK)
-                        },
-                        { revertDefaultAndShowError(revertDefault) }
-                )
+                    updateSwipeToReceiveAddresses()
+                    getView().updateAppShortcuts()
+                    getView().setActivityResult(Activity.RESULT_OK)
+                },
+                { revertDefaultAndShowError(revertDefault) }
+            )
     }
 
     private fun updateSwipeToReceiveAddresses() {
@@ -537,11 +542,11 @@ class AccountEditPresenter @Inject internal constructor(
             swipeToReceiveHelper.storeEthAddress()
             Void.TYPE
         }.subscribeOn(Schedulers.computation())
-                .addToCompositeDisposable(this)
-                .subscribe(
-                        { /* No-op */ },
-                        { Timber.e(it) }
-                )
+            .addToCompositeDisposable(this)
+            .subscribe(
+                { /* No-op */ },
+                { Timber.e(it) }
+            )
     }
 
     private fun revertDefaultAndShowError(revertDefault: Int) {
@@ -554,10 +559,10 @@ class AccountEditPresenter @Inject internal constructor(
     fun onClickScanXpriv(view: View) {
         if (payloadDataManager.wallet!!.isDoubleEncryption) {
             getView().promptPrivateKey(
-                    String.format(
-                            stringUtils.getString(R.string.watch_only_spend_instructionss),
-                            legacyAddress!!.address
-                    )
+                String.format(
+                    stringUtils.getString(R.string.watch_only_spend_instructionss),
+                    legacyAddress!!.address
+                )
             )
         } else {
             getView().startScanActivity()
@@ -578,9 +583,9 @@ class AccountEditPresenter @Inject internal constructor(
         val title: String
         val subTitle: String
 
-        if (account != null && account!!.isArchived
-                || bchAccount != null && bchAccount!!.isArchived
-                || legacyAddress != null && legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS
+        if (account != null && account!!.isArchived ||
+            bchAccount != null && bchAccount!!.isArchived ||
+            legacyAddress != null && legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS
         ) {
             title = stringUtils.getString(R.string.unarchive)
             subTitle = stringUtils.getString(R.string.unarchive_are_you_sure)
@@ -614,29 +619,29 @@ class AccountEditPresenter @Inject internal constructor(
     @VisibleForTesting
     @Throws(Exception::class)
     internal fun importAddressPrivateKey(
-            key: ECKey,
-            address: LegacyAddress,
-            matchesIntendedAddress: Boolean
+        key: ECKey,
+        address: LegacyAddress,
+        matchesIntendedAddress: Boolean
     ) {
         setLegacyAddressKey(key, address)
 
         payloadDataManager.syncPayloadWithServer()
-                .addToCompositeDisposable(this)
-                .doOnError { Timber.e(it) }
-                .subscribe(
-                        {
-                            view.setActivityResult(Activity.RESULT_OK)
-                            accountModel.scanPrivateKeyVisibility = View.GONE
-                            accountModel.archiveVisibility = View.VISIBLE
+            .addToCompositeDisposable(this)
+            .doOnError { Timber.e(it) }
+            .subscribe(
+                {
+                    view.setActivityResult(Activity.RESULT_OK)
+                    accountModel.scanPrivateKeyVisibility = View.GONE
+                    accountModel.archiveVisibility = View.VISIBLE
 
-                            if (matchesIntendedAddress) {
-                                view.privateKeyImportSuccess()
-                            } else {
-                                view.privateKeyImportMismatch()
-                            }
-                        },
-                        { view.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR) }
-                )
+                    if (matchesIntendedAddress) {
+                        view.privateKeyImportSuccess()
+                    } else {
+                        view.privateKeyImportMismatch()
+                    }
+                },
+                { view.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR) }
+            )
     }
 
     @Throws(Exception::class)
@@ -647,10 +652,10 @@ class AccountEditPresenter @Inject internal constructor(
         } else {
             val encryptedKey = Base58.encode(key.privKeyBytes)
             val encrypted2 = DoubleEncryptionFactory.encrypt(
-                    encryptedKey,
-                    payloadDataManager.wallet!!.sharedKey,
-                    secondPassword,
-                    payloadDataManager.wallet!!.options.pbkdf2Iterations
+                encryptedKey,
+                payloadDataManager.wallet!!.sharedKey,
+                secondPassword,
+                payloadDataManager.wallet!!.options.pbkdf2Iterations
             )
             address.privateKey = encrypted2
         }
@@ -661,8 +666,8 @@ class AccountEditPresenter @Inject internal constructor(
     @Throws(Exception::class)
     internal fun importUnmatchedPrivateKey(key: ECKey) {
         if (payloadDataManager.wallet!!.legacyAddressStringList.contains(
-                        key.toAddress(environmentSettings.bitcoinNetworkParameters).toString()
-                )
+                key.toAddress(environmentSettings.bitcoinNetworkParameters).toString()
+            )
         ) {
             // Wallet contains address associated with this private key, find & save it with scanned key
             val foundAddressString = key.toAddress(BitcoinMainNetParams.get()).toString()
@@ -713,11 +718,11 @@ class AccountEditPresenter @Inject internal constructor(
 
         val qrCodeDimension = 260
         val qrCodeEncoder = QRCodeEncoder(
-                qrString,
-                null,
-                Contents.Type.TEXT,
-                BarcodeFormat.QR_CODE.toString(),
-                qrCodeDimension
+            qrString,
+            null,
+            Contents.Type.TEXT,
+            BarcodeFormat.QR_CODE.toString(),
+            qrCodeDimension
         )
         try {
             bitmap = qrCodeEncoder.encodeAsBitmap()
@@ -754,29 +759,28 @@ class AccountEditPresenter @Inject internal constructor(
             updateTransactions = payloadDataManager.updateAllTransactions()
         } else {
             walletSync = metadataManager.saveToMetadata(
-                    bchDataManager.serializeForSaving(),
-                    BitcoinCashWallet.METADATA_TYPE_EXTERNAL
+                bchDataManager.serializeForSaving(),
+                BitcoinCashWallet.METADATA_TYPE_EXTERNAL
             )
             archivable = ::isArchivableBch
             updateTransactions =
-                    Completable.fromObservable(bchDataManager.getWalletTransactions(50, 50))
+                Completable.fromObservable(bchDataManager.getWalletTransactions(50, 50))
         }
 
         walletSync.addToCompositeDisposable(this)
-                .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
-                .doOnError { Timber.e(it) }
-                .doAfterTerminate { view.dismissProgressDialog() }
-                .subscribe(
-                        {
-                            updateTransactions.emptySubscribe()
+            .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
+            .doOnError { Timber.e(it) }
+            .doAfterTerminate { view.dismissProgressDialog() }
+            .subscribe(
+                {
+                    updateTransactions.emptySubscribe()
 
-                            updateArchivedUi(isArchived, archivable)
-                            view.setActivityResult(Activity.RESULT_OK)
-                        },
-                        { view.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR) }
-                )
+                    updateArchivedUi(isArchived, archivable)
+                    view.setActivityResult(Activity.RESULT_OK)
+                },
+                { view.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR) }
+            )
     }
-
 
     @SuppressLint("VisibleForTests")
     private fun importNonBIP38Address(format: String, data: String) {
@@ -786,7 +790,7 @@ class AccountEditPresenter @Inject internal constructor(
             val key = privateKeyFactory.getKey(format, data)
             if (key != null && key.hasPrivKey()) {
                 val keyAddress =
-                        key.toAddress(environmentSettings.bitcoinNetworkParameters).toString()
+                    key.toAddress(environmentSettings.bitcoinNetworkParameters).toString()
                 if (legacyAddress!!.address != keyAddress) {
                     // Private key does not match this address - warn user but import nevertheless
                     importUnmatchedPrivateKey(key)
@@ -809,19 +813,18 @@ class AccountEditPresenter @Inject internal constructor(
 
         try {
             val bip38 =
-                    BIP38PrivateKey.fromBase58(environmentSettings.bitcoinNetworkParameters, data)
+                BIP38PrivateKey.fromBase58(environmentSettings.bitcoinNetworkParameters, data)
             val key = bip38.decrypt(pw)
 
             if (key != null && key.hasPrivKey()) {
                 val keyAddress =
-                        key.toAddress(environmentSettings.bitcoinNetworkParameters).toString()
+                    key.toAddress(environmentSettings.bitcoinNetworkParameters).toString()
                 if (legacyAddress!!.address != keyAddress) {
                     // Private key does not match this address - warn user but import nevertheless
                     importUnmatchedPrivateKey(key)
                 } else {
                     importAddressPrivateKey(key, legacyAddress!!, true)
                 }
-
             } else {
                 view.showToast(R.string.invalid_private_key, ToastCustom.TYPE_ERROR)
             }
@@ -839,16 +842,16 @@ class AccountEditPresenter @Inject internal constructor(
         payloadDataManager.legacyAddresses = addressCopy
 
         payloadDataManager.syncPayloadWithServer()
-                .addToCompositeDisposable(this)
-                .doOnError { Timber.e(it) }
-                .subscribe(
-                        {
-                            // Subscribe to new address only if successfully created
-                            view.sendBroadcast("address", legacyAddress.address)
-                            view.setActivityResult(Activity.RESULT_OK)
-                        },
-                        { view.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR) }
-                )
+            .addToCompositeDisposable(this)
+            .doOnError { Timber.e(it) }
+            .subscribe(
+                {
+                    // Subscribe to new address only if successfully created
+                    view.sendBroadcast("address", legacyAddress.address)
+                    view.setActivityResult(Activity.RESULT_OK)
+                },
+                { view.showToast(R.string.remote_save_ko, ToastCustom.TYPE_ERROR) }
+            )
     }
 
     /**
@@ -862,50 +865,49 @@ class AccountEditPresenter @Inject internal constructor(
         val pendingTransaction = PendingTransaction()
 
         return sendDataManager.getUnspentOutputs(legacyAddress!!.address)
-                .flatMap { unspentOutputs ->
-                    val suggestedFeePerKb =
-                            BigInteger.valueOf(dynamicFeeCache.btcFeeOptions!!.regularFee * 1000)
+            .flatMap { unspentOutputs ->
+                val suggestedFeePerKb =
+                    BigInteger.valueOf(dynamicFeeCache.btcFeeOptions!!.regularFee * 1000)
 
-                    val sweepableCoins =
-                            sendDataManager.getMaximumAvailable(unspentOutputs, suggestedFeePerKb)
-                    val sweepAmount = sweepableCoins.left
+                val sweepableCoins =
+                    sendDataManager.getMaximumAvailable(unspentOutputs, suggestedFeePerKb)
+                val sweepAmount = sweepableCoins.left
 
-                    var label: String? = legacyAddress.label
-                    if (label.isNullOrEmpty()) {
-                        label = legacyAddress.address
-                    }
-
-                    // To default account
-                    val defaultAccount = payloadDataManager.defaultAccount
-                    pendingTransaction.sendingObject = ItemAccount(
-                            label,
-                            sweepAmount.toString(),
-                            "",
-                            sweepAmount.toLong(),
-                            legacyAddress,
-                            legacyAddress.address
-                    )
-                    pendingTransaction.receivingObject = ItemAccount(
-                            defaultAccount.label,
-                            "",
-                            "",
-                            sweepAmount.toLong(),
-                            defaultAccount,
-                            null
-                    )
-                    pendingTransaction.unspentOutputBundle = sendDataManager.getSpendableCoins(
-                            unspentOutputs,
-                            sweepAmount,
-                            suggestedFeePerKb
-                    )
-                    pendingTransaction.bigIntAmount = sweepAmount
-                    pendingTransaction.bigIntFee =
-                            pendingTransaction.unspentOutputBundle.absoluteFee
-
-                    payloadDataManager.getNextReceiveAddress(defaultAccount)
+                var label: String? = legacyAddress.label
+                if (label.isNullOrEmpty()) {
+                    label = legacyAddress.address
                 }
-                .doOnNext { pendingTransaction.receivingAddress = it }
-                .map { pendingTransaction }
-    }
 
+                // To default account
+                val defaultAccount = payloadDataManager.defaultAccount
+                pendingTransaction.sendingObject = ItemAccount(
+                    label,
+                    sweepAmount.toString(),
+                    "",
+                    sweepAmount.toLong(),
+                    legacyAddress,
+                    legacyAddress.address
+                )
+                pendingTransaction.receivingObject = ItemAccount(
+                    defaultAccount.label,
+                    "",
+                    "",
+                    sweepAmount.toLong(),
+                    defaultAccount,
+                    null
+                )
+                pendingTransaction.unspentOutputBundle = sendDataManager.getSpendableCoins(
+                    unspentOutputs,
+                    sweepAmount,
+                    suggestedFeePerKb
+                )
+                pendingTransaction.bigIntAmount = sweepAmount
+                pendingTransaction.bigIntFee =
+                    pendingTransaction.unspentOutputBundle.absoluteFee
+
+                payloadDataManager.getNextReceiveAddress(defaultAccount)
+            }
+            .doOnNext { pendingTransaction.receivingAddress = it }
+            .map { pendingTransaction }
+    }
 }

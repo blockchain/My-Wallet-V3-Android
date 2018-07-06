@@ -12,7 +12,7 @@ import piuk.blockchain.androidbuysell.models.coinify.KycResponse
 import piuk.blockchain.androidbuysell.models.coinify.ReviewState
 import piuk.blockchain.androidbuysell.services.ExchangeService
 
-class CoinifyIdentityInReviewPresenterTest: RxTest() {
+class CoinifyIdentityInReviewPresenterTest : RxTest() {
 
     private lateinit var subject: CoinifyIdentityInReviewPresenter
 
@@ -23,10 +23,10 @@ class CoinifyIdentityInReviewPresenterTest: RxTest() {
     @Before
     fun setup() {
         subject =
-                CoinifyIdentityInReviewPresenter(
-                        exchangeService,
-                        coinifyDataManager
-                )
+            CoinifyIdentityInReviewPresenter(
+                exchangeService,
+                coinifyDataManager
+            )
         subject.initView(view)
     }
 

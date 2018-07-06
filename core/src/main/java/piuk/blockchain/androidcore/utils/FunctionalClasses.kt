@@ -18,18 +18,17 @@ sealed class Either<out A, out B> {
     data class Right<out B>(val value: B) : Either<Nothing, B>()
 
     inline fun <L, R, T> Either<L, R>.fold(left: (L) -> T, right: (R) -> T): T =
-            when (this) {
-                is Left -> left(value)
-                is Right -> right(value)
-            }
+        when (this) {
+            is Left -> left(value)
+            is Right -> right(value)
+        }
 
     inline fun <L, R, T> Either<L, R>.flatMap(f: (R) -> Either<L, T>): Either<L, T> =
-            fold({ this as Left }, f)
+        fold({ this as Left }, f)
 
     inline fun <L, R, T> Either<L, R>.map(f: (R) -> T): Either<L, T> =
-            flatMap { Right(f(it)) }
-
+        flatMap { Right(f(it)) }
 }
 
 fun <T> Observable<T>.either(): Observable<Either<Throwable, T>> =
-        map { Either.Right(it) as Either<Throwable, T> }.onErrorReturn { Either.Left(it) }
+    map { Either.Right(it) as Either<Throwable, T> }.onErrorReturn { Either.Left(it) }

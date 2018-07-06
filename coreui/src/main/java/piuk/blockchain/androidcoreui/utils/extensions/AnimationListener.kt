@@ -43,5 +43,4 @@ class AnimationListener : Animation.AnimationListener {
     fun onAnimationRepeat(func: (animation: Animation?) -> Unit) {
         onAnimationRepeat = func
     }
-
 }

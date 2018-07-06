@@ -3,16 +3,16 @@ package piuk.blockchain.android.ui.send
 import android.support.annotation.ColorRes
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
+import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.ui.base.View
-import java.util.*
+import java.util.Locale
 
 interface SendView : View {
 
     val locale: Locale
 
-    //Update field
+    // Update field
     fun updateSendingAddress(label: String)
 
     fun updateReceivingHint(hint: Int)
@@ -35,7 +35,7 @@ interface SendView : View {
 
     fun updateFeeAmount(fee: String)
 
-    //Set property
+    // Set property
     fun setCryptoMaxLength(length: Int)
 
     fun setSelectedCurrency(cryptoCurrency: CryptoCurrencies)
@@ -44,7 +44,7 @@ interface SendView : View {
 
     fun clearWarning()
 
-    //Hide / Show
+    // Hide / Show
     fun hideReceivingDropdown()
 
     fun showReceivingDropdown()
@@ -61,7 +61,7 @@ interface SendView : View {
 
     fun hideFeePriority()
 
-    //Enable / Disable
+    // Enable / Disable
     fun disableCryptoTextChangeListener()
 
     fun enableCryptoTextChangeListener()
@@ -106,11 +106,19 @@ interface SendView : View {
 
     fun showSecondPasswordDialog()
 
-    fun showPaymentDetails(confirmationDetails: PaymentConfirmationDetails, note: String?, allowFeeChange: Boolean)
+    fun showPaymentDetails(
+        confirmationDetails: PaymentConfirmationDetails,
+        note: String?,
+        allowFeeChange: Boolean
+    )
 
     fun showLargeTransactionWarning()
 
-    fun showTransactionSuccess(hash: String, transactionValue: Long, cryptoCurrency: CryptoCurrencies)
+    fun showTransactionSuccess(
+        hash: String,
+        transactionValue: Long,
+        cryptoCurrency: CryptoCurrencies
+    )
 
     fun dismissProgressDialog()
 

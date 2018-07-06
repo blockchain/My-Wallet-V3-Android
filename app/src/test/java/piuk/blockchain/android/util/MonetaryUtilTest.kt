@@ -1,13 +1,13 @@
-//package piuk.blockchain.android.util
+// package piuk.blockchain.android.util
 //
-//import org.amshove.kluent.`should be instance of`
-//import org.amshove.kluent.`should equal to`
-//import org.amshove.kluent.`should equal`
-//import org.junit.Test
-//import java.text.NumberFormat
-//import java.util.*
+// import org.amshove.kluent.`should be instance of`
+// import org.amshove.kluent.`should equal to`
+// import org.amshove.kluent.`should equal`
+// import org.junit.Test
+// import java.text.NumberFormat
+// import java.util.*
 //
-//class MonetaryUtilTest {
+// class MonetaryUtilTest {
 //
 //    val subject = MonetaryUtil()
 //
@@ -86,4 +86,4 @@
 //        result `should equal` "£"
 //    }
 //
-//}
+// }

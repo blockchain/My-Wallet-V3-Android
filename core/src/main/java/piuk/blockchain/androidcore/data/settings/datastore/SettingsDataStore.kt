@@ -8,14 +8,13 @@ import piuk.blockchain.androidcore.utils.annotations.Mockable
 
 @Mockable
 class SettingsDataStore(
-        private val memoryStore: SettingsMemoryStore,
-        private val webSource: Observable<Settings>
+    private val memoryStore: SettingsMemoryStore,
+    private val webSource: Observable<Settings>
 ) {
 
     fun getSettings(): Observable<Settings> =
-            DefaultFetchStrategy(webSource, memoryStore.getSettings(), memoryStore).fetch()
+        DefaultFetchStrategy(webSource, memoryStore.getSettings(), memoryStore).fetch()
 
     fun fetchSettings(): Observable<Settings> =
-            FreshFetchStrategy(webSource, memoryStore).fetch()
-
+        FreshFetchStrategy(webSource, memoryStore).fetch()
 }

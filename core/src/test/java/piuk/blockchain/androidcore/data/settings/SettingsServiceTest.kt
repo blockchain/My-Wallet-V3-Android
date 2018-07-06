@@ -76,7 +76,7 @@ class SettingsServiceTest : RxTest() {
         val mockResponse = mock(ResponseBody::class.java)
         val email = "EMAIL"
         whenever(settingsManager.updateSetting(SettingsManager.METHOD_UPDATE_EMAIL, email))
-                .thenReturn(Observable.just(mockResponse))
+            .thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.updateEmail(email).test()
         // Assert
@@ -94,7 +94,7 @@ class SettingsServiceTest : RxTest() {
         val mockResponse = mock(ResponseBody::class.java)
         val phoneNumber = "PHONE_NUMBER"
         whenever(settingsManager.updateSetting(SettingsManager.METHOD_UPDATE_SMS, phoneNumber))
-                .thenReturn(Observable.just(mockResponse))
+            .thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.updateSms(phoneNumber).test()
         // Assert
@@ -112,7 +112,7 @@ class SettingsServiceTest : RxTest() {
         val mockResponse = mock(ResponseBody::class.java)
         val verificationCode = "VERIFICATION_CODE"
         whenever(settingsManager.updateSetting(SettingsManager.METHOD_VERIFY_SMS, verificationCode))
-                .thenReturn(Observable.just(mockResponse))
+            .thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.verifySms(verificationCode).test()
         // Assert
@@ -129,7 +129,7 @@ class SettingsServiceTest : RxTest() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
         whenever(settingsManager.updateSetting(SettingsManager.METHOD_UPDATE_BLOCK_TOR_IPS, 1))
-                .thenReturn(Observable.just(mockResponse))
+            .thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.updateTor(true).test()
         // Assert
@@ -147,17 +147,17 @@ class SettingsServiceTest : RxTest() {
         val mockResponse = mock(ResponseBody::class.java)
         val notificationType = 1337
         whenever(
-                settingsManager.updateSetting(
-                        SettingsManager.METHOD_UPDATE_NOTIFICATION_TYPE,
-                        notificationType
-                )
+            settingsManager.updateSetting(
+                SettingsManager.METHOD_UPDATE_NOTIFICATION_TYPE,
+                notificationType
+            )
         ).thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.updateNotifications(notificationType).test()
         // Assert
         verify(settingsManager).updateSetting(
-                SettingsManager.METHOD_UPDATE_NOTIFICATION_TYPE,
-                notificationType
+            SettingsManager.METHOD_UPDATE_NOTIFICATION_TYPE,
+            notificationType
         )
         verifyNoMoreInteractions(settingsManager)
         testObserver.assertComplete()
@@ -171,17 +171,17 @@ class SettingsServiceTest : RxTest() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
         whenever(
-                settingsManager.updateSetting(
-                        SettingsManager.METHOD_UPDATE_NOTIFICATION_ON,
-                        SettingsManager.NOTIFICATION_ON
-                )
+            settingsManager.updateSetting(
+                SettingsManager.METHOD_UPDATE_NOTIFICATION_ON,
+                SettingsManager.NOTIFICATION_ON
+            )
         ).thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.enableNotifications(true).test()
         // Assert
         verify(settingsManager).updateSetting(
-                SettingsManager.METHOD_UPDATE_NOTIFICATION_ON,
-                SettingsManager.NOTIFICATION_ON
+            SettingsManager.METHOD_UPDATE_NOTIFICATION_ON,
+            SettingsManager.NOTIFICATION_ON
         )
         verifyNoMoreInteractions(settingsManager)
         testObserver.assertComplete()
@@ -196,7 +196,7 @@ class SettingsServiceTest : RxTest() {
         val mockResponse = mock(ResponseBody::class.java)
         val authType = 1337
         whenever(settingsManager.updateSetting(SettingsManager.METHOD_UPDATE_AUTH_TYPE, authType))
-                .thenReturn(Observable.just(mockResponse))
+            .thenReturn(Observable.just(mockResponse))
         // Act
         val testObserver = subject.updateTwoFactor(authType).test()
         // Assert
@@ -206,5 +206,4 @@ class SettingsServiceTest : RxTest() {
         testObserver.assertNoErrors()
         assertEquals(mockResponse, testObserver.values()[0])
     }
-
 }
