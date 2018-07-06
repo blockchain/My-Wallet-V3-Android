@@ -53,7 +53,6 @@ enum class CoinifyErrorCodes(val code: String) {
      */
     InvalidIban("invalid_iban"),
 
-
     // Generic
     /**
      * Resource not found.

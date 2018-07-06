@@ -5,27 +5,26 @@ import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.ToJson
 import piuk.blockchain.androidcore.utils.annotations.Mockable
 
-
 /**
  * Wraps a [returnUrl] which is the URL to be triggered when the KYC process is
  * complete.
  */
 @Mockable
 data class KycResponse(
-        // Identifier for the KYC review
-        val id: Int,
-        // KYC review state	State of the KYC review
-        val state: ReviewState,
-        // URL to return to when kyc flow is completed (this is only necessary in redirect mode).
-        val returnUrl: String,
-        // URL to redirect the user to in order to perform the KYC review
-        val redirectUrl: String,
-        // Reference to the external KYC review, this ID can be used in embedded mode.
-        val externalId: String,
-        // The time when the bank account was last updated, in ISO 8601.
-        val updateTime: String,
-        // Timestamp for when this bank account was first created, in ISO 8601.
-        val createTime: String
+    // Identifier for the KYC review
+    val id: Int,
+    // KYC review state	State of the KYC review
+    val state: ReviewState,
+    // URL to return to when kyc flow is completed (this is only necessary in redirect mode).
+    val returnUrl: String,
+    // URL to redirect the user to in order to perform the KYC review
+    val redirectUrl: String,
+    // Reference to the external KYC review, this ID can be used in embedded mode.
+    val externalId: String,
+    // The time when the bank account was last updated, in ISO 8601.
+    val updateTime: String,
+    // Timestamp for when this bank account was first created, in ISO 8601.
+    val createTime: String
 )
 
 sealed class ReviewState {
@@ -52,10 +51,9 @@ sealed class ReviewState {
     object DocumentsRequested : ReviewState()
 
     fun isEndState(): Boolean =
-            (this === Rejected || this === Failed || this === Expired || this === Completed)
+        (this === Rejected || this === Failed || this === Expired || this === Completed)
 
     fun isProcessing(): Boolean = this === Reviewing
-
 }
 
 @Suppress("unused")
@@ -93,5 +91,4 @@ class ReviewStateAdapter {
         private const val REVIEWING = "reviewing"
         private const val DOCUMENTS_REQUESTED = "documentsRequested"
     }
-
 }

@@ -16,19 +16,20 @@ import javax.inject.Inject
 @Mockable
 @PresenterScope
 class FingerprintHelper @Inject constructor(
-        private val applicationContext: Context,
-        private val prefsUtil: PrefsUtil,
-        private val fingerprintAuth: FingerprintAuth
+    private val applicationContext: Context,
+    private val prefsUtil: PrefsUtil,
+    private val fingerprintAuth: FingerprintAuth
 ) {
 
-    @VisibleForTesting var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    @VisibleForTesting
+    var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     /**
      * Returns true only if there is appropriate hardware available && there are enrolled
      * fingerprints
      */
     fun isFingerprintAvailable(): Boolean =
-            fingerprintAuth.isFingerprintAvailable(applicationContext)
+        fingerprintAuth.isFingerprintAvailable(applicationContext)
 
     /**
      * Returns true if the device has the appropriate hardware for fingerprint authentication
@@ -39,13 +40,13 @@ class FingerprintHelper @Inject constructor(
      * Returns if any fingerprints are registered
      */
     fun areFingerprintsEnrolled(): Boolean =
-            fingerprintAuth.areFingerprintsEnrolled(applicationContext)
+        fingerprintAuth.areFingerprintsEnrolled(applicationContext)
 
     /**
      * Returns true if the user has previously enabled fingerprint login
      */
     fun isFingerprintUnlockEnabled(): Boolean =
-            isFingerprintAvailable() && prefsUtil.getValue(PrefsUtil.KEY_FINGERPRINT_ENABLED, false)
+        isFingerprintAvailable() && prefsUtil.getValue(PrefsUtil.KEY_FINGERPRINT_ENABLED, false)
 
     /**
      * Store whether or not fingerprint login has been successfully set up
@@ -59,7 +60,7 @@ class FingerprintHelper @Inject constructor(
      * into a Base64 string and written to shared prefs with a key. Please note that this doesn't
      * encrypt the data in any way, just obfuscates it.
 
-     * @param key  The key to write/retrieve the data to/from
+     * @param key The key to write/retrieve the data to/from
      * *
      * @param data The data to be stored
      * *
@@ -109,79 +110,79 @@ class FingerprintHelper @Inject constructor(
      */
     fun authenticateFingerprint(callback: AuthCallback) {
         compositeDisposable.add(
-                fingerprintAuth.authenticate(applicationContext)
-                        .subscribe(
-                                {
-                                    when (it.result) {
-                                        FingerprintResult.FAILED -> callback.onFailure()
-                                        FingerprintResult.HELP -> callback.onHelp(it.message ?: "")
-                                        FingerprintResult.AUTHENTICATED -> callback.onAuthenticated(
-                                                null
-                                        )
-                                        else -> throw RuntimeException("$it.result was null")
-                                    }
-                                }, { _ -> callback.onFatalError() })
+            fingerprintAuth.authenticate(applicationContext)
+                .subscribe(
+                    {
+                        when (it.result) {
+                            FingerprintResult.FAILED -> callback.onFailure()
+                            FingerprintResult.HELP -> callback.onHelp(it.message ?: "")
+                            FingerprintResult.AUTHENTICATED -> callback.onAuthenticated(
+                                null
+                            )
+                            else -> throw RuntimeException("$it.result was null")
+                        }
+                    }, { _ -> callback.onFatalError() })
         )
     }
 
     /**
      * Encrypts a String and stores its private key in the Android Keystore using a specific keyword
 
-     * @param key             The key to save/retrieve the object
+     * @param key The key to save/retrieve the object
      * *
      * @param stringToEncrypt The String to be encrypted
      * *
-     * @param callback        [AuthCallback]
+     * @param callback [AuthCallback]
      */
     fun encryptString(key: String, stringToEncrypt: String, callback: AuthCallback) {
         compositeDisposable.add(
-                fingerprintAuth.encrypt(applicationContext, key, stringToEncrypt)
-                        .subscribe(
-                                {
-                                    when (it.result) {
-                                        FingerprintResult.FAILED -> callback.onFailure()
-                                        FingerprintResult.HELP -> callback.onHelp(it.message ?: "")
-                                        FingerprintResult.AUTHENTICATED -> callback.onAuthenticated(
-                                                it.encrypted
-                                        )
-                                        else -> throw RuntimeException("$it.result was null")
-                                    }
-                                }, { _ -> callback.onFatalError() })
+            fingerprintAuth.encrypt(applicationContext, key, stringToEncrypt)
+                .subscribe(
+                    {
+                        when (it.result) {
+                            FingerprintResult.FAILED -> callback.onFailure()
+                            FingerprintResult.HELP -> callback.onHelp(it.message ?: "")
+                            FingerprintResult.AUTHENTICATED -> callback.onAuthenticated(
+                                it.encrypted
+                            )
+                            else -> throw RuntimeException("$it.result was null")
+                        }
+                    }, { _ -> callback.onFatalError() })
         )
     }
 
     /**
      * Decrypts a supplied String after authentication
 
-     * @param key             The key of the object to be retrieved
+     * @param key The key of the object to be retrieved
      * *
      * @param encryptedString The String to be decrypted
      * *
-     * @param callback        [AuthCallback]
+     * @param callback [AuthCallback]
      */
     fun decryptString(key: String, encryptedString: String, callback: AuthCallback) {
         compositeDisposable.add(
-                fingerprintAuth.decrypt(applicationContext, key, encryptedString)
-                        .subscribe(
-                                {
-                                    when (it.result) {
-                                        FingerprintResult.FAILED -> callback.onFailure()
-                                        FingerprintResult.HELP -> callback.onHelp(it.message ?: "")
-                                        FingerprintResult.AUTHENTICATED -> callback.onAuthenticated(
-                                                it.decrypted
-                                        )
-                                        else -> throw RuntimeException("$it.result was null")
-                                    }
-                                }, { throwable ->
-                            if (RxFingerprint.keyInvalidated(throwable)) {
-                                // The keys you wanted to use are invalidated because the user has turned off his
-                                // secure lock screen or changed the fingerprints stored on the device
-                                // You have to re-encrypt the data to access it
-                                callback.onKeyInvalidated()
-                            } else {
-                                callback.onFatalError()
-                            }
-                        })
+            fingerprintAuth.decrypt(applicationContext, key, encryptedString)
+                .subscribe(
+                    {
+                        when (it.result) {
+                            FingerprintResult.FAILED -> callback.onFailure()
+                            FingerprintResult.HELP -> callback.onHelp(it.message ?: "")
+                            FingerprintResult.AUTHENTICATED -> callback.onAuthenticated(
+                                it.decrypted
+                            )
+                            else -> throw RuntimeException("$it.result was null")
+                        }
+                    }, { throwable ->
+                        if (RxFingerprint.keyInvalidated(throwable)) {
+                            // The keys you wanted to use are invalidated because the user has turned off his
+                            // secure lock screen or changed the fingerprints stored on the device
+                            // You have to re-encrypt the data to access it
+                            callback.onKeyInvalidated()
+                        } else {
+                            callback.onFatalError()
+                        }
+                    })
         )
     }
 
@@ -205,5 +206,4 @@ class FingerprintHelper @Inject constructor(
 
         fun onFatalError()
     }
-
 }

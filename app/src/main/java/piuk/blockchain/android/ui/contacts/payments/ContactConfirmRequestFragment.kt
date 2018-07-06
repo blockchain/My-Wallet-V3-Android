@@ -18,18 +18,24 @@ import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.ViewUtils
-import piuk.blockchain.androidcoreui.utils.extensions.*
+import piuk.blockchain.androidcoreui.utils.extensions.getTextString
+import piuk.blockchain.androidcoreui.utils.extensions.gone
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.toast
+import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 
-class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, ContactConfirmRequestPresenter>(),
-        ContactConfirmRequestView {
+class ContactConfirmRequestFragment :
+    BaseFragment<ContactConfirmRequestView, ContactConfirmRequestPresenter>(),
+    ContactConfirmRequestView {
 
     override val fragmentBundle: Bundle?
         get() = arguments
     override val note: String
         get() = edittext_description.getTextString()
 
-    @Inject lateinit var paymentRequestPresenter: ContactConfirmRequestPresenter
+    @Inject
+    lateinit var paymentRequestPresenter: ContactConfirmRequestPresenter
     private var progressDialog: MaterialProgressDialog? = null
     private var listener: FragmentInteractionListener? = null
 
@@ -38,9 +44,9 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_contact_payment_request_notes)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,13 +94,13 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
 
     override fun showProgressDialog() {
         progressDialog = MaterialProgressDialog(
-                context
+            context
         )
-                .apply {
-                    setCancelable(false)
-                    setMessage(R.string.please_wait)
-                    show()
-                }
+            .apply {
+                setCancelable(false)
+                setMessage(R.string.please_wait)
+                show()
+            }
     }
 
     override fun dismissProgressDialog() {
@@ -109,9 +115,9 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
     }
 
     override fun onRequestSuccessful(
-            paymentRequestType: PaymentRequestType,
-            contactName: String,
-            btcAmount: String
+        paymentRequestType: PaymentRequestType,
+        contactName: String,
+        btcAmount: String
     ) {
         listener?.onRequestSuccessful(paymentRequestType, contactName, btcAmount)
     }
@@ -138,7 +144,8 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
         // TODO: For now this isn't reset when leaving this page as onResume isn't triggered ¯\_(ツ)_/¯
         if ((activity as AppCompatActivity).supportActionBar != null) {
             (activity as BaseAuthActivity).setupToolbar(
-                    (activity as MainActivity).supportActionBar, R.string.contacts_confirm_title)
+                (activity as MainActivity).supportActionBar, R.string.contacts_confirm_title
+            )
         } else {
             finishPage()
         }
@@ -149,11 +156,10 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
         fun onPageFinished()
 
         fun onRequestSuccessful(
-                paymentRequestType: PaymentRequestType,
-                contactName: String,
-                btcAmount: String
+            paymentRequestType: PaymentRequestType,
+            contactName: String,
+            btcAmount: String
         )
-
     }
 
     companion object {
@@ -166,11 +172,11 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
 
         @JvmStatic
         fun newInstance(
-                confirmationDetails: PaymentConfirmationDetails,
-                requestType: PaymentRequestType,
-                contactId: String,
-                satoshis: Long,
-                accountPosition: Int
+            confirmationDetails: PaymentConfirmationDetails,
+            requestType: PaymentRequestType,
+            contactId: String,
+            satoshis: Long,
+            accountPosition: Int
         ): ContactConfirmRequestFragment {
 
             val args = Bundle().apply {
@@ -183,5 +189,4 @@ class ContactConfirmRequestFragment : BaseFragment<ContactConfirmRequestView, Co
             return ContactConfirmRequestFragment().apply { arguments = args }
         }
     }
-
 }

@@ -23,24 +23,24 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class DisplayableDelegate<in T>(
-        activity: Activity,
-        private var showCrypto: Boolean,
-        private val listClickListener: TxFeedClickListener
+    activity: Activity,
+    private var showCrypto: Boolean,
+    private val listClickListener: TxFeedClickListener
 ) : AdapterDelegate<T> {
 
     private val dateUtil = DateUtil(activity)
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            items[position] is Displayable
+        items[position] is Displayable
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            TxViewHolder(parent.inflate(R.layout.item_balance))
+        TxViewHolder(parent.inflate(R.layout.item_balance))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
 
         val viewHolder = holder as TxViewHolder
@@ -58,7 +58,6 @@ class DisplayableDelegate<in T>(
         tx.note?.let {
             viewHolder.note.text = it
             viewHolder.note.visible()
-
         } ?: viewHolder.note.gone()
 
         if (showCrypto) {
@@ -79,7 +78,7 @@ class DisplayableDelegate<in T>(
         // TODO: Move this click listener to the ViewHolder to avoid unnecessary object instantiation during binding
         viewHolder.itemView.setOnClickListener {
             listClickListener.onTransactionClicked(
-                    getRealTxPosition(viewHolder.adapterPosition, items), position
+                getRealTxPosition(viewHolder.adapterPosition, items), position
             )
         }
     }
@@ -89,79 +88,79 @@ class DisplayableDelegate<in T>(
     }
 
     private fun getResolvedColor(viewHolder: RecyclerView.ViewHolder, @ColorRes color: Int): Int =
-            viewHolder.getContext().getResolvedColor(color)
+        viewHolder.getContext().getResolvedColor(color)
 
     private fun displayTransferred(viewHolder: TxViewHolder, tx: Displayable) {
         viewHolder.direction.setText(R.string.MOVED)
         viewHolder.result.setBackgroundResource(
-                getColorForConfirmations(
-                        tx,
-                        R.drawable.rounded_view_transferred_50,
-                        R.drawable.rounded_view_transferred
-                )
+            getColorForConfirmations(
+                tx,
+                R.drawable.rounded_view_transferred_50,
+                R.drawable.rounded_view_transferred
+            )
         )
 
         viewHolder.direction.setTextColor(
-                getResolvedColor(
-                        viewHolder, getColorForConfirmations(
-                        tx,
-                        R.color.product_gray_transferred_50,
-                        R.color.product_gray_transferred
+            getResolvedColor(
+                viewHolder, getColorForConfirmations(
+                    tx,
+                    R.color.product_gray_transferred_50,
+                    R.color.product_gray_transferred
                 )
-                )
+            )
         )
     }
 
     private fun displayReceived(viewHolder: TxViewHolder, tx: Displayable) {
         viewHolder.direction.setText(R.string.RECEIVED)
         viewHolder.result.setBackgroundResource(
-                getColorForConfirmations(
-                        tx,
-                        R.drawable.rounded_view_green_50,
-                        R.drawable.rounded_view_green
-                )
+            getColorForConfirmations(
+                tx,
+                R.drawable.rounded_view_green_50,
+                R.drawable.rounded_view_green
+            )
         )
 
         viewHolder.direction.setTextColor(
-                getResolvedColor(
-                        viewHolder, getColorForConfirmations(
-                        tx,
-                        R.color.product_green_received_50,
-                        R.color.product_green_received
+            getResolvedColor(
+                viewHolder, getColorForConfirmations(
+                    tx,
+                    R.color.product_green_received_50,
+                    R.color.product_green_received
                 )
-                )
+            )
         )
     }
 
     private fun displaySent(viewHolder: TxViewHolder, tx: Displayable) {
         viewHolder.direction.setText(R.string.SENT)
         viewHolder.result.setBackgroundResource(
-                getColorForConfirmations(
-                        tx,
-                        R.drawable.rounded_view_red_50,
-                        R.drawable.rounded_view_red
-                )
+            getColorForConfirmations(
+                tx,
+                R.drawable.rounded_view_red_50,
+                R.drawable.rounded_view_red
+            )
         )
 
         viewHolder.direction.setTextColor(
-                getResolvedColor(
-                        viewHolder, getColorForConfirmations(
-                        tx,
-                        R.color.product_red_sent_50,
-                        R.color.product_red_sent
+            getResolvedColor(
+                viewHolder, getColorForConfirmations(
+                    tx,
+                    R.color.product_red_sent_50,
+                    R.color.product_red_sent
                 )
-                )
+            )
         )
     }
 
     private fun getColorForConfirmations(
-            tx: Displayable,
-            @DrawableRes colorLight: Int,
-            @DrawableRes colorDark: Int
+        tx: Displayable,
+        @DrawableRes colorLight: Int,
+        @DrawableRes colorDark: Int
     ) = if (tx.confirmations < getRequiredConfirmations(tx)) colorLight else colorDark
 
     private fun getRequiredConfirmations(tx: Displayable) =
-            if (tx.cryptoCurrency == CryptoCurrencies.BTC) CONFIRMATIONS_BTC else CONFIRMATIONS_ETH
+        if (tx.cryptoCurrency == CryptoCurrencies.BTC) CONFIRMATIONS_BTC else CONFIRMATIONS_ETH
 
     private fun getRealTxPosition(position: Int, items: List<T>): Int {
         val diff = items.size - items.count { it is Displayable }
@@ -169,7 +168,7 @@ class DisplayableDelegate<in T>(
     }
 
     private class TxViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var result: TextView = itemView.result
@@ -184,7 +183,5 @@ class DisplayableDelegate<in T>(
 
         private const val CONFIRMATIONS_BTC = 3
         private const val CONFIRMATIONS_ETH = 12
-
     }
-
 }

@@ -16,16 +16,22 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 class HeaderDelegate<in T> : AdapterDelegate<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            HeaderViewHolder(parent.inflate(R.layout.item_accounts_row_header))
+        HeaderViewHolder(parent.inflate(R.layout.item_accounts_row_header))
 
-    override fun onBindViewHolder(items: List<T>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<*>) {
+    override fun onBindViewHolder(
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
+    ) {
         val headerViewHolder = holder as HeaderViewHolder
         headerViewHolder.header.text = items[position] as CharSequence?
     }
 
     override fun isForViewType(items: List<T>, position: Int): Boolean = items[position] is String
 
-    private class HeaderViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class HeaderViewHolder internal constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
         internal var header: TextView = itemView.header_name
         internal var button: ImageView = itemView.imageview_plus
@@ -34,10 +40,15 @@ class HeaderDelegate<in T> : AdapterDelegate<T> {
         init {
             // Layout changes to fit new balance designs but without creating specific layout
             button.gone()
-            header.setTextColor(ContextCompat.getColor(itemView.context, R.color.primary_gray_medium))
+            header.setTextColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.primary_gray_medium
+                )
+            )
             layout.layoutParams = ViewGroup.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
             )
         }
     }

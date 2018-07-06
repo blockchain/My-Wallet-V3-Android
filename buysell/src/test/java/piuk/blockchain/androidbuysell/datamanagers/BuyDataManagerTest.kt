@@ -1,6 +1,5 @@
 package piuk.blockchain.androidbuysell.datamanagers
 
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
@@ -10,7 +9,9 @@ import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.subjects.ReplaySubject
 import org.junit.Before
-import org.mockito.Mockito.*
+import org.mockito.Mockito.RETURNS_DEEP_STUBS
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
 import piuk.blockchain.androidbuysell.RxTest
 import piuk.blockchain.androidbuysell.models.ExchangeData
 import piuk.blockchain.androidbuysell.services.BuyConditions
@@ -23,9 +24,11 @@ import kotlin.test.Test
 class BuyDataManagerTest : RxTest() {
 
     private lateinit var subject: BuyDataManager
-    private val mockSettingsDataManager: SettingsDataManager = mock(defaultAnswer = RETURNS_DEEP_STUBS)
+    private val mockSettingsDataManager: SettingsDataManager =
+        mock(defaultAnswer = RETURNS_DEEP_STUBS)
     private val mockAuthDataManager: AuthDataManager = mock()
-    private val mockPayloadDataManager: PayloadDataManager = mock(defaultAnswer = RETURNS_DEEP_STUBS)
+    private val mockPayloadDataManager: PayloadDataManager =
+        mock(defaultAnswer = RETURNS_DEEP_STUBS)
     private val mockExchangeService: ExchangeService = mock()
 
     private val mockWalletOptions: WalletOptions = mock(defaultAnswer = RETURNS_DEEP_STUBS)
@@ -47,11 +50,11 @@ class BuyDataManagerTest : RxTest() {
         whenever(buyConditions.exchangeDataSource).thenReturn(exchangeDataSource)
 
         subject = BuyDataManager(
-                mockSettingsDataManager,
-                mockAuthDataManager,
-                mockPayloadDataManager,
-                buyConditions,
-                mockExchangeService
+            mockSettingsDataManager,
+            mockAuthDataManager,
+            mockPayloadDataManager,
+            buyConditions,
+            mockExchangeService
         )
     }
 
@@ -64,9 +67,9 @@ class BuyDataManagerTest : RxTest() {
         source.onComplete()
 
         whenever(mockAuthDataManager.getWalletOptions()).thenReturn(
-                Observable.just(
-                        mockWalletOptions
-                )
+            Observable.just(
+                mockWalletOptions
+            )
         )
 
         return source
@@ -94,9 +97,9 @@ class BuyDataManagerTest : RxTest() {
         source.onComplete()
 
         whenever(mockExchangeService.getExchangeMetaData()).thenReturn(
-                Observable.just(
-                        mockExchangeData
-                )
+            Observable.just(
+                mockExchangeData
+            )
         )
 
         return source
@@ -140,7 +143,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isCoinifyAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -157,7 +160,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isCoinifyAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -174,7 +177,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isCoinifyAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -191,7 +194,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isCoinifyAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -210,7 +213,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isUnocoinAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -230,7 +233,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isUnocoinAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -249,7 +252,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isUnocoinAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -268,7 +271,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isUnocoinAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -291,7 +294,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -314,7 +317,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -337,7 +340,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -360,7 +363,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -383,7 +386,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -406,7 +409,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -429,7 +432,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -451,7 +454,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -474,7 +477,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.isSfoxAllowed.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -484,7 +487,7 @@ class BuyDataManagerTest : RxTest() {
     @Throws(Exception::class)
     fun `canBuy isAllowed and androidEnabled`() {
 
-        //individual cases have been tested above
+        // individual cases have been tested above
 
         // Arrange
         whenever(mockPayloadDataManager.wallet!!.guid).thenReturn("7279615c-23eb-4a1c-92df-2440acea8e1a")
@@ -503,7 +506,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.canBuy.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -513,7 +516,7 @@ class BuyDataManagerTest : RxTest() {
     @Throws(Exception::class)
     fun `canBuy isAllowed but not rolled out`() {
 
-        //individual cases have been tested above
+        // individual cases have been tested above
 
         // Arrange
         whenever(mockPayloadDataManager.wallet!!.guid).thenReturn("7279615c-23eb-4a1c-92df-2440acea8e1a")
@@ -527,7 +530,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.canBuy.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -537,7 +540,7 @@ class BuyDataManagerTest : RxTest() {
     @Throws(Exception::class)
     fun `canBuy notAllowed and androidEnabled`() {
 
-        //individual cases have been tested above
+        // individual cases have been tested above
 
         // Arrange
         whenever(mockPayloadDataManager.wallet!!.guid).thenReturn("7279615c-23eb-4a1c-92df-2440acea8e1a")
@@ -556,7 +559,7 @@ class BuyDataManagerTest : RxTest() {
         // Act
         val testObserver = subject.canBuy.test()
 
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
@@ -569,7 +572,7 @@ class BuyDataManagerTest : RxTest() {
         whenever(mockSettings.countryCode).thenReturn("GB")
         // Act
         val testObserver = subject.countryCode.test()
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue("GB")
@@ -582,7 +585,7 @@ class BuyDataManagerTest : RxTest() {
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("GB"))
         // Act
         val testObserver = subject.isInCoinifyCountry("GB").test()
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(true)
@@ -595,7 +598,7 @@ class BuyDataManagerTest : RxTest() {
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("GB"))
         // Act
         val testObserver = subject.isInCoinifyCountry("ZA").test()
-        //Assert
+        // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)

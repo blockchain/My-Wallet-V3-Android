@@ -8,7 +8,6 @@ import info.blockchain.wallet.exceptions.HDWalletException
 import info.blockchain.wallet.multiaddress.MultiAddressFactoryBch
 import info.blockchain.wallet.multiaddress.TransactionSummary
 import info.blockchain.wallet.payload.BalanceManagerBch
-import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.Completable
 import org.bitcoinj.core.ECKey
@@ -16,7 +15,7 @@ import org.bitcoinj.core.NetworkParameters
 import org.bitcoinj.params.BitcoinCashTestNet3Params
 import org.slf4j.LoggerFactory
 import java.math.BigInteger
-import java.util.*
+import java.util.ArrayList
 
 @Suppress("unused")
 open class BitcoinCashWallet : DeterministicWallet {
@@ -25,30 +24,30 @@ open class BitcoinCashWallet : DeterministicWallet {
     private lateinit var multiAddressFactory: MultiAddressFactoryBch
 
     private constructor(
-            blockExplorer: BlockExplorer,
-            params: NetworkParameters,
-            coinPath: String,
-            passphrase: String
+        blockExplorer: BlockExplorer,
+        params: NetworkParameters,
+        coinPath: String,
+        passphrase: String
     ) : super(params, coinPath, MNEMONIC_LENGTH, passphrase) {
         setupApi(blockExplorer)
     }
 
     private constructor(
-            blockExplorer: BlockExplorer,
-            params: NetworkParameters,
-            coinPath: String,
-            entropyHex: String,
-            passphrase: String
+        blockExplorer: BlockExplorer,
+        params: NetworkParameters,
+        coinPath: String,
+        entropyHex: String,
+        passphrase: String
     ) : super(params, coinPath, entropyHex, passphrase) {
         setupApi(blockExplorer)
     }
 
     private constructor(
-            blockExplorer: BlockExplorer,
-            params: NetworkParameters,
-            coinPath: String,
-            mnemonic: List<String>,
-            passphrase: String
+        blockExplorer: BlockExplorer,
+        params: NetworkParameters,
+        coinPath: String,
+        mnemonic: List<String>,
+        passphrase: String
     ) : super(params, coinPath, mnemonic, passphrase) {
         setupApi(blockExplorer)
     }
@@ -70,18 +69,21 @@ open class BitcoinCashWallet : DeterministicWallet {
      * @param allAccountsAndAddresses A list of both xPubs from HD accounts and [LegacyAddress]
      * addresses
      */
-    fun updateAllBalances(legacyAddressList: List<String>, allAccountsAndAddresses: List<String>): Completable =
-            if (isTestnet()) {
-                //TODO(bch testnet explorer coming soon)
-                Completable.complete()
-            } else {
-                Completable.fromCallable {
-                    balanceManager.updateAllBalances(legacyAddressList, allAccountsAndAddresses)
-                }
+    fun updateAllBalances(
+        legacyAddressList: List<String>,
+        allAccountsAndAddresses: List<String>
+    ): Completable =
+        if (isTestnet()) {
+            // TODO(bch testnet explorer coming soon)
+            Completable.complete()
+        } else {
+            Completable.fromCallable {
+                balanceManager.updateAllBalances(legacyAddressList, allAccountsAndAddresses)
             }
+        }
 
     fun getAddressBalance(address: String): BigInteger =
-            balanceManager.getAddressBalance(address) ?: BigInteger.ZERO
+        balanceManager.getAddressBalance(address) ?: BigInteger.ZERO
 
     fun getWalletBalance(): BigInteger = balanceManager.walletBalance ?: BigInteger.ZERO
 
@@ -90,7 +92,7 @@ open class BitcoinCashWallet : DeterministicWallet {
      * archived addresses.
      */
     fun getImportedAddressBalance(): BigInteger =
-            balanceManager.importedAddressesBalance ?: BigInteger.ZERO
+        balanceManager.importedAddressesBalance ?: BigInteger.ZERO
 
     /**
      *
@@ -103,28 +105,28 @@ open class BitcoinCashWallet : DeterministicWallet {
      * @return All wallet transactions, all legacy transactions, or transaction relating to a single context/address
      */
     fun getTransactions(
-            legacyAddressList: List<String>?,
-            watchOnly: List<String>,
-            activeXpubs: List<String>,
-            context: String?,
-            limit: Int,
-            offset: Int
+        legacyAddressList: List<String>?,
+        watchOnly: List<String>,
+        activeXpubs: List<String>,
+        context: String?,
+        limit: Int,
+        offset: Int
     ): MutableList<TransactionSummary> =
 
-            if (isTestnet()) {
-                //TODO(bch testnet explorer coming soon)
-                mutableListOf()
-            } else {
-                multiAddressFactory.getAccountTransactions(
-                        activeXpubs,
-                        watchOnly,
-                        legacyAddressList,
-                        context,
-                        limit,
-                        offset,
-                        BCH_FORK_HEIGHT
-                )
-            }
+        if (isTestnet()) {
+            // TODO(bch testnet explorer coming soon)
+            mutableListOf()
+        } else {
+            multiAddressFactory.getAccountTransactions(
+                activeXpubs,
+                watchOnly,
+                legacyAddressList,
+                context,
+                limit,
+                offset,
+                BCH_FORK_HEIGHT
+            )
+        }
 
     /**
      * Generates a Base58 Bitcoin Cash receive address for an account at a given position. The
@@ -213,7 +215,7 @@ open class BitcoinCashWallet : DeterministicWallet {
     /**
      * Allows you to generate a receive address from any given point on the receive chain.
      *
-     * @param accountIndex  The index of the account you wish to generate an address from
+     * @param accountIndex The index of the account you wish to generate an address from
      * @param addressIndex What position on the chain the address you wish to create is
      * @return A Bitcoin Cash receive address in Base58 format
      */
@@ -224,7 +226,7 @@ open class BitcoinCashWallet : DeterministicWallet {
     /**
      * Allows you to generate a change address from any given point on the change chain.
      *
-     * @param accountIndex  The index of the account you wish to generate an address from
+     * @param accountIndex The index of the account you wish to generate an address from
      * @param addressIndex What position on the chain the address you wish to create is
      * @return A Bitcoin Cash change address in Base58 format
      */
@@ -246,12 +248,12 @@ open class BitcoinCashWallet : DeterministicWallet {
      * @return
      */
     fun isOwnAddress(address: String) =
-            multiAddressFactory.isOwnHDAddress(address)
+        multiAddressFactory.isOwnHDAddress(address)
 
     /**
      * Returns an xPub from an address if the address belongs to this wallet.
      * @param address The Bitcoin Cash base58 address you want to query
-     * @return  An xPub as a String
+     * @return An xPub as a String
      */
     fun getXpubFromAddress(address: String): String? {
         return multiAddressFactory.getXpubFromAddress(address)
@@ -262,7 +264,7 @@ open class BitcoinCashWallet : DeterministicWallet {
      * balances after a successful transaction which speeds up the balance the UI reflects without
      * the need to wait for incoming websocket notification.
      *
-     * @param amount  The amount to be subtracted from the address's balance
+     * @param amount The amount to be subtracted from the address's balance
      * @param address A valid Bitcoin cash address in base58 format
      */
     @Throws(Exception::class)
@@ -271,8 +273,10 @@ open class BitcoinCashWallet : DeterministicWallet {
     }
 
     @Throws(HDWalletException::class)
-    fun getHDKeysForSigning(account: DeterministicAccount,
-                            unspentOutputs: List<UnspentOutput>): List<ECKey> {
+    fun getHDKeysForSigning(
+        account: DeterministicAccount,
+        unspentOutputs: List<UnspentOutput>
+    ): List<ECKey> {
 
         if (!account.node.hasPrivKey())
             throw HDWalletException("Wallet private key unavailable. First decrypt with second password.")
@@ -281,7 +285,9 @@ open class BitcoinCashWallet : DeterministicWallet {
 
             for (unspentOutput in unspentOutputs) {
                 if (unspentOutput.xpub != null) {
-                    val split = unspentOutput.xpub.path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    val split =
+                        unspentOutput.xpub.path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                            .toTypedArray()
                     val chain = Integer.parseInt(split[1])
                     val addressIndex = Integer.parseInt(split[2])
                     val address = account.chains[chain]!!.getAddressAt(addressIndex)
@@ -312,27 +318,51 @@ open class BitcoinCashWallet : DeterministicWallet {
         const val METADATA_TYPE_EXTERNAL = 7
 
         @Synchronized
-        fun create(blockExplorer: BlockExplorer, params: NetworkParameters, coinPath: String): BitcoinCashWallet {
+        fun create(
+            blockExplorer: BlockExplorer,
+            params: NetworkParameters,
+            coinPath: String
+        ): BitcoinCashWallet {
             return BitcoinCashWallet(blockExplorer, params, coinPath, "")
         }
 
         @Synchronized
-        fun create(blockExplorer: BlockExplorer, params: NetworkParameters, coinPath: String, passphrase: String): BitcoinCashWallet {
+        fun create(
+            blockExplorer: BlockExplorer,
+            params: NetworkParameters,
+            coinPath: String,
+            passphrase: String
+        ): BitcoinCashWallet {
             return BitcoinCashWallet(blockExplorer, params, coinPath, passphrase)
         }
 
         @Synchronized
-        fun restore(blockExplorer: BlockExplorer, params: NetworkParameters, coinPath: String, entropyHex: String, passphrase: String): BitcoinCashWallet {
+        fun restore(
+            blockExplorer: BlockExplorer,
+            params: NetworkParameters,
+            coinPath: String,
+            entropyHex: String,
+            passphrase: String
+        ): BitcoinCashWallet {
             return BitcoinCashWallet(blockExplorer, params, coinPath, entropyHex, passphrase)
         }
 
         @Synchronized
-        fun restore(blockExplorer: BlockExplorer, params: NetworkParameters, coinPath: String, mnemonic: List<String>, passphrase: String): BitcoinCashWallet {
+        fun restore(
+            blockExplorer: BlockExplorer,
+            params: NetworkParameters,
+            coinPath: String,
+            mnemonic: List<String>,
+            passphrase: String
+        ): BitcoinCashWallet {
             return BitcoinCashWallet(blockExplorer, params, coinPath, mnemonic, passphrase)
         }
 
         @Synchronized
-        fun createWatchOnly(blockExplorer: BlockExplorer, params: NetworkParameters): BitcoinCashWallet {
+        fun createWatchOnly(
+            blockExplorer: BlockExplorer,
+            params: NetworkParameters
+        ): BitcoinCashWallet {
             return BitcoinCashWallet(blockExplorer, params)
         }
     }

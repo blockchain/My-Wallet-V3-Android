@@ -12,22 +12,21 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 internal class BuySellEmptyListDelegate : AdapterDelegate<BuySellDisplayable> {
 
     override fun isForViewType(items: List<BuySellDisplayable>, position: Int): Boolean =
-            items[position] is EmptyTransactionList
+        items[position] is EmptyTransactionList
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            BuySellEmptyViewHolder(parent.inflate(R.layout.item_buy_sell_empty_transactions))
+        BuySellEmptyViewHolder(parent.inflate(R.layout.item_buy_sell_empty_transactions))
 
     override fun onBindViewHolder(
-            items: List<BuySellDisplayable>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<BuySellDisplayable>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         holder as BuySellEmptyViewHolder
     }
 
     private class BuySellEmptyViewHolder(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView)
-
 }

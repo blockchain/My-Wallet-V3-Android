@@ -20,43 +20,45 @@ import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 
-class BackupWalletWordListFragment : BaseFragment<BackupWalletWordListView, BackupWalletWordListPresenter>(),
-        BackupWalletWordListView {
+class BackupWalletWordListFragment :
+    BaseFragment<BackupWalletWordListView, BackupWalletWordListPresenter>(),
+    BackupWalletWordListView {
 
-    @Inject lateinit var backupWalletWordListPresenter: BackupWalletWordListPresenter
+    @Inject
+    lateinit var backupWalletWordListPresenter: BackupWalletWordListPresenter
 
     private val animEnterFromRight: Animation by unsafeLazy {
         AnimationUtils.loadAnimation(
-                activity,
-                R.anim.enter_from_right
+            activity,
+            R.anim.enter_from_right
         )
     }
     private val animEnterFromLeft: Animation by unsafeLazy {
         AnimationUtils.loadAnimation(
-                activity,
-                R.anim.enter_from_left
+            activity,
+            R.anim.enter_from_left
         )
     }
     private val animExitToLeft: Animation by unsafeLazy {
         AnimationUtils.loadAnimation(
-                activity,
-                R.anim.exit_to_left
+            activity,
+            R.anim.exit_to_left
         )
     }
     private val animExitToRight: Animation by unsafeLazy {
         AnimationUtils.loadAnimation(
-                activity,
-                R.anim.exit_to_right
+            activity,
+            R.anim.exit_to_right
         )
     }
     private val word: String by unsafeLazy {
         getString(
-                R.string.backup_word
+            R.string.backup_word
         )
     }
     private val of: String by unsafeLazy {
         getString(
-                R.string.backup_of
+            R.string.backup_of
         )
     }
 
@@ -67,9 +69,9 @@ class BackupWalletWordListFragment : BaseFragment<BackupWalletWordListView, Back
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_backup_word_list)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -164,10 +166,10 @@ class BackupWalletWordListFragment : BaseFragment<BackupWalletWordListView, Back
 
         fragmentManager?.run {
             beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .replace(R.id.content_frame, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 

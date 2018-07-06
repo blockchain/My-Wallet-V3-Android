@@ -14,8 +14,8 @@ interface AdapterDelegate<in T> {
     /**
      * Determines whether or not this [AdapterDelegate] is responsible for the given data element
      *
-     * @param items     The adapter's data source
-     * @param position  The current position in the data source
+     * @param items The adapter's data source
+     * @param position The current position in the data source
      */
     fun isForViewType(items: List<T>, position: Int): Boolean
 
@@ -31,11 +31,15 @@ interface AdapterDelegate<in T> {
     /**
      * Called to bind the [RecyclerView.ViewHolder] to the item of the data source set
      *
-     * @param items     The adapter's data source
-     * @param position  The current position in the data source
+     * @param items The adapter's data source
+     * @param position The current position in the data source
      *
      * @param holder The [RecyclerView.ViewHolder] to bind
      */
-    fun onBindViewHolder(items: List<T>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<*>)
-
+    fun onBindViewHolder(
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
+    )
 }

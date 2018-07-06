@@ -1,10 +1,10 @@
 package piuk.blockchain.android.ui.dashboard.adapter
 
 import android.content.Context
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.android.ui.adapters.AdapterDelegatesManager
 import piuk.blockchain.android.ui.adapters.DelegationAdapter
 import piuk.blockchain.android.ui.dashboard.PieChartsState
+import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 
 /**
  * @param context The Activity/Fragment [Context]
@@ -12,9 +12,9 @@ import piuk.blockchain.android.ui.dashboard.PieChartsState
  * @param coinSelector A callback for getting the selected coin from the pie Chart
  */
 class DashboardDelegateAdapter(
-        context: Context,
-        assetSelector: (CryptoCurrencies) -> Unit,
-        coinSelector: (CryptoCurrencies) -> Unit
+    context: Context,
+    assetSelector: (CryptoCurrencies) -> Unit,
+    coinSelector: (CryptoCurrencies) -> Unit
 ) : DelegationAdapter<Any>(AdapterDelegatesManager(), emptyList()) {
 
     private val onboardingDelegate = OnboardingDelegate<Any>(context)
@@ -36,5 +36,4 @@ class DashboardDelegateAdapter(
     fun updatePieChartState(chartsState: PieChartsState) {
         pieChartDelegate.updateChartState(chartsState)
     }
-
 }

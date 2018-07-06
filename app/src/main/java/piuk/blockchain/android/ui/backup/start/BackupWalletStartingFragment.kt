@@ -14,19 +14,21 @@ import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import javax.inject.Inject
 
-class BackupWalletStartingFragment : BaseFragment<BackupWalletStartingView, BackupWalletStartingPresenter>(),
-        BackupWalletStartingView {
+class BackupWalletStartingFragment :
+    BaseFragment<BackupWalletStartingView, BackupWalletStartingPresenter>(),
+    BackupWalletStartingView {
 
-    @Inject lateinit var backupWalletStartingPresenter: BackupWalletStartingPresenter
+    @Inject
+    lateinit var backupWalletStartingPresenter: BackupWalletStartingPresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? = container!!.inflate(R.layout.fragment_backup_start)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,7 +36,8 @@ class BackupWalletStartingFragment : BaseFragment<BackupWalletStartingView, Back
 
         button_start.setOnClickListener {
             if (presenter.isDoubleEncrypted()) {
-                SecondPasswordHandler(activity).validate(object : SecondPasswordHandler.ResultListener {
+                SecondPasswordHandler(activity).validate(object :
+                    SecondPasswordHandler.ResultListener {
                     override fun onNoSecondPassword() {
                         throw IllegalStateException("This point should never be reached")
                     }
@@ -43,8 +46,8 @@ class BackupWalletStartingFragment : BaseFragment<BackupWalletStartingView, Back
                         val fragment = BackupWalletWordListFragment().apply {
                             arguments = Bundle().apply {
                                 putString(
-                                        BackupWalletWordListFragment.ARGUMENT_SECOND_PASSWORD,
-                                        validateSecondPassword
+                                    BackupWalletWordListFragment.ARGUMENT_SECOND_PASSWORD,
+                                    validateSecondPassword
                                 )
                             }
                         }
@@ -64,14 +67,13 @@ class BackupWalletStartingFragment : BaseFragment<BackupWalletStartingView, Back
     private fun loadFragment(fragment: Fragment) {
         activity?.run {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
     companion object {
         const val TAG = "BackupWalletStartingFragment"
     }
-
 }

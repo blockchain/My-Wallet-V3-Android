@@ -24,9 +24,11 @@ private const val ERROR_TIMEOUT_MILLIS: Long = 1500
 private const val SUCCESS_DELAY_MILLIS: Long = 600
 private const val FATAL_ERROR_TIMEOUT_MILLIS: Long = 3500
 
-class FingerprintDialog : BaseDialogFragment<FingerprintView, FingerprintPresenter>(), FingerprintView {
+class FingerprintDialog : BaseDialogFragment<FingerprintView, FingerprintPresenter>(),
+    FingerprintView {
 
-    @Inject lateinit var fingerprintPresenter: FingerprintPresenter
+    @Inject
+    lateinit var fingerprintPresenter: FingerprintPresenter
     private var authCallback: FingerprintAuthCallback? = null
 
     init {
@@ -44,9 +46,9 @@ class FingerprintDialog : BaseDialogFragment<FingerprintView, FingerprintPresent
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         dialog.apply {
             setTitle(getString(R.string.fingerprint_login_title))
@@ -139,7 +141,7 @@ class FingerprintDialog : BaseDialogFragment<FingerprintView, FingerprintPresent
     }
 
     private class BackButtonListener constructor(
-            private val fingerprintAuthCallback: FingerprintAuthCallback
+        private val fingerprintAuthCallback: FingerprintAuthCallback
     ) : DialogInterface.OnKeyListener {
 
         override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
@@ -161,7 +163,6 @@ class FingerprintDialog : BaseDialogFragment<FingerprintView, FingerprintPresent
         fun onAuthenticated(data: String?)
 
         fun onCanceled()
-
     }
 
     companion object {
@@ -179,7 +180,6 @@ class FingerprintDialog : BaseDialogFragment<FingerprintView, FingerprintPresent
             return fragment
         }
     }
-
 }
 
 /**

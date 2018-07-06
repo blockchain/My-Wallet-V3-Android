@@ -19,28 +19,28 @@ import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class AssetPriceCardDelegate<in T>(
-        private val context: Context,
-        private val assetSelector: (CryptoCurrencies) -> Unit
+    private val context: Context,
+    private val assetSelector: (CryptoCurrencies) -> Unit
 ) : AdapterDelegate<T> {
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            items[position] is AssetPriceCardState
+        items[position] is AssetPriceCardState
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            AssetPriceCardViewHolder(parent.inflate(R.layout.item_asset_price_card), assetSelector)
+        AssetPriceCardViewHolder(parent.inflate(R.layout.item_asset_price_card), assetSelector)
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         (holder as AssetPriceCardViewHolder).bind(items[position] as AssetPriceCardState, context)
     }
 
     private class AssetPriceCardViewHolder internal constructor(
-            itemView: View,
-            private val assetSelector: (CryptoCurrencies) -> Unit
+        itemView: View,
+        private val assetSelector: (CryptoCurrencies) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var price: TextView = itemView.textview_price
@@ -88,7 +88,5 @@ class AssetPriceCardDelegate<in T>(
             price.invisible()
             error.visible()
         }
-
     }
-
 }

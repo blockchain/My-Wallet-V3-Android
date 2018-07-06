@@ -9,7 +9,7 @@ import android.widget.AdapterView
  * Allow us to use a functional interface in place of implementing members that we might not need to.
  */
 inline fun onItemSelectedListener(
-        crossinline function: (position: Int) -> Unit
+    crossinline function: (position: Int) -> Unit
 ): AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -20,7 +20,6 @@ inline fun onItemSelectedListener(
     override fun onNothingSelected(parent: AdapterView<*>?) {
         // No-op
     }
-
 }
 
 inline fun ViewPager.setOnPageChangeListener(func: OnPageChangeListener.() -> Unit) {
@@ -59,7 +58,6 @@ class OnPageChangeListener : ViewPager.OnPageChangeListener {
     fun onPageSelected(func: (position: Int) -> Unit) {
         onPageSelected = func
     }
-
 }
 
 /**
@@ -82,5 +80,4 @@ fun TabLayout.setOnTabSelectedListener(function: (position: Int) -> Unit) {
             function(selectedTabPosition)
         }
     })
-
 }

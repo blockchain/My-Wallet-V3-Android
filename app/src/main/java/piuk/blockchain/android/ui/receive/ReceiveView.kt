@@ -5,7 +5,7 @@ import android.support.annotation.StringRes
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import java.util.*
+import java.util.Locale
 
 interface ReceiveView : View {
 

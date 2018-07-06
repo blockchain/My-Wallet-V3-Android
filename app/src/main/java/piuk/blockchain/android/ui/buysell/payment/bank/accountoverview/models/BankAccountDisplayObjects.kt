@@ -6,6 +6,6 @@ interface BankAccountDisplayable
 class AddAccountButton : BankAccountDisplayable
 
 data class BankAccountListObject(
-        val bankAccountId: Int,
-        val iban: String
+    val bankAccountId: Int,
+    val iban: String
 ) : BankAccountDisplayable

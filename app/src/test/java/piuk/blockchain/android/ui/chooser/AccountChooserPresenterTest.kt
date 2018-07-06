@@ -23,7 +23,7 @@ import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import java.math.BigInteger
-import java.util.*
+import java.util.Arrays
 
 class AccountChooserPresenterTest {
 
@@ -41,13 +41,13 @@ class AccountChooserPresenterTest {
     @Throws(Exception::class)
     fun setUp() {
         subject = AccountChooserPresenter(
-                walletAccountHelper,
-                payloadDataManager,
-                bchDataManager,
-                currencyState,
-                stringUtils,
-                contactsDataManager,
-                currencyFormatManager
+            walletAccountHelper,
+            payloadDataManager,
+            bchDataManager,
+            currencyState,
+            stringUtils,
+            contactsDataManager,
+            currencyFormatManager
         )
         subject.initView(activity)
     }
@@ -64,7 +64,7 @@ class AccountChooserPresenterTest {
         contact1.mdid = "mdid"
         val contact2 = Contact()
         whenever(contactsDataManager.getContactList())
-                .thenReturn(Observable.just(contact0, contact1, contact2))
+            .thenReturn(Observable.just(contact0, contact1, contact2))
         // Act
         subject.onViewReady()
         // Assert
@@ -85,7 +85,7 @@ class AccountChooserPresenterTest {
         val contact1 = Contact()
         val contact2 = Contact()
         whenever(contactsDataManager.getContactList())
-                .thenReturn(Observable.just(contact0, contact1, contact2))
+            .thenReturn(Observable.just(contact0, contact1, contact2))
         // Act
         subject.onViewReady()
         // Assert
@@ -102,12 +102,12 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount("")
         val itemAccount2 = ItemAccount("")
         whenever(walletAccountHelper.getHdAccounts())
-                .thenReturn(listOf(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(listOf(itemAccount0, itemAccount1, itemAccount2))
         val itemAccount3 = ItemAccount("")
         whenever(walletAccountHelper.getEthAccount())
-                .thenReturn(Arrays.asList(itemAccount3))
+            .thenReturn(Arrays.asList(itemAccount3))
         whenever(walletAccountHelper.getHdBchAccounts())
-                .thenReturn(listOf(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(listOf(itemAccount0, itemAccount1, itemAccount2))
         // Act
         subject.onViewReady()
         // Assert
@@ -130,9 +130,9 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount()
         val itemAccount2 = ItemAccount()
         whenever(walletAccountHelper.getHdAccounts())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         whenever(walletAccountHelper.getLegacyAddresses())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         // Act
         subject.onViewReady()
         // Assert
@@ -153,7 +153,7 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount()
         val itemAccount2 = ItemAccount()
         whenever(walletAccountHelper.getHdAccounts())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         // Act
         subject.onViewReady()
         // Assert
@@ -173,7 +173,7 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount()
         val itemAccount2 = ItemAccount()
         whenever(walletAccountHelper.getHdBchAccounts())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         // Act
         subject.onViewReady()
         // Assert
@@ -193,9 +193,9 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount()
         val itemAccount2 = ItemAccount()
         whenever(walletAccountHelper.getHdBchAccounts())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         whenever(walletAccountHelper.getLegacyBchAddresses())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         // Act
         subject.onViewReady()
         // Assert
@@ -221,16 +221,16 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount()
         val itemAccount2 = ItemAccount()
         whenever(walletAccountHelper.getHdAccounts())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         whenever(payloadDataManager.walletBalance).thenReturn(BigInteger.TEN)
         whenever(payloadDataManager.importedAddressesBalance).thenReturn(BigInteger.TEN)
         whenever(payloadDataManager.legacyAddresses)
-                .thenReturn(mutableListOf(legacyAddress0, legacyAddress1))
+            .thenReturn(mutableListOf(legacyAddress0, legacyAddress1))
         whenever(payloadDataManager.accounts)
-                .thenReturn(listOf(account0, account1, account2))
+            .thenReturn(listOf(account0, account1, account2))
         whenever(currencyState.isDisplayingCryptoCurrency).thenReturn(true)
         whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
-                .thenReturn("$11350.00")
+            .thenReturn("$11350.00")
         whenever(stringUtils.getString(any())).thenReturn("")
         // Act
         subject.onViewReady()
@@ -256,16 +256,16 @@ class AccountChooserPresenterTest {
         val itemAccount1 = ItemAccount()
         val itemAccount2 = ItemAccount()
         whenever(walletAccountHelper.getHdBchAccounts())
-                .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
+            .thenReturn(Arrays.asList(itemAccount0, itemAccount1, itemAccount2))
         whenever(bchDataManager.getWalletBalance()).thenReturn(BigInteger.TEN)
         whenever(bchDataManager.getImportedAddressBalance()).thenReturn(BigInteger.TEN)
         whenever(payloadDataManager.legacyAddresses)
-                .thenReturn(listOf(legacyAddress0, legacyAddress1))
+            .thenReturn(listOf(legacyAddress0, legacyAddress1))
         whenever(bchDataManager.getActiveAccounts())
-                .thenReturn(listOf(account0, account1, account2))
+            .thenReturn(listOf(account0, account1, account2))
         whenever(currencyState.isDisplayingCryptoCurrency).thenReturn(true)
         whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
-                .thenReturn("$1450")
+            .thenReturn("$1450")
         whenever(stringUtils.getString(any())).thenReturn("")
         // Act
         subject.onViewReady()
@@ -276,5 +276,4 @@ class AccountChooserPresenterTest {
         // Value includes 1 headers, 3 accounts, 1 total summary, 1 legacy summary
         captor.firstValue.size shouldEqual 6
     }
-
 }

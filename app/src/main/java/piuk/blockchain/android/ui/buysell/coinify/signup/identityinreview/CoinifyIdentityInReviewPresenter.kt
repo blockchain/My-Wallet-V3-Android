@@ -19,45 +19,45 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CoinifyIdentityInReviewPresenter @Inject constructor(
-        private val exchangeService: ExchangeService,
-        private val coinifyDataManager: CoinifyDataManager
+    private val exchangeService: ExchangeService,
+    private val coinifyDataManager: CoinifyDataManager
 ) : BasePresenter<CoinifyIdentityInReviewView>() {
 
     override fun onViewReady() {
         Observable.timer(2, TimeUnit.SECONDS, Schedulers.computation())
-                .applySchedulers()
-                .addToCompositeDisposable(this)
-                .doOnSubscribe { view.onShowLoading() }
-                .flatMap { getCoinifyMetaDataObservable() }
-                .flatMapCompletable {
-                    if (it.isPresent) {
-                        // User has coinify account - Continue sign-up or go to overview
-                        continueTraderSignupOrGoToOverviewCompletable(it.get())
-                    } else {
-                        // This will never happen but handle case anyway
-                        view.onFinish()
-                        Completable.complete()
-                    }
+            .applySchedulers()
+            .addToCompositeDisposable(this)
+            .doOnSubscribe { view.onShowLoading() }
+            .flatMap { getCoinifyMetaDataObservable() }
+            .flatMapCompletable {
+                if (it.isPresent) {
+                    // User has coinify account - Continue sign-up or go to overview
+                    continueTraderSignupOrGoToOverviewCompletable(it.get())
+                } else {
+                    // This will never happen but handle case anyway
+                    view.onFinish()
+                    Completable.complete()
                 }
-                .doOnEvent { view.dismissLoading() }
-                .subscribeBy(
-                        onError = {
-                            Timber.e(it)
-                            view.onFinish()
-                        }
-                )
+            }
+            .doOnEvent { view.dismissLoading() }
+            .subscribeBy(
+                onError = {
+                    Timber.e(it)
+                    view.onFinish()
+                }
+            )
     }
 
     private fun continueTraderSignupOrGoToOverviewCompletable(coinifyData: CoinifyData) =
-            coinifyDataManager.getTrader(coinifyData.token!!)
-                    .flatMap {
-                        // Trader exists - Check for any KYC reviews
-                        coinifyDataManager.getKycReviews(coinifyData.token!!)
-                    }.flatMapCompletable { kycList ->
-                        filterReviewStatus(kycList)
-                        Completable.complete()
-                    }
-                    .applySchedulers()
+        coinifyDataManager.getTrader(coinifyData.token!!)
+            .flatMap {
+                // Trader exists - Check for any KYC reviews
+                coinifyDataManager.getKycReviews(coinifyData.token!!)
+            }.flatMapCompletable { kycList ->
+                filterReviewStatus(kycList)
+                Completable.complete()
+            }
+            .applySchedulers()
 
     @VisibleForTesting
     fun filterReviewStatus(kycList: List<KycResponse>) {
@@ -90,8 +90,8 @@ class CoinifyIdentityInReviewPresenter @Inject constructor(
      * @return An [Observable] wrapping an [Optional] with coinify data
      */
     private fun getCoinifyMetaDataObservable() =
-            exchangeService.getExchangeMetaData()
-                    .applySchedulers()
-                    .addToCompositeDisposable(this)
-                    .map { it.coinify?.run { Optional.of(this) } ?: Optional.absent() }
+        exchangeService.getExchangeMetaData()
+            .applySchedulers()
+            .addToCompositeDisposable(this)
+            .map { it.coinify?.run { Optional.of(this) } ?: Optional.absent() }
 }

@@ -1,12 +1,12 @@
 package piuk.blockchain.android.ui.backup.wordlist
 
 import piuk.blockchain.android.ui.backup.wordlist.BackupWalletWordListFragment.Companion.ARGUMENT_SECOND_PASSWORD
-import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.android.util.BackupWalletUtil
+import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import javax.inject.Inject
 
 class BackupWalletWordListPresenter @Inject constructor(
-        private val backupWalletUtil: BackupWalletUtil
+    private val backupWalletUtil: BackupWalletUtil
 ) : BasePresenter<BackupWalletWordListView>() {
 
     internal var secondPassword: String? = null
@@ -25,5 +25,4 @@ class BackupWalletWordListPresenter @Inject constructor(
     internal fun getWordForIndex(index: Int) = mnemonic!![index]
 
     internal fun getMnemonicSize() = mnemonic?.size ?: -1
-
 }

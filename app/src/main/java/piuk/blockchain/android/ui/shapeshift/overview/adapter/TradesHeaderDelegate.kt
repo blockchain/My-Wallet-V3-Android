@@ -11,26 +11,28 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 
 class TradesHeaderDelegate<in T>() : AdapterDelegate<T> {
 
-    override fun isForViewType(items: List<T>, position: Int): Boolean = items[position] is ShapeshiftHeaderDisplayable
+    override fun isForViewType(items: List<T>, position: Int): Boolean =
+        items[position] is ShapeshiftHeaderDisplayable
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            HeaderViewHolder(parent.inflate(R.layout.item_shapeshift_row_header))
+        HeaderViewHolder(parent.inflate(R.layout.item_shapeshift_row_header))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>) {
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
+    ) {
 
         val viewHolder = holder as HeaderViewHolder
 
         viewHolder.layout.setOnClickListener {
-            //no-op
+            // no-op
         }
     }
 
     private class HeaderViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var layout: RelativeLayout = itemView.relative_layout

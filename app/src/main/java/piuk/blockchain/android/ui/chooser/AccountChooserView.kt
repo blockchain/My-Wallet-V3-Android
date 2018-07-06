@@ -12,5 +12,4 @@ interface AccountChooserView : View {
     fun updateUi(items: List<ItemAccount>)
 
     fun showNoContacts()
-
 }

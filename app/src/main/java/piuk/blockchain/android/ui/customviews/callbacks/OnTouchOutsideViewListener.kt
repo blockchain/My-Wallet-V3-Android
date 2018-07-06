@@ -9,5 +9,4 @@ interface OnTouchOutsideViewListener {
      * Called when a touch event has occurred outside a given view.
      */
     fun onTouchOutside(view: View, event: MotionEvent)
-
 }

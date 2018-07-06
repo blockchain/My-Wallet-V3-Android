@@ -2,11 +2,11 @@ package piuk.blockchain.androidbuysell.models.coinify
 
 @Suppress("unused")
 data class SignUpDetails(
-        val email: String,
-        val defaultCurrency: String,
-        val profile: Profile,
-        val partnerId: Int,
-        val trustedEmailValidationToken: String
+    val email: String,
+    val defaultCurrency: String,
+    val profile: Profile,
+    val partnerId: Int,
+    val trustedEmailValidationToken: String
 ) {
 
     val generateOfflineToken: Boolean = true
@@ -26,19 +26,17 @@ data class SignUpDetails(
          * @return A basic [SignUpDetails] object for initial registration.
          */
         fun basicSignUp(
-                email: String,
-                defaultCurrency: String,
-                countryCode: String,
-                partnerId: Int,
-                trustedEmailValidationToken: String
+            email: String,
+            defaultCurrency: String,
+            countryCode: String,
+            partnerId: Int,
+            trustedEmailValidationToken: String
         ): SignUpDetails = SignUpDetails(
-                email,
-                defaultCurrency,
-                Profile(Address(countryCode)),
-                partnerId,
-                trustedEmailValidationToken
+            email,
+            defaultCurrency,
+            Profile(Address(countryCode)),
+            partnerId,
+            trustedEmailValidationToken
         )
-
     }
 }
-

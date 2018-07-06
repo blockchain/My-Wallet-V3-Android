@@ -1,22 +1,30 @@
 package piuk.blockchain.android.ui.backup.verify
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.android.ui.backup.BackupWalletActivity
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.android.util.BackupWalletUtil
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
 class BackupVerifyPresenterTest {
 
     private lateinit var subject: BackupVerifyPresenter
     private val view: BackupVerifyView = mock()
-    private val payloadDataManager: PayloadDataManager = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+    private val payloadDataManager: PayloadDataManager =
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
     private val prefsUtil: PrefsUtil = mock()
     private val backupWalletUtil: BackupWalletUtil = mock()
 
@@ -118,7 +126,7 @@ class BackupVerifyPresenterTest {
     fun `updateBackupStatus failure`() {
         // Arrange
         whenever(payloadDataManager.syncPayloadWithServer())
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         whenever(payloadDataManager.wallet!!.hdWallets[0]).thenReturn(mock())
         // Act
         subject.updateBackupStatus()
@@ -133,5 +141,4 @@ class BackupVerifyPresenterTest {
         verifyNoMoreInteractions(view)
         verifyZeroInteractions(prefsUtil)
     }
-
 }

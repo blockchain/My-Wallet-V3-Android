@@ -17,7 +17,7 @@ import io.reactivex.internal.functions.Functions
  * @return A [Disposable] object.
  */
 fun <T> Maybe<T>.emptySubscribe(): Disposable =
-        subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
+    subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
 
 /**
  * Subscribes to a [Maybe] and silently consumes any emitted values. Any exceptions thrown won't
@@ -27,7 +27,7 @@ fun <T> Maybe<T>.emptySubscribe(): Disposable =
  * @return A [Disposable] object.
  */
 fun <T> Single<T>.emptySubscribe(): Disposable =
-        subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
+    subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
 
 /**
  * Subscribes to a [Flowable] and silently consumes any emitted values. Any exceptions thrown won't
@@ -37,7 +37,7 @@ fun <T> Single<T>.emptySubscribe(): Disposable =
  * @return A [Disposable] object.
  */
 fun <T> Flowable<T>.emptySubscribe(): Disposable =
-        subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
+    subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
 
 /**
  * Subscribes to a [Observable] and silently consumes any emitted values. Any exceptions thrown won't
@@ -47,7 +47,7 @@ fun <T> Flowable<T>.emptySubscribe(): Disposable =
  * @return A [Disposable] object.
  */
 fun <T> Observable<T>.emptySubscribe(): Disposable =
-        subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
+    subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER)
 
 /**
  * Subscribes to a [Completable] and silently completes, if applicable. Any exceptions thrown won't
@@ -57,4 +57,4 @@ fun <T> Observable<T>.emptySubscribe(): Disposable =
  * @return A [Disposable] object.
  */
 fun Completable.emptySubscribe(): Disposable =
-        subscribe(Functions.EMPTY_ACTION, Functions.ERROR_CONSUMER)
+    subscribe(Functions.EMPTY_ACTION, Functions.ERROR_CONSUMER)

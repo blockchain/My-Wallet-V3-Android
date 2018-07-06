@@ -19,16 +19,15 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.view_expanding_currency_header.view.*
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcoreui.utils.extensions.setAnimationListener
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
+import piuk.blockchain.androidcoreui.utils.extensions.setAnimationListener
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 
-
 class ExpandableCurrencyHeader @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : RelativeLayout(context, attrs) {
 
     private lateinit var selectionListener: (CryptoCurrencies) -> Unit
@@ -43,7 +42,7 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
     init {
         // Inflate layout
         LayoutInflater.from(getContext())
-                .inflate(R.layout.view_expanding_currency_header, this, true)
+            .inflate(R.layout.view_expanding_currency_header, this, true)
         // Add compound drawables manually to avoid inflation errors on <21
         textview_bitcoin.setRightDrawable(R.drawable.vector_bitcoin)
         textview_ethereum.setRightDrawable(R.drawable.vector_eth)
@@ -161,10 +160,10 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
         textview_selected_currency.run {
             text = context.getText(title).toString().toUpperCase()
             setCompoundDrawablesWithIntrinsicBounds(
-                    AppCompatResources.getDrawable(context, leftDrawable),
-                    null,
-                    ContextCompat.getDrawable(context, R.drawable.ic_arrow_drop_down_grey600_24dp),
-                    null
+                AppCompatResources.getDrawable(context, leftDrawable),
+                null,
+                ContextCompat.getDrawable(context, R.drawable.ic_arrow_drop_down_grey600_24dp),
+                null
             )
             visible()
         }
@@ -193,23 +192,22 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
 
     private fun TextView.setRightDrawable(@DrawableRes drawable: Int) {
         setCompoundDrawablesWithIntrinsicBounds(
-                AppCompatResources.getDrawable(context, drawable),
-                null,
-                null,
-                null
+            AppCompatResources.getDrawable(context, drawable),
+            null,
+            null,
+            null
         )
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private inner class CustomOutline internal constructor(
-            internal var width: Int,
-            internal var height: Int
+        internal var width: Int,
+        internal var height: Int
     ) : ViewOutlineProvider() {
 
         override fun getOutline(view: View, outline: Outline) {
             outline.setRect(0, 0, width, height)
         }
-
     }
 
     private inner class ExpandAnimation(private val startHeight: Int, endHeight: Int) :
@@ -225,5 +223,4 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
 
         override fun willChangeBounds(): Boolean = true
     }
-
 }

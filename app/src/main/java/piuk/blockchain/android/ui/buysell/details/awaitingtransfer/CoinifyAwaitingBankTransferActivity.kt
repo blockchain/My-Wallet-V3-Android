@@ -38,7 +38,8 @@ class CoinifyAwaitingBankTransferActivity :
     BaseMvpActivity<CoinifyAwaitingBankTransferView, CoinifyAwaitingBankTransferPresenter>(),
     CoinifyAwaitingBankTransferView {
 
-    @Inject lateinit var presenter: CoinifyAwaitingBankTransferPresenter
+    @Inject
+    lateinit var presenter: CoinifyAwaitingBankTransferPresenter
     private var progressDialog: MaterialProgressDialog? = null
     private val dataModel by unsafeLazy { intent.getParcelableExtra(EXTRA_AWAITING_FUNDS_MODEL) as AwaitingFundsModel }
 
@@ -52,15 +53,18 @@ class CoinifyAwaitingBankTransferActivity :
         setupToolbar(toolBar, R.string.buy_sell_state_awaiting_funds)
 
         // Check Intent for validity
-        require(intent.hasExtra(EXTRA_AWAITING_FUNDS_MODEL)) { "Intent does not contain AwaitingFundsModel, please start this Activity via the static factory method start()." }
+        require(intent.hasExtra(EXTRA_AWAITING_FUNDS_MODEL)) {
+            "Intent does not contain AwaitingFundsModel. " +
+                "Please start this Activity via the static factory method start()."
+        }
 
         renderUi(dataModel)
     }
 
     private fun renderUi(dataModel: AwaitingFundsModel) {
         textViewDescription.text = getString(
-                R.string.buy_sell_awaiting_funds_description,
-                dataModel.formattedAmount
+            R.string.buy_sell_awaiting_funds_description,
+            dataModel.formattedAmount
         )
         textViewReference.text = dataModel.reference
         textViewRecipientName.text = dataModel.recipientName
@@ -72,7 +76,12 @@ class CoinifyAwaitingBankTransferActivity :
         textViewFundsAlreadySent.setOnClickListener { showFundsSentDialog() }
         textViewCopyAll.setOnClickListener {
             copyToClipboard(
-                    "${dataModel.reference}\n${dataModel.recipientName}\n${dataModel.recipientAddress}\n${dataModel.iban}\n${dataModel.bic}\n${dataModel.bank}\n"
+                dataModel.reference +
+                    "\n${dataModel.recipientName}" +
+                    "\n${dataModel.recipientAddress}" +
+                    "\n${dataModel.iban}" +
+                    "\n${dataModel.bic}" +
+                    "\n${dataModel.bank}\n"
             )
         }
 
@@ -93,14 +102,14 @@ class CoinifyAwaitingBankTransferActivity :
 
     private fun showFundsSentDialog() {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.buy_sell_awaiting_funds_already_sent_title)
-                .setMessage(R.string.buy_sell_awaiting_funds_already_sent_message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
+            .setTitle(R.string.buy_sell_awaiting_funds_already_sent_title)
+            .setMessage(R.string.buy_sell_awaiting_funds_already_sent_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean =
-            consume { menuInflater.inflate(R.menu.menu_coinify_transaction_detail, menu) }
+        consume { menuInflater.inflate(R.menu.menu_coinify_transaction_detail, menu) }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId ?: -1) {
         R.id.action_cancel -> consume { presenter.cancelTrade(dataModel.tradeId) }
@@ -142,14 +151,12 @@ class CoinifyAwaitingBankTransferActivity :
     companion object {
 
         private const val EXTRA_AWAITING_FUNDS_MODEL =
-                "piuk.blockchain.android.ui.buysell.details.EXTRA_AWAITING_FUNDS_MODEL"
+            "piuk.blockchain.android.ui.buysell.details.EXTRA_AWAITING_FUNDS_MODEL"
 
         internal fun start(context: Context, awaitingFundsModel: AwaitingFundsModel) {
             Intent(context, CoinifyAwaitingBankTransferActivity::class.java).apply {
                 putExtra(EXTRA_AWAITING_FUNDS_MODEL, awaitingFundsModel)
             }.run { context.startActivity(this) }
         }
-
     }
-
 }

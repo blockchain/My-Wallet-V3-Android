@@ -61,5 +61,4 @@ class SettingsMemoryStoreTest : RxTest() {
         // Assert
         testObserver.assertValueAt(0) { it == Optional.None }
     }
-
 }

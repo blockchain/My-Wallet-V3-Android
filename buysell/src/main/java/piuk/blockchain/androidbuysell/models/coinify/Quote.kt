@@ -15,9 +15,9 @@ package piuk.blockchain.androidbuysell.models.coinify
  * @see [https://en.wikipedia.org/wiki/ISO_4217].
  */
 internal data class QuoteRequest(
-        val baseCurrency: String,
-        val quoteCurrency: String,
-        val baseAmount: Double
+    val baseCurrency: String,
+    val quoteCurrency: String,
+    val baseAmount: Double
 )
 
 /**
@@ -29,11 +29,11 @@ internal data class QuoteRequest(
  * @see [https://en.wikipedia.org/wiki/ISO_8601]
  */
 data class Quote(
-        val id: Int?,
-        val baseCurrency: String,
-        val quoteCurrency: String,
-        val baseAmount: Double,
-        val quoteAmount: Double,
-        val issueTime: String,
-        val expiryTime: String
+    val id: Int?,
+    val baseCurrency: String,
+    val quoteCurrency: String,
+    val baseAmount: Double,
+    val quoteAmount: Double,
+    val issueTime: String,
+    val expiryTime: String
 )

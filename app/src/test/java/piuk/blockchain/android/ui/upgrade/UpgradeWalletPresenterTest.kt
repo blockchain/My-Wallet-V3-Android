@@ -11,10 +11,10 @@ import io.reactivex.Completable
 import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.androidcore.data.auth.AuthDataManager
 import piuk.blockchain.android.ui.launcher.LauncherActivity
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.access.AccessState
+import piuk.blockchain.androidcore.data.auth.AuthDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
@@ -36,12 +36,12 @@ class UpgradeWalletPresenterTest {
     fun setUp() {
 
         subject = UpgradeWalletPresenter(
-                mockPrefs,
-                mockAppUtil,
-                mockAccessState,
-                mockAuthDataManager,
-                mockPayloadDataManager,
-                mockStringUtils
+            mockPrefs,
+            mockAppUtil,
+            mockAccessState,
+            mockAuthDataManager,
+            mockPayloadDataManager,
+            mockStringUtils
         )
         subject.initView(mockActivity)
     }
@@ -114,9 +114,9 @@ class UpgradeWalletPresenterTest {
         whenever(mockPayloadDataManager.tempPassword).thenReturn(currentPassword)
         whenever(mockAccessState.pin).thenReturn(pin)
         whenever(mockAuthDataManager.createPin(currentPassword, pin))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockPayloadDataManager.syncPayloadWithServer())
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.submitPasswords(firstPassword, secondPassword)
         // Assert
@@ -143,9 +143,9 @@ class UpgradeWalletPresenterTest {
         whenever(mockPayloadDataManager.tempPassword).thenReturn(currentPassword)
         whenever(mockAccessState.pin).thenReturn(pin)
         whenever(mockAuthDataManager.createPin(currentPassword, pin))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         whenever(mockPayloadDataManager.syncPayloadWithServer())
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.submitPasswords(firstPassword, secondPassword)
         // Assert
@@ -170,7 +170,7 @@ class UpgradeWalletPresenterTest {
         val walletName = "WALLET_NAME"
         whenever(mockStringUtils.getString(any())).thenReturn(walletName)
         whenever(mockPayloadDataManager.upgradeV2toV3(secondPassword, walletName))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.onUpgradeRequested(secondPassword)
         // Assert
@@ -192,7 +192,7 @@ class UpgradeWalletPresenterTest {
         val walletName = "WALLET_NAME"
         whenever(mockStringUtils.getString(any())).thenReturn(walletName)
         whenever(mockPayloadDataManager.upgradeV2toV3(secondPassword, walletName))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         // Act
         subject.onUpgradeRequested(secondPassword)
         // Assert
@@ -235,5 +235,4 @@ class UpgradeWalletPresenterTest {
         verify(mockActivity).onBackButtonPressed()
         verifyNoMoreInteractions(mockActivity)
     }
-
 }

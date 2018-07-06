@@ -31,8 +31,8 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlinx.android.synthetic.main.activity_coinify_kyc.linear_layout_kyc_root as rootView
+import java.util.Date
+import java.util.Locale
 import kotlinx.android.synthetic.main.activity_coinify_kyc.web_view_coinify_kyc as webView
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -41,8 +41,10 @@ class CoinifyKycActivity : BaseAuthActivity() {
     private val redirectUrl by unsafeLazy { intent.getStringExtra(EXTRA_REDIRECT_URL) }
     private val externalKycId by unsafeLazy { intent.getStringExtra(EXTRA_EXTERNAL_KYC_ID) }
     // Upload Objects
-    @Thunk var valueCallback: ValueCallback<Array<Uri>>? = null
-    @Thunk var capturedImageUri: Uri? = null
+    @Thunk
+    var valueCallback: ValueCallback<Array<Uri>>? = null
+    @Thunk
+    var capturedImageUri: Uri? = null
 
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,21 +89,21 @@ class CoinifyKycActivity : BaseAuthActivity() {
     @Thunk
     fun requestNecessaryPermissions() {
         val dialogMultiplePermissionsListener: MultiplePermissionsListener =
-                DialogOnAnyDeniedMultiplePermissionsListener.Builder
-                        .withContext(this)
-                        .withTitle(R.string.request_write_and_camera_storage_permission_title)
-                        .withMessage(R.string.request_write_and_camera_storage_permission_description)
-                        .withButtonText(android.R.string.ok)
-                        .build()
+            DialogOnAnyDeniedMultiplePermissionsListener.Builder
+                .withContext(this)
+                .withTitle(R.string.request_write_and_camera_storage_permission_title)
+                .withMessage(R.string.request_write_and_camera_storage_permission_description)
+                .withButtonText(android.R.string.ok)
+                .build()
 
         Dexter.withActivity(this)
-                .withPermissions(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                .withListener(dialogMultiplePermissionsListener)
-                .withErrorListener { Timber.wtf("Dexter permissions error $it") }
-                .check()
+            .withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            .withListener(dialogMultiplePermissionsListener)
+            .withErrorListener { Timber.wtf("Dexter permissions error $it") }
+            .check()
     }
 
     /**
@@ -115,24 +117,23 @@ class CoinifyKycActivity : BaseAuthActivity() {
     companion object {
 
         private const val EXTRA_REDIRECT_URL =
-                "piuk.blockchain.android.ui.buysell.coinify.signup.kyc.EXTRA_REDIRECT_URL"
+            "piuk.blockchain.android.ui.buysell.coinify.signup.kyc.EXTRA_REDIRECT_URL"
         private const val EXTRA_EXTERNAL_KYC_ID =
-                "piuk.blockchain.android.ui.buysell.coinify.signup.kyc.EXTRA_EXTERNAL_KYC_ID"
+            "piuk.blockchain.android.ui.buysell.coinify.signup.kyc.EXTRA_EXTERNAL_KYC_ID"
         private const val REDIRECT_URL_PARTIAL = "/kyc/return/isignthis/"
         private const val REQUEST_CODE_PICK_FILE = 9123
 
         fun startForResult(
-                activity: Activity,
-                redirectUrl: String,
-                externalKycId: String,
-                requestCode: Int
+            activity: Activity,
+            redirectUrl: String,
+            externalKycId: String,
+            requestCode: Int
         ) {
             Intent(activity, CoinifyKycActivity::class.java).apply {
                 putExtra(EXTRA_REDIRECT_URL, redirectUrl)
                 putExtra(EXTRA_EXTERNAL_KYC_ID, externalKycId)
             }.run { activity.startActivityForResult(this, requestCode) }
         }
-
     }
 
     private inner class FileAwareChromeClient : WebChromeClient() {
@@ -144,9 +145,9 @@ class CoinifyKycActivity : BaseAuthActivity() {
         // This page won't be accessed on <KITKAT anyway.
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         override fun onShowFileChooser(
-                webView: WebView,
-                filePathCallback: ValueCallback<Array<Uri>>,
-                fileChooserParams: WebChromeClient.FileChooserParams
+            webView: WebView,
+            filePathCallback: ValueCallback<Array<Uri>>,
+            fileChooserParams: WebChromeClient.FileChooserParams
         ): Boolean {
             // Double check that we don't have any existing callbacks
             valueCallback?.onReceiveValue(null)
@@ -196,7 +197,6 @@ class CoinifyKycActivity : BaseAuthActivity() {
                 toast(R.string.buy_sell_cannot_open_file, ToastCustom.TYPE_ERROR)
                 false
             }
-
         }
 
         @Throws(IOException::class)
@@ -204,7 +204,7 @@ class CoinifyKycActivity : BaseAuthActivity() {
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val imageFileName = "JPEG_" + timeStamp + "_"
             val storageDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             return File.createTempFile(imageFileName, ".jpg", storageDir)
         }
     }

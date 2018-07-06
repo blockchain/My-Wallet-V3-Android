@@ -9,21 +9,22 @@ import kotlinx.android.synthetic.main.activity_shapeshift_detail.*
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
+import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
+import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
-import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
 import piuk.blockchain.androidcoreui.utils.extensions.toast
-import piuk.blockchain.androidcore.utils.helperfunctions.consume
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShiftDetailPresenter>(),
-        ShapeShiftDetailView {
+    ShapeShiftDetailView {
 
     override val locale: Locale = Locale.getDefault()
 
     @Suppress("MemberVisibilityCanPrivate", "unused")
-    @Inject lateinit var shapeShiftDetailPresenter: ShapeShiftDetailPresenter
+    @Inject
+    lateinit var shapeShiftDetailPresenter: ShapeShiftDetailPresenter
 
     override val depositAddress: String by lazy { intent.getStringExtra(EXTRA_DEPOSIT_ADDRESS) }
 
@@ -42,7 +43,7 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
     }
 
     override fun onSupportNavigateUp() =
-            consume { onBackPressed() }
+        consume { onBackPressed() }
 
     override fun updateUi(uiState: TradeDetailUiState) {
         setupToolbar(toolbar_general, uiState.title)
@@ -74,7 +75,7 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
         textview_order_id_amount.text = displayString
         textview_order_id_amount.setOnClickListener {
             val clipboard =
-                    getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText("Send address", displayString)
             clipboard.primaryClip = clip
             toast(R.string.copied_to_clipboard)
@@ -84,7 +85,7 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
     override fun showProgressDialog(@StringRes message: Int) {
         dismissProgressDialog()
         progressDialog = MaterialProgressDialog(
-                this
+            this
         ).apply {
             setCancelable(false)
             setMessage(message)
@@ -117,7 +118,5 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
             }
             context.startActivity(intent)
         }
-
     }
-
 }

@@ -9,18 +9,20 @@ import kotlinx.android.synthetic.main.activity_pairing_code.*
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 
 @Suppress("UNUSED_PARAMETER")
-class PairingCodeActivity : BaseMvpActivity<PairingCodeView, PairingCodePresenter>(), PairingCodeView {
+class PairingCodeActivity : BaseMvpActivity<PairingCodeView, PairingCodePresenter>(),
+    PairingCodeView {
 
     @Suppress("MemberVisibilityCanBePrivate")
-    @Inject lateinit var pairingCodePresenter: PairingCodePresenter
+    @Inject
+    lateinit var pairingCodePresenter: PairingCodePresenter
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -40,7 +42,7 @@ class PairingCodeActivity : BaseMvpActivity<PairingCodeView, PairingCodePresente
     }
 
     override fun onSupportNavigateUp(): Boolean =
-            consume { onBackPressed() }
+        consume { onBackPressed() }
 
     override fun onQrLoaded(bitmap: Bitmap) {
         tv_warning.setText(R.string.pairing_code_warning_2)
@@ -97,5 +99,4 @@ class PairingCodeActivity : BaseMvpActivity<PairingCodeView, PairingCodePresente
             context.startActivity(intent)
         }
     }
-
 }

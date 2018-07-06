@@ -29,9 +29,9 @@ class MetadataManagerTest : RxTest() {
     override fun setUp() {
         super.setUp()
         subject = MetadataManager(
-                payloadDataManager,
-                metadataUtils,
-                rxBus
+            payloadDataManager,
+            metadataUtils,
+            rxBus
         )
     }
 
@@ -44,7 +44,7 @@ class MetadataManagerTest : RxTest() {
 
         val key: DeterministicKey = mock()
         whenever(payloadDataManager.getMetadataNodeFactory())
-                .thenReturn(Observable.just(metadataNodeFactory))
+            .thenReturn(Observable.just(metadataNodeFactory))
         whenever(metadataNodeFactory.metadataNode).thenReturn(key)
 
         // Act
@@ -69,7 +69,7 @@ class MetadataManagerTest : RxTest() {
         whenever(metadataNodeFactory.metadataNode).thenReturn(key)
 
         whenever(payloadDataManager.generateAndReturnNodes())
-                .thenReturn(Observable.just(metadataNodeFactory))
+            .thenReturn(Observable.just(metadataNodeFactory))
 
         // Act
         val testObserver = subject.attemptMetadataSetup().test()
@@ -103,7 +103,7 @@ class MetadataManagerTest : RxTest() {
         val key: DeterministicKey = mock()
         whenever(payloadDataManager.generateNodes()).thenReturn(Completable.complete())
         whenever(payloadDataManager.getMetadataNodeFactory())
-                .thenReturn(Observable.just(metadataNodeFactory))
+            .thenReturn(Observable.just(metadataNodeFactory))
         whenever(metadataNodeFactory.metadataNode).thenReturn(key)
 
         // Act
@@ -140,5 +140,4 @@ class MetadataManagerTest : RxTest() {
         verify(metadataUtils).getMetadataNode(node, type)
         verify(metadata).putMetadata(data)
     }
-
 }

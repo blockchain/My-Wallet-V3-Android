@@ -16,35 +16,35 @@ import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.ui.customviews.LockableViewPager
 import piuk.blockchain.android.ui.dashboard.models.OnboardingModel
 import piuk.blockchain.android.ui.onboarding.OnboardingPagerAdapter
+import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.androidcoreui.utils.helperfunctions.setOnPageChangeListener
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 
 class OnboardingDelegate<in T>(
-        private val context: Context
+    private val context: Context
 ) : AdapterDelegate<T> {
 
     private val onboardingPagerAdapter by unsafeLazy {
         OnboardingPagerAdapter(
-                context
+            context
         )
     }
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            items[position] is OnboardingModel
+        items[position] is OnboardingModel
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            OnboardingViewHolder(parent.inflate(R.layout.item_onboarding))
+        OnboardingViewHolder(parent.inflate(R.layout.item_onboarding))
 
     @Suppress("CascadeIf")
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         holder as OnboardingViewHolder
 
@@ -102,7 +102,7 @@ class OnboardingDelegate<in T>(
     }
 
     private class OnboardingViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         // Root Layout
@@ -115,7 +115,5 @@ class OnboardingDelegate<in T>(
         internal var skipAll: TextView = itemView.btn_skip_all
         internal var viewPager: LockableViewPager = itemView.pager_onboarding
         internal var indicator: CircleIndicator = itemView.indicator
-
     }
-
 }

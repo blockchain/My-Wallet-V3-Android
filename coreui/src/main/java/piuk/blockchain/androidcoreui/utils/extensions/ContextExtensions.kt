@@ -90,4 +90,5 @@ fun Context.getResolvedColor(@ColorRes color: Int): Int = ContextCompat.getColor
  *
  * @param color The Res ID of the color.
  */
-fun Fragment.getResolvedColor(@ColorRes color: Int): Int = ContextCompat.getColor(this.context!!, color)
+fun Fragment.getResolvedColor(@ColorRes color: Int): Int =
+    ContextCompat.getColor(this.context!!, color)

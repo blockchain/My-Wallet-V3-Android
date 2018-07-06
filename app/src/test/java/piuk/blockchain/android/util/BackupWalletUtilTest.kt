@@ -75,5 +75,4 @@ class BackupWalletUtilTest {
         verifyNoMoreInteractions(wallet)
         result `should equal` null
     }
-
 }

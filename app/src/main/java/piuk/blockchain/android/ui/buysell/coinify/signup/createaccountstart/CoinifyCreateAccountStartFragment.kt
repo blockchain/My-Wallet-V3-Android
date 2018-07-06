@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_coinify_create_account_start.buysellWelcomeButton
+import kotlinx.android.synthetic.main.fragment_coinify_create_account_start.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -16,9 +16,9 @@ class CoinifyCreateAccountStartFragment : Fragment() {
     private var signUpListener: CoinifyFlowListener? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_coinify_create_account_start)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +44,5 @@ class CoinifyCreateAccountStartFragment : Fragment() {
     companion object {
 
         fun newInstance(): CoinifyCreateAccountStartFragment = CoinifyCreateAccountStartFragment()
-
     }
 }

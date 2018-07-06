@@ -36,10 +36,8 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransferFundsDataManager
 import piuk.blockchain.android.ui.account.AccountPresenter.Companion.KEY_WARN_TRANSFER_ALL
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.android.ui.send.PendingTransaction
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcoreui.utils.AppUtil
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
@@ -47,14 +45,16 @@ import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import piuk.blockchain.androidcoreui.utils.AppUtil
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.*
+import java.util.Locale
 
 @Config(
-        sdk = [23],
-        constants = BuildConfig::class,
-        application = BlockchainTestApplication::class
+    sdk = [23],
+    constants = BuildConfig::class,
+    application = BlockchainTestApplication::class
 )
 @RunWith(RobolectricTestRunner::class)
 class AccountPresenterTest {
@@ -78,16 +78,16 @@ class AccountPresenterTest {
         MockitoAnnotations.initMocks(this)
 
         subject = AccountPresenter(
-                payloadDataManager,
-                bchDataManager,
-                metadataManager,
-                fundsDataManager,
-                prefsUtil,
-                appUtil,
-                privateKeyFactory,
-                environmentSettings,
-                currencyState,
-                currencyFormatManager
+            payloadDataManager,
+            bchDataManager,
+            metadataManager,
+            fundsDataManager,
+            prefsUtil,
+            appUtil,
+            privateKeyFactory,
+            environmentSettings,
+            currencyState,
+            currencyFormatManager
         )
 
         subject.initView(activity)
@@ -119,7 +119,7 @@ class AccountPresenterTest {
         // Arrange
         val triple = Triple.of(listOf(PendingTransaction()), 1L, 2L)
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.just(triple))
+            .thenReturn(Observable.just(triple))
         val mockPayload = mock(Wallet::class.java)
         whenever(mockPayload.isUpgraded).thenReturn(true)
         whenever(payloadDataManager.wallet).thenReturn(mockPayload)
@@ -139,7 +139,7 @@ class AccountPresenterTest {
         // Arrange
         val triple = Triple.of(listOf(PendingTransaction()), 1L, 2L)
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.just(triple))
+            .thenReturn(Observable.just(triple))
         val mockPayload = mock(Wallet::class.java)
         whenever(mockPayload.isUpgraded).thenReturn(true)
         whenever(payloadDataManager.wallet).thenReturn(mockPayload)
@@ -158,7 +158,7 @@ class AccountPresenterTest {
         // Arrange
         val triple = Triple.of(emptyList<PendingTransaction>(), 1L, 2L)
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.just<Triple<List<PendingTransaction>, Long, Long>>(triple))
+            .thenReturn(Observable.just<Triple<List<PendingTransaction>, Long, Long>>(triple))
         val mockPayload = mock(Wallet::class.java)
         whenever(mockPayload.isUpgraded).thenReturn(true)
         whenever(payloadDataManager.wallet).thenReturn(mockPayload)
@@ -175,7 +175,7 @@ class AccountPresenterTest {
     fun checkTransferableLegacyFundsThrowsException() {
         // Arrange
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         // Act
         subject.checkTransferableLegacyFunds(true, true)
         // Assert
@@ -191,7 +191,7 @@ class AccountPresenterTest {
         val account: Account = mock()
         whenever(account.xpub).thenReturn("xpub")
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
-                .thenReturn(Observable.just(account))
+            .thenReturn(Observable.just(account))
         whenever(bchDataManager.serializeForSaving()).thenReturn("")
         whenever(metadataManager.saveToMetadata(any(), anyInt())).thenReturn(Completable.complete())
         // Act
@@ -212,7 +212,7 @@ class AccountPresenterTest {
     fun createNewAccountDecryptionException() {
         // Arrange
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
-                .thenReturn(Observable.error(DecryptionException()))
+            .thenReturn(Observable.error(DecryptionException()))
         // Act
         subject.createNewAccount("")
         // Assert
@@ -227,7 +227,7 @@ class AccountPresenterTest {
     fun createNewAccountPayloadException() {
         // Arrange
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
-                .thenReturn(Observable.error(PayloadException()))
+            .thenReturn(Observable.error(PayloadException()))
         // Act
         subject.createNewAccount("")
         // Assert
@@ -242,7 +242,7 @@ class AccountPresenterTest {
     fun createNewAccountUnknownException() {
         // Arrange
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
-                .thenReturn(Observable.error(Exception()))
+            .thenReturn(Observable.error(Exception()))
         // Act
         subject.createNewAccount("")
         // Assert
@@ -258,7 +258,7 @@ class AccountPresenterTest {
         // Arrange
         val legacyAddress = LegacyAddress()
         whenever(payloadDataManager.updateLegacyAddress(legacyAddress))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.updateLegacyAddress(legacyAddress)
         // Assert
@@ -275,7 +275,7 @@ class AccountPresenterTest {
         // Arrange
         val legacyAddress = LegacyAddress()
         whenever(payloadDataManager.updateLegacyAddress(legacyAddress))
-                .thenReturn(Completable.error(Throwable()))
+            .thenReturn(Completable.error(Throwable()))
         // Act
         subject.updateLegacyAddress(legacyAddress)
         // Assert
@@ -317,8 +317,8 @@ class AccountPresenterTest {
 
         // Act
         subject.importBip38Address(
-                "6PRJmkckxBct8jUwn6UcJbickdrnXBiPP9JkNW83g4VyFNsfEuxas39pSS",
-                "password"
+            "6PRJmkckxBct8jUwn6UcJbickdrnXBiPP9JkNW83g4VyFNsfEuxas39pSS",
+            "password"
         )
         // Assert
         verify(activity).showProgressDialog(anyInt())
@@ -332,8 +332,8 @@ class AccountPresenterTest {
 
         // Act
         subject.importBip38Address(
-                "6PRJmkckxBct8jUwn6UcJbickdrnXBiPP9JkNW83g4VyFNsfEuxas39pSS",
-                "notthepassword"
+            "6PRJmkckxBct8jUwn6UcJbickdrnXBiPP9JkNW83g4VyFNsfEuxas39pSS",
+            "notthepassword"
         )
         // Assert
         verify(activity).showProgressDialog(anyInt())
@@ -359,7 +359,7 @@ class AccountPresenterTest {
     fun onAddressScannedNonBip38() {
         // Arrange
         whenever(payloadDataManager.getKeyFromImportedData(anyString(), anyString()))
-                .thenReturn(Observable.just(mock(ECKey::class.java)))
+            .thenReturn(Observable.just(mock(ECKey::class.java)))
         // Act
         subject.onAddressScanned("L1FQxC7wmmRNNe2YFPNXscPq3kaheiA4T7SnTr7vYSBW7Jw1A7PD")
         // Assert
@@ -373,11 +373,11 @@ class AccountPresenterTest {
     fun onAddressScannedNonBip38Failure() {
         // Arrange
         whenever(payloadDataManager.getKeyFromImportedData(anyString(), anyString()))
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         // Act
         subject.onAddressScanned("L1FQxC7wmmRNNe2YFPNXscPq3kaheiA4T7SnTr7vYSBW7Jw1A7PD")
         whenever(payloadDataManager.getKeyFromImportedData(anyString(), anyString()))
-                .thenReturn(Observable.just(mock(ECKey::class.java)))
+            .thenReturn(Observable.just(mock(ECKey::class.java)))
         // Assert
         verify(payloadDataManager).getKeyFromImportedData(anyString(), anyString())
         verify(activity).showProgressDialog(anyInt())
@@ -445,7 +445,7 @@ class AccountPresenterTest {
         // Arrange
         val address = "17UovdU9ZvepPe75igTQwxqNME1HbnvMB7"
         whenever(payloadDataManager.addLegacyAddress(any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.confirmImportWatchOnly(address)
         // Assert
@@ -460,7 +460,7 @@ class AccountPresenterTest {
         // Arrange
         val address = "17UovdU9ZvepPe75igTQwxqNME1HbnvMB7"
         whenever(payloadDataManager.addLegacyAddress(any()))
-                .thenReturn(Completable.error(Throwable()))
+            .thenReturn(Completable.error(Throwable()))
         // Act
         subject.confirmImportWatchOnly(address)
         // Assert
@@ -492,17 +492,17 @@ class AccountPresenterTest {
         whenever(mockECKey.hasPrivKey()).thenReturn(true)
         val legacyAddress = LegacyAddress()
         whenever(payloadDataManager.setKeyForLegacyAddress(mockECKey, null))
-                .thenReturn(Observable.just(legacyAddress))
+            .thenReturn(Observable.just(legacyAddress))
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         whenever(
-                currencyFormatManager.getFormattedSelectedCoinValueWithUnit(
-                        BigDecimal.valueOf(0),
-                        null,
-                        BTCDenomination.SATOSHI
-                )
+            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(
+                BigDecimal.valueOf(0),
+                null,
+                BTCDenomination.SATOSHI
+            )
         ).thenReturn("")
 
         // Act
@@ -520,12 +520,11 @@ class AccountPresenterTest {
         val mockECKey = mock(ECKey::class.java)
         whenever(mockECKey.hasPrivKey()).thenReturn(true)
         whenever(payloadDataManager.setKeyForLegacyAddress(mockECKey, null))
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         // Act
         subject.handlePrivateKey(mockECKey, null)
         // Assert
         verify(activity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR))
         verifyNoMoreInteractions(activity)
     }
-
 }

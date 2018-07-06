@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_balance.*
 import kotlinx.android.synthetic.main.include_no_transaction_message.*
 import kotlinx.android.synthetic.main.view_expanding_currency_header.*
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.android.data.websocket.WebSocketService
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.ItemAccount
@@ -31,12 +30,17 @@ import piuk.blockchain.android.ui.customviews.callbacks.OnTouchOutsideViewListen
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.shortcuts.LauncherShortcutHelper
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity
+import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.base.UiState
 import piuk.blockchain.androidcoreui.utils.AndroidUtils
 import piuk.blockchain.androidcoreui.utils.ViewUtils
-import piuk.blockchain.androidcoreui.utils.extensions.*
+import piuk.blockchain.androidcoreui.utils.extensions.gone
+import piuk.blockchain.androidcoreui.utils.extensions.goneIf
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.toast
+import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.androidcoreui.utils.helperfunctions.onItemSelectedListener
 import javax.inject.Inject
 
@@ -48,17 +52,18 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     private var txFeedAdapter: TxFeedAdapter? = null
 
     @Suppress("MemberVisibilityCanBePrivate")
-    @Inject lateinit var balancePresenter: BalancePresenter
+    @Inject
+    lateinit var balancePresenter: BalancePresenter
 
     private var interactionListener: OnFragmentInteractionListener? = null
     private var spacerDecoration: BottomSpacerDecoration? = null
     private var backPressed: Long = 0
     private val itemSelectedListener =
-            onItemSelectedListener {
-                currency_header?.close()
-                presenter.onAccountSelected(it)
-                recyclerview.smoothScrollToPosition(0)
-            }
+        onItemSelectedListener {
+            currency_header?.close()
+            presenter.onAccountSelected(it)
+            recyclerview.smoothScrollToPosition(0)
+        }
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -74,9 +79,9 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_balance)
 
     override fun createPresenter() = balancePresenter
@@ -88,22 +93,22 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
 
         activity?.apply {
             (activity as MainActivity).setOnTouchOutsideViewListener(app_bar,
-                    object : OnTouchOutsideViewListener {
-                        override fun onTouchOutside(view: View, event: MotionEvent) {
-                            currency_header.close()
-                        }
-                    })
+                object : OnTouchOutsideViewListener {
+                    override fun onTouchOutside(view: View, event: MotionEvent) {
+                        currency_header.close()
+                    }
+                })
         }
 
         swipe_container.setProgressViewEndTarget(
-                false,
-                ViewUtils.convertDpToPixel(72F + 20F, context).toInt()
+            false,
+            ViewUtils.convertDpToPixel(72F + 20F, context).toInt()
         )
         swipe_container.setOnRefreshListener { presenter.onRefreshRequested() }
         swipe_container.setColorSchemeResources(
-                R.color.product_green_medium,
-                R.color.primary_blue_medium,
-                R.color.product_red_medium
+            R.color.product_green_medium,
+            R.color.primary_blue_medium,
+            R.color.product_red_medium
         )
 
         textview_balance.setOnClickListener {
@@ -138,7 +143,7 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
         }
 
         LocalBroadcastManager.getInstance(context!!)
-                .registerReceiver(receiver, IntentFilter(ACTION_INTENT))
+            .registerReceiver(receiver, IntentFilter(ACTION_INTENT))
     }
 
     override fun onPause() {
@@ -164,9 +169,9 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     override fun setupAccountsAdapter(accountsList: List<ItemAccount>) {
         if (accountsAdapter == null) {
             accountsAdapter = AccountsAdapter(
-                    context,
-                    R.layout.spinner_balance_header,
-                    accountsList
+                context,
+                R.layout.spinner_balance_header,
+                accountsList
             ).apply { setDropDownViewResource(R.layout.item_balance_account_dropdown) }
         }
 
@@ -217,7 +222,7 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     private fun addBottomNavigationBarSpace() {
         if (spacerDecoration == null) {
             spacerDecoration = BottomSpacerDecoration(
-                    ViewUtils.convertDpToPixel(56f, context).toInt()
+                ViewUtils.convertDpToPixel(56f, context).toInt()
             )
         }
         recyclerview?.apply {
@@ -233,9 +238,9 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     override fun generateLauncherShortcuts() {
         if (AndroidUtils.is25orHigher() && presenter.areLauncherShortcutsEnabled()) {
             val launcherShortcutHelper = LauncherShortcutHelper(
-                    activity,
-                    presenter.payloadDataManager,
-                    activity!!.getSystemService(ShortcutManager::class.java)
+                activity,
+                presenter.payloadDataManager,
+                activity!!.getSystemService(ShortcutManager::class.java)
             )
 
             launcherShortcutHelper.generateReceiveShortcuts()
@@ -306,7 +311,9 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
                 button_get_bitcoin.setOnClickListener { startReceiveFragmentBch() }
                 description.setText(R.string.transaction_occur_when_bitcoin_cash)
             }
-            else -> throw IllegalArgumentException("Cryptocurrency ${presenter.getCurrentCurrency().unit} not supported")
+            else -> throw IllegalArgumentException(
+                "Cryptocurrency ${presenter.getCurrentCurrency().unit} not supported"
+            )
         }
     }
 
@@ -347,7 +354,7 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     private fun broadcastIntent(action: String) {
         activity?.run {
             LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent(action))
+                .sendBroadcast(Intent(action))
         }
     }
 
@@ -370,7 +377,6 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
                 }
             }
         }
-
     }
 
     interface OnFragmentInteractionListener {
@@ -380,5 +386,4 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
     private inner class LayoutManager(context: Context) : LinearLayoutManager(context) {
         override fun supportsPredictiveItemAnimations() = false
     }
-
 }

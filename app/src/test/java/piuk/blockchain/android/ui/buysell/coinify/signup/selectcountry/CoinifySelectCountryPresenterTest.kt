@@ -1,6 +1,10 @@
 package piuk.blockchain.androidbuysellui.ui.signup
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
@@ -9,7 +13,7 @@ import piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry.CoinifySe
 import piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry.CoinifySelectCountryView
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 
-class CoinifySelectCountryPresenterTest: RxTest() {
+class CoinifySelectCountryPresenterTest : RxTest() {
 
     private lateinit var subject: CoinifySelectCountryPresenter
 
@@ -19,9 +23,9 @@ class CoinifySelectCountryPresenterTest: RxTest() {
     @Before
     fun setup() {
         subject =
-                CoinifySelectCountryPresenter(
-                        buyDataManager
-                )
+            CoinifySelectCountryPresenter(
+                buyDataManager
+            )
         subject.initView(view)
     }
 

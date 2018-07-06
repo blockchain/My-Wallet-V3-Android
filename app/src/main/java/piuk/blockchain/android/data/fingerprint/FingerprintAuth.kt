@@ -18,8 +18,15 @@ interface FingerprintAuth {
 
     fun authenticate(applicationContext: Context): Observable<FingerprintAuthenticationResult>
 
-    fun encrypt(applicationContext: Context, key: String, stringToEncrypt: String): Observable<FingerprintEncryptionResult>
+    fun encrypt(
+        applicationContext: Context,
+        key: String,
+        stringToEncrypt: String
+    ): Observable<FingerprintEncryptionResult>
 
-    fun decrypt(applicationContext: Context, key: String, stringToDecrypt: String): Observable<FingerprintDecryptionResult>
-
+    fun decrypt(
+        applicationContext: Context,
+        key: String,
+        stringToDecrypt: String
+    ): Observable<FingerprintDecryptionResult>
 }

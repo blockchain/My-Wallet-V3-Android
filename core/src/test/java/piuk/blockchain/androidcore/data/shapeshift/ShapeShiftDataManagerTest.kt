@@ -8,7 +8,14 @@ import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.shapeshift.ShapeShiftApi
 import info.blockchain.wallet.shapeshift.ShapeShiftTrades
-import info.blockchain.wallet.shapeshift.data.*
+import info.blockchain.wallet.shapeshift.data.MarketInfo
+import info.blockchain.wallet.shapeshift.data.Quote
+import info.blockchain.wallet.shapeshift.data.QuoteRequest
+import info.blockchain.wallet.shapeshift.data.QuoteResponseWrapper
+import info.blockchain.wallet.shapeshift.data.SendAmountResponseWrapper
+import info.blockchain.wallet.shapeshift.data.State
+import info.blockchain.wallet.shapeshift.data.Trade
+import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import io.reactivex.Completable
 import io.reactivex.Observable
 import org.amshove.kluent.`should be`
@@ -34,17 +41,17 @@ class ShapeShiftDataManagerTest : RxTest() {
     private val shapeShiftDataStore: ShapeShiftDataStore = mock()
     private val metadataManager: MetadataManager = mock()
     private val rxBus: RxBus =
-            RxBus()
+        RxBus()
 
     @Before
     @Throws(Exception::class)
     override fun setUp() {
         super.setUp()
         subject = ShapeShiftDataManager(
-                shapeShiftApi,
-                shapeShiftDataStore,
-                metadataManager,
-                rxBus
+            shapeShiftApi,
+            shapeShiftDataStore,
+            metadataManager,
+            rxBus
         )
     }
 
@@ -56,7 +63,6 @@ class ShapeShiftDataManagerTest : RxTest() {
         // Act
 
         // Assert
-
     }
 
     @Test
@@ -122,7 +128,10 @@ class ShapeShiftDataManagerTest : RxTest() {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(shapeShiftDataStore, atLeastOnce()).tradeData
-        verify(metadataManager).saveToMetadata(tradeData.toJson(), ShapeShiftTrades.METADATA_TYPE_EXTERNAL)
+        verify(metadataManager).saveToMetadata(
+            tradeData.toJson(),
+            ShapeShiftTrades.METADATA_TYPE_EXTERNAL
+        )
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
@@ -474,7 +483,7 @@ class ShapeShiftDataManagerTest : RxTest() {
         val responseWrapper: QuoteResponseWrapper = mock()
         whenever(responseWrapper.wrapper).thenReturn(quote)
         whenever(shapeShiftApi.getApproximateQuote(quoteRequest))
-                .thenReturn(Observable.just(responseWrapper))
+            .thenReturn(Observable.just(responseWrapper))
         // Act
         val testObserver = subject.getApproximateQuote(quoteRequest).test()
         // Assert
@@ -494,7 +503,7 @@ class ShapeShiftDataManagerTest : RxTest() {
         val responseWrapper: QuoteResponseWrapper = mock()
         whenever(responseWrapper.error).thenReturn(error)
         whenever(shapeShiftApi.getApproximateQuote(quoteRequest))
-                .thenReturn(Observable.just(responseWrapper))
+            .thenReturn(Observable.just(responseWrapper))
         // Act
         val testObserver = subject.getApproximateQuote(quoteRequest).test()
         // Assert
@@ -503,7 +512,5 @@ class ShapeShiftDataManagerTest : RxTest() {
         testObserver.assertValue(Either.Left(error))
         verify(shapeShiftApi).getApproximateQuote(quoteRequest)
         verifyNoMoreInteractions(shapeShiftApi)
-
     }
-
 }

@@ -21,5 +21,4 @@ class SettingsMemoryStore : SettingsStore, PersistentStore<Settings> {
     override fun invalidate() {
         settings = Optional.None
     }
-
 }

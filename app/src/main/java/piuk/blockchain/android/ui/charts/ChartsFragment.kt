@@ -27,19 +27,25 @@ import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import piuk.blockchain.androidcoreui.utils.extensions.*
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.invisible
+import piuk.blockchain.androidcoreui.utils.extensions.setCustomFont
+import piuk.blockchain.androidcoreui.utils.extensions.toast
+import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.androidcoreui.utils.helperfunctions.CustomFont
 import piuk.blockchain.androidcoreui.utils.helperfunctions.loadFont
 import java.math.RoundingMode
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
 
     @Suppress("MemberVisibilityCanBePrivate")
-    @Inject lateinit var chartsPresenter: ChartsPresenter
+    @Inject
+    lateinit var chartsPresenter: ChartsPresenter
 
     override val locale: Locale = Locale.getDefault()
     override val cryptoCurrency: CryptoCurrencies by unsafeLazy {
@@ -47,11 +53,11 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
     }
     private val buttonsList by unsafeLazy {
         listOf(
-                textview_day,
-                textview_week,
-                textview_month,
-                textview_year,
-                textview_all_time
+            textview_day,
+            textview_week,
+            textview_month,
+            textview_year,
+            textview_all_time
         )
     }
     private var listener: TimeSpanUpdateListener? = null
@@ -61,9 +67,9 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_graphs)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,11 +91,11 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
     @SuppressLint("SetTextI18n")
     override fun updateCurrentPrice(fiatSymbol: String, price: Double) {
         textview_price.text = "$fiatSymbol${NumberFormat.getNumberInstance(Locale.getDefault())
-                .apply {
-                    maximumFractionDigits = 2
-                    minimumFractionDigits = 2
-                    roundingMode = RoundingMode.HALF_UP
-                }.format(price)}"
+            .apply {
+                maximumFractionDigits = 2
+                minimumFractionDigits = 2
+                roundingMode = RoundingMode.HALF_UP
+            }.format(price)}"
     }
 
     override fun onAttach(context: Context?) {
@@ -139,12 +145,12 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
             setCustomFont(CustomFont.MONTSERRAT_REGULAR)
         }
         buttonsList.filterNot { it === selected }
-                .map {
-                    with(it) {
-                        paintFlags = paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
-                        setCustomFont(CustomFont.MONTSERRAT_LIGHT)
-                    }
+            .map {
+                with(it) {
+                    paintFlags = paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
+                    setCustomFont(CustomFont.MONTSERRAT_LIGHT)
                 }
+            }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -221,8 +227,8 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
         arrow.visible()
         arrow.rotation = rotation
         arrow.setColorFilter(
-                ContextCompat.getColor(arrow.context, color),
-                PorterDuff.Mode.SRC_ATOP
+            ContextCompat.getColor(arrow.context, color),
+            PorterDuff.Mode.SRC_ATOP
         )
     }
 
@@ -255,10 +261,10 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
             axisLeft.setDrawGridLines(false)
             axisLeft.setValueFormatter { fl, _ ->
                 NumberFormat.getNumberInstance(Locale.getDefault())
-                        .apply {
-                            maximumFractionDigits = 0
-                            roundingMode = RoundingMode.HALF_UP
-                        }.format(fl)
+                    .apply {
+                        maximumFractionDigits = 0
+                        roundingMode = RoundingMode.HALF_UP
+                    }.format(fl)
             }
             axisLeft.textColor = ContextCompat.getColor(context, R.color.primary_gray_medium)
             axisRight.isEnabled = false
@@ -269,8 +275,8 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
             setExtraOffsets(8f, 0f, 0f, 10f)
             setNoDataTextColor(ContextCompat.getColor(context, R.color.primary_gray_medium))
             loadFont(
-                    context,
-                    CustomFont.MONTSERRAT_LIGHT
+                context,
+                CustomFont.MONTSERRAT_LIGHT
             ) {
                 xAxis.typeface = it
                 axisLeft.typeface = it
@@ -288,13 +294,12 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
             }
             return ChartsFragment().apply { arguments = args }
         }
-
     }
 
     inner class ValueMarker(
-            context: Context,
-            layoutResource: Int,
-            private val fiatSymbol: String
+        context: Context,
+        layoutResource: Int,
+        private val fiatSymbol: String
     ) : MarkerView(context, layoutResource) {
 
         private val date = findViewById<TextView>(R.id.textview_marker_date)
@@ -306,11 +311,11 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
         override fun refreshContent(e: Entry, highlight: Highlight) {
             date.text = SimpleDateFormat("E, MMM dd, HH:mm").format(Date(e.x.toLong() * 1000))
             price.text = "$fiatSymbol${NumberFormat.getNumberInstance(Locale.getDefault())
-                    .apply {
-                        maximumFractionDigits = 2
-                        minimumFractionDigits = 2
-                    }
-                    .format(e.y)}"
+                .apply {
+                    maximumFractionDigits = 2
+                    minimumFractionDigits = 2
+                }
+                .format(e.y)}"
 
             super.refreshContent(e, highlight)
         }
@@ -324,11 +329,9 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
             return mpPointF!!
         }
     }
-
 }
 
 interface TimeSpanUpdateListener {
 
     fun onTimeSpanUpdated(timeSpan: TimeSpan)
-
 }

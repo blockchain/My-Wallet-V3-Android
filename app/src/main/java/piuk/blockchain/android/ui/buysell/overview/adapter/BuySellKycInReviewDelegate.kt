@@ -11,20 +11,20 @@ import piuk.blockchain.android.ui.buysell.overview.models.KycInProgress
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 
 internal class BuySellKycInReviewDelegate(
-        private val listener: CoinifyTxFeedListener
+    private val listener: CoinifyTxFeedListener
 ) : AdapterDelegate<BuySellDisplayable> {
 
     override fun isForViewType(items: List<BuySellDisplayable>, position: Int): Boolean =
-            items[position] is KycInProgress
+        items[position] is KycInProgress
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            KycInProgressViewHolder(parent.inflate(R.layout.item_buy_sell_kyc_in_progress))
+        KycInProgressViewHolder(parent.inflate(R.layout.item_buy_sell_kyc_in_progress))
 
     override fun onBindViewHolder(
-            items: List<BuySellDisplayable>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<BuySellDisplayable>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         holder as KycInProgressViewHolder
         holder.bind(listener)
@@ -38,7 +38,5 @@ internal class BuySellKycInReviewDelegate(
             itemView.setOnClickListener { listener.onKycReviewClicked() }
             button.setOnClickListener { listener.onKycReviewClicked() }
         }
-
     }
-
 }

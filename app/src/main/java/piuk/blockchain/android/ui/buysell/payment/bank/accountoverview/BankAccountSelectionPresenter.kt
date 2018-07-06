@@ -16,53 +16,53 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class BankAccountSelectionPresenter @Inject constructor(
-        private val exchangeService: ExchangeService,
-        private val coinifyDataManager: CoinifyDataManager
+    private val exchangeService: ExchangeService,
+    private val coinifyDataManager: CoinifyDataManager
 ) : BasePresenter<BankAccountSelectionView>() {
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
-                .addToCompositeDisposable(this)
-                .applySchedulers()
-                .singleOrError()
-                .map { it.coinify!!.token }
+            .addToCompositeDisposable(this)
+            .applySchedulers()
+            .singleOrError()
+            .map { it.coinify!!.token }
 
     override fun onViewReady() {
         tokenSingle
-                .addToCompositeDisposable(this)
-                .applySchedulers()
-                .flatMapObservable { fetchAccountsObservable(it) }
-                .doOnError { Timber.e(it) }
-                .subscribeBy(onNext = { view.renderUiState(it) })
+            .addToCompositeDisposable(this)
+            .applySchedulers()
+            .flatMapObservable { fetchAccountsObservable(it) }
+            .doOnError { Timber.e(it) }
+            .subscribeBy(onNext = { view.renderUiState(it) })
     }
 
     internal fun deleteBankAccount(bankAccountId: Int) {
         tokenSingle
-                .addToCompositeDisposable(this)
-                .applySchedulers()
-                .flatMapCompletable { coinifyDataManager.deleteBankAccount(it, bankAccountId) }
-                .andThen(tokenSingle)
-                .flatMapObservable { fetchAccountsObservable(it) }
-                .doOnError { Timber.e(it) }
-                .startWith(BankAccountState.Loading)
-                .onErrorReturn { BankAccountState.DeleteAccountFailure }
-                .subscribeBy(onNext = { view.renderUiState(it) })
+            .addToCompositeDisposable(this)
+            .applySchedulers()
+            .flatMapCompletable { coinifyDataManager.deleteBankAccount(it, bankAccountId) }
+            .andThen(tokenSingle)
+            .flatMapObservable { fetchAccountsObservable(it) }
+            .doOnError { Timber.e(it) }
+            .startWith(BankAccountState.Loading)
+            .onErrorReturn { BankAccountState.DeleteAccountFailure }
+            .subscribeBy(onNext = { view.renderUiState(it) })
     }
 
     private fun fetchAccountsObservable(token: String): Observable<BankAccountState> =
-            coinifyDataManager.getBankAccounts(token)
-                    .flattenAsObservable { it }
-                    .map<BankAccountDisplayable> {
-                        BankAccountListObject(it.id!!, formatStringWithSpaces(it.account.number))
-                    }
-                    .toList()
-                    .toObservable()
-                    .map<BankAccountState> {
-                        it.add(AddAccountButton())
-                        return@map BankAccountState.Data(it)
-                    }
-                    .startWith(BankAccountState.Loading)
-                    .onErrorReturn { BankAccountState.Failure }
+        coinifyDataManager.getBankAccounts(token)
+            .flattenAsObservable { it }
+            .map<BankAccountDisplayable> {
+                BankAccountListObject(it.id!!, formatStringWithSpaces(it.account.number))
+            }
+            .toList()
+            .toObservable()
+            .map<BankAccountState> {
+                it.add(AddAccountButton())
+                return@map BankAccountState.Data(it)
+            }
+            .startWith(BankAccountState.Loading)
+            .onErrorReturn { BankAccountState.Failure }
 
     private fun formatStringWithSpaces(original: String): String {
         val dashInterval = 4

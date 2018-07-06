@@ -10,19 +10,21 @@ import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 
 class TradesNewExchangeDelegate<in T>(
-        private val listClickListener: TradesListClickListener
+    private val listClickListener: TradesListClickListener
 ) : AdapterDelegate<T> {
 
-    override fun isForViewType(items: List<T>, position: Int): Boolean = items[position] is ShapeshiftNewExchangeDisplayable
+    override fun isForViewType(items: List<T>, position: Int): Boolean =
+        items[position] is ShapeshiftNewExchangeDisplayable
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            HeaderViewHolder(parent.inflate(R.layout.item_shapeshift_row_new_exchange))
+        HeaderViewHolder(parent.inflate(R.layout.item_shapeshift_row_new_exchange))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>) {
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
+    ) {
 
         val viewHolder = holder as HeaderViewHolder
 
@@ -30,7 +32,7 @@ class TradesNewExchangeDelegate<in T>(
     }
 
     private class HeaderViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var layout: RelativeLayout = itemView.relative_layout

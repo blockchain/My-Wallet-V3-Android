@@ -31,9 +31,9 @@ class CoinifySignUpPresenterTest : RxTest() {
     @Before
     fun setup() {
         subject = CoinifySignUpPresenter(
-                exchangeService,
-                coinifyDataManager,
-                stringUtils
+            exchangeService,
+            coinifyDataManager,
+            stringUtils
         )
         subject.initView(view)
     }

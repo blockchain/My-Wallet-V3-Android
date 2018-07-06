@@ -23,12 +23,15 @@ import kotlinx.android.synthetic.main.toolbar_general.toolbar_general as toolBar
 class AddBankAccountActivity : BaseMvpActivity<AddBankAccountView, AddBankAccountPresenter>(),
     AddBankAccountView {
 
-    @Inject lateinit var presenter: AddBankAccountPresenter
+    @Inject
+    lateinit var presenter: AddBankAccountPresenter
     override val iban: String
         get() = editTextIban.getTextString()
     override val bic: String
         get() = editTextBic.getTextString()
-    private val displayModel by unsafeLazy { intent.getParcelableExtra(EXTRA_DISPLAY_MODEL) as SellConfirmationDisplayModel }
+    private val displayModel by unsafeLazy {
+        intent.getParcelableExtra(EXTRA_DISPLAY_MODEL) as SellConfirmationDisplayModel
+    }
 
     init {
         Injector.INSTANCE.presenterComponent.inject(this)
@@ -80,27 +83,26 @@ class AddBankAccountActivity : BaseMvpActivity<AddBankAccountView, AddBankAccoun
     companion object {
 
         private const val EXTRA_DISPLAY_MODEL =
-                "piuk.blockchain.android.ui.buysell.payment.bank.addaccount.accountoverview.EXTRA_DISPLAY_MODEL"
+            "piuk.blockchain.android.ui.buysell.payment.bank.addaccount.accountoverview.EXTRA_DISPLAY_MODEL"
 
         fun start(
-                activity: Activity,
-                displayModel: SellConfirmationDisplayModel
+            activity: Activity,
+            displayModel: SellConfirmationDisplayModel
         ) {
             Intent(activity, AddBankAccountActivity::class.java)
-                    .putExtra(EXTRA_DISPLAY_MODEL, displayModel)
-                    .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
-                    .run { activity.startActivity(this) }
+                .putExtra(EXTRA_DISPLAY_MODEL, displayModel)
+                .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+                .run { activity.startActivity(this) }
         }
 
         fun startForResult(
-                activity: Activity,
-                displayModel: SellConfirmationDisplayModel,
-                requestCode: Int
+            activity: Activity,
+            displayModel: SellConfirmationDisplayModel,
+            requestCode: Int
         ) {
             Intent(activity, AddBankAccountActivity::class.java)
-                    .putExtra(EXTRA_DISPLAY_MODEL, displayModel)
-                    .run { activity.startActivityForResult(this, requestCode) }
+                .putExtra(EXTRA_DISPLAY_MODEL, displayModel)
+                .run { activity.startActivityForResult(this, requestCode) }
         }
-
     }
 }

@@ -1,16 +1,22 @@
 package piuk.blockchain.android.ui.onboarding
 
 import android.content.Intent
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.api.data.Settings
 import io.reactivex.Observable
 import org.amshove.kluent.shouldEqual
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.androidcore.data.access.AccessState
-import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.android.ui.fingerprint.FingerprintHelper
 import piuk.blockchain.android.ui.onboarding.OnboardingActivity.EXTRAS_EMAIL_ONLY
+import piuk.blockchain.androidcore.data.access.AccessState
+import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import java.lang.IllegalStateException
 
@@ -25,7 +31,8 @@ class OnboardingPresenterTest {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        subject = OnboardingPresenter(mockFingerprintHelper, mockAccessState, mockSettingsDataManager)
+        subject =
+            OnboardingPresenter(mockFingerprintHelper, mockAccessState, mockSettingsDataManager)
         subject.initView(mockActivity)
     }
 
@@ -191,5 +198,4 @@ class OnboardingPresenterTest {
         // Assert
         result shouldEqual email
     }
-
 }

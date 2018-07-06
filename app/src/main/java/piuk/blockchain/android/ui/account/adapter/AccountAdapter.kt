@@ -1,13 +1,13 @@
 package piuk.blockchain.android.ui.account.adapter
 
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.android.ui.adapters.AdapterDelegatesManager
 import piuk.blockchain.android.ui.adapters.DelegationAdapter
+import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
 import kotlin.properties.Delegates
 
 class AccountAdapter(
-        accountHeadersListener: AccountHeadersListener
+    accountHeadersListener: AccountHeadersListener
 ) : DelegationAdapter<Any>(AdapterDelegatesManager(), emptyList()) {
 
     private val createWalletDelegate = CreateWalletDelegate<Any>(accountHeadersListener)
@@ -26,8 +26,7 @@ class AccountAdapter(
      * Observes the items list and automatically notifies the adapter of changes to the data based
      * on the comparison we make here, which is a simple equality check.
      */
-    override var items: List<Any> by Delegates.observable(emptyList()) {
-        _, oldList, newList ->
+    override var items: List<Any> by Delegates.observable(emptyList()) { _, oldList, newList ->
         autoNotify(oldList, newList) { o, n -> o == n }
     }
 
@@ -36,7 +35,6 @@ class AccountAdapter(
      * layouts.
      */
     override fun getItemId(position: Int): Long = items[position].hashCode().toLong()
-
 }
 
 interface AccountHeadersListener {
@@ -46,5 +44,4 @@ interface AccountHeadersListener {
     fun onImportAddressClicked()
 
     fun onAccountClicked(cryptoCurrency: CryptoCurrencies, correctedPosition: Int)
-
 }

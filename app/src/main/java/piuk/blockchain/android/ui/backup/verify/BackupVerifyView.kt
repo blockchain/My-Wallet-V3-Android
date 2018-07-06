@@ -20,5 +20,4 @@ interface BackupVerifyView : View {
     fun showStartingFragment()
 
     fun showWordHints(hints: List<Int>)
-
 }

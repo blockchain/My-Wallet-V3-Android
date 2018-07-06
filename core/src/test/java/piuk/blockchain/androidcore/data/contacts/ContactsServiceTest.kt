@@ -13,7 +13,7 @@ import org.amshove.kluent.shouldEqual
 import org.junit.Before
 import org.junit.Test
 import piuk.blockchain.androidcore.RxTest
-import java.util.*
+import java.util.HashMap
 
 class ContactsServiceTest : RxTest() {
 
@@ -126,7 +126,13 @@ class ContactsServiceTest : RxTest() {
     @Throws(Exception::class)
     fun getContactsWithUnreadPaymentRequests() {
         // Arrange
-        whenever(mockContacts.digestUnreadPaymentRequests()).thenReturn(listOf(mock(), mock(), mock()))
+        whenever(mockContacts.digestUnreadPaymentRequests()).thenReturn(
+            listOf(
+                mock(),
+                mock(),
+                mock()
+            )
+        )
         // Act
         val testObserver = subject.getContactsWithUnreadPaymentRequests().test()
         // Assert
@@ -412,5 +418,4 @@ class ContactsServiceTest : RxTest() {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
     }
-
 }

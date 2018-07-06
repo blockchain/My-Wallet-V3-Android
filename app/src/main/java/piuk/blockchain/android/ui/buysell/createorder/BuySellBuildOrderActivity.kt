@@ -27,7 +27,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.toolbar_general.toolbar_general
+import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.confirmation.buy.CoinifyBuyConfirmationActivity
@@ -50,7 +50,6 @@ import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.NumericKeyboardCallback
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.disableSoftKeyboard
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.gone
@@ -61,7 +60,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.androidcoreui.utils.helperfunctions.onItemSelectedListener
 import timber.log.Timber
 import java.text.DecimalFormatSymbols
-import java.util.*
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_buy_sell_build_order.button_review_order as buttonReviewOrder
@@ -77,22 +76,22 @@ import kotlinx.android.synthetic.main.activity_buy_sell_build_order.text_view_ac
 import kotlinx.android.synthetic.main.activity_buy_sell_build_order.text_view_account_to_from_description as textViewAccountDescription
 import kotlinx.android.synthetic.main.activity_buy_sell_build_order.text_view_limits as textViewLimits
 import kotlinx.android.synthetic.main.activity_buy_sell_build_order.text_view_quote_price as textViewQuotePrice
-import kotlinx.android.synthetic.main.activity_buy_sell_build_order.view_divider_quote as viewQuoteDivider
 
 class BuySellBuildOrderActivity :
     BaseMvpActivity<BuySellBuildOrderView, BuySellBuildOrderPresenter>(), BuySellBuildOrderView,
     MemorySafeSubscription,
     NumericKeyboardCallback {
 
-    @Inject lateinit var presenter: BuySellBuildOrderPresenter
+    @Inject
+    lateinit var presenter: BuySellBuildOrderPresenter
     override val locale: Locale = Locale.getDefault()
     override val compositeDisposable = CompositeDisposable()
     private val orderTypeInitializer =
-            InvalidatableLazy { intent.getSerializableExtra(EXTRA_ORDER_TYPE) as OrderType }
+        InvalidatableLazy { intent.getSerializableExtra(EXTRA_ORDER_TYPE) as OrderType }
     override val orderType by orderTypeInitializer
     private var progressDialog: MaterialProgressDialog? = null
     private val defaultDecimalSeparator =
-            DecimalFormatSymbols.getInstance().decimalSeparator.toString()
+        DecimalFormatSymbols.getInstance().decimalSeparator.toString()
     private val editTexts by unsafeLazy {
         listOf(editTextSend, editTextReceive)
     }
@@ -111,7 +110,10 @@ class BuySellBuildOrderActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buy_sell_build_order)
-        require(intent.hasExtra(EXTRA_ORDER_TYPE)) { "You must pass an order type to the Activity. Please start this Activity via the provided static factory method." }
+        require(intent.hasExtra(EXTRA_ORDER_TYPE)) {
+            "You must pass an order type to the Activity. " +
+                "Please start this Activity via the provided static factory method."
+        }
 
         val (title, label) = when (orderType) {
             OrderType.Buy, OrderType.BuyCard, OrderType.BuyBank -> R.string.buy_sell_buy to R.string.to
@@ -125,24 +127,24 @@ class BuySellBuildOrderActivity :
         val receiveObservable = getTextWatcherObservable(editTextReceive, presenter.receiveSubject)
 
         sendObservable
-                .onErrorResumeNext(sendObservable)
-                .addToCompositeDisposable(this)
-                .subscribe()
+            .onErrorResumeNext(sendObservable)
+            .addToCompositeDisposable(this)
+            .subscribe()
 
         receiveObservable
-                .onErrorResumeNext(receiveObservable)
-                .addToCompositeDisposable(this)
-                .subscribe()
+            .onErrorResumeNext(receiveObservable)
+            .addToCompositeDisposable(this)
+            .subscribe()
 
         setupKeypad()
 
         textViewLimits.setOnClickListener { presenter.onMaxClicked() }
         RxView.clicks(buttonReviewOrder)
-                .throttleFirst(500, TimeUnit.MILLISECONDS)
-                .subscribeBy(onNext = {
-                    closeKeyPad()
-                    presenter.onConfirmClicked()
-                })
+            .throttleFirst(500, TimeUnit.MILLISECONDS)
+            .subscribeBy(onNext = {
+                closeKeyPad()
+                presenter.onConfirmClicked()
+            })
 
         onViewReady()
     }
@@ -158,57 +160,55 @@ class BuySellBuildOrderActivity :
 
     override fun startOrderConfirmation(orderType: OrderType, quote: BuyConfirmationDisplayModel) {
         CoinifyBuyConfirmationActivity.startForResult(
-                this,
-                CoinifyBuyConfirmationActivity.REQUEST_CODE_CONFIRM_BUY_ORDER,
-                orderType,
-                quote
+            this,
+            CoinifyBuyConfirmationActivity.REQUEST_CODE_CONFIRM_BUY_ORDER,
+            orderType,
+            quote
         )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CHOOSE_ACCOUNT && resultCode == Activity.RESULT_OK) {
             handleRequestResult(data!!)
-        } else if (requestCode == CoinifyBuyConfirmationActivity.REQUEST_CODE_CONFIRM_BUY_ORDER
-            && resultCode == Activity.RESULT_OK
+        } else if (requestCode == CoinifyBuyConfirmationActivity.REQUEST_CODE_CONFIRM_BUY_ORDER &&
+            resultCode == Activity.RESULT_OK
         ) {
             // If CoinifyBuyConfirmationActivity finishes with no issues, clear this page too
             finish()
-        } else if (requestCode == CoinifyBuyConfirmationActivity.REQUEST_CODE_CONFIRM_BUY_ORDER
-            && resultCode == Activity.RESULT_CANCELED
+        } else if (requestCode == CoinifyBuyConfirmationActivity.REQUEST_CODE_CONFIRM_BUY_ORDER &&
+            resultCode == Activity.RESULT_CANCELED
         ) {
             if (data != null) {
                 val cardLimit =
-                        data.getDoubleExtra(CoinifyBuyConfirmationActivity.EXTRA_CARD_LIMIT, 0.0)
+                    data.getDoubleExtra(CoinifyBuyConfirmationActivity.EXTRA_CARD_LIMIT, 0.0)
                 editTextSend.setText(cardLimit.toString())
                 // Overwrite data as we know that this order is now card-only
                 intent.putExtra(EXTRA_ORDER_TYPE, OrderType.BuyCard)
                 orderTypeInitializer.invalidate()
             }
-
         } else if (requestCode == REQUEST_CODE_CONFIRM_MAKE_SELL_PAYMENT) {
             // If CoinifySellConfirmationActivity finishes with no issues, clear this page too
             if (resultCode == Activity.RESULT_OK) finish()
-
         } else super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun getTextWatcherObservable(
-            editText: EditText,
-            publishSubject: PublishSubject<String>
+        editText: EditText,
+        publishSubject: PublishSubject<String>
     ): Observable<String> = RxTextView.textChanges(editText)
-            // Logging
-            .doOnError(Timber::e)
-            .doOnTerminate { Timber.wtf("Text watcher terminated unexpectedly $editText") }
-            // Skip first event emitted when subscribing
-            .skip(1)
-            // Convert to String
-            .map { it.toString() }
-            // Ignore elements emitted by non-user events (ie presenter updates) and those
-            // emitted from changes to paired EditText (ie edit fiat, edit crypto)
-            .doOnNext { if (currentFocus == editText) publishSubject.onNext(it) }
-            // Scheduling
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+        // Logging
+        .doOnError(Timber::e)
+        .doOnTerminate { Timber.wtf("Text watcher terminated unexpectedly $editText") }
+        // Skip first event emitted when subscribing
+        .skip(1)
+        // Convert to String
+        .map { it.toString() }
+        // Ignore elements emitted by non-user events (ie presenter updates) and those
+        // emitted from changes to paired EditText (ie edit fiat, edit crypto)
+        .doOnNext { if (currentFocus == editText) publishSubject.onNext(it) }
+        // Scheduling
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
 
     private fun renderExchangeRateFailure() {
         textViewQuotePrice.invisible()
@@ -286,24 +286,24 @@ class BuySellBuildOrderActivity :
         val spannable = getFormattedLimit(status)
 
         spannable.setSpan(
-                ForegroundColorSpan(getResolvedColor(R.color.primary_gray_medium)),
-                0,
-                start,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            ForegroundColorSpan(getResolvedColor(R.color.primary_gray_medium)),
+            0,
+            start,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         spannable.setSpan(
-                ForegroundColorSpan(getResolvedColor(R.color.primary_blue_accent)),
-                start,
-                end,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            ForegroundColorSpan(getResolvedColor(R.color.primary_blue_accent)),
+            start,
+            end,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         spannable.setSpan(
-                ForegroundColorSpan(getResolvedColor(R.color.primary_gray_medium)),
-                end,
-                text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            ForegroundColorSpan(getResolvedColor(R.color.primary_gray_medium)),
+            end,
+            text.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         textViewLimits.setText(spannable, TextView.BufferType.SPANNABLE)
@@ -338,10 +338,10 @@ class BuySellBuildOrderActivity :
         ConstraintSet().apply {
             clone(constraintLayout)
             connect(
-                    R.id.view_divider_quote,
-                    ConstraintSet.TOP,
-                    R.id.spinner_account_selection,
-                    ConstraintSet.BOTTOM
+                R.id.view_divider_quote,
+                ConstraintSet.TOP,
+                R.id.spinner_account_selection,
+                ConstraintSet.BOTTOM
             )
             applyTo(constraintLayout)
         }
@@ -349,13 +349,13 @@ class BuySellBuildOrderActivity :
         accountSelectionClickable.forEach {
             it.setOnClickListener {
                 AccountChooserActivity.startForResult(
-                        this,
-                        AccountMode.BitcoinHdOnly,
-                        REQUEST_CODE_CHOOSE_ACCOUNT,
-                        when (orderType) {
-                            OrderType.Buy, OrderType.BuyCard, OrderType.BuyBank -> getString(R.string.from)
-                            OrderType.Sell -> getString(R.string.to)
-                        }
+                    this,
+                    AccountMode.BitcoinHdOnly,
+                    REQUEST_CODE_CHOOSE_ACCOUNT,
+                    when (orderType) {
+                        OrderType.Buy, OrderType.BuyCard, OrderType.BuyBank -> getString(R.string.from)
+                        OrderType.Sell -> getString(R.string.to)
+                    }
                 )
             }
         }
@@ -368,7 +368,7 @@ class BuySellBuildOrderActivity :
     @SuppressLint("SyntheticAccessor")
     private fun handleRequestResult(data: Intent) {
         presenter.account =
-                data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM).toKotlinObject()
+            data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM).toKotlinObject()
     }
 
     private fun getFormattedLimit(status: BuySellBuildOrderPresenter.LimitStatus.Data): SpannableString {
@@ -411,7 +411,7 @@ class BuySellBuildOrderActivity :
 
     private fun setupSpinner(currencies: List<String>) {
         val dataAdapter = ArrayAdapter<String>(this, R.layout.item_spinner_buy_sell, currencies)
-                .apply { setDropDownViewResource(R.layout.item_spinner_buy_sell_list) }
+            .apply { setDropDownViewResource(R.layout.item_spinner_buy_sell_list) }
 
         with(spinnerCurrencySelection) {
             adapter = dataAdapter
@@ -433,11 +433,11 @@ class BuySellBuildOrderActivity :
         if (!hasShownFatalError) {
             hasShownFatalError = true
             AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                    .setTitle(R.string.app_name)
-                    .setMessage(errorMessage)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
-                    .setCancelable(false)
-                    .show()
+                .setTitle(R.string.app_name)
+                .setMessage(errorMessage)
+                .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
+                .setCancelable(false)
+                .show()
         }
     }
 
@@ -461,17 +461,17 @@ class BuySellBuildOrderActivity :
 
     override fun launchAddNewBankAccount(displayModel: SellConfirmationDisplayModel) {
         AddBankAccountActivity.startForResult(
-                this,
-                displayModel,
-                REQUEST_CODE_CONFIRM_MAKE_SELL_PAYMENT
+            this,
+            displayModel,
+            REQUEST_CODE_CONFIRM_MAKE_SELL_PAYMENT
         )
     }
 
     override fun launchBankAccountSelection(displayModel: SellConfirmationDisplayModel) {
         BankAccountSelectionActivity.startForResult(
-                this,
-                displayModel,
-                REQUEST_CODE_CONFIRM_MAKE_SELL_PAYMENT
+            this,
+            displayModel,
+            REQUEST_CODE_CONFIRM_MAKE_SELL_PAYMENT
         )
     }
 
@@ -513,8 +513,8 @@ class BuySellBuildOrderActivity :
         scrollView.apply {
             setPadding(0, 0, 0, 0)
             layoutParams = CoordinatorLayout.LayoutParams(
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT,
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT
+                CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                CoordinatorLayout.LayoutParams.MATCH_PARENT
             ).apply { setMargins(0, height, 0, 0) }
 
             postDelayed({ smoothScrollTo(0, 0) }, 100)
@@ -531,8 +531,8 @@ class BuySellBuildOrderActivity :
         scrollView.apply {
             setPadding(0, 0, 0, keyboard.height)
             layoutParams = CoordinatorLayout.LayoutParams(
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT,
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT
+                CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                CoordinatorLayout.LayoutParams.MATCH_PARENT
             ).apply { setMargins(0, height, 0, 0) }
 
             scrollTo(0, bottom)
@@ -548,15 +548,13 @@ class BuySellBuildOrderActivity :
     companion object {
 
         private const val EXTRA_ORDER_TYPE =
-                "piuk.blockchain.android.ui.buysell.payment.EXTRA_ORDER_TYPE"
+            "piuk.blockchain.android.ui.buysell.payment.EXTRA_ORDER_TYPE"
         private const val REQUEST_CODE_CHOOSE_ACCOUNT = 1001
 
         fun start(context: Context, orderType: OrderType) {
             Intent(context, BuySellBuildOrderActivity::class.java)
-                    .apply { putExtra(EXTRA_ORDER_TYPE, orderType) }
-                    .run { context.startActivity(this) }
+                .apply { putExtra(EXTRA_ORDER_TYPE, orderType) }
+                .run { context.startActivity(this) }
         }
-
     }
-
 }

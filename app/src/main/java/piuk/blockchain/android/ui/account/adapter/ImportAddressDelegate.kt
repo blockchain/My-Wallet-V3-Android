@@ -14,29 +14,29 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class ImportAddressDelegate<in T>(
-        val listener: AccountHeadersListener
+    val listener: AccountHeadersListener
 ) : AdapterDelegate<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            HeaderViewHolder(parent.inflate(R.layout.item_accounts_row_header))
+        HeaderViewHolder(parent.inflate(R.layout.item_accounts_row_header))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         val headerViewHolder = holder as HeaderViewHolder
         headerViewHolder.bind(items[position] as AccountItem, listener)
     }
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            if (items[position] is AccountItem) {
-                (items[position] as AccountItem).type == AccountItem.TYPE_IMPORT_ADDRESS_BUTTON
-                        || (items[position] as AccountItem).type == AccountItem.TYPE_LEGACY_HEADER
-            } else {
-                false
-            }
+        if (items[position] is AccountItem) {
+            (items[position] as AccountItem).type == AccountItem.TYPE_IMPORT_ADDRESS_BUTTON ||
+                (items[position] as AccountItem).type == AccountItem.TYPE_LEGACY_HEADER
+        } else {
+            false
+        }
 
     private class HeaderViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -57,5 +57,4 @@ class ImportAddressDelegate<in T>(
             }
         }
     }
-
 }

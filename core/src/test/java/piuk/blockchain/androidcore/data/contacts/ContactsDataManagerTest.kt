@@ -20,7 +20,7 @@ import piuk.blockchain.androidcore.RxTest
 import piuk.blockchain.androidcore.data.contacts.datastore.ContactsMapStore
 import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionListStore
 import piuk.blockchain.androidcore.data.rxjava.RxBus
-import java.util.*
+import java.util.NoSuchElementException
 
 class ContactsDataManagerTest : RxTest() {
 
@@ -36,10 +36,10 @@ class ContactsDataManagerTest : RxTest() {
         super.setUp()
 
         subject = ContactsDataManager(
-                contactsService,
-                contactsMapStore,
-                pendingTransactionListStore,
-                rxBus
+            contactsService,
+            contactsMapStore,
+            pendingTransactionListStore,
+            rxBus
         )
     }
 
@@ -50,9 +50,10 @@ class ContactsDataManagerTest : RxTest() {
         val mockMetadataNode: DeterministicKey = mock()
         val mockSharedMetadataNode: DeterministicKey = mock()
         whenever(contactsService.initContactsService(mockMetadataNode, mockSharedMetadataNode))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
-        val testObserver = subject.initContactsService(mockMetadataNode, mockSharedMetadataNode).test()
+        val testObserver =
+            subject.initContactsService(mockMetadataNode, mockSharedMetadataNode).test()
         // Assert
         verify(contactsService).initContactsService(mockMetadataNode, mockSharedMetadataNode)
         testObserver.assertComplete()
@@ -77,7 +78,8 @@ class ContactsDataManagerTest : RxTest() {
         contact2.addFacilitatedTransaction(facilitatedTransaction1)
         whenever(contactsService.fetchContacts()).thenReturn(Completable.complete())
         whenever(contactsService.getContactList()).thenReturn(
-                Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            Observable.fromIterable(listOf(contact0, contact1, contact2))
+        )
         // Act
         val testObserver = subject.fetchContacts().test()
         // Assert
@@ -122,7 +124,8 @@ class ContactsDataManagerTest : RxTest() {
         val contact1 = Contact()
         val contact2 = Contact()
         whenever(contactsService.getContactList()).thenReturn(
-                Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            Observable.fromIterable(listOf(contact0, contact1, contact2))
+        )
         // Act
         val testObserver = subject.getContactList().toList().test()
         // Assert
@@ -140,7 +143,7 @@ class ContactsDataManagerTest : RxTest() {
         val contact1 = Contact()
         val contact2 = Contact()
         whenever(contactsService.getContactsWithUnreadPaymentRequests())
-                .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
         // Act
         val testObserver = subject.getContactsWithUnreadPaymentRequests().toList().test()
         // Assert
@@ -185,7 +188,7 @@ class ContactsDataManagerTest : RxTest() {
         val contactId = "CONTACT ID"
         val contactName = "CONTACT_NAME"
         whenever(contactsService.renameContact(contactId, contactName))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.renameContact(contactId, contactName).test()
         // Assert
@@ -201,7 +204,7 @@ class ContactsDataManagerTest : RxTest() {
         val sender = Contact()
         val recipient = Contact()
         whenever(contactsService.createInvitation(sender, recipient))
-                .thenReturn(Observable.just(sender))
+            .thenReturn(Observable.just(sender))
         // Act
         val testObserver = subject.createInvitation(sender, recipient).test()
         // Assert
@@ -218,7 +221,7 @@ class ContactsDataManagerTest : RxTest() {
         val invitationUrl = "INVITATION_URL"
         val sender = Contact()
         whenever(contactsService.acceptInvitation(invitationUrl))
-                .thenReturn(Observable.just(sender))
+            .thenReturn(Observable.just(sender))
         // Act
         val testObserver = subject.acceptInvitation(invitationUrl).test()
         // Assert
@@ -235,7 +238,7 @@ class ContactsDataManagerTest : RxTest() {
         val invitationUrl = "INVITATION_URL"
         val sender = Contact()
         whenever(contactsService.readInvitationLink(invitationUrl))
-                .thenReturn(Observable.just(sender))
+            .thenReturn(Observable.just(sender))
         // Act
         val testObserver = subject.readInvitationLink(invitationUrl).test()
         // Assert
@@ -251,7 +254,7 @@ class ContactsDataManagerTest : RxTest() {
         // Arrange
         val recipient = Contact()
         whenever(contactsService.readInvitationSent(recipient))
-                .thenReturn(Observable.just(true))
+            .thenReturn(Observable.just(true))
         // Act
         val testObserver = subject.readInvitationSent(recipient).test()
         // Assert
@@ -268,7 +271,7 @@ class ContactsDataManagerTest : RxTest() {
         val mdid = "MDID"
         val paymentRequest = PaymentRequest()
         whenever(contactsService.requestSendPayment(mdid, paymentRequest))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.requestSendPayment(mdid, paymentRequest).test()
         // Assert
@@ -284,7 +287,7 @@ class ContactsDataManagerTest : RxTest() {
         val mdid = "MDID"
         val paymentRequest = RequestForPaymentRequest()
         whenever(contactsService.requestReceivePayment(mdid, paymentRequest))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.requestReceivePayment(mdid, paymentRequest).test()
         // Assert
@@ -301,7 +304,7 @@ class ContactsDataManagerTest : RxTest() {
         val paymentRequest = PaymentRequest()
         val fctxId = "FCTX_ID"
         whenever(contactsService.sendPaymentRequestResponse(mdid, paymentRequest, fctxId))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.sendPaymentRequestResponse(mdid, paymentRequest, fctxId).test()
         // Assert
@@ -318,7 +321,7 @@ class ContactsDataManagerTest : RxTest() {
         val txHash = "TX_HASH"
         val fctxId = "FCTX_ID"
         whenever(contactsService.sendPaymentBroadcasted(mdid, txHash, fctxId))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.sendPaymentBroadcasted(mdid, txHash, fctxId).test()
         // Assert
@@ -334,7 +337,7 @@ class ContactsDataManagerTest : RxTest() {
         val mdid = "MDID"
         val fctxId = "FCTX_ID"
         whenever(contactsService.sendPaymentDeclinedResponse(mdid, fctxId))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.sendPaymentDeclinedResponse(mdid, fctxId).test()
         // Assert
@@ -350,7 +353,7 @@ class ContactsDataManagerTest : RxTest() {
         val mdid = "MDID"
         val fctxId = "FCTX_ID"
         whenever(contactsService.sendPaymentCancelledResponse(mdid, fctxId))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.sendPaymentCancelledResponse(mdid, fctxId).test()
         // Assert
@@ -397,7 +400,7 @@ class ContactsDataManagerTest : RxTest() {
         val message2 = Message()
         val onlyNew = true
         whenever(contactsService.getMessages(onlyNew))
-                .thenReturn(Observable.just(listOf(message0, message1, message2)))
+            .thenReturn(Observable.just(listOf(message0, message1, message2)))
         // Act
         val testObserver = subject.getMessages(onlyNew).test()
         // Assert
@@ -430,7 +433,7 @@ class ContactsDataManagerTest : RxTest() {
         val messageId = "MESSAGE_ID"
         val markAsRead = true
         whenever(contactsService.markMessageAsRead(messageId, markAsRead))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.markMessageAsRead(messageId, markAsRead).test()
         // Assert
@@ -459,7 +462,7 @@ class ContactsDataManagerTest : RxTest() {
         // Has no transactions
         val contact2 = Contact().apply { name = "contact2" }
         whenever(contactsService.getContactList())
-                .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
         // Act
         val testObserver = subject.refreshFacilitatedTransactions().toList().test()
         // Assert
@@ -497,7 +500,7 @@ class ContactsDataManagerTest : RxTest() {
         }
         contact2.addFacilitatedTransaction(facilitatedTransaction2)
         whenever(contactsService.getContactList())
-                .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
         // Act
         val testObserver = subject.refreshFacilitatedTransactions().toList().test()
         // Assert
@@ -519,7 +522,13 @@ class ContactsDataManagerTest : RxTest() {
         val contactTransactionModel1 = ContactTransactionModel("", mock())
         val contactTransactionModel2 = ContactTransactionModel("", mock())
         whenever(pendingTransactionListStore.list)
-                .thenReturn(listOf(contactTransactionModel0, contactTransactionModel1, contactTransactionModel2))
+            .thenReturn(
+                listOf(
+                    contactTransactionModel0,
+                    contactTransactionModel1,
+                    contactTransactionModel2
+                )
+            )
         // Act
         val testObserver = subject.getFacilitatedTransactions().toList().test()
         // Assert
@@ -544,7 +553,7 @@ class ContactsDataManagerTest : RxTest() {
         val contact1 = Contact()
         val contact2 = Contact()
         whenever(contactsService.getContactList())
-                .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
         // Act
         val testObserver = subject.getContactFromFctxId(fctxId).test()
         // Assert
@@ -569,7 +578,7 @@ class ContactsDataManagerTest : RxTest() {
         val contact1 = Contact()
         val contact2 = Contact()
         whenever(contactsService.getContactList())
-                .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
         // Act
         val testObserver = subject.getContactFromFctxId(fctxId).test()
         // Assert
@@ -585,7 +594,12 @@ class ContactsDataManagerTest : RxTest() {
         // Arrange
         val mdid = "MDID"
         val fctxId = "FCTX_ID"
-        whenever(contactsService.deleteFacilitatedTransaction(mdid, fctxId)).thenReturn(Completable.complete())
+        whenever(
+            contactsService.deleteFacilitatedTransaction(
+                mdid,
+                fctxId
+            )
+        ).thenReturn(Completable.complete())
         // Act
         val testObserver = subject.deleteFacilitatedTransaction(mdid, fctxId).test()
         // Assert
@@ -617,5 +631,4 @@ class ContactsDataManagerTest : RxTest() {
         verify(contactsService).destroy()
         subject.getTransactionDisplayMap().size shouldEqual 0
     }
-
 }

@@ -14,21 +14,21 @@ import timber.log.Timber
  * onNext/onComplete/onError
  */
 fun <T> Observable<T>.applySchedulers(): Observable<T> = this.subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnError(Timber::e)
+    .observeOn(AndroidSchedulers.mainThread())
+    .doOnError(Timber::e)
 
 /**
  * Applies standard Schedulers to a [Single], ie IO for subscription, Main Thread for
  * onNext/onComplete/onError
  */
 fun <T> Single<T>.applySchedulers(): Single<T> = this.subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnError(Timber::e)
+    .observeOn(AndroidSchedulers.mainThread())
+    .doOnError(Timber::e)
 
 /**
  * Applies standard Schedulers to a [Completable], ie IO for subscription,
  * Main Thread for onNext/onComplete/onError
  */
 fun Completable.applySchedulers(): Completable = this.subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnError(Timber::e)
+    .observeOn(AndroidSchedulers.mainThread())
+    .doOnError(Timber::e)

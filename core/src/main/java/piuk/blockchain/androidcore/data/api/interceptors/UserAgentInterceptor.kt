@@ -4,8 +4,8 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class UserAgentInterceptor(
-        private val versionName: String,
-        private val versionType: String
+    private val versionName: String,
+    private val versionType: String
 ) : Interceptor {
 
     /**
@@ -17,9 +17,8 @@ class UserAgentInterceptor(
 
         val originalRequest = chain.request()
         val requestWithUserAgent = originalRequest.newBuilder()
-                .header("User-Agent", userAgent)
-                .build()
+            .header("User-Agent", userAgent)
+            .build()
         return chain.proceed(requestWithUserAgent)
     }
-
 }

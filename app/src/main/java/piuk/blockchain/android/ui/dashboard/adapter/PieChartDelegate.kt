@@ -35,11 +35,11 @@ import piuk.blockchain.androidcoreui.utils.helperfunctions.loadFont
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.NumberFormat
-import java.util.*
+import java.util.Locale
 
 class PieChartDelegate<in T>(
-        private val context: Context,
-        private val coinSelector: (CryptoCurrencies) -> Unit
+    private val context: Context,
+    private val coinSelector: (CryptoCurrencies) -> Unit
 ) : AdapterDelegate<T> {
 
     private var viewHolder: PieChartViewHolder? = null
@@ -51,16 +51,16 @@ class PieChartDelegate<in T>(
     private var firstRender = true
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
-            items[position] is PieChartsState
+        items[position] is PieChartsState
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            PieChartViewHolder(parent.inflate(R.layout.item_pie_chart), coinSelector)
+        PieChartViewHolder(parent.inflate(R.layout.item_pie_chart), coinSelector)
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         viewHolder = holder as PieChartViewHolder
     }
@@ -99,7 +99,7 @@ class PieChartDelegate<in T>(
         fiatSymbol = data.fiatSymbol
 
         val isEmpty = (data.bitcoinValue + data.etherValue + data.bitcoinCashValue)
-                .compareTo(BigDecimal.ZERO) == 0
+            .compareTo(BigDecimal.ZERO) == 0
         // Prevent issue where chart won't render if NOT first fun AND data has recently gone from
         // empty to non-empty.
         if (isEmpty) firstRender = true
@@ -140,9 +140,9 @@ class PieChartDelegate<in T>(
         listOf(PieEntry(100.0f, ""))
     } else {
         listOf(
-                PieEntry(data.bitcoinValue.toFloat(), context.getString(R.string.bitcoin)),
-                PieEntry(data.etherValue.toFloat(), context.getString(R.string.ether)),
-                PieEntry(data.bitcoinCashValue.toFloat(), context.getString(R.string.bitcoin_cash))
+            PieEntry(data.bitcoinValue.toFloat(), context.getString(R.string.bitcoin)),
+            PieEntry(data.etherValue.toFloat(), context.getString(R.string.ether)),
+            PieEntry(data.bitcoinCashValue.toFloat(), context.getString(R.string.bitcoin_cash))
         )
     }
 
@@ -150,9 +150,9 @@ class PieChartDelegate<in T>(
         listOf(ContextCompat.getColor(context, R.color.primary_gray_light))
     } else {
         listOf(
-                ContextCompat.getColor(context, R.color.color_bitcoin),
-                ContextCompat.getColor(context, R.color.color_ether),
-                ContextCompat.getColor(context, R.color.color_bitcoin_cash)
+            ContextCompat.getColor(context, R.color.color_bitcoin),
+            ContextCompat.getColor(context, R.color.color_ether),
+            ContextCompat.getColor(context, R.color.color_bitcoin_cash)
         )
     }
 
@@ -160,8 +160,8 @@ class PieChartDelegate<in T>(
         viewHolder?.chart?.apply {
             setDrawCenterText(true)
             loadFont(
-                    context,
-                    CustomFont.MONTSERRAT_REGULAR
+                context,
+                CustomFont.MONTSERRAT_REGULAR
             ) { setCenterTextTypeface(it) }
             setCenterTextColor(ContextCompat.getColor(context, R.color.primary_gray_dark))
             setCenterTextSize(16f)
@@ -183,8 +183,8 @@ class PieChartDelegate<in T>(
     }
 
     private inner class ValueMarker(
-            context: Context,
-            layoutResource: Int
+        context: Context,
+        layoutResource: Int
     ) : MarkerView(context, layoutResource) {
 
         private val coin = findViewById<TextView>(R.id.textview_marker_coin)
@@ -196,23 +196,23 @@ class PieChartDelegate<in T>(
         override fun refreshContent(e: Entry, highlight: Highlight) {
             val amount = e.y.toBigDecimal()
             price.text = "$fiatSymbol${NumberFormat.getNumberInstance(Locale.getDefault())
-                    .apply {
-                        maximumFractionDigits = 2
-                        minimumFractionDigits = 2
-                    }
-                    .format(amount)}"
+                .apply {
+                    maximumFractionDigits = 2
+                    minimumFractionDigits = 2
+                }
+                .format(amount)}"
 
             // Rounded for comparison as at some point in the stack we're truncating full BigDecimals
             // to doubles and then converting them back again
             coin.text = when (amount.setScale(2, RoundingMode.HALF_UP)) {
                 bitcoinValue.setScale(
-                        2,
-                        RoundingMode.HALF_UP
+                    2,
+                    RoundingMode.HALF_UP
                 ) -> context.getString(R.string.bitcoin)
                 etherValue.setScale(2, RoundingMode.HALF_UP) -> context.getString(R.string.ether)
                 bitcoinCashValue.setScale(
-                        2,
-                        RoundingMode.HALF_UP
+                    2,
+                    RoundingMode.HALF_UP
                 ) -> context.getString(R.string.bitcoin_cash)
                 else -> ""
             }
@@ -231,8 +231,8 @@ class PieChartDelegate<in T>(
     }
 
     private class PieChartViewHolder internal constructor(
-            itemView: View,
-            private val coinSelector: (CryptoCurrencies) -> Unit
+        itemView: View,
+        private val coinSelector: (CryptoCurrencies) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var chart: PieChart = itemView.pie_chart
@@ -255,7 +255,5 @@ class PieChartDelegate<in T>(
             etherButton.setOnClickListener { coinSelector.invoke(CryptoCurrencies.ETHER) }
             bitcoinCashButton.setOnClickListener { coinSelector.invoke(CryptoCurrencies.BCH) }
         }
-
     }
-
 }

@@ -3,7 +3,7 @@ package piuk.blockchain.android.ui.backup.transfer
 import android.support.annotation.StringRes
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import java.util.*
+import java.util.Locale
 
 interface ConfirmFundsTransferView : View {
 

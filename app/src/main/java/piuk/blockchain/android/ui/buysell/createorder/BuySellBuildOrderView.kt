@@ -6,7 +6,7 @@ import piuk.blockchain.android.ui.buysell.createorder.models.OrderType
 import piuk.blockchain.android.ui.buysell.createorder.models.SellConfirmationDisplayModel
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import java.util.*
+import java.util.Locale
 
 interface BuySellBuildOrderView : View {
 
@@ -49,5 +49,4 @@ interface BuySellBuildOrderView : View {
     fun launchAddNewBankAccount(displayModel: SellConfirmationDisplayModel)
 
     fun launchBankAccountSelection(displayModel: SellConfirmationDisplayModel)
-
 }

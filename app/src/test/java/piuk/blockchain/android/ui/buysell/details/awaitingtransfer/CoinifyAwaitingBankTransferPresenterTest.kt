@@ -77,7 +77,7 @@ class CoinifyAwaitingBankTransferPresenterTest {
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
         val tradeId = 12345
         whenever(coinifyDataManager.cancelTrade(token, tradeId))
-                .thenReturn(Single.error { Throwable() })
+            .thenReturn(Single.error { Throwable() })
         // Act
         subject.cancelTrade(tradeId)
         // Assert

@@ -5,7 +5,7 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import javax.inject.Inject
 
 class SSLVerifyPresenter @Inject constructor(
-        private val sslVerifyUtil: SSLVerifyUtil
+    private val sslVerifyUtil: SSLVerifyUtil
 ) : BasePresenter<SSLVerifyView>() {
 
     override fun onViewReady() {

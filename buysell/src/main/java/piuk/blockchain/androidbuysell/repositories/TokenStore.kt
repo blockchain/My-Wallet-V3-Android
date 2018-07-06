@@ -7,5 +7,4 @@ import piuk.blockchain.androidcore.utils.Optional
 interface TokenStore {
 
     fun getAccessToken(): Observable<Optional<AuthResponse>>
-
 }

@@ -34,22 +34,24 @@ class ChartsDataManagerTest : RxTest() {
         // Arrange
         val btc = CryptoCurrencies.BTC
         val fiat = "USD"
-        whenever(historicPriceApi.getHistoricPriceSeries(
+        whenever(
+            historicPriceApi.getHistoricPriceSeries(
                 btc.symbol,
                 fiat,
                 FIRST_BTC_ENTRY_TIME,
                 Scale.FIVE_DAYS
-        )).thenReturn(Observable.just(listOf(PriceDatum())))
+            )
+        ).thenReturn(Observable.just(listOf(PriceDatum())))
         // Act
         val testObserver = subject.getAllTimePrice(btc, fiat).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(historicPriceApi).getHistoricPriceSeries(
-                btc.symbol,
-                fiat,
-                FIRST_BTC_ENTRY_TIME,
-                Scale.FIVE_DAYS
+            btc.symbol,
+            fiat,
+            FIRST_BTC_ENTRY_TIME,
+            Scale.FIVE_DAYS
         )
         verifyNoMoreInteractions(historicPriceApi)
     }
@@ -60,22 +62,24 @@ class ChartsDataManagerTest : RxTest() {
         // Arrange
         val eth = CryptoCurrencies.ETHER
         val fiat = "USD"
-        whenever(historicPriceApi.getHistoricPriceSeries(
+        whenever(
+            historicPriceApi.getHistoricPriceSeries(
                 eth.symbol,
                 fiat,
                 FIRST_ETH_ENTRY_TIME,
                 Scale.FIVE_DAYS
-        )).thenReturn(Observable.just(listOf(PriceDatum())))
+            )
+        ).thenReturn(Observable.just(listOf(PriceDatum())))
         // Act
         val testObserver = subject.getAllTimePrice(eth, fiat).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(historicPriceApi).getHistoricPriceSeries(
-                eth.symbol,
-                fiat,
-                FIRST_ETH_ENTRY_TIME,
-                Scale.FIVE_DAYS
+            eth.symbol,
+            fiat,
+            FIRST_ETH_ENTRY_TIME,
+            Scale.FIVE_DAYS
         )
         verifyNoMoreInteractions(historicPriceApi)
     }
@@ -86,22 +90,24 @@ class ChartsDataManagerTest : RxTest() {
         // Arrange
         val btc = CryptoCurrencies.BTC
         val fiat = "USD"
-        whenever(historicPriceApi.getHistoricPriceSeries(
+        whenever(
+            historicPriceApi.getHistoricPriceSeries(
                 eq(btc.symbol),
                 eq(fiat),
                 any(),
                 eq(Scale.ONE_DAY)
-        )).thenReturn(Observable.just(listOf(PriceDatum())))
+            )
+        ).thenReturn(Observable.just(listOf(PriceDatum())))
         // Act
         val testObserver = subject.getYearPrice(btc, fiat).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(historicPriceApi).getHistoricPriceSeries(
-                eq(btc.symbol),
-                eq(fiat),
-                any(),
-                eq(Scale.ONE_DAY)
+            eq(btc.symbol),
+            eq(fiat),
+            any(),
+            eq(Scale.ONE_DAY)
         )
         verifyNoMoreInteractions(historicPriceApi)
     }
@@ -112,22 +118,24 @@ class ChartsDataManagerTest : RxTest() {
         // Arrange
         val btc = CryptoCurrencies.BTC
         val fiat = "USD"
-        whenever(historicPriceApi.getHistoricPriceSeries(
+        whenever(
+            historicPriceApi.getHistoricPriceSeries(
                 eq(btc.symbol),
                 eq(fiat),
                 any(),
                 eq(Scale.TWO_HOURS)
-        )).thenReturn(Observable.just(listOf(PriceDatum())))
+            )
+        ).thenReturn(Observable.just(listOf(PriceDatum())))
         // Act
         val testObserver = subject.getMonthPrice(btc, fiat).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(historicPriceApi).getHistoricPriceSeries(
-                eq(btc.symbol),
-                eq(fiat),
-                any(),
-                eq(Scale.TWO_HOURS)
+            eq(btc.symbol),
+            eq(fiat),
+            any(),
+            eq(Scale.TWO_HOURS)
         )
         verifyNoMoreInteractions(historicPriceApi)
     }
@@ -138,22 +146,24 @@ class ChartsDataManagerTest : RxTest() {
         // Arrange
         val btc = CryptoCurrencies.BTC
         val fiat = "USD"
-        whenever(historicPriceApi.getHistoricPriceSeries(
+        whenever(
+            historicPriceApi.getHistoricPriceSeries(
                 eq(btc.symbol),
                 eq(fiat),
                 any(),
                 eq(Scale.ONE_HOUR)
-        )).thenReturn(Observable.just(listOf(PriceDatum())))
+            )
+        ).thenReturn(Observable.just(listOf(PriceDatum())))
         // Act
         val testObserver = subject.getWeekPrice(btc, fiat).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(historicPriceApi).getHistoricPriceSeries(
-                eq(btc.symbol),
-                eq(fiat),
-                any(),
-                eq(Scale.ONE_HOUR)
+            eq(btc.symbol),
+            eq(fiat),
+            any(),
+            eq(Scale.ONE_HOUR)
         )
         verifyNoMoreInteractions(historicPriceApi)
     }
@@ -164,24 +174,25 @@ class ChartsDataManagerTest : RxTest() {
         // Arrange
         val btc = CryptoCurrencies.BTC
         val fiat = "USD"
-        whenever(historicPriceApi.getHistoricPriceSeries(
+        whenever(
+            historicPriceApi.getHistoricPriceSeries(
                 eq(btc.symbol),
                 eq(fiat),
                 any(),
                 eq(Scale.FIFTEEN_MINUTES)
-        )).thenReturn(Observable.just(listOf(PriceDatum())))
+            )
+        ).thenReturn(Observable.just(listOf(PriceDatum())))
         // Act
         val testObserver = subject.getDayPrice(btc, fiat).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(historicPriceApi).getHistoricPriceSeries(
-                eq(btc.symbol),
-                eq(fiat),
-                any(),
-                eq(Scale.FIFTEEN_MINUTES)
+            eq(btc.symbol),
+            eq(fiat),
+            any(),
+            eq(Scale.FIFTEEN_MINUTES)
         )
         verifyNoMoreInteractions(historicPriceApi)
     }
-
 }

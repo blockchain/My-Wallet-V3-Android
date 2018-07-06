@@ -6,17 +6,17 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.toolbar_general.toolbar_general
+import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.createorder.BuySellBuildOrderActivity
 import piuk.blockchain.android.ui.buysell.createorder.models.OrderType
-import piuk.blockchain.android.ui.buysell.details.trade.CoinifyTransactionDetailActivity
 import piuk.blockchain.android.ui.buysell.details.awaitingtransfer.CoinifyAwaitingBankTransferActivity
 import piuk.blockchain.android.ui.buysell.details.models.AwaitingFundsModel
 import piuk.blockchain.android.ui.buysell.details.models.BuySellDetailsModel
 import piuk.blockchain.android.ui.buysell.details.models.RecurringTradeDisplayModel
 import piuk.blockchain.android.ui.buysell.details.recurring.RecurringTradeDetailActivity
+import piuk.blockchain.android.ui.buysell.details.trade.CoinifyTransactionDetailActivity
 import piuk.blockchain.android.ui.buysell.overview.adapter.CoinifyOverviewAdapter
 import piuk.blockchain.android.ui.buysell.overview.adapter.CoinifyTxFeedListener
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellDisplayable
@@ -26,7 +26,7 @@ import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.extensions.toast
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_coinify_overview.recycler_view_coinify_overview as recyclerView
 import kotlinx.android.synthetic.main.activity_coinify_overview.swipe_refresh_layout_coinify as swipeRefresh
@@ -35,31 +35,32 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
     CoinifyOverviewView {
 
     override val locale: Locale = Locale.getDefault()
-    @Inject lateinit var presenter: CoinifyOverviewPresenter
+    @Inject
+    lateinit var presenter: CoinifyOverviewPresenter
     private var progressDialog: MaterialProgressDialog? = null
     private val adapter by unsafeLazy {
         CoinifyOverviewAdapter(
-                object : CoinifyTxFeedListener {
-                    override fun onKycReviewClicked() {
-                        launchCardBuyFlow()
-                    }
-
-                    override fun onTransactionClicked(transactionId: Int) {
-                        presenter.onTransactionSelected(transactionId)
-                    }
-
-                    override fun onBuyClicked() {
-                        presenter.onBuySelected()
-                    }
-
-                    override fun onSellClicked() {
-                        presenter.onSellSelected()
-                    }
-
-                    override fun onSubscriptionClicked(subscriptionId: Int) {
-                        presenter.onSubscriptionClicked(subscriptionId)
-                    }
+            object : CoinifyTxFeedListener {
+                override fun onKycReviewClicked() {
+                    launchCardBuyFlow()
                 }
+
+                override fun onTransactionClicked(transactionId: Int) {
+                    presenter.onTransactionSelected(transactionId)
+                }
+
+                override fun onBuyClicked() {
+                    presenter.onBuySelected()
+                }
+
+                override fun onSellClicked() {
+                    presenter.onSellSelected()
+                }
+
+                override fun onSubscriptionClicked(subscriptionId: Int) {
+                    presenter.onSubscriptionClicked(subscriptionId)
+                }
+            }
         )
     }
 
@@ -135,10 +136,10 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
 
     override fun showAlertDialog(message: Int) {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.app_name)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     override fun displayProgressDialog() {
@@ -168,8 +169,7 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
     companion object {
 
         fun start(context: Context) =
-                Intent(context, CoinifyOverviewActivity::class.java)
-                        .run { context.startActivity(this) }
-
+            Intent(context, CoinifyOverviewActivity::class.java)
+                .run { context.startActivity(this) }
     }
 }

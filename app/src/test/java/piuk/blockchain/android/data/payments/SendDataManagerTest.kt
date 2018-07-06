@@ -44,35 +44,35 @@ class SendDataManagerTest : RxTest() {
         val mockAmount: BigInteger = mock()
         val txHash = "TX_HASH"
         whenever(
-                mockPaymentService.submitPayment(
-                        mockOutputBundle,
-                        mockKeys,
-                        toAddress,
-                        changeAddress,
-                        mockFee,
-                        mockAmount
-                )
-        ).thenReturn(Observable.just(txHash))
-        // Act
-        val testObserver = subject.submitBtcPayment(
+            mockPaymentService.submitPayment(
                 mockOutputBundle,
                 mockKeys,
                 toAddress,
                 changeAddress,
                 mockFee,
                 mockAmount
+            )
+        ).thenReturn(Observable.just(txHash))
+        // Act
+        val testObserver = subject.submitBtcPayment(
+            mockOutputBundle,
+            mockKeys,
+            toAddress,
+            changeAddress,
+            mockFee,
+            mockAmount
         ).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.values()[0] shouldEqual txHash
         verify(mockPaymentService).submitPayment(
-                mockOutputBundle,
-                mockKeys,
-                toAddress,
-                changeAddress,
-                mockFee,
-                mockAmount
+            mockOutputBundle,
+            mockKeys,
+            toAddress,
+            changeAddress,
+            mockFee,
+            mockAmount
         )
         verifyNoMoreInteractions(mockPaymentService)
     }
@@ -89,35 +89,35 @@ class SendDataManagerTest : RxTest() {
         val mockAmount: BigInteger = mock()
         val txHash = "TX_HASH"
         whenever(
-                mockPaymentService.submitBchPayment(
-                        mockOutputBundle,
-                        mockKeys,
-                        toAddress,
-                        changeAddress,
-                        mockFee,
-                        mockAmount
-                )
-        ).thenReturn(Observable.just(txHash))
-        // Act
-        val testObserver = subject.submitBchPayment(
+            mockPaymentService.submitBchPayment(
                 mockOutputBundle,
                 mockKeys,
                 toAddress,
                 changeAddress,
                 mockFee,
                 mockAmount
+            )
+        ).thenReturn(Observable.just(txHash))
+        // Act
+        val testObserver = subject.submitBchPayment(
+            mockOutputBundle,
+            mockKeys,
+            toAddress,
+            changeAddress,
+            mockFee,
+            mockAmount
         ).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.values()[0] shouldEqual txHash
         verify(mockPaymentService).submitBchPayment(
-                mockOutputBundle,
-                mockKeys,
-                toAddress,
-                changeAddress,
-                mockFee,
-                mockAmount
+            mockOutputBundle,
+            mockKeys,
+            toAddress,
+            changeAddress,
+            mockFee,
+            mockAmount
         )
         verifyNoMoreInteractions(mockPaymentService)
     }
@@ -150,7 +150,7 @@ class SendDataManagerTest : RxTest() {
         val address = "ADDRESS"
         val mockUnspentOutputs: UnspentOutputs = mock()
         whenever(mockPaymentService.getUnspentOutputs(address))
-                .thenReturn(Observable.just(mockUnspentOutputs))
+            .thenReturn(Observable.just(mockUnspentOutputs))
         // Act
         val testObserver = subject.getUnspentOutputs(address).test()
         // Assert
@@ -168,7 +168,7 @@ class SendDataManagerTest : RxTest() {
         val address = "ADDRESS"
         val mockUnspentOutputs: UnspentOutputs = mock()
         whenever(mockPaymentService.getUnspentBchOutputs(address))
-                .thenReturn(Observable.just(mockUnspentOutputs))
+            .thenReturn(Observable.just(mockUnspentOutputs))
         // Act
         val testObserver = subject.getUnspentBchOutputs(address).test()
         // Assert
@@ -188,7 +188,7 @@ class SendDataManagerTest : RxTest() {
         val mockFee: BigInteger = mock()
         val mockOutputs: SpendableUnspentOutputs = mock()
         whenever(mockPaymentService.getSpendableCoins(mockUnspent, mockPayment, mockFee))
-                .thenReturn(mockOutputs)
+            .thenReturn(mockOutputs)
         // Act
         val result = subject.getSpendableCoins(mockUnspent, mockPayment, mockFee)
         // Assert
@@ -205,7 +205,7 @@ class SendDataManagerTest : RxTest() {
         val mockFee: BigInteger = mock()
         val mockSweepableCoins: Pair<BigInteger, BigInteger> = mock()
         whenever(mockPaymentService.getMaximumAvailable(mockUnspent, mockFee))
-                .thenReturn(mockSweepableCoins)
+            .thenReturn(mockSweepableCoins)
         // Act
         val result = subject.getMaximumAvailable(mockUnspent, mockFee)
         // Assert
@@ -255,7 +255,7 @@ class SendDataManagerTest : RxTest() {
         val mockFeePerKb: BigInteger = mock()
         val mockAbsoluteFee: BigInteger = mock()
         whenever(mockPaymentService.estimateFee(inputs, outputs, mockFeePerKb))
-                .thenReturn(mockAbsoluteFee)
+            .thenReturn(mockAbsoluteFee)
         // Act
         val result = subject.estimatedFee(inputs, outputs, mockFeePerKb)
         // Assert
@@ -263,5 +263,4 @@ class SendDataManagerTest : RxTest() {
         verify(mockPaymentService).estimateFee(inputs, outputs, mockFeePerKb)
         verifyNoMoreInteractions(mockPaymentService)
     }
-
 }

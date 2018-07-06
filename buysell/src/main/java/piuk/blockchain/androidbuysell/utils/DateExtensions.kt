@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import org.apache.commons.lang3.time.DateUtils
 import timber.log.Timber
 import java.text.ParseException
-import java.util.*
+import java.util.Date
 
 /**
  * Converts a [String] from an ISO 8601 date to a [Date] object. The receiving [String] can specify

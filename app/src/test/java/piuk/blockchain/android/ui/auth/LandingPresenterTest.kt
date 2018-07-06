@@ -23,15 +23,15 @@ class LandingPresenterTest {
     private val mockActivity: LandingView = mock()
     private val mockContext: Context = mock()
     private var environmentSettings: EnvironmentConfig =
-            mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
     private var promptManager: PromptManager =
-            mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
 
     @Before
     fun setUp() {
         subject = LandingPresenter(
-                environmentSettings,
-                promptManager
+            environmentSettings,
+            promptManager
         )
         subject.initView(mockActivity)
     }
@@ -39,13 +39,13 @@ class LandingPresenterTest {
     @Test
     @Throws(Exception::class)
     fun `onViewReady show debug`() {
-        //Arrange
+        // Arrange
         whenever(environmentSettings.shouldShowDebugMenu()).thenReturn(true)
         val environment = Environment.fromString("env_prod")
         whenever(environmentSettings.environment).thenReturn(environment)
-        //Act
+        // Act
         subject.onViewReady()
-        //Assert
+        // Assert
         verify(mockActivity).showToast("Current environment: env_prod", ToastCustom.TYPE_GENERAL)
         verify(mockActivity).showDebugMenu()
     }
@@ -53,23 +53,23 @@ class LandingPresenterTest {
     @Test
     @Throws(Exception::class)
     fun `onViewReady no debug`() {
-        //Arrange
+        // Arrange
         whenever(environmentSettings.shouldShowDebugMenu()).thenReturn(false)
-        //Act
+        // Act
         subject.onViewReady()
-        //Assert
+        // Assert
         verifyNoMoreInteractions(mockActivity)
     }
 
     @Test
     @Throws(Exception::class)
     fun initPreLoginPrompts() {
-        //Arrange
+        // Arrange
         whenever(promptManager.getPreLoginPrompts(any()))
-                .thenReturn(Observable.just(listOf(mock(AlertDialog::class))))
-        //Act
+            .thenReturn(Observable.just(listOf(mock(AlertDialog::class))))
+        // Act
         subject.initPreLoginPrompts(mockContext)
-        //Assert
+        // Assert
         verify(promptManager).getPreLoginPrompts(mockContext)
         verify(mockActivity).showWarningPrompt(any())
     }

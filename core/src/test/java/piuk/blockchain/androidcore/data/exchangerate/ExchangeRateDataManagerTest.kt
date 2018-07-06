@@ -21,8 +21,8 @@ class ExchangeRateDataManagerTest {
     @Before
     fun setUp() {
         subject = ExchangeRateDataManager(
-                exchangeRateDataStore,
-                rxBus
+            exchangeRateDataStore,
+            rxBus
         )
     }
 
@@ -38,7 +38,10 @@ class ExchangeRateDataManagerTest {
         val result = subject.getFiatFromBtc(BigDecimal.valueOf(satoshis), "USD")
 
         // Assert
-        assertEquals(BigDecimal.valueOf(exchangeRate).multiply(BigDecimal.valueOf(satoshis)), result)
+        assertEquals(
+            BigDecimal.valueOf(exchangeRate).multiply(BigDecimal.valueOf(satoshis)),
+            result
+        )
     }
 
     @Test
@@ -53,7 +56,10 @@ class ExchangeRateDataManagerTest {
         val result = subject.getFiatFromEth(BigDecimal.valueOf(satoshis), "USD")
 
         // Assert
-        assertEquals(BigDecimal.valueOf(exchangeRate).multiply(BigDecimal.valueOf(satoshis)), result)
+        assertEquals(
+            BigDecimal.valueOf(exchangeRate).multiply(BigDecimal.valueOf(satoshis)),
+            result
+        )
     }
 
     @Test
@@ -68,7 +74,10 @@ class ExchangeRateDataManagerTest {
         val result = subject.getFiatFromBch(BigDecimal.valueOf(satoshis), "USD")
 
         // Assert
-        assertEquals(BigDecimal.valueOf(exchangeRate).multiply(BigDecimal.valueOf(satoshis)), result)
+        assertEquals(
+            BigDecimal.valueOf(exchangeRate).multiply(BigDecimal.valueOf(satoshis)),
+            result
+        )
     }
 
     @Test
@@ -115,14 +124,14 @@ class ExchangeRateDataManagerTest {
 
         // Arrange
         whenever(exchangeRateDataStore.getBtcHistoricPrice(any(), any()))
-                .thenReturn(Observable.just(8100.37))
+            .thenReturn(Observable.just(8100.37))
 
         // Act
         // Assert
         subject.getBtcHistoricPrice((1e8.toLong() / 2), "", 0L).test()
-                .assertValue { result -> result.compareTo(BigDecimal.valueOf(4050.185)) == 0 }
+            .assertValue { result -> result.compareTo(BigDecimal.valueOf(4050.185)) == 0 }
         subject.getBtcHistoricPrice((1e8.toLong() / 3), "", 0L).test()
-                .assertValue { result -> result.compareTo(BigDecimal.valueOf(2700.1233063321)) == 0 }
+            .assertValue { result -> result.compareTo(BigDecimal.valueOf(2700.1233063321)) == 0 }
     }
 
     @Test
@@ -130,14 +139,22 @@ class ExchangeRateDataManagerTest {
 
         // Arrange
         whenever(exchangeRateDataStore.getEthHistoricPrice(any(), any()))
-                .thenReturn(Observable.just(553.37))
+            .thenReturn(Observable.just(553.37))
 
         // Act
         // Assert
-        val result1 = subject.getEthHistoricPrice(Convert.toWei("1.0", Convert.Unit.ETHER).toBigInteger(), "", 0L)
-                .test().values()[0]
-        val result2 = subject.getEthHistoricPrice(Convert.toWei("0.5", Convert.Unit.ETHER).toBigInteger(), "", 0L)
-                .test().values()[0]
+        val result1 = subject.getEthHistoricPrice(
+            Convert.toWei("1.0", Convert.Unit.ETHER).toBigInteger(),
+            "",
+            0L
+        )
+            .test().values()[0]
+        val result2 = subject.getEthHistoricPrice(
+            Convert.toWei("0.5", Convert.Unit.ETHER).toBigInteger(),
+            "",
+            0L
+        )
+            .test().values()[0]
 
         assertEquals("553.3700000000", result1.toString())
         assertEquals("276.6850000000", result2.toString())
@@ -148,13 +165,13 @@ class ExchangeRateDataManagerTest {
 
         // Arrange
         whenever(exchangeRateDataStore.getBchHistoricPrice(any(), any()))
-                .thenReturn(Observable.just(8100.37))
+            .thenReturn(Observable.just(8100.37))
 
         // Act
         // Assert
         subject.getBchHistoricPrice((1e8.toLong() / 2), "", 0L).test()
-                .assertValue { result -> result.compareTo(BigDecimal.valueOf(4050.185)) == 0 }
+            .assertValue { result -> result.compareTo(BigDecimal.valueOf(4050.185)) == 0 }
         subject.getBchHistoricPrice((1e8.toLong() / 3), "", 0L).test()
-                .assertValue { result -> result.compareTo(BigDecimal.valueOf(2700.1233063321)) == 0 }
+            .assertValue { result -> result.compareTo(BigDecimal.valueOf(2700.1233063321)) == 0 }
     }
 }

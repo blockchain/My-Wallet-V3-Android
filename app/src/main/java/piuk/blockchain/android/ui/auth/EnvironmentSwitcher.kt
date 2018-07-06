@@ -12,20 +12,27 @@ import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 
 internal class EnvironmentSwitcher(
-        private val context: Context,
-        private val prefsUtil: PrefsUtil,
-        private val appUtil: AppUtil
+    private val context: Context,
+    private val prefsUtil: PrefsUtil,
+    private val appUtil: AppUtil
 ) {
 
     fun showDebugMenu() {
         AlertDialog.Builder(context, R.style.AlertDialogStyle)
-                .setTitle("Debug settings")
-                .setMessage("Select 'Reset Prefs' to reset various device timers and saved states, such as warning dialogs, onboarding etc.\n\nSelect 'Wipe Wallet' to log out and completely reset this app.")
-                .setPositiveButton("Reset Prefs") { _, _ -> resetPrefs() }
-                .setNegativeButton("Reset Wallet") { _, _ -> appUtil.clearCredentialsAndRestart(LauncherActivity::class.java) }
-                .setNeutralButton(android.R.string.cancel, null)
-                .create()
-                .show()
+            .setTitle("Debug settings")
+            .setMessage(
+                "Select 'Reset Prefs' to reset various device timers and saved states, such as warning " +
+                    "dialogs, onboarding etc.\n\nSelect 'Wipe Wallet' to log out and completely reset this app."
+            )
+            .setPositiveButton("Reset Prefs") { _, _ -> resetPrefs() }
+            .setNegativeButton("Reset Wallet") { _, _ ->
+                appUtil.clearCredentialsAndRestart(
+                    LauncherActivity::class.java
+                )
+            }
+            .setNeutralButton(android.R.string.cancel, null)
+            .create()
+            .show()
     }
 
     private fun resetPrefs() {
@@ -47,5 +54,4 @@ internal class EnvironmentSwitcher(
 
         context.toast("Prefs Reset")
     }
-
 }

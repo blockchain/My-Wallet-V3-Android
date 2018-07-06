@@ -22,7 +22,8 @@ class PromptManagerTest : RxTest() {
     override fun setUp() {
         super.setUp()
 
-        subject = PromptManager(mockPrefsUtil, mockPayloadDataManager, mockTransactionListDataManager)
+        subject =
+            PromptManager(mockPrefsUtil, mockPayloadDataManager, mockTransactionListDataManager)
     }
 
     @Test

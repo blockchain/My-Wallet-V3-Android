@@ -21,14 +21,15 @@ import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.helperfunctions.onItemSelectedListener
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class ConfirmFundsTransferDialogFragment :
     BaseDialogFragment<ConfirmFundsTransferView, ConfirmFundsTransferPresenter>(),
     ConfirmFundsTransferView {
 
-    @Inject lateinit var confirmFundsTransferPresenter: ConfirmFundsTransferPresenter
+    @Inject
+    lateinit var confirmFundsTransferPresenter: ConfirmFundsTransferPresenter
     override val locale: Locale = Locale.getDefault()
 
     private var progressDialog: MaterialProgressDialog? = null
@@ -38,9 +39,9 @@ class ConfirmFundsTransferDialogFragment :
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         dialog.apply { setCancelable(true) }
 
@@ -69,25 +70,25 @@ class ConfirmFundsTransferDialogFragment :
         toolbar.title = getString(R.string.transfer_confirm)
 
         val receiveToAdapter = AddressAdapter(
-                activity,
-                R.layout.spinner_item,
-                presenter.getReceiveToList(),
-                true
+            activity,
+            R.layout.spinner_item,
+            presenter.getReceiveToList(),
+            true
         ).apply { setDropDownViewResource(R.layout.spinner_dropdown) }
         spinner_destination.adapter = receiveToAdapter
         spinner_destination.onItemSelectedListener =
-                onItemSelectedListener {
-                    spinner_destination.setSelection(spinner_destination.selectedItemPosition)
-                    presenter.accountSelected(spinner_destination.selectedItemPosition)
-                }
+            onItemSelectedListener {
+                spinner_destination.setSelection(spinner_destination.selectedItemPosition)
+                presenter.accountSelected(spinner_destination.selectedItemPosition)
+            }
 
         spinner_destination.viewTreeObserver.addOnGlobalLayoutListener(
-                object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        spinner_destination.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        spinner_destination.dropDownWidth = spinner_destination.width
-                    }
-                })
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    spinner_destination.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    spinner_destination.dropDownWidth = spinner_destination.width
+                }
+            })
 
         button_transfer_all.setOnClickListener {
             SecondPasswordHandler(activity).validate(object : SecondPasswordHandler.ResultListener {
@@ -110,7 +111,7 @@ class ConfirmFundsTransferDialogFragment :
         hideProgressDialog()
         if (activity != null && !activity!!.isFinishing) {
             progressDialog = MaterialProgressDialog(
-                    context
+                context
             ).apply {
                 setMessage(getString(R.string.please_wait))
                 setCancelable(false)
@@ -182,7 +183,5 @@ class ConfirmFundsTransferDialogFragment :
                 setStyle(DialogFragment.STYLE_NO_FRAME, R.style.FullscreenDialog)
             }
         }
-
     }
-
 }

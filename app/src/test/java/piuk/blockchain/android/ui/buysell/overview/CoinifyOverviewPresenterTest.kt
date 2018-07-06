@@ -20,9 +20,8 @@ import piuk.blockchain.androidbuysell.models.coinify.KycResponse
 import piuk.blockchain.androidbuysell.models.coinify.ReviewState
 import piuk.blockchain.androidbuysell.models.coinify.TradeState
 import piuk.blockchain.androidbuysell.services.ExchangeService
-import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import java.util.*
+import java.util.Locale
 
 class CoinifyOverviewPresenterTest : RxTest() {
 
@@ -40,10 +39,10 @@ class CoinifyOverviewPresenterTest : RxTest() {
     override fun setUp() {
         super.setUp()
         subject = CoinifyOverviewPresenter(
-                exchangeService,
-                coinifyDataManager,
-                metadataManager,
-                stringUtils
+            exchangeService,
+            coinifyDataManager,
+            metadataManager,
+            stringUtils
         )
         subject.initView(view)
 
@@ -59,26 +58,26 @@ class CoinifyOverviewPresenterTest : RxTest() {
         whenever(coinifyData.token).thenReturn(token)
         whenever(exchangeData.coinify).thenReturn(coinifyData)
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
-                // Second invocation will be for comparing metadata, which we aren't testing right now
-                .thenReturn(Observable.error { Throwable() })
+            // Second invocation will be for comparing metadata, which we aren't testing right now
+            .thenReturn(Observable.error { Throwable() })
         val coinifyTrade = CoinifyTrade(
-                id = 12345,
-                traderId = 12345,
-                state = TradeState.Processing,
-                inCurrency = "GBP",
-                outCurrency = "BTC",
-                inAmount = 1.0,
-                outAmount = 1.0,
-                outAmountExpected = 1.0,
-                transferIn = mock(),
-                transferOut = mock(),
-                receiptUrl = null,
-                quoteExpireTime = null,
-                updateTime = "2016-07-07T12:10:19Z",
-                createTime = "2016-07-07T12:10:19Z"
+            id = 12345,
+            traderId = 12345,
+            state = TradeState.Processing,
+            inCurrency = "GBP",
+            outCurrency = "BTC",
+            inAmount = 1.0,
+            outAmount = 1.0,
+            outAmountExpected = 1.0,
+            transferIn = mock(),
+            transferOut = mock(),
+            receiptUrl = null,
+            quoteExpireTime = null,
+            updateTime = "2016-07-07T12:10:19Z",
+            createTime = "2016-07-07T12:10:19Z"
         )
         whenever(coinifyDataManager.getTrades(token))
-                .thenReturn(Observable.just(coinifyTrade))
+            .thenReturn(Observable.just(coinifyTrade))
         // Act
         subject.refreshTransactionList()
         // Assert
@@ -99,7 +98,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
 
         whenever(coinifyDataManager.getTrades(token))
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         // Act
         subject.refreshTransactionList()
         // Assert
@@ -123,7 +122,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         val reviewState = ReviewState.Completed
         whenever(kycResponse.state).thenReturn(reviewState)
         whenever(coinifyDataManager.getKycReviews(token))
-                .thenReturn(Single.just(listOf(kycResponse)))
+            .thenReturn(Single.just(listOf(kycResponse)))
         // Act
         subject.onBuySelected()
         // Assert
@@ -149,7 +148,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         val reviewState = ReviewState.Reviewing
         whenever(kycResponse.state).thenReturn(reviewState)
         whenever(coinifyDataManager.getKycReviews(token))
-                .thenReturn(Single.just(listOf(kycResponse)))
+            .thenReturn(Single.just(listOf(kycResponse)))
         // Act
         subject.onBuySelected()
         // Assert
@@ -172,7 +171,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
 
         whenever(coinifyDataManager.getKycReviews(token))
-                .thenReturn(Single.error { Throwable() })
+            .thenReturn(Single.error { Throwable() })
         // Act
         subject.onBuySelected()
         // Assert
@@ -198,7 +197,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         val reviewState = ReviewState.Completed
         whenever(kycResponse.state).thenReturn(reviewState)
         whenever(coinifyDataManager.getKycReviews(token))
-                .thenReturn(Single.just(listOf(kycResponse)))
+            .thenReturn(Single.just(listOf(kycResponse)))
         // Act
         subject.onSellSelected()
         // Assert
@@ -224,7 +223,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         val reviewState = ReviewState.Reviewing
         whenever(kycResponse.state).thenReturn(reviewState)
         whenever(coinifyDataManager.getKycReviews(token))
-                .thenReturn(Single.just(listOf(kycResponse)))
+            .thenReturn(Single.just(listOf(kycResponse)))
         // Act
         subject.onSellSelected()
         // Assert
@@ -247,7 +246,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
 
         whenever(coinifyDataManager.getKycReviews(token))
-                .thenReturn(Single.error { Throwable() })
+            .thenReturn(Single.error { Throwable() })
         // Act
         subject.onSellSelected()
         // Assert

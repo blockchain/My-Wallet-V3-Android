@@ -1,10 +1,10 @@
 package piuk.blockchain.android.ui.shapeshift.detail
 
 import android.support.annotation.StringRes
+import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
-import java.util.*
+import java.util.Locale
 
 interface ShapeShiftDetailView : View {
 

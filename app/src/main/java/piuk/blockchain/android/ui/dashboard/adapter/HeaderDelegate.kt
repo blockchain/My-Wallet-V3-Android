@@ -12,13 +12,13 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 class HeaderDelegate<in T> : AdapterDelegate<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            HeaderViewHolder(parent.inflate(R.layout.item_dashboard_header))
+        HeaderViewHolder(parent.inflate(R.layout.item_dashboard_header))
 
     override fun onBindViewHolder(
-            items: List<T>,
-            position: Int,
-            holder: RecyclerView.ViewHolder,
-            payloads: List<*>
+        items: List<T>,
+        position: Int,
+        holder: RecyclerView.ViewHolder,
+        payloads: List<*>
     ) {
         val headerViewHolder = holder as HeaderViewHolder
         headerViewHolder.header.text = items[position] as CharSequence?
@@ -27,7 +27,7 @@ class HeaderDelegate<in T> : AdapterDelegate<T> {
     override fun isForViewType(items: List<T>, position: Int): Boolean = items[position] is String
 
     private class HeaderViewHolder internal constructor(
-            itemView: View
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
         internal var header: TextView = itemView.header_name
     }

@@ -20,7 +20,10 @@ import piuk.blockchain.android.ui.charts.ChartsActivity
 import piuk.blockchain.android.ui.customviews.BottomSpacerDecoration
 import piuk.blockchain.android.ui.dashboard.adapter.DashboardDelegateAdapter
 import piuk.blockchain.android.ui.home.MainActivity
-import piuk.blockchain.android.ui.home.MainActivity.*
+import piuk.blockchain.android.ui.home.MainActivity.ACCOUNT_EDIT
+import piuk.blockchain.android.ui.home.MainActivity.ACTION_RECEIVE_BCH
+import piuk.blockchain.android.ui.home.MainActivity.CONTACTS_EDIT
+import piuk.blockchain.android.ui.home.MainActivity.SETTINGS_EDIT
 import piuk.blockchain.android.util.OSUtil
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -30,7 +33,7 @@ import piuk.blockchain.androidcoreui.utils.AndroidUtils
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), DashboardView {
@@ -39,13 +42,15 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
     override val locale: Locale = Locale.getDefault()
 
     @Suppress("MemberVisibilityCanBePrivate")
-    @Inject lateinit var dashboardPresenter: DashboardPresenter
-    @Inject lateinit var osUtil: OSUtil
+    @Inject
+    lateinit var dashboardPresenter: DashboardPresenter
+    @Inject
+    lateinit var osUtil: OSUtil
     private val dashboardAdapter by unsafeLazy {
         DashboardDelegateAdapter(
-                context!!,
-                { ChartsActivity.start(context!!, it) },
-                { startBalance(it) }
+            context!!,
+            { ChartsActivity.start(context!!, it) },
+            { startBalance(it) }
         )
     }
     private val receiver = object : BroadcastReceiver() {
@@ -66,9 +71,9 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_dashboard)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,7 +94,7 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
             (activity as MainActivity).bottomNavigationView.restoreBottomNavigation()
         }
         LocalBroadcastManager.getInstance(context!!)
-                .registerReceiver(receiver, IntentFilter(BalanceFragment.ACTION_INTENT))
+            .registerReceiver(receiver, IntentFilter(BalanceFragment.ACTION_INTENT))
 
         recycler_view?.scrollToPosition(0)
     }
@@ -177,7 +182,7 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
     private fun broadcastIntent(action: String) {
         activity?.run {
             LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent(action))
+                .sendBroadcast(Intent(action))
         }
     }
 
@@ -194,7 +199,7 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
     private fun setupToolbar() {
         if ((activity as AppCompatActivity).supportActionBar != null) {
             (activity as BaseAuthActivity).setupToolbar(
-                    (activity as MainActivity).supportActionBar, R.string.dashboard_title
+                (activity as MainActivity).supportActionBar, R.string.dashboard_title
             )
         }
     }
@@ -205,7 +210,6 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
         fun newInstance(): DashboardFragment {
             return DashboardFragment()
         }
-
     }
 
     /**

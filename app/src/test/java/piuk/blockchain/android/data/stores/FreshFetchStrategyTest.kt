@@ -22,8 +22,8 @@ class FreshFetchStrategyTest : RxTest() {
         webSource = Observable.just(value)
         whenever(memoryStore.store(value)).thenReturn(Observable.just(value))
         subject = FreshFetchStrategy(
-                webSource,
-                memoryStore
+            webSource,
+            memoryStore
         )
         // Act
         val testObserver = subject.fetch().test()
@@ -31,5 +31,4 @@ class FreshFetchStrategyTest : RxTest() {
         verify(memoryStore).store(value)
         testObserver.values()[0] `should equal to` value
     }
-
 }

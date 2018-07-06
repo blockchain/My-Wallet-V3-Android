@@ -31,7 +31,7 @@ class BackupWalletCompletedPresenterTest {
         // Arrange
         val date = 1499181978000L
         whenever(prefsUtil.getValue(BackupWalletActivity.BACKUP_DATE_KEY, 0L))
-                .thenReturn(date)
+            .thenReturn(date)
         // Act
         subject.onViewReady()
         // Assert
@@ -45,7 +45,7 @@ class BackupWalletCompletedPresenterTest {
     fun `onViewReady hide backup date`() {
         // Arrange
         whenever(prefsUtil.getValue(BackupWalletActivity.BACKUP_DATE_KEY, 0L))
-                .thenReturn(0L)
+            .thenReturn(0L)
         // Act
         subject.onViewReady()
         // Assert
@@ -58,9 +58,10 @@ class BackupWalletCompletedPresenterTest {
     @Test
     fun `checkTransferableFunds success`() {
         // Arrange
-        val triple = org.apache.commons.lang3.tuple.Triple.of(mutableListOf(PendingTransaction()), 0L, 0L)
+        val triple =
+            org.apache.commons.lang3.tuple.Triple.of(mutableListOf(PendingTransaction()), 0L, 0L)
         whenever(transferFundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.just(triple))
+            .thenReturn(Observable.just(triple))
         // Act
         subject.checkTransferableFunds()
         // Assert
@@ -74,7 +75,7 @@ class BackupWalletCompletedPresenterTest {
     fun `checkTransferableFunds failure`() {
         // Arrange
         whenever(transferFundsDataManager.transferableFundTransactionListForDefaultAccount)
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         // Act
         subject.checkTransferableFunds()
         // Assert
@@ -82,5 +83,4 @@ class BackupWalletCompletedPresenterTest {
         verifyNoMoreInteractions(transferFundsDataManager)
         verifyZeroInteractions(view)
     }
-
 }

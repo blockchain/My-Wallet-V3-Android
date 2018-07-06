@@ -16,9 +16,9 @@ class CoinifyCreateAccountCompletedFragment : Fragment() {
     private var signUpListener: CoinifyFlowListener? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_coinify_create_account_completed)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +46,6 @@ class CoinifyCreateAccountCompletedFragment : Fragment() {
     companion object {
 
         fun newInstance(): CoinifyCreateAccountCompletedFragment =
-                CoinifyCreateAccountCompletedFragment()
-
+            CoinifyCreateAccountCompletedFragment()
     }
 }

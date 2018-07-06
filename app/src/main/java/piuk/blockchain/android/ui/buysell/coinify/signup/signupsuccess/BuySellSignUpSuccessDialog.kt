@@ -30,22 +30,22 @@ class BuySellSignUpSuccessDialog : DialogFragment() {
     private val compositeDisposable = CompositeDisposable()
     private val colors by unsafeLazy {
         arrayOf(
-                getResolvedColor(R.color.secondary_yellow_medium),
-                getResolvedColor(R.color.primary_blue_light),
-                getResolvedColor(R.color.secondary_pink_light),
-                getResolvedColor(R.color.secondary_red_light),
-                getResolvedColor(R.color.product_green_medium)
+            getResolvedColor(R.color.secondary_yellow_medium),
+            getResolvedColor(R.color.primary_blue_light),
+            getResolvedColor(R.color.secondary_pink_light),
+            getResolvedColor(R.color.secondary_red_light),
+            getResolvedColor(R.color.product_green_medium)
         ).toIntArray()
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? = inflater.inflate(
-            R.layout.dialog_fragment_coinify_signup_success,
-            container,
-            false
+        R.layout.dialog_fragment_coinify_signup_success,
+        container,
+        false
     ).apply {
         isFocusableInTouchMode = true
         requestFocus()
@@ -80,8 +80,8 @@ class BuySellSignUpSuccessDialog : DialogFragment() {
         val backgroundAnim = Completable.fromCallable {
             val drawable = view_konfetti.background.apply { alpha = 0 }
             ObjectAnimator.ofPropertyValuesHolder(
-                    drawable,
-                    PropertyValuesHolder.ofInt("alpha", 0, 255)
+                drawable,
+                PropertyValuesHolder.ofInt("alpha", 0, 255)
             ).apply {
                 target = drawable
                 duration = 1000
@@ -90,12 +90,12 @@ class BuySellSignUpSuccessDialog : DialogFragment() {
         }
 
         val closeDialog = Completable.timer(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .doOnComplete { closeDialogAndNavToKyc() }
+            .doOnComplete { closeDialogAndNavToKyc() }
 
         compositeDisposable.add(
-                Completable.mergeArray(messageFadeIn, backgroundAnim, closeDialog)
-                        .doOnError { Timber.e(it) }
-                        .subscribe()
+            Completable.mergeArray(messageFadeIn, backgroundAnim, closeDialog)
+                .doOnError { Timber.e(it) }
+                .subscribe()
         )
     }
 
@@ -125,29 +125,29 @@ class BuySellSignUpSuccessDialog : DialogFragment() {
 
     private fun streamFromTop(colors: IntArray) {
         view_konfetti.build()
-                .addColors(*colors)
-                .setDirection(0.0, 359.0)
-                .setSpeed(4f, 7f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(Size(12), Size(16, 6f))
-                .setPosition(-50f, view_konfetti.width + 50f, -50f, -50f)
-                .streamFor(300, 5000L)
+            .addColors(*colors)
+            .setDirection(0.0, 359.0)
+            .setSpeed(4f, 7f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000)
+            .addShapes(Shape.RECT, Shape.CIRCLE)
+            .addSizes(Size(12), Size(16, 6f))
+            .setPosition(-50f, view_konfetti.width + 50f, -50f, -50f)
+            .streamFor(300, 5000L)
     }
 
     private fun burstFromCenter(colors: IntArray, x: Float, y: Float) {
         if (!canIHaveMoreConfetti()) return
         view_konfetti.build()
-                .addColors(*colors)
-                .setDirection(0.0, 359.0)
-                .setSpeed(4f, 7f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .addSizes(Size(12), Size(16, 6f))
-                .setPosition(x, y)
-                .burst(100)
+            .addColors(*colors)
+            .setDirection(0.0, 359.0)
+            .setSpeed(4f, 7f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000)
+            .addShapes(Shape.RECT, Shape.CIRCLE)
+            .addSizes(Size(12), Size(16, 6f))
+            .setPosition(x, y)
+            .burst(100)
     }
 
     private fun canIHaveMoreConfetti(): Boolean = view_konfetti.getActiveSystems().size <= 3
@@ -155,13 +155,12 @@ class BuySellSignUpSuccessDialog : DialogFragment() {
     companion object {
 
         internal const val SUCCESS_FRAGMENT_ID =
-                "piuk.blockchain.android.ui.buysell.coinify.signup.signupsuccess.BuySellSignUpSuccessDialog"
+            "piuk.blockchain.android.ui.buysell.coinify.signup.signupsuccess.BuySellSignUpSuccessDialog"
 
         internal fun newInstance(): BuySellSignUpSuccessDialog {
             return BuySellSignUpSuccessDialog().apply {
                 setStyle(DialogFragment.STYLE_NO_FRAME, R.style.FullscreenDialog)
             }
         }
-
     }
 }

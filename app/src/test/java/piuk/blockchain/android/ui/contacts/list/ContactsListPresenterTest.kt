@@ -1,7 +1,15 @@
 package piuk.blockchain.android.ui.contacts.list
 
 import android.content.Intent
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.anyOrNull
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.contacts.data.Contact
 import info.blockchain.wallet.exceptions.DecryptionException
 import info.blockchain.wallet.metadata.MetadataNodeFactory
@@ -18,17 +26,23 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import piuk.blockchain.android.BlockchainTestApplication
 import piuk.blockchain.android.BuildConfig
-import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.android.data.notifications.models.NotificationPayload
+import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcoreui.ui.base.UiState
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import java.util.*
+import java.util.ArrayList
+import java.util.Collections
+import java.util.TreeMap
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@Config(sdk = intArrayOf(23), constants = BuildConfig::class, application = BlockchainTestApplication::class)
+@Config(
+    sdk = intArrayOf(23),
+    constants = BuildConfig::class,
+    application = BlockchainTestApplication::class
+)
 @RunWith(RobolectricTestRunner::class)
 class ContactsListPresenterTest {
 
@@ -51,7 +65,9 @@ class ContactsListPresenterTest {
         // Arrange
         val uri = "METADATA_URI"
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockContactsManager.acceptInvitation(uri)).thenReturn(Observable.just(Contact()))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         whenever(mockContactsManager.getContactList()).thenReturn(Observable.empty())
@@ -73,12 +89,18 @@ class ContactsListPresenterTest {
         // Arrange
         val uri = "METADATA_URI"
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockContactsManager.acceptInvitation(uri)).thenReturn(Observable.error { Throwable() })
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
-        whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(Collections.emptyList()))
+        whenever(mockContactsManager.getContactList()).thenReturn(
+            Observable.fromIterable(
+                Collections.emptyList()
+            )
+        )
         whenever(mockContactsManager.getContactsWithUnreadPaymentRequests())
-                .thenReturn(Observable.fromIterable(listOf<Contact>()))
+            .thenReturn(Observable.fromIterable(listOf<Contact>()))
         // Act
         subject.handleLink(uri)
         // Assert
@@ -102,10 +124,16 @@ class ContactsListPresenterTest {
         // Arrange
         val notificationPayload: NotificationPayload = mock()
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(true))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
-        whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(Collections.emptyList()))
+        whenever(mockContactsManager.getContactList()).thenReturn(
+            Observable.fromIterable(
+                Collections.emptyList()
+            )
+        )
         // Act
         subject.onViewReady()
         notificationObservable.onNext(notificationPayload)
@@ -123,10 +151,16 @@ class ContactsListPresenterTest {
     fun onViewReadyEmitErrorEvent() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(true))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
-        whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(Collections.emptyList()))
+        whenever(mockContactsManager.getContactList()).thenReturn(
+            Observable.fromIterable(
+                Collections.emptyList()
+            )
+        )
         // Act
         subject.onViewReady()
         notificationObservable.onError(Throwable())
@@ -146,7 +180,9 @@ class ContactsListPresenterTest {
         val uri = "URI"
         val intent = Intent().apply { putExtra(ContactsListActivity.EXTRA_METADATA_URI, uri) }
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockActivity.pageIntent).thenReturn(intent)
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(false))
         whenever(mockPayloadDataManager.isDoubleEncrypted).thenReturn(true)
@@ -171,16 +207,25 @@ class ContactsListPresenterTest {
         whenever(mockPayloadDataManager.generateNodes()).thenReturn(Completable.complete())
         val mockNodeFactory: MetadataNodeFactory = mock()
         whenever(mockPayloadDataManager.getMetadataNodeFactory())
-                .thenReturn(Observable.just(mockNodeFactory))
+            .thenReturn(Observable.just(mockNodeFactory))
         whenever(mockNodeFactory.sharedMetadataNode).thenReturn(mock())
         whenever(mockNodeFactory.metadataNode).thenReturn(mock())
         whenever(mockContactsManager.initContactsService(any(), any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockPayloadDataManager.registerMdid())
-                .thenReturn(Observable.just(ResponseBody.create(MediaType.parse("application/json"), "")))
+            .thenReturn(
+                Observable.just(
+                    ResponseBody.create(
+                        MediaType.parse("application/json"),
+                        ""
+                    )
+                )
+            )
         whenever(mockContactsManager.publishXpub()).thenReturn(Completable.complete())
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         // Act
         subject.onViewReady()
         // Assert
@@ -204,20 +249,22 @@ class ContactsListPresenterTest {
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         val id = "ID"
         val contacts = listOf(
-                Contact().apply { mdid = "mdid" },
-                Contact().apply { mdid = "mdid" },
-                Contact().apply {
-                    mdid = "mdid"
-                    this.id = id
-                })
+            Contact().apply { mdid = "mdid" },
+            Contact().apply { mdid = "mdid" },
+            Contact().apply {
+                mdid = "mdid"
+                this.id = id
+            })
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(contacts))
         whenever(mockContactsManager.getContactsWithUnreadPaymentRequests())
-                .thenReturn(Observable.fromIterable(listOf(Contact().apply {
-                    mdid = "mdid"
-                    this.id = id
-                })))
+            .thenReturn(Observable.fromIterable(listOf(Contact().apply {
+                mdid = "mdid"
+                this.id = id
+            })))
         // Act
         subject.onViewReady()
         // Assert
@@ -233,12 +280,14 @@ class ContactsListPresenterTest {
     fun onViewReadyShouldLoadContactsEmpty() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(true))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(listOf<Contact>()))
         whenever(mockContactsManager.getContactsWithUnreadPaymentRequests())
-                .thenReturn(Observable.fromIterable(listOf<Contact>()))
+            .thenReturn(Observable.fromIterable(listOf<Contact>()))
         whenever(mockContactsManager.readInvitationSent(any())).thenReturn(Observable.just(true))
         // Act
         subject.onViewReady()
@@ -255,13 +304,15 @@ class ContactsListPresenterTest {
     fun onViewReadyShouldFailLoadingRequests() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(true))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         whenever(mockContactsManager.getContactList())
-                .thenReturn(Observable.fromIterable(listOf<Contact>()))
+            .thenReturn(Observable.fromIterable(listOf<Contact>()))
         whenever(mockContactsManager.getContactsWithUnreadPaymentRequests())
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         // Act
         subject.onViewReady()
         // Assert
@@ -277,7 +328,9 @@ class ContactsListPresenterTest {
     fun onViewReadyShouldFailLoadingContacts() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
-        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(notificationObservable)
+        whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
+            notificationObservable
+        )
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(true))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.error { Throwable() })
         // Act
@@ -295,14 +348,14 @@ class ContactsListPresenterTest {
         // Arrange
         val password = "PASSWORD"
         whenever(mockPayloadDataManager.generateNodes())
-                .thenReturn(Completable.error { DecryptionException() })
+            .thenReturn(Completable.error { DecryptionException() })
         val mockNodeFactory: MetadataNodeFactory = mock()
         whenever(mockPayloadDataManager.getMetadataNodeFactory())
-                .thenReturn(Observable.just(mockNodeFactory))
+            .thenReturn(Observable.just(mockNodeFactory))
         whenever(mockNodeFactory.sharedMetadataNode).thenReturn(mock())
         whenever(mockNodeFactory.metadataNode).thenReturn(mock())
         whenever(mockContactsManager.initContactsService(any(), any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.initContactsService()
         // Assert
@@ -321,14 +374,14 @@ class ContactsListPresenterTest {
         // Arrange
         val password = "PASSWORD"
         whenever(mockPayloadDataManager.generateNodes())
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         val mockNodeFactory: MetadataNodeFactory = mock()
         whenever(mockPayloadDataManager.getMetadataNodeFactory())
-                .thenReturn(Observable.just(mockNodeFactory))
+            .thenReturn(Observable.just(mockNodeFactory))
         whenever(mockNodeFactory.sharedMetadataNode).thenReturn(mock())
         whenever(mockNodeFactory.metadataNode).thenReturn(mock())
         whenever(mockContactsManager.initContactsService(any(), any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.initContactsService()
         // Assert
@@ -346,7 +399,7 @@ class ContactsListPresenterTest {
     fun checkStatusOfPendingContactsSuccess() {
         // Arrange
         whenever(mockContactsManager.readInvitationSent(any<Contact>()))
-                .thenReturn(Observable.just(true))
+            .thenReturn(Observable.just(true))
         whenever(mockContactsManager.getContactList()).thenReturn(Observable.error { Throwable() })
         // Act
         subject.checkStatusOfPendingContacts(listOf(Contact(), Contact(), Contact()))
@@ -438,9 +491,9 @@ class ContactsListPresenterTest {
             this.recipient = recipient
         }
         whenever(mockContactsManager.publishXpub())
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockContactsManager.createInvitation(sender, recipient))
-                .thenReturn(Observable.just(sender))
+            .thenReturn(Observable.just(sender))
         // Act
         subject.createLink()
         // Assert
@@ -468,9 +521,9 @@ class ContactsListPresenterTest {
             this.recipient = recipient
         }
         whenever(mockContactsManager.publishXpub())
-                        .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockContactsManager.createInvitation(sender, recipient))
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         // Act
         subject.createLink()
         // Assert
@@ -514,7 +567,7 @@ class ContactsListPresenterTest {
         subject.contactList.put(recipient.id, recipient)
 
         whenever(mockContactsManager.removeContact(recipient))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.onDeleteContactConfirmed(recipient.id)
         // Assert

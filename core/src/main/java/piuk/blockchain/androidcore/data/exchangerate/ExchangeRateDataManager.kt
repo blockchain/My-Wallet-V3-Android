@@ -20,106 +20,106 @@ import javax.inject.Inject
 @Mockable
 @PresenterScope
 class ExchangeRateDataManager @Inject constructor(
-        private val exchangeRateDataStore: ExchangeRateDataStore,
-        rxBus: RxBus
+    private val exchangeRateDataStore: ExchangeRateDataStore,
+    rxBus: RxBus
 ) {
 
     private final val rxPinning = RxPinning(rxBus)
 
     fun updateTickers() =
-            rxPinning.call { exchangeRateDataStore.updateExchangeRates() }
-                    .applySchedulers()
+        rxPinning.call { exchangeRateDataStore.updateExchangeRates() }
+            .applySchedulers()
 
     fun getLastBtcPrice(currencyName: String) =
-            exchangeRateDataStore.getLastBtcPrice(currencyName)
+        exchangeRateDataStore.getLastBtcPrice(currencyName)
 
     fun getLastBchPrice(currencyName: String) =
-            exchangeRateDataStore.getLastBchPrice(currencyName)
+        exchangeRateDataStore.getLastBchPrice(currencyName)
 
     fun getLastEthPrice(currencyName: String) =
-            exchangeRateDataStore.getLastEthPrice(currencyName)
+        exchangeRateDataStore.getLastEthPrice(currencyName)
 
     fun getCurrencyLabels() = exchangeRateDataStore.getCurrencyLabels()
 
     /**
      * Returns the historic value of a number of Satoshi at a given time in a given currency.
      *
-     * @param satoshis     The amount of Satoshi to be converted
-     * @param currency     The currency to be converted to as a 3 letter acronym, eg USD, GBP
+     * @param satoshis The amount of Satoshi to be converted
+     * @param currency The currency to be converted to as a 3 letter acronym, eg USD, GBP
      * @param timeInSeconds The time at which to get the price, in seconds since epoch
      * @return A double value, which <b>is not</b> rounded to any significant figures
      */
     fun getBtcHistoricPrice(
-            satoshis: Long,
-            currency: String,
-            timeInSeconds: Long
+        satoshis: Long,
+        currency: String,
+        timeInSeconds: Long
     ): Observable<BigDecimal> = rxPinning.call<BigDecimal> {
         exchangeRateDataStore.getBtcHistoricPrice(currency, timeInSeconds)
-                .map {
-                    val exchangeRate = BigDecimal.valueOf(it)
-                    val satoshiDecimal = BigDecimal.valueOf(satoshis)
-                    return@map exchangeRate.multiply(
-                            satoshiDecimal.divide(
-                                    SATOSHIS_PER_BITCOIN,
-                                    8,
-                                    RoundingMode.HALF_UP
-                            )
+            .map {
+                val exchangeRate = BigDecimal.valueOf(it)
+                val satoshiDecimal = BigDecimal.valueOf(satoshis)
+                return@map exchangeRate.multiply(
+                    satoshiDecimal.divide(
+                        SATOSHIS_PER_BITCOIN,
+                        8,
+                        RoundingMode.HALF_UP
                     )
-                }
+                )
+            }
     }
 
     /**
      * Returns the historic value of a number of Satoshi at a given time in a given currency.
      *
-     * @param satoshis     The amount of Satoshi to be converted
-     * @param currency     The currency to be converted to as a 3 letter acronym, eg USD, GBP
+     * @param satoshis The amount of Satoshi to be converted
+     * @param currency The currency to be converted to as a 3 letter acronym, eg USD, GBP
      * @param timeInSeconds The time at which to get the price, in seconds since epoch
      * @return A double value, which <b>is not</b> rounded to any significant figures
      */
     fun getBchHistoricPrice(
-            satoshis: Long,
-            currency: String,
-            timeInSeconds: Long
+        satoshis: Long,
+        currency: String,
+        timeInSeconds: Long
     ): Observable<BigDecimal> = rxPinning.call<BigDecimal> {
         exchangeRateDataStore.getBchHistoricPrice(currency, timeInSeconds)
-                .map {
-                    val exchangeRate = BigDecimal.valueOf(it)
-                    val satoshiDecimal = BigDecimal.valueOf(satoshis)
-                    return@map exchangeRate.multiply(
-                            satoshiDecimal.divide(
-                                    SATOSHIS_PER_BITCOIN,
-                                    8,
-                                    RoundingMode.HALF_UP
-                            )
+            .map {
+                val exchangeRate = BigDecimal.valueOf(it)
+                val satoshiDecimal = BigDecimal.valueOf(satoshis)
+                return@map exchangeRate.multiply(
+                    satoshiDecimal.divide(
+                        SATOSHIS_PER_BITCOIN,
+                        8,
+                        RoundingMode.HALF_UP
                     )
-                }
+                )
+            }
     }
 
     /**
      * Returns the historic value of a number of Wei at a given time in a given currency.
      *
-     * @param wei          The amount of Ether to be converted in Wei, ie ETH * 1e18
-     * @param currency     The currency to be converted to as a 3 letter acronym, eg USD, GBP
+     * @param wei The amount of Ether to be converted in Wei, ie ETH * 1e18
+     * @param currency The currency to be converted to as a 3 letter acronym, eg USD, GBP
      * @param timeInSeconds The time at which to get the price, in seconds since epoch
      * @return A double value, which <b>is not</b> rounded to any significant figures
      */
     fun getEthHistoricPrice(
-            wei: BigInteger,
-            currency: String,
-            timeInSeconds: Long
+        wei: BigInteger,
+        currency: String,
+        timeInSeconds: Long
     ): Observable<BigDecimal> = rxPinning.call<BigDecimal> {
         exchangeRateDataStore.getEthHistoricPrice(currency, timeInSeconds)
-                .map {
-                    val exchangeRate = BigDecimal.valueOf(it)
-                    val ethDecimal = BigDecimal(wei)
-                    return@map exchangeRate.multiply(
-                            ethDecimal.divide(
-                                    WEI_PER_ETHER,
-                                    8,
-                                    RoundingMode.HALF_UP
-                            )
+            .map {
+                val exchangeRate = BigDecimal.valueOf(it)
+                val ethDecimal = BigDecimal(wei)
+                return@map exchangeRate.multiply(
+                    ethDecimal.divide(
+                        WEI_PER_ETHER,
+                        8,
+                        RoundingMode.HALF_UP
                     )
-                }
+                )
+            }
     }
 
     fun getBtcFromFiat(fiatAmount: BigDecimal, fiatUnit: String): BigDecimal {

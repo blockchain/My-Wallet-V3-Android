@@ -20,7 +20,7 @@ import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.*
+import java.util.Collections
 import javax.inject.Inject
 
 @Mockable
@@ -60,7 +60,7 @@ class WalletAccountHelper @Inject constructor(
      */
     fun getHdAccounts(): List<ItemAccount> {
         val list = payloadManager.payload?.hdWallets?.get(0)?.accounts
-                ?: Collections.emptyList<Account>()
+            ?: Collections.emptyList<Account>()
         // Skip archived account
         return list.filterNot { it.isArchived }
             .map {
@@ -101,7 +101,7 @@ class WalletAccountHelper @Inject constructor(
      */
     fun getLegacyAddresses(): List<ItemAccount> {
         val list = payloadManager.payload?.legacyAddressList
-                ?: Collections.emptyList<LegacyAddress>()
+            ?: Collections.emptyList<LegacyAddress>()
         // Skip archived address
         return list.filterNot { it.tag == LegacyAddress.ARCHIVED_ADDRESS }
             .map {
@@ -554,9 +554,9 @@ class WalletAccountHelper @Inject constructor(
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Extension functions
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     private fun String.removeBchUri(): String = this.replace("bitcoincash:", "")
 }

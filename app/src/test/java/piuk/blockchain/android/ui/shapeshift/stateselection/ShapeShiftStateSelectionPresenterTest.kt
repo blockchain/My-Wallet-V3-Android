@@ -46,7 +46,7 @@ class ShapeShiftStateSelectionPresenterTest {
         val state = "California"
         val stateCode = "CA"
         whenever(walletOptionsDataManager.isStateWhitelisted(stateCode))
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         // Act
         subject.updateAmericanState(state)
         // Assert
@@ -63,7 +63,7 @@ class ShapeShiftStateSelectionPresenterTest {
         val state = "California"
         val stateCode = "CA"
         whenever(walletOptionsDataManager.isStateWhitelisted(stateCode))
-                .thenReturn(Observable.just(false))
+            .thenReturn(Observable.just(false))
         // Act
         subject.updateAmericanState(state)
         // Assert
@@ -80,9 +80,9 @@ class ShapeShiftStateSelectionPresenterTest {
         val state = "California"
         val stateCode = "CA"
         whenever(walletOptionsDataManager.isStateWhitelisted(stateCode))
-                .thenReturn(Observable.just(true))
+            .thenReturn(Observable.just(true))
         whenever(shapeShiftDataManager.setState(any(State::class)))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         // Act
         subject.updateAmericanState(state)
         // Assert
@@ -100,9 +100,9 @@ class ShapeShiftStateSelectionPresenterTest {
         val state = "California"
         val stateCode = "CA"
         whenever(walletOptionsDataManager.isStateWhitelisted(stateCode))
-                .thenReturn(Observable.just(true))
+            .thenReturn(Observable.just(true))
         whenever(shapeShiftDataManager.setState(any(State::class)))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.updateAmericanState(state)
         // Assert
@@ -113,5 +113,4 @@ class ShapeShiftStateSelectionPresenterTest {
         verify(view).finishActivityWithResult(Activity.RESULT_OK)
         verifyNoMoreInteractions(view)
     }
-
 }

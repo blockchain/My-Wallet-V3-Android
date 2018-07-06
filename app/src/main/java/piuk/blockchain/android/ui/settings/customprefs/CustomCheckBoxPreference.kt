@@ -11,10 +11,10 @@ import piuk.blockchain.androidcoreui.utils.helperfunctions.loadFont
 
 @Suppress("unused")
 class CustomCheckBoxPreference @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = R.attr.checkBoxPreferenceStyle,
-        defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.checkBoxPreferenceStyle,
+    defStyleRes: Int = 0
 ) : CheckBoxPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     init {
@@ -25,8 +25,8 @@ class CustomCheckBoxPreference @JvmOverloads constructor(
 
     private fun init() {
         loadFont(
-                context,
-                CustomFont.MONTSERRAT_REGULAR
+            context,
+            CustomFont.MONTSERRAT_REGULAR
         ) {
             typeface = it
             // Forces setting fonts when Summary or Title are set via XMl
@@ -50,5 +50,4 @@ class CustomCheckBoxPreference @JvmOverloads constructor(
     override fun setSummary(summary: CharSequence?) {
         summary?.let { super.setSummary(summary.applyFont(typeface)) } ?: super.setSummary(summary)
     }
-
 }

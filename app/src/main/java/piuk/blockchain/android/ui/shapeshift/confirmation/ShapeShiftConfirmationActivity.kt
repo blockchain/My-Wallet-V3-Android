@@ -16,25 +16,27 @@ import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.SecondPasswordHandler
-import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
-import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.android.ui.shapeshift.inprogress.TradeInProgressActivity
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
-import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
+import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
+import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
+import piuk.blockchain.androidcoreui.utils.extensions.toast
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
-class ShapeShiftConfirmationActivity : BaseMvpActivity<ShapeShiftConfirmationView, ShapeShiftConfirmationPresenter>(),
-        ShapeShiftConfirmationView,
-        SecondPasswordHandler.ResultListener {
+class ShapeShiftConfirmationActivity :
+    BaseMvpActivity<ShapeShiftConfirmationView, ShapeShiftConfirmationPresenter>(),
+    ShapeShiftConfirmationView,
+    SecondPasswordHandler.ResultListener {
 
     override val locale: Locale = Locale.getDefault()
 
     @Suppress("MemberVisibilityCanPrivate", "unused")
-    @Inject lateinit var confirmationPresenter: ShapeShiftConfirmationPresenter
+    @Inject
+    lateinit var confirmationPresenter: ShapeShiftConfirmationPresenter
 
     override val shapeShiftData: ShapeShiftData by unsafeLazy {
         intent.getParcelableExtra<ShapeShiftData>(EXTRA_SHAPESHIFT_DATA)
@@ -60,15 +62,15 @@ class ShapeShiftConfirmationActivity : BaseMvpActivity<ShapeShiftConfirmationVie
         val terms = SpannableString(stringFirstPart + stringSecondPart)
         textView_terms_conditions.text = terms.apply {
             setSpan(
-                    ForegroundColorSpan(
-                            ContextCompat.getColor(
-                                    this@ShapeShiftConfirmationActivity,
-                                    R.color.primary_blue_accent
-                            )
-                    ),
-                    stringFirstPart.length,
-                    terms.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        this@ShapeShiftConfirmationActivity,
+                        R.color.primary_blue_accent
+                    )
+                ),
+                stringFirstPart.length,
+                terms.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
 
@@ -76,12 +78,12 @@ class ShapeShiftConfirmationActivity : BaseMvpActivity<ShapeShiftConfirmationVie
     }
 
     override fun onSupportNavigateUp() =
-            consume { onBackPressed() }
+        consume { onBackPressed() }
 
     override fun showProgressDialog(@StringRes message: Int) {
         dismissProgressDialog()
         progressDialog = MaterialProgressDialog(
-                this
+            this
         ).apply {
             setCancelable(false)
             setMessage(message)
@@ -137,17 +139,17 @@ class ShapeShiftConfirmationActivity : BaseMvpActivity<ShapeShiftConfirmationVie
 
     override fun showTimeExpiring() {
         textview_time_remaining.setTextColor(
-                ContextCompat.getColor(this, R.color.product_red_medium)
+            ContextCompat.getColor(this, R.color.product_red_medium)
         )
     }
 
     override fun showQuoteExpiredDialog() {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.app_name)
-                .setMessage(R.string.shapeshift_quote_expired_error_message)
-                .setPositiveButton(android.R.string.ok) { _, _ -> finishPage() }
-                .setCancelable(false)
-                .show()
+            .setTitle(R.string.app_name)
+            .setMessage(R.string.shapeshift_quote_expired_error_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> finishPage() }
+            .setCancelable(false)
+            .show()
     }
 
     override fun launchProgressPage(depositAddress: String) {
@@ -180,7 +182,8 @@ class ShapeShiftConfirmationActivity : BaseMvpActivity<ShapeShiftConfirmationVie
 
     companion object {
 
-        private const val SHAPESHIFT_TERMS_LINK = "https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf"
+        private const val SHAPESHIFT_TERMS_LINK =
+            "https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf"
         private const val EXTRA_SHAPESHIFT_DATA = "piuk.blockchain.android.EXTRA_SHAPESHIFT_DATA"
 
         @JvmStatic
@@ -193,7 +196,5 @@ class ShapeShiftConfirmationActivity : BaseMvpActivity<ShapeShiftConfirmationVie
 
             context.startActivity(intent)
         }
-
     }
-
 }

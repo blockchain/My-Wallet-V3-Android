@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry
 
 import piuk.blockchain.androidcoreui.ui.base.View
 
-interface CoinifySelectCountryView: View {
+interface CoinifySelectCountryView : View {
 
     fun onStartVerifyEmail(countryCode: String)
 

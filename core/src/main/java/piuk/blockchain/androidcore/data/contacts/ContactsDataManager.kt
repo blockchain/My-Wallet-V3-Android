@@ -18,7 +18,7 @@ import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
-import java.util.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 /**
@@ -44,10 +44,10 @@ import javax.inject.Inject
 @Mockable
 @PresenterScope
 class ContactsDataManager @Inject constructor(
-        private val contactsService: ContactsService,
-        private val contactsMapStore: ContactsMapStore,
-        private val pendingTransactionListStore: PendingTransactionListStore,
-        rxBus: RxBus
+    private val contactsService: ContactsService,
+    private val contactsMapStore: ContactsMapStore,
+    private val pendingTransactionListStore: PendingTransactionListStore,
+    rxBus: RxBus
 ) {
 
     private val rxPinning: RxPinning = RxPinning(rxBus)
@@ -55,14 +55,14 @@ class ContactsDataManager @Inject constructor(
     /**
      * Initialises the Contacts service.
      *
-     * @param metadataNode       A [DeterministicKey] representing the Metadata Node
+     * @param metadataNode A [DeterministicKey] representing the Metadata Node
      * @param sharedMetadataNode A [DeterministicKey] representing the Shared Metadata node
      *
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun initContactsService(
-            metadataNode: DeterministicKey,
-            sharedMetadataNode: DeterministicKey
+        metadataNode: DeterministicKey,
+        sharedMetadataNode: DeterministicKey
     ): Completable {
         return rxPinning.call {
             contactsService.initContactsService(metadataNode, sharedMetadataNode)
@@ -74,12 +74,12 @@ class ContactsDataManager @Inject constructor(
      */
     private fun invalidate(): Completable {
         return rxPinning.call { contactsService.invalidate() }
-                .applySchedulers()
+            .applySchedulers()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // CONTACTS
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Fetches an updated version of the contacts list and parses [FacilitatedTransaction]
@@ -89,24 +89,24 @@ class ContactsDataManager @Inject constructor(
      */
     fun fetchContacts(): Completable {
         return rxPinning.call { contactsService.fetchContacts() }
-                .andThen(contactsService.getContactList())
-                .doOnNext { contact ->
-                    contactsMapStore.displayMap.putAll(
-                            contact.facilitatedTransactions.values
-                                    .filter { !it.txHash.isNullOrEmpty() }
-                                    .associateBy({ it.txHash }, {
-                                        ContactTransactionDisplayModel(
-                                                it.role,
-                                                it.state,
-                                                it.note ?: "",
-                                                contact.name
-                                        )
-                                    })
-                    )
-                }
-                .toList()
-                .ignoreElement()
-                .applySchedulers()
+            .andThen(contactsService.getContactList())
+            .doOnNext { contact ->
+                contactsMapStore.displayMap.putAll(
+                    contact.facilitatedTransactions.values
+                        .filter { !it.txHash.isNullOrEmpty() }
+                        .associateBy({ it.txHash }, {
+                            ContactTransactionDisplayModel(
+                                it.role,
+                                it.state,
+                                it.note ?: "",
+                                contact.name
+                            )
+                        })
+                )
+            }
+            .toList()
+            .ignoreElement()
+            .applySchedulers()
     }
 
     /**
@@ -115,7 +115,7 @@ class ContactsDataManager @Inject constructor(
      * @return A [Completable] object, ie an asynchronous void operation≈≈
      */
     fun saveContacts(): Completable = rxPinning.call { contactsService.saveContacts() }
-            .applySchedulers()
+        .applySchedulers()
 
     /**
      * Completely wipes your contact list from the metadata endpoint. Does not update memory.
@@ -123,7 +123,7 @@ class ContactsDataManager @Inject constructor(
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun wipeContacts(): Completable = rxPinning.call { contactsService.wipeContacts() }
-            .applySchedulers()
+        .applySchedulers()
 
     /**
      * Returns a stream of [Contact] objects, comprising a list of users. List can be empty.
@@ -131,7 +131,7 @@ class ContactsDataManager @Inject constructor(
      * @return A stream of [Contact] objects
      */
     fun getContactList(): Observable<Contact> = contactsService.getContactList()
-            .applySchedulers()
+        .applySchedulers()
 
     /**
      * Returns a stream of [Contact] objects, comprising of a list of users with [ ] objects that
@@ -140,8 +140,8 @@ class ContactsDataManager @Inject constructor(
      * @return A stream of [Contact] objects
      */
     fun getContactsWithUnreadPaymentRequests(): Observable<Contact> =
-            callWithToken(contactsService.getContactsWithUnreadPaymentRequests())
-                    .applySchedulers()
+        callWithToken(contactsService.getContactsWithUnreadPaymentRequests())
+            .applySchedulers()
 
     /**
      * Inserts a contact into the locally stored Contacts list. Saves this list to server.
@@ -151,8 +151,8 @@ class ContactsDataManager @Inject constructor(
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun addContact(contact: Contact): Completable =
-            rxPinning.call { contactsService.addContact(contact) }
-                    .applySchedulers()
+        rxPinning.call { contactsService.addContact(contact) }
+            .applySchedulers()
 
     /**
      * Removes a contact from the locally stored Contacts list. Saves updated list to server.
@@ -162,29 +162,29 @@ class ContactsDataManager @Inject constructor(
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun removeContact(contact: Contact): Completable =
-            rxPinning.call { contactsService.removeContact(contact) }
-                    .applySchedulers()
+        rxPinning.call { contactsService.removeContact(contact) }
+            .applySchedulers()
 
     /**
      * Renames a [Contact] and then saves the changes to the server.
      *
      * @param contactId The ID of the Contact you wish to update
-     * @param name      The new name for the Contact
+     * @param name The new name for the Contact
      *
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun renameContact(contactId: String, name: String): Completable =
-            rxPinning.call { contactsService.renameContact(contactId, name) }
-                    .applySchedulers()
+        rxPinning.call { contactsService.renameContact(contactId, name) }
+            .applySchedulers()
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // INVITATIONS
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Creates a new invite and associated invite ID for linking two users together
      *
-     * @param myDetails        My details that will be visible in invitation url
+     * @param myDetails My details that will be visible in invitation url
      * @param recipientDetails Recipient details
      *
      * @return A [Contact] object, which is an updated version of the mydetails object, ie
@@ -192,7 +192,7 @@ class ContactsDataManager @Inject constructor(
      */
     fun createInvitation(myDetails: Contact, recipientDetails: Contact): Observable<Contact> {
         return callWithToken(contactsService.createInvitation(myDetails, recipientDetails))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
@@ -204,7 +204,7 @@ class ContactsDataManager @Inject constructor(
      */
     fun acceptInvitation(invitationUrl: String): Observable<Contact> {
         return callWithToken(contactsService.acceptInvitation(invitationUrl))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
@@ -216,7 +216,7 @@ class ContactsDataManager @Inject constructor(
      */
     fun readInvitationLink(url: String): Observable<Contact> {
         return callWithToken(contactsService.readInvitationLink(url))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
@@ -229,17 +229,17 @@ class ContactsDataManager @Inject constructor(
      */
     fun readInvitationSent(contact: Contact): Observable<Boolean> {
         return callWithToken(contactsService.readInvitationSent(contact))
-                .applySchedulers()
+            .applySchedulers()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // PAYMENT REQUESTS
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Requests that another user sends you a payment
      *
-     * @param mdid    The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param request A [PaymentRequest] object containing the request details, ie the amount
      *                and an optional note
      *
@@ -247,13 +247,13 @@ class ContactsDataManager @Inject constructor(
      */
     fun requestSendPayment(mdid: String, request: PaymentRequest): Completable {
         return callWithToken(contactsService.requestSendPayment(mdid, request))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
      * Requests that another user receive bitcoin from current user
      *
-     * @param mdid    The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param request A [PaymentRequest] object containing the request details, ie the amount
      *                and an optional note, the receive address
      *
@@ -261,72 +261,72 @@ class ContactsDataManager @Inject constructor(
      */
     fun requestReceivePayment(mdid: String, request: RequestForPaymentRequest): Completable {
         return callWithToken(contactsService.requestReceivePayment(mdid, request))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
      * Sends a response to a payment request containing a [PaymentRequest], which contains a
      * bitcoin address belonging to the user.
      *
-     * @param mdid            The recipient's MDID*
-     * @param paymentRequest  A [PaymentRequest] object
+     * @param mdid The recipient's MDID*
+     * @param paymentRequest A [PaymentRequest] object
      * @param facilitatedTxId The ID of the [FacilitatedTransaction]
      *
      * @return A [Completable] object
      */
     fun sendPaymentRequestResponse(
-            mdid: String,
-            paymentRequest: PaymentRequest,
-            facilitatedTxId: String
+        mdid: String,
+        paymentRequest: PaymentRequest,
+        facilitatedTxId: String
     ): Completable {
         return callWithToken(
-                contactsService.sendPaymentRequestResponse(mdid, paymentRequest, facilitatedTxId)
+            contactsService.sendPaymentRequestResponse(mdid, paymentRequest, facilitatedTxId)
         ).applySchedulers()
     }
 
     /**
      * Sends notification that a transaction has been processed.
      *
-     * @param mdid            The recipient's MDID
-     * @param txHash          The transaction hash
+     * @param mdid The recipient's MDID
+     * @param txHash The transaction hash
      * @param facilitatedTxId The ID of the [FacilitatedTransaction]
      *
      * @return A [Completable] object
      */
     fun sendPaymentBroadcasted(mdid: String, txHash: String, facilitatedTxId: String): Completable {
         return callWithToken(contactsService.sendPaymentBroadcasted(mdid, txHash, facilitatedTxId))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
      * Sends a response to a payment request declining the offer of payment.
      *
-     * @param mdid   The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param fctxId The ID of the [FacilitatedTransaction] to be declined
      *
      * @return A [Completable] object
      */
     fun sendPaymentDeclinedResponse(mdid: String, fctxId: String): Completable {
         return callWithToken(contactsService.sendPaymentDeclinedResponse(mdid, fctxId))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
      * Informs the recipient of a payment request that the request has been cancelled.
      *
-     * @param mdid   The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param fctxId The ID of the [FacilitatedTransaction] to be cancelled
      *
      * @return A [Completable] object
      */
     fun sendPaymentCancelledResponse(mdid: String, fctxId: String): Completable {
         return callWithToken(contactsService.sendPaymentCancelledResponse(mdid, fctxId))
-                .applySchedulers()
+            .applySchedulers()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // XPUB AND MDID HANDLING
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Returns the XPub associated with an MDID, should the user already be in your trusted contacts
@@ -337,8 +337,8 @@ class ContactsDataManager @Inject constructor(
      * @return A [Observable] wrapping a String
      */
     fun fetchXpub(mdid: String): Observable<String> =
-            rxPinning.call<String> { contactsService.fetchXpub(mdid) }
-                    .applySchedulers()
+        rxPinning.call<String> { contactsService.fetchXpub(mdid) }
+            .applySchedulers()
 
     /**
      * Publishes the user's XPub to the metadata service
@@ -346,11 +346,11 @@ class ContactsDataManager @Inject constructor(
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun publishXpub(): Completable = rxPinning.call { contactsService.publishXpub() }
-            .applySchedulers()
+        .applySchedulers()
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // MESSAGES
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Returns a list of [Message] objects, with a flag to only return those which haven't
@@ -362,7 +362,7 @@ class ContactsDataManager @Inject constructor(
      */
     fun getMessages(onlyNew: Boolean): Observable<List<Message>> {
         return callWithToken(contactsService.getMessages(onlyNew))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
@@ -374,25 +374,25 @@ class ContactsDataManager @Inject constructor(
      */
     fun readMessage(messageId: String): Observable<Message> {
         return callWithToken(contactsService.readMessage(messageId))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
      * Marks a message as read or unread
      *
-     * @param messageId  The ID of the message to be marked as read/unread
+     * @param messageId The ID of the message to be marked as read/unread
      * @param markAsRead A flag setting the read status
      *
      * @return A [Completable] object, ie an asynchronous void operation
      */
     fun markMessageAsRead(messageId: String, markAsRead: Boolean): Completable {
         return callWithToken(contactsService.markMessageAsRead(messageId, markAsRead))
-                .applySchedulers()
+            .applySchedulers()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // FACILITATED TRANSACTIONS
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Finds and returns a stream of [ContactTransactionModel] objects and stores them locally
@@ -405,23 +405,23 @@ class ContactsDataManager @Inject constructor(
     fun refreshFacilitatedTransactions(): Observable<ContactTransactionModel> {
         pendingTransactionListStore.clearList()
         return getContactList()
-                .flatMapIterable { contact ->
-                    val transactions = ArrayList<ContactTransactionModel>()
-                    for (it in contact.facilitatedTransactions.values) {
-                        // If hash is null, transaction has not been completed
-                        if ((it.txHash == null || it.txHash.isEmpty())
-                                // Filter out cancelled and declined transactions
-                                && it.state != FacilitatedTransaction.STATE_CANCELLED
-                                && it.state != FacilitatedTransaction.STATE_DECLINED
-                        ) {
+            .flatMapIterable { contact ->
+                val transactions = ArrayList<ContactTransactionModel>()
+                for (it in contact.facilitatedTransactions.values) {
+                    // If hash is null, transaction has not been completed
+                    if ((it.txHash == null || it.txHash.isEmpty()) &&
+                        // Filter out cancelled and declined transactions
+                        it.state != FacilitatedTransaction.STATE_CANCELLED &&
+                        it.state != FacilitatedTransaction.STATE_DECLINED
+                    ) {
 
-                            val model = ContactTransactionModel(contact.name, it)
-                            pendingTransactionListStore.insertTransaction(model)
-                            transactions.add(model)
-                        }
+                        val model = ContactTransactionModel(contact.name, it)
+                        pendingTransactionListStore.insertTransaction(model)
+                        transactions.add(model)
                     }
-                    return@flatMapIterable transactions
                 }
+                return@flatMapIterable transactions
+            }
     }
 
     /**
@@ -431,7 +431,7 @@ class ContactsDataManager @Inject constructor(
      * @return An [Observable] stream of [ContactTransactionModel] objects
      */
     fun getFacilitatedTransactions(): Observable<ContactTransactionModel> =
-            Observable.fromIterable(pendingTransactionListStore.list)
+        Observable.fromIterable(pendingTransactionListStore.list)
 
     /**
      * Returns a [Contact] object from a given FacilitatedTransaction ID. It's possible that
@@ -442,14 +442,14 @@ class ContactsDataManager @Inject constructor(
      * @return A [Single] emitting a [Contact] object or will emit a [ ] if the Contact isn't found.
      */
     fun getContactFromFctxId(fctxId: String): Single<Contact> = getContactList()
-            .filter { it.facilitatedTransactions[fctxId] != null }
-            .firstOrError()
+        .filter { it.facilitatedTransactions[fctxId] != null }
+        .firstOrError()
 
     /**
      * Deletes a [FacilitatedTransaction] object from a [Contact] and then syncs the
      * Contact list with the server.
      *
-     * @param mdid   The Contact's MDID
+     * @param mdid The Contact's MDID
      *
      * @param fctxId The FacilitatedTransaction's ID
      *
@@ -457,7 +457,7 @@ class ContactsDataManager @Inject constructor(
      */
     fun deleteFacilitatedTransaction(mdid: String, fctxId: String): Completable {
         return callWithToken(contactsService.deleteFacilitatedTransaction(mdid, fctxId))
-                .applySchedulers()
+            .applySchedulers()
     }
 
     /**
@@ -475,9 +475,9 @@ class ContactsDataManager @Inject constructor(
         contactsMapStore.clearData()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // TOKEN FUNCTIONS
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Calls a function and invalidates the access token on failure before calling the original
@@ -494,15 +494,14 @@ class ContactsDataManager @Inject constructor(
      * which propagates an error to the UI when SSL pinning fails.
      */
     private fun callWithToken(completable: Completable): Completable =
-            rxPinning.call { getRetry(completable) }
+        rxPinning.call { getRetry(completable) }
 
     private fun <T> getRetry(observable: Observable<T>): Observable<T> =
-            Observable.defer<T> { observable }
-                    .doOnError { invalidate() }
-                    .retry(1)
-
-    private fun getRetry(completable: Completable): Completable = Completable.defer { completable }
+        Observable.defer<T> { observable }
             .doOnError { invalidate() }
             .retry(1)
 
+    private fun getRetry(completable: Completable): Completable = Completable.defer { completable }
+        .doOnError { invalidate() }
+        .retry(1)
 }

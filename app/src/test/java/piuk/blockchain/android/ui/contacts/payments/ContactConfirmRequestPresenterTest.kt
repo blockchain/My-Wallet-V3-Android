@@ -1,7 +1,13 @@
 package piuk.blockchain.android.ui.contacts.payments
 
 import android.os.Bundle
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.contacts.data.Contact
 import info.blockchain.wallet.contacts.data.PaymentRequest
 import info.blockchain.wallet.contacts.data.RequestForPaymentRequest
@@ -15,10 +21,10 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import piuk.blockchain.android.BlockchainTestApplication
 import piuk.blockchain.android.BuildConfig
+import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
-import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import kotlin.test.assertNull
 
@@ -60,7 +66,10 @@ class ContactConfirmRequestPresenterTest {
         val bundle = Bundle().apply {
             putString(ContactConfirmRequestFragment.ARGUMENT_CONTACT_ID, contactId)
             putLong(ContactConfirmRequestFragment.ARGUMENT_SATOSHIS, satoshis)
-            putSerializable(ContactConfirmRequestFragment.ARGUMENT_REQUEST_TYPE, PaymentRequestType.REQUEST)
+            putSerializable(
+                ContactConfirmRequestFragment.ARGUMENT_REQUEST_TYPE,
+                PaymentRequestType.REQUEST
+            )
             putParcelable(ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS, null)
             putInt(ContactConfirmRequestFragment.ARGUMENT_ACCOUNT_POSITION, accountPosition)
         }
@@ -97,7 +106,10 @@ class ContactConfirmRequestPresenterTest {
             putString(ContactConfirmRequestFragment.ARGUMENT_CONTACT_ID, contactId)
             putLong(ContactConfirmRequestFragment.ARGUMENT_SATOSHIS, satoshis)
             putInt(ContactConfirmRequestFragment.ARGUMENT_ACCOUNT_POSITION, accountPosition)
-            putParcelable(ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS, paymentDetails)
+            putParcelable(
+                ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS,
+                paymentDetails
+            )
             putSerializable(ContactConfirmRequestFragment.ARGUMENT_REQUEST_TYPE, paymentRequestType)
         }
         val contact0 = Contact()
@@ -108,7 +120,11 @@ class ContactConfirmRequestPresenterTest {
         val contact2 = Contact()
         val contactList = listOf(contact0, contact1, contact2)
         whenever(mockActivity.fragmentBundle).thenReturn(bundle)
-        whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(contactList))
+        whenever(mockContactsManager.getContactList()).thenReturn(
+            Observable.fromIterable(
+                contactList
+            )
+        )
         // Act
         subject.onViewReady()
         // Assert
@@ -148,7 +164,10 @@ class ContactConfirmRequestPresenterTest {
             putString(ContactConfirmRequestFragment.ARGUMENT_CONTACT_ID, contactId)
             putLong(ContactConfirmRequestFragment.ARGUMENT_SATOSHIS, satoshis)
             putInt(ContactConfirmRequestFragment.ARGUMENT_ACCOUNT_POSITION, accountPosition)
-            putParcelable(ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS, paymentDetails)
+            putParcelable(
+                ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS,
+                paymentDetails
+            )
             putSerializable(ContactConfirmRequestFragment.ARGUMENT_REQUEST_TYPE, paymentRequestType)
         }
         whenever(mockActivity.fragmentBundle).thenReturn(bundle)
@@ -193,7 +212,10 @@ class ContactConfirmRequestPresenterTest {
             putString(ContactConfirmRequestFragment.ARGUMENT_CONTACT_ID, contactId)
             putLong(ContactConfirmRequestFragment.ARGUMENT_SATOSHIS, satoshis)
             putInt(ContactConfirmRequestFragment.ARGUMENT_ACCOUNT_POSITION, accountPosition)
-            putParcelable(ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS, paymentDetails)
+            putParcelable(
+                ContactConfirmRequestFragment.ARGUMENT_CONFIRMATION_DETAILS,
+                paymentDetails
+            )
             putSerializable(ContactConfirmRequestFragment.ARGUMENT_REQUEST_TYPE, paymentRequestType)
         }
         val contact0 = Contact()
@@ -201,7 +223,11 @@ class ContactConfirmRequestPresenterTest {
         val contact2 = Contact()
         val contactList = listOf(contact0, contact1, contact2)
         whenever(mockActivity.fragmentBundle).thenReturn(bundle)
-        whenever(mockContactsManager.getContactList()).thenReturn(Observable.fromIterable(contactList))
+        whenever(mockContactsManager.getContactList()).thenReturn(
+            Observable.fromIterable(
+                contactList
+            )
+        )
         // Act
         subject.onViewReady()
         // Assert
@@ -253,9 +279,9 @@ class ContactConfirmRequestPresenterTest {
             this.confirmationDetails = paymentDetails
         }
         whenever(mockPayloadDataManager.getNextReceiveAddress(accountPosition))
-                .thenReturn(Observable.just(receiveAddress))
+            .thenReturn(Observable.just(receiveAddress))
         whenever(mockContactsManager.requestSendPayment(eq(contactMdid), any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockActivity.note).thenReturn(note)
         // Act
         subject.sendRequest()
@@ -304,13 +330,16 @@ class ContactConfirmRequestPresenterTest {
             this.confirmationDetails = paymentDetails
         }
         whenever(mockContactsManager.requestReceivePayment(eq(contactMdid), any()))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockActivity.note).thenReturn(note)
         // Act
         subject.sendRequest()
         // Assert
         verifyZeroInteractions(mockPayloadDataManager)
-        verify(mockContactsManager).requestReceivePayment(eq(contactMdid), any<RequestForPaymentRequest>())
+        verify(mockContactsManager).requestReceivePayment(
+            eq(contactMdid),
+            any<RequestForPaymentRequest>()
+        )
         verifyNoMoreInteractions(mockContactsManager)
         verify(mockActivity).showProgressDialog()
         verify(mockActivity).note
@@ -341,9 +370,9 @@ class ContactConfirmRequestPresenterTest {
             this.paymentRequestType = paymentRequestType
         }
         whenever(mockPayloadDataManager.getNextReceiveAddress(accountPosition))
-                .thenReturn(Observable.just(receiveAddress))
+            .thenReturn(Observable.just(receiveAddress))
         whenever(mockContactsManager.requestSendPayment(eq(contactMdid), any()))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         whenever(mockActivity.note).thenReturn(note)
         // Act
         subject.sendRequest()
@@ -379,13 +408,16 @@ class ContactConfirmRequestPresenterTest {
             this.paymentRequestType = paymentRequestType
         }
         whenever(mockContactsManager.requestReceivePayment(eq(contactMdid), any()))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         whenever(mockActivity.note).thenReturn(note)
         // Act
         subject.sendRequest()
         // Assert
         verifyZeroInteractions(mockPayloadDataManager)
-        verify(mockContactsManager).requestReceivePayment(eq(contactMdid), any<RequestForPaymentRequest>())
+        verify(mockContactsManager).requestReceivePayment(
+            eq(contactMdid),
+            any<RequestForPaymentRequest>()
+        )
         verifyNoMoreInteractions(mockContactsManager)
         verify(mockActivity).showProgressDialog()
         verify(mockActivity).note
@@ -393,5 +425,4 @@ class ContactConfirmRequestPresenterTest {
         verify(mockActivity).showToast(any(), eq(ToastCustom.TYPE_ERROR))
         verifyNoMoreInteractions(mockActivity)
     }
-
 }

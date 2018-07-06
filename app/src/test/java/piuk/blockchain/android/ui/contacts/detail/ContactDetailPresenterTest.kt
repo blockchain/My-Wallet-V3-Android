@@ -33,7 +33,6 @@ import piuk.blockchain.android.data.contacts.models.ContactTransactionModel
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
 import piuk.blockchain.android.data.notifications.models.NotificationPayload
 import piuk.blockchain.android.ui.contacts.list.ContactsListActivity.KEY_BUNDLE_CONTACT_ID
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
@@ -41,6 +40,7 @@ import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Config(sdk = [23], constants = BuildConfig::class, application = BlockchainTestApplication::class)
@@ -62,14 +62,14 @@ class ContactDetailPresenterTest {
     @Throws(Exception::class)
     fun setUp() {
         subject = ContactDetailPresenter(
-                mockContactsManager,
-                mockPayloadDataManager,
-                mockPrefsUtil,
-                mockRxBus,
-                mockTransactionListDataManager,
-                mockExchangeRateFactory,
-                mockCurrencyState,
-                currencyFormatManager
+            mockContactsManager,
+            mockPayloadDataManager,
+            mockPrefsUtil,
+            mockRxBus,
+            mockTransactionListDataManager,
+            mockExchangeRateFactory,
+            mockCurrencyState,
+            currencyFormatManager
         )
         subject.initView(mockActivity)
     }
@@ -80,7 +80,7 @@ class ContactDetailPresenterTest {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         // Act
         subject.onViewReady()
@@ -99,12 +99,12 @@ class ContactDetailPresenterTest {
         val bundle = Bundle()
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         bundle.putString(KEY_BUNDLE_CONTACT_ID, contactId)
         whenever(mockActivity.pageBundle).thenReturn(bundle)
         whenever(mockContactsManager.getContactList())
-                .thenReturn(Observable.error { Throwable() })
+            .thenReturn(Observable.error { Throwable() })
         // Act
         subject.onViewReady()
         // Assert
@@ -122,7 +122,7 @@ class ContactDetailPresenterTest {
         val bundle = Bundle()
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         bundle.putString(KEY_BUNDLE_CONTACT_ID, contactId)
         whenever(mockActivity.pageBundle).thenReturn(bundle)
@@ -134,7 +134,7 @@ class ContactDetailPresenterTest {
             name = contactName
         }
         whenever(mockContactsManager.getContactList())
-                .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
+            .thenReturn(Observable.fromIterable(listOf(contact0, contact1, contact2)))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         whenever(mockCurrencyState.isDisplayingCryptoCurrency).thenReturn(true)
         // Act
@@ -176,7 +176,7 @@ class ContactDetailPresenterTest {
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         val notificationPayload: NotificationPayload = mock()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         whenever(notificationPayload.type).thenReturn(NotificationPayload.NotificationType.CONTACT_REQUEST)
         // Act
@@ -196,7 +196,7 @@ class ContactDetailPresenterTest {
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         val notificationPayload: NotificationPayload = mock()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         // Act
         subject.onViewReady()
@@ -214,7 +214,7 @@ class ContactDetailPresenterTest {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         // Act
         subject.onViewReady()
@@ -286,7 +286,7 @@ class ContactDetailPresenterTest {
         // Arrange
         val contact = Contact()
         whenever(mockContactsManager.removeContact(contact))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         subject.contact = contact
         // Act
         subject.onDeleteContactConfirmed()
@@ -351,7 +351,7 @@ class ContactDetailPresenterTest {
         }
         subject.contact = contact
         whenever(mockContactsManager.renameContact(contactId, newName))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         // Act
         subject.onContactRenamed(newName)
         // Assert
@@ -379,12 +379,12 @@ class ContactDetailPresenterTest {
         bundle.putString(KEY_BUNDLE_CONTACT_ID, contactId)
         whenever(mockActivity.pageBundle).thenReturn(bundle)
         whenever(mockContactsManager.renameContact(contactId, newName))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         whenever(mockContactsManager.getContactList()).thenReturn(Observable.just(contact))
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         val notificationObservable = PublishSubject.create<NotificationPayload>()
         whenever(mockRxBus.register(NotificationPayload::class.java)).thenReturn(
-                notificationObservable
+            notificationObservable
         )
         whenever(mockCurrencyState.isDisplayingCryptoCurrency).thenReturn(true)
         // Act
@@ -525,11 +525,11 @@ class ContactDetailPresenterTest {
         subject.onTransactionClicked(fctxId)
         // Assert
         verify(mockActivity).showAccountChoiceDialog(
-                listOf(
-                        accountLabel0,
-                        accountLabel1,
-                        accountLabel2
-                ), fctxId
+            listOf(
+                accountLabel0,
+                accountLabel1,
+                accountLabel2
+            ), fctxId
         )
         verifyNoMoreInteractions(mockActivity)
     }
@@ -557,10 +557,10 @@ class ContactDetailPresenterTest {
         subject.onTransactionClicked(fctxId)
         // Assert
         verify(mockActivity).initiatePayment(
-                facilitatedTransaction.toBitcoinURI(),
-                contact.id,
-                contact.mdid,
-                fctxId
+            facilitatedTransaction.toBitcoinURI(),
+            contact.id,
+            contact.mdid,
+            fctxId
         )
         verifyNoMoreInteractions(mockActivity)
     }
@@ -611,7 +611,7 @@ class ContactDetailPresenterTest {
         }
         val contactTransaction = ContactTransactionModel("", transaction)
         whenever(mockContactsManager.getFacilitatedTransactions())
-                .thenReturn(Observable.fromIterable(listOf(contactTransaction)))
+            .thenReturn(Observable.fromIterable(listOf(contactTransaction)))
         // Act
         subject.onTransactionLongClicked(fctxId)
         // Assert
@@ -633,7 +633,7 @@ class ContactDetailPresenterTest {
         }
         val contactTransaction = ContactTransactionModel("", transaction)
         whenever(mockContactsManager.getFacilitatedTransactions())
-                .thenReturn(Observable.fromIterable(listOf(contactTransaction)))
+            .thenReturn(Observable.fromIterable(listOf(contactTransaction)))
         // Act
         subject.onTransactionLongClicked(fctxId)
         // Assert
@@ -663,9 +663,9 @@ class ContactDetailPresenterTest {
         val contactMdid = "CONTACT_MDID"
         val contact = Contact().apply { mdid = contactMdid }
         whenever(mockContactsManager.getContactFromFctxId(fctxId))
-                .thenReturn(Single.just(contact))
+            .thenReturn(Single.just(contact))
         whenever(mockContactsManager.sendPaymentDeclinedResponse(contactMdid, fctxId))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         subject.contact = contact
         // Act
         subject.confirmDeclineTransaction(fctxId)
@@ -686,9 +686,9 @@ class ContactDetailPresenterTest {
         val contactMdid = "CONTACT_MDID"
         val contact = Contact().apply { mdid = contactMdid }
         whenever(mockContactsManager.getContactFromFctxId(fctxId))
-                .thenReturn(Single.just(contact))
+            .thenReturn(Single.just(contact))
         whenever(mockContactsManager.sendPaymentDeclinedResponse(contactMdid, fctxId))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         subject.contact = contact
         // Act
@@ -711,9 +711,9 @@ class ContactDetailPresenterTest {
         val contactMdid = "CONTACT_MDID"
         val contact = Contact().apply { mdid = contactMdid }
         whenever(mockContactsManager.getContactFromFctxId(fctxId))
-                .thenReturn(Single.just(contact))
+            .thenReturn(Single.just(contact))
         whenever(mockContactsManager.sendPaymentCancelledResponse(contactMdid, fctxId))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         subject.contact = contact
         // Act
         subject.confirmCancelTransaction(fctxId)
@@ -734,9 +734,9 @@ class ContactDetailPresenterTest {
         val contactMdid = "CONTACT_MDID"
         val contact = Contact().apply { mdid = contactMdid }
         whenever(mockContactsManager.getContactFromFctxId(fctxId))
-                .thenReturn(Single.just(contact))
+            .thenReturn(Single.just(contact))
         whenever(mockContactsManager.sendPaymentCancelledResponse(contactMdid, fctxId))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
         subject.contact = contact
         // Act
@@ -766,11 +766,11 @@ class ContactDetailPresenterTest {
         })
         val address = "ADDRESS"
         whenever(mockPayloadDataManager.getNextReceiveAddressAndReserve(eq(accountPosition), any()))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(mockPayloadDataManager.getPositionOfAccountInActiveList(accountPosition))
-                .thenReturn(accountPosition)
+            .thenReturn(accountPosition)
         whenever(mockContactsManager.sendPaymentRequestResponse(eq(mdid), any(), eq(fctxId)))
-                .thenReturn(Completable.complete())
+            .thenReturn(Completable.complete())
         // Act
         subject.onAccountChosen(accountPosition, fctxId)
         // Assert
@@ -791,7 +791,7 @@ class ContactDetailPresenterTest {
         // Arrange
         val fctxId = "FCTX_ID"
         whenever(mockContactsManager.getContactFromFctxId(fctxId))
-                .thenReturn(Single.error(Throwable()))
+            .thenReturn(Single.error(Throwable()))
         // Act
         subject.onPaymentRequestAccepted(fctxId)
         // Assert
@@ -817,7 +817,7 @@ class ContactDetailPresenterTest {
         }
         contact.facilitatedTransactions[fctxId] = fctx
         whenever(mockContactsManager.getContactFromFctxId(fctxId))
-                .thenReturn(Single.just(contact))
+            .thenReturn(Single.just(contact))
         // Act
         subject.onPaymentRequestAccepted(fctxId)
         // Assert
@@ -851,11 +851,11 @@ class ContactDetailPresenterTest {
         })
         val address = "ADDRESS"
         whenever(mockPayloadDataManager.getNextReceiveAddressAndReserve(eq(accountPosition), any()))
-                .thenReturn(Observable.just(address))
+            .thenReturn(Observable.just(address))
         whenever(mockPayloadDataManager.getPositionOfAccountInActiveList(accountPosition))
-                .thenReturn(accountPosition)
+            .thenReturn(accountPosition)
         whenever(mockContactsManager.sendPaymentRequestResponse(eq(mdid), any(), eq(fctxId)))
-                .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.error { Throwable() })
         // Act
         subject.onAccountChosen(accountPosition, fctxId)
         // Assert
@@ -922,5 +922,4 @@ class ContactDetailPresenterTest {
         // Assert
         verify(mockRxBus).unregister(eq(NotificationPayload::class.java), anyOrNull())
     }
-
 }

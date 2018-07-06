@@ -28,109 +28,108 @@ internal interface Coinify {
 
     @POST
     fun signUp(
-            @Url url: String,
-            @Body signUpDetails: SignUpDetails
+        @Url url: String,
+        @Body signUpDetails: SignUpDetails
     ): Single<TraderResponse>
 
     @GET
     fun getTrader(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<Trader>
 
     @GET
     fun getSubscriptions(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<List<Subscription>>
 
     @GET
     fun getTrades(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<List<CoinifyTrade>>
 
     @POST
     fun createTrade(
-            @Url path: String,
-            @Body coinifyTrade: CoinifyTradeRequest,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Body coinifyTrade: CoinifyTradeRequest,
+        @Header("Authorization") accessToken: String
     ): Single<CoinifyTrade>
 
     @PATCH
     fun cancelTrade(
-            @Url path: String,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Header("Authorization") accessToken: String
     ): Single<CoinifyTrade>
 
     @GET
     fun getTradeStatus(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<CoinifyTrade>
 
     @POST
     fun auth(
-            @Url url: String,
-            @Body authRequest: AuthRequest
+        @Url url: String,
+        @Body authRequest: AuthRequest
     ): Single<AuthResponse>
 
     @POST
     fun startKycReview(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<KycResponse>
 
     @GET
     fun getKycReviews(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<List<KycResponse>>
 
     @POST
     fun getKycReviewStatus(
-            @Url url: String,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Header("Authorization") accessToken: String
     ): Single<KycResponse>
 
     @POST
     fun getQuote(
-            @Url url: String,
-            @Body quoteRequest: QuoteRequest,
-            @Header("Authorization") accessToken: String
+        @Url url: String,
+        @Body quoteRequest: QuoteRequest,
+        @Header("Authorization") accessToken: String
     ): Single<Quote>
 
     @GET
     fun getPaymentMethods(
-            @Url path: String,
-            @Query("inCurrency") inCurrency: String?,
-            @Query("outCurrency") outCurrency: String?,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Query("inCurrency") inCurrency: String?,
+        @Query("outCurrency") outCurrency: String?,
+        @Header("Authorization") accessToken: String
     ): Single<List<PaymentMethod>>
 
     @GET
     fun getBankAccounts(
-            @Url path: String,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Header("Authorization") accessToken: String
     ): Single<List<BankAccount>>
 
     @GET
     fun getBankAccount(
-            @Url path: String,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Header("Authorization") accessToken: String
     ): Single<BankAccount>
 
     @DELETE
     fun deleteBankAccount(
-            @Url path: String,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Header("Authorization") accessToken: String
     ): Completable
 
     @POST
     fun addBankAccount(
-            @Url path: String,
-            @Body bankAccount: BankAccount,
-            @Header("Authorization") accessToken: String
+        @Url path: String,
+        @Body bankAccount: BankAccount,
+        @Header("Authorization") accessToken: String
     ): Single<BankAccount>
-
 }

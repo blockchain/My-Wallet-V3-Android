@@ -31,29 +31,29 @@ fun loadFont(context: Context, font: CustomFont, func: (Typeface) -> Unit) {
     val handler = Handler(handlerThread.looper)
 
     val request = FontRequest(
-            "com.google.android.gms.fonts",
-            "com.google.android.gms",
-            font.query,
-            R.array.com_google_android_gms_fonts_certs
+        "com.google.android.gms.fonts",
+        "com.google.android.gms",
+        font.query,
+        R.array.com_google_android_gms_fonts_certs
     )
 
     FontsContractCompat.requestFont(
-            context,
-            request,
-            object : FontsContractCompat.FontRequestCallback() {
-                override fun onTypefaceRetrieved(typeface: Typeface) {
-                    FontCache.cacheFont(
-                            font,
-                            typeface
-                    )
-                    func.invoke(typeface)
-                }
+        context,
+        request,
+        object : FontsContractCompat.FontRequestCallback() {
+            override fun onTypefaceRetrieved(typeface: Typeface) {
+                FontCache.cacheFont(
+                    font,
+                    typeface
+                )
+                func.invoke(typeface)
+            }
 
-                override fun onTypefaceRequestFailed(reason: Int) {
-                    Timber.e("FontsContractCompat.requestFont failed with error code $reason")
-                }
-            },
-            handler
+            override fun onTypefaceRequestFailed(reason: Int) {
+                Timber.e("FontsContractCompat.requestFont failed with error code $reason")
+            }
+        },
+        handler
     )
 }
 
@@ -62,7 +62,6 @@ enum class CustomFont(val query: String) {
     MONTSERRAT_REGULAR("Montserrat"),
     MONTSERRAT_LIGHT("name=Montserrat&weight=300"),
     MONTSERRAT_SEMI_BOLD("name=Montserrat&weight=600"),
-
 }
 
 /**
@@ -79,7 +78,5 @@ class FontCache {
         }
 
         fun getCachedFont(customFont: CustomFont): Typeface? = fontMap[customFont]
-
     }
-
 }

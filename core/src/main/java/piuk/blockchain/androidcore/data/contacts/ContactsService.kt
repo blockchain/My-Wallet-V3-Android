@@ -17,22 +17,22 @@ import javax.inject.Inject
 @Mockable
 class ContactsService @Inject constructor(private val contacts: Contacts) {
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // INIT METHODS AND AUTH
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Initialises the Contacts service
      *
-     * @param metaDataHDNode       The key for the metadata service
+     * @param metaDataHDNode The key for the metadata service
      * @param sharedMetaDataHDNode The key for the shared metadata service
      *
      * @return A [Completable] object
      */
     @WebRequest
     internal fun initContactsService(
-            metaDataHDNode: DeterministicKey,
-            sharedMetaDataHDNode: DeterministicKey
+        metaDataHDNode: DeterministicKey,
+        sharedMetaDataHDNode: DeterministicKey
     ) = Completable.fromCallable {
         contacts.init(metaDataHDNode, sharedMetaDataHDNode)
     }
@@ -46,9 +46,9 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
         contacts.invalidateToken()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // CONTACTS SPECIFIC
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Fetches an updated version of the contacts list
@@ -129,7 +129,7 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
      * Renames a [Contact] and then saves the changes to the server.
      *
      * @param contactId The ID of the Contact you wish to update
-     * @param name      The new name for the Contact
+     * @param name The new name for the Contact
      *
      * @return A [Completable] object, ie an asynchronous void operation
      */
@@ -138,14 +138,14 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
         contacts.renameContact(contactId, name)
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // SHARING SPECIFIC
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Creates a new invite and associated invite ID for linking two users together
      *
-     * @param myDetails        My details that will be visible in invitation url
+     * @param myDetails My details that will be visible in invitation url
      * @param recipientDetails Recipient details
      * @return A [Contact] object, which is an updated version of the mydetails object, ie
      * it's the sender's own contact details
@@ -153,7 +153,7 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun createInvitation(myDetails: Contact, recipientDetails: Contact) =
-            Observable.fromCallable { contacts.createInvitation(myDetails, recipientDetails) }
+        Observable.fromCallable { contacts.createInvitation(myDetails, recipientDetails) }
 
     /**
      * Accepts an invitation from another user
@@ -165,7 +165,7 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun acceptInvitation(url: String) =
-            Observable.fromCallable { contacts.acceptInvitationLink(url) }
+        Observable.fromCallable { contacts.acceptInvitationLink(url) }
 
     /**
      * Returns some Contact information from an invitation link
@@ -177,7 +177,7 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun readInvitationLink(url: String) =
-            Observable.fromCallable { contacts.readInvitationLink(url) }
+        Observable.fromCallable { contacts.readInvitationLink(url) }
 
     /**
      * Allows the user to poll to check if the passed Contact has accepted their invite
@@ -190,16 +190,16 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun readInvitationSent(contact: Contact) =
-            Observable.fromCallable { contacts.readInvitationSent(contact) }
+        Observable.fromCallable { contacts.readInvitationSent(contact) }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // PAYMENT REQUEST SPECIFIC
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Sends a new payment request without the need to ask for a receive address from the recipient.
      *
-     * @param mdid    The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param request A [PaymentRequest] object containing the request details, ie the amount
      *                and an optional note
      *
@@ -208,14 +208,14 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun requestSendPayment(mdid: String, request: PaymentRequest) =
-            Completable.fromCallable {
-                contacts.sendPaymentRequest(mdid, request)
-            }
+        Completable.fromCallable {
+            contacts.sendPaymentRequest(mdid, request)
+        }
 
     /**
      * Requests that another user receive bitcoin from current user
 
-     * @param mdid    The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param request A [PaymentRequest] object containing the request details, ie the amount
      *                and an optional note, the receive address
      *
@@ -224,16 +224,16 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun requestReceivePayment(mdid: String, request: RequestForPaymentRequest) =
-            Completable.fromCallable {
-                contacts.sendRequestForPaymentRequest(mdid, request)
-            }
+        Completable.fromCallable {
+            contacts.sendRequestForPaymentRequest(mdid, request)
+        }
 
     /**
      * Sends a response to a payment request containing a [PaymentRequest], which contains a
      * bitcoin address belonging to the user.
      *
-     * @param mdid            The recipient's MDID
-     * @param paymentRequest  A [PaymentRequest] object
+     * @param mdid The recipient's MDID
+     * @param paymentRequest A [PaymentRequest] object
      * @param facilitatedTxId The ID of the [FacilitatedTransaction]
      *
      * @return A [Completable] object
@@ -241,9 +241,9 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun sendPaymentRequestResponse(
-            mdid: String,
-            paymentRequest: PaymentRequest,
-            facilitatedTxId: String
+        mdid: String,
+        paymentRequest: PaymentRequest,
+        facilitatedTxId: String
     ) = Completable.fromCallable {
         contacts.sendPaymentRequest(mdid, paymentRequest, facilitatedTxId)
     }
@@ -251,8 +251,8 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     /**
      * Sends notification that a transaction has been processed.
      *
-     * @param mdid            The recipient's MDID
-     * @param txHash          The transaction hash
+     * @param mdid The recipient's MDID
+     * @param txHash The transaction hash
      * @param facilitatedTxId The ID of the [FacilitatedTransaction]
      *
      * @return A [Completable] object
@@ -260,9 +260,9 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun sendPaymentBroadcasted(
-            mdid: String,
-            txHash: String,
-            facilitatedTxId: String
+        mdid: String,
+        txHash: String,
+        facilitatedTxId: String
     ) = Completable.fromCallable {
         contacts.sendPaymentBroadcasted(mdid, txHash, facilitatedTxId)
     }
@@ -270,7 +270,7 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     /**
      * Sends a response to a payment request declining the offer of payment.
      *
-     * @param mdid   The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param fctxId The ID of the [FacilitatedTransaction] to be declined
      *
      * @return A [Completable] object
@@ -278,14 +278,14 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun sendPaymentDeclinedResponse(mdid: String, fctxId: String) =
-            Completable.fromCallable {
-                contacts.sendPaymentDeclined(mdid, fctxId)
-            }
+        Completable.fromCallable {
+            contacts.sendPaymentDeclined(mdid, fctxId)
+        }
 
     /**
      * Informs the recipient of a payment request that the request has been cancelled.
      *
-     * @param mdid   The recipient's MDID
+     * @param mdid The recipient's MDID
      * @param fctxId The ID of the [FacilitatedTransaction] to be cancelled
      *
      * @return A [Completable] object
@@ -293,13 +293,13 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun sendPaymentCancelledResponse(mdid: String, fctxId: String) =
-            Completable.fromCallable {
-                contacts.sendPaymentCancelled(mdid, fctxId)
-            }
+        Completable.fromCallable {
+            contacts.sendPaymentCancelled(mdid, fctxId)
+        }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // XPUB AND MDID SPECIFIC
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Returns the XPub associated with an MDID, should the user already be in your trusted contacts
@@ -322,9 +322,9 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
         contacts.publishXpub()
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // MESSAGES SPECIFIC
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Returns a list of [Message] objects, with a flag to only return those which haven't
@@ -337,7 +337,7 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun getMessages(onlyNew: Boolean) =
-            Observable.fromCallable { contacts.getMessages(onlyNew) }
+        Observable.fromCallable { contacts.getMessages(onlyNew) }
 
     /**
      * Allows users to read a particular message by retrieving it from the Shared Metadata service
@@ -349,12 +349,12 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun readMessage(messageId: String) =
-            Observable.fromCallable { contacts.readMessage(messageId) }
+        Observable.fromCallable { contacts.readMessage(messageId) }
 
     /**
      * Marks a message as read or unread
      *
-     * @param messageId  The ID of the message to be marked as read/unread
+     * @param messageId The ID of the message to be marked as read/unread
      * @param markAsRead A flag setting the read status
      *
      * @return A [Completable] object, ie an asynchronous void operation
@@ -362,27 +362,26 @@ class ContactsService @Inject constructor(private val contacts: Contacts) {
     @WebRequest
     @RequiresAccessToken
     internal fun markMessageAsRead(messageId: String, markAsRead: Boolean) =
-            Completable.fromCallable {
-                contacts.markMessageAsRead(messageId, markAsRead)
-            }
+        Completable.fromCallable {
+            contacts.markMessageAsRead(messageId, markAsRead)
+        }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // FACILITATED TRANSACTIONS
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     /**
      * Deletes a [FacilitatedTransaction] object from a [Contact] and then syncs the
      * Contact list with the server.
      *
-     * @param mdid   The Contact's MDID
+     * @param mdid The Contact's MDID
      * @param fctxId The FacilitatedTransaction's ID
      *
      * @return A [Completable] object, ie an asynchronous void operation
      */
     @WebRequest
     internal fun deleteFacilitatedTransaction(mdid: String, fctxId: String) =
-            Completable.fromCallable {
-                contacts.deleteFacilitatedTransaction(mdid, fctxId)
-            }
-
+        Completable.fromCallable {
+            contacts.deleteFacilitatedTransaction(mdid, fctxId)
+        }
 }

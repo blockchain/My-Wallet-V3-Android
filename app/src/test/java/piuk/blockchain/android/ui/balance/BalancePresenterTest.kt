@@ -13,27 +13,27 @@ import io.reactivex.Observable
 import org.amshove.kluent.`should equal to`
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.androidcore.data.access.AuthEvent
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
-import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
-import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.android.data.notifications.models.NotificationPayload
-import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
 import piuk.blockchain.android.ui.account.ItemAccount
-import piuk.blockchain.androidcoreui.ui.base.UiState
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper
 import piuk.blockchain.android.util.StringUtils
+import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
+import piuk.blockchain.androidcore.data.access.AuthEvent
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
+import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
+import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import piuk.blockchain.androidcoreui.ui.base.UiState
 
 @Suppress("IllegalIdentifier")
 class BalancePresenterTest {
@@ -60,21 +60,21 @@ class BalancePresenterTest {
     fun setUp() {
 
         subject = BalancePresenter(
-                exchangeRateFactory,
-                transactionListDataManager,
-                ethDataManager,
-                swipeToReceiveHelper,
-                payloadDataManager,
-                buyDataManager,
-                stringUtils,
-                prefsUtil,
-                rxBus,
-                currencyState,
-                shapeShiftDataManager,
-                bchDataManager,
-                walletAccountHelper,
-                environmentSettings,
-                currencyFormatManager
+            exchangeRateFactory,
+            transactionListDataManager,
+            ethDataManager,
+            swipeToReceiveHelper,
+            payloadDataManager,
+            buyDataManager,
+            stringUtils,
+            prefsUtil,
+            rxBus,
+            currencyState,
+            shapeShiftDataManager,
+            bchDataManager,
+            walletAccountHelper,
+            environmentSettings,
+            currencyFormatManager
         )
         subject.initView(view)
     }
@@ -126,7 +126,7 @@ class BalancePresenterTest {
     fun areLauncherShortcutsEnabled() {
         // Arrange
         whenever(prefsUtil.getValue(PrefsUtil.KEY_RECEIVE_SHORTCUTS_ENABLED, true))
-                .thenReturn(false)
+            .thenReturn(false)
         // Act
         val result = subject.areLauncherShortcutsEnabled()
         // Assert
@@ -140,7 +140,7 @@ class BalancePresenterTest {
     fun onRefreshRequested() {
         // Arrange
 
-        //getCurrentAccount()
+        // getCurrentAccount()
         whenever(view.getCurrentAccountPosition()).thenReturn(0)
         val account: ItemAccount = mock()
         whenever(walletAccountHelper.getAccountItemsForOverview()).thenReturn(mutableListOf(account))
@@ -152,7 +152,7 @@ class BalancePresenterTest {
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
         whenever(payloadDataManager.updateAllBalances()).thenReturn(Completable.complete())
         whenever(transactionListDataManager.fetchTransactions(any(), any(), any()))
-                .thenReturn(Observable.empty())
+            .thenReturn(Observable.empty())
 
         whenever(currencyState.isDisplayingCryptoCurrency).thenReturn(true)
 
@@ -166,7 +166,6 @@ class BalancePresenterTest {
         verify(view, times(2)).updateAccountsDataSet(mutableListOf(account))
         verify(view).generateLauncherShortcuts()
         verify(view).updateTransactionValueType(true)
-
     }
 
     @Test
@@ -211,11 +210,13 @@ class BalancePresenterTest {
     fun updateEthAddress() {
         // Arrange
         val abc: EthAddressResponseMap = mock()
-        whenever(ethDataManager.fetchEthAddress()).thenReturn(Observable.just(
+        whenever(ethDataManager.fetchEthAddress()).thenReturn(
+            Observable.just(
                 CombinedEthModel(
-                        abc
+                    abc
                 )
-        ))
+            )
+        )
         // Act
         val testObserver = subject.updateEthAddress().test()
         // Assert

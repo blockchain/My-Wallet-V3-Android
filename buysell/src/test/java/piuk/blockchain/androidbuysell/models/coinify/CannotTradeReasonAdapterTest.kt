@@ -11,8 +11,8 @@ import org.junit.Test
 class CannotTradeReasonAdapterTest {
 
     private val moshi: Moshi = Moshi.Builder()
-            .add(CannotTradeReasonAdapter())
-            .build()
+        .add(CannotTradeReasonAdapter())
+        .build()
     private val type = Types.newParameterizedType(List::class.java, CannotTradeReason::class.java)
     private val adapter: JsonAdapter<List<CannotTradeReason>> = moshi.adapter(type)
 
@@ -86,8 +86,9 @@ class CannotTradeReasonAdapterTest {
 
     companion object {
         private const val FORCED_DELAY_JSON =
-                "[{\"delayEnd\":\"2016-04-01T12:27:36Z\",\"reasonCode\":\"forced_delay\"}]"
-        private const val TRADE_IN_PROGRESS_JSON = "[{\"reasonCode\":\"trade_in_progress\",\"tradeId\":12345}]"
+            "[{\"delayEnd\":\"2016-04-01T12:27:36Z\",\"reasonCode\":\"forced_delay\"}]"
+        private const val TRADE_IN_PROGRESS_JSON =
+            "[{\"reasonCode\":\"trade_in_progress\",\"tradeId\":12345}]"
         private const val LIMITS_EXCEEDED_JSON = "[{\"reasonCode\":\"limits_exceeded\"}]"
     }
 }

@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.buysell.confirmation.sell
 
 import piuk.blockchain.android.ui.buysell.createorder.models.SellConfirmationDisplayModel
 import piuk.blockchain.androidcoreui.ui.base.View
-import java.util.*
+import java.util.Locale
 
 interface CoinifySellConfirmationView : View {
 
@@ -25,5 +25,4 @@ interface CoinifySellConfirmationView : View {
     fun showErrorDialog(errorMessage: String)
 
     fun showTransactionComplete()
-
 }

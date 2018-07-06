@@ -9,37 +9,37 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class BuySellDetailsModel(
-        val isSell: Boolean,
-        val isAwaitingCardPayment: Boolean,
-        val pageTitle: String,
-        val headlineAmount: String,
-        val detailAmount: String,
-        val date: String,
-        val tradeIdDisplay: String,
-        val tradeId: Int,
-        val currencyReceivedTitle: String,
-        val exchangeRate: String,
-        val amountSent: String,
-        val paymentFee: String,
-        val totalCost: String
+    val isSell: Boolean,
+    val isAwaitingCardPayment: Boolean,
+    val pageTitle: String,
+    val headlineAmount: String,
+    val detailAmount: String,
+    val date: String,
+    val tradeIdDisplay: String,
+    val tradeId: Int,
+    val currencyReceivedTitle: String,
+    val exchangeRate: String,
+    val amountSent: String,
+    val paymentFee: String,
+    val totalCost: String
 ) : Parcelable
 
 @Parcelize
 data class AwaitingFundsModel(
-        val tradeId: Int,
-        val formattedAmount: String,
-        val reference: String,
-        val recipientName: String,
-        val recipientAddress: String,
-        val iban: String,
-        val bic: String,
-        val bank: String
+    val tradeId: Int,
+    val formattedAmount: String,
+    val reference: String,
+    val recipientName: String,
+    val recipientAddress: String,
+    val iban: String,
+    val bic: String,
+    val bank: String
 ) : Parcelable
 
 @Parcelize
 data class RecurringTradeDisplayModel(
-        val amountString: String,
-        val frequencyString: String,
-        val durationStringToFormat: String,
-        val duration: String
+    val amountString: String,
+    val frequencyString: String,
+    val durationStringToFormat: String,
+    val duration: String
 ) : Parcelable

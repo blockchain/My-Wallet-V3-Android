@@ -7,7 +7,7 @@ import okhttp3.ResponseBody
 import okio.Buffer
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 class ApiInterceptor : Interceptor {
 
@@ -17,10 +17,10 @@ class ApiInterceptor : Interceptor {
         val startTime = System.nanoTime()
 
         var requestLog = String.format(
-                "Sending request of type %s to %s with headers %s",
-                request.method(),
-                request.url(),
-                request.headers()
+            "Sending request of type %s to %s with headers %s",
+            request.method(),
+            request.url(),
+            request.headers()
         )
 
         if (request.method().compareTo("post", ignoreCase = true) == 0) {
@@ -33,11 +33,11 @@ class ApiInterceptor : Interceptor {
         val endTime = System.nanoTime()
 
         val responseLog = String.format(
-                Locale.ENGLISH,
-                "Received response from %s in %.1fms%n%s",
-                response.request().url(),
-                (endTime - startTime) / 1e6,
-                response.headers()
+            Locale.ENGLISH,
+            "Received response from %s in %.1fms%n%s",
+            response.request().url(),
+            (endTime - startTime) / 1e6,
+            response.headers()
         )
 
         val bodyString = response.body()!!.string()
@@ -48,8 +48,8 @@ class ApiInterceptor : Interceptor {
         }
 
         return response.newBuilder()
-                .body(ResponseBody.create(response.body()!!.contentType(), bodyString))
-                .build()
+            .body(ResponseBody.create(response.body()!!.contentType(), bodyString))
+            .build()
     }
 
     private fun requestBodyToString(request: RequestBody?): String {

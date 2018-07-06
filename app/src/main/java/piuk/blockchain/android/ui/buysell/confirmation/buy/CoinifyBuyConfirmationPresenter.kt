@@ -27,24 +27,26 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import timber.log.Timber
 import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Currency
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CoinifyBuyConfirmationPresenter @Inject constructor(
-        private val payloadDataManager: PayloadDataManager,
-        private val coinifyDataManager: CoinifyDataManager,
-        private val exchangeService: ExchangeService,
-        private val stringUtils: StringUtils,
-        private val metadataManager: MetadataManager
+    private val payloadDataManager: PayloadDataManager,
+    private val coinifyDataManager: CoinifyDataManager,
+    private val exchangeService: ExchangeService,
+    private val stringUtils: StringUtils,
+    private val metadataManager: MetadataManager
 ) : BasePresenter<CoinifyBuyConfirmationView>() {
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
-                .addToCompositeDisposable(this)
-                .applySchedulers()
-                .singleOrError()
-                .map { it.coinify!!.token }
+            .addToCompositeDisposable(this)
+            .applySchedulers()
+            .singleOrError()
+            .map { it.coinify!!.token }
 
     override fun onViewReady() {
         val expiryDateGmt = view.displayableQuote.originalQuote.expiryTime.fromIso8601()!!
@@ -82,93 +84,93 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
         getAddressAndReserve(quote).flatMapSingle { address ->
             tokenSingle.flatMap {
                 return@flatMap coinifyDataManager.createNewTrade(
-                        it,
-                        CoinifyTradeRequest.cardBuy(quote.originalQuote.id, address)
+                    it,
+                    CoinifyTradeRequest.cardBuy(quote.originalQuote.id, address)
                 )
             }
         }.singleOrError()
-                .doOnSubscribe { view.displayProgressDialog() }
-                .doAfterTerminate { view.dismissProgressDialog() }
-                .subscribeBy(
-                        onSuccess = {
-                            val cardDetails = it.transferIn.details as CardDetails
-                            view.launchCardPaymentWebView(
-                                    cardDetails.redirectUrl,
-                                    cardDetails.paymentId,
-                                    it.inCurrency,
-                                    it.inAmount
-                            )
-                        },
-                        onError = { handleException(it) }
-                )
+            .doOnSubscribe { view.displayProgressDialog() }
+            .doAfterTerminate { view.dismissProgressDialog() }
+            .subscribeBy(
+                onSuccess = {
+                    val cardDetails = it.transferIn.details as CardDetails
+                    view.launchCardPaymentWebView(
+                        cardDetails.redirectUrl,
+                        cardDetails.paymentId,
+                        it.inCurrency,
+                        it.inAmount
+                    )
+                },
+                onError = { handleException(it) }
+            )
     }
 
     private fun completeBankBuy(quote: BuyConfirmationDisplayModel) {
         val addressPosition =
-                payloadDataManager.getNextReceiveAddressPosition(payloadDataManager.accounts[quote.accountIndex])
+            payloadDataManager.getNextReceiveAddressPosition(payloadDataManager.accounts[quote.accountIndex])
 
         getAddressAndReserve(quote).flatMapSingle { address ->
             tokenSingle.flatMap {
                 coinifyDataManager.createNewTrade(
-                        it,
-                        CoinifyTradeRequest.bankBuy(quote.originalQuote.id, address)
+                    it,
+                    CoinifyTradeRequest.bankBuy(quote.originalQuote.id, address)
                 )
             }
         }.singleOrError()
-                .flatMap { trade ->
-                    updateMetadataCompletable(
-                            addressPosition,
-                            quote.accountIndex,
-                            trade
-                    )
-                }
-                .doOnSubscribe { view.displayProgressDialog() }
-                .doAfterTerminate { view.dismissProgressDialog() }
-                .subscribeBy(
-                        onSuccess = {
-                            val model = getAwaitingFundsModel(it)
-                            view.launchTransferDetailsPage(it.id, model)
-                        },
-                        onError = { handleException(it) }
+            .flatMap { trade ->
+                updateMetadataCompletable(
+                    addressPosition,
+                    quote.accountIndex,
+                    trade
                 )
+            }
+            .doOnSubscribe { view.displayProgressDialog() }
+            .doAfterTerminate { view.dismissProgressDialog() }
+            .subscribeBy(
+                onSuccess = {
+                    val model = getAwaitingFundsModel(it)
+                    view.launchTransferDetailsPage(it.id, model)
+                },
+                onError = { handleException(it) }
+            )
     }
 
     private fun updateMetadataCompletable(
-            addressPosition: Int,
-            accountIndex: Int,
-            trade: CoinifyTrade
+        addressPosition: Int,
+        accountIndex: Int,
+        trade: CoinifyTrade
     ): Single<CoinifyTrade> = exchangeService.getExchangeMetaData()
-            .map {
-                if (it.coinify!!.trades == null) {
-                    it.coinify!!.trades = mutableListOf()
-                }
-                it.coinify!!.trades!!.add(
-                        TradeData()
-                                .apply {
-                                    id = trade.id
-                                    state = trade.state.toString()
-                                    isBuy = false
-                                    this.accountIndex = accountIndex
-                                    receiveIndex = addressPosition
-                                    isConfirmed = false
-                                }
-                )
+        .map {
+            if (it.coinify!!.trades == null) {
+                it.coinify!!.trades = mutableListOf()
+            }
+            it.coinify!!.trades!!.add(
+                TradeData()
+                    .apply {
+                        id = trade.id
+                        state = trade.state.toString()
+                        isBuy = false
+                        this.accountIndex = accountIndex
+                        receiveIndex = addressPosition
+                        isConfirmed = false
+                    }
+            )
 
-                return@map it
-            }
-            .flatMapCompletable {
-                metadataManager.saveToMetadata(
-                        it.toSerialisedString(),
-                        ExchangeService.METADATA_TYPE_EXCHANGE
-                )
-            }
-            .toSingle { trade }
+            return@map it
+        }
+        .flatMapCompletable {
+            metadataManager.saveToMetadata(
+                it.toSerialisedString(),
+                ExchangeService.METADATA_TYPE_EXCHANGE
+            )
+        }
+        .toSingle { trade }
 
     private fun getAddressAndReserve(quote: BuyConfirmationDisplayModel): Observable<String> =
-            payloadDataManager.getNextReceiveAddressAndReserve(
-                    payloadDataManager.accounts[quote.accountIndex],
-                    stringUtils.getString(R.string.buy_sell_confirmation_order_id) + quote.originalQuote.id.toString()
-            )
+        payloadDataManager.getNextReceiveAddressAndReserve(
+            payloadDataManager.accounts[quote.accountIndex],
+            stringUtils.getString(R.string.buy_sell_confirmation_order_id) + quote.originalQuote.id.toString()
+        )
 
     private fun handleException(it: Throwable) {
         Timber.e(it)
@@ -186,50 +188,50 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
             view.showQuoteExpiredDialog()
         } else {
             Observable.interval(1, TimeUnit.SECONDS)
-                    .addToCompositeDisposable(this)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnEach { remaining-- }
-                    .map { return@map remaining }
-                    .doOnNext {
-                        val readableTime = String.format(
-                                "%2d:%02d",
-                                TimeUnit.SECONDS.toMinutes(it),
-                                TimeUnit.SECONDS.toSeconds(it) -
-                                        TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(it))
-                        )
-                        view.updateCounter(readableTime)
-                    }
-                    .doOnNext { if (it < 5 * 60) view.showTimeExpiring() }
-                    .takeUntil { it <= 0 }
-                    .doOnComplete { view.showQuoteExpiredDialog() }
-                    .subscribe()
+                .addToCompositeDisposable(this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnEach { remaining-- }
+                .map { return@map remaining }
+                .doOnNext {
+                    val readableTime = String.format(
+                        "%2d:%02d",
+                        TimeUnit.SECONDS.toMinutes(it),
+                        TimeUnit.SECONDS.toSeconds(it) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(it))
+                    )
+                    view.updateCounter(readableTime)
+                }
+                .doOnNext { if (it < 5 * 60) view.showTimeExpiring() }
+                .takeUntil { it <= 0 }
+                .doOnComplete { view.showQuoteExpiredDialog() }
+                .subscribe()
         }
     }
 
     private fun getAwaitingFundsModel(it: CoinifyTrade): AwaitingFundsModel {
         val (referenceText, account, bank, holder, _, _) = (it.transferIn.details as BankDetails)
         val formattedAmount = formatFiatWithSymbol(
-                it.transferIn.sendAmount,
-                it.transferIn.currency,
-                view.locale
+            it.transferIn.sendAmount,
+            it.transferIn.currency,
+            view.locale
         )
 
         return AwaitingFundsModel(
-                it.id,
-                formattedAmount,
-                referenceText,
-                holder.name,
-                holder.address.getFormattedAddressString(),
-                account.number,
-                account.bic,
-                "${bank.name}, ${bank.address.getFormattedAddressString()}"
+            it.id,
+            formattedAmount,
+            referenceText,
+            holder.name,
+            holder.address.getFormattedAddressString(),
+            account.number,
+            account.bic,
+            "${bank.name}, ${bank.address.getFormattedAddressString()}"
         )
     }
 
     private fun formatFiatWithSymbol(
-            fiatValue: Double,
-            currencyCode: String,
-            locale: Locale
+        fiatValue: Double,
+        currencyCode: String,
+        locale: Locale
     ): String {
         val numberFormat = NumberFormat.getCurrencyInstance(locale)
         val decimalFormatSymbols = (numberFormat as DecimalFormat).decimalFormatSymbols
@@ -238,5 +240,4 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
         }
         return numberFormat.format(fiatValue)
     }
-
 }

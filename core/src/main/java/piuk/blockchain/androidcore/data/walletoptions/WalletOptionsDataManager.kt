@@ -9,17 +9,17 @@ import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.annotations.Mockable
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
 
 @Mockable
 @PresenterScope
 class WalletOptionsDataManager @Inject constructor(
-        private val authService: AuthService,
-        private val walletOptionsState: WalletOptionsState,
-        private val settingsDataManager: SettingsDataManager,
-        @Named("explorer-url") private val explorerUrl: String
+    private val authService: AuthService,
+    private val walletOptionsState: WalletOptionsState,
+    private val settingsDataManager: SettingsDataManager,
+    @Named("explorer-url") private val explorerUrl: String
 ) {
 
     /**
@@ -29,16 +29,16 @@ class WalletOptionsDataManager @Inject constructor(
      */
     private fun initWalletOptionsReplaySubjects() {
         authService.getWalletOptions()
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(walletOptionsState.walletOptionsSource)
+            .subscribeOn(Schedulers.io())
+            .subscribeWith(walletOptionsState.walletOptionsSource)
     }
 
     private fun initSettingsReplaySubjects(guid: String, sharedKey: String) {
         settingsDataManager.initSettings(guid, sharedKey)
 
         settingsDataManager.getSettings()
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(walletOptionsState.walletSettingsSource)
+            .subscribeOn(Schedulers.io())
+            .subscribeWith(walletOptionsState.walletSettingsSource)
     }
 
     fun showShapeshift(guid: String, sharedKey: String): Observable<Boolean> {
@@ -46,10 +46,10 @@ class WalletOptionsDataManager @Inject constructor(
         initSettingsReplaySubjects(guid, sharedKey)
 
         return Observable.zip(walletOptionsState.walletOptionsSource,
-                walletOptionsState.walletSettingsSource,
-                BiFunction { options, settings ->
-                    isShapeshiftAllowed(options, settings)
-                }
+            walletOptionsState.walletSettingsSource,
+            BiFunction { options, settings ->
+                isShapeshiftAllowed(options, settings)
+            }
         )
     }
 
@@ -63,24 +63,24 @@ class WalletOptionsDataManager @Inject constructor(
     }
 
     fun isInUsa(): Observable<Boolean> =
-            walletOptionsState.walletSettingsSource.map { it.countryCode == "US" }
+        walletOptionsState.walletSettingsSource.map { it.countryCode == "US" }
 
     fun isStateWhitelisted(state: String): Observable<Boolean> =
-            walletOptionsState.walletOptionsSource
-                    .map { it.shapeshift.statesWhitelist.let { it?.contains(state) ?: true } }
+        walletOptionsState.walletOptionsSource
+            .map { it.shapeshift.statesWhitelist.let { it?.contains(state) ?: true } }
 
     fun getCoinifyPartnerId(): Observable<Int> =
-            walletOptionsState.walletOptionsSource.map { it.partners.coinify.partnerId }
+        walletOptionsState.walletOptionsSource.map { it.partners.coinify.partnerId }
 
     fun getBchFee(): Int = walletOptionsState.walletOptionsSource.value!!.bchFeePerByte
 
     fun getShapeShiftLimit(): Int =
-            walletOptionsState.walletOptionsSource.value!!.shapeshift.upperLimit
+        walletOptionsState.walletOptionsSource.value!!.shapeshift.upperLimit
 
     fun getBuyWebviewWalletLink(): String {
         initWalletOptionsReplaySubjects()
         return (walletOptionsState.walletOptionsSource.value!!.buyWebviewWalletLink
-                ?: explorerUrl+"wallet") + "/#/intermediate"
+            ?: explorerUrl + "wallet") + "/#/intermediate"
     }
 
     /**
@@ -140,9 +140,9 @@ class WalletOptionsDataManager @Inject constructor(
 
             result = when {
                 map.containsKey(language) -> map[language] ?: ""
-            //Regional
+            // Regional
                 map.containsKey(lcid) -> map[lcid] ?: ""
-            //Default
+            // Default
                 else -> map["en"] ?: ""
             }
         }
@@ -152,11 +152,10 @@ class WalletOptionsDataManager @Inject constructor(
 
     fun getLastEthTransactionFuse(): Observable<Long> {
         return walletOptionsState.walletOptionsSource
-                .map { return@map it.ethereum.lastTxFuse }
+            .map { return@map it.ethereum.lastTxFuse }
     }
 
     companion object {
         private const val SHOW_SHAPESHIFT = "showShapeshift"
     }
-
 }

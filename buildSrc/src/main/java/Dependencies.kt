@@ -82,7 +82,6 @@ object Versions {
     const val json = "20140107"
     const val espresso = "3.0.1"
     const val jacoco = "0.8.1"
-
 }
 
 object Libraries {
@@ -94,9 +93,9 @@ object Libraries {
     const val kotlinAllOpen = "org.jetbrains.kotlin:kotlin-allopen:${Versions.kotlin}"
     const val coveralls = "org.kt3k.gradle.plugin:coveralls-gradle-plugin:${Versions.coveralls}"
     const val googleServicesPlugin =
-            "com.google.gms:google-services:${Versions.googleServicesPlugin}"
+        "com.google.gms:google-services:${Versions.googleServicesPlugin}"
     const val buildProperties =
-            "com.novoda:gradle-build-properties-plugin:${Versions.buildProperties}"
+        "com.novoda:gradle-build-properties-plugin:${Versions.buildProperties}"
     const val ktlint = "com.github.shyiko:ktlint:${Versions.ktlint}"
 
     // Support Libraries
@@ -110,23 +109,23 @@ object Libraries {
     const val dynamicAnims = "com.android.support:support-dynamic-animation:${Versions.supportLibs}"
     const val annotations = "com.android.support:support-annotations:${Versions.supportLibs}"
     const val constraintLayout =
-            "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
+        "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
     const val dataBindingKapt = "com.android.databinding:compiler:${Versions.androidPlugin}"
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
 
     // Google & Firebase
     const val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
     const val firebaseMessaging =
-            "com.google.firebase:firebase-messaging:${Versions.firebaseMessaging}"
+        "com.google.firebase:firebase-messaging:${Versions.firebaseMessaging}"
     const val googlePlayServicesBase =
-            "com.google.android.gms:play-services-base:${Versions.googleServices}"
+        "com.google.android.gms:play-services-base:${Versions.googleServices}"
 
     // Networking, RxJava
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitJacksonConverter =
-            "com.squareup.retrofit2:converter-jackson:${Versions.retrofit}"
+        "com.squareup.retrofit2:converter-jackson:${Versions.retrofit}"
     const val retrofitRxMoshiConverter =
-            "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+        "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     const val retrofitRxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
     const val okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
@@ -141,7 +140,7 @@ object Libraries {
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
     const val rxBindingV4 = "com.jakewharton.rxbinding2:rxbinding-support-v4:${Versions.rxBinding}"
     const val rxBindingV7 =
-            "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${Versions.rxBinding}"
+        "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${Versions.rxBinding}"
     const val rxFingerprint = "com.mtramin:rxfingerprint:${Versions.rxFingerprint}"
 
     // Utils, Ethereum
@@ -165,7 +164,7 @@ object Libraries {
     const val circleIndicator = "me.relex:circleindicator:${Versions.circleIndicator}@aar"
     const val bottomNav = "com.aurelhubert:ahbottomnavigation:${Versions.bottomNav}"
     const val countryPicker =
-            "com.github.mukeshsolanki:country-picker-android:${Versions.countryPicker}"
+        "com.github.mukeshsolanki:country-picker-android:${Versions.countryPicker}"
     const val zxing = "com.google.zxing:core:${Versions.zxing}"
     const val wheelPicker = "cn.aigestudio.wheelpicker:WheelPicker:${Versions.wheelPicker}"
     const val konfetti = "nl.dionsegijn:konfetti:${Versions.konfetti}"
@@ -192,5 +191,4 @@ object Libraries {
     const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.retrofit}"
     const val okHttpMock = "com.squareup.okhttp3:mockwebserver:${Versions.okHttp}"
     const val jacoco = "org.jacoco:org.jacoco.core:${Versions.jacoco}"
-
 }

@@ -11,10 +11,10 @@ interface ShapeShiftView : View {
     fun onTradeUpdate(trade: Trade, tradeResponse: TradeStatusResponse)
 
     fun onExchangeRateUpdated(
-            btcExchangeRate: Double,
-            ethExchangeRate: Double,
-            bchExchangeRate: Double,
-            isBtc: Boolean
+        btcExchangeRate: Double,
+        ethExchangeRate: Double,
+        bchExchangeRate: Double,
+        isBtc: Boolean
     )
 
     fun onViewTypeChanged(isBtc: Boolean)

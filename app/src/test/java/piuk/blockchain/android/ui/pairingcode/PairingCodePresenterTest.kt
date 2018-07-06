@@ -18,10 +18,10 @@ import org.robolectric.annotation.Config
 import piuk.blockchain.android.BlockchainTestApplication
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.auth.AuthDataManager
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
-import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.android.util.StringUtils
+import piuk.blockchain.androidcore.data.auth.AuthDataManager
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 
 @Config(sdk = [23], constants = BuildConfig::class, application = BlockchainTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
@@ -33,7 +33,7 @@ class PairingCodePresenterTest {
     private val mockQrCodeDataManager: QrCodeDataManager = mock()
     private val mockStringUtils: StringUtils = mock()
     private val mockPayloadDataManager: PayloadDataManager =
-            mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
     private val mockAuthDataManager: AuthDataManager = mock()
 
     @Before
@@ -41,10 +41,10 @@ class PairingCodePresenterTest {
     fun setUp() {
         whenever(mockStringUtils.getString(R.string.pairing_code_instruction_1)).thenReturn("")
         subject = PairingCodePresenter(
-                mockQrCodeDataManager,
-                mockStringUtils,
-                mockPayloadDataManager,
-                mockAuthDataManager
+            mockQrCodeDataManager,
+            mockStringUtils,
+            mockPayloadDataManager,
+            mockAuthDataManager
         )
         subject.initView(mockActivity)
     }
@@ -58,17 +58,17 @@ class PairingCodePresenterTest {
         whenever(mockPayloadDataManager.wallet!!.sharedKey).thenReturn("ghjk")
         whenever(mockPayloadDataManager.tempPassword).thenReturn("zxcv")
         whenever(
-                mockQrCodeDataManager.generatePairingCode(
-                        any(),
-                        any(),
-                        any(),
-                        any(),
-                        any()
-                )
+            mockQrCodeDataManager.generatePairingCode(
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
         ).thenReturn(Observable.just(bitmap))
         val body = ResponseBody.create(MediaType.parse("application/text"), "asdasdasd")
         whenever(mockAuthDataManager.getPairingEncryptionPassword(any()))
-                .thenReturn(Observable.just(body))
+            .thenReturn(Observable.just(body))
         // Act
         subject.generatePairingQr()
         // Assert
@@ -79,5 +79,4 @@ class PairingCodePresenterTest {
         verify(mockActivity).hideProgressSpinner()
         verifyNoMoreInteractions(mockActivity)
     }
-
 }

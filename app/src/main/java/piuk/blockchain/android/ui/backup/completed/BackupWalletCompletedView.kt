@@ -9,5 +9,4 @@ interface BackupWalletCompletedView : View {
     fun showLastBackupDate(lastBackup: Long)
 
     fun hideLastBackupDate()
-
 }

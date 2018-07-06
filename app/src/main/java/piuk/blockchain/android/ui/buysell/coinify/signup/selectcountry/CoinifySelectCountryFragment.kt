@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.fragment_coinify_select_country.buyandsellChooseCountryContinueButton
-import kotlinx.android.synthetic.main.fragment_coinify_select_country.countryPicker
+import kotlinx.android.synthetic.main.fragment_coinify_select_country.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
@@ -30,17 +29,17 @@ class CoinifySelectCountryFragment :
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ) = container?.inflate(R.layout.fragment_coinify_select_country)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         RxView.clicks(buyandsellChooseCountryContinueButton)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .subscribeBy(onNext = { presenter.collectDataAndContinue(countryPicker.currentItemPosition) })
+            .throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .subscribeBy(onNext = { presenter.collectDataAndContinue(countryPicker.currentItemPosition) })
 
         onViewReady()
     }
@@ -82,6 +81,5 @@ class CoinifySelectCountryFragment :
     companion object {
 
         fun newInstance(): CoinifySelectCountryFragment = CoinifySelectCountryFragment()
-
     }
 }

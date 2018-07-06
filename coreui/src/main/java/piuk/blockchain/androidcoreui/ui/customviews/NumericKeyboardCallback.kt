@@ -7,5 +7,4 @@ interface NumericKeyboardCallback {
     fun onKeypadOpen()
 
     fun onKeypadOpenCompleted()
-
 }

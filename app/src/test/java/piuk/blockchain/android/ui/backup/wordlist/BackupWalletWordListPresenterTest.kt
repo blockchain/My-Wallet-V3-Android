@@ -98,6 +98,4 @@ class BackupWalletWordListPresenterTest {
         verifyNoMoreInteractions(backupWalletUtil)
         result `should equal to` 4
     }
-
 }
-

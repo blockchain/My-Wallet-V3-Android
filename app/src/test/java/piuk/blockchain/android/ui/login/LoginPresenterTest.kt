@@ -25,7 +25,8 @@ class LoginPresenterTest {
     private lateinit var subject: LoginPresenter
     private var view: LoginView = mock()
     private var appUtil: AppUtil = mock()
-    private var payloadDataManager: PayloadDataManager = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
+    private var payloadDataManager: PayloadDataManager =
+        mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
     private var prefsUtil: PrefsUtil = mock()
 
     @Before
@@ -87,7 +88,11 @@ class LoginPresenterTest {
     fun `pairWithQR SSL Exception`() {
         // Arrange
         val qrCode = "QR_CODE"
-        whenever(payloadDataManager.handleQrCode(qrCode)).thenReturn(Completable.error(SSLPeerUnverifiedException("")))
+        whenever(payloadDataManager.handleQrCode(qrCode)).thenReturn(
+            Completable.error(
+                SSLPeerUnverifiedException("")
+            )
+        )
         // Act
         subject.pairWithQR(qrCode)
         // Assert
@@ -103,5 +108,4 @@ class LoginPresenterTest {
         verify(view).dismissProgressDialog()
         verifyNoMoreInteractions(appUtil)
     }
-
 }

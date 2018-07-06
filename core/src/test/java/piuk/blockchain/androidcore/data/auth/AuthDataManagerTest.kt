@@ -39,11 +39,11 @@ class AuthDataManagerTest : RxTest() {
     override fun setUp() {
         super.setUp()
         subject = AuthDataManager(
-                prefsUtil,
-                authService,
-                accessState,
-                aesUtilWrapper,
-                prngHelper
+            prefsUtil,
+            authService,
+            accessState,
+            aesUtilWrapper,
+            prngHelper
         )
     }
 
@@ -53,10 +53,10 @@ class AuthDataManagerTest : RxTest() {
         // Arrange
         val mockResponseBody = mock<ResponseBody>()
         whenever(
-                authService.getEncryptedPayload(
-                        anyString(),
-                        anyString()
-                )
+            authService.getEncryptedPayload(
+                anyString(),
+                anyString()
+            )
         ).thenReturn(Observable.just(Response.success(mockResponseBody)))
         // Act
         val observer = subject.getEncryptedPayload("1234567890", "1234567890").test()
@@ -73,7 +73,7 @@ class AuthDataManagerTest : RxTest() {
         // Arrange
         val sessionId = "SESSION_ID"
         whenever(authService.getSessionId(anyString()))
-                .thenReturn(Observable.just(sessionId))
+            .thenReturn(Observable.just(sessionId))
         // Act
         val testObserver = subject.getSessionId("1234567890").test()
         // Assert
@@ -92,7 +92,7 @@ class AuthDataManagerTest : RxTest() {
         val code = "123456"
         val responseBody = ResponseBody.create(MediaType.parse("application/json"), "{}")
         whenever(authService.submitTwoFactorCode(sessionId, guid, code))
-                .thenReturn(Observable.just(responseBody))
+            .thenReturn(Observable.just(responseBody))
         // Act
         val testObserver = subject.submitTwoFactorCode(sessionId, guid, code).test()
         // Assert
@@ -115,15 +115,15 @@ class AuthDataManagerTest : RxTest() {
         status.success = decryptionKey
         whenever(prefsUtil.getValue(PrefsUtil.KEY_PIN_IDENTIFIER, "")).thenReturn(key)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ENCRYPTED_PASSWORD, ""))
-                .thenReturn(encryptedPassword)
+            .thenReturn(encryptedPassword)
         whenever(authService.validateAccess(key, pin))
-                .thenReturn(Observable.just(Response.success(status)))
+            .thenReturn(Observable.just(Response.success(status)))
         whenever(
-                aesUtilWrapper.decrypt(
-                        encryptedPassword,
-                        decryptionKey,
-                        AESUtil.PIN_PBKDF2_ITERATIONS
-                )
+            aesUtilWrapper.decrypt(
+                encryptedPassword,
+                decryptionKey,
+                AESUtil.PIN_PBKDF2_ITERATIONS
+            )
         ).thenReturn(plaintextPassword)
         // Act
         val observer = subject.validatePin(pin).test()
@@ -137,9 +137,9 @@ class AuthDataManagerTest : RxTest() {
         verify(authService).validateAccess(key, pin)
         verifyNoMoreInteractions(authService)
         verify(aesUtilWrapper).decrypt(
-                encryptedPassword,
-                decryptionKey,
-                AESUtil.PIN_PBKDF2_ITERATIONS
+            encryptedPassword,
+            decryptionKey,
+            AESUtil.PIN_PBKDF2_ITERATIONS
         )
         verifyNoMoreInteractions(aesUtilWrapper)
         verifyZeroInteractions(prngHelper)
@@ -160,19 +160,19 @@ class AuthDataManagerTest : RxTest() {
         status.success = decryptionKey
         whenever(prefsUtil.getValue(PrefsUtil.KEY_PIN_IDENTIFIER, "")).thenReturn(key)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_ENCRYPTED_PASSWORD, ""))
-                .thenReturn(encryptedPassword)
+            .thenReturn(encryptedPassword)
         whenever(authService.validateAccess(key, pin))
-                .thenReturn(
-                        Observable.just(
-                                Response.error(
-                                        500,
-                                        ResponseBody.create(
-                                                MediaType.parse("application/json"),
-                                                "{}"
-                                        )
-                                )
+            .thenReturn(
+                Observable.just(
+                    Response.error(
+                        500,
+                        ResponseBody.create(
+                            MediaType.parse("application/json"),
+                            "{}"
                         )
+                    )
                 )
+            )
         // Act
         val observer = subject.validatePin(pin).test()
         // Assert
@@ -215,18 +215,18 @@ class AuthDataManagerTest : RxTest() {
         val encryptedPassword = "ENCRYPTED_PASSWORD"
         val status = Status()
         whenever(
-                authService.setAccessKey(
-                        anyString(),
-                        anyString(),
-                        eq(pin)
-                )
+            authService.setAccessKey(
+                anyString(),
+                anyString(),
+                eq(pin)
+            )
         ).thenReturn(Observable.just(Response.success(status)))
         whenever(
-                aesUtilWrapper.encrypt(
-                        eq(password),
-                        anyString(),
-                        eq(AESUtil.PIN_PBKDF2_ITERATIONS)
-                )
+            aesUtilWrapper.encrypt(
+                eq(password),
+                anyString(),
+                eq(AESUtil.PIN_PBKDF2_ITERATIONS)
+            )
         ).thenReturn(encryptedPassword)
         // Act
         val observer = subject.createPin(password, pin).test()
@@ -236,21 +236,21 @@ class AuthDataManagerTest : RxTest() {
         verify(prngHelper).applyPRNGFixes()
         verifyNoMoreInteractions(prngHelper)
         verify(authService).setAccessKey(
-                anyString(),
-                anyString(),
-                eq(pin)
+            anyString(),
+            anyString(),
+            eq(pin)
         )
         verifyNoMoreInteractions(authService)
         verify(aesUtilWrapper).encrypt(
-                eq(password),
-                anyString(),
-                eq(AESUtil.PIN_PBKDF2_ITERATIONS)
+            eq(password),
+            anyString(),
+            eq(AESUtil.PIN_PBKDF2_ITERATIONS)
         )
         verifyNoMoreInteractions(aesUtilWrapper)
         verify(prefsUtil).setValue(PrefsUtil.KEY_ENCRYPTED_PASSWORD, encryptedPassword)
         verify(prefsUtil).setValue(
-                eq(PrefsUtil.KEY_PIN_IDENTIFIER),
-                anyString()
+            eq(PrefsUtil.KEY_PIN_IDENTIFIER),
+            anyString()
         )
         verifyNoMoreInteractions(prefsUtil)
         observer.assertComplete()
@@ -264,21 +264,21 @@ class AuthDataManagerTest : RxTest() {
         val password = "PASSWORD"
         val pin = "1234"
         whenever(
-                authService.setAccessKey(
-                        anyString(),
-                        anyString(),
-                        eq(pin)
-                )
+            authService.setAccessKey(
+                anyString(),
+                anyString(),
+                eq(pin)
+            )
         ).thenReturn(
-                Observable.just(
-                        Response.error(
-                                500,
-                                ResponseBody.create(
-                                        MediaType.parse("application/json"),
-                                        "{}"
-                                )
-                        )
+            Observable.just(
+                Response.error(
+                    500,
+                    ResponseBody.create(
+                        MediaType.parse("application/json"),
+                        "{}"
+                    )
                 )
+            )
         )
         // Act
         val observer = subject.createPin(password, pin).test()
@@ -288,9 +288,9 @@ class AuthDataManagerTest : RxTest() {
         verify(prngHelper).applyPRNGFixes()
         verifyNoMoreInteractions(prngHelper)
         verify(authService).setAccessKey(
-                anyString(),
-                anyString(),
-                eq(pin)
+            anyString(),
+            anyString(),
+            eq(pin)
         )
         verifyNoMoreInteractions(authService)
         verifyZeroInteractions(aesUtilWrapper)
@@ -325,7 +325,7 @@ class AuthDataManagerTest : RxTest() {
         val sessionId = "SESSION_ID"
         val guid = "GUID"
         whenever(authService.getEncryptedPayload(guid, sessionId))
-                .thenReturn(Observable.error(Throwable()))
+            .thenReturn(Observable.error(Throwable()))
         // Act
         val testObserver = subject.startPollingAuthStatus(guid, sessionId).test()
         testScheduler.advanceTimeBy(3, TimeUnit.SECONDS)
@@ -345,11 +345,12 @@ class AuthDataManagerTest : RxTest() {
         // Arrange
         val sessionId = "SESSION_ID"
         val guid = "GUID"
-        val responseBody = ResponseBody.create(MediaType.parse("application/json"),
-                ERROR_BODY
+        val responseBody = ResponseBody.create(
+            MediaType.parse("application/json"),
+            ERROR_BODY
         )
         whenever(authService.getEncryptedPayload(guid, sessionId))
-                .thenReturn(Observable.just(Response.error(500, responseBody)))
+            .thenReturn(Observable.just(Response.error(500, responseBody)))
         // Act
         val testObserver = subject.startPollingAuthStatus(guid, sessionId).test()
         testScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
@@ -378,8 +379,7 @@ class AuthDataManagerTest : RxTest() {
     companion object {
 
         private const val ERROR_BODY = "{\n" +
-                "\t\"authorization_required\": \"true\"\n" +
-                "}"
+            "\t\"authorization_required\": \"true\"\n" +
+            "}"
     }
-
 }

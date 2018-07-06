@@ -24,18 +24,18 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      * needed for determining buy/sell regions.
      */
     fun getWalletOptions(): Observable<WalletOptions> =
-            rxPinning.call<WalletOptions> { walletApi.walletOptions }
+        rxPinning.call<WalletOptions> { walletApi.walletOptions }
 
     /**
      * Get encrypted copy of Payload
      *
-     * @param guid      A user's GUID
+     * @param guid A user's GUID
      * @param sessionId The session ID, retrieved from [.getSessionId]
      * @return [<] wrapping an encrypted Payload
      */
     fun getEncryptedPayload(
-            guid: String,
-            sessionId: String
+        guid: String,
+        sessionId: String
     ): Observable<Response<ResponseBody>> = rxPinning.call<Response<ResponseBody>> {
         walletApi.fetchEncryptedPayload(guid, sessionId)
     }
@@ -44,15 +44,15 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      * Posts a user's 2FA code to the server. Will return an encrypted copy of the Payload if
      * successful.
      *
-     * @param sessionId     The current session ID
-     * @param guid          The user's GUID
+     * @param sessionId The current session ID
+     * @param guid The user's GUID
      * @param twoFactorCode The user's generated (or received) 2FA code
      * @return An [Observable] which may contain an encrypted Payload
      */
     fun submitTwoFactorCode(
-            sessionId: String,
-            guid: String,
-            twoFactorCode: String
+        sessionId: String,
+        guid: String,
+        twoFactorCode: String
     ): Observable<ResponseBody> = rxPinning.call<ResponseBody> {
         walletApi.submitTwoFactorCode(sessionId, guid, twoFactorCode)
     }
@@ -65,21 +65,21 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      */
     fun getSessionId(guid: String): Observable<String> = rxPinning.call<String> {
         walletApi.getSessionId(guid)
-                .map { responseBodyResponse ->
-                    val headers = responseBodyResponse.headers().get("Set-Cookie")
-                    if (headers != null) {
-                        val fields = headers.split(";\\s*".toRegex()).dropLastWhile { it.isEmpty() }
-                                .toTypedArray()
-                        for (field in fields) {
-                            if (field.startsWith("SID=")) {
-                                return@map field.substring(4)
-                            }
+            .map { responseBodyResponse ->
+                val headers = responseBodyResponse.headers().get("Set-Cookie")
+                if (headers != null) {
+                    val fields = headers.split(";\\s*".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray()
+                    for (field in fields) {
+                        if (field.startsWith("SID=")) {
+                            return@map field.substring(4)
                         }
-                    } else {
-                        throw ApiException("Session ID not found in headers")
                     }
-                    ""
+                } else {
+                    throw ApiException("Session ID not found in headers")
                 }
+                ""
+            }
     }
 
     /**
@@ -89,24 +89,24 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      * @return An [Observable] wrapping the pairing encryption password
      */
     fun getPairingEncryptionPassword(guid: String): Observable<ResponseBody> =
-            rxPinning.call<ResponseBody> {
-                walletApi.fetchPairingEncryptionPassword(guid)
-            }
+        rxPinning.call<ResponseBody> {
+            walletApi.fetchPairingEncryptionPassword(guid)
+        }
 
     /**
      * Sends the access key to the server
      *
-     * @param key   The PIN identifier
+     * @param key The PIN identifier
      * @param value The value, randomly generated
-     * @param pin   The user's PIN
+     * @param pin The user's PIN
      * @return An [Observable] where the boolean represents success
      */
     fun setAccessKey(
-            key: String,
-            value: String,
-            pin: String
+        key: String,
+        value: String,
+        pin: String
     ): Observable<Response<Status>> =
-            rxPinning.call<Response<Status>> { walletApi.setAccess(key, value, pin) }
+        rxPinning.call<Response<Status>> { walletApi.setAccess(key, value, pin) }
 
     /**
      * Validates a user's PIN with the server
@@ -116,14 +116,14 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      * @return A [Response] which may or may not contain the field "success"
      */
     fun validateAccess(key: String, pin: String): Observable<Response<Status>> =
-            rxPinning.call<Response<Status>> {
-                walletApi.validateAccess(key, pin)
-                        .doOnError {
-                            if (it.message?.contains("Incorrect PIN") == true) {
-                                throw InvalidCredentialsException("Incorrect PIN")
-                            }
-                        }
-            }
+        rxPinning.call<Response<Status>> {
+            walletApi.validateAccess(key, pin)
+                .doOnError {
+                    if (it.message?.contains("Incorrect PIN") == true) {
+                        throw InvalidCredentialsException("Incorrect PIN")
+                    }
+                }
+        }
 
     /**
      * Logs an event to the backend for analytics purposes to work out which features are used most
@@ -134,7 +134,7 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      * @see EventService
      */
     fun logEvent(event: String): Observable<Status> =
-            rxPinning.call<Status> { walletApi.logEvent(event) }
+        rxPinning.call<Status> { walletApi.logEvent(event) }
 
     /**
      * Returns a signed JWT for use with the buy/sell APIs.
@@ -142,7 +142,7 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
      * @return A [String] representing a signed JWT.
      */
     fun getSignedJwt(guid: String, sharedKey: String, partner: String): Single<String> =
-            rxPinning.callSingle {
-                walletApi.getSignedJsonToken(guid, sharedKey, partner)
-            }
+        rxPinning.callSingle {
+            walletApi.getSignedJsonToken(guid, sharedKey, partner)
+        }
 }

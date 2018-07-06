@@ -9,9 +9,8 @@ import javax.inject.Named
 class ConnectionApi @Inject constructor(@Named("explorer") retrofit: Retrofit) {
 
     private val connectionEndpoint: ConnectionEndpoint =
-            retrofit.create(ConnectionEndpoint::class.java)
+        retrofit.create(ConnectionEndpoint::class.java)
 
     fun getExplorerConnection(): Observable<ResponseBody> =
-            connectionEndpoint.pingExplorer()
-
+        connectionEndpoint.pingExplorer()
 }
