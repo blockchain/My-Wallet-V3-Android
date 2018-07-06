@@ -126,7 +126,7 @@
             android:name=".ui.pairingcode.PairingCodeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".ui.shapeshift.overview.ShapeShiftActivity"
+            android:name=".ui.shapeshift.overview.ShapeShiftActivityRename"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".ui.shapeshift.newexchange.NewExchangeActivity"
