@@ -22,7 +22,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 
-class ShapeShiftActivityRename : BaseMvpActivity<ShapeShiftViewRename, ShapeShiftPresenter>(), ShapeShiftViewRename,
+class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(), ShapeShiftView,
     TradesListClickListener {
 
     @Suppress("MemberVisibilityCanBePrivate")
@@ -170,7 +170,7 @@ class ShapeShiftActivityRename : BaseMvpActivity<ShapeShiftViewRename, ShapeShif
 
         @JvmStatic
         fun start(context: Context) {
-            context.startActivity(Intent(context, ShapeShiftActivityRename::class.java))
+            context.startActivity(Intent(context, ShapeShiftActivity::class.java))
         }
     }
 }

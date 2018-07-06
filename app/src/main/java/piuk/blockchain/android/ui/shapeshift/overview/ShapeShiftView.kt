@@ -4,7 +4,7 @@ import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import piuk.blockchain.androidcoreui.ui.base.View
 
-interface ShapeShiftViewRename : View {
+interface ShapeShiftView : View {
 
     fun onStateUpdated(shapeshiftState: ShapeShiftState)
 

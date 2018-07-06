@@ -82,7 +82,7 @@ import piuk.blockchain.android.ui.pairingcode.PairingCodeActivity;
 import piuk.blockchain.android.ui.receive.ReceiveFragment;
 import piuk.blockchain.android.ui.send.SendFragment;
 import piuk.blockchain.android.ui.settings.SettingsActivity;
-import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivityRename;
+import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
 import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
@@ -171,7 +171,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
                 getPresenter().routeToBuySell();
             } else if (intent.getAction().equals(ACTION_SHAPESHIFT) && getActivity() != null) {
-                ShapeShiftActivityRename.start(MainActivity.this);
+                ShapeShiftActivity.start(MainActivity.this);
             } else if (intent.getAction().equals(ACTION_BTC_BALANCE)) {
                 getPresenter().setCryptoCurrency(CryptoCurrencies.BTC);
                 // This forces the balance page to reload
@@ -487,7 +487,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 startActivityForResult(new Intent(this, BackupWalletActivity.class), REQUEST_BACKUP);
                 break;
             case R.id.nav_exchange:
-                ShapeShiftActivityRename.start(this);
+                ShapeShiftActivity.start(this);
                 break;
             case R.id.nav_addresses:
                 startActivityForResult(new Intent(this, AccountActivity.class), ACCOUNT_EDIT);

@@ -58,7 +58,7 @@ import piuk.blockchain.android.ui.shapeshift.confirmation.ShapeShiftConfirmation
 import piuk.blockchain.android.ui.shapeshift.detail.ShapeShiftDetailActivity;
 import piuk.blockchain.android.ui.shapeshift.inprogress.TradeInProgressActivity;
 import piuk.blockchain.android.ui.shapeshift.newexchange.NewExchangeActivity;
-import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivityRename;
+import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
 import piuk.blockchain.android.ui.shapeshift.stateselection.ShapeShiftStateSelectionActivity;
 import piuk.blockchain.android.ui.ssl.SSLVerifyActivity;
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveFragment;
@@ -147,7 +147,7 @@ public interface PresenterComponent {
 
     void inject(@NotNull DashboardFragment dashboardFragment);
 
-    void inject(@NotNull ShapeShiftActivityRename shapeshiftActivity);
+    void inject(@NotNull ShapeShiftActivity shapeshiftActivity);
 
     void inject(@NotNull NewExchangeActivity newExchangeActivity);
 

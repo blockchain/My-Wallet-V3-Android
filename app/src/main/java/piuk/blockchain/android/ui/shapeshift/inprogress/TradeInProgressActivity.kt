@@ -12,7 +12,7 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.shapeshift.models.TradeProgressUiState
-import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivityRename
+import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import javax.inject.Inject
 
@@ -44,7 +44,7 @@ class TradeInProgressActivity : BaseMvpActivity<TradeInProgressView, TradeInProg
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
             startActivity(intent)
-            ShapeShiftActivityRename.start(this)
+            ShapeShiftActivity.start(this)
         }
 
         onViewReady()

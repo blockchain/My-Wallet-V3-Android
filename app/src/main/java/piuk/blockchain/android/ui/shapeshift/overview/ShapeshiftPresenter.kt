@@ -24,7 +24,7 @@ class ShapeShiftPresenter @Inject constructor(
     private val exchangeRateFactory: ExchangeRateDataManager,
     private val currencyState: CurrencyState,
     private val walletOptionsDataManager: WalletOptionsDataManager
-) : BasePresenter<ShapeShiftViewRename>() {
+) : BasePresenter<ShapeShiftView>() {
 
     override fun onViewReady() {
         shapeShiftDataManager.initShapeshiftTradeData()
