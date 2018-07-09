@@ -93,4 +93,25 @@ class RxTestRuleTests {
                 }
         AndroidSchedulers.mainThread() `should not be` scheduler
     }
+
+    @Test
+    fun `can set newThread trampoline`() {
+        rxInit { newThreadTrampoline() }
+            .runRule {
+                Schedulers.newThread() `should be` Schedulers.trampoline()
+            }
+        Schedulers.newThread() `should not be` Schedulers.trampoline()
+    }
+
+    @Test
+    fun `can set newThread to a test scheduler`() {
+        val scheduler = TestScheduler()
+
+        rxInit { newThread(scheduler) }
+            .runRule {
+                Schedulers.newThread() `should be` scheduler
+            }
+        Schedulers.newThread() `should not be` scheduler
+    }
+
 }

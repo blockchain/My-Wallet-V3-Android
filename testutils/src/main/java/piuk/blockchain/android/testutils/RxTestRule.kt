@@ -32,6 +32,14 @@ class RxInit {
         io(Schedulers.trampoline())
     }
 
+    fun newThread(scheduler: Scheduler) {
+        RxJavaPlugins.setNewThreadSchedulerHandler { _ -> scheduler }
+    }
+
+    fun newThreadTrampoline() {
+        newThread(Schedulers.trampoline())
+    }
+
     fun main(scheduler: Scheduler) {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.trampoline() }
         RxAndroidPlugins.setMainThreadSchedulerHandler { _ -> scheduler }
