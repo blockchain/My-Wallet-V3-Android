@@ -59,7 +59,6 @@ class ContactDetailPresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = ContactDetailPresenter(
             mockContactsManager,
@@ -75,7 +74,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldFinishPage() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -92,7 +90,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldThrowErrorAndQuitPage() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -115,7 +112,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldSucceed() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -152,7 +148,6 @@ class ContactDetailPresenterTest {
     }
 
 //    @Test
-//    @Throws(Exception::class)
 //    fun onViewReadySubscribeAndEmitEvent() {
 //        // Arrange
 //        val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -170,7 +165,6 @@ class ContactDetailPresenterTest {
 //    }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadySubscribeAndEmitUnwantedEvent() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -190,7 +184,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadySubscribeAndEmitNullEvent() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -209,7 +202,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadySubscribeAndEmitErrorEvent() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -227,7 +219,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getPrefsUtil() {
         // Arrange
 
@@ -238,7 +229,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactsTransactionMap() {
         // Arrange
         whenever(mockContactsManager.getTransactionDisplayMap()).thenReturn(HashMap())
@@ -250,7 +240,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onDeleteContactClicked() {
         // Arrange
 
@@ -262,7 +251,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onDeleteContactConfirmedShouldShowSuccessful() {
         // Arrange
         val contact = Contact()
@@ -281,7 +269,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onDeleteContactConfirmedShouldShowError() {
         // Arrange
         val contact = Contact()
@@ -300,7 +287,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onRenameContactClicked() {
         // Arrange
         val contact = Contact().apply { name = "CONTACT_NAME" }
@@ -313,7 +299,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onContactRenamedShouldDoNothingAsNameMatches() {
         // Arrange
         val contactName = "CONTACT_NAME"
@@ -326,7 +311,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onContactRenamedShouldShowErrorAsNameEmpty() {
         // Arrange
         val emptyName = ""
@@ -340,7 +324,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onContactRenamedShouldShowErrorAsWebCallFails() {
         // Arrange
         val newName = "CONTACT_NAME"
@@ -364,7 +347,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onContactRenamedShouldShowSuccess() {
         // Arrange
         val newName = "NEW_NAME"
@@ -405,7 +387,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldShowNotFound() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -419,7 +400,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldShowWaitingForAddress() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -438,7 +418,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldShowWaitingForPayment() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -457,7 +436,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldShowTxDetail() {
         // Arrange
         val txHash = "TX_HASH"
@@ -472,7 +450,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldShowSendAddressDialog() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -499,7 +476,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldShowSendAccountChoiceDialog() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -535,7 +511,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionClickedShouldInitiatePayment() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -566,7 +541,6 @@ class ContactDetailPresenterTest {
     }
 
 //    @Test
-//    @Throws(Exception::class)
 //    fun onTransactionClickedShouldPromptPayOrDecline() {
 //        // Arrange
 //        val fctxId = "FCTX_ID"
@@ -600,7 +574,6 @@ class ContactDetailPresenterTest {
 //    }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionLongClickedWaitingForAddressRprInit() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -622,7 +595,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onTransactionLongClickedWaitingForPaymentPrInit() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -644,7 +616,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun declineTransaction() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -656,7 +627,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun confirmDeclineTransactionShouldShowSuccessful() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -679,7 +649,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun confirmDeclineTransactionShouldShowFailure() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -704,7 +673,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun confirmCancelTransactionShouldShowSuccessful() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -727,7 +695,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun confirmCancelTransactionShouldShowFailure() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -752,7 +719,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAccountChosenShouldShowSuccess() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -786,7 +752,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onPaymentRequestAccepted failure`() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -801,7 +766,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onPaymentRequestAccepted success`() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -837,7 +801,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAccountChosenShouldShowFailure() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -872,7 +835,6 @@ class ContactDetailPresenterTest {
 
     @Suppress("CAST_NEVER_SUCCEEDS")
     @Test
-    @Throws(Exception::class)
     fun sortAndUpdateTransactions() {
         // Arrange
         val contactName = "CONTACT_NAME"
@@ -913,7 +875,6 @@ class ContactDetailPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewDestroyed() {
         // Arrange
 

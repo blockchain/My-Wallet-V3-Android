@@ -52,7 +52,6 @@ class ConfirmFundsTransferPresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
@@ -69,7 +68,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReady() {
         // Arrange
         val mockPayload = mock(Wallet::class.java, RETURNS_DEEP_STUBS)
@@ -88,7 +86,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `accountSelected error`() {
         // Arrange
         whenever(payloadDataManager.getPositionOfAccountFromActiveList(0)).thenReturn(1)
@@ -104,7 +101,6 @@ class ConfirmFundsTransferPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun updateUi() {
         // Arrange
         val total = 100000000L
@@ -150,7 +146,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `sendPayment and archive`() {
         // Arrange
         whenever(transferFundsDataManager.sendPayment(anyList<PendingTransaction>(), anyString()))
@@ -175,7 +170,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `sendPayment no archive`() {
         // Arrange
         subject.pendingTransactions = mutableListOf()
@@ -195,7 +189,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `sendPayment error`() {
         // Arrange
         subject.pendingTransactions = mutableListOf()
@@ -215,7 +208,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getReceiveToList() {
         // Arrange
         whenever(walletAccountHelper.getAccountItems()).thenReturn(listOf())
@@ -227,7 +219,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getDefaultAccount() {
         // Arrange
         whenever(payloadDataManager.defaultAccountIndex).thenReturn(0)
@@ -239,7 +230,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `archiveAll successful`() {
         // Arrange
         val transaction = PendingTransaction()
@@ -258,7 +248,6 @@ class ConfirmFundsTransferPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `archiveAll unsuccessful`() {
         // Arrange
         val transaction = PendingTransaction()

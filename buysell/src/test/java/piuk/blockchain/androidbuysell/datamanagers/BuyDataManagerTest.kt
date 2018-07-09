@@ -106,7 +106,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isBuyRolledOut() {
         isBuyRolledOut(0.0, false)
         isBuyRolledOut(0.3, false)
@@ -133,7 +132,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isCoinifyAllowed is sepa country, no account`() {
         // Arrange
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("GB"))
@@ -150,7 +148,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isCoinifyAllowed is sepa country, with account`() {
         // Arrange
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("GB"))
@@ -167,7 +164,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isCoinifyAllowed not sepa country, no account`() {
         // Arrange
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("RSA"))
@@ -184,7 +180,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isCoinifyAllowed not sepa country, with account`() {
         // Arrange
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("RSA"))
@@ -201,7 +196,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isUnocoinAllowed is india country, is invited, has account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.unocoin.countries).thenReturn(listOf("IND"))
@@ -220,7 +214,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isUnocoinAllowed not india country, is invited, has account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.unocoin.countries).thenReturn(listOf("GB"))
@@ -240,7 +233,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isUnocoinAllowed not india country, not invited, has account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.unocoin.countries).thenReturn(listOf("GB"))
@@ -259,7 +251,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isUnocoinAllowed not india country, not invited, no account, androidDisabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.unocoin.countries).thenReturn(listOf("GB"))
@@ -278,7 +269,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed is USA country and state, has account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("USA"))
@@ -301,7 +291,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed is USA country, wrong state, has account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("USA"))
@@ -324,7 +313,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed not USA country, has account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("GB"))
@@ -347,7 +335,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed is USA country and state, no account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("USA"))
@@ -370,7 +357,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed is USA country, wrong state, no account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("USA"))
@@ -393,7 +379,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed not USA country, no account, androidEnabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("GB"))
@@ -416,7 +401,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed is USA country and state, no account, androidDisabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("USA"))
@@ -439,7 +423,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed is USA country, wrong state, no account, androidDisabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("USA"))
@@ -461,7 +444,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isSfoxAllowed not USA country, no account, androidDisabled`() {
         // Arrange
         whenever(mockWalletOptions.partners.sfox.countries).thenReturn(listOf("GB"))
@@ -484,7 +466,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `canBuy isAllowed and androidEnabled`() {
 
         // individual cases have been tested above
@@ -513,7 +494,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `canBuy isAllowed but not rolled out`() {
 
         // individual cases have been tested above
@@ -537,7 +517,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `canBuy notAllowed and androidEnabled`() {
 
         // individual cases have been tested above
@@ -566,7 +545,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getCountryCode() {
         // Arrange
         whenever(mockSettings.countryCode).thenReturn("GB")
@@ -579,7 +557,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isInCoinifyCountry true`() {
         // Arrange
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("GB"))
@@ -592,7 +569,6 @@ class BuyDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isInCoinifyCountry false`() {
         // Arrange
         whenever(mockWalletOptions.partners.coinify.countries).thenReturn(listOf("GB"))

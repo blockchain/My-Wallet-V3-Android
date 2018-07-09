@@ -84,7 +84,6 @@ class AccountEditPresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
@@ -108,7 +107,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setAccountModel() {
         // Arrange
         val newModel = AccountEditModel(mock())
@@ -119,7 +117,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyV3() {
         // Arrange
         val intent = Intent().apply {
@@ -147,7 +144,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyV3Archived() {
         // Arrange
         val intent = Intent().apply {
@@ -176,7 +172,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickTransferFundsSuccess() {
         // Arrange
         val legacyAddress = LegacyAddress()
@@ -222,7 +217,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickTransferFundsSuccessTransactionEmpty() {
         // Arrange
         val legacyAddress = LegacyAddress()
@@ -259,7 +253,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickTransferFundsError() {
         // Arrange
         val legacyAddress = LegacyAddress()
@@ -277,7 +270,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun transferFundsClickable() {
         // Arrange
         whenever(accountEditModel.transferFundsClickable).thenReturn(false)
@@ -288,7 +280,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitPaymentSuccess() {
         // Arrange
         val legacyAddress = LegacyAddress().apply { address = "" }
@@ -327,7 +318,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitPaymentFailed() {
         // Arrange
         val pendingTransaction = PendingTransaction()
@@ -361,7 +351,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitPaymentECKeyException() {
         // Arrange
         val pendingTransaction = PendingTransaction()
@@ -382,7 +371,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAccountLabelInvalid() {
         // Arrange
 
@@ -393,7 +381,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAccountLabelSuccess() {
         // Arrange
         subject.account = Account()
@@ -408,7 +395,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAccountLabelFailed() {
         // Arrange
         subject.legacyAddress = LegacyAddress().apply { label = "old label" }
@@ -424,7 +410,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickChangeLabel() {
         // Arrange
         whenever(accountEditModel.label).thenReturn("label")
@@ -435,7 +420,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickDefaultSuccess() {
         // Arrange
         val account = Account()
@@ -457,7 +441,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickDefaultFailure() {
         // Arrange
         val account = Account()
@@ -480,7 +463,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickScanXpriv() {
         // Arrange
         subject.legacyAddress = LegacyAddress()
@@ -494,7 +476,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickScanXprivDoubleEncrypted() {
         // Arrange
         subject.legacyAddress = LegacyAddress()
@@ -509,7 +490,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickShowXpubAccount() {
         // Arrange
         subject.account = Account()
@@ -520,7 +500,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickShowXpubLegacyAddress() {
         // Arrange
         subject.legacyAddress = LegacyAddress()
@@ -537,7 +516,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onClickArchive() {
         // Arrange
         subject.account = Account()
@@ -549,7 +527,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun showAddressDetails() {
         // Arrange
         subject.legacyAddress = LegacyAddress()
@@ -566,7 +543,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleIncomingScanIntentInvalidData() {
         // Arrange
         val intent = Intent()
@@ -579,7 +555,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleIncomingScanIntentUnrecognisedKeyFormat() {
         // Arrange
         val intent = Intent().apply {
@@ -596,7 +571,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleIncomingScanIntentBip38() {
         // Arrange
         val intent = Intent().apply {
@@ -613,7 +587,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleIncomingScanIntentNonBip38NoKey() {
         // Arrange
         val intent = Intent().apply {
@@ -632,7 +605,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleIncomingScanIntentNonBip38WithKey() {
         // Arrange
         val legacyAddress = LegacyAddress().apply { address = "" }
@@ -655,7 +627,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setSecondPassword() {
         // Arrange
 
@@ -666,7 +637,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun archiveAccountSuccess() {
         // Arrange
         subject.account = Account()
@@ -683,7 +653,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun archiveAccountFailed() {
         // Arrange
         subject.account = Account()
@@ -701,7 +670,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun importBIP38AddressError() {
         // Arrange
 
@@ -716,7 +684,6 @@ class AccountEditPresenterTest {
 
     @Ignore("This test is failing because of https://github.com/robolectric/robolectric/issues/3839")
     @Test
-    @Throws(Exception::class)
     fun importBIP38AddressValidAddressEmptyKey() {
         // Arrange
 
@@ -734,7 +701,6 @@ class AccountEditPresenterTest {
 
     @Ignore("Cannot decrypt key in test VM")
     @Test
-    @Throws(Exception::class)
     fun importBIP38AddressValidAddressWithKey() {
         // Arrange
         val legacyAddress = LegacyAddress()
@@ -754,7 +720,6 @@ class AccountEditPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun importAddressPrivateKeySuccessMatchesIntendedAddressNoDoubleEncryption() {
         // Arrange
         val mockPayload: Wallet = mock()
@@ -774,7 +739,6 @@ class AccountEditPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun importAddressPrivateKeySuccessNoAddressMatchDoubleEncryption() {
         // Arrange
         subject.secondPassword = "password"
@@ -798,7 +762,6 @@ class AccountEditPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun importAddressPrivateKeyFailed() {
         // Arrange
         subject.secondPassword = "password"
@@ -820,7 +783,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun importUnmatchedPrivateKeyFoundInPayloadSuccess() {
         // Arrange
         val mockPayload: Wallet = mock()
@@ -848,7 +810,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun importUnmatchedPrivateNotFoundInPayloadSuccess() {
         // Arrange
         val mockPayload: Wallet = mock()
@@ -868,7 +829,6 @@ class AccountEditPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun importUnmatchedPrivateNotFoundInPayloadFailure() {
         // Arrange
         val mockPayload: Wallet = mock()

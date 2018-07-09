@@ -57,7 +57,6 @@ class PayloadDataManagerTest {
     }
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
 
         whenever(environmentConfig.bitcoinNetworkParameters).thenReturn(mainNetParams)
@@ -72,7 +71,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initializeFromPayload() {
         // Arrange
         val payload = "{}"
@@ -88,7 +86,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun restoreHdWallet() {
         // Arrange
         val mnemonic = "MNEMONIC"
@@ -108,7 +105,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createHdWallet() {
         // Arrange
         val password = "PASSWORD"
@@ -127,7 +123,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initializeAndDecrypt() {
         // Arrange
         val sharedKey = "SHARED_KEY"
@@ -144,7 +139,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleQrCode() {
         // Arrange
         val data = "DATA"
@@ -163,7 +157,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun upgradeV2toV3() {
         // Arrange
         val secondPassword = "SECOND_PASSWORD"
@@ -179,7 +172,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun syncPayloadWithServer() {
         // Arrange
         whenever(payloadService.syncPayloadWithServer()).thenReturn(Completable.complete())
@@ -192,7 +184,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun syncPayloadAndPublicKeys() {
         // Arrange
         whenever(payloadService.syncPayloadAndPublicKeys()).thenReturn(Completable.complete())
@@ -205,7 +196,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAllTransactions() {
         // Arrange
         whenever(payloadService.updateAllTransactions()).thenReturn(Completable.complete())
@@ -218,7 +208,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAllBalances() {
         // Arrange
         whenever(payloadService.updateAllBalances()).thenReturn(Completable.complete())
@@ -231,7 +220,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateTransactionNotes() {
         // Arrange
         val txHash = "TX_HASH"
@@ -247,7 +235,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getBalanceOfAddresses() {
         // Arrange
         val address = "ADDRESS"
@@ -264,7 +251,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getBalanceOfBchAddresses() {
         // Arrange
         val address = "ADDRESS"
@@ -281,7 +267,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun addressToLabel() {
         // Arrange
         val address = "ADDRESS"
@@ -296,7 +281,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getNextReceiveAddress based on account index`() {
         // Arrange
         val index = 0
@@ -315,7 +299,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getNextReceiveAddress from account`() {
         // Arrange
         val mockAccount: Account = mock()
@@ -331,7 +314,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getNextReceiveAddressAndReserve() {
         // Arrange
         val accountIndex = 0
@@ -353,7 +335,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getNextChangeAddress based on account index`() {
         // Arrange
         val index = 0
@@ -372,7 +353,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getNextChangeAddress from account`() {
         // Arrange
         val mockAccount: Account = mock()
@@ -388,7 +368,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getAddressECKey() {
         // Arrange
         val mockLegacyAddress: LegacyAddress = mock()
@@ -405,7 +384,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createNewAccount() {
         // Arrange
         val mockAccount: Account = mock()
@@ -421,7 +399,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setPrivateKeySuccessNoDoubleEncryption() {
         // Arrange
         val mockECKey: ECKey = mock()
@@ -438,7 +415,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setKeyForLegacyAddress() {
         // Arrange
         val mockECKey: ECKey = mock()
@@ -456,7 +432,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun addLegacyAddress() {
         // Arrange
         val mockLegacyAddress: LegacyAddress = mock()
@@ -470,7 +445,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateLegacyAddress() {
         // Arrange
         val mockLegacyAddress: LegacyAddress = mock()
@@ -484,7 +458,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getKeyFromImportedData() {
         // Arrange
         val data = "DATA"
@@ -499,7 +472,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAccounts returns list of accounts`() {
         // Arrange
         val mockAccount: Account = mock()
@@ -514,7 +486,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAccounts returns empty list`() {
         // Arrange
         whenever(payloadManager.payload).thenReturn(null)
@@ -526,7 +497,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getLegacyAddresses returns list of legacy addresses`() {
         // Arrange
         val mockLegacyAddress: LegacyAddress = mock()
@@ -540,7 +510,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getLegacyAddresses returns empty list`() {
         // Arrange
         whenever(payloadManager.payload).thenReturn(null)
@@ -552,7 +521,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getAddressBalance() {
         // Arrange
         val address = "ADDRESS"
@@ -568,7 +536,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getReceiveAddressAtPosition() {
         // Arrange
         val mockAccount: Account = mock()
@@ -585,7 +552,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getReceiveAddressAtArbitraryPosition() {
         // Arrange
         val mockAccount: Account = mock()
@@ -602,7 +568,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun subtractAmountFromAddressBalance() {
         // Arrange
         val address = "ADDRESS"
@@ -615,7 +580,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun incrementReceiveAddress() {
         // Arrange
         val mockAccount: Account = mock()
@@ -627,7 +591,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun incrementChangeAddress() {
         // Arrange
         val mockAccount: Account = mock()
@@ -639,7 +602,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getXpubFromAddress() {
         // Arrange
         val xPub = "X_PUB"
@@ -655,7 +617,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getXpubFromIndex() {
         // Arrange
         val xPub = "X_PUB"
@@ -671,7 +632,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isOwnHDAddress() {
         // Arrange
         val address = "ADDRESS"
@@ -683,7 +643,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun loadNodes() {
         // Arrange
         whenever(payloadService.loadNodes()).thenReturn(Observable.just(true))
@@ -697,7 +656,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun generateNodes() {
         // Arrange
         whenever(payloadService.generateNodes())
@@ -711,7 +669,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getMetadataNodeFactory() {
         // Arrange
         val mockNodeFactory: MetadataNodeFactory = mock()
@@ -726,7 +683,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun registerMdid() {
         // Arrange
         val responseBody = ResponseBody.create(MediaType.parse("application/json"), "{}")
@@ -741,7 +697,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun unregisterMdid() {
         // Arrange
         val responseBody = ResponseBody.create(MediaType.parse("application/json"), "{}")
@@ -756,7 +711,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getWallet returns wallet`() {
         // Arrange
         val mockWallet: Wallet = mock()
@@ -770,7 +724,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getWallet returns null`() {
         // Arrange
         whenever(payloadManager.payload).thenReturn(null)
@@ -783,7 +736,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getDefaultAccountIndex() {
         // Arrange
         val index = 42
@@ -796,7 +748,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getDefaultAccount() {
         // Arrange
         val index = 42
@@ -813,7 +764,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getAccount() {
         // Arrange
         val index = 42
@@ -842,7 +792,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getHDKeysForSigning() {
         // Arrange
         val mockAccount: Account = mock()
@@ -863,7 +812,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getPayloadChecksum() {
         // Arrange
         val checkSum = "CHECKSUM"
@@ -877,7 +825,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getTempPassword() {
         // Arrange
         val tempPassword = "TEMP_PASSWORD"
@@ -891,7 +838,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setTempPassword() {
         // Arrange
         val tempPassword = "TEMP_PASSWORD"
@@ -903,7 +849,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getImportedAddressesBalance() {
         // Arrange
         val balance = BigInteger.TEN
@@ -917,7 +862,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isDoubleEncrypted() {
         // Arrange
         whenever(payloadManager.payload.isDoubleEncryption).thenReturn(true)
@@ -928,7 +872,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getPositionOfAccountFromActiveList() {
         // Arrange
         val index = 1
@@ -945,7 +888,6 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getPositionOfAccountInActiveList() {
         // Arrange
         val index = 3

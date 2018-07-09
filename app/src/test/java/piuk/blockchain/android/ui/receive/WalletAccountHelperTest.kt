@@ -60,7 +60,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAccountItems should return one Account and one LegacyAddress`() {
         // Arrange
         val label = "LABEL"
@@ -92,7 +91,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAccountItems when currency is BCH should return one Account and one LegacyAddress`() {
         // Arrange
         val label = "LABEL"
@@ -128,7 +126,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getHdAccounts should return single Account`() {
         // Arrange
         val label = "LABEL"
@@ -155,7 +152,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getHdAccounts when currency is BCH should return single Account`() {
         // Arrange
         val label = "LABEL"
@@ -182,7 +178,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAccountItems when currency is ETH should return one account`() {
         // Arrange
         val ethAccount: EthereumAccount = mock()
@@ -205,7 +200,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getLegacyAddresses should return single LegacyAddress`() {
         // Arrange
         val address = "ADDRESS"
@@ -230,7 +224,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAddressBookEntries should return single item`() {
         // Arrange
         val addressBook = AddressBook()
@@ -242,7 +235,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getAddressBookEntries should return empty list`() {
         // Arrange
         whenever(payloadManager.payload.addressBook)
@@ -254,7 +246,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getDefaultAccount should return ETH account`() {
         // Arrange
         val ethAccount: EthereumAccount = mock()
@@ -277,7 +268,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getDefaultAccount should return BTC account`() {
         // Arrange
         val btcAccount: Account = mock()
@@ -298,7 +288,6 @@ class WalletAccountHelperTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getDefaultAccount should return BCH account`() {
         // Arrange
         val bchAccount: GenericMetadataAccount = mock()

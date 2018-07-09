@@ -44,7 +44,6 @@ class MetadataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `attemptMetadataSetup load success`() {
         // Arrange
         whenever(payloadDataManager.loadNodes()).thenReturn(Observable.just(true))
@@ -66,7 +65,6 @@ class MetadataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `attemptMetadataSetup load fails wo 2nd pw`() {
         // Arrange
         whenever(payloadDataManager.loadNodes()).thenReturn(Observable.just(false))
@@ -90,7 +88,6 @@ class MetadataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `attemptMetadataSetup load fails with 2nd pw`() {
         // Arrange
         whenever(payloadDataManager.loadNodes()).thenReturn(Observable.just(false))
@@ -103,7 +100,6 @@ class MetadataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `generateAndSetupMetadata load success`() {
         // Arrange
         whenever(payloadDataManager.loadNodes()).thenReturn(Observable.just(true))
@@ -127,7 +123,6 @@ class MetadataManagerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun saveToMetadata() {
         // Arrange
         val type = 1337

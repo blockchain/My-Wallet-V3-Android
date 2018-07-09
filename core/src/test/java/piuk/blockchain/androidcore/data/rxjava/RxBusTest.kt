@@ -22,7 +22,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun registerSingleObserver() {
         // Arrange
         val type = String::class.java
@@ -35,7 +34,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun registerMultipleObserversOfSameType() {
         // Arrange
         val type = String::class.java
@@ -50,7 +48,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun registerMultipleObserversOfDifferentTypes() {
         // Arrange
         val type0 = String::class.java
@@ -71,7 +68,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun unregisterObserverOneRegistered() {
         // Arrange
         val type = String::class.java
@@ -84,7 +80,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun unregisterObserverMultipleRegistered() {
         // Arrange
         val type = String::class.java
@@ -100,7 +95,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun unregisterObserverNoneRegistered() {
         // Arrange
         val type = String::class.java
@@ -113,7 +107,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun emitEventTypeRegistered() {
         // Arrange
         val type = String::class.java
@@ -128,7 +121,6 @@ class RxBusTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun emitEventTypeNotRegistered() {
         // Arrange
         val typeToRegister = Double::class.java

@@ -34,7 +34,6 @@ class CoinifyAwaitingBankTransferPresenterTest {
     }
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = CoinifyAwaitingBankTransferPresenter(exchangeService, coinifyDataManager)
         subject.initView(view)

@@ -38,14 +38,12 @@ class ContactConfirmRequestPresenterTest {
     private val mockPayloadDataManager: PayloadDataManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = ContactConfirmRequestPresenter(mockContactsManager, mockPayloadDataManager)
         subject.initView(mockActivity)
     }
 
     @Test(expected = TypeCastException::class)
-    @Throws(Exception::class)
     fun `onViewReady empty bundle`() {
         // Arrange
         whenever(mockActivity.fragmentBundle).thenReturn(Bundle())
@@ -57,7 +55,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    @Throws(Exception::class)
     fun onViewReadyNullValues() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -82,7 +79,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyLoadContactsSuccess() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -141,7 +137,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyLoadContactsFailure() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -189,7 +184,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyLoadContactsNotFound() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -245,7 +239,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendRequestSuccessTypeRequest() {
         // Arrange
         val contactName = "CONTACT_NAME"
@@ -297,7 +290,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendRequestSuccessTypeSend() {
         // Arrange
         val contactName = "CONTACT_NAME"
@@ -349,7 +341,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendRequestFailureTypeRequest() {
         // Arrange
         val contactName = "CONTACT_NAME"
@@ -388,7 +379,6 @@ class ContactConfirmRequestPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendRequestFailureTypeSend() {
         // Arrange
         val contactName = "CONTACT_NAME"

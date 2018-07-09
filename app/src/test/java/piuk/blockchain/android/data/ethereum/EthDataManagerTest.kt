@@ -61,7 +61,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun clearEthAccountDetails() {
         // Arrange
 
@@ -73,7 +72,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun fetchEthAddress() {
         // Arrange
         val ethAddress = "ADDRESS"
@@ -95,7 +93,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun fetchEthAddressTestnet() {
         // Arrange
         whenever(environmentSettings.environment).thenReturn(Environment.TESTNET)
@@ -110,7 +107,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getEthResponseModel() {
         // Arrange
 
@@ -122,7 +118,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getEthWallet() {
         // Arrange
 
@@ -134,7 +129,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getEthTransactions response found with 3 transactions`() {
         // Arrange
         val combinedEthModel: CombinedEthModel = mock()
@@ -155,7 +149,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getEthTransactions response not found`() {
         // Arrange
         whenever(ethDataStore.ethAddressResponse).thenReturn(null)
@@ -170,7 +163,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending response not found`() {
         // Arrange
         val ethHash = "HASH"
@@ -217,7 +209,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx unprocessed, just submitted`() {
 
         val isProcessed = false
@@ -228,7 +219,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx processed`() {
 
         val isProcessed = true
@@ -239,7 +229,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx unprocessed, legacy processed`() {
         // legacy txs won't have last_tx_timestamp in metadata
         val isProcessed = false
@@ -249,7 +238,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx unprocessed, legacy dropped`() {
         // legacy txs won't have last_tx_timestamp in metadata
         val isProcessed = false
@@ -259,7 +247,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx unprocessed, 1min before being dropped`() {
 
         // 23h59m - 1 min before drop time
@@ -272,7 +259,6 @@ class EthDataManagerTest : RxTest() {
 
     @Ignore // This is incredibly flakey
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx unprocessed, just dropped`() {
 
         // 24h - on drop time
@@ -284,7 +270,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `isLastTxPending last tx unprocessed, 1min after being dropped`() {
 
         // 24h01m - 1 min passed drop time
@@ -295,7 +280,6 @@ class EthDataManagerTest : RxTest() {
         isLastTxPending(txProcessed, sent, shouldBePending)
     }
 
-    @Throws(Exception::class)
     private fun isLastTxPending(
         isProcessed: Boolean,
         timeLastTxSent: Long,
@@ -356,7 +340,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getLatestBlock() {
         // Arrange
         val latestBlock: EthLatestBlock = mock()
@@ -373,7 +356,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getLatestBlockTestnet() {
         // Arrange
         whenever(environmentSettings.environment).thenReturn(Environment.TESTNET)
@@ -386,7 +368,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getIfContract() {
         // Arrange
         val address = "ADDRESS"
@@ -403,7 +384,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getIfContractTestnet() {
         // Arrange
         val address = "ADDRESS"
@@ -417,7 +397,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getTransactionNotes returns string object`() {
         // Arrange
         val hash = "HASH"
@@ -432,7 +411,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getTransactionNotes returns null object as wallet is missing`() {
         // Arrange
         val hash = "HASH"
@@ -446,7 +424,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `updateTransactionNotes success`() {
         // Arrange
         val hash = "HASH"
@@ -467,7 +444,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `updateTransactionNotes wallet not found`() {
         // Arrange
         val hash = "HASH"
@@ -484,7 +460,6 @@ class EthDataManagerTest : RxTest() {
 
     // TODO: This is not at all testable
     @Test
-    @Throws(Exception::class)
     fun initEthereumWallet() {
         // Arrange
 
@@ -495,7 +470,6 @@ class EthDataManagerTest : RxTest() {
 
     // TODO: This isn't testable either, wrap [RawTransaction] class in interface
     @Test
-    @Throws(Exception::class)
     fun createEthTransaction() {
         // Arrange
 
@@ -505,7 +479,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun signEthTransaction() {
         // Arrange
         val rawTransaction: RawTransaction = mock()
@@ -524,7 +497,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun pushEthTx() {
         // Arrange
         val byteArray = ByteArray(32)
@@ -542,7 +514,6 @@ class EthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setLastTxHashObservable() {
         // Arrange
         val hash = "HASH"

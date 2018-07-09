@@ -27,14 +27,12 @@ class BuySellLauncherPresenterTest : RxTest() {
     private var coinifyDataManager: CoinifyDataManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setup() {
         subject = BuySellLauncherPresenter(exchangeService, coinifyDataManager)
         subject.initView(view)
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady has coinify token and has completed KYC`() {
         // Arrange
         val exchange: ExchangeData = mock()
@@ -57,7 +55,6 @@ class BuySellLauncherPresenterTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady has coinify token and has not completed KYC`() {
         // Arrange
         val exchange: ExchangeData = mock()
@@ -80,7 +77,6 @@ class BuySellLauncherPresenterTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady has exchange data but no coinify token`() {
         // Arrange
         val exchange: ExchangeData = mock()
@@ -98,7 +94,6 @@ class BuySellLauncherPresenterTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady no exchange data`() {
         // Arrange
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(ExchangeData()))
@@ -112,7 +107,6 @@ class BuySellLauncherPresenterTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady network exception`() {
         // Arrange
         whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.error { Throwable() })

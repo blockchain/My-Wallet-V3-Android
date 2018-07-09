@@ -29,7 +29,6 @@ class BackupVerifyPresenterTest {
     private val backupWalletUtil: BackupWalletUtil = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = BackupVerifyPresenter(payloadDataManager, prefsUtil, backupWalletUtil)
         subject.initView(view)
@@ -101,7 +100,6 @@ class BackupVerifyPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `updateBackupStatus success`() {
         // Arrange
         whenever(payloadDataManager.syncPayloadWithServer()).thenReturn(Completable.complete())
@@ -122,7 +120,6 @@ class BackupVerifyPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `updateBackupStatus failure`() {
         // Arrange
         whenever(payloadDataManager.syncPayloadWithServer())

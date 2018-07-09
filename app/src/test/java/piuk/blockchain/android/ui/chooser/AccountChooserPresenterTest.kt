@@ -38,7 +38,6 @@ class AccountChooserPresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = AccountChooserPresenter(
             walletAccountHelper,
@@ -53,7 +52,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode contacts`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.ContactsOnly)
@@ -76,7 +74,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode contacts no confirmed contacts`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.ContactsOnly)
@@ -94,7 +91,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode ShapeShift`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.ShapeShift)
@@ -122,7 +118,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode bitcoin`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.Bitcoin)
@@ -145,7 +140,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode bitcoin HD only`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.BitcoinHdOnly)
@@ -165,7 +159,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode bitcoin cash`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.BitcoinCash)
@@ -185,7 +178,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode bitcoin cash send`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.BitcoinCashSend)
@@ -208,7 +200,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode bitcoin summary`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.BitcoinSummary)
@@ -243,7 +234,6 @@ class AccountChooserPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady mode bitcoin cash summary`() {
         // Arrange
         whenever(activity.accountMode).thenReturn(AccountMode.BitcoinCashSummary)

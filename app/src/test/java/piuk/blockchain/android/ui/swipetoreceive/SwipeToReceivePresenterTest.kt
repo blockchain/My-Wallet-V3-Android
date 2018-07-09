@@ -26,7 +26,6 @@ class SwipeToReceivePresenterTest {
     private val stringUtils: StringUtils = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
 
         subject = SwipeToReceivePresenter(qrCodeDataManager, swipeToReceiveHelper, stringUtils)
@@ -34,7 +33,6 @@ class SwipeToReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady no addresses`() {
         // Arrange
         whenever(swipeToReceiveHelper.getBitcoinReceiveAddresses()).thenReturn(emptyList())
@@ -57,7 +55,6 @@ class SwipeToReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady address returned is empty`() {
         // Arrange
         val addresses = listOf("adrr0", "addr1", "addr2", "addr3", "addr4")
@@ -81,7 +78,6 @@ class SwipeToReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onView ready address returned BTC`() {
         // Arrange
         val bitmap: Bitmap = mock()
@@ -114,7 +110,6 @@ class SwipeToReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `address returned ETH`() {
         // Arrange
         val address = "addr0"
@@ -147,7 +142,6 @@ class SwipeToReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onView ready address returned BCH`() {
         // Arrange
         val bitmap: Bitmap = mock()

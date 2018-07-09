@@ -37,7 +37,6 @@ class LandingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady show debug`() {
         // Arrange
         whenever(environmentSettings.shouldShowDebugMenu()).thenReturn(true)
@@ -51,7 +50,6 @@ class LandingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady no debug`() {
         // Arrange
         whenever(environmentSettings.shouldShowDebugMenu()).thenReturn(false)
@@ -62,7 +60,6 @@ class LandingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initPreLoginPrompts() {
         // Arrange
         whenever(promptManager.getPreLoginPrompts(any()))

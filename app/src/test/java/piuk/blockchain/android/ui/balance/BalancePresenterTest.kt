@@ -80,7 +80,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReady() {
 
         // Arrange
@@ -101,7 +100,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewDestroyed() {
         // Arrange
         val notificationObservable = Observable.just(NotificationPayload(emptyMap()))
@@ -116,13 +114,11 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onResume() {
         // Child function onRefreshRequested
     }
 
     @Test
-    @Throws(Exception::class)
     fun areLauncherShortcutsEnabled() {
         // Arrange
         whenever(prefsUtil.getValue(PrefsUtil.KEY_RECEIVE_SHORTCUTS_ENABLED, true))
@@ -136,7 +132,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onRefreshRequested() {
         // Arrange
 
@@ -169,7 +164,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateBalancesCompletable() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
@@ -194,7 +188,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUpdateTickerCompletable() {
         // Arrange
         whenever(exchangeRateFactory.updateTickers()).thenReturn(Completable.complete())
@@ -206,7 +199,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateEthAddress() {
         // Arrange
         val abc: EthAddressResponseMap = mock()
@@ -225,7 +217,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateBchWallet() {
         // Arrange
         whenever(bchDataManager.refreshMetadataCompletable()).thenReturn(Completable.complete())
@@ -237,7 +228,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onGetBitcoinClicked API less than 19 canBuy returns true`() {
         // Arrange
         whenever(buyDataManager.canBuy).thenReturn(Observable.just(true))
@@ -253,7 +243,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onGetBitcoinClicked API less than 19 canBuy returns false`() {
         // Arrange
         whenever(buyDataManager.canBuy).thenReturn(Observable.just(false))
@@ -268,7 +257,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onGetBitcoinClicked canBuy returns true`() {
         // Arrange
         whenever(buyDataManager.canBuy).thenReturn(Observable.just(true))
@@ -284,7 +272,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onGetBitcoinClicked canBuy returns false`() {
         // Arrange
         whenever(buyDataManager.canBuy).thenReturn(Observable.just(false))
@@ -299,7 +286,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun refreshBalanceHeader() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
@@ -315,7 +301,6 @@ class BalancePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun refreshAccountDataSet() {
         // Arrange
         val mockList = mutableListOf<ItemAccount>()

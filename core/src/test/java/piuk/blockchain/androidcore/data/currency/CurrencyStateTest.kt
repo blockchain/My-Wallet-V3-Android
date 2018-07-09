@@ -21,7 +21,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSelectedCryptoCurrencyDefault() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -37,7 +36,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSelectedCryptoCurrencyEther() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -53,7 +51,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSetSelectedCryptoCurrencyBtc() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -69,7 +66,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSetSelectedCryptoCurrencyEther() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -85,7 +81,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isDisplayingCryptoDefault() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -98,7 +93,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isDisplayingCryptoFalse() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -111,7 +105,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isDisplayingCryptoTrue() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))
@@ -124,7 +117,6 @@ class CurrencyStateTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun toggleCryptoCurrency() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name))

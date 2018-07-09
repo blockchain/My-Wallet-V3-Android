@@ -27,7 +27,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSettingsObservable() {
         val mockSettings = mock(Settings::class.java)
         whenever(settingsManager.info).thenReturn(Observable.just(mockSettings))
@@ -42,7 +41,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initSettings() {
         // Arrange
         val guid = "GUID"
@@ -54,7 +52,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSettings() {
         // Arrange
         val mockSettings = mock(Settings::class.java)
@@ -70,7 +67,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateEmail() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
@@ -88,7 +84,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateSms() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
@@ -106,7 +101,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun verifySms() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
@@ -124,7 +118,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateTor() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
@@ -141,7 +134,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateNotifications() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
@@ -166,7 +158,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun enableNotifications() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)
@@ -190,7 +181,6 @@ class SettingsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateTwoFactor() {
         // Arrange
         val mockResponse = mock(ResponseBody::class.java)

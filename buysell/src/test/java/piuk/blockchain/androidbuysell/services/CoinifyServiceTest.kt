@@ -91,7 +91,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `sign up success`() {
         // Arrange
         server.enqueue(
@@ -121,7 +120,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `sign up failure test error code parsing`() {
         // Arrange
         server.enqueue(
@@ -150,7 +148,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getTrader success`() {
         // Arrange
         server.enqueue(
@@ -177,7 +174,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getSubscriptions success`() {
         // Arrange
         server.enqueue(
@@ -204,7 +200,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getTrades success`() {
         // Arrange
         server.enqueue(
@@ -231,7 +226,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `create card buy trade success`() {
         // Arrange
         server.enqueue(
@@ -272,7 +266,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `create bank buy trade success`() {
         // Arrange
         server.enqueue(
@@ -313,7 +306,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `create bank sell trade success`() {
         // Arrange
         server.enqueue(
@@ -354,7 +346,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `cancel trade success`() {
         // Arrange
         server.enqueue(
@@ -385,7 +376,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getTradeStatus success`() {
         // Arrange
         server.enqueue(
@@ -412,7 +402,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `auth success`() {
         // Arrange
         server.enqueue(
@@ -446,7 +435,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `startKycReview success`() {
         // Arrange
         server.enqueue(
@@ -472,7 +460,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getKycReviewStatus success`() {
         // Arrange
         server.enqueue(
@@ -499,7 +486,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getKycReviews success`() {
         // Arrange
         server.enqueue(
@@ -527,7 +513,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getQuote with amount parameter success`() {
         // Arrange
         server.enqueue(
@@ -565,7 +550,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `get payment methods success`() {
         // Arrange
         server.enqueue(
@@ -604,7 +588,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `get bank accounts success`() {
         // Arrange
         server.enqueue(
@@ -635,7 +618,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `get specific bank account success`() {
         // Arrange
         server.enqueue(
@@ -666,7 +648,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `delete specific bank account success`() {
         // Arrange
         server.enqueue(
@@ -694,7 +675,6 @@ class CoinifyServiceTest : MockWebServerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `add bank account success`() {
         // Arrange
         server.enqueue(

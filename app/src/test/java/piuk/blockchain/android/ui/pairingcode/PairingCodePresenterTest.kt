@@ -37,7 +37,6 @@ class PairingCodePresenterTest {
     private val mockAuthDataManager: AuthDataManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         whenever(mockStringUtils.getString(R.string.pairing_code_instruction_1)).thenReturn("")
         subject = PairingCodePresenter(
@@ -50,7 +49,6 @@ class PairingCodePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun generatePairingQr() {
         // Arrange
         val bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.RGB_565)

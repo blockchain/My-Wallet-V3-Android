@@ -48,7 +48,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getEncryptedPayload() {
         // Arrange
         val mockResponseBody = mock<ResponseBody>()
@@ -68,7 +67,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSessionId() {
         // Arrange
         val sessionId = "SESSION_ID"
@@ -84,7 +82,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitTwoFactorCode() {
         // Arrange
         val sessionId = "SESSION_ID"
@@ -103,7 +100,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun validatePinSuccessful() {
         // Arrange
         val pin = "1234"
@@ -149,7 +145,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun validatePinFailure() {
         // Arrange
         val pin = "1234"
@@ -190,7 +185,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createPinInvalid() {
         // Arrange
         val password = "PASSWORD"
@@ -207,7 +201,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createPinSuccessful() {
         // Arrange
         val password = "PASSWORD"
@@ -258,7 +251,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createPinError() {
         // Arrange
         val password = "PASSWORD"
@@ -300,7 +292,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getWalletOptions() {
         // Arrange
         val walletOptions = WalletOptions()
@@ -319,7 +310,6 @@ class AuthDataManagerTest : RxTest() {
      * [AuthDataManager.AUTHORIZATION_REQUIRED]
      */
     @Test
-    @Throws(Exception::class)
     fun startPollingAuthStatusError() {
         // Arrange
         val sessionId = "SESSION_ID"
@@ -340,7 +330,6 @@ class AuthDataManagerTest : RxTest() {
      * Getting encrypted payload returns Auth Required, should be filtered out and emit no values.
      */
     @Test
-    @Throws(Exception::class)
     fun startPollingAuthStatusAccessRequired() {
         // Arrange
         val sessionId = "SESSION_ID"
@@ -362,7 +351,6 @@ class AuthDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createCheckEmailTimer() {
         // Arrange
 

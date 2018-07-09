@@ -102,7 +102,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun clearEthAccountDetails() {
         // Arrange
 
@@ -114,7 +113,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `initBchWallet create new metadata payload wo second pw`() {
         // Arrange
         whenever(payloadDataManager.isDoubleEncrypted).thenReturn(false)
@@ -132,7 +130,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `initBchWallet retrieve existing data payload wo second pw`() {
         // Arrange
         whenever(payloadDataManager.isDoubleEncrypted).thenReturn(false)
@@ -148,7 +145,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `initBchWallet create new metadata payload with second pw`() {
         // Arrange
         whenever(payloadDataManager.isDoubleEncrypted).thenReturn(true)
@@ -168,7 +164,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `initBchWallet retrieve existing data payload with second pw`() {
         // Arrange
         whenever(payloadDataManager.isDoubleEncrypted).thenReturn(true)
@@ -184,7 +179,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `fetchMetadata doesn't exist`() {
 
         // Arrange
@@ -199,7 +193,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `fetchMetadata exists`() {
 
         // Arrange
@@ -214,7 +207,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `restoreBchWallet with 2nd pw 1 account`() {
 
         // Arrange
@@ -231,7 +223,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `restoreBchWallet with 2nd pw 2 account`() {
 
         // Arrange
@@ -269,7 +260,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `restoreBchWallet no 2nd pw 1 account`() {
 
         // Arrange
@@ -296,7 +286,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `restoreBchWallet no 2nd pw 2 account`() {
 
         // Arrange
@@ -333,7 +322,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `correctBtcOffsetIfNeed btc equal to bch account size`() {
         // Arrange
         val btcAccount: Account = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
@@ -356,7 +344,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `correctBtcOffsetIfNeed btc more than bch account size`() {
         // Arrange
         val btcAccount: Account = mock(defaultAnswer = Mockito.RETURNS_DEEP_STUBS)
@@ -379,7 +366,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `correctBtcOffsetIfNeed btc 1 less than bch account size`() {
         // Arrange
         val btcAccountsNeeded = 1
@@ -417,7 +403,6 @@ class BchDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `correctBtcOffsetIfNeed btc 5 less than bch account size`() {
         // Arrange
         val btcAccountsNeeded = 5

@@ -12,7 +12,6 @@
 //    val subject = MonetaryUtil()
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun getBTCFormat() {
 //        // Arrange
 //
@@ -23,7 +22,6 @@
 //    }
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun getFiatFormat() {
 //        // Arrange
 //        val currency = "GBP"
@@ -34,7 +32,6 @@
 //    }
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun `getDisplayAmount BTC`() {
 //        // Arrange
 //        // Act
@@ -45,7 +42,6 @@
 //
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun `getDisplayAmountWithFormatting long BTC`() {
 //        // Arrange
 //        // Act
@@ -55,7 +51,6 @@
 //    }
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun `getDisplayAmountWithFormatting double BTC`() {
 //        // Arrange
 //        // Act
@@ -65,7 +60,6 @@
 //    }
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun `getFiatDisplayString GBP in UK`() {
 //        // Arrange
 //
@@ -76,7 +70,6 @@
 //    }
 //
 //    @Test
-//    @Throws(Exception::class)
 //    fun `getCurrencySymbol GBP in UK`() {
 //        // Arrange
 //

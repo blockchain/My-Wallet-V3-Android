@@ -29,7 +29,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initContactsService() {
         // Arrange
 
@@ -42,7 +41,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun invalidate() {
         // Arrange
 
@@ -55,7 +53,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun fetchContacts() {
         // Arrange
 
@@ -68,7 +65,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun saveContacts() {
         // Arrange
 
@@ -81,7 +77,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun wipeContacts() {
         // Arrange
 
@@ -94,7 +89,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun destroy() {
         // Arrange
 
@@ -105,7 +99,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactList() {
         // Arrange
         val map = HashMap<String, Contact>()
@@ -123,7 +116,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactsWithUnreadPaymentRequests() {
         // Arrange
         whenever(mockContacts.digestUnreadPaymentRequests()).thenReturn(
@@ -143,7 +135,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun addContact() {
         // Arrange
         val mockContact: Contact = mock()
@@ -156,7 +147,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun removeContact() {
         // Arrange
         val mockContact: Contact = mock()
@@ -169,7 +159,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun renameContact() {
         // Arrange
         val contactId = "CONTACT_ID"
@@ -183,7 +172,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createInvitation() {
         // Arrange
         val mockSender: Contact = mock()
@@ -199,7 +187,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun acceptInvitation() {
         // Arrange
         val mockSender: Contact = mock()
@@ -215,7 +202,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun readInvitationLink() {
         // Arrange
         val mockSender: Contact = mock()
@@ -231,7 +217,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun readInvitationSent() {
         // Arrange
         val mockRecipient: Contact = mock()
@@ -246,7 +231,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun requestSendPayment() {
         // Arrange
         val mdid = "MDID"
@@ -260,7 +244,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun requestReceivePayment() {
         // Arrange
         val mdid = "MDID"
@@ -274,7 +257,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentRequestResponse() {
         // Arrange
         val mdid = "MDID"
@@ -289,7 +271,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentBroadcasted() {
         // Arrange
         val mdid = "MDID"
@@ -304,7 +285,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentDeclinedResponse() {
         // Arrange
         val mdid = "MDID"
@@ -318,7 +298,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentCancelledResponse() {
         // Arrange
         val mdid = "MDID"
@@ -332,7 +311,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun fetchXpub() {
         // Arrange
         val mdid = "MDID"
@@ -348,7 +326,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun publishXpub() {
         // Arrange
 
@@ -361,7 +338,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getMessages() {
         // Arrange
         val onlyNew = true
@@ -376,7 +352,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun readMessage() {
         // Arrange
         val messageId = "MESSAGE_ID"
@@ -392,7 +367,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun markMessageAsRead() {
         // Arrange
         val messageId = "MESSAGE_ID"
@@ -406,7 +380,6 @@ class ContactsServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun deleteFacilitatedTransaction() {
         // Arrange
         val messageId = "MESSAGE_ID"

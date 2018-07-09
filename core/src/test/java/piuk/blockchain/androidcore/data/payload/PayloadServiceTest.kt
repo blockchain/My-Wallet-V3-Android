@@ -40,13 +40,11 @@ class PayloadServiceTest {
     }
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = PayloadService(mockPayloadManager)
     }
 
     @Test
-    @Throws(Exception::class)
     fun initializeFromPayload() {
         // Arrange
         val payload = "PAYLOAD"
@@ -65,7 +63,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun restoreHdWallet() {
         // Arrange
         val mnemonic = "MNEMONIC"
@@ -85,7 +82,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createHdWallet() {
         // Arrange
         val password = "PASSWORD"
@@ -103,7 +99,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initializeAndDecrypt() {
         // Arrange
         val sharedKey = "SHARED_KEY"
@@ -124,7 +119,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleQrCode() {
         // Arrange
         val qrString = "QR_STRING"
@@ -137,7 +131,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `upgradeV2toV3 successful`() {
         // Arrange
         val secondPassword = "SECOND_PASSWORD"
@@ -153,7 +146,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `upgradeV2toV3 failed`() {
         // Arrange
         val secondPassword = "SECOND_PASSWORD"
@@ -170,7 +162,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `syncPayloadWithServer successful`() {
         // Arrange
         whenever(mockPayloadManager.save()).thenReturn(true)
@@ -183,7 +174,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `syncPayloadWithServer failed`() {
         // Arrange
         whenever(mockPayloadManager.save()).thenReturn(false)
@@ -197,7 +187,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `syncPayloadAndPublicKeys successful`() {
         // Arrange
         whenever(mockPayloadManager.saveAndSyncPubKeys()).thenReturn(true)
@@ -210,7 +199,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `syncPayloadAndPublicKeys failed`() {
         // Arrange
         whenever(mockPayloadManager.saveAndSyncPubKeys()).thenReturn(false)
@@ -224,7 +212,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAllTransactions() {
         // Arrange
 
@@ -237,7 +224,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateAllBalances() {
         // Arrange
 
@@ -250,7 +236,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getBalanceOfAddresses() {
         // Arrange
         val addresses = listOf("address_one", "address_two", "address_three")
@@ -274,7 +259,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getBalanceOfBchAddresses() {
         // Arrange
         val addresses = listOf("address_one", "address_two", "address_three")
@@ -298,7 +282,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateTransactionNotes() {
         // Arrange
         val txHash = "TX_HASH"
@@ -315,7 +298,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createNewAccount() {
         // Arrange
         val label = "LABEL"
@@ -338,7 +320,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setKeyForLegacyAddress() {
         // Arrange
         val mockEcKey: ECKey = mock()
@@ -356,7 +337,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun addLegacyAddress() {
         // Arrange
         val mockLegacyAddress: LegacyAddress = mock()
@@ -369,7 +349,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateLegacyAddress() {
         // Arrange
         val mockLegacyAddress: LegacyAddress = mock()
@@ -382,7 +361,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun loadNodes() {
         // Arrange
         whenever(mockPayloadManager.loadNodes()).thenReturn(true)
@@ -396,7 +374,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun generateNodes() {
         // Arrange
 
@@ -409,7 +386,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun registerMdid() {
         // Arrange
         val mockKey: DeterministicKey = mock()
@@ -427,7 +403,6 @@ class PayloadServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun unregisterMdid() {
         // Arrange
         val mockKey: DeterministicKey = mock()

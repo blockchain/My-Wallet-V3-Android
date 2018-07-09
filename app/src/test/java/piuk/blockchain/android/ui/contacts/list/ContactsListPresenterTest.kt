@@ -56,7 +56,6 @@ class ContactsListPresenterTest {
     private val mockRxBus: RxBus = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = ContactsListPresenter(mockContactsManager, mockPayloadDataManager, mockEnvironmentConfig, mockRxBus)
         subject.initView(mockActivity)
@@ -65,7 +64,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleLinkSuccessful() {
         // Arrange
         val uri = "METADATA_URI"
@@ -89,7 +87,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun handleLinkFailure() {
         // Arrange
         val uri = "METADATA_URI"
@@ -124,7 +121,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyEmitNotificationEvent() {
         // Arrange
         val notificationPayload: NotificationPayload = mock()
@@ -152,7 +148,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyEmitErrorEvent() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -179,7 +174,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldShowSecondPasswordDialog() {
         // Arrange
         val uri = "URI"
@@ -204,7 +198,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldInitContacts() {
         // Arrange
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(false))
@@ -247,7 +240,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldLoadContactsSuccessfully() {
         // Arrange
         whenever(mockPayloadDataManager.loadNodes()).thenReturn(Observable.just(true))
@@ -281,7 +273,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldLoadContactsEmpty() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -305,7 +296,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldFailLoadingRequests() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -329,7 +319,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyShouldFailLoadingContacts() {
         // Arrange
         val notificationObservable = PublishSubject.create<NotificationPayload>()
@@ -348,7 +337,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initContactsServiceShouldThrowDecryptionException() {
         // Arrange
         whenever(mockPayloadDataManager.generateNodes())
@@ -373,7 +361,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initContactsServiceShouldThrowException() {
         // Arrange
         whenever(mockPayloadDataManager.generateNodes())
@@ -398,7 +385,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun checkStatusOfPendingContactsSuccess() {
         // Arrange
         whenever(mockContactsManager.readInvitationSent(any()))
@@ -416,7 +402,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun refreshContactsFailure() {
         // Arrange
         whenever(mockContactsManager.fetchContacts()).thenReturn(Completable.complete())
@@ -433,7 +418,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewDestroyed() {
         // Arrange
 
@@ -444,7 +428,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setNameOfSender() {
         // Arrange
         val name = "Sender"
@@ -456,7 +439,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setNameOfRecipient() {
         // Arrange
         val name = "Recipient"
@@ -468,7 +450,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun clearContactNames() {
         // Arrange
         // Act
@@ -479,7 +460,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createLink() {
         // Arrange
         val senderName = "SENDER_NAME"
@@ -512,7 +492,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createLinkFailure() {
         // Arrange
         val senderName = "SENDER_NAME"
@@ -541,7 +520,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createLinkPreexistingUri() {
         // Arrange
         val uri = "URI"
@@ -558,7 +536,6 @@ class ContactsListPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onDeleteContactConfirmed() {
         // Arrange
         val recipientName = "RECIPIENT_NAME"

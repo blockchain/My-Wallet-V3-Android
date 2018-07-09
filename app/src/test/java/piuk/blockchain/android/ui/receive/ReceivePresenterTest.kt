@@ -60,7 +60,6 @@ class ReceivePresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         initFramework()
 
@@ -79,7 +78,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady hide contacts introduction`() {
         // Arrange
         whenever(environmentSettings.environment).thenReturn(Environment.PRODUCTION)
@@ -97,7 +95,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady show contacts introduction`() {
         // Arrange
         whenever(environmentSettings.environment).thenReturn(Environment.PRODUCTION)
@@ -115,7 +112,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady don't show contacts`() {
         // Arrange
         whenever(environmentSettings.environment).thenReturn(Environment.PRODUCTION)
@@ -130,7 +126,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onSendToContactClicked() {
         // Arrange
 
@@ -142,7 +137,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isValidAmount() {
         // Arrange
         val amount = "-1"
@@ -153,7 +147,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun shouldShowDropdown() {
         // Arrange
         whenever(walletAccountHelper.getAccountItems()).thenReturn(listOf(mock(), mock()))
@@ -168,7 +161,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onLegacyAddressSelected no label`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -192,7 +184,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onLegacyAddressSelected with label`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -220,7 +211,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onLegacyAddressSelected BCH with no label`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -248,7 +238,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onLegacyAddressSelected BCH with label`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -278,7 +267,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onAccountSelected success`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -314,7 +302,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onAccountSelected address derivation failure`() {
         // Arrange
         val label = "LABEL"
@@ -343,7 +330,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onEthSelected() {
         // Arrange
         val ethAccount = "0x879dBFdE84B0239feB355f55F81fb29f898C778C"
@@ -373,7 +359,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onBchAccountSelected success`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -423,7 +408,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onSelectBchDefault success`() {
         // Arrange
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -475,7 +459,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onSelectDefault account valid account position`() {
         val accountPosition = 2
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -514,7 +497,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onSelectDefault account invalid account position`() {
         val accountPosition = -1
         val address = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -553,7 +535,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onBitcoinAmountChanged() {
         // Arrange
         val amount = "2100000000000000"
@@ -572,7 +553,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getSelectedAccountPosition ETH`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
@@ -589,7 +569,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `getSelectedAccountPosition BTC`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
@@ -600,7 +579,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setWarnWatchOnlySpend() {
         // Arrange
 
@@ -611,7 +589,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun clearSelectedContactId() {
         // Arrange
         val contactId = "1337"
@@ -623,7 +600,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getConfirmationDetails() {
         // Arrange
         val label = "LABEL"
@@ -690,7 +666,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onShowBottomSheetSelected btc`() {
         // Arrange
         subject.selectedAddress = "1ATy3ktyaYjzZZQQnhvPsuBVheUDYcUP7V"
@@ -704,7 +679,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onShowBottomSheetSelected eth`() {
         // Arrange
         subject.selectedAddress = "0x879dBFdE84B0239feB355f55F81fb29f898C778C"
@@ -716,7 +690,6 @@ class ReceivePresenterTest {
     }
 
     @Test(expected = IllegalStateException::class)
-    @Throws(Exception::class)
     fun `onShowBottomSheetSelected unknown`() {
         // Arrange
         whenever(environmentSettings.bitcoinCashNetworkParameters).thenReturn(
@@ -730,7 +703,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateFiatTextField() {
         // Arrange
         whenever(
@@ -749,7 +721,6 @@ class ReceivePresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateBtcTextField() {
         // Arrange
         whenever(currencyFormatManager.getFormattedSelectedCoinValueFromFiatString("2.0"))

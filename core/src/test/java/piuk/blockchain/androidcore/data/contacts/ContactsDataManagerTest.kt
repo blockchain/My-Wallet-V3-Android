@@ -44,7 +44,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun initContactsService() {
         // Arrange
         val mockMetadataNode: DeterministicKey = mock()
@@ -61,7 +60,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun fetchContacts() {
         // Arrange
         val contact0 = Contact()
@@ -91,7 +89,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun saveContacts() {
         // Arrange
         whenever(contactsService.saveContacts()).thenReturn(Completable.complete())
@@ -104,7 +101,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun wipeContacts() {
         // Arrange
         whenever(contactsService.wipeContacts()).thenReturn(Completable.complete())
@@ -117,7 +113,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactList() {
         // Arrange
         val contact0 = Contact()
@@ -136,7 +131,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactsWithUnreadPaymentRequests() {
         // Arrange
         val contact0 = Contact()
@@ -154,7 +148,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun addContact() {
         // Arrange
         val contact0 = Contact()
@@ -168,7 +161,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun removeContact() {
         // Arrange
         val contact0 = Contact()
@@ -182,7 +174,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun renameContact() {
         // Arrange
         val contactId = "CONTACT ID"
@@ -198,7 +189,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createInvitation() {
         // Arrange
         val sender = Contact()
@@ -215,7 +205,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun acceptInvitation() {
         // Arrange
         val invitationUrl = "INVITATION_URL"
@@ -232,7 +221,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun readInvitationLink() {
         // Arrange
         val invitationUrl = "INVITATION_URL"
@@ -249,7 +237,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun readInvitationSent() {
         // Arrange
         val recipient = Contact()
@@ -265,7 +252,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun requestSendPayment() {
         // Arrange
         val mdid = "MDID"
@@ -281,7 +267,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun requestReceivePayment() {
         // Arrange
         val mdid = "MDID"
@@ -297,7 +282,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentRequestResponse() {
         // Arrange
         val mdid = "MDID"
@@ -314,7 +298,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentBroadcasted() {
         // Arrange
         val mdid = "MDID"
@@ -331,7 +314,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentDeclinedResponse() {
         // Arrange
         val mdid = "MDID"
@@ -347,7 +329,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun sendPaymentCancelledResponse() {
         // Arrange
         val mdid = "MDID"
@@ -363,7 +344,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun fetchXpub() {
         // Arrange
         val mdid = "MDID"
@@ -379,7 +359,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun publishXpub() {
         // Arrange
         whenever(contactsService.publishXpub()).thenReturn(Completable.complete())
@@ -392,7 +371,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getMessages() {
         // Arrange
         val message0 = Message()
@@ -411,7 +389,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun readMessage() {
         // Arrange
         val messageId = "MESSAGE_ID"
@@ -427,7 +404,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun markMessageAsRead() {
         // Arrange
         val messageId = "MESSAGE_ID"
@@ -443,7 +419,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun refreshFacilitatedTransactions() {
         // Arrange
         // Has completed transaction, should be filtered out
@@ -477,7 +452,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun refreshFacilitatedTransactionsFiltersOutDeclined() {
         // Arrange
         // Has declined transaction - should be filtered out
@@ -515,7 +489,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getFacilitatedTransactions() {
         // Arrange
         val contactTransactionModel0 = ContactTransactionModel("", mock())
@@ -538,7 +511,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactFromFctxId() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -564,7 +536,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactFromFctxIdNotFound() {
         // Arrange
         val fctxId = "FCTX_ID"
@@ -589,7 +560,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun deleteFacilitatedTransaction() {
         // Arrange
         val mdid = "MDID"
@@ -609,7 +579,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getContactsTransactionMap() {
         // Arrange
 
@@ -620,7 +589,6 @@ class ContactsDataManagerTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun resetContacts() {
         // Arrange
 

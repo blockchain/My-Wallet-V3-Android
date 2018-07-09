@@ -15,14 +15,12 @@ class ConfirmPaymentPresenterTest {
     private val mockActivity: ConfirmPaymentView = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject = ConfirmPaymentPresenter()
         subject.initView(mockActivity)
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady payment details null`() {
         // Arrange
 
@@ -35,7 +33,6 @@ class ConfirmPaymentPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReady() {
         // Arrange
         val fromLabel = "FROM_LABEL"

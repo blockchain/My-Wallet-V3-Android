@@ -73,7 +73,6 @@ class AccountPresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
@@ -114,7 +113,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun checkTransferableLegacyFundsWarnTransferAllTrue() {
         // Arrange
         val triple = Triple.of(listOf(PendingTransaction()), 1L, 2L)
@@ -134,7 +132,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun checkTransferableLegacyFundsWarnTransferAllTrueDontShowDialog() {
         // Arrange
         val triple = Triple.of(listOf(PendingTransaction()), 1L, 2L)
@@ -153,7 +150,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun checkTransferableLegacyFundsNoFundsAvailable() {
         // Arrange
         val triple = Triple.of(emptyList<PendingTransaction>(), 1L, 2L)
@@ -171,7 +167,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun checkTransferableLegacyFundsThrowsException() {
         // Arrange
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
@@ -185,7 +180,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createNewAccountSuccessful() {
         // Arrange
         val account: Account = mock()
@@ -208,7 +202,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createNewAccountDecryptionException() {
         // Arrange
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
@@ -223,7 +216,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createNewAccountPayloadException() {
         // Arrange
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
@@ -238,7 +230,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun createNewAccountUnknownException() {
         // Arrange
         whenever(payloadDataManager.createNewAccount(anyString(), isNull<String>()))
@@ -253,7 +244,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateLegacyAddressSuccessful() {
         // Arrange
         val legacyAddress = LegacyAddress()
@@ -270,7 +260,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun updateLegacyAddressFailed() {
         // Arrange
         val legacyAddress = LegacyAddress()
@@ -287,7 +276,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onScanButtonClickedCameraInUse() {
         // Arrange
         whenever(appUtil.isCameraOpen).thenReturn(true)
@@ -299,7 +287,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onScanButtonClickedCameraAvailable() {
         // Arrange
         whenever(appUtil.isCameraOpen).thenReturn(false)
@@ -311,7 +298,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun importBip38AddressWithValidPassword() {
         // Arrange
 
@@ -326,7 +312,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun importBip38AddressWithIncorrectPassword() {
         // Arrange
 
@@ -343,7 +328,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedBip38() {
         // Arrange
 
@@ -355,7 +339,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedNonBip38() {
         // Arrange
         whenever(payloadDataManager.getKeyFromImportedData(anyString(), anyString()))
@@ -369,7 +352,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedNonBip38Failure() {
         // Arrange
         whenever(payloadDataManager.getKeyFromImportedData(anyString(), anyString()))
@@ -386,7 +368,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedWatchOnlyInvalidAddress() {
         // Arrange
 
@@ -398,7 +379,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedWatchOnlyNullAddress() {
         // Arrange
 
@@ -410,7 +390,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedWatchAddressAlreadyInWallet() {
         // Arrange
         val mockPayload = mock(Wallet::class.java, RETURNS_DEEP_STUBS)
@@ -425,7 +404,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onAddressScannedWatchAddressNotInWallet() {
         // Arrange
         val mockPayload = mock(Wallet::class.java, RETURNS_DEEP_STUBS)
@@ -440,7 +418,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun confirmImportWatchOnlySuccess() {
         // Arrange
         val address = "17UovdU9ZvepPe75igTQwxqNME1HbnvMB7"
@@ -455,7 +432,6 @@ class AccountPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun confirmImportWatchOnlyFailure() {
         // Arrange
         val address = "17UovdU9ZvepPe75igTQwxqNME1HbnvMB7"
@@ -471,7 +447,6 @@ class AccountPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun handlePrivateKeyWhenKeyIsNull() {
         // Arrange
 
@@ -484,7 +459,6 @@ class AccountPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun handlePrivateKeyExistingAddressSuccess() {
         // Arrange
         whenever(environmentSettings.environment).thenReturn(Environment.PRODUCTION)
@@ -514,7 +488,6 @@ class AccountPresenterTest {
 
     @SuppressLint("VisibleForTests")
     @Test
-    @Throws(Exception::class)
     fun handlePrivateKeyExistingAddressFailure() {
         // Arrange
         val mockECKey = mock(ECKey::class.java)

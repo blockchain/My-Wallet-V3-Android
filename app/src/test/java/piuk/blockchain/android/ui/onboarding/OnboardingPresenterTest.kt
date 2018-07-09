@@ -29,7 +29,6 @@ class OnboardingPresenterTest {
     private val mockActivity: OnboardingView = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
         subject =
             OnboardingPresenter(mockFingerprintHelper, mockAccessState, mockSettingsDataManager)
@@ -37,7 +36,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadySettingsFailureEmailOnly() {
         // Arrange
         val intent: Intent = mock()
@@ -56,7 +54,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyFingerprintHardwareAvailable() {
         // Arrange
         val mockSettings: Settings = mock()
@@ -75,7 +72,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onViewReadyNoFingerprintHardware() {
         // Arrange
         val mockSettings: Settings = mock()
@@ -94,7 +90,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onEnableFingerprintClickedFingerprintEnrolled() {
         // Arrange
         val captor = argumentCaptor<String>()
@@ -114,7 +109,6 @@ class OnboardingPresenterTest {
     }
 
     @Test(expected = IllegalStateException::class)
-    @Throws(Exception::class)
     fun onEnableFingerprintClickedNoPinFound() {
         // Arrange
         whenever(mockFingerprintHelper.isFingerprintAvailable()).thenReturn(true)
@@ -130,7 +124,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onEnableFingerprintClickedNoFingerprintEnrolled() {
         // Arrange
         whenever(mockFingerprintHelper.isFingerprintAvailable()).thenReturn(false)
@@ -147,7 +140,6 @@ class OnboardingPresenterTest {
     }
 
     @Test(expected = IllegalStateException::class)
-    @Throws(Exception::class)
     fun onEnableFingerprintClickedNoHardwareMethodCalledAccidentally() {
         // Arrange
         whenever(mockFingerprintHelper.isFingerprintAvailable()).thenReturn(false)
@@ -163,7 +155,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setFingerprintUnlockEnabledTrue() {
         // Arrange
 
@@ -175,7 +166,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun setFingerprintUnlockEnabledFalse() {
         // Arrange
 
@@ -188,7 +178,6 @@ class OnboardingPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getEmail() {
         // Arrange
         val email = "EMAIL"

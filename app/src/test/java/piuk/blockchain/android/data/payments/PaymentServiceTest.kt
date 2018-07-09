@@ -53,7 +53,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitPaymentSuccess() {
         // Arrange
         val txHash = "TX_HASH"
@@ -114,7 +113,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitPaymentFailure() {
         // Arrange
         val txHash = "TX_HASH"
@@ -179,7 +177,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitPaymentException() {
         // Arrange
         val txHash = "TX_HASH"
@@ -230,7 +227,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitBchPaymentSuccess() {
         // Arrange
         val txHash = "TX_HASH"
@@ -291,7 +287,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitBchPaymentFailure() {
         // Arrange
         val txHash = "TX_HASH"
@@ -356,7 +351,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun submitBchPaymentException() {
         // Arrange
         val txHash = "TX_HASH"
@@ -408,7 +402,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUnspentOutputsSuccess() {
         // Arrange
         val address = "ADDRESS"
@@ -428,7 +421,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUnspentOutputs500Error() {
         // Arrange
         val address = "ADDRESS"
@@ -447,7 +439,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUnspentOutputsFailed() {
         // Arrange
         val address = "ADDRESS"
@@ -467,7 +458,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUnspentBchOutputsSuccess() {
         // Arrange
         val address = "ADDRESS"
@@ -487,7 +477,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUnspentBchOutputs500Error() {
         // Arrange
         val address = "ADDRESS"
@@ -506,7 +495,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getUnspentBchOutputsFailed() {
         // Arrange
         val address = "ADDRESS"
@@ -526,7 +514,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getSpendableCoins() {
         // Arrange
         val mockUnspent = mock(UnspentOutputs::class.java)
@@ -545,7 +532,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun getMaximumAvailable() {
         // Arrange
         val mockUnspent = mock(UnspentOutputs::class.java)
@@ -561,7 +547,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun isAdequateFee() {
         // Arrange
         val inputs = 1
@@ -577,7 +562,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun estimateSize() {
         // Arrange
         val inputs = 1
@@ -593,7 +577,6 @@ class PaymentServiceTest : RxTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun estimateFee() {
         // Arrange
         val inputs = 1

@@ -15,7 +15,6 @@ import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 class LabelUtilTest {
 
     @Test
-    @Throws(Exception::class)
     fun `label found in accounts`() {
         // Arrange
         val newLabel = "NEW_LABEL"
@@ -33,7 +32,6 @@ class LabelUtilTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `label found in accounts despite cases not matching`() {
         // Arrange
         val newLabel = "NEW_LABEL"
@@ -51,7 +49,6 @@ class LabelUtilTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `label found in legacy addresses`() {
         // Arrange
         val newLabel = "NEW_LABEL"
@@ -73,7 +70,6 @@ class LabelUtilTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `label found in BCH accounts`() {
         // Arrange
         val newLabel = "NEW_LABEL"
@@ -95,7 +91,6 @@ class LabelUtilTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `label not found`() {
         // Arrange
         val newLabel = "NEW_LABEL"

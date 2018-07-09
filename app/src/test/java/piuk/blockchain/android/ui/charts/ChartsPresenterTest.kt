@@ -29,7 +29,6 @@ class ChartsPresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
 
         subject = ChartsPresenter(
@@ -43,7 +42,6 @@ class ChartsPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady success`() {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
@@ -79,7 +77,6 @@ class ChartsPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady failure`() {
         // Arrange
         val fiat = "USD"
@@ -113,7 +110,6 @@ class ChartsPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `setSelectedTimeSpan day`() {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
@@ -149,7 +145,6 @@ class ChartsPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `setSelectedTimeSpan week ETH`() {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
@@ -185,7 +180,6 @@ class ChartsPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `setSelectedTimeSpan year ETH`() {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
@@ -221,7 +215,6 @@ class ChartsPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `setSelectedTimeSpan all time BCH`() {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))

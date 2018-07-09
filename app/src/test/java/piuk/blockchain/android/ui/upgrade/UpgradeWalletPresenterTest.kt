@@ -32,7 +32,6 @@ class UpgradeWalletPresenterTest {
     private val mockStringUtils: StringUtils = mock()
 
     @Before
-    @Throws(Exception::class)
     fun setUp() {
 
         subject = UpgradeWalletPresenter(
@@ -47,7 +46,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady password is null`() {
         // Arrange
         whenever(mockPayloadDataManager.tempPassword).thenReturn(null)
@@ -63,7 +61,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onViewReady password strength is low`() {
         // Arrange
         val password = "PASSWORD"
@@ -78,7 +75,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `submitPasswords length invalid`() {
         // Arrange
         val firstPassword = "ABC"
@@ -91,7 +87,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `submitPasswords passwords don't match`() {
         // Arrange
         val firstPassword = "ABCD"
@@ -104,7 +99,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `submitPasswords create PIN successful`() {
         // Arrange
         val firstPassword = "ABCD"
@@ -133,7 +127,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `submitPasswords create PIN failed`() {
         // Arrange
         val firstPassword = "ABCD"
@@ -163,7 +156,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onUpgradeRequested successful`() {
         // Arrange
         val secondPassword = "SECOND_PASSWORD"
@@ -185,7 +177,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `onUpgradeRequested failed`() {
         // Arrange
         val secondPassword = "SECOND_PASSWORD"
@@ -207,7 +198,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onContinueClicked() {
         // Arrange
 
@@ -223,7 +213,6 @@ class UpgradeWalletPresenterTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun onBackButtonPressed() {
         // Arrange
         val mockContext: Context = mock()
