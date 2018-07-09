@@ -25,10 +25,7 @@ class SendDataManagerTest : RxTest() {
     private val mockRxBus: RxBus = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         subject = SendDataManager(mockPaymentService, mockRxBus)
     }
 

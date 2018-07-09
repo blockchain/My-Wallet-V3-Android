@@ -44,9 +44,7 @@ class ShapeShiftDataManagerTest : RxTest() {
         RxBus()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = ShapeShiftDataManager(
             shapeShiftApi,
             shapeShiftDataStore,

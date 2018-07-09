@@ -18,10 +18,7 @@ class PromptManagerTest : RxTest() {
     private val mockSettings: Settings = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         subject =
             PromptManager(mockPrefsUtil, mockPayloadDataManager, mockTransactionListDataManager)
     }

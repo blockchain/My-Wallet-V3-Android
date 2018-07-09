@@ -29,9 +29,7 @@ class CoinifyDataManagerTest : RxTest() {
     private val accessTokenStore: AccessTokenStore = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = CoinifyDataManager(coinifyService, authService, accessTokenStore)
     }
 

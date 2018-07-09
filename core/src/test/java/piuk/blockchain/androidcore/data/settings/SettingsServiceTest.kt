@@ -20,9 +20,7 @@ class SettingsServiceTest : RxTest() {
     private val settingsManager: SettingsManager = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = SettingsService(settingsManager)
     }
 

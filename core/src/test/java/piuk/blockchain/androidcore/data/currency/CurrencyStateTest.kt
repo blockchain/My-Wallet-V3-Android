@@ -14,9 +14,7 @@ class CurrencyStateTest : RxTest() {
     private val mockPrefs: PrefsUtil = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = CurrencyState.getInstance()
     }
 

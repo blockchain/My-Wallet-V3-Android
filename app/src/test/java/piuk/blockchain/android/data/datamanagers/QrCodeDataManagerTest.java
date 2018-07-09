@@ -26,8 +26,7 @@ public class QrCodeDataManagerTest extends RxTest {
     private static final String TEST_URI = "bitcoin://1234567890";
 
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setUp() {
         subject = new QrCodeDataManager();
     }
 

@@ -26,9 +26,7 @@ class WalletOptionsDataManagerTest : RxTest() {
     private val explorerUrl: String = "https://blockchain.info/"
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         walletOptionsState.wipe()
         subject = WalletOptionsDataManager(
             authService,

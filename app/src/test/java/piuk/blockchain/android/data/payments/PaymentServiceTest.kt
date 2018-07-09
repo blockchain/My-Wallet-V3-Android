@@ -40,10 +40,7 @@ class PaymentServiceTest : RxTest() {
     private val environmentSettings: EnvironmentConfig = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         subject = PaymentService(environmentSettings, payment)
 
         whenever(environmentSettings.bitcoinNetworkParameters)

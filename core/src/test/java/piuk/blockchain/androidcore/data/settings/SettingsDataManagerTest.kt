@@ -25,9 +25,7 @@ class SettingsDataManagerTest : RxTest() {
     private val rxBus: RxBus = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = SettingsDataManager(settingsService, settingsDataStore, rxBus)
     }
 

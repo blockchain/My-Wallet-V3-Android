@@ -31,10 +31,7 @@ class ContactsDataManagerTest : RxTest() {
     private val contactsMapStore = ContactsMapStore()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         subject = ContactsDataManager(
             contactsService,
             contactsMapStore,

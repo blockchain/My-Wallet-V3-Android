@@ -33,8 +33,7 @@ public class NotificationTokenManagerTest extends RxTest{
     @Mock private RxBus rxBus;
 
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         subject = new NotificationTokenManager(notificationService, payloadManager, prefsUtil, firebaseInstanceId, rxBus);

@@ -43,8 +43,7 @@ public class TransferFundsDataManagerTest extends RxTest {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS) private DynamicFeeCache dynamicFeeCache;
 
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         subject = new TransferFundsDataManager(payloadDataManager, sendDataManager, dynamicFeeCache);
     }

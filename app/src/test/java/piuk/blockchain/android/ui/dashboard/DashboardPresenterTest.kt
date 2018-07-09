@@ -48,9 +48,7 @@ class DashboardPresenterTest : RxTest() {
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         subject = DashboardPresenter(
             prefsUtil,
             exchangeRateFactory,

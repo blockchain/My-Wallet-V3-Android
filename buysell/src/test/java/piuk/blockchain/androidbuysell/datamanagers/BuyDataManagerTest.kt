@@ -37,10 +37,7 @@ class BuyDataManagerTest : RxTest() {
     private val buyConditions: BuyConditions = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         val walletOptionsSource = mockWalletOptionsReplay()
         val exchangeDataSource = mockExchangeDataReplay()
         val walletSettingsSource = mockWalletSettingsReplay()

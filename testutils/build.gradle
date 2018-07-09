@@ -17,8 +17,6 @@ android {
 }
 
 dependencies {
-    api Libraries.annotations
-
     // RxJava
     api Libraries.rxJava
     api Libraries.rxKotlin

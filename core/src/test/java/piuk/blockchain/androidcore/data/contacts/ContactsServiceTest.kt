@@ -21,10 +21,7 @@ class ContactsServiceTest : RxTest() {
     private val mockContacts: Contacts = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         subject = ContactsService(mockContacts)
     }
 

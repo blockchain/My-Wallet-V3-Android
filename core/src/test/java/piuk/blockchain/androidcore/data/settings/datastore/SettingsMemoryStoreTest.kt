@@ -13,8 +13,7 @@ class SettingsMemoryStoreTest : RxTest() {
     lateinit var subject: SettingsMemoryStore
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = SettingsMemoryStore()
     }
 

@@ -55,9 +55,7 @@ class TradeInProgressPresenterTest : RxTest() {
     )
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = TradeInProgressPresenter(shapeShiftDataManager)
         subject.initView(view)
 

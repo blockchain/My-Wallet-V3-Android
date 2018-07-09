@@ -48,8 +48,7 @@ public class TransactionListDataManagerTest extends RxTest {
     private TransactionListDataManager subject;
 
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         transactionListStore = new TransactionListStore();

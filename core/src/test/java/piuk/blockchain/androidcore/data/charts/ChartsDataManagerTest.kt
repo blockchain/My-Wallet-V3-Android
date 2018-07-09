@@ -23,8 +23,7 @@ class ChartsDataManagerTest : RxTest() {
     private val rxBus = RxBus()
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = ChartsDataManager(historicPriceApi, rxBus)
     }
 

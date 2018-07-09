@@ -78,8 +78,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     DecimalFormat dm = new DecimalFormat();
 
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         dm.setMinimumFractionDigits(2);

@@ -47,8 +47,7 @@ class EthDataManagerTest : RxTest() {
     private val rxBus = RxBus()
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = EthDataManager(
             payloadManager,
             ethAccountApi,

@@ -35,9 +35,7 @@ class AuthDataManagerTest : RxTest() {
     private lateinit var subject: AuthDataManager
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = AuthDataManager(
             prefsUtil,
             authService,

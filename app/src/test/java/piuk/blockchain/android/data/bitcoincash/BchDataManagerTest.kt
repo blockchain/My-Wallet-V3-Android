@@ -45,9 +45,7 @@ class BchDataManagerTest : RxTest() {
     private val rxBus = RxBus()
 
     @Before
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         whenever(environmentSettings.bitcoinCashNetworkParameters).thenReturn(
             BitcoinCashMainNetParams.get()
         )

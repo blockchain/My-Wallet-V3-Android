@@ -35,9 +35,7 @@ class CoinifyOverviewPresenterTest : RxTest() {
     private val token = "TOKEN"
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         subject = CoinifyOverviewPresenter(
             exchangeService,
             coinifyDataManager,

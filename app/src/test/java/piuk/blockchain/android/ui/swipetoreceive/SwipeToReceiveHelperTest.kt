@@ -45,10 +45,7 @@ class SwipeToReceiveHelperTest : RxTest() {
     private val environmentSettings: EnvironmentConfig = mock()
 
     @Before
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         whenever(environmentSettings.bitcoinCashNetworkParameters)
             .thenReturn(BitcoinCashMainNetParams.get())
 

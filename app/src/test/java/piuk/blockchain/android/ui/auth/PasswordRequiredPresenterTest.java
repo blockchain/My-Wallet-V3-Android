@@ -65,8 +65,7 @@ public class PasswordRequiredPresenterTest extends RxTest {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS) private PayloadDataManager payloadDataManager;
 
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         subject = new PasswordRequiredPresenter(appUtil,
