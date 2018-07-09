@@ -52,7 +52,6 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.ParseException
 import java.util.Calendar
-import java.util.Currency
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -196,7 +195,8 @@ class BuySellBuildOrderPresenter @Inject constructor(
         val paymentFeeSell = (amountToReceive * (outPercentageFee / 100)).toBigDecimal()
 
         Logging.logStartCheckout(
-            StartCheckoutEvent().putCurrency(Currency.getInstance(currencyToSend))
+            StartCheckoutEvent()
+                .putCustomAttribute("currency", currencyToSend.toUpperCase())
                 .putTotalPrice(amountToSend.absoluteValue.toBigDecimal())
                 .putItemCount(1)
         )
@@ -249,7 +249,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                 view.locale
             ),
             totalAmountToReceiveFormatted =
-                (amountToReceive.toBigDecimal() - outFixedFee.absoluteValue.toBigDecimal()).sanitise(),
+            (amountToReceive.toBigDecimal() - outFixedFee.absoluteValue.toBigDecimal()).sanitise(),
             totalCostFormatted = currencyFormatManager.getFormattedFiatValueWithSymbol(
                 (amountToSend.toBigDecimal() + paymentFeeBuy).toDouble(),
                 currencyToSend,
@@ -579,10 +579,10 @@ class BuySellBuildOrderPresenter @Inject constructor(
         val limitAmount = when (view.orderType) {
             OrderType.Sell -> {
                 val max = if (maxBitcoinAmount < limits.btc!!.toBigDecimal()) {
-                        maxBitcoinAmount
-                    } else {
-                        limits.btc!!.toBigDecimal()
-                    }
+                    maxBitcoinAmount
+                } else {
+                    limits.btc!!.toBigDecimal()
+                }
                 "$max BTC"
             }
             OrderType.BuyCard, OrderType.BuyBank, OrderType.Buy -> "${fiatFormat.format(
@@ -769,7 +769,8 @@ class BuySellBuildOrderPresenter @Inject constructor(
             // Prevents double logging, as both Observables will be triggered by new data and call this function
             lastLog = newLogItem
             Logging.logAddToCart(
-                AddToCartEvent().putCurrency(Currency.getInstance(currency.toUpperCase()))
+                AddToCartEvent()
+                    .putCustomAttribute("currency", currency.toUpperCase())
                     .putItemPrice(amount.absoluteValue.toBigDecimal())
                     .putItemName(itemName.toUpperCase())
                     .putItemType(itemType)
