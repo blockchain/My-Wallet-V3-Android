@@ -21,7 +21,6 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.utils.logging.Logging
 import timber.log.Timber
 import java.util.Calendar
-import java.util.Currency
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.absoluteValue
