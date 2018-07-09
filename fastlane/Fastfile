@@ -183,7 +183,7 @@ platform :android do
 
     desc "Runs all tests"
     lane :test do
-      gradle(task: "testEnvProdMinApi21DebugUnitTestCoverage")
+      gradle(task: "testEnvProdDebugUnitTestCoverage")
     end
 
     private_lane :generate_apk do | options |
@@ -200,7 +200,7 @@ platform :android do
       gradle(
         task: 'assemble',
         build_type: 'Release',
-        flavor: 'Env' + environment + 'MinApi17',
+        flavor: 'Env' + environment,
         print_command: false,
         properties: {
           "android.injected.signing.store.file" => "#{storeFile}",
@@ -244,7 +244,7 @@ platform :android do
     desc "Submit a release Alpha build to the Play Store. This won't publish, just upload."
     lane :alpha do
 
-      sh("cp ../app/build/outputs/apk/envProdMinApi17/release/*.apk ~/Desktop/release.apk")
+      sh("cp ../app/build/outputs/apk/envProd/release/*.apk ~/Desktop/release.apk")
 
       apkPath = File.expand_path("~/Desktop/release.apk")
 

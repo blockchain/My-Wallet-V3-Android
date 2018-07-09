@@ -72,13 +72,10 @@ class RxTestRuleTests {
 
     @Test
     fun `can set android main to trampoline`() {
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.computation() }
-
         rxInit { mainTrampoline() }
                 .runRule {
                     AndroidSchedulers.mainThread() `should be` Schedulers.trampoline()
                 }
-        AndroidSchedulers.mainThread() `should not be` Schedulers.trampoline()
     }
 
     @Test

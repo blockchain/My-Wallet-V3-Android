@@ -40,8 +40,8 @@ def coverageSourceDirs = [
 ]
 
 def coverageClassDirectories = [
-        fileTree(dir: 'app/build/intermediates/classes/envProdMinApi21Debug', excludes: excludedDirs),
-        fileTree(dir: 'app/build/tmp/kotlin-classes/envProdMinApi21Debug', excludes: excludedDirs),
+        fileTree(dir: 'app/build/intermediates/classes/envProdDebug', excludes: excludedDirs),
+        fileTree(dir: 'app/build/tmp/kotlin-classes/envProdDebug', excludes: excludedDirs),
         fileTree(dir: 'buysell/build/intermediates/classes/debug', excludes: excludedDirs),
         fileTree(dir: 'buysell/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'buysellui/build/intermediates/classes/debug', excludes: excludedDirs),

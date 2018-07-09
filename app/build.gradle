@@ -22,6 +22,7 @@ android {
     defaultConfig {
         applicationId "piuk.blockchain.android"
         targetSdkVersion Versions.targetSdk
+        minSdkVersion Versions.minSdk
         versionCode Versions.versionCode
         versionName Versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -48,22 +49,9 @@ android {
         }
     }
 
-    flavorDimensions "environment", "minSdk"
+    flavorDimensions "environment"
 
     productFlavors {
-        /**
-         * API LEVELS
-         */
-        minApi17 {
-            dimension "minSdk"
-            minSdkVersion Versions.minSdk
-        }
-        minApi21 {
-            // Specifically to avoid Multidexing on CI, which is causing OOM errors for now
-            // This should be removed when possible
-            dimension "minSdk"
-            minSdkVersion 21
-        }
         /**
          * Environments
          */
