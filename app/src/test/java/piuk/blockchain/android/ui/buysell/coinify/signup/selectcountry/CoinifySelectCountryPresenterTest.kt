@@ -8,7 +8,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.android.RxTest
+import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry.CoinifySelectCountryPresenter
 import piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry.CoinifySelectCountryView
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager

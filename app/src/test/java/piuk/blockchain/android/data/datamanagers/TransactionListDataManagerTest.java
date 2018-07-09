@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
-import piuk.blockchain.android.RxTest;
+import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;

@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldHaveKey
 import org.amshove.kluent.shouldNotHaveKey
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.androidcore.RxTest
+import piuk.blockchain.android.testutils.RxTest
 
 class RxBusTest : RxTest() {
 

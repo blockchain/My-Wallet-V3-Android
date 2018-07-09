@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.mock
 import info.blockchain.wallet.api.data.Settings
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.android.RxTest
+import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 

@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.android.RxTest
+import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.android.ui.buysell.launcher.BuySellLauncherPresenter
 import piuk.blockchain.android.ui.buysell.launcher.BuySellLauncherView
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager

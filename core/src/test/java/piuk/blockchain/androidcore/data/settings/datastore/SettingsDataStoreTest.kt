@@ -6,7 +6,7 @@ import info.blockchain.wallet.api.data.Settings
 import io.reactivex.Observable
 import org.amshove.kluent.mock
 import org.junit.Test
-import piuk.blockchain.androidcore.RxTest
+import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.utils.Optional
 
 class SettingsDataStoreTest : RxTest() {

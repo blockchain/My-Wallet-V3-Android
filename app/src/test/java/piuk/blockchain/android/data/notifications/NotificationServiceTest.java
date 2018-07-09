@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import okhttp3.ResponseBody;
-import piuk.blockchain.android.RxTest;
+import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.android.data.notifications.NotificationService;
 
 import static org.mockito.Mockito.mock;

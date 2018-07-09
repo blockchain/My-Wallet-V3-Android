@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.androidcore.RxTest
+import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.utils.PrefsUtil
 
 class CurrencyStateTest : RxTest() {

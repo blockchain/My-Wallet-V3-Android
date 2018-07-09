@@ -9,7 +9,7 @@ import okhttp3.ResponseBody
 import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.androidbuysell.RxTest
+import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidbuysell.models.coinify.AuthRequest
 import piuk.blockchain.androidbuysell.models.coinify.AuthResponse
 import piuk.blockchain.androidbuysell.models.coinify.GrantType

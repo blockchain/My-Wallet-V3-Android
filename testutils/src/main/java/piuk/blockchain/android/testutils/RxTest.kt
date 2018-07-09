@@ -1,4 +1,4 @@
-package piuk.blockchain.androidbuysell
+package piuk.blockchain.android.testutils
 
 import android.support.annotation.CallSuper
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -19,8 +19,7 @@ open class RxTest {
      * Returns a [TestScheduler] object which allows for easy testing of time-based methods
      * that return [io.reactivex.Observable] objects.
      */
-    protected var testScheduler: TestScheduler? = null
-        private set
+    protected val testScheduler: TestScheduler = TestScheduler()
 
     @Before
     @CallSuper
@@ -28,7 +27,6 @@ open class RxTest {
     open fun setUp() {
         RxAndroidPlugins.reset()
         RxJavaPlugins.reset()
-        testScheduler = TestScheduler()
 
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { TrampolineScheduler.instance() }
 
