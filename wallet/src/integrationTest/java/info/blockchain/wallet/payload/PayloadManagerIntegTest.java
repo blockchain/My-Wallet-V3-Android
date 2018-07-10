@@ -4,7 +4,8 @@ import info.blockchain.wallet.BaseIntegTest;
 import info.blockchain.wallet.payload.data.HDWallet;
 import info.blockchain.wallet.payload.data.LegacyAddress;
 import info.blockchain.wallet.payload.data.Wallet;
-
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.BitcoinMainNetParams;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -90,9 +91,10 @@ public class PayloadManagerIntegTest extends BaseIntegTest {
         String guid = "f4c49ecb-ac6e-4b45-add4-21dafb90d804";
         String sharedKey = "ba600158-2216-4166-b40c-ee50b33f1835";
         String pw = "testtesttest";
+        NetworkParameters networkParameters = BitcoinMainNetParams.get();
 
         PayloadManager payloadManager = PayloadManager.getInstance();
-        payloadManager.initializeAndDecrypt(sharedKey, guid, pw);
+        payloadManager.initializeAndDecrypt(networkParameters, sharedKey, guid, pw);
 
         Assert.assertEquals(guid, payloadManager.getPayload().getGuid());
         Assert.assertEquals(sharedKey, payloadManager.getPayload().getSharedKey());

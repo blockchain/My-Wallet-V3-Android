@@ -1,6 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
-apply from: 'integTest.gradle'
+apply from: 'integrationTest.gradle'
 apply from: '../quality/jacocoWallet.gradle'
 apply from: '../quality/ktlint.gradle'
 

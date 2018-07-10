@@ -1,0 +1,37 @@
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDirs = ['src/integrationTest/java']
+        }
+        resources.srcDirs = ['src/integrationTest/resources']
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom implementation
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+dependencies {
+    // Empty for now as we don't need anything extra here
+}
+
+task integrationTest(type: Test) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = 'Runs the wallet integration tests.'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    reports {
+        html.enabled = true
+        junitXml.enabled = true
+    }
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
+testClasses.finalizedBy integrationTestClasses
