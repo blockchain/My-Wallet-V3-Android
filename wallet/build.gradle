@@ -73,6 +73,7 @@ dependencies {
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.json
+    testImplementation Libraries.kluent
 }
 
 test {
