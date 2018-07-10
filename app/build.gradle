@@ -32,6 +32,7 @@ android {
         buildConfigBoolean "CONTACTS_ENABLED", false
         buildConfigString "SHAPE_SHIFT_API_KEY", buildProperties.secrets['shapeShiftApiKey']
         manifestPlaceholders = [FABRIC_API_KEY: buildProperties.secrets['fabricApiKey'].string]
+        resConfigs 'cs', 'de', 'es', 'fr', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-rBR', 'ru', 'th', 'tr', 'uk', 'vi', 'zh-rCN'
     }
     buildTypes {
         release {
