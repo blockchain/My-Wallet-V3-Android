@@ -15,6 +15,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -119,6 +120,9 @@ class BuySellBuildOrderActivity :
             OrderType.Buy, OrderType.BuyCard, OrderType.BuyBank -> R.string.buy_sell_buy to R.string.to
             OrderType.Sell -> R.string.buy_sell_sell to R.string.from
         }
+
+        // Ensure keyboard can't display despite initial focus on EditText
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         setupToolbar(toolbar_general, title)
         textViewAccountTitle.setText(label)

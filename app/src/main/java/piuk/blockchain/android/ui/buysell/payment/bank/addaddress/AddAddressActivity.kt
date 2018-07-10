@@ -136,6 +136,11 @@ class AddAddressActivity : BaseMvpActivity<AddAddressView, AddAddressPresenter>(
         finish()
     }
 
+    override fun onStop() {
+        super.onStop()
+        ViewUtils.hideKeyboard(this)
+    }
+
     override fun createPresenter(): AddAddressPresenter = presenter
 
     override fun getView(): AddAddressView = this

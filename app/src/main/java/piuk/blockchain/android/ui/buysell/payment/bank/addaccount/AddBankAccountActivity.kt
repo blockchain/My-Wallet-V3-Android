@@ -76,6 +76,11 @@ class AddBankAccountActivity : BaseMvpActivity<AddBankAccountView, AddBankAccoun
         finish()
     }
 
+    override fun onStop() {
+        super.onStop()
+        ViewUtils.hideKeyboard(this)
+    }
+
     override fun createPresenter(): AddBankAccountPresenter = presenter
 
     override fun getView(): AddBankAccountView = this
