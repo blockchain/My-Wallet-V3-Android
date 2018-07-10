@@ -6,4 +6,7 @@
     <dimen name="pinentry_hint_size">16sp</dimen>
 
     <dimen name="swipe_receive_qr_size">180dp</dimen>
+
+    <dimen name="buy_sell_payment_button_text_size">12sp</dimen>
+    <dimen name="buy_sell_payment_button_margin">8dp</dimen>
 </resources>
