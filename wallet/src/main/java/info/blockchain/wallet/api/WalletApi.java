@@ -209,12 +209,6 @@ public class WalletApi {
                 BlockchainFramework.getApiCode());
     }
 
-    public Observable<Status> logEvent(String name) {
-        return getExplorerInstance().logEvent(
-                name,
-                BlockchainFramework.getApiCode());
-    }
-
     public Observable<WalletOptions> getWalletOptions() {
         return getExplorerInstance().getWalletOptions(BlockchainFramework.getApiCode());
     }

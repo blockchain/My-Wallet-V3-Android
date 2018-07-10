@@ -59,7 +59,6 @@ import io.reactivex.Observable;
 import kotlin.Unit;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
-import piuk.blockchain.android.data.logging.EventService;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.databinding.ActivityMainBinding;
 import piuk.blockchain.android.injection.Injector;
@@ -201,7 +200,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                     if (!(getCurrentFragment() instanceof SendFragment)) {
                         // This is a bit of a hack to allow the selection of the correct button
                         // On the bottom nav bar, but without starting the fragment again
-                        startSendFragment(null, null);
+                        startSendFragment(null);
                         ViewUtils.setElevation(binding.appbarLayout, 0f);
                     }
                     break;
@@ -390,7 +389,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         if (resultCode == RESULT_OK && requestCode == SCAN_URI
                 && data != null && data.getStringExtra(CaptureActivity.SCAN_RESULT) != null) {
             String strResult = data.getStringExtra(CaptureActivity.SCAN_RESULT);
-            doScanInput(strResult, EventService.EVENT_TX_INPUT_FROM_QR);
+            doScanInput(strResult);
 
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_BACKUP) {
             resetNavigationDrawer();
@@ -460,7 +459,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         }
     }
 
-    private void doScanInput(String strResult, String scanRoute) {
+    private void doScanInput(String strResult) {
         if (FormatsUtil.isValidBitcoinAddress(strResult)) {
             new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                     .setTitle(R.string.confirm_currency)
@@ -468,16 +467,16 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                     .setCancelable(true)
                     .setPositiveButton(R.string.bitcoin_cash, (dialog, which) -> {
                         getPresenter().setCryptoCurrency(CryptoCurrencies.BCH);
-                        startSendFragment(strResult, scanRoute);
+                        startSendFragment(strResult);
                     })
                     .setNegativeButton(R.string.bitcoin, (dialog, which) -> {
                         getPresenter().setCryptoCurrency(CryptoCurrencies.BTC);
-                        startSendFragment(strResult, scanRoute);
+                        startSendFragment(strResult);
                     })
                     .create()
                     .show();
         } else {
-            startSendFragment(strResult, scanRoute);
+            startSendFragment(strResult);
         }
     }
 
@@ -637,7 +636,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
 
     @Override
     public void onScanInput(String strUri) {
-        doScanInput(strUri, EventService.EVENT_TX_INPUT_FROM_URI);
+        doScanInput(strUri);
     }
 
     @Override
@@ -803,13 +802,13 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         addFragmentToBackStack(ContactRequestSuccessFragment.newInstance(paymentRequestType, contactName, btcAmount));
     }
 
-    private void startSendFragment(@Nullable String scanData, @Nullable String scanRoute) {
+    private void startSendFragment(@Nullable String scanData) {
         binding.bottomNavigation.removeOnTabSelectedListener();
         binding.bottomNavigation.setCurrentItem(0);
         ViewUtils.setElevation(binding.appbarLayout, 0f);
         binding.bottomNavigation.setOnTabSelectedListener(tabSelectedListener);
         SendFragment sendFragment =
-                SendFragment.newInstance(scanData, scanRoute, getSelectedAccountFromFragments());
+                SendFragment.newInstance(scanData, getSelectedAccountFromFragments());
         addFragmentToBackStack(sendFragment);
     }
 

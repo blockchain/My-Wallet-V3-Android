@@ -133,11 +133,6 @@ public interface WalletEndpoints {
             @Query("method") String method,
             @Query("api_code") String apiCode);
 
-    @GET("event")
-    Observable<Status> logEvent(
-            @Query("name") String name,
-            @Query("api_code") String apiCode);
-
     @GET("Resources/wallet-options.json")
     Observable<WalletOptions> getWalletOptions(@Query("api_code") String apiCode);
 

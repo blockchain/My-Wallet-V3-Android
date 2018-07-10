@@ -126,17 +126,6 @@ class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: R
         }
 
     /**
-     * Logs an event to the backend for analytics purposes to work out which features are used most
-     * often.
-     *
-     * @param event An event as a String
-     * @return An [Observable] wrapping a [Status] object
-     * @see EventService
-     */
-    fun logEvent(event: String): Observable<Status> =
-        rxPinning.call<Status> { walletApi.logEvent(event) }
-
-    /**
      * Returns a signed JWT for use with the buy/sell APIs.
      *
      * @return A [String] representing a signed JWT.

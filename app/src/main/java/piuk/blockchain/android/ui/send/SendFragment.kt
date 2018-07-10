@@ -49,7 +49,6 @@ import kotlinx.android.synthetic.main.include_to_row_editable.view.*
 import kotlinx.android.synthetic.main.view_expanding_currency_header.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus
-import piuk.blockchain.android.data.logging.EventService
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
 import piuk.blockchain.android.ui.account.SecondPasswordHandler
@@ -299,14 +298,10 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         if (resultCode != Activity.RESULT_OK) return
 
         when (requestCode) {
-            MainActivity.SCAN_URI -> presenter.handleURIScan(
-                data?.getStringExtra(CaptureActivity.SCAN_RESULT),
-                EventService.EVENT_TX_INPUT_FROM_QR
-            )
+            MainActivity.SCAN_URI -> presenter.handleURIScan(data?.getStringExtra(CaptureActivity.SCAN_RESULT))
             SCAN_PRIVX -> presenter.handlePrivxScan(data?.getStringExtra(CaptureActivity.SCAN_RESULT))
             REQUEST_CODE_BTC_SENDING -> presenter.selectSendingAccountBtc(data)
             REQUEST_CODE_BTC_RECEIVING -> presenter.selectReceivingAccountBtc(data)
-
             REQUEST_CODE_BCH_SENDING -> presenter.selectSendingAccountBch(data)
             REQUEST_CODE_BCH_RECEIVING -> presenter.selectReceivingAccountBch(data)
             else -> super.onActivityResult(requestCode, resultCode, data)
@@ -450,15 +445,13 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
 
     private fun handleIncomingArguments() {
         if (arguments != null) {
-
             presenter.selectDefaultOrFirstFundedSendingAccount()
 
             val scanData = arguments!!.getString(ARGUMENT_SCAN_DATA)
-            val metricInputFlag = arguments!!.getString(ARGUMENT_SCAN_DATA_ADDRESS_INPUT_ROUTE)
 
             if (scanData != null) {
                 handlingActivityResult = true
-                presenter.handleURIScan(scanData, metricInputFlag)
+                presenter.handleURIScan(scanData)
             }
         }
     }
@@ -1055,7 +1048,6 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         const val SCAN_PRIVX = 2011
         const val ARGUMENT_SCAN_DATA = "scan_data"
         const val ARGUMENT_SELECTED_ACCOUNT_POSITION = "selected_account_position"
-        const val ARGUMENT_SCAN_DATA_ADDRESS_INPUT_ROUTE = "address_input_route"
 
         private const val COOL_DOWN_MILLIS = 2 * 1000
         private const val ARGUMENT_CONTACT_ID = "contact_id"
@@ -1067,15 +1059,10 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         private const val REQUEST_CODE_BCH_SENDING = 914
 
         @JvmStatic
-        fun newInstance(
-            scanData: String?,
-            scanRoute: String?,
-            selectedAccountPosition: Int
-        ): SendFragment {
+        fun newInstance(scanData: String?, selectedAccountPosition: Int): SendFragment {
             val fragment = SendFragment()
             val args = Bundle()
             args.putString(ARGUMENT_SCAN_DATA, scanData)
-            args.putString(ARGUMENT_SCAN_DATA_ADDRESS_INPUT_ROUTE, scanRoute)
             args.putInt(ARGUMENT_SELECTED_ACCOUNT_POSITION, selectedAccountPosition)
             fragment.arguments = args
             return fragment

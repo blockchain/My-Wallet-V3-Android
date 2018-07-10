@@ -7,7 +7,6 @@ import android.widget.EditText
 import com.fasterxml.jackson.databind.ObjectMapper
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.wallet.api.Environment
-import info.blockchain.wallet.api.WalletApi
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.ethereum.EthereumAccount
@@ -31,7 +30,6 @@ import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.cache.DynamicFeeCache
 import piuk.blockchain.android.data.datamanagers.FeeDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
-import piuk.blockchain.android.data.logging.EventService
 import piuk.blockchain.android.data.payments.SendDataManager
 import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
@@ -41,7 +39,6 @@ import piuk.blockchain.android.util.EditTextFormatUtil
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
@@ -50,7 +47,6 @@ import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
-import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
@@ -97,8 +93,6 @@ class SendPresenter @Inject constructor(
     private var absoluteSuggestedFee = BigInteger.ZERO
     private var maxAvailable = BigInteger.ZERO
     private var verifiedSecondPassword: String? = null
-
-    private var metricInputFlag: String? = null
 
     /**
      * External changes.
@@ -637,17 +631,7 @@ class SendPresenter @Inject constructor(
         unspentApiResponsesBtc.clear()
         unspentApiResponsesBch.clear()
 
-        logAddressInputMetric()
-
         return hash
-    }
-
-    private fun logAddressInputMetric() {
-        val handler = EventService(
-            prefsUtil,
-            AuthService(WalletApi(), RxBus())
-        )
-        if (metricInputFlag != null) handler.logAddressInputEvent(metricInputFlag)
     }
 
     /**
@@ -719,9 +703,6 @@ class SendPresenter @Inject constructor(
     private fun checkManualAddressInput() {
         val address = view.getReceivingAddress()
         address?.let {
-            // Input analytics
-            checkClipboardPaste(address)
-
             // Only if valid address so we don't override with a label
             when (currencyState.cryptoCurrency) {
                 CryptoCurrencies.BTC ->
@@ -896,7 +877,6 @@ class SendPresenter @Inject constructor(
 
     internal fun clearReceivingObject() {
         pendingTransaction.receivingObject = null
-        metricInputFlag = null
     }
 
     private fun clearCryptoAmount() {
@@ -1404,10 +1384,8 @@ class SendPresenter @Inject constructor(
     }
 
     @Suppress("CascadeIf")
-    internal fun handleURIScan(untrimmedscanData: String?, scanRoute: String) {
+    internal fun handleURIScan(untrimmedscanData: String?) {
         if (untrimmedscanData == null) return
-
-        metricInputFlag = scanRoute
 
         var scanData = untrimmedscanData.trim { it <= ' ' }
             .replace("ethereum:", "")
@@ -1856,13 +1834,6 @@ class SendPresenter @Inject constructor(
                 { /* No-op */ },
                 { Timber.e(it) }
             )
-    }
-
-    private fun checkClipboardPaste(address: String) {
-        val contents = view.getClipboardContents()
-        if (contents != null && contents == address) {
-            metricInputFlag = EventService.EVENT_TX_INPUT_FROM_PASTE
-        }
     }
 
     private fun isValidBitcoinAmount(bAmount: BigInteger?): Boolean {
