@@ -78,7 +78,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             if (isSell) loadMax(new)
         }
     }
-    var selectedCurrency: String? by Delegates.observable<String?>(null) { _, old, new ->
+    var selectedCurrency: String by Delegates.observable("USD") { _, old, new ->
         if (old != new) initialiseUi(); subscribeToSubjects()
     }
     private var latestQuote: Quote? = null
@@ -110,7 +110,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     private val emptyQuote
-        get() = Quote(null, selectedCurrency!!, "BTC", 0.0, 0.0, "", "")
+        get() = Quote(null, selectedCurrency, "BTC", 0.0, 0.0, "", "")
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
@@ -348,7 +348,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                     coinifyDataManager.getQuote(
                         it,
                         if (isSell) amount else amount.unaryMinus(),
-                        selectedCurrency!!,
+                        selectedCurrency,
                         "BTC"
                     ).doOnSuccess { latestQuote = it }
                         .onErrorReturn { emptyQuote }
@@ -374,7 +374,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         it,
                         if (isSell) amount.unaryMinus() else amount,
                         "BTC",
-                        selectedCurrency!!
+                        selectedCurrency
                     ).doOnSuccess { latestQuote = it }
                         .onErrorReturn { emptyQuote }
                         .doAfterSuccess { view.showQuoteInProgress(false) }
@@ -487,7 +487,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         return@BiFunction trader to inMedium
                     }
                 ).flatMap { (trader, inMedium) ->
-                    val currency = if (initialLoad) trader.defaultCurrency else selectedCurrency!!
+                    val currency = if (initialLoad) trader.defaultCurrency else selectedCurrency
 
                     getExchangeRate(token, -1.0, currency)
                         .toObservable()
@@ -509,12 +509,12 @@ class BuySellBuildOrderPresenter @Inject constructor(
                             minimumInAmount = if (view.orderType == OrderType.Sell) {
                                 it.minimumInAmounts.getLimitsForCurrency("btc")
                             } else {
-                                it.minimumInAmounts.getLimitsForCurrency(selectedCurrency!!)
+                                it.minimumInAmounts.getLimitsForCurrency(selectedCurrency)
                             }
                             maximumInAmounts = if (view.orderType == OrderType.Sell) {
                                 it.limitInAmounts.getLimitsForCurrency("btc")
                             } else {
-                                it.limitInAmounts.getLimitsForCurrency(selectedCurrency!!)
+                                it.limitInAmounts.getLimitsForCurrency(selectedCurrency)
                             }
                         }
                         .doOnNext { renderLimits(it.limitInAmounts) }
@@ -537,7 +537,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
 
     private fun updateSendAmount(quoteAmount: Double) {
         val formatted = currencyFormatManager
-            .getFiatFormat(selectedCurrency!!).format(quoteAmount)
+            .getFiatFormat(selectedCurrency).format(quoteAmount)
         view.updateSendAmount(formatted)
     }
 
@@ -638,7 +638,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     private fun getLocalisedCardLimit(): BigDecimal {
-        val exchangeRateSelected = getExchangeRate(selectedCurrency!!)
+        val exchangeRateSelected = getExchangeRate(selectedCurrency)
         val exchangeRateDefault = getExchangeRate(defaultCurrency)
         val rate = exchangeRateSelected.div(exchangeRateDefault)
         return rate.multiply(maximumInCardAmount.toBigDecimal()).setScale(2, RoundingMode.DOWN)
