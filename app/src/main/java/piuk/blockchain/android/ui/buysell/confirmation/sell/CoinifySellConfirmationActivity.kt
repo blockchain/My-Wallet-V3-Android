@@ -68,7 +68,7 @@ class CoinifySellConfirmationActivity :
             textViewSellAmount.text = "$amountToSend $currencyOut"
             textViewTransactionFee.text = "-$networkFee $currencyOut"
             textViewFiatTotal.text = totalAmountToReceiveFormatted
-            textViewPaymentFee.text = paymentFee
+            textViewPaymentFee.text = "-$paymentFee"
             textViewBtcToSend.text =
                 getString(
                     R.string.buy_sell_confirmation_btc_to_receive_description,
