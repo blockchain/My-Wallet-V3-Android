@@ -97,7 +97,7 @@ class CoinifyBuyConfirmationActivity :
             textViewReceiveFeeDetail.text = "$orderFee $currencyIn"
             textViewToBeReceivedDetail.text = "$totalAmountToReceiveFormatted $currencyIn"
             textViewSendAmountDetail.text = amountToSend
-            textViewSendFeeDetail.text = "-$paymentFee"
+            textViewSendFeeDetail.text = paymentFee
             textViewTotalCostDetail.text = totalCostFormatted
         }
 
