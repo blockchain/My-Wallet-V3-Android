@@ -487,7 +487,9 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         return@BiFunction trader to inMedium
                     }
                 ).flatMap { (trader, inMedium) ->
-                    getExchangeRate(token, -1.0, trader.defaultCurrency)
+                    val currency = if (initialLoad) trader.defaultCurrency else selectedCurrency!!
+
+                    getExchangeRate(token, -1.0, currency)
                         .toObservable()
                         .doOnNext {
                             maximumInCardAmount = trader.level?.limits?.card?.inX?.daily ?: 0.0
