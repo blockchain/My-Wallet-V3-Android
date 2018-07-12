@@ -160,13 +160,10 @@ class BuySellBuildOrderPresenter @Inject constructor(
     internal fun onMinClicked() {
         val updateAmount = minimumInAmount.toString()
         if (isSell) {
+            view.requestReceiveFocus()
             view.updateReceiveAmount(updateAmount)
-            // For some reason, the TextWatcher won't be triggered from the above method, so here we
-            // emit the value manually instead.
-            receiveSubject.onNext("0")
-            // This allows multiple clicks as it won't be debounced
-            receiveSubject.onNext(updateAmount)
         } else {
+            view.requestSendFocus()
             view.updateSendAmount(updateAmount)
         }
     }

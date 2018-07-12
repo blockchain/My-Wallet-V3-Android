@@ -391,6 +391,14 @@ class BuySellBuildOrderActivity :
         editTextSend.setSelection(amount.length)
     }
 
+    override fun requestReceiveFocus() {
+        editTextReceive.requestFocus()
+    }
+
+    override fun requestSendFocus() {
+        editTextSend.requestFocus()
+    }
+
     override fun setButtonEnabled(enabled: Boolean) {
         buttonReviewOrder.isEnabled = enabled
     }
