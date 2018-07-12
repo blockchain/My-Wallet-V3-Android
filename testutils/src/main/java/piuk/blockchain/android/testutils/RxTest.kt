@@ -9,8 +9,9 @@ import org.junit.Rule
  * same Scheduler that runs immediately. Also exposes a [TestScheduler] for testing of
  * time-based methods.
  */
+open class RxTest
 @Deprecated("Implement an rxInit rule locally, specifying just the schedulers the test requires")
-open class RxTest {
+constructor() {
 
     /**
      * Returns a [TestScheduler] object which allows for easy testing of time-based methods

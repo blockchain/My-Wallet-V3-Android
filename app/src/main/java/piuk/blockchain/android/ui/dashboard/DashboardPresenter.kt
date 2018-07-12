@@ -2,6 +2,9 @@ package piuk.blockchain.android.ui.dashboard
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.VisibleForTesting
+import info.blockchain.balance.AccountKey
+import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -10,7 +13,6 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
-import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.ui.balance.AnnouncementData
 import piuk.blockchain.android.ui.dashboard.models.OnboardingModel
 import piuk.blockchain.android.ui.home.MainActivity
@@ -22,7 +24,6 @@ import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
@@ -70,15 +71,9 @@ class DashboardPresenter @Inject constructor(
             MetadataEvent::class.java
         )
     }
-    @Suppress("MemberVisibilityCanBePrivate")
-    @VisibleForTesting
-    var btcBalance: Long = 0L
-    @Suppress("MemberVisibilityCanBePrivate")
-    @VisibleForTesting
-    var bchBalance: Long = 0L
-    @Suppress("MemberVisibilityCanBePrivate")
-    @VisibleForTesting
-    var ethBalance: BigInteger = BigInteger.ZERO
+    private var btcBalance = CryptoValue.ZeroBtc
+    private var bchBalance = CryptoValue.ZeroBch
+    private var ethBalance: BigInteger = BigInteger.ZERO
 
     override fun onViewReady() {
         with(view) {
@@ -196,21 +191,14 @@ class DashboardPresenter @Inject constructor(
                             .onErrorComplete()
                     )
                     .doOnComplete {
-                        btcBalance =
-                            transactionListDataManager.getBtcBalance(ItemAccount().apply {
-                                type = ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY
-                            })
-
-                        bchBalance =
-                            transactionListDataManager.getBchBalance(ItemAccount().apply {
-                                type = ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY
-                            })
+                        btcBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BTC))
+                        bchBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BCH))
                         ethBalance = ethAddressResponse.getTotalBalance()
 
                         val btcFiat =
-                            exchangeRateFactory.getLastBtcPrice(getFiatCurrency()) * (btcBalance / 1e8)
+                            exchangeRateFactory.getLastBtcPrice(getFiatCurrency()) * btcBalance.toMajorUnitDouble()
                         val bchFiat =
-                            exchangeRateFactory.getLastBchPrice(getFiatCurrency()) * (bchBalance / 1e8)
+                            exchangeRateFactory.getLastBchPrice(getFiatCurrency()) * bchBalance.toMajorUnitDouble()
                         val ethFiat =
                             BigDecimal(
                                 exchangeRateFactory.getLastEthPrice(
@@ -228,9 +216,9 @@ class DashboardPresenter @Inject constructor(
 
                         Logging.logCustom(
                             BalanceLoadedEvent(
-                                btcBalance > 0,
-                                bchBalance > 0,
-                                ethBalance.toLong() > 0
+                                btcBalance.isPositive(),
+                                bchBalance.isPositive(),
+                                ethBalance.signum() == 1
                             )
                         )
 
@@ -241,15 +229,13 @@ class DashboardPresenter @Inject constructor(
                             etherValue = ethFiat,
                             bitcoinCashValue = BigDecimal.valueOf(bchFiat),
                             // Formatted fiat value Strings
-                            bitcoinValueString = getBtcFiatString(btcBalance),
+                            bitcoinValueString = getBtcFiatString(btcBalance.amount),
                             etherValueString = getEthFiatString(ethBalance),
-                            bitcoinCashValueString = getBchFiatString(bchBalance),
+                            bitcoinCashValueString = getBchFiatString(bchBalance.amount),
                             // Formatted Amount Strings
-                            bitcoinAmountString = getBtcBalanceString(btcBalance),
+                            bitcoinAmountString = getBtcBalanceString(btcBalance.amount),
                             etherAmountString = getEthBalanceString(ethBalance),
-                            bitcoinCashAmountString = getBchBalanceString(
-                                bchBalance
-                            ),
+                            bitcoinCashAmountString = getBchBalanceString(bchBalance.amount),
                             // Total
                             totalValueString = totalString
                         ).also { view.updatePieChartState(it) }
@@ -443,25 +429,25 @@ class DashboardPresenter @Inject constructor(
         )
     }
 
-    private fun getBtcBalanceString(btcBalance: Long): String =
+    private fun getBtcBalanceString(btcBalance: BigInteger): String =
         currencyFormatManager.getFormattedBtcValueWithUnit(
             btcBalance.toBigDecimal(),
             BTCDenomination.SATOSHI
         )
 
-    private fun getBtcFiatString(btcBalance: Long): String =
+    private fun getBtcFiatString(btcBalance: BigInteger): String =
         currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(
             btcBalance.toBigDecimal(),
             BTCDenomination.SATOSHI
         )
 
-    private fun getBchBalanceString(bchBalance: Long): String =
+    private fun getBchBalanceString(bchBalance: BigInteger): String =
         currencyFormatManager.getFormattedBchValueWithUnit(
             bchBalance.toBigDecimal(),
             BTCDenomination.SATOSHI
         )
 
-    private fun getBchFiatString(bchBalance: Long): String =
+    private fun getBchFiatString(bchBalance: BigInteger): String =
         currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(
             bchBalance.toBigDecimal(),
             BTCDenomination.SATOSHI

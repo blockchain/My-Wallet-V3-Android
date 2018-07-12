@@ -21,5 +21,5 @@ private class BitcoinCashBalanceReportAdapter(
         dataManager.getAddressBalance(address).toBalance()
 
     private fun BigInteger.toBalance() =
-        CryptoValue(CryptoCurrency.BCH, this.toLong())
+        CryptoValue(CryptoCurrency.BCH, this)
 }
