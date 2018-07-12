@@ -3,12 +3,10 @@ package piuk.blockchain.androidcore.data.walletoptions
 import info.blockchain.wallet.api.data.Settings
 import info.blockchain.wallet.api.data.WalletOptions
 import io.reactivex.subjects.ReplaySubject
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.helperfunctions.InvalidatableLazy
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Mockable
 @Singleton
 class WalletOptionsState @Inject constructor() {
 

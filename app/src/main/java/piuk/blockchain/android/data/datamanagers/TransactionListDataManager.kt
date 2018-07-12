@@ -14,13 +14,11 @@ import piuk.blockchain.androidcore.data.transactions.models.BtcDisplayable
 import piuk.blockchain.androidcore.data.transactions.models.Displayable
 import piuk.blockchain.androidcore.data.transactions.models.EthDisplayable
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.util.ArrayList
 import java.util.HashMap
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class TransactionListDataManager @Inject constructor(
     private val payloadManager: PayloadManager,

@@ -4,7 +4,6 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.ToJson
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 
 /**
  * An offline token is a lifetime token, granted when a user signs up. It is used
@@ -37,7 +36,6 @@ class GrantTypeAdapter {
     fun toJson(grantType: GrantType) = grantType.toString()
 }
 
-@Mockable
 data class AuthResponse(
     @field:Json(name = "access_token") val accessToken: String,
     @field:Json(name = "token_type") val tokenType: String,

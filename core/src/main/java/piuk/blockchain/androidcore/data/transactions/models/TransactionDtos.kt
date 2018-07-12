@@ -4,7 +4,6 @@ import info.blockchain.wallet.ethereum.data.EthTransaction
 import info.blockchain.wallet.multiaddress.TransactionSummary
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.math.BigInteger
 
 abstract class Displayable {
@@ -26,7 +25,6 @@ abstract class Displayable {
     open var note: String? = null
 }
 
-@Mockable
 data class EthDisplayable(
     private val combinedEthModel: CombinedEthModel,
     private val ethTransaction: EthTransaction,
@@ -65,7 +63,6 @@ data class EthDisplayable(
         get() = (blockHeight - ethTransaction.blockNumber).toInt()
 }
 
-@Mockable
 data class BtcDisplayable(
     private val transactionSummary: TransactionSummary
 ) : Displayable() {
@@ -96,7 +93,6 @@ data class BtcDisplayable(
         get() = transactionSummary.isPending
 }
 
-@Mockable
 data class BchDisplayable(
     private val transactionSummary: TransactionSummary
 ) : Displayable() {

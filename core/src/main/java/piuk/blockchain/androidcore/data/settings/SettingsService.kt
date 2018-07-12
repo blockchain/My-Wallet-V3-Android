@@ -4,11 +4,9 @@ import info.blockchain.wallet.api.data.Settings
 import info.blockchain.wallet.settings.SettingsManager
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import javax.inject.Inject
 
-@Mockable
 class SettingsService @Inject constructor(private val settingsApi: SettingsManager) {
 
     /**

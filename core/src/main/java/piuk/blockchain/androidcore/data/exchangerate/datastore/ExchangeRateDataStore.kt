@@ -7,13 +7,11 @@ import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
 import piuk.blockchain.androidcore.utils.Optional
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Mockable
 @Singleton
 class ExchangeRateDataStore @Inject constructor(
     private val exchangeRateService: ExchangeRateService,

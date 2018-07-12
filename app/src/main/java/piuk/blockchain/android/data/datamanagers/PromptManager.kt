@@ -18,10 +18,8 @@ import piuk.blockchain.android.util.RootUtil
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class PromptManager @Inject constructor(
     private val prefsUtil: PrefsUtil,

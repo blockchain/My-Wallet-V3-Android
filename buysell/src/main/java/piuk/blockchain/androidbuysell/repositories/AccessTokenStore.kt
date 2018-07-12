@@ -4,11 +4,9 @@ import io.reactivex.Observable
 import piuk.blockchain.androidbuysell.models.coinify.AuthResponse
 import piuk.blockchain.androidcore.data.datastores.persistentstore.PersistentStore
 import piuk.blockchain.androidcore.utils.Optional
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Mockable
 @Singleton
 class AccessTokenStore @Inject constructor() : TokenStore, PersistentStore<AuthResponse> {
 

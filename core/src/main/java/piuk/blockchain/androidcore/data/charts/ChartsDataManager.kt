@@ -8,12 +8,10 @@ import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.util.Calendar
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceApi, rxBus: RxBus) {
 

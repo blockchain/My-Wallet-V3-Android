@@ -10,13 +10,11 @@ import org.bitcoinj.crypto.BIP38PrivateKey
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class SendDataManager @Inject constructor(
     private val paymentService: PaymentService,

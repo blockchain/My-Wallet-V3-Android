@@ -10,11 +10,9 @@ import io.reactivex.Single
 import okhttp3.ResponseBody
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import retrofit2.Response
 import javax.inject.Inject
 
-@Mockable
 class AuthService @Inject constructor(private val walletApi: WalletApi, rxBus: RxBus) {
 
     private val rxPinning: RxPinning = RxPinning(rxBus)

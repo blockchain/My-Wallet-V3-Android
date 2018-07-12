@@ -12,7 +12,6 @@ import piuk.blockchain.androidbuysell.models.TradeData
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.websockets.WebSocketReceiveEvent
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.extensions.toKotlinObject
 import timber.log.Timber
@@ -24,7 +23,6 @@ import javax.inject.Singleton
  * Created by justin on 5/1/17.
  */
 
-@Mockable
 @Singleton
 class ExchangeService @Inject constructor(
     private val payloadManager: PayloadManager,

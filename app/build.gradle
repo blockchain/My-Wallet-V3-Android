@@ -183,6 +183,10 @@ dependencies {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.protobuf'
     }
+    // For AS running of robolectric
+    testImplementation Libraries.testRunner
+    testImplementation Libraries.testRules
+
     testImplementation Libraries.json
     testImplementation project(':testutils')
 }

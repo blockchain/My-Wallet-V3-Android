@@ -1,6 +1,5 @@
 package piuk.blockchain.androidcore.data.currency
 
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -11,7 +10,6 @@ import javax.inject.Inject
 /**
  * This class allows us to format decimal values for clean UI display.
  */
-@Mockable
 class CurrencyFormatUtil @Inject constructor() {
 
     private lateinit var btcFormat: DecimalFormat

@@ -4,10 +4,8 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
 
-@Mockable
 data class CoinifyTrade(
     /** Unique ID for this trade */
     val id: Int,
@@ -57,7 +55,6 @@ data class CoinifyTrade(
         inCurrency.equals("btc", true) || inCurrency.equals("eth", true)
 }
 
-@Mockable
 data class Transfer(
     /** Unique identifier for this transfer. */
     val id: Int,

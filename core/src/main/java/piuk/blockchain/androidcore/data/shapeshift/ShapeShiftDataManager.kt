@@ -20,12 +20,10 @@ import piuk.blockchain.androidcore.data.shapeshift.models.CoinPairings
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.Optional
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class ShapeShiftDataManager @Inject constructor(
     private val shapeShiftApi: ShapeShiftApi,

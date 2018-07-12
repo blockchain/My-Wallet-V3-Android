@@ -8,11 +8,9 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.data.settings.datastore.SettingsDataStore
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class SettingsDataManager @Inject constructor(
     private val settingsService: SettingsService,

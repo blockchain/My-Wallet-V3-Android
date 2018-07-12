@@ -9,11 +9,9 @@ import io.reactivex.disposables.CompositeDisposable
 import piuk.blockchain.android.data.fingerprint.FingerprintAuth
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.io.UnsupportedEncodingException
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class FingerprintHelper @Inject constructor(
     private val applicationContext: Context,

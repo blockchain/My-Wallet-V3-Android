@@ -1,9 +1,6 @@
 package piuk.blockchain.android.ui.account
 
-import piuk.blockchain.androidcore.utils.annotations.Mockable
-
 @Suppress("LeakingThis")
-@Mockable
 class ItemAccount {
 
     enum class TYPE {

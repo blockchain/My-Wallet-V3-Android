@@ -3,13 +3,11 @@ package piuk.blockchain.androidcore.data.ethereum.models
 import info.blockchain.wallet.ethereum.data.EthAddressResponse
 import info.blockchain.wallet.ethereum.data.EthAddressResponseMap
 import info.blockchain.wallet.ethereum.data.EthTransaction
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.math.BigInteger
 
 /**
  * A model that merges the transactions and balances of multiple ETH responses into a single object.
  */
-@Mockable
 class CombinedEthModel(private val ethAddressResponseMap: EthAddressResponseMap) {
 
     fun getTotalBalance(): BigInteger {

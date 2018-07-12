@@ -31,13 +31,11 @@ import piuk.blockchain.androidbuysell.models.coinify.exceptions.wrapErrorMessage
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Mockable
 @Singleton
 class CoinifyService @Inject constructor(
     environmentConfig: EnvironmentConfig,

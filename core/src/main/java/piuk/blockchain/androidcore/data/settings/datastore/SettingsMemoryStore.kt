@@ -4,9 +4,7 @@ import info.blockchain.wallet.api.data.Settings
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.data.datastores.persistentstore.PersistentStore
 import piuk.blockchain.androidcore.utils.Optional
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 
-@Mockable
 class SettingsMemoryStore : SettingsStore, PersistentStore<Settings> {
 
     private var settings: Optional<Settings> = Optional.None

@@ -14,13 +14,11 @@ import io.reactivex.exceptions.Exceptions
 import okhttp3.ResponseBody
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.core.NetworkParameters
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver
 import java.util.LinkedHashMap
 import javax.inject.Inject
 
-@Mockable
 class PayloadService @Inject constructor(private val payloadManager: PayloadManager) {
 
     // /////////////////////////////////////////////////////////////////////////

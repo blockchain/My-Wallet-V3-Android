@@ -28,11 +28,9 @@ import piuk.blockchain.androidbuysell.services.CoinifyService
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.Optional
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class CoinifyDataManager @Inject constructor(
     private val coinifyService: CoinifyService,

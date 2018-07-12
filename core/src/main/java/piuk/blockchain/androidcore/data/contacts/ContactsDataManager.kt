@@ -16,7 +16,6 @@ import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionLis
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.util.ArrayList
 import javax.inject.Inject
@@ -41,7 +40,6 @@ import javax.inject.Inject
  *
  * 5) Finally, publish the user's XPub to the Shared Metadata service via [publishXpub].
  */
-@Mockable
 @PresenterScope
 class ContactsDataManager @Inject constructor(
     private val contactsService: ContactsService,

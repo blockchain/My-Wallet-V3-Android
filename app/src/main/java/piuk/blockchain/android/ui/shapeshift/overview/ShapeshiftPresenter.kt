@@ -11,13 +11,11 @@ import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcore.utils.Optional
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@Mockable
 class ShapeShiftPresenter @Inject constructor(
     private val shapeShiftDataManager: ShapeShiftDataManager,
     private val prefsUtil: PrefsUtil,

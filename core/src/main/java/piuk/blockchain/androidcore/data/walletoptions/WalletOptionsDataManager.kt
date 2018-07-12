@@ -8,12 +8,10 @@ import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
 
-@Mockable
 @PresenterScope
 class WalletOptionsDataManager @Inject constructor(
     private val authService: AuthService,

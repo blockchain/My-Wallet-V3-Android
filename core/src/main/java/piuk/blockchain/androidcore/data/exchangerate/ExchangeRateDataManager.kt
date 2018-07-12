@@ -5,7 +5,6 @@ import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataS
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -17,7 +16,6 @@ import javax.inject.Inject
  * for all crypto currencies.
  * Historic prices for all crypto currencies can be queried from here.
  */
-@Mockable
 @PresenterScope
 class ExchangeRateDataManager @Inject constructor(
     private val exchangeRateDataStore: ExchangeRateDataStore,

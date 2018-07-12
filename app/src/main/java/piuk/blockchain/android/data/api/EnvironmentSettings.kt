@@ -10,9 +10,7 @@ import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.androidbuysell.api.COINIFY_LIVE_BASE
 import piuk.blockchain.androidbuysell.api.COINIFY_SANDBOX_BASE
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 
-@Mockable
 class EnvironmentSettings : EnvironmentConfig {
 
     override fun shouldShowDebugMenu(): Boolean = BuildConfig.DEBUG

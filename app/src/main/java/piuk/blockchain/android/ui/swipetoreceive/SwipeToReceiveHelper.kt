@@ -12,13 +12,11 @@ import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import timber.log.Timber
 import java.math.BigInteger
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class SwipeToReceiveHelper @Inject constructor(
     private val payloadDataManager: PayloadDataManager,

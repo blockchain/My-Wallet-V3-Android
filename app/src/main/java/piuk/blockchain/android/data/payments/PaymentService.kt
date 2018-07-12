@@ -8,14 +8,12 @@ import io.reactivex.Observable
 import org.apache.commons.lang3.tuple.Pair
 import org.bitcoinj.core.ECKey
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
 import java.util.HashMap
 import javax.inject.Inject
 
-@Mockable
 class PaymentService @Inject constructor(
     private val environmentSettings: EnvironmentConfig,
     private val payment: Payment

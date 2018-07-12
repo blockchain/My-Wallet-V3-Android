@@ -11,7 +11,6 @@ import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
@@ -23,7 +22,6 @@ import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@Mockable
 class ShapeShiftDetailPresenter @Inject constructor(
     private val shapeShiftDataManager: ShapeShiftDataManager,
     private val stringUtils: StringUtils

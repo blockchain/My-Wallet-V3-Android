@@ -17,13 +17,11 @@ import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.Collections
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class WalletAccountHelper @Inject constructor(
     private val payloadManager: PayloadManager,
