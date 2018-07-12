@@ -65,7 +65,8 @@ class ISignThisActivity : BaseAuthActivity() {
         val cost = intent.getDoubleExtra(EXTRA_COST, -1.0)
         val fromCurrency = intent.getStringExtra(EXTRA_FROM_CURRENCY).toUpperCase()
         Logging.logPurchase(
-            PurchaseEvent().putCurrency(Currency.getInstance("BTC"))
+            PurchaseEvent()
+                .putCustomAttribute("currency", "BTC")
                 .putItemPrice(cost.absoluteValue.toBigDecimal())
                 .putItemName(fromCurrency)
                 .putItemType(Logging.ITEM_TYPE_CRYPTO)
