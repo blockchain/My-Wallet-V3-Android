@@ -36,7 +36,8 @@ def coverageSourceDirs = [
         'buysellui/src/main/java',
         'coreui/src/main/java',
         'core/src/main/java',
-        'wallet/src/main/java'
+        'wallet/src/main/java',
+        'balance/src/main/kotlin'
 ]
 
 def coverageClassDirectories = [
@@ -52,10 +53,13 @@ def coverageClassDirectories = [
         fileTree(dir: 'core/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
         fileTree(dir: 'wallet/build/classes/java/main', excludes: excludedDirs),
         fileTree(dir: 'wallet/build/classes/kotlin/main', excludes: excludedDirs),
+        fileTree(dir: 'balance/build/classes/java/main', excludes: excludedDirs),
+        fileTree(dir: 'balance/build/classes/kotlin/main', excludes: excludedDirs),
 ]
 
 task jacocoRootReport(type: JacocoReport) {
     dependsOn "wallet:testCoverage"
+    dependsOn "balance:testCoverage"
     dependsOn "core:testCoverage"
     dependsOn "coreui:testCoverage"
     dependsOn "buysell:testCoverage"
@@ -71,6 +75,7 @@ task jacocoRootReport(type: JacocoReport) {
 
     executionData = files(
             tasks.getByPath("wallet:testCoverage").executionData,
+            tasks.getByPath("balance:testCoverage").executionData,
             tasks.getByPath("core:testCoverage").executionData,
             tasks.getByPath("coreui:testCoverage").executionData,
             tasks.getByPath("buysell:testCoverage").executionData,

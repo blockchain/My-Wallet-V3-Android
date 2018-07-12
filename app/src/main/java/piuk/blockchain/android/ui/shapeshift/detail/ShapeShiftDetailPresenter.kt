@@ -84,8 +84,8 @@ class ShapeShiftDetailPresenter @Inject constructor(
 
     private fun handleTradeResponse(tradeStatusResponse: TradeStatusResponse) {
         with(tradeStatusResponse) {
-            val fromCoin: CryptoCurrencies = CryptoCurrencies.fromString(incomingType ?: "btc")!!
-            val toCoin: CryptoCurrencies = CryptoCurrencies.fromString(outgoingType ?: "eth")!!
+            val fromCoin: CryptoCurrencies = CryptoCurrencies.fromSymbol(incomingType ?: "btc")!!
+            val toCoin: CryptoCurrencies = CryptoCurrencies.fromSymbol(outgoingType ?: "eth")!!
             val fromAmount: BigDecimal? = incomingCoin
             val toAmount: BigDecimal? = outgoingCoin
             val pair = """${fromCoin.symbol.toLowerCase()}_${toCoin.symbol.toLowerCase()}"""

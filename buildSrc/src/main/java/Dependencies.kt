@@ -17,6 +17,8 @@ object Versions {
     const val coveralls = "2.8.2"
     const val buildProperties = "0.4"
     const val ktlint = "0.24.0"
+    const val kotlinJvmTarget = "1.6"
+    const val javaCompatibilityVersion = 1.7
 
     // Support Libraries
     const val supportLibs = "27.1.1"

@@ -7,7 +7,7 @@ enum class CryptoCurrencies(val symbol: String, val unit: String) {
 
     companion object {
 
-        fun fromString(text: String): CryptoCurrencies? =
-            CryptoCurrencies.values().firstOrNull { it.symbol.equals(text, ignoreCase = true) }
+        fun fromSymbol(symbol: String): CryptoCurrencies? =
+            CryptoCurrencies.values().firstOrNull { it.symbol.equals(symbol, ignoreCase = true) }
     }
 }

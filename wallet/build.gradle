@@ -1,7 +1,7 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply from: 'integrationTest.gradle'
-apply from: '../quality/jacocoWallet.gradle'
+apply from: '../quality/jacocoKtLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
 
 buildscript {
@@ -15,8 +15,8 @@ buildscript {
 
 group = 'info.blockchain'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = Versions.javaCompatibilityVersion
+targetCompatibility = Versions.javaCompatibilityVersion
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -84,11 +84,11 @@ test {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "1.6"
+        jvmTarget = Versions.kotlinJvmTarget
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "1.6"
+        jvmTarget = Versions.kotlinJvmTarget
     }
 }
