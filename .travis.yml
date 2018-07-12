@@ -1,0 +1,9 @@
+language: android
+android:
+  components:
+    - build-tools-27.0.3
+    - android-27
+script:
+  - echo $FIREBASE_API_JSON  | base64 --decode > app/google-services.json
+  - ./gradlew build -Penv=envDev -PbuildType=debug -x lint -x integTest
+sudo: required

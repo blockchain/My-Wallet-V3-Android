@@ -18,6 +18,12 @@ buildscript {
     }
 }
 
+ext {
+    travisBuild = System.getenv("TRAVIS") == "true"
+    // allows for -Dpre-dex=false to be set
+    preDexEnabled = "true" == System.getProperty("pre-dex", "true")
+}
+
 allprojects {
     repositories {
         google()
@@ -31,3 +37,4 @@ task clean(type: Delete) {
 }
 
 apply from: 'quality/jacocoRootReport.gradle'
+

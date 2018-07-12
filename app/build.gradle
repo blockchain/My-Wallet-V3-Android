@@ -10,14 +10,18 @@ apply from: '../quality/ktlint.gradle'
 
 buildProperties {
     secrets {
-        using project.file('secrets.properties')
+        using(file('secrets.properties')).or(file('secretsDefaults.properties'))
     }
 }
 
 android {
     compileSdkVersion Versions.compileSdk
     buildToolsVersion Versions.buildTools
-    dexOptions.javaMaxHeapSize "3g"
+    dexOptions {
+        javaMaxHeapSize "3g"
+        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+        preDexLibraries = preDexEnabled && !travisBuild
+    }
 
     defaultConfig {
         applicationId "piuk.blockchain.android"
@@ -134,6 +138,25 @@ android {
     }
 }
 
+android.variantFilter { variant ->
+    def environment = findProperty("env")
+    if (environment != null) {
+        def variantEnvironment = variant.getFlavors().get(0).name
+        if (environment != variantEnvironment) {
+            println("Disabled ${variant.name} due to no match with -Penv=$environment flag")
+            variant.setIgnore(true)
+        }
+    }
+
+    def buildType = findProperty("buildType")
+    if (buildType != null) {
+        if (buildType != variant.buildType.name) {
+            println("Disabled ${variant.name} due to no match with -PbuildType=$buildType flag")
+            variant.setIgnore(true)
+        }
+    }
+}
+
 kapt {
     useBuildCache = true
 }
@@ -183,6 +206,8 @@ dependencies {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.protobuf'
     }
+    testImplementation Libraries.testRunner
+    testImplementation Libraries.testRules
     testImplementation Libraries.json
     testImplementation project(':testutils')
 }
