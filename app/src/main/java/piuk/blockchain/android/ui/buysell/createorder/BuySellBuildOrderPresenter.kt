@@ -78,7 +78,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             if (isSell) loadMax(new)
         }
     }
-    var selectedCurrency: String by Delegates.observable("USD") { _, old, new ->
+    var selectedCurrency: String by Delegates.observable("EUR") { _, old, new ->
         if (old != new) initialiseUi(); subscribeToSubjects()
     }
     private var latestQuote: Quote? = null
@@ -97,7 +97,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
     // The outbound fee - ie for Buying, this is the BTC cost of the transaction. This will be
     // zero if Selling, as fee is on our side, not Coinify's.
     private var outFixedFee: Double = 0.0
-    private var defaultCurrency: String = "usd"
+    private var defaultCurrency: String = "EUR"
     private var initialLoad = true
     // For comparison to avoid double logging
     private var lastLog: LogItem? = null
@@ -487,7 +487,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         return@BiFunction trader to inMedium
                     }
                 ).flatMap { (trader, inMedium) ->
-                    val currency = if (initialLoad) trader.defaultCurrency else selectedCurrency
+                    val currency = if (initialLoad) getDefaultCurrency(trader.defaultCurrency) else selectedCurrency
 
                     getExchangeRate(token, -1.0, currency)
                         .toObservable()
@@ -495,10 +495,10 @@ class BuySellBuildOrderPresenter @Inject constructor(
                             maximumInCardAmount = trader.level?.limits?.card?.inX?.daily ?: 0.0
                         }
                         .flatMap { getPaymentMethods(token, inMedium).toObservable() }
-                        .doOnNext { defaultCurrency = trader.defaultCurrency }
+                        .doOnNext { defaultCurrency = getDefaultCurrency(trader.defaultCurrency) }
                         .doOnNext {
                             if (initialLoad) {
-                                selectCurrencies(it, inMedium, trader.defaultCurrency)
+                                selectCurrencies(it, inMedium, defaultCurrency)
                                 initialLoad = false
                             }
 
@@ -527,6 +527,16 @@ class BuySellBuildOrderPresenter @Inject constructor(
                     view.onFatalError()
                 }
             )
+    }
+
+    private fun getDefaultCurrency(userDefaultCurrency: String): String = if (!isSell) {
+        userDefaultCurrency
+    } else {
+        if (userDefaultCurrency.equals("usd", ignoreCase = true)) {
+            defaultCurrency
+        } else {
+            userDefaultCurrency
+        }
     }
 
     private fun updateReceiveAmount(quoteAmount: Double) {
@@ -562,6 +572,9 @@ class BuySellBuildOrderPresenter @Inject constructor(
             Medium.Blockchain -> paymentMethod.outCurrencies.toMutableList() // Sell
             else -> paymentMethod.inCurrencies.toMutableList() // Buy
         }
+
+        // Selling USD is not allowed
+        if (isSell) currencies.remove("USD")
 
         selectedCurrency = if (currencies.contains(userCurrency)) {
             val index = currencies.indexOf(userCurrency)
