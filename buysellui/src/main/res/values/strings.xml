@@ -62,6 +62,8 @@
     <string name="buy_sell_awaiting_funds_cancel_trade">Cancel trade</string>
     <string name="buy_sell_awaiting_funds_cancel_trade_success">Trade successfully cancelled</string>
     <string name="buy_sell_awaiting_funds_cancel_trade_failed">Could not cancel trade</string>
+    <string name="buy_sell_awaiting_funds_cancel_trade_dialog_title">Cancel trade?</string>
+    <string name="buy_sell_awaiting_funds_cancel_trade_dialog_disclaimer">Note: if you have already sent funds from your bank account to Coinify, this trade will still be processed when they receive your transfer and you will be sent the bitcoin you purchased.</string>
 
     <!-- KYC-->
     <string name="buy_sell_id_verification_in_review">Identity Verification in Review</string>
