@@ -102,14 +102,15 @@ class CoinifyIdentityInReviewFragment :
                 R.string.buy_sell_review_status,
                 getString(R.string.buy_sell_review_status_in_pending)
             )
-            val vector = VectorDrawableCompat.create(
+            VectorDrawableCompat.create(
                 resources,
                 R.drawable.vector_alert,
                 ContextThemeWrapper(requireActivity(), R.style.AppTheme).theme
-            )!!
-            DrawableCompat.wrap(vector)
-            DrawableCompat.setTint(vector, getResolvedColor(R.color.primary_navy_medium))
-            setCompoundDrawablesWithIntrinsicBounds(vector, null, null, null)
+            )?.run {
+                DrawableCompat.wrap(this)
+                DrawableCompat.setTint(this, getResolvedColor(R.color.primary_navy_medium))
+                setCompoundDrawablesWithIntrinsicBounds(this, null, null, null)
+            }
             visible()
         }
 
