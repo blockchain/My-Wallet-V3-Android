@@ -71,9 +71,12 @@
     <string name="buy_sell_review_failed">Identity Verification Process Unsuccessful</string>
     <string name="buy_sell_review_status_message">Our Buy &amp; Sell Partner Coinify will email you a status update within 48 hours.</string>
     <string name="buy_sell_review_status_failed">Please contact our Buy &amp; Sell Partner Coinify</string>
+    <string name="buy_sell_review_status_pending_message">Transactions are unavailable until verification is complete. Please finish verifying your identity.</string>
+    <string name="buy_sell_review_finish_verification">Finish verification</string>
+    <string name="buy_sell_review_finish_verification_title">Complete Identity Verification</string>
     <string name="buy_sell_review_status">Status: %1$s</string>
     <string name="buy_sell_review_status_in_review">In Review</string>
-    <string name="buy_sell_review_status_in_pending">Pending</string>
+    <string name="buy_sell_review_status_in_pending">Incomplete</string>
     <string name="buy_sell_review_status_in_rejected">Rejected</string>
     <string name="buy_sell_review_status_in_failed">Failed</string>
     <string name="buy_sell_review_status_in_expired">Expired</string>

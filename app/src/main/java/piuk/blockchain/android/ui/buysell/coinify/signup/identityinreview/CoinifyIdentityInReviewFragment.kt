@@ -1,7 +1,11 @@
 package piuk.blockchain.android.ui.buysell.coinify.signup.identityinreview
 
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
+import android.support.graphics.drawable.VectorDrawableCompat
+import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v7.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +15,12 @@ import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifyFlowListener
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
+import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.text_view_finish_verification as finishKyc
 
 class CoinifyIdentityInReviewFragment :
     BaseFragment<CoinifyIdentityInReviewView, CoinifyIdentityInReviewPresenter>(),
@@ -90,12 +96,30 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onShowPending() {
-        textviewReviewStatus.text = getString(
-            R.string.buy_sell_review_status,
-            getString(R.string.buy_sell_review_status_in_pending)
-        )
+        textviewReviewTitle.setText(R.string.buy_sell_review_finish_verification_title)
+        textviewReviewStatus.apply {
+            text = getString(
+                R.string.buy_sell_review_status,
+                getString(R.string.buy_sell_review_status_in_pending)
+            )
+            val vector = VectorDrawableCompat.create(
+                resources,
+                R.drawable.vector_alert,
+                ContextThemeWrapper(requireActivity(), R.style.AppTheme).theme
+            )!!
+            DrawableCompat.wrap(vector)
+            DrawableCompat.setTint(vector, getResolvedColor(R.color.primary_navy_medium))
+            setCompoundDrawablesWithIntrinsicBounds(vector, null, null, null)
+            visible()
+        }
+
         textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        textviewReviewMessage.setText(R.string.buy_sell_review_status_pending_message)
+        finishKyc.apply {
+            visible()
+            paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            setOnClickListener { signUpListener?.requestStartVerifyIdentification() }
+        }
     }
 
     override fun onShowRejected() {
