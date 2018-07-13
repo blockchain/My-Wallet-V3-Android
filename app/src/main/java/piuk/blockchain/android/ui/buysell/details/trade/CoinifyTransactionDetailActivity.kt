@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
@@ -14,7 +16,6 @@ import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
@@ -122,6 +123,16 @@ class CoinifyTransactionDetailActivity :
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean =
+        if (orderDetails.isAwaitingCardPayment) {
+            consume { menuInflater.inflate(R.menu.menu_coinify_transaction_detail, menu) }
+        } else false
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId ?: -1) {
+        R.id.action_cancel -> consume { presenter.cancelTrade(orderDetails.tradeId) }
+        else -> false
+    }
+
     override fun showProgressDialog() {
         if (!isFinishing) {
             progressDialog = MaterialProgressDialog(this).apply {
@@ -139,8 +150,12 @@ class CoinifyTransactionDetailActivity :
         }
     }
 
-    override fun showErrorToast(message: Int) {
-        toast(message, ToastCustom.TYPE_ERROR)
+    override fun showToast(message: Int, toastType: String) {
+        toast(message, toastType)
+    }
+
+    override fun finishPage() {
+        finish()
     }
 
     override fun launchCardPayment(
@@ -153,7 +168,7 @@ class CoinifyTransactionDetailActivity :
         finish()
     }
 
-    override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
+    override fun onSupportNavigateUp(): Boolean = consume { finish() }
 
     override fun createPresenter(): CoinifyTransactionDetailPresenter = presenter
 

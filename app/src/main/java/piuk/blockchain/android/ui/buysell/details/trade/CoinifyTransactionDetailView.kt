@@ -3,6 +3,7 @@ package piuk.blockchain.android.ui.buysell.details.trade
 import android.support.annotation.StringRes
 import piuk.blockchain.android.ui.buysell.details.models.BuySellDetailsModel
 import piuk.blockchain.androidcoreui.ui.base.View
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
 interface CoinifyTransactionDetailView : View {
 
@@ -19,5 +20,7 @@ interface CoinifyTransactionDetailView : View {
 
     fun dismissProgressDialog()
 
-    fun showErrorToast(@StringRes message: Int)
+    fun showToast(@StringRes message: Int, @ToastCustom.ToastType toastType: String)
+
+    fun finishPage()
 }
