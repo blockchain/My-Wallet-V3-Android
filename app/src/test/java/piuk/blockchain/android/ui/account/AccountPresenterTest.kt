@@ -39,7 +39,7 @@ import piuk.blockchain.android.ui.account.AccountPresenter.Companion.KEY_WARN_TR
 import piuk.blockchain.android.ui.send.PendingTransaction
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
@@ -470,7 +470,7 @@ class AccountPresenterTest {
         whenever(fundsDataManager.transferableFundTransactionListForDefaultAccount)
             .thenReturn(Observable.empty())
 
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(
             currencyFormatManager.getFormattedSelectedCoinValueWithUnit(
                 BigDecimal.valueOf(0),

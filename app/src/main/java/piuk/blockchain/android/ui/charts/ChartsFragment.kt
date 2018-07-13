@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_graphs.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.androidcore.data.charts.TimeSpan
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
@@ -48,8 +48,8 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
     lateinit var chartsPresenter: ChartsPresenter
 
     override val locale: Locale = Locale.getDefault()
-    override val cryptoCurrency: CryptoCurrencies by unsafeLazy {
-        arguments!!.getSerializable(ARGUMENT_CRYPTOCURRENCY) as CryptoCurrencies
+    override val cryptoCurrency: CryptoCurrency by unsafeLazy {
+        arguments!!.getSerializable(ARGUMENT_CRYPTOCURRENCY) as CryptoCurrency
     }
     private val buttonsList by unsafeLazy {
         listOf(
@@ -84,7 +84,7 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
         is ChartsState.TimeSpanUpdated -> showTimeSpanSelected(state.timeSpan)
     }
 
-    override fun updateSelectedCurrency(cryptoCurrency: CryptoCurrencies) {
+    override fun updateSelectedCurrency(cryptoCurrency: CryptoCurrency) {
         textview_currency.text = getString(R.string.dashboard_price, cryptoCurrency.unit)
     }
 
@@ -288,7 +288,7 @@ class ChartsFragment : BaseFragment<ChartsView, ChartsPresenter>(), ChartsView {
 
         private const val ARGUMENT_CRYPTOCURRENCY = "ARGUMENT_CRYPTOCURRENCY"
 
-        internal fun newInstance(cryptoCurrency: CryptoCurrencies): ChartsFragment {
+        internal fun newInstance(cryptoCurrency: CryptoCurrency): ChartsFragment {
             val args = Bundle().apply {
                 putSerializable(ARGUMENT_CRYPTOCURRENCY, cryptoCurrency)
             }

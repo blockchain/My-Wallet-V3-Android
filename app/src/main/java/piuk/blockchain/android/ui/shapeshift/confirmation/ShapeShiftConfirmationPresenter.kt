@@ -20,7 +20,7 @@ import piuk.blockchain.android.data.payments.SendDataManager
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.ethereum.EthereumAccountWrapper
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
@@ -93,7 +93,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
 
             with(view.shapeShiftData) {
                 when (fromCurrency) {
-                    CryptoCurrencies.BTC -> sendBtcTransaction(
+                    CryptoCurrency.BTC -> sendBtcTransaction(
                         xPub,
                         depositAddress,
                         changeAddress,
@@ -101,13 +101,13 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
                         transactionFee,
                         feePerKb
                     )
-                    CryptoCurrencies.ETHER -> sendEthTransaction(
+                    CryptoCurrency.ETHER -> sendEthTransaction(
                         gasPrice,
                         depositAddress,
                         depositAmount,
                         gasLimit
                     )
-                    CryptoCurrencies.BCH -> sendBchTransaction(
+                    CryptoCurrency.BCH -> sendBchTransaction(
                         xPub,
                         depositAddress,
                         changeAddress,
@@ -350,7 +350,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
     // endregion
 
     // region View Updates
-    private fun updateDeposit(fromCurrency: CryptoCurrencies, depositAmount: BigDecimal) {
+    private fun updateDeposit(fromCurrency: CryptoCurrency, depositAmount: BigDecimal) {
         val label =
             stringUtils.getFormattedString(R.string.shapeshift_deposit_title, fromCurrency.unit)
         val amount = "${depositAmount.toLocalisedString()} ${fromCurrency.symbol}"
@@ -358,7 +358,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
         view.updateDeposit(label, amount)
     }
 
-    private fun updateReceive(toCurrency: CryptoCurrencies, receiveAmount: BigDecimal) {
+    private fun updateReceive(toCurrency: CryptoCurrency, receiveAmount: BigDecimal) {
         val label =
             stringUtils.getFormattedString(R.string.shapeshift_receive_title, toCurrency.unit)
         val amount = "${receiveAmount.toLocalisedString()} ${toCurrency.symbol}"
@@ -367,7 +367,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
     }
 
     private fun updateTotal(
-        toCurrency: CryptoCurrencies,
+        toCurrency: CryptoCurrency,
         depositAmount: BigDecimal,
         transactionFee: BigInteger
     ) {
@@ -381,8 +381,8 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
 
     private fun updateExchangeRate(
         exchangeRate: BigDecimal,
-        fromCurrency: CryptoCurrencies,
-        toCurrency: CryptoCurrencies
+        fromCurrency: CryptoCurrency,
+        toCurrency: CryptoCurrency
     ) {
         val formattedExchangeRate = exchangeRate.setScale(8, RoundingMode.HALF_DOWN)
             .toLocalisedString()
@@ -396,14 +396,14 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
         view.updateExchangeRate(formattedString)
     }
 
-    private fun updateTransactionFee(fromCurrency: CryptoCurrencies, transactionFee: BigInteger) {
+    private fun updateTransactionFee(fromCurrency: CryptoCurrency, transactionFee: BigInteger) {
         val fee = getFeeForCurrency(fromCurrency, transactionFee)
         val displayString = "${fee.toLocalisedString()} ${fromCurrency.symbol}"
 
         view.updateTransactionFee(displayString)
     }
 
-    private fun updateNetworkFee(toCurrency: CryptoCurrencies, networkFee: BigDecimal) {
+    private fun updateNetworkFee(toCurrency: CryptoCurrency, networkFee: BigDecimal) {
         val displayString = "${networkFee.toLocalisedString()} ${toCurrency.symbol}"
 
         view.updateNetworkFee(displayString)
@@ -438,16 +438,16 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
     }
 
     private fun getFeeForCurrency(
-        toCurrency: CryptoCurrencies,
+        toCurrency: CryptoCurrency,
         transactionFee: BigInteger
     ): BigDecimal =
         when (toCurrency) {
-            CryptoCurrencies.BTC, CryptoCurrencies.BCH -> BigDecimal(transactionFee).divide(
+            CryptoCurrency.BTC, CryptoCurrency.BCH -> BigDecimal(transactionFee).divide(
                 BigDecimal.valueOf(BTC_DEC),
                 8,
                 RoundingMode.HALF_DOWN
             )
-            CryptoCurrencies.ETHER -> Convert.fromWei(
+            CryptoCurrency.ETHER -> Convert.fromWei(
                 BigDecimal(transactionFee),
                 Convert.Unit.ETHER
             )

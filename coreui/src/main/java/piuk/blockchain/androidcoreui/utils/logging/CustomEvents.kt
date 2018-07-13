@@ -1,7 +1,7 @@
 package piuk.blockchain.androidcoreui.utils.logging
 
 import com.crashlytics.android.answers.CustomEvent
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.utils.extensions.getAmountRangeBch
 import piuk.blockchain.androidcoreui.utils.extensions.getAmountRangeBtc
 import piuk.blockchain.androidcoreui.utils.extensions.getAmountRangeEth
@@ -44,20 +44,20 @@ class PaymentSentEvent : CustomEvent("Payment Sent") {
 
     fun putAmountForRange(
         amountSent: BigInteger,
-        cryptoCurrencies: CryptoCurrencies
+        cryptoCurrency: CryptoCurrency
     ): PaymentSentEvent {
-        val amountRange = when (cryptoCurrencies) {
-            CryptoCurrencies.BTC -> amountSent.getAmountRangeBtc()
-            CryptoCurrencies.ETHER -> amountSent.getAmountRangeEth()
-            CryptoCurrencies.BCH -> amountSent.getAmountRangeBch()
+        val amountRange = when (cryptoCurrency) {
+            CryptoCurrency.BTC -> amountSent.getAmountRangeBtc()
+            CryptoCurrency.ETHER -> amountSent.getAmountRangeEth()
+            CryptoCurrency.BCH -> amountSent.getAmountRangeBch()
         }
 
         putCustomAttribute("Amount", amountRange)
         return this
     }
 
-    fun putCurrencyType(cryptoCurrencies: CryptoCurrencies): PaymentSentEvent {
-        putCustomAttribute("Currency", cryptoCurrencies.symbol)
+    fun putCurrencyType(cryptoCurrency: CryptoCurrency): PaymentSentEvent {
+        putCustomAttribute("Currency", cryptoCurrency.symbol)
         return this
     }
 }

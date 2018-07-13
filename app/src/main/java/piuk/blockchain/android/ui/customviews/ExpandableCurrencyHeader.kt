@@ -19,7 +19,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.view_expanding_currency_header.view.*
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.setAnimationListener
@@ -30,14 +30,14 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : RelativeLayout(context, attrs) {
 
-    private lateinit var selectionListener: (CryptoCurrencies) -> Unit
+    private lateinit var selectionListener: (CryptoCurrency) -> Unit
 
     private var expanded = false
     private var firstOpen = true
     private var collapsedHeight: Int = 0
     private var contentHeight: Int = 0
     private var contentWidth: Int = 0
-    private var selectedCurrency = CryptoCurrencies.BTC
+    private var selectedCurrency = CryptoCurrency.BTC
 
     init {
         // Inflate layout
@@ -58,9 +58,9 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
 
         textview_selected_currency.setOnClickListener { animateLayout(true) }
 
-        textview_bitcoin.setOnClickListener { closeLayout(CryptoCurrencies.BTC) }
-        textview_ethereum.setOnClickListener { closeLayout(CryptoCurrencies.ETHER) }
-        textview_bitcoin_cash.setOnClickListener { closeLayout(CryptoCurrencies.BCH) }
+        textview_bitcoin.setOnClickListener { closeLayout(CryptoCurrency.BTC) }
+        textview_ethereum.setOnClickListener { closeLayout(CryptoCurrency.ETHER) }
+        textview_bitcoin_cash.setOnClickListener { closeLayout(CryptoCurrency.BCH) }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -91,18 +91,18 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
         }
     }
 
-    fun setSelectionListener(selectionListener: (CryptoCurrencies) -> Unit) {
+    fun setSelectionListener(selectionListener: (CryptoCurrency) -> Unit) {
         this.selectionListener = selectionListener
     }
 
-    fun setCurrentlySelectedCurrency(cryptoCurrency: CryptoCurrencies) {
+    fun setCurrentlySelectedCurrency(cryptoCurrency: CryptoCurrency) {
         selectedCurrency = cryptoCurrency
         when (selectedCurrency) {
-            CryptoCurrencies.BTC ->
+            CryptoCurrency.BTC ->
                 updateCurrencyUi(R.drawable.vector_bitcoin, R.string.bitcoin)
-            CryptoCurrencies.ETHER ->
+            CryptoCurrency.ETHER ->
                 updateCurrencyUi(R.drawable.vector_eth, R.string.ether)
-            CryptoCurrencies.BCH ->
+            CryptoCurrency.BCH ->
                 updateCurrencyUi(R.drawable.vector_bitcoin_cash, R.string.bitcoin_cash)
         }
     }
@@ -170,10 +170,10 @@ class ExpandableCurrencyHeader @JvmOverloads constructor(
     }
 
     /**
-     * Pass null as the parameter here to close the view without triggering any [CryptoCurrencies]
+     * Pass null as the parameter here to close the view without triggering any [CryptoCurrency]
      * change listeners.
      */
-    private fun closeLayout(cryptoCurrency: CryptoCurrencies?) {
+    private fun closeLayout(cryptoCurrency: CryptoCurrency?) {
         // Update UI
         cryptoCurrency?.run { setCurrentlySelectedCurrency(this) }
         // Trigger layout change

@@ -31,7 +31,7 @@ import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.confirm.ConfirmPaymentDialog
 import piuk.blockchain.android.ui.shortcuts.LauncherShortcutHelper
 import piuk.blockchain.android.ui.zxing.CaptureActivity
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -377,7 +377,7 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
             activity: Activity,
             accountIndex: Int,
             addressIndex: Int,
-            cryptoCurrency: CryptoCurrencies,
+            cryptoCurrency: CryptoCurrency,
             requestCode: Int
         ) {
             Intent(activity, AccountEditActivity::class.java).apply {

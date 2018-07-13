@@ -1,7 +1,7 @@
 package piuk.blockchain.android.ui.balance
 
 import piuk.blockchain.android.ui.account.ItemAccount
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.UiState
 import piuk.blockchain.androidcoreui.ui.base.View
 
@@ -15,7 +15,7 @@ interface BalanceView : View {
 
     fun updateAccountsDataSet(accountsList: List<ItemAccount>)
 
-    fun updateSelectedCurrency(cryptoCurrency: CryptoCurrencies)
+    fun updateSelectedCurrency(cryptoCurrency: CryptoCurrency)
 
     fun updateBalanceHeader(balance: String)
 

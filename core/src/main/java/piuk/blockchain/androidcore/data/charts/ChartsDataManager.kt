@@ -4,7 +4,7 @@ import info.blockchain.wallet.prices.PriceApi
 import info.blockchain.wallet.prices.Scale
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.data.charts.models.ChartDatumDto
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
@@ -23,12 +23,12 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
      * as possible, with each measurement being 5 days apart. Any data points which have no price are
      * filtered out.
      *
-     * @param cryptoCurrency The chosen [CryptoCurrencies] object
+     * @param cryptoCurrency The chosen [CryptoCurrency] object
      * @param fiatCurrency The fiat currency which you want results for, eg "USD"
      * @return A stream of [ChartDatumDto] objects via an [Observable]
      */
     fun getAllTimePrice(
-        cryptoCurrency: CryptoCurrencies,
+        cryptoCurrency: CryptoCurrency,
         fiatCurrency: String
     ): Observable<ChartDatumDto> =
         rxPinning.call<ChartDatumDto> {
@@ -40,12 +40,12 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
      * year, with each measurement being 24 hours apart. Any data points which have no price are
      * filtered out.
      *
-     * @param cryptoCurrency The chosen [CryptoCurrencies] object
+     * @param cryptoCurrency The chosen [CryptoCurrency] object
      * @param fiatCurrency The fiat currency which you want results for, eg "USD"
      * @return A stream of [ChartDatumDto] objects via an [Observable]
      */
     fun getYearPrice(
-        cryptoCurrency: CryptoCurrencies,
+        cryptoCurrency: CryptoCurrency,
         fiatCurrency: String
     ): Observable<ChartDatumDto> =
         rxPinning.call<ChartDatumDto> {
@@ -57,12 +57,12 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
      * month, with each measurement being 2 hours apart. Any data points which have no price are
      * filtered out.
      *
-     * @param cryptoCurrency The chosen [CryptoCurrencies] object
+     * @param cryptoCurrency The chosen [CryptoCurrency] object
      * @param fiatCurrency The fiat currency which you want results for, eg "USD"
      * @return A stream of [ChartDatumDto] objects via an [Observable]
      */
     fun getMonthPrice(
-        cryptoCurrency: CryptoCurrencies,
+        cryptoCurrency: CryptoCurrency,
         fiatCurrency: String
     ): Observable<ChartDatumDto> =
         rxPinning.call<ChartDatumDto> {
@@ -74,12 +74,12 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
      * week, with each measurement being 1 hour apart. Any data points which have no price are
      * filtered out.
      *
-     * @param cryptoCurrency The chosen [CryptoCurrencies] object
+     * @param cryptoCurrency The chosen [CryptoCurrency] object
      * @param fiatCurrency The fiat currency which you want results for, eg "USD"
      * @return A stream of [ChartDatumDto] objects via an [Observable]
      */
     fun getWeekPrice(
-        cryptoCurrency: CryptoCurrencies,
+        cryptoCurrency: CryptoCurrency,
         fiatCurrency: String
     ): Observable<ChartDatumDto> =
         rxPinning.call<ChartDatumDto> {
@@ -91,12 +91,12 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
      * day, with each measurement being 15 minutes apart. Any data points which have no price are
      * filtered out.
      *
-     * @param cryptoCurrency The chosen [CryptoCurrencies] object
+     * @param cryptoCurrency The chosen [CryptoCurrency] object
      * @param fiatCurrency The fiat currency which you want results for, eg "USD"
      * @return A stream of [ChartDatumDto] objects via an [Observable]
      */
     fun getDayPrice(
-        cryptoCurrency: CryptoCurrencies,
+        cryptoCurrency: CryptoCurrency,
         fiatCurrency: String
     ): Observable<ChartDatumDto> =
         rxPinning.call<ChartDatumDto> {
@@ -105,7 +105,7 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
     // endregion
 
     private fun getHistoricPriceObservable(
-        cryptoCurrency: CryptoCurrencies,
+        cryptoCurrency: CryptoCurrency,
         fiatCurrency: String,
         timeSpan: TimeSpan
     ): Observable<ChartDatumDto> {
@@ -138,7 +138,7 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
 
     private fun getStartTimeForTimeSpan(
         timeSpan: TimeSpan,
-        cryptoCurrency: CryptoCurrencies
+        cryptoCurrency: CryptoCurrency
     ): Long {
         val start = when (timeSpan) {
             TimeSpan.ALL_TIME -> return getFirstMeasurement(cryptoCurrency)
@@ -155,14 +155,14 @@ class ChartsDataManager @Inject constructor(private val historicPriceApi: PriceA
     /**
      * Provides the first timestamp for which we have prices, returned in epoch-seconds
      *
-     * @param cryptoCurrency The [CryptoCurrencies] that you want a start date for
+     * @param cryptoCurrency The [CryptoCurrency] that you want a start date for
      * @return A [Long] in epoch-seconds since the start of our data
      */
-    private fun getFirstMeasurement(cryptoCurrency: CryptoCurrencies): Long {
+    private fun getFirstMeasurement(cryptoCurrency: CryptoCurrency): Long {
         return when (cryptoCurrency) {
-            CryptoCurrencies.BTC -> FIRST_BTC_ENTRY_TIME
-            CryptoCurrencies.ETHER -> FIRST_ETH_ENTRY_TIME
-            CryptoCurrencies.BCH -> FIRST_BCH_ENTRY_TIME
+            CryptoCurrency.BTC -> FIRST_BTC_ENTRY_TIME
+            CryptoCurrency.ETHER -> FIRST_ETH_ENTRY_TIME
+            CryptoCurrency.BCH -> FIRST_BCH_ENTRY_TIME
         }
     }
 }

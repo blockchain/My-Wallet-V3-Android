@@ -60,7 +60,7 @@ import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.util.EditTextFormatUtil
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
@@ -165,9 +165,9 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
 
         currency_header.setSelectionListener { currency ->
             when (currency) {
-                CryptoCurrencies.BTC -> presenter?.onSelectDefault(selectedAccountPosition)
-                CryptoCurrencies.ETHER -> presenter?.onEthSelected()
-                CryptoCurrencies.BCH -> presenter?.onSelectBchDefault()
+                CryptoCurrency.BTC -> presenter?.onSelectDefault(selectedAccountPosition)
+                CryptoCurrency.ETHER -> presenter?.onEthSelected()
+                CryptoCurrency.BCH -> presenter?.onSelectBchDefault()
             }
         }
     }
@@ -225,12 +225,12 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
             val currency = CurrencyState.getInstance().cryptoCurrency
             AccountChooserActivity.startForResult(
                 this,
-                if (currency == CryptoCurrencies.BTC) {
+                if (currency == CryptoCurrency.BTC) {
                     AccountMode.Bitcoin
                 } else {
                     AccountMode.BitcoinCash
                 },
-                if (currency == CryptoCurrencies.BTC) {
+                if (currency == CryptoCurrency.BTC) {
                     REQUEST_CODE_RECEIVE_BITCOIN
                 } else {
                     REQUEST_CODE_RECEIVE_BITCOIN_CASH
@@ -474,12 +474,12 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
         }
     }
 
-    override fun setSelectedCurrency(cryptoCurrency: CryptoCurrencies) {
+    override fun setSelectedCurrency(cryptoCurrency: CryptoCurrency) {
         currency_header.setCurrentlySelectedCurrency(cryptoCurrency)
         when (cryptoCurrency) {
-            CryptoCurrencies.BTC -> displayBitcoinLayout()
-            CryptoCurrencies.ETHER -> displayEtherLayout()
-            CryptoCurrencies.BCH -> displayBitcoinCashLayout()
+            CryptoCurrency.BTC -> displayBitcoinLayout()
+            CryptoCurrency.ETHER -> displayEtherLayout()
+            CryptoCurrency.BCH -> displayBitcoinCashLayout()
         }
     }
 

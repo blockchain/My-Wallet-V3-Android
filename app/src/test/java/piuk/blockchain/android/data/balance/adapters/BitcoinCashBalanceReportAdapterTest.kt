@@ -9,7 +9,7 @@ import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import java.math.BigInteger
 
 class BitcoinCashBalanceReportAdapterTest {
@@ -24,13 +24,13 @@ class BitcoinCashBalanceReportAdapterTest {
     @Test
     fun `value of entire balance comes from data manager wallet balance`() {
         whenever(dataManager.getWalletBalance()).thenReturn(BigInteger.valueOf(1234L))
-        balanceReporter.entireBalance() `should equal` CryptoValue(CryptoCurrencies.BCH, 1234L)
+        balanceReporter.entireBalance() `should equal` CryptoValue(CryptoCurrency.BCH, 1234L)
     }
 
     @Test
     fun `value of imported address balance comes from data manager imported address balance`() {
         whenever(dataManager.getImportedAddressBalance()).thenReturn(BigInteger.valueOf(4567L))
-        balanceReporter.importedAddressBalance() `should equal` CryptoValue(CryptoCurrencies.BCH, 4567L)
+        balanceReporter.importedAddressBalance() `should equal` CryptoValue(CryptoCurrency.BCH, 4567L)
     }
 
     @Test
@@ -41,6 +41,6 @@ class BitcoinCashBalanceReportAdapterTest {
             )
         )
         balanceReporter.addressBalance("mpxqy2yDLebDHuUVugcHrbS729HtxzRZtM") `should equal`
-            CryptoValue(CryptoCurrencies.BCH, 8901L)
+            CryptoValue(CryptoCurrency.BCH, 8901L)
     }
 }

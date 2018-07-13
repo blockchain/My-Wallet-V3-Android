@@ -2,13 +2,13 @@ package piuk.blockchain.androidcore.data.transactions.models
 
 import info.blockchain.wallet.ethereum.data.EthTransaction
 import info.blockchain.wallet.multiaddress.TransactionSummary
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import java.math.BigInteger
 
 abstract class Displayable {
 
-    abstract val cryptoCurrency: CryptoCurrencies
+    abstract val cryptoCurrency: CryptoCurrency
     abstract val direction: TransactionSummary.Direction
     abstract val timeStamp: Long
     abstract val total: BigInteger
@@ -31,8 +31,8 @@ data class EthDisplayable(
     private val blockHeight: Long
 ) : Displayable() {
 
-    override val cryptoCurrency: CryptoCurrencies
-        get() = CryptoCurrencies.ETHER
+    override val cryptoCurrency: CryptoCurrency
+        get() = CryptoCurrency.ETHER
     override val direction: TransactionSummary.Direction
         get() = when {
             combinedEthModel.getAccounts()[0] == ethTransaction.to
@@ -67,8 +67,8 @@ data class BtcDisplayable(
     private val transactionSummary: TransactionSummary
 ) : Displayable() {
 
-    override val cryptoCurrency: CryptoCurrencies
-        get() = CryptoCurrencies.BTC
+    override val cryptoCurrency: CryptoCurrency
+        get() = CryptoCurrency.BTC
     override val direction: TransactionSummary.Direction
         get() = transactionSummary.direction
     override val timeStamp: Long
@@ -97,8 +97,8 @@ data class BchDisplayable(
     private val transactionSummary: TransactionSummary
 ) : Displayable() {
 
-    override val cryptoCurrency: CryptoCurrencies
-        get() = CryptoCurrencies.BCH
+    override val cryptoCurrency: CryptoCurrency
+        get() = CryptoCurrency.BCH
     override val direction: TransactionSummary.Direction
         get() = transactionSummary.direction
     override val timeStamp: Long

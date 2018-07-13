@@ -4,7 +4,7 @@ import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.charts.ChartsDataManager
 import piuk.blockchain.androidcore.data.charts.TimeSpan
 import piuk.blockchain.androidcore.data.charts.models.ChartDatumDto
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
@@ -72,9 +72,9 @@ class ChartsPresenter @Inject constructor(
 
     private fun getCurrentPrice() {
         val price = when (view.cryptoCurrency) {
-            CryptoCurrencies.BTC -> exchangeRateFactory.getLastBtcPrice(getFiatCurrency())
-            CryptoCurrencies.ETHER -> exchangeRateFactory.getLastEthPrice(getFiatCurrency())
-            CryptoCurrencies.BCH -> exchangeRateFactory.getLastBchPrice(getFiatCurrency())
+            CryptoCurrency.BTC -> exchangeRateFactory.getLastBtcPrice(getFiatCurrency())
+            CryptoCurrency.ETHER -> exchangeRateFactory.getLastEthPrice(getFiatCurrency())
+            CryptoCurrency.BCH -> exchangeRateFactory.getLastBchPrice(getFiatCurrency())
         }
 
         view.updateCurrentPrice(getCurrencySymbol(), price)

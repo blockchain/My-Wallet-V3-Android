@@ -12,7 +12,7 @@ import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
@@ -40,11 +40,11 @@ class WalletAccountHelper @Inject constructor(
      * @return Returns a list of [ItemAccount] objects
      */
     fun getAccountItems(): List<ItemAccount> = when (currencyState.cryptoCurrency) {
-        CryptoCurrencies.BTC -> mutableListOf<ItemAccount>().apply {
+        CryptoCurrency.BTC -> mutableListOf<ItemAccount>().apply {
             addAll(getHdAccounts())
             addAll(getLegacyAddresses())
         }
-        CryptoCurrencies.BCH -> mutableListOf<ItemAccount>().apply {
+        CryptoCurrency.BCH -> mutableListOf<ItemAccount>().apply {
             addAll(getHdBchAccounts())
             addAll(getLegacyBchAddresses())
         }
@@ -183,16 +183,16 @@ class WalletAccountHelper @Inject constructor(
     } ?: emptyList()
 
     fun getDefaultAccount(): ItemAccount = when (currencyState.cryptoCurrency) {
-        CryptoCurrencies.BTC -> getDefaultBtcAccount()
-        CryptoCurrencies.BCH -> getDefaultBchAccount()
-        CryptoCurrencies.ETHER -> getDefaultEthAccount()
+        CryptoCurrency.BTC -> getDefaultBtcAccount()
+        CryptoCurrency.BCH -> getDefaultBchAccount()
+        CryptoCurrency.ETHER -> getDefaultEthAccount()
         else -> throw IllegalArgumentException("Cryptocurrency ${currencyState.cryptoCurrency.unit} not yet supported")
     }
 
     fun getDefaultOrFirstFundedAccount(): ItemAccount = when (currencyState.cryptoCurrency) {
-        CryptoCurrencies.BTC -> getDefaultOrFirstFundedBtcAccount()
-        CryptoCurrencies.BCH -> getDefaultOrFirstFundedBchAccount()
-        CryptoCurrencies.ETHER -> getDefaultEthAccount()
+        CryptoCurrency.BTC -> getDefaultOrFirstFundedBtcAccount()
+        CryptoCurrency.BCH -> getDefaultOrFirstFundedBchAccount()
+        CryptoCurrency.ETHER -> getDefaultEthAccount()
         else -> throw IllegalArgumentException("Cryptocurrency ${currencyState.cryptoCurrency.unit} not yet supported")
     }
 
@@ -391,8 +391,8 @@ class WalletAccountHelper @Inject constructor(
      * @return Returns a list of [ItemAccount] objects
      */
     fun getAccountItemsForOverview(): List<ItemAccount> = when (currencyState.cryptoCurrency) {
-        CryptoCurrencies.BTC -> getBtcOverviewList()
-        CryptoCurrencies.BCH -> getBchOverviewList()
+        CryptoCurrency.BTC -> getBtcOverviewList()
+        CryptoCurrency.BCH -> getBchOverviewList()
         else -> getEthOverviewList()
     }
 

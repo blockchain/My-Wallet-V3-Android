@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.account.adapter
 
 import piuk.blockchain.android.ui.adapters.AdapterDelegatesManager
 import piuk.blockchain.android.ui.adapters.DelegationAdapter
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
 import kotlin.properties.Delegates
 
@@ -43,5 +43,5 @@ interface AccountHeadersListener {
 
     fun onImportAddressClicked()
 
-    fun onAccountClicked(cryptoCurrency: CryptoCurrencies, correctedPosition: Int)
+    fun onAccountClicked(cryptoCurrency: CryptoCurrency, correctedPosition: Int)
 }

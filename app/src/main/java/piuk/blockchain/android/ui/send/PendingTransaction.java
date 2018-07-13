@@ -10,7 +10,7 @@ import info.blockchain.wallet.payment.SpendableUnspentOutputs;
 import java.math.BigInteger;
 
 import piuk.blockchain.android.ui.account.ItemAccount;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 
 public class PendingTransaction {
 
@@ -34,8 +34,8 @@ public class PendingTransaction {
     }
 
     @JsonIgnore
-    public boolean isHD(CryptoCurrencies currency) {
-        if (currency == CryptoCurrencies.BTC) {
+    public boolean isHD(CryptoCurrency currency) {
+        if (currency == CryptoCurrency.BTC) {
             return (sendingObject.getAccountObject() instanceof Account);
         } else {
             return (sendingObject.getAccountObject() instanceof GenericMetadataAccount);

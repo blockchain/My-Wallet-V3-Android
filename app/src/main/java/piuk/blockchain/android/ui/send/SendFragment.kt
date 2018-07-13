@@ -61,7 +61,7 @@ import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.util.AppRate
 import piuk.blockchain.androidcore.data.access.AccessState
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
@@ -262,9 +262,9 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         closeKeypad()
         currency_header.setSelectionListener { currency ->
             when (currency) {
-                CryptoCurrencies.BTC -> presenter?.onBitcoinChosen()
-                CryptoCurrencies.ETHER -> presenter?.onEtherChosen()
-                CryptoCurrencies.BCH -> presenter?.onBitcoinCashChosen()
+                CryptoCurrency.BTC -> presenter?.onBitcoinChosen()
+                CryptoCurrency.ETHER -> presenter?.onEtherChosen()
+                CryptoCurrency.BCH -> presenter?.onBitcoinCashChosen()
             }
         }
     }
@@ -336,12 +336,12 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
             val currency = CurrencyState.getInstance().cryptoCurrency
             AccountChooserActivity.startForResult(
                 this,
-                if (CurrencyState.getInstance().cryptoCurrency == CryptoCurrencies.BTC) {
+                if (CurrencyState.getInstance().cryptoCurrency == CryptoCurrency.BTC) {
                     AccountMode.Bitcoin
                 } else {
                     AccountMode.BitcoinCash
                 },
-                if (currency == CryptoCurrencies.BTC) {
+                if (currency == CryptoCurrency.BTC) {
                     REQUEST_CODE_BTC_RECEIVING
                 } else {
                     REQUEST_CODE_BCH_RECEIVING
@@ -473,12 +473,12 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         val currency = CurrencyState.getInstance().cryptoCurrency
         AccountChooserActivity.startForResult(
             this,
-            if (CurrencyState.getInstance().cryptoCurrency == CryptoCurrencies.BTC) {
+            if (CurrencyState.getInstance().cryptoCurrency == CryptoCurrency.BTC) {
                 AccountMode.Bitcoin
             } else {
                 AccountMode.BitcoinCashSend
             },
-            if (currency == CryptoCurrencies.BTC) {
+            if (currency == CryptoCurrency.BTC) {
                 REQUEST_CODE_BTC_SENDING
             } else {
                 REQUEST_CODE_BCH_SENDING
@@ -513,7 +513,7 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
         }
     }
 
-    override fun setSelectedCurrency(cryptoCurrency: CryptoCurrencies) {
+    override fun setSelectedCurrency(cryptoCurrency: CryptoCurrency) {
         currency_header.setCurrentlySelectedCurrency(cryptoCurrency)
     }
 
@@ -968,7 +968,7 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
     override fun showTransactionSuccess(
         hash: String,
         transactionValue: Long,
-        cryptoCurrency: CryptoCurrencies
+        cryptoCurrency: CryptoCurrency
     ) {
 
         playAudio()
@@ -998,7 +998,7 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
                     setOnDismissListener { finishPage() }
                 }
 
-                if (cryptoCurrency == CryptoCurrencies.ETHER) {
+                if (cryptoCurrency == CryptoCurrency.ETHER) {
                     setMessage(getString(R.string.eth_transaction_complete))
                 }
 

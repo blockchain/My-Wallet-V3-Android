@@ -21,7 +21,7 @@ import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.androidcore.data.access.AuthEvent
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
@@ -67,7 +67,7 @@ class BalancePresenter @Inject constructor(
         onTxFeedAdapterSetup()
         subscribeToEvents()
         if (environmentSettings.environment == Environment.TESTNET) {
-            currencyState.cryptoCurrency = CryptoCurrencies.BTC
+            currencyState.cryptoCurrency = CryptoCurrency.BTC
             view.disableCurrencyHeader()
         }
     }
@@ -163,9 +163,9 @@ class BalancePresenter @Inject constructor(
     @VisibleForTesting
     internal fun updateBalancesCompletable() =
         when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> payloadDataManager.updateAllBalances()
-            CryptoCurrencies.ETHER -> ethDataManager.fetchEthAddressCompletable()
-            CryptoCurrencies.BCH -> bchDataManager.updateAllBalances()
+            CryptoCurrency.BTC -> payloadDataManager.updateAllBalances()
+            CryptoCurrency.ETHER -> ethDataManager.fetchEthAddressCompletable()
+            CryptoCurrency.BCH -> bchDataManager.updateAllBalances()
             else -> throw IllegalArgumentException("${currencyState.cryptoCurrency.unit} is not currently supported")
         }
 
@@ -190,7 +190,7 @@ class BalancePresenter @Inject constructor(
                                     }
 
                                     when (currencyState.cryptoCurrency) {
-                                        CryptoCurrencies.BTC -> {
+                                        CryptoCurrency.BTC -> {
                                             tx.totalDisplayableCrypto =
                                                 getBtcBalanceString(
                                                     true,
@@ -202,7 +202,7 @@ class BalancePresenter @Inject constructor(
                                                     tx.total.toLong()
                                                 )
                                         }
-                                        CryptoCurrencies.ETHER -> {
+                                        CryptoCurrency.ETHER -> {
                                             tx.totalDisplayableCrypto =
                                                 getEthBalanceString(
                                                     true,
@@ -214,7 +214,7 @@ class BalancePresenter @Inject constructor(
                                                     BigDecimal(tx.total)
                                                 )
                                         }
-                                        CryptoCurrencies.BCH -> {
+                                        CryptoCurrency.BCH -> {
                                             tx.totalDisplayableCrypto =
                                                 getBchBalanceString(
                                                     true,
@@ -251,7 +251,7 @@ class BalancePresenter @Inject constructor(
     /*
     Currency selected from dropdown
      */
-    internal fun onCurrencySelected(cryptoCurrency: CryptoCurrencies) {
+    internal fun onCurrencySelected(cryptoCurrency: CryptoCurrency) {
         // Set new currency state
         currencyState.cryptoCurrency = cryptoCurrency
 

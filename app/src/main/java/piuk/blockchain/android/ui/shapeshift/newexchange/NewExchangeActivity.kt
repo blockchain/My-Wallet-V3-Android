@@ -34,7 +34,7 @@ import piuk.blockchain.android.ui.chooser.AccountMode
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.shapeshift.confirmation.ShapeShiftConfirmationActivity
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
@@ -64,9 +64,9 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     override val shapeShiftApiKey: String = BuildConfig.SHAPE_SHIFT_API_KEY
     override val isBuyPermitted: Boolean = AndroidUtils.is19orHigher()
 
-    private val btcSymbol = CryptoCurrencies.BTC.symbol.toUpperCase()
-    private val ethSymbol = CryptoCurrencies.ETHER.symbol.toUpperCase()
-    private val bchSymbol = CryptoCurrencies.BCH.symbol.toUpperCase()
+    private val btcSymbol = CryptoCurrency.BTC.symbol.toUpperCase()
+    private val ethSymbol = CryptoCurrency.ETHER.symbol.toUpperCase()
+    private val bchSymbol = CryptoCurrency.BCH.symbol.toUpperCase()
     private val compositeDisposable = CompositeDisposable()
     private val defaultDecimalSeparator =
         DecimalFormatSymbols.getInstance().decimalSeparator.toString()
@@ -117,8 +117,8 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     }
 
     override fun updateUi(
-        fromCurrency: CryptoCurrencies,
-        toCurrency: CryptoCurrencies,
+        fromCurrency: CryptoCurrency,
+        toCurrency: CryptoCurrency,
         fromLabel: String,
         toLabel: String,
         fiatHint: String
@@ -133,15 +133,15 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
         edittext_to_crypto.hint = decimalFormat.format(0.0)
 
         when (fromCurrency) {
-            CryptoCurrencies.BTC -> showFromBtc()
-            CryptoCurrencies.ETHER -> showFromEth()
-            CryptoCurrencies.BCH -> showFromBch()
+            CryptoCurrency.BTC -> showFromBtc()
+            CryptoCurrency.ETHER -> showFromEth()
+            CryptoCurrency.BCH -> showFromBch()
         }
 
         when (toCurrency) {
-            CryptoCurrencies.BTC -> showToBtc()
-            CryptoCurrencies.ETHER -> showToEth()
-            CryptoCurrencies.BCH -> showToBch()
+            CryptoCurrency.BTC -> showToBtc()
+            CryptoCurrency.ETHER -> showToEth()
+            CryptoCurrency.BCH -> showToBch()
         }
     }
 

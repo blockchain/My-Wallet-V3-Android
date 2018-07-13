@@ -5,7 +5,7 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.ui.base.UiState
 import javax.inject.Inject
@@ -23,9 +23,9 @@ class SwipeToReceivePresenter @Inject constructor(
     }
 
     private val currencyList = listOf(
-        CryptoCurrencies.BTC,
-        CryptoCurrencies.ETHER,
-        CryptoCurrencies.BCH
+        CryptoCurrency.BTC,
+        CryptoCurrency.ETHER,
+        CryptoCurrency.BCH
     )
 
     private val bitcoinAddress: Single<String>
@@ -39,7 +39,7 @@ class SwipeToReceivePresenter @Inject constructor(
         currencyPosition = 0
     }
 
-    private fun onCurrencySelected(cryptoCurrency: CryptoCurrencies) {
+    private fun onCurrencySelected(cryptoCurrency: CryptoCurrency) {
         view.displayCoinType(
             stringUtils.getFormattedString(
                 R.string.swipe_receive_request,
@@ -53,12 +53,12 @@ class SwipeToReceivePresenter @Inject constructor(
         val hasAddresses: Boolean
 
         when (cryptoCurrency) {
-            CryptoCurrencies.BTC -> {
+            CryptoCurrency.BTC -> {
                 accountName = swipeToReceiveHelper.getBitcoinAccountName()
                 single = bitcoinAddress.map { "bitcoin:$it" }
                 hasAddresses = !swipeToReceiveHelper.getBitcoinReceiveAddresses().isEmpty()
             }
-            CryptoCurrencies.ETHER -> {
+            CryptoCurrency.ETHER -> {
                 accountName = swipeToReceiveHelper.getEthAccountName()
                 single = ethereumAddress
                 hasAddresses = !swipeToReceiveHelper.getEthReceiveAddress().isNullOrEmpty()

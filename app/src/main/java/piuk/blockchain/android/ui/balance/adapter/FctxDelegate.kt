@@ -12,7 +12,7 @@ import piuk.blockchain.android.data.contacts.models.ContactTransactionModel
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.android.util.StringUtils
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.utils.extensions.getContext
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -218,7 +218,7 @@ class FctxDelegate<in T>(
     }
 
     private fun getDisplayUnits(): String =
-        CryptoCurrencies.BTC.name
+        CryptoCurrency.BTC.name
 
     private class FctxViewHolder internal constructor(
         itemView: View

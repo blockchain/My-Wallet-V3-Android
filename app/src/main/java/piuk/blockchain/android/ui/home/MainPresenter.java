@@ -37,7 +37,7 @@ import piuk.blockchain.android.ui.home.models.MetadataEvent;
 import piuk.blockchain.androidcoreui.utils.AppUtil;
 import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.metadata.MetadataManager;
@@ -177,7 +177,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     void doTestnetCheck() {
         if (environmentSettings.getEnvironment().equals(Environment.TESTNET)) {
-            currencyState.setCryptoCurrency(CryptoCurrencies.BTC);
+            currencyState.setCryptoCurrency(CryptoCurrency.BTC);
             getView().showTestnetWarning();
         }
     }
@@ -458,7 +458,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
     }
 
-    void setCryptoCurrency(CryptoCurrencies cryptoCurrency) {
+    void setCryptoCurrency(CryptoCurrency cryptoCurrency) {
         currencyState.setCryptoCurrency(cryptoCurrency);
     }
 

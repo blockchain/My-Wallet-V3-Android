@@ -16,7 +16,7 @@ public class CurrencyState {
     private static CurrencyState INSTANCE;
 
     private PrefsUtil prefs;
-    private CryptoCurrencies cryptoCurrency;
+    private CryptoCurrency cryptoCurrency;
     private boolean isDisplayingCryptoCurrency;
 
     private CurrencyState() {
@@ -31,31 +31,31 @@ public class CurrencyState {
 
     public void init(PrefsUtil prefs) {
         this.prefs = prefs;
-        String value = prefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrencies.BTC.name());
+        String value = prefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name());
         try {
-            cryptoCurrency = CryptoCurrencies.valueOf(value);
+            cryptoCurrency = CryptoCurrency.valueOf(value);
         } catch (IllegalArgumentException e) {
             // It's possible that the wrong string is stored here - clear stored value
             prefs.removeValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE);
-            setCryptoCurrency(CryptoCurrencies.BTC);
+            setCryptoCurrency(CryptoCurrency.BTC);
         }
         isDisplayingCryptoCurrency = true;
     }
 
-    public CryptoCurrencies getCryptoCurrency() {
+    public CryptoCurrency getCryptoCurrency() {
         return cryptoCurrency;
     }
 
-    public void setCryptoCurrency(CryptoCurrencies cryptoCurrency) {
+    public void setCryptoCurrency(CryptoCurrency cryptoCurrency) {
         prefs.setValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, cryptoCurrency.name());
         this.cryptoCurrency = cryptoCurrency;
     }
 
     public void toggleCryptoCurrency() {
-        if (cryptoCurrency == CryptoCurrencies.BTC) {
-            cryptoCurrency = CryptoCurrencies.ETHER;
+        if (cryptoCurrency == CryptoCurrency.BTC) {
+            cryptoCurrency = CryptoCurrency.ETHER;
         } else {
-            cryptoCurrency = CryptoCurrencies.BTC;
+            cryptoCurrency = CryptoCurrency.BTC;
         }
 
         setCryptoCurrency(cryptoCurrency);

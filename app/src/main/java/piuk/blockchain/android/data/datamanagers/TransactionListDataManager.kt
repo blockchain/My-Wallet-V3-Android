@@ -6,7 +6,7 @@ import io.reactivex.Single
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
 import piuk.blockchain.android.ui.account.ItemAccount
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.transactions.TransactionListStore
 import piuk.blockchain.androidcore.data.transactions.models.BchDisplayable
@@ -35,9 +35,9 @@ class TransactionListDataManager @Inject constructor(
     ): Observable<List<Displayable>> {
 
         val observable: Observable<List<Displayable>> = when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> fetchBtcTransactions(itemAccount, limit, offset)
-            CryptoCurrencies.ETHER -> getEthereumObservable()
-            CryptoCurrencies.BCH -> fetchBchTransactions(itemAccount, limit, offset)
+            CryptoCurrency.BTC -> fetchBtcTransactions(itemAccount, limit, offset)
+            CryptoCurrency.ETHER -> getEthereumObservable()
+            CryptoCurrency.BCH -> fetchBchTransactions(itemAccount, limit, offset)
             else -> throw IllegalArgumentException("Cryptocurrency ${currencyState.cryptoCurrency.unit} not supported")
         }
 

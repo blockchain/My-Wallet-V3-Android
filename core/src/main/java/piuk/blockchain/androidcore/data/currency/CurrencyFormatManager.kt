@@ -53,9 +53,9 @@ class CurrencyFormatManager @Inject constructor(
      */
     fun getSelectedCoinMaxFractionDigits() =
         when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> currencyFormatUtil.getBtcMaxFractionDigits()
-            CryptoCurrencies.ETHER -> currencyFormatUtil.getEthMaxFractionDigits()
-            CryptoCurrencies.BCH -> currencyFormatUtil.getBchMaxFractionDigits()
+            CryptoCurrency.BTC -> currencyFormatUtil.getBtcMaxFractionDigits()
+            CryptoCurrency.ETHER -> currencyFormatUtil.getEthMaxFractionDigits()
+            CryptoCurrency.BCH -> currencyFormatUtil.getBchMaxFractionDigits()
             else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
         }
 
@@ -66,9 +66,9 @@ class CurrencyFormatManager @Inject constructor(
      */
     fun getSelectedCoinUnit() =
         when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> currencyFormatUtil.getBtcUnit()
-            CryptoCurrencies.ETHER -> currencyFormatUtil.getEthUnit()
-            CryptoCurrencies.BCH -> currencyFormatUtil.getBchUnit()
+            CryptoCurrency.BTC -> currencyFormatUtil.getBtcUnit()
+            CryptoCurrency.ETHER -> currencyFormatUtil.getEthUnit()
+            CryptoCurrency.BCH -> currencyFormatUtil.getBchUnit()
             else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
         }
 
@@ -113,9 +113,9 @@ class CurrencyFormatManager @Inject constructor(
             getConvertedCoinValue(coinValue, convertEthDenomination, convertBtcDenomination)
 
         return when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> currencyFormatUtil.formatBtc(convertedCoinValue)
-            CryptoCurrencies.ETHER -> currencyFormatUtil.formatEth(convertedCoinValue)
-            CryptoCurrencies.BCH -> currencyFormatUtil.formatBch(convertedCoinValue)
+            CryptoCurrency.BTC -> currencyFormatUtil.formatBtc(convertedCoinValue)
+            CryptoCurrency.ETHER -> currencyFormatUtil.formatEth(convertedCoinValue)
+            CryptoCurrency.BCH -> currencyFormatUtil.formatBch(convertedCoinValue)
             else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
         }
     }
@@ -129,9 +129,9 @@ class CurrencyFormatManager @Inject constructor(
             getConvertedCoinValue(coinValue, convertEthDenomination, convertBtcDenomination)
 
         return when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> currencyFormatUtil.formatBtcWithUnit(convertedCoinValue)
-            CryptoCurrencies.ETHER -> currencyFormatUtil.formatEthWithUnit(convertedCoinValue)
-            CryptoCurrencies.BCH -> currencyFormatUtil.formatBchWithUnit(convertedCoinValue)
+            CryptoCurrency.BTC -> currencyFormatUtil.formatBtcWithUnit(convertedCoinValue)
+            CryptoCurrency.ETHER -> currencyFormatUtil.formatEthWithUnit(convertedCoinValue)
+            CryptoCurrency.BCH -> currencyFormatUtil.formatBchWithUnit(convertedCoinValue)
             else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
         }
     }
@@ -143,13 +143,13 @@ class CurrencyFormatManager @Inject constructor(
         val fiatAmount = fiatText.toSafeDouble(locale).toBigDecimal()
 
         return when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> currencyFormatUtil.formatBtc(
+            CryptoCurrency.BTC -> currencyFormatUtil.formatBtc(
                 exchangeRateDataManager.getBtcFromFiat(fiatAmount, fiatCountryCode)
             )
-            CryptoCurrencies.ETHER -> currencyFormatUtil.formatEth(
+            CryptoCurrency.ETHER -> currencyFormatUtil.formatEth(
                 exchangeRateDataManager.getEthFromFiat(fiatAmount, fiatCountryCode)
             )
-            CryptoCurrencies.BCH -> currencyFormatUtil.formatBch(
+            CryptoCurrency.BCH -> currencyFormatUtil.formatBch(
                 exchangeRateDataManager.getBchFromFiat(fiatAmount, fiatCountryCode)
             )
             else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
@@ -188,13 +188,13 @@ class CurrencyFormatManager @Inject constructor(
     ): BigDecimal {
         return if (convertEthDenomination != null) {
             when (currencyState.cryptoCurrency) {
-                CryptoCurrencies.ETHER -> getFiatValueFromEth(coinValue, convertEthDenomination)
+                CryptoCurrency.ETHER -> getFiatValueFromEth(coinValue, convertEthDenomination)
                 else -> throw IllegalArgumentException("${currencyState.cryptoCurrency} denomination not supported.")
             }
         } else {
             when (currencyState.cryptoCurrency) {
-                CryptoCurrencies.BTC -> getFiatValueFromBtc(coinValue, convertBtcDenomination)
-                CryptoCurrencies.BCH -> getFiatValueFromBch(coinValue, convertBtcDenomination)
+                CryptoCurrency.BTC -> getFiatValueFromBtc(coinValue, convertBtcDenomination)
+                CryptoCurrency.BCH -> getFiatValueFromBch(coinValue, convertBtcDenomination)
                 else -> throw IllegalArgumentException("${currencyState.cryptoCurrency} denomination not supported.")
             }
         }

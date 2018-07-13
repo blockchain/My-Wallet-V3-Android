@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_asset_price_card.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.ui.dashboard.AssetPriceCardState
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
@@ -20,7 +20,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class AssetPriceCardDelegate<in T>(
     private val context: Context,
-    private val assetSelector: (CryptoCurrencies) -> Unit
+    private val assetSelector: (CryptoCurrency) -> Unit
 ) : AdapterDelegate<T> {
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
@@ -40,7 +40,7 @@ class AssetPriceCardDelegate<in T>(
 
     private class AssetPriceCardViewHolder internal constructor(
         itemView: View,
-        private val assetSelector: (CryptoCurrencies) -> Unit
+        private val assetSelector: (CryptoCurrency) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var price: TextView = itemView.textview_price

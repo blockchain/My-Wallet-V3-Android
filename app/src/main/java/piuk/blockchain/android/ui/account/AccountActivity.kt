@@ -41,7 +41,7 @@ import piuk.blockchain.android.ui.backup.transfer.ConfirmFundsTransferDialogFrag
 import piuk.blockchain.android.ui.balance.BalanceFragment
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.ui.zxing.Intents
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
@@ -166,7 +166,7 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
         importAddress()
     }
 
-    override fun onAccountClicked(cryptoCurrency: CryptoCurrencies, correctedPosition: Int) {
+    override fun onAccountClicked(cryptoCurrency: CryptoCurrency, correctedPosition: Int) {
         onRowClick(cryptoCurrency, correctedPosition)
     }
 
@@ -192,7 +192,7 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
             .check()
     }
 
-    private fun onRowClick(cryptoCurrency: CryptoCurrencies, position: Int) {
+    private fun onRowClick(cryptoCurrency: CryptoCurrency, position: Int) {
         AccountEditActivity.startForResult(
             this,
             getAccountPosition(cryptoCurrency, position),
@@ -202,8 +202,8 @@ class AccountActivity : BaseMvpActivity<AccountView, AccountPresenter>(), Accoun
         )
     }
 
-    private fun getAccountPosition(cryptoCurrency: CryptoCurrencies, position: Int): Int =
-        if (cryptoCurrency == CryptoCurrencies.BTC) {
+    private fun getAccountPosition(cryptoCurrency: CryptoCurrency, position: Int): Int =
+        if (cryptoCurrency == CryptoCurrency.BTC) {
             if (position < presenter.accountSize) position else -1
         } else {
             position

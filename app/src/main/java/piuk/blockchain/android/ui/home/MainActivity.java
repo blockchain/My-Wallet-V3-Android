@@ -87,7 +87,7 @@ import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog;
@@ -159,30 +159,30 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             if (intent.getAction().equals(ACTION_SEND) && getActivity() != null) {
                 requestScan();
             } else if (intent.getAction().equals(ACTION_RECEIVE) && getActivity() != null) {
-                getPresenter().setCryptoCurrency(CryptoCurrencies.BTC);
+                getPresenter().setCryptoCurrency(CryptoCurrency.BTC);
                 binding.bottomNavigation.setCurrentItem(3);
             } else if (intent.getAction().equals(ACTION_RECEIVE_ETH) && getActivity() != null) {
-                getPresenter().setCryptoCurrency(CryptoCurrencies.ETHER);
+                getPresenter().setCryptoCurrency(CryptoCurrency.ETHER);
                 binding.bottomNavigation.setCurrentItem(3);
             } else if (intent.getAction().equals(ACTION_RECEIVE_BCH) && getActivity() != null) {
-                getPresenter().setCryptoCurrency(CryptoCurrencies.BCH);
+                getPresenter().setCryptoCurrency(CryptoCurrency.BCH);
                 binding.bottomNavigation.setCurrentItem(3);
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
                 getPresenter().routeToBuySell();
             } else if (intent.getAction().equals(ACTION_SHAPESHIFT) && getActivity() != null) {
                 ShapeShiftActivity.start(MainActivity.this);
             } else if (intent.getAction().equals(ACTION_BTC_BALANCE)) {
-                getPresenter().setCryptoCurrency(CryptoCurrencies.BTC);
+                getPresenter().setCryptoCurrency(CryptoCurrency.BTC);
                 // This forces the balance page to reload
                 paymentMade = true;
                 binding.bottomNavigation.setCurrentItem(2);
             } else if (intent.getAction().equals(ACTION_ETH_BALANCE)) {
-                getPresenter().setCryptoCurrency(CryptoCurrencies.ETHER);
+                getPresenter().setCryptoCurrency(CryptoCurrency.ETHER);
                 // This forces the balance page to reload
                 paymentMade = true;
                 binding.bottomNavigation.setCurrentItem(2);
             } else if (intent.getAction().equals(ACTION_BCH_BALANCE)) {
-                getPresenter().setCryptoCurrency(CryptoCurrencies.BCH);
+                getPresenter().setCryptoCurrency(CryptoCurrency.BCH);
                 // This forces the balance page to reload
                 paymentMade = true;
                 binding.bottomNavigation.setCurrentItem(2);
@@ -466,11 +466,11 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                     .setMessage(R.string.confirm_currency_message)
                     .setCancelable(true)
                     .setPositiveButton(R.string.bitcoin_cash, (dialog, which) -> {
-                        getPresenter().setCryptoCurrency(CryptoCurrencies.BCH);
+                        getPresenter().setCryptoCurrency(CryptoCurrency.BCH);
                         startSendFragment(strResult);
                     })
                     .setNegativeButton(R.string.bitcoin, (dialog, which) -> {
-                        getPresenter().setCryptoCurrency(CryptoCurrencies.BTC);
+                        getPresenter().setCryptoCurrency(CryptoCurrency.BTC);
                         startSendFragment(strResult);
                     })
                     .create()

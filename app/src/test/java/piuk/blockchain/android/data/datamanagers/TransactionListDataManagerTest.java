@@ -23,7 +23,7 @@ import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel;
@@ -79,7 +79,7 @@ public class TransactionListDataManagerTest extends RxTest {
         ItemAccount itemAccount = new ItemAccount();
         itemAccount.setAccountObject(account);
         itemAccount.setType(ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY);
-        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         // Act
         TestObserver<List<Displayable>> testObserver = subject.fetchTransactions(itemAccount, 0, 0).test();
         // Assert
@@ -106,7 +106,7 @@ public class TransactionListDataManagerTest extends RxTest {
         ItemAccount itemAccount = new ItemAccount();
         itemAccount.setAccountObject(account);
         itemAccount.setType(ItemAccount.TYPE.ALL_LEGACY);
-        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         // Act
         TestObserver<List<Displayable>> testObserver = subject.fetchTransactions(itemAccount, 0, 0).test();
         // Assert
@@ -135,7 +135,7 @@ public class TransactionListDataManagerTest extends RxTest {
         itemAccount.setAccountObject(account);
         itemAccount.setType(ItemAccount.TYPE.SINGLE_ACCOUNT);
         itemAccount.setAddress(xPub);
-        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         // Act
         TestObserver<List<Displayable>> testObserver =
                 subject.fetchTransactions(itemAccount, 0, 0).test();
@@ -165,7 +165,7 @@ public class TransactionListDataManagerTest extends RxTest {
         itemAccount.setAccountObject(account);
         itemAccount.setType(ItemAccount.TYPE.ALL_LEGACY);
         itemAccount.setAddress(xPub);
-        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         // Act
         TestObserver<List<Displayable>> testObserver =
                 subject.fetchTransactions(itemAccount, 0, 0).test();
@@ -185,10 +185,10 @@ public class TransactionListDataManagerTest extends RxTest {
         when(ethDataManager.getLatestBlock()).thenReturn(Observable.just(latestBlock));
         when(ethDataManager.getEthTransactions()).thenReturn(Observable.just(transaction));
         when(ethDataManager.getEthResponseModel()).thenReturn(ethModel);
-        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         ItemAccount itemAccount = new ItemAccount();
         itemAccount.setType(ItemAccount.TYPE.SINGLE_ACCOUNT);
-        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(currencyState.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         // Act
         TestObserver<List<Displayable>> testObserver =
                 subject.fetchTransactions(itemAccount, 0, 0).test();

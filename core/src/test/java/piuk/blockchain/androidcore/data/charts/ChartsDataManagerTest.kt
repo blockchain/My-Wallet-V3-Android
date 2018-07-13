@@ -13,7 +13,7 @@ import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Test
 import piuk.blockchain.android.testutils.RxTest
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 
 class ChartsDataManagerTest : RxTest() {
@@ -30,7 +30,7 @@ class ChartsDataManagerTest : RxTest() {
     @Test
     fun `getAllTimePrice BTC`() {
         // Arrange
-        val btc = CryptoCurrencies.BTC
+        val btc = CryptoCurrency.BTC
         val fiat = "USD"
         whenever(
             historicPriceApi.getHistoricPriceSeries(
@@ -57,7 +57,7 @@ class ChartsDataManagerTest : RxTest() {
     @Test
     fun `getAllTimePrice ETH`() {
         // Arrange
-        val eth = CryptoCurrencies.ETHER
+        val eth = CryptoCurrency.ETHER
         val fiat = "USD"
         whenever(
             historicPriceApi.getHistoricPriceSeries(
@@ -84,7 +84,7 @@ class ChartsDataManagerTest : RxTest() {
     @Test
     fun getYearPrice() {
         // Arrange
-        val btc = CryptoCurrencies.BTC
+        val btc = CryptoCurrency.BTC
         val fiat = "USD"
         whenever(
             historicPriceApi.getHistoricPriceSeries(
@@ -111,7 +111,7 @@ class ChartsDataManagerTest : RxTest() {
     @Test
     fun getMonthPrice() {
         // Arrange
-        val btc = CryptoCurrencies.BTC
+        val btc = CryptoCurrency.BTC
         val fiat = "USD"
         whenever(
             historicPriceApi.getHistoricPriceSeries(
@@ -138,7 +138,7 @@ class ChartsDataManagerTest : RxTest() {
     @Test
     fun getWeekPrice() {
         // Arrange
-        val btc = CryptoCurrencies.BTC
+        val btc = CryptoCurrency.BTC
         val fiat = "USD"
         whenever(
             historicPriceApi.getHistoricPriceSeries(
@@ -165,7 +165,7 @@ class ChartsDataManagerTest : RxTest() {
     @Test
     fun getDayPrice() {
         // Arrange
-        val btc = CryptoCurrencies.BTC
+        val btc = CryptoCurrency.BTC
         val fiat = "USD"
         whenever(
             historicPriceApi.getHistoricPriceSeries(

@@ -33,7 +33,7 @@ import javax.inject.Inject;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.databinding.ActivityTransactionDetailsBinding;
 import piuk.blockchain.android.injection.Injector;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.androidcoreui.utils.ViewUtils;
@@ -200,7 +200,7 @@ public class TransactionDetailActivity extends BaseMvpActivity<TransactionDetail
     }
 
     @Override
-    public void setStatus(@NonNull CryptoCurrencies cryptoCurrency,
+    public void setStatus(@NonNull CryptoCurrency cryptoCurrency,
                           @Nullable String status,
                           @Nullable String hash) {
 
@@ -252,12 +252,12 @@ public class TransactionDetailActivity extends BaseMvpActivity<TransactionDetail
         switch (item.getItemId()) {
             case R.id.action_share:
                 String url;
-                CryptoCurrencies transactionType = getPresenter().getTransactionType();
-                if (transactionType == CryptoCurrencies.BTC) {
+                CryptoCurrency transactionType = getPresenter().getTransactionType();
+                if (transactionType == CryptoCurrency.BTC) {
                     url = BTC_URL;
-                } else if (transactionType == CryptoCurrencies.ETHER) {
+                } else if (transactionType == CryptoCurrency.ETHER) {
                     url = ETH_URL;
-                } else if (transactionType == CryptoCurrencies.BCH) {
+                } else if (transactionType == CryptoCurrency.BCH) {
                     url = BCH_URL;
                 } else
                     throw new IllegalArgumentException("Unknown currency type " + transactionType.getUnit());

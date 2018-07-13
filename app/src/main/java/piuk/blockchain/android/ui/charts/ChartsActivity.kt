@@ -10,18 +10,18 @@ import kotlinx.android.synthetic.main.activity_graphs.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.androidcore.data.charts.TimeSpan
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
 class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
 
-    private val cryptoCurrency: CryptoCurrencies by unsafeLazy {
-        intent.getSerializableExtra(EXTRA_CRYPTOCURRENCY) as CryptoCurrencies
+    private val cryptoCurrency: CryptoCurrency by unsafeLazy {
+        intent.getSerializableExtra(EXTRA_CRYPTOCURRENCY) as CryptoCurrency
     }
-    private val bitcoin = ChartsFragment.newInstance(CryptoCurrencies.BTC)
-    private val ether = ChartsFragment.newInstance(CryptoCurrencies.ETHER)
-    private val bitcoinCash = ChartsFragment.newInstance(CryptoCurrencies.BCH)
+    private val bitcoin = ChartsFragment.newInstance(CryptoCurrency.BTC)
+    private val ether = ChartsFragment.newInstance(CryptoCurrency.ETHER)
+    private val bitcoinCash = ChartsFragment.newInstance(CryptoCurrency.BCH)
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -46,9 +46,9 @@ class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
         }
 
         when (cryptoCurrency) {
-            CryptoCurrencies.BTC -> viewpager.currentItem = 0
-            CryptoCurrencies.ETHER -> viewpager.currentItem = 1
-            CryptoCurrencies.BCH -> viewpager.currentItem = 2
+            CryptoCurrency.BTC -> viewpager.currentItem = 0
+            CryptoCurrency.ETHER -> viewpager.currentItem = 1
+            CryptoCurrency.BCH -> viewpager.currentItem = 2
         }
 
         button_close.setOnClickListener { finish() }
@@ -64,7 +64,7 @@ class ChartsActivity : BaseAuthActivity(), TimeSpanUpdateListener {
 
         private const val EXTRA_CRYPTOCURRENCY = "piuk.blockchain.android.EXTRA_CRYPTOCURRENCY"
 
-        fun start(context: Context, cryptoCurrency: CryptoCurrencies) {
+        fun start(context: Context, cryptoCurrency: CryptoCurrency) {
             val intent = Intent(context, ChartsActivity::class.java).apply {
                 putExtra(EXTRA_CRYPTOCURRENCY, cryptoCurrency)
             }

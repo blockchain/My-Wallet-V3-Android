@@ -37,7 +37,7 @@ import piuk.blockchain.androidcore.data.transactions.models.EthDisplayable;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
@@ -191,7 +191,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     public void onViewReadyTransactionFoundInList() throws Exception {
         // Arrange
         Displayable displayableToFind = mock(BtcDisplayable.class);
-        when(displayableToFind.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayableToFind.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayableToFind.getDirection()).thenReturn(TransactionSummary.Direction.TRANSFERRED);
         when(displayableToFind.getHash()).thenReturn("txMoved_hash");
         when(displayableToFind.getTotal()).thenReturn(BigInteger.valueOf(1_000L));
@@ -246,7 +246,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         subject.onViewReady();
         // Assert
         verify(activity).getPageIntent();
-        verify(activity).setStatus(CryptoCurrencies.BTC, "Pending (0/3 Confirmations)", "txMoved_hash");
+        verify(activity).setStatus(CryptoCurrency.BTC, "Pending (0/3 Confirmations)", "txMoved_hash");
         verify(activity).setTransactionType(TransactionSummary.Direction.TRANSFERRED);
         verify(activity).setTransactionColour(R.color.product_gray_transferred_50);
         verify(activity).setDescription(null);
@@ -267,7 +267,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     public void onViewReadyTransactionFoundViaHash() throws Exception {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.TRANSFERRED);
         when(displayable.getHash()).thenReturn("txMoved_hash");
         when(displayable.getTotal()).thenReturn(BigInteger.valueOf(1_000L));
@@ -317,7 +317,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         subject.onViewReady();
         // Assert
         verify(activity).getPageIntent();
-        verify(activity).setStatus(CryptoCurrencies.BTC, "Pending (0/3 Confirmations)", "txMoved_hash");
+        verify(activity).setStatus(CryptoCurrency.BTC, "Pending (0/3 Confirmations)", "txMoved_hash");
         verify(activity).setTransactionType(TransactionSummary.Direction.TRANSFERRED);
         verify(activity).setTransactionColour(R.color.product_gray_transferred_50);
         verify(activity).setDescription(null);
@@ -338,7 +338,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     public void onViewReadyTransactionFoundViaHashEthereum() throws Exception {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.SENT);
         when(displayable.getHash()).thenReturn("hash");
         when(displayable.getTotal()).thenReturn(BigInteger.valueOf(1_000L));
@@ -390,7 +390,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         subject.onViewReady();
         // Assert
         verify(activity).getPageIntent();
-        verify(activity).setStatus(CryptoCurrencies.ETHER, "Pending (0/12 Confirmations)", "hash");
+        verify(activity).setStatus(CryptoCurrency.ETHER, "Pending (0/12 Confirmations)", "hash");
         verify(activity).setTransactionType(TransactionSummary.Direction.SENT);
         verify(activity).setTransactionColour(R.color.product_red_sent_50);
         verify(activity).setDescription(anyString());
@@ -409,7 +409,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     public void getTransactionValueStringUsd() {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.SENT);
         when(displayable.getTotal()).thenReturn(BigInteger.valueOf(1_000L));
         BigDecimal price = BigDecimal.valueOf(1000.00);
@@ -438,7 +438,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     public void getTransactionValueStringReceivedEth() {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.RECEIVED);
         when(displayable.getTotal()).thenReturn(BigInteger.valueOf(1_000L));
         BigDecimal price = BigDecimal.valueOf(1000.00);
@@ -466,7 +466,7 @@ public class TransactionDetailPresenterTest extends RxTest {
     public void getTransactionValueStringTransferred() {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.SENT);
         when(displayable.getTotal()).thenReturn(BigInteger.valueOf(1_000L));
         BigDecimal price = BigDecimal.valueOf(1000.00);
@@ -492,7 +492,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         subject.displayable = displayable;
         when(payloadDataManager.updateTransactionNotes(anyString(), anyString()))
                 .thenReturn(Completable.complete());
@@ -510,7 +510,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         subject.displayable = displayable;
         when(ethDataManager.updateTransactionNotes(anyString(), anyString()))
                 .thenReturn(Completable.complete());
@@ -528,7 +528,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         subject.displayable = displayable;
         when(payloadDataManager.updateTransactionNotes(anyString(), anyString()))
                 .thenReturn(Completable.error(new Throwable()));
@@ -545,7 +545,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BCH);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BCH);
         subject.displayable = displayable;
         when(ethDataManager.updateTransactionNotes(anyString(), anyString()))
                 .thenReturn(Completable.complete());
@@ -559,7 +559,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         subject.displayable = displayable;
         when(payloadDataManager.getTransactionNotes("hash")).thenReturn("note");
         // Act
@@ -574,7 +574,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         subject.displayable = displayable;
         when(ethDataManager.getTransactionNotes("hash")).thenReturn("note");
         // Act
@@ -589,7 +589,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BchDisplayable.class);
         when(displayable.getHash()).thenReturn("hash");
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BCH);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BCH);
         subject.displayable = displayable;
         // Act
         String value = subject.getTransactionNote();
@@ -615,9 +615,9 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(stringUtils.getString(R.string.transaction_detail_pending))
                 .thenReturn("Pending (%1$s/%2$s Confirmations)");
         // Act
-        subject.setConfirmationStatus(CryptoCurrencies.ETHER, "hash", 0);
+        subject.setConfirmationStatus(CryptoCurrency.ETHER, "hash", 0);
         // Assert
-        verify(activity).setStatus(CryptoCurrencies.ETHER, "Pending (0/12 Confirmations)", "hash");
+        verify(activity).setStatus(CryptoCurrency.ETHER, "Pending (0/12 Confirmations)", "hash");
         verifyNoMoreInteractions(activity);
     }
 
@@ -626,9 +626,9 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         when(stringUtils.getString(R.string.transaction_detail_confirmed)).thenReturn("Confirmed");
         // Act
-        subject.setConfirmationStatus(CryptoCurrencies.BTC, "hash", 3);
+        subject.setConfirmationStatus(CryptoCurrency.BTC, "hash", 3);
         // Assert
-        verify(activity).setStatus(CryptoCurrencies.BTC, "Confirmed", "hash");
+        verify(activity).setStatus(CryptoCurrency.BTC, "Confirmed", "hash");
         verifyNoMoreInteractions(activity);
     }
 
@@ -637,7 +637,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getConfirmations()).thenReturn(0);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.TRANSFERRED);
         // Act
         subject.setTransactionColor(displayable);
@@ -651,7 +651,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getConfirmations()).thenReturn(3);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.TRANSFERRED);
         // Act
         subject.setTransactionColor(displayable);
@@ -665,7 +665,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getConfirmations()).thenReturn(2);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.SENT);
         // Act
         subject.setTransactionColor(displayable);
@@ -679,7 +679,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getConfirmations()).thenReturn(3);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.SENT);
         // Act
         subject.setTransactionColor(displayable);
@@ -693,7 +693,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(EthDisplayable.class);
         when(displayable.getConfirmations()).thenReturn(7);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.ETHER);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.ETHER);
         when(displayable.getDirection()).thenReturn(TransactionSummary.Direction.RECEIVED);
         // Act
         subject.setTransactionColor(displayable);
@@ -707,7 +707,7 @@ public class TransactionDetailPresenterTest extends RxTest {
         // Arrange
         Displayable displayable = mock(BtcDisplayable.class);
         when(displayable.getConfirmations()).thenReturn(3);
-        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrencies.BTC);
+        when(displayable.getCryptoCurrency()).thenReturn(CryptoCurrency.BTC);
         // Act
         subject.setTransactionColor(displayable);
         // Assert

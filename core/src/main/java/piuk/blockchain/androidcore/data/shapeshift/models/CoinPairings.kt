@@ -1,7 +1,7 @@
 package piuk.blockchain.androidcore.data.shapeshift.models
 
 import info.blockchain.wallet.shapeshift.ShapeShiftPairs
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 
 /**
  * For strict type checking and convenience.
@@ -16,23 +16,23 @@ enum class CoinPairings(val pairCode: String) {
 
     companion object {
 
-        fun getPair(fromCurrency: CryptoCurrencies, toCurrency: CryptoCurrencies): CoinPairings =
+        fun getPair(fromCurrency: CryptoCurrency, toCurrency: CryptoCurrency): CoinPairings =
             when (fromCurrency) {
-                CryptoCurrencies.BTC -> when (toCurrency) {
-                    CryptoCurrencies.ETHER -> BTC_TO_ETH
-                    CryptoCurrencies.BCH -> BTC_TO_BCH
+                CryptoCurrency.BTC -> when (toCurrency) {
+                    CryptoCurrency.ETHER -> BTC_TO_ETH
+                    CryptoCurrency.BCH -> BTC_TO_BCH
                     else ->
                         throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
                 }
-                CryptoCurrencies.ETHER -> when (toCurrency) {
-                    CryptoCurrencies.BTC -> ETH_TO_BTC
-                    CryptoCurrencies.BCH -> ETH_TO_BCH
+                CryptoCurrency.ETHER -> when (toCurrency) {
+                    CryptoCurrency.BTC -> ETH_TO_BTC
+                    CryptoCurrency.BCH -> ETH_TO_BCH
                     else ->
                         throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
                 }
-                CryptoCurrencies.BCH -> when (toCurrency) {
-                    CryptoCurrencies.BTC -> BCH_TO_BTC
-                    CryptoCurrencies.ETHER -> BCH_TO_ETH
+                CryptoCurrency.BCH -> when (toCurrency) {
+                    CryptoCurrency.BTC -> BCH_TO_BTC
+                    CryptoCurrency.ETHER -> BCH_TO_ETH
                     else ->
                         throw IllegalArgumentException("Invalid pairing ${toCurrency.symbol} + ${fromCurrency.symbol}")
                 }

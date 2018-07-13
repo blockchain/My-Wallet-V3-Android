@@ -17,9 +17,9 @@ class CurrencyFormatUtil @Inject constructor() {
     private lateinit var fiatFormat: DecimalFormat
     private lateinit var ethShortFormat: DecimalFormat
 
-    private val btcUnit = CryptoCurrencies.BTC.symbol
-    private val bchUnit = CryptoCurrencies.BCH.symbol
-    private val ethUnit = CryptoCurrencies.ETHER.symbol
+    private val btcUnit = CryptoCurrency.BTC.symbol
+    private val bchUnit = CryptoCurrency.BCH.symbol
+    private val ethUnit = CryptoCurrency.ETHER.symbol
 
     private val maxEthShortDecimalLength = 8
     private val maxBtcDecimalLength = 8

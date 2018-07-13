@@ -16,7 +16,7 @@ import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
@@ -70,16 +70,16 @@ class ReceivePresenter @Inject internal constructor(
         } else view.hideContactsIntroduction()
 
         if (environmentSettings.environment == Environment.TESTNET) {
-            currencyState.cryptoCurrency = CryptoCurrencies.BTC
+            currencyState.cryptoCurrency = CryptoCurrency.BTC
             view.disableCurrencyHeader()
         }
     }
 
     internal fun onResume(defaultAccountPosition: Int) {
         when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.BTC -> onSelectDefault(defaultAccountPosition)
-            CryptoCurrencies.ETHER -> onEthSelected()
-            CryptoCurrencies.BCH -> onSelectBchDefault()
+            CryptoCurrency.BTC -> onSelectDefault(defaultAccountPosition)
+            CryptoCurrency.ETHER -> onEthSelected()
+            CryptoCurrency.BCH -> onSelectBchDefault()
             else -> throw IllegalArgumentException("${currencyState.cryptoCurrency.unit} is not currently supported")
         }
     }
@@ -146,7 +146,7 @@ class ReceivePresenter @Inject internal constructor(
     }
 
     internal fun onAccountSelected(account: Account) {
-        currencyState.cryptoCurrency = CryptoCurrencies.BTC
+        currencyState.cryptoCurrency = CryptoCurrency.BTC
         view.setSelectedCurrency(currencyState.cryptoCurrency)
         selectedAccount = account
         selectedBchAccount = null
@@ -169,7 +169,7 @@ class ReceivePresenter @Inject internal constructor(
     }
 
     internal fun onEthSelected() {
-        currencyState.cryptoCurrency = CryptoCurrencies.ETHER
+        currencyState.cryptoCurrency = CryptoCurrency.ETHER
         compositeDisposable.clear()
         view.setSelectedCurrency(currencyState.cryptoCurrency)
         selectedAccount = null
@@ -193,7 +193,7 @@ class ReceivePresenter @Inject internal constructor(
     }
 
     internal fun onBchAccountSelected(account: GenericMetadataAccount) {
-        currencyState.cryptoCurrency = CryptoCurrencies.BCH
+        currencyState.cryptoCurrency = CryptoCurrency.BCH
         view.setSelectedCurrency(currencyState.cryptoCurrency)
         selectedAccount = null
         selectedBchAccount = account
@@ -250,7 +250,7 @@ class ReceivePresenter @Inject internal constructor(
     }
 
     internal fun getSelectedAccountPosition(): Int {
-        return if (currencyState.cryptoCurrency == CryptoCurrencies.ETHER) {
+        return if (currencyState.cryptoCurrency == CryptoCurrency.ETHER) {
             -1
         } else {
             val position = payloadDataManager.accounts.asIterable()
@@ -279,7 +279,7 @@ class ReceivePresenter @Inject internal constructor(
         val satoshis = getSatoshisFromText(view.getBtcAmount())
 
         cryptoAmount = getTextFromSatoshis(satoshis.toLong())
-        this.cryptoUnit = CryptoCurrencies.BTC.name
+        this.cryptoUnit = CryptoCurrency.BTC.name
         this.fiatUnit = fiatUnit
 
         fiatAmount = currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(
@@ -309,7 +309,7 @@ class ReceivePresenter @Inject internal constructor(
     internal fun updateFiatTextField(bitcoin: String) {
 
         when (currencyState.cryptoCurrency) {
-            CryptoCurrencies.ETHER ->
+            CryptoCurrency.ETHER ->
                 view.updateFiatTextField(
                     currencyFormatManager.getFormattedFiatValueFromCoinValueInputText(
                         coinInputText = bitcoin,

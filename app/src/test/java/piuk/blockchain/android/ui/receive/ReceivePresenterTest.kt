@@ -33,7 +33,7 @@ import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
@@ -278,11 +278,11 @@ class ReceivePresenterTest {
         whenever(payloadDataManager.getNextReceiveAddress(account))
             .thenReturn(Observable.just(address))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         // Act
         subject.onAccountSelected(account)
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.BTC)
+        verify(activity).setSelectedCurrency(CryptoCurrency.BTC)
         verify(activity).getBtcAmount()
         verify(activity).updateReceiveAddress(address)
         verify(activity).updateReceiveLabel(label)
@@ -293,7 +293,7 @@ class ReceivePresenterTest {
         verify(payloadDataManager).getNextReceiveAddress(account)
         verify(payloadDataManager).updateAllTransactions()
         verifyNoMoreInteractions(payloadDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.BTC
+        verify(currencyState).cryptoCurrency = CryptoCurrency.BTC
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` account
@@ -309,11 +309,11 @@ class ReceivePresenterTest {
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
         whenever(payloadDataManager.getNextReceiveAddress(account))
             .thenReturn(Observable.error { Throwable() })
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         // Act
         subject.onAccountSelected(account)
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.BTC)
+        verify(activity).setSelectedCurrency(CryptoCurrency.BTC)
         verify(activity).showQrLoading()
         verify(activity).updateReceiveLabel(label)
         verify(activity).showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR)
@@ -321,7 +321,7 @@ class ReceivePresenterTest {
         verify(payloadDataManager).updateAllTransactions()
         verify(payloadDataManager).getNextReceiveAddress(account)
         verifyNoMoreInteractions(payloadDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.BTC
+        verify(currencyState).cryptoCurrency = CryptoCurrency.BTC
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` account
@@ -340,17 +340,17 @@ class ReceivePresenterTest {
         whenever(ethResponse.account).thenReturn(ethAccount)
         whenever(qrCodeDataManager.generateQrCode(anyString(), anyInt()))
             .thenReturn(Observable.empty())
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
         // Act
         subject.onEthSelected()
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.ETHER)
+        verify(activity).setSelectedCurrency(CryptoCurrency.ETHER)
         verify(activity).updateReceiveAddress(ethAccount)
         verify(activity).showQrLoading()
         verifyNoMoreInteractions(activity)
         verify(qrCodeDataManager).generateQrCode(anyString(), anyInt())
         verifyNoMoreInteractions(qrCodeDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.ETHER
+        verify(currencyState).cryptoCurrency = CryptoCurrency.ETHER
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` null
@@ -381,13 +381,13 @@ class ReceivePresenterTest {
         whenever(bchDataManager.getWalletTransactions(50, 0))
             .thenReturn(Observable.just(emptyList()))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
         whenever(environmentSettings.bitcoinCashNetworkParameters)
             .thenReturn(BitcoinCashMainNetParams.get())
         // Act
         subject.onBchAccountSelected(account)
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.BCH)
+        verify(activity).setSelectedCurrency(CryptoCurrency.BCH)
         verify(activity).updateReceiveAddress(bech32Display)
         verify(activity).updateReceiveLabel(label)
         verify(activity, times(2)).showQrLoading()
@@ -399,7 +399,7 @@ class ReceivePresenterTest {
         verify(bchDataManager).getNextReceiveAddress(0)
         verify(bchDataManager).getWalletTransactions(50, 0)
         verifyNoMoreInteractions(payloadDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.BCH
+        verify(currencyState).cryptoCurrency = CryptoCurrency.BCH
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` null
@@ -431,13 +431,13 @@ class ReceivePresenterTest {
         whenever(bchDataManager.getWalletTransactions(50, 0))
             .thenReturn(Observable.just(emptyList()))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
         whenever(environmentSettings.bitcoinCashNetworkParameters)
             .thenReturn(BitcoinCashMainNetParams.get())
         // Act
         subject.onSelectBchDefault()
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.BCH)
+        verify(activity).setSelectedCurrency(CryptoCurrency.BCH)
         verify(activity).updateReceiveAddress(bech32Display)
         verify(activity).updateReceiveLabel(label)
         verify(activity, times(2)).showQrLoading()
@@ -450,7 +450,7 @@ class ReceivePresenterTest {
         verify(bchDataManager).getNextReceiveAddress(0)
         verify(bchDataManager).getWalletTransactions(50, 0)
         verifyNoMoreInteractions(payloadDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.BCH
+        verify(currencyState).cryptoCurrency = CryptoCurrency.BCH
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` null
@@ -472,11 +472,11 @@ class ReceivePresenterTest {
         whenever(payloadDataManager.getNextReceiveAddress(account))
             .thenReturn(Observable.just(address))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         // Act
         subject.onSelectDefault(accountPosition)
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.BTC)
+        verify(activity).setSelectedCurrency(CryptoCurrency.BTC)
         verify(activity).getBtcAmount()
         verify(activity).updateReceiveAddress(address)
         verify(activity).updateReceiveLabel(label)
@@ -488,7 +488,7 @@ class ReceivePresenterTest {
         verify(payloadDataManager).getAccount(accountPosition)
         verify(payloadDataManager).updateAllTransactions()
         verifyNoMoreInteractions(payloadDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.BTC
+        verify(currencyState).cryptoCurrency = CryptoCurrency.BTC
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` account
@@ -510,11 +510,11 @@ class ReceivePresenterTest {
         whenever(payloadDataManager.getNextReceiveAddress(account))
             .thenReturn(Observable.just(address))
         whenever(payloadDataManager.updateAllTransactions()).thenReturn(Completable.complete())
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         // Act
         subject.onSelectDefault(accountPosition)
         // Assert
-        verify(activity).setSelectedCurrency(CryptoCurrencies.BTC)
+        verify(activity).setSelectedCurrency(CryptoCurrency.BTC)
         verify(activity).getBtcAmount()
         verify(activity).updateReceiveAddress(address)
         verify(activity).updateReceiveLabel(label)
@@ -526,7 +526,7 @@ class ReceivePresenterTest {
         verify(payloadDataManager).updateAllTransactions()
         verify(payloadDataManager).defaultAccount
         verifyNoMoreInteractions(payloadDataManager)
-        verify(currencyState).cryptoCurrency = CryptoCurrencies.BTC
+        verify(currencyState).cryptoCurrency = CryptoCurrency.BTC
         verify(currencyState).cryptoCurrency
         verifyNoMoreInteractions(currencyState)
         subject.selectedAccount `should be` account
@@ -555,7 +555,7 @@ class ReceivePresenterTest {
     @Test
     fun `getSelectedAccountPosition ETH`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         val xPub = "X_PUB"
         val account = Account().apply { xpub = xPub }
         subject.selectedAccount = account
@@ -571,7 +571,7 @@ class ReceivePresenterTest {
     @Test
     fun `getSelectedAccountPosition BTC`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
         // Act
         val result = subject.getSelectedAccountPosition()
         // Assert
@@ -615,7 +615,7 @@ class ReceivePresenterTest {
         whenever(payloadDataManager.getPositionOfAccountInActiveList(0))
             .thenReturn(10)
         subject.selectedAccount = account
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(payloadDataManager.wallet!!.hdWallets[0].accounts.indexOf(account))
             .thenReturn(accountPosition)
         whenever(activity.getContactName())

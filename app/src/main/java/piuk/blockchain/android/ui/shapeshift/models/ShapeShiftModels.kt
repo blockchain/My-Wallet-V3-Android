@@ -6,7 +6,7 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import kotlinx.android.parcel.Parcelize
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -14,8 +14,8 @@ import java.math.BigInteger
 @Parcelize
 data class ShapeShiftData(
     val orderId: String,
-    var fromCurrency: CryptoCurrencies,
-    var toCurrency: CryptoCurrencies,
+    var fromCurrency: CryptoCurrency,
+    var toCurrency: CryptoCurrency,
     // The amount you're sending to ShapeShift
     var depositAmount: BigDecimal,
     // The address you're sending the funds to

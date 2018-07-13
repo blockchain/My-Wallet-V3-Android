@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.View
 import java.util.Locale
 
@@ -38,7 +38,7 @@ interface SendView : View {
     // Set property
     fun setCryptoMaxLength(length: Int)
 
-    fun setSelectedCurrency(cryptoCurrency: CryptoCurrencies)
+    fun setSelectedCurrency(cryptoCurrency: CryptoCurrency)
 
     fun setFeePrioritySelection(index: Int)
 
@@ -117,7 +117,7 @@ interface SendView : View {
     fun showTransactionSuccess(
         hash: String,
         transactionValue: Long,
-        cryptoCurrency: CryptoCurrencies
+        cryptoCurrency: CryptoCurrency
     )
 
     fun dismissProgressDialog()

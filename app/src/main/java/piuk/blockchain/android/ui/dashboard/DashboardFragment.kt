@@ -25,7 +25,7 @@ import piuk.blockchain.android.ui.home.MainActivity.ACTION_RECEIVE_BCH
 import piuk.blockchain.android.ui.home.MainActivity.CONTACTS_EDIT
 import piuk.blockchain.android.ui.home.MainActivity.SETTINGS_EDIT
 import piuk.blockchain.android.util.OSUtil
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
@@ -169,11 +169,11 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
 
     override fun getMvpView() = this
 
-    private fun startBalance(cryptoCurrency: CryptoCurrencies) {
+    private fun startBalance(cryptoCurrency: CryptoCurrency) {
         val action = when (cryptoCurrency) {
-            CryptoCurrencies.BTC -> MainActivity.ACTION_BTC_BALANCE
-            CryptoCurrencies.ETHER -> MainActivity.ACTION_ETH_BALANCE
-            CryptoCurrencies.BCH -> MainActivity.ACTION_BCH_BALANCE
+            CryptoCurrency.BTC -> MainActivity.ACTION_BTC_BALANCE
+            CryptoCurrency.ETHER -> MainActivity.ACTION_ETH_BALANCE
+            CryptoCurrency.BCH -> MainActivity.ACTION_BCH_BALANCE
         }
 
         broadcastIntent(action)

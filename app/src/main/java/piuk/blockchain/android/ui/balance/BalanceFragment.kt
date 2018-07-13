@@ -31,7 +31,7 @@ import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.shortcuts.LauncherShortcutHelper
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity
 import piuk.blockchain.androidcore.data.access.AccessState
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.base.UiState
 import piuk.blockchain.androidcoreui.utils.AndroidUtils
@@ -290,7 +290,7 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
         no_transaction_include.visible()
 
         when (presenter.getCurrentCurrency()) {
-            CryptoCurrencies.BTC -> {
+            CryptoCurrency.BTC -> {
                 button_get_bitcoin.setText(R.string.onboarding_get_bitcoin)
                 button_get_bitcoin.setOnClickListener {
                     if (shouldShowBuy()) {
@@ -301,12 +301,12 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
                 }
                 description.setText(R.string.transaction_occur_when_bitcoin)
             }
-            CryptoCurrencies.ETHER -> {
+            CryptoCurrency.ETHER -> {
                 button_get_bitcoin.setText(R.string.onboarding_get_eth)
                 button_get_bitcoin.setOnClickListener { startReceiveFragmentEth() }
                 description.setText(R.string.transaction_occur_when_eth)
             }
-            CryptoCurrencies.BCH -> {
+            CryptoCurrency.BCH -> {
                 button_get_bitcoin.setText(R.string.onboarding_get_bitcoin_cash)
                 button_get_bitcoin.setOnClickListener { startReceiveFragmentBch() }
                 description.setText(R.string.transaction_occur_when_bitcoin_cash)
@@ -347,7 +347,7 @@ class BalanceFragment : BaseFragment<BalanceView, BalancePresenter>(), BalanceVi
         presenter.setViewType(isBtc)
     }
 
-    override fun updateSelectedCurrency(cryptoCurrency: CryptoCurrencies) {
+    override fun updateSelectedCurrency(cryptoCurrency: CryptoCurrency) {
         currency_header?.setCurrentlySelectedCurrency(cryptoCurrency)
     }
 

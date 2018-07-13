@@ -39,7 +39,7 @@ import piuk.blockchain.android.testutils.rxInit
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.ethereum.EthereumAccountWrapper
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -75,8 +75,8 @@ class ShapeShiftConfirmationPresenterTest {
 
     private val fromBtc = ShapeShiftData(
         orderId = orderId,
-        fromCurrency = CryptoCurrencies.BTC,
-        toCurrency = CryptoCurrencies.ETHER,
+        fromCurrency = CryptoCurrency.BTC,
+        toCurrency = CryptoCurrency.ETHER,
         depositAmount = BigDecimal.valueOf(1.0),
         depositAddress = "17MgvXUa6tPsh3KMRWAPYBuDwbtCBF6Py5",
         changeAddress = changeAddress,
@@ -95,8 +95,8 @@ class ShapeShiftConfirmationPresenterTest {
 
     private val fromEth = ShapeShiftData(
         orderId = orderId,
-        fromCurrency = CryptoCurrencies.ETHER,
-        toCurrency = CryptoCurrencies.BCH,
+        fromCurrency = CryptoCurrency.ETHER,
+        toCurrency = CryptoCurrency.BCH,
         depositAmount = BigDecimal.valueOf(1.0),
         depositAddress = "0xF85608F8fe3887Dab333Ec250A972C1DC19C52B3",
         changeAddress = changeAddress,
@@ -115,8 +115,8 @@ class ShapeShiftConfirmationPresenterTest {
 
     private val fromBch = ShapeShiftData(
         orderId = orderId,
-        fromCurrency = CryptoCurrencies.BCH,
-        toCurrency = CryptoCurrencies.ETHER,
+        fromCurrency = CryptoCurrency.BCH,
+        toCurrency = CryptoCurrency.ETHER,
         depositAmount = BigDecimal.valueOf(1.0),
         depositAddress = "17MgvXUa6tPsh3KMRWAPYBuDwbtCBF6Py5",
         changeAddress = changeAddress,

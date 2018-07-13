@@ -13,7 +13,7 @@ import org.junit.Test
 import piuk.blockchain.androidcore.data.charts.ChartsDataManager
 import piuk.blockchain.androidcore.data.charts.TimeSpan
 import piuk.blockchain.androidcore.data.charts.models.ChartDatumDto
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
@@ -46,12 +46,12 @@ class ChartsPresenterTest {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
         val fiat = "USD"
-        whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(view.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBtcPrice(fiat)).thenReturn(13950.0)
-        whenever(chartsDataManager.getMonthPrice(CryptoCurrencies.BTC, fiat))
+        whenever(chartsDataManager.getMonthPrice(CryptoCurrency.BTC, fiat))
             .thenReturn(Observable.just(chartData))
         // Act
         subject.onViewReady()
@@ -65,7 +65,7 @@ class ChartsPresenterTest {
         // TODO: Mockito currently doesn't play nicely with child classes of sealed parents
 //        verify(view).updateChartState(ChartsState.Data(any(), eq("US$")))
 //        verifyNoMoreInteractions(view)
-        verify(chartsDataManager).getMonthPrice(CryptoCurrencies.BTC, fiat)
+        verify(chartsDataManager).getMonthPrice(CryptoCurrency.BTC, fiat)
         verifyNoMoreInteractions(chartsDataManager)
         verify(exchangeRateFactory).getLastBtcPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
@@ -80,12 +80,12 @@ class ChartsPresenterTest {
     fun `onViewReady failure`() {
         // Arrange
         val fiat = "USD"
-        whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(view.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBtcPrice(fiat)).thenReturn(13950.0)
-        whenever(chartsDataManager.getMonthPrice(CryptoCurrencies.BTC, fiat))
+        whenever(chartsDataManager.getMonthPrice(CryptoCurrency.BTC, fiat))
             .thenReturn(Observable.error(Throwable()))
         // Act
         subject.onViewReady()
@@ -98,7 +98,7 @@ class ChartsPresenterTest {
         verify(view).updateChartState(ChartsState.Loading)
         verify(view).updateChartState(ChartsState.Error)
 //        verifyNoMoreInteractions(view)
-        verify(chartsDataManager).getMonthPrice(CryptoCurrencies.BTC, fiat)
+        verify(chartsDataManager).getMonthPrice(CryptoCurrency.BTC, fiat)
         verifyNoMoreInteractions(chartsDataManager)
         verify(exchangeRateFactory).getLastBtcPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
@@ -114,12 +114,12 @@ class ChartsPresenterTest {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
         val fiat = "USD"
-        whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(view.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBtcPrice(fiat)).thenReturn(13950.0)
-        whenever(chartsDataManager.getDayPrice(CryptoCurrencies.BTC, fiat))
+        whenever(chartsDataManager.getDayPrice(CryptoCurrency.BTC, fiat))
             .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.DAY
@@ -133,7 +133,7 @@ class ChartsPresenterTest {
         // TODO: Mockito currently doesn't play nicely with child classes of sealed parents
 //        verify(view).updateChartState(ChartsState.Data(any(), eq("US$")))
 //        verifyNoMoreInteractions(view)
-        verify(chartsDataManager).getDayPrice(CryptoCurrencies.BTC, fiat)
+        verify(chartsDataManager).getDayPrice(CryptoCurrency.BTC, fiat)
         verifyNoMoreInteractions(chartsDataManager)
         verify(exchangeRateFactory).getLastBtcPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
@@ -149,12 +149,12 @@ class ChartsPresenterTest {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
         val fiat = "USD"
-        whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(view.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastEthPrice(fiat)).thenReturn(1281.78)
-        whenever(chartsDataManager.getWeekPrice(CryptoCurrencies.ETHER, fiat))
+        whenever(chartsDataManager.getWeekPrice(CryptoCurrency.ETHER, fiat))
             .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.WEEK
@@ -168,7 +168,7 @@ class ChartsPresenterTest {
         // TODO: Mockito currently doesn't play nicely with child classes of sealed parents
 //        verify(view).updateChartState(ChartsState.Data(any(), eq("US$")))
 //        verifyNoMoreInteractions(view)
-        verify(chartsDataManager).getWeekPrice(CryptoCurrencies.ETHER, fiat)
+        verify(chartsDataManager).getWeekPrice(CryptoCurrency.ETHER, fiat)
         verifyNoMoreInteractions(chartsDataManager)
         verify(exchangeRateFactory).getLastEthPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
@@ -184,12 +184,12 @@ class ChartsPresenterTest {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
         val fiat = "USD"
-        whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(view.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastEthPrice(fiat)).thenReturn(1281.78)
-        whenever(chartsDataManager.getYearPrice(CryptoCurrencies.ETHER, fiat))
+        whenever(chartsDataManager.getYearPrice(CryptoCurrency.ETHER, fiat))
             .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.YEAR
@@ -203,7 +203,7 @@ class ChartsPresenterTest {
         // TODO: Mockito currently doesn't play nicely with child classes of sealed parents
 //        verify(view).updateChartState(ChartsState.Data(any(), eq("US$")))
 //        verifyNoMoreInteractions(view)
-        verify(chartsDataManager).getYearPrice(CryptoCurrencies.ETHER, fiat)
+        verify(chartsDataManager).getYearPrice(CryptoCurrency.ETHER, fiat)
         verifyNoMoreInteractions(chartsDataManager)
         verify(exchangeRateFactory).getLastEthPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)
@@ -219,12 +219,12 @@ class ChartsPresenterTest {
         // Arrange
         val chartData = ChartDatumDto(mock(PriceDatum::class))
         val fiat = "USD"
-        whenever(view.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
+        whenever(view.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
         whenever(view.locale).thenReturn(Locale.UK)
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn(fiat)
         whenever(exchangeRateFactory.getLastBchPrice(fiat)).thenReturn(1281.78)
-        whenever(chartsDataManager.getAllTimePrice(CryptoCurrencies.BCH, fiat))
+        whenever(chartsDataManager.getAllTimePrice(CryptoCurrency.BCH, fiat))
             .thenReturn(Observable.just(chartData))
         // Act
         subject.selectedTimeSpan = TimeSpan.ALL_TIME
@@ -238,7 +238,7 @@ class ChartsPresenterTest {
         // TODO: Mockito currently doesn't play nicely with child classes of sealed parents
 //        verify(view).updateChartState(ChartsState.Data(any(), eq("US$")))
 //        verifyNoMoreInteractions(view)
-        verify(chartsDataManager).getAllTimePrice(CryptoCurrencies.BCH, fiat)
+        verify(chartsDataManager).getAllTimePrice(CryptoCurrency.BCH, fiat)
         verifyNoMoreInteractions(chartsDataManager)
         verify(exchangeRateFactory).getLastBchPrice(fiat)
         verifyNoMoreInteractions(exchangeRateFactory)

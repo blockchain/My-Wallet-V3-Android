@@ -3,7 +3,7 @@ package piuk.blockchain.android.data.balance.adapters
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.BalanceReporter
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import java.math.BigInteger
 
 fun BchDataManager.toBalanceReporter(): BalanceReporter = BitcoinCashBalanceReportAdapter(this)
@@ -21,5 +21,5 @@ private class BitcoinCashBalanceReportAdapter(
         dataManager.getAddressBalance(address).toBalance()
 
     private fun BigInteger.toBalance() =
-        CryptoValue(CryptoCurrencies.BCH, this.toLong())
+        CryptoValue(CryptoCurrency.BCH, this.toLong())
 }

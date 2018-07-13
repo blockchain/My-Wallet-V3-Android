@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import info.blockchain.wallet.multiaddress.TransactionSummary
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
@@ -24,7 +24,7 @@ interface TransactionDetailView : View {
 
     fun setFromAddress(addresses: List<TransactionDetailModel>)
 
-    fun setStatus(cryptoCurrency: CryptoCurrencies, status: String?, hash: String?)
+    fun setStatus(cryptoCurrency: CryptoCurrency, status: String?, hash: String?)
 
     fun setFee(fee: String?)
 

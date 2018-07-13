@@ -14,7 +14,7 @@ import org.mockito.Mockito.verifyNoMoreInteractions
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
 import piuk.blockchain.android.util.StringUtils
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.UiState
 
 class SwipeToReceivePresenterTest {
@@ -42,7 +42,7 @@ class SwipeToReceivePresenterTest {
         whenever(
             stringUtils.getFormattedString(
                 R.string.swipe_receive_request,
-                CryptoCurrencies.BTC.unit
+                CryptoCurrency.BTC.unit
             )
         ).thenReturn("BTC")
         // Act
@@ -65,7 +65,7 @@ class SwipeToReceivePresenterTest {
         whenever(
             stringUtils.getFormattedString(
                 R.string.swipe_receive_request,
-                CryptoCurrencies.BTC.unit
+                CryptoCurrency.BTC.unit
             )
         ).thenReturn("BTC")
         // Act
@@ -89,7 +89,7 @@ class SwipeToReceivePresenterTest {
         whenever(
             stringUtils.getFormattedString(
                 R.string.swipe_receive_request,
-                CryptoCurrencies.BTC.unit
+                CryptoCurrency.BTC.unit
             )
         )
             .thenReturn("BTC")
@@ -121,7 +121,7 @@ class SwipeToReceivePresenterTest {
         whenever(
             stringUtils.getFormattedString(
                 R.string.swipe_receive_request,
-                CryptoCurrencies.ETHER.unit
+                CryptoCurrency.ETHER.unit
             )
         )
             .thenReturn("ETH")
@@ -153,7 +153,7 @@ class SwipeToReceivePresenterTest {
         whenever(
             stringUtils.getFormattedString(
                 R.string.swipe_receive_request,
-                CryptoCurrencies.BCH.unit
+                CryptoCurrency.BCH.unit
             )
         )
             .thenReturn("BCH")

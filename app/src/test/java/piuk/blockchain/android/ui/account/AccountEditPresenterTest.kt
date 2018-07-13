@@ -49,7 +49,7 @@ import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -121,7 +121,7 @@ class AccountEditPresenterTest {
         // Arrange
         val intent = Intent().apply {
             putExtra(EXTRA_ACCOUNT_INDEX, 0)
-            putExtra(EXTRA_CRYPTOCURRENCY, CryptoCurrencies.BTC)
+            putExtra(EXTRA_CRYPTOCURRENCY, CryptoCurrency.BTC)
         }
         whenever(view.activityIntent).thenReturn(intent)
         val importedAccount: Account = mock()
@@ -148,7 +148,7 @@ class AccountEditPresenterTest {
         // Arrange
         val intent = Intent().apply {
             putExtra(EXTRA_ACCOUNT_INDEX, 0)
-            putExtra(EXTRA_CRYPTOCURRENCY, CryptoCurrencies.BTC)
+            putExtra(EXTRA_CRYPTOCURRENCY, CryptoCurrency.BTC)
         }
         whenever(view.activityIntent).thenReturn(intent)
         val importedAccount: Account = mock()

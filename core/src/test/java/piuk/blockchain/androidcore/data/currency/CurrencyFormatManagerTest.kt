@@ -36,7 +36,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getCryptoMaxDecimalLength BTC`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(currencyFormatUtil.getBtcMaxFractionDigits()).thenReturn(8)
 
         // Act
@@ -49,7 +49,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getCryptoMaxDecimalLength BCH`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
         whenever(currencyFormatUtil.getBchMaxFractionDigits()).thenReturn(8)
 
         // Act
@@ -62,7 +62,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getCryptoMaxDecimalLength ETH`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
         whenever(currencyFormatUtil.getEthMaxFractionDigits()).thenReturn(18)
 
         // Act
@@ -75,7 +75,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getCryptoUnit BTC`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(currencyFormatUtil.getBtcUnit()).thenReturn("BTC")
 
         // Act
@@ -88,7 +88,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getCryptoUnit BCH`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BCH)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
         whenever(currencyFormatUtil.getBchUnit()).thenReturn("BCH")
 
         // Act
@@ -101,7 +101,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getCryptoUnit ETH`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
         whenever(currencyFormatUtil.getEthUnit()).thenReturn("ETH")
 
         // Act
@@ -114,7 +114,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getConvertedCoinValue BTC default satoshi denomination`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
 
         // Act
         // Assert
@@ -134,7 +134,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getConvertedCoinValue BTC satoshi denomination`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
 
         // Act
         // Assert
@@ -160,7 +160,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getConvertedCoinValue BTC btc denomination`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
 
         // Act
         // Assert
@@ -186,7 +186,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getConvertedCoinValue ETH eth denomination`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
 
         // Act
         // Assert
@@ -212,7 +212,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getConvertedCoinValue ETH wei denomination`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.ETHER)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
 
         // Act
         // Assert
@@ -238,7 +238,7 @@ class CurrencyFormatManagerTest {
     @Test
     fun `getFormattedSelectedCoinValue BTC default satoshi denomination`() {
         // Arrange
-        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
         whenever(currencyFormatUtil.formatBtc(any())).thenReturn("something")
 
         // Act

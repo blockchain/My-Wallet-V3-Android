@@ -39,7 +39,7 @@ import piuk.blockchain.android.util.LabelUtil
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -88,13 +88,13 @@ class AccountEditPresenter @Inject internal constructor(
 
         accountIndex = intent.getIntExtra(EXTRA_ACCOUNT_INDEX, -1)
         val addressIndex = intent.getIntExtra(EXTRA_ADDRESS_INDEX, -1)
-        val cryptoCurrency: CryptoCurrencies =
-            intent.getSerializableExtra(EXTRA_CRYPTOCURRENCY) as CryptoCurrencies
+        val cryptoCurrency: CryptoCurrency =
+            intent.getSerializableExtra(EXTRA_CRYPTOCURRENCY) as CryptoCurrency
 
         check(accountIndex >= 0 || addressIndex >= 0) { "Both accountIndex and addressIndex are less than 0" }
-        check(cryptoCurrency != CryptoCurrencies.ETHER) { "Ether is not supported on this page" }
+        check(cryptoCurrency != CryptoCurrency.ETHER) { "Ether is not supported on this page" }
 
-        if (cryptoCurrency == CryptoCurrencies.BTC) {
+        if (cryptoCurrency == CryptoCurrency.BTC) {
             renderBtc(accountIndex, addressIndex)
         } else {
             renderBch(accountIndex)
@@ -315,7 +315,7 @@ class AccountEditPresenter @Inject internal constructor(
         }
 
         val fiatUnit = prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)
-        val btcUnit = CryptoCurrencies.BTC.name
+        val btcUnit = CryptoCurrency.BTC.name
 
         with(details) {
             cryptoAmount =

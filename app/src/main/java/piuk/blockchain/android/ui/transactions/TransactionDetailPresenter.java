@@ -39,7 +39,7 @@ import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
 import piuk.blockchain.androidcore.data.currency.BTCDenomination;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies;
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.currency.ETHDenomination;
@@ -126,9 +126,9 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
 
     void updateTransactionNote(String description) {
         Completable completable;
-        if (displayable.getCryptoCurrency() == CryptoCurrencies.BTC) {
+        if (displayable.getCryptoCurrency() == CryptoCurrency.BTC) {
             completable = payloadDataManager.updateTransactionNotes(displayable.getHash(), description);
-        } else if (displayable.getCryptoCurrency() == CryptoCurrencies.ETHER) {
+        } else if (displayable.getCryptoCurrency() == CryptoCurrency.ETHER) {
             completable = ethDataManager.updateTransactionNotes(displayable.getHash(), description);
         } else {
             throw new IllegalArgumentException("Only BTC and ETHER currently supported");
@@ -150,11 +150,11 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         setDate(displayable.getTimeStamp());
         setFee(displayable.getCryptoCurrency(), displayable.getFee());
 
-        if (displayable.getCryptoCurrency() == CryptoCurrencies.BTC) {
+        if (displayable.getCryptoCurrency() == CryptoCurrency.BTC) {
             handleBtcToAndFrom(displayable);
-        } else if (displayable.getCryptoCurrency() == CryptoCurrencies.ETHER) {
+        } else if (displayable.getCryptoCurrency() == CryptoCurrency.ETHER) {
             handleEthToAndFrom(displayable);
-        } else if (displayable.getCryptoCurrency() == CryptoCurrencies.BCH) {
+        } else if (displayable.getCryptoCurrency() == CryptoCurrency.BCH) {
             handleBchToAndFrom(displayable);
         } else {
             throw new IllegalArgumentException(displayable.getCryptoCurrency() + " is not currently supported");
@@ -251,7 +251,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         }
     }
 
-    private ArrayList<TransactionDetailModel> getFromList(CryptoCurrencies currency, HashMap<String, BigInteger> inputMap) {
+    private ArrayList<TransactionDetailModel> getFromList(CryptoCurrency currency, HashMap<String, BigInteger> inputMap) {
         ArrayList<TransactionDetailModel> inputs = new ArrayList<>();
 
         String unit = "";
@@ -260,7 +260,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
             long value = (item.getValue() != null) ? item.getValue().longValue() : 0;
 
             String label;
-            if (currency == CryptoCurrencies.BTC) {
+            if (currency == CryptoCurrency.BTC) {
                 label = payloadDataManager.addressToLabel(item.getKey());
                 unit = getDisplayUnitsBtc();
             } else {
@@ -297,7 +297,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         return inputs;
     }
 
-    private ArrayList<TransactionDetailModel> getToList(CryptoCurrencies currency,
+    private ArrayList<TransactionDetailModel> getToList(CryptoCurrency currency,
                                                         ContactTransactionDisplayModel displayModel,
                                                         HashMap<String, BigInteger> outputMap) {
         ArrayList<TransactionDetailModel> recipients = new ArrayList<>();
@@ -308,7 +308,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
             String unit;
             String label;
 
-            if (currency == CryptoCurrencies.BTC) {
+            if (currency == CryptoCurrency.BTC) {
                 label = payloadDataManager.addressToLabel(item.getKey());
                 unit = getDisplayUnitsBtc();
             } else {
@@ -339,20 +339,20 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         return recipients;
     }
 
-    private void setFee(CryptoCurrencies currency, BigInteger fee) {
-        if (currency == CryptoCurrencies.BTC) {
+    private void setFee(CryptoCurrency currency, BigInteger fee) {
+        if (currency == CryptoCurrency.BTC) {
             String formattedFee = (
                     currencyFormatManager.getFormattedBtcValueWithUnit(
                             new BigDecimal(fee),
                             BTCDenomination.SATOSHI));
             getView().setFee(formattedFee);
-        } else if (currency == CryptoCurrencies.ETHER) {
+        } else if (currency == CryptoCurrency.ETHER) {
             String formattedFee = (
                     currencyFormatManager.getFormattedEthShortValueWithUnit(
                             new BigDecimal(fee),
                             ETHDenomination.WEI));
             getView().setFee(formattedFee);
-        } else if (currency == CryptoCurrencies.BCH) {
+        } else if (currency == CryptoCurrency.BCH) {
             String formattedFee = (
                     currencyFormatManager.getFormattedBchValueWithUnit(
                             new BigDecimal(fee),
@@ -363,14 +363,14 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         }
     }
 
-    private void setTransactionAmountInBtcOrEth(CryptoCurrencies currency, BigInteger total) {
-        if (currency == CryptoCurrencies.ETHER) {
+    private void setTransactionAmountInBtcOrEth(CryptoCurrency currency, BigInteger total) {
+        if (currency == CryptoCurrency.ETHER) {
             String amountEth = (
                     currencyFormatManager.getFormattedEthShortValueWithUnit(
                             new BigDecimal(total.abs()), ETHDenomination.WEI));
 
             getView().setTransactionValueBtc(amountEth);
-        } else if (currency == CryptoCurrencies.BTC) {
+        } else if (currency == CryptoCurrency.BTC) {
             String amountBtc = (
                     currencyFormatManager.getFormattedBtcValueWithUnit(
                             new BigDecimal(total.abs()), BTCDenomination.SATOSHI));
@@ -387,9 +387,9 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
 
     private void setTransactionNote(String txHash) {
         String notes;
-        if (displayable.getCryptoCurrency() == CryptoCurrencies.BTC) {
+        if (displayable.getCryptoCurrency() == CryptoCurrency.BTC) {
             notes = payloadDataManager.getTransactionNotes(txHash);
-        } else if (displayable.getCryptoCurrency() == CryptoCurrencies.ETHER) {
+        } else if (displayable.getCryptoCurrency() == CryptoCurrency.ETHER) {
             notes = ethDataManager.getTransactionNotes(displayable.getHash());
         } else {
             //Only BTC and ETHER currently supported
@@ -400,9 +400,9 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
     }
 
     public String getTransactionNote() {
-        if (displayable.getCryptoCurrency() == CryptoCurrencies.BTC) {
+        if (displayable.getCryptoCurrency() == CryptoCurrency.BTC) {
             return payloadDataManager.getTransactionNotes(displayable.getHash());
-        } else if (displayable.getCryptoCurrency() == CryptoCurrencies.ETHER) {
+        } else if (displayable.getCryptoCurrency() == CryptoCurrency.ETHER) {
             return ethDataManager.getTransactionNotes(displayable.getHash());
         } else {
             // Currently no available notes for bch
@@ -414,12 +414,12 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         return displayable.getHash();
     }
 
-    public CryptoCurrencies getTransactionType() {
+    public CryptoCurrency getTransactionType() {
         return displayable.getCryptoCurrency();
     }
 
     @VisibleForTesting
-    void setConfirmationStatus(CryptoCurrencies cryptoCurrency, String txHash, long confirmations) {
+    void setConfirmationStatus(CryptoCurrency cryptoCurrency, String txHash, long confirmations) {
         if (confirmations >= getRequiredConfirmations(cryptoCurrency)) {
             getView().setStatus(cryptoCurrency, stringUtils.getString(R.string.transaction_detail_confirmed), txHash);
         } else {
@@ -429,7 +429,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         }
     }
 
-    private int getRequiredConfirmations(CryptoCurrencies cryptoCurrency) {
+    private int getRequiredConfirmations(CryptoCurrency cryptoCurrency) {
         switch (cryptoCurrency) {
             case BTC:
                 return CONFIRMATIONS_BTC;
@@ -470,13 +470,13 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
 
     @VisibleForTesting
     Observable<String> getTransactionValueString(String currency, Displayable transaction) {
-        if (transaction.getCryptoCurrency() == CryptoCurrencies.BTC) {
+        if (transaction.getCryptoCurrency() == CryptoCurrency.BTC) {
             return exchangeRateFactory.getBtcHistoricPrice(
                     transaction.getTotal().longValue(),
                     currency,
                     transaction.getTimeStamp())
                     .map(aDouble -> getTransactionString(transaction, aDouble));
-        } else if (transaction.getCryptoCurrency() == CryptoCurrencies.BCH) {
+        } else if (transaction.getCryptoCurrency() == CryptoCurrency.BCH) {
             return exchangeRateFactory.getBchHistoricPrice(
                     transaction.getTotal().longValue(),
                     currency,
@@ -511,10 +511,10 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
     }
 
     private String getDisplayUnitsBtc() {
-        return CryptoCurrencies.BTC.name();
+        return CryptoCurrency.BTC.name();
     }
 
     private String getDisplayUnitsBch() {
-        return CryptoCurrencies.BCH.name();
+        return CryptoCurrency.BCH.name();
     }
 }

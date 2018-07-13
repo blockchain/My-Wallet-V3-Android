@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.item_pie_chart.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.ui.dashboard.PieChartsState
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -39,7 +39,7 @@ import java.util.Locale
 
 class PieChartDelegate<in T>(
     private val context: Context,
-    private val coinSelector: (CryptoCurrencies) -> Unit
+    private val coinSelector: (CryptoCurrency) -> Unit
 ) : AdapterDelegate<T> {
 
     private var viewHolder: PieChartViewHolder? = null
@@ -232,7 +232,7 @@ class PieChartDelegate<in T>(
 
     private class PieChartViewHolder internal constructor(
         itemView: View,
-        private val coinSelector: (CryptoCurrencies) -> Unit
+        private val coinSelector: (CryptoCurrency) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         internal var chart: PieChart = itemView.pie_chart
@@ -251,9 +251,9 @@ class PieChartDelegate<in T>(
         internal var bitcoinCashButton: LinearLayout = itemView.linear_layout_bitcoin_cash
 
         init {
-            bitcoinButton.setOnClickListener { coinSelector.invoke(CryptoCurrencies.BTC) }
-            etherButton.setOnClickListener { coinSelector.invoke(CryptoCurrencies.ETHER) }
-            bitcoinCashButton.setOnClickListener { coinSelector.invoke(CryptoCurrencies.BCH) }
+            bitcoinButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.BTC) }
+            etherButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.ETHER) }
+            bitcoinCashButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.BCH) }
         }
     }
 }

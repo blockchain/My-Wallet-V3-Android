@@ -2,7 +2,7 @@ package piuk.blockchain.android.ui.shapeshift.newexchange
 
 import android.support.annotation.StringRes
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import java.util.Locale
@@ -16,8 +16,8 @@ interface NewExchangeView : View {
     val isBuyPermitted: Boolean
 
     fun updateUi(
-        fromCurrency: CryptoCurrencies,
-        toCurrency: CryptoCurrencies,
+        fromCurrency: CryptoCurrency,
+        toCurrency: CryptoCurrency,
         fromLabel: String,
         toLabel: String,
         fiatHint: String

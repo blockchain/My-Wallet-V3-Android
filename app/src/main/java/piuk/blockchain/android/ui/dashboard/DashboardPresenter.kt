@@ -22,7 +22,7 @@ import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
+import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
@@ -60,9 +60,9 @@ class DashboardPresenter @Inject constructor(
             stringUtils.getString(R.string.dashboard_balances),
             PieChartsState.Loading,
             stringUtils.getString(R.string.dashboard_price_charts),
-            AssetPriceCardState.Loading(CryptoCurrencies.BTC),
-            AssetPriceCardState.Loading(CryptoCurrencies.ETHER),
-            AssetPriceCardState.Loading(CryptoCurrencies.BCH)
+            AssetPriceCardState.Loading(CryptoCurrency.BTC),
+            AssetPriceCardState.Loading(CryptoCurrency.ETHER),
+            AssetPriceCardState.Loading(CryptoCurrency.BCH)
         )
     }
     private val metadataObservable by unsafeLazy {
@@ -138,17 +138,17 @@ class DashboardPresenter @Inject constructor(
                     val list = listOf(
                         AssetPriceCardState.Data(
                             getBtcPriceString(),
-                            CryptoCurrencies.BTC,
+                            CryptoCurrency.BTC,
                             R.drawable.vector_bitcoin
                         ),
                         AssetPriceCardState.Data(
                             getEthPriceString(),
-                            CryptoCurrencies.ETHER,
+                            CryptoCurrency.ETHER,
                             R.drawable.vector_eth
                         ),
                         AssetPriceCardState.Data(
                             getBchPriceString(),
-                            CryptoCurrencies.BCH,
+                            CryptoCurrency.BCH,
                             R.drawable.vector_bitcoin_cash
                         )
                     )
@@ -157,9 +157,9 @@ class DashboardPresenter @Inject constructor(
                 },
                 {
                     val list = listOf(
-                        AssetPriceCardState.Error(CryptoCurrencies.BTC),
-                        AssetPriceCardState.Error(CryptoCurrencies.ETHER),
-                        AssetPriceCardState.Error(CryptoCurrencies.BCH)
+                        AssetPriceCardState.Error(CryptoCurrency.BTC),
+                        AssetPriceCardState.Error(CryptoCurrency.ETHER),
+                        AssetPriceCardState.Error(CryptoCurrency.BCH)
                     )
 
                     handleAssetPriceUpdate(list)
@@ -562,14 +562,14 @@ sealed class PieChartsState {
     object Error : PieChartsState()
 }
 
-sealed class AssetPriceCardState(val currency: CryptoCurrencies) {
+sealed class AssetPriceCardState(val currency: CryptoCurrency) {
 
     data class Data(
         val priceString: String,
-        val cryptoCurrency: CryptoCurrencies,
+        val cryptoCurrency: CryptoCurrency,
         @DrawableRes val icon: Int
     ) : AssetPriceCardState(cryptoCurrency)
 
-    class Loading(val cryptoCurrency: CryptoCurrencies) : AssetPriceCardState(cryptoCurrency)
-    class Error(val cryptoCurrency: CryptoCurrencies) : AssetPriceCardState(cryptoCurrency)
+    class Loading(val cryptoCurrency: CryptoCurrency) : AssetPriceCardState(cryptoCurrency)
+    class Error(val cryptoCurrency: CryptoCurrency) : AssetPriceCardState(cryptoCurrency)
 }
