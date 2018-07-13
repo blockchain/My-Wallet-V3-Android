@@ -1,7 +1,7 @@
 package piuk.blockchain.androidcore.data.shapeshift.models
 
 import info.blockchain.wallet.shapeshift.ShapeShiftPairs
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 
 /**
  * For strict type checking and convenience.

@@ -3,6 +3,7 @@ package piuk.blockchain.androidcore.data.currency;
 import java.util.Currency;
 import java.util.Locale;
 
+import info.blockchain.balance.CryptoCurrency;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcore.utils.annotations.Mockable;
 

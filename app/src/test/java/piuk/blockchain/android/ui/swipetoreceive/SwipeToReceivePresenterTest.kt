@@ -14,7 +14,7 @@ import org.mockito.Mockito.verifyNoMoreInteractions
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
 import piuk.blockchain.android.util.StringUtils
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.UiState
 
 class SwipeToReceivePresenterTest {

@@ -34,7 +34,7 @@ import piuk.blockchain.android.ui.chooser.AccountMode
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.shapeshift.confirmation.ShapeShiftConfirmationActivity
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity

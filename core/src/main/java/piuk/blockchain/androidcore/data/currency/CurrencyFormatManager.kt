@@ -1,6 +1,7 @@
 package piuk.blockchain.androidcore.data.currency
 
 import android.support.annotation.VisibleForTesting
+import info.blockchain.balance.CryptoCurrency
 import org.web3j.utils.Convert
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope

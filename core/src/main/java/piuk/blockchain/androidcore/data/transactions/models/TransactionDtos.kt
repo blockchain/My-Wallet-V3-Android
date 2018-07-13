@@ -2,7 +2,7 @@ package piuk.blockchain.androidcore.data.transactions.models
 
 import info.blockchain.wallet.ethereum.data.EthTransaction
 import info.blockchain.wallet.multiaddress.TransactionSummary
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import java.math.BigInteger
 

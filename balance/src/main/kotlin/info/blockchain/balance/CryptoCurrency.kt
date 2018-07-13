@@ -1,4 +1,4 @@
-package piuk.blockchain.androidcore.data.currency
+package info.blockchain.balance
 
 enum class CryptoCurrency(val symbol: String, val unit: String) {
     BTC("BTC", "Bitcoin"),

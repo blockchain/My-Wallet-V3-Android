@@ -13,7 +13,7 @@ import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Test
 import piuk.blockchain.android.testutils.RxTest
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 
 class ChartsDataManagerTest : RxTest() {

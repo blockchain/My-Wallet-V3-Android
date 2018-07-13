@@ -1,7 +1,7 @@
 package piuk.blockchain.androidcoreui.utils.logging
 
 import com.crashlytics.android.answers.CustomEvent
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.utils.extensions.getAmountRangeBch
 import piuk.blockchain.androidcoreui.utils.extensions.getAmountRangeBtc
 import piuk.blockchain.androidcoreui.utils.extensions.getAmountRangeEth

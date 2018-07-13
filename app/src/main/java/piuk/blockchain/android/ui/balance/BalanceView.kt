@@ -1,7 +1,7 @@
 package piuk.blockchain.android.ui.balance
 
 import piuk.blockchain.android.ui.account.ItemAccount
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.UiState
 import piuk.blockchain.androidcoreui.ui.base.View
 

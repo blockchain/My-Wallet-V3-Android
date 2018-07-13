@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import info.blockchain.wallet.multiaddress.TransactionSummary
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 

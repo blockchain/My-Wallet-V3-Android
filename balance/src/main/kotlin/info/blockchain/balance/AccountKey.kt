@@ -1,7 +1,5 @@
 package info.blockchain.balance
 
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
-
 /**
  * Account key describes a part of you wallet. It doesn't have value or labels, but can be used in methods that enables
  * those to be looked up or calculated.

@@ -6,7 +6,7 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import kotlinx.android.parcel.Parcelize
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import java.math.BigDecimal
 import java.math.BigInteger
 

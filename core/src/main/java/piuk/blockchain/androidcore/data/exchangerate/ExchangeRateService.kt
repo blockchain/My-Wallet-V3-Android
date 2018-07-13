@@ -2,7 +2,7 @@ package piuk.blockchain.androidcore.data.exchangerate
 
 import info.blockchain.wallet.prices.PriceApi
 import io.reactivex.Observable
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject

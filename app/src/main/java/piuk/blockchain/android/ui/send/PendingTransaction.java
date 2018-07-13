@@ -10,7 +10,7 @@ import info.blockchain.wallet.payment.SpendableUnspentOutputs;
 import java.math.BigInteger;
 
 import piuk.blockchain.android.ui.account.ItemAccount;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
+import info.blockchain.balance.CryptoCurrency;
 
 public class PendingTransaction {
 

@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.View
 import java.util.Locale
 

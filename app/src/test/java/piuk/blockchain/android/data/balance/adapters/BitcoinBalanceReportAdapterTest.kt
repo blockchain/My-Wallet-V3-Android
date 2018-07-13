@@ -9,7 +9,7 @@ import info.blockchain.wallet.payload.PayloadManager
 import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import java.math.BigInteger
 
 class BitcoinBalanceReportAdapterTest {

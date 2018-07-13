@@ -3,7 +3,7 @@ package piuk.blockchain.androidcore.data.exchangerate.datastore
 import info.blockchain.wallet.prices.data.PriceDatum
 import io.reactivex.Completable
 import io.reactivex.Observable
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
 import piuk.blockchain.androidcore.utils.Optional
 import piuk.blockchain.androidcore.utils.PrefsUtil

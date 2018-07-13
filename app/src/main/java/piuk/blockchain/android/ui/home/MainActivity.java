@@ -87,7 +87,7 @@ import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
+import info.blockchain.balance.CryptoCurrency;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog;

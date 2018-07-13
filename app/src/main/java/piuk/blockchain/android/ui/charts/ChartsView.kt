@@ -1,6 +1,6 @@
 package piuk.blockchain.android.ui.charts
 
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.base.View
 import java.util.Locale
 

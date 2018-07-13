@@ -23,7 +23,7 @@ import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
+import info.blockchain.balance.CryptoCurrency;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel;

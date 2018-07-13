@@ -2,6 +2,7 @@ package piuk.blockchain.androidcore.data.currency
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
+import info.blockchain.balance.CryptoCurrency
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

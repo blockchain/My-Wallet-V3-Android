@@ -37,7 +37,7 @@ import piuk.blockchain.android.ui.home.models.MetadataEvent;
 import piuk.blockchain.androidcoreui.utils.AppUtil;
 import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency;
+import info.blockchain.balance.CryptoCurrency;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.metadata.MetadataManager;

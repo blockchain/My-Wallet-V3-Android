@@ -1,4 +1,4 @@
-package piuk.blockchain.androidcore.data.currency
+package info.blockchain.balance
 
 import org.amshove.kluent.`should be`
 import org.junit.Test

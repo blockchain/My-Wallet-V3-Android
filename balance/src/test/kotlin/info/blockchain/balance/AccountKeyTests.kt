@@ -2,7 +2,6 @@ package info.blockchain.balance
 
 import org.amshove.kluent.`should be`
 import org.junit.Test
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
 
 class AccountKeyTests {
 

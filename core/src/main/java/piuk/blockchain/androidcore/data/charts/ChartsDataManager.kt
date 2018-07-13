@@ -4,7 +4,7 @@ import info.blockchain.wallet.prices.PriceApi
 import info.blockchain.wallet.prices.Scale
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.data.charts.models.ChartDatumDto
-import piuk.blockchain.androidcore.data.currency.CryptoCurrency
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope

@@ -1,5 +1,6 @@
 package piuk.blockchain.androidcore.data.currency
 
+import info.blockchain.balance.CryptoCurrency
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
