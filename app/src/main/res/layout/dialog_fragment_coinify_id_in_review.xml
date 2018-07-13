@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -57,6 +58,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textviewReviewStatus" />
+
+    <TextView
+        android:id="@+id/text_view_finish_verification"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="32sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="@string/buy_sell_review_finish_verification"
+        android:textAllCaps="true"
+        android:textColor="@color/primary_blue_accent"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textviewReviewMessage"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/buttonContinue"

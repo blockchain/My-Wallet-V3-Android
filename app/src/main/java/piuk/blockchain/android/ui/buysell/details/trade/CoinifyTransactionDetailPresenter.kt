@@ -9,6 +9,8 @@ import piuk.blockchain.androidbuysell.models.coinify.CardDetails
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import timber.log.Timber
 import javax.inject.Inject
 
 class CoinifyTransactionDetailPresenter @Inject constructor(
@@ -41,7 +43,31 @@ class CoinifyTransactionDetailPresenter @Inject constructor(
                         it.inAmount
                     )
                 },
-                onError = { view.showErrorToast(R.string.unexpected_error) }
+                onError = { view.showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR) }
+            )
+    }
+
+    internal fun cancelTrade(tradeId: Int) {
+        tokenSingle
+            .flatMap { coinifyDataManager.cancelTrade(it, tradeId) }
+            .applySchedulers()
+            .doOnSubscribe { view.showProgressDialog() }
+            .doOnEvent { _, _ -> view.dismissProgressDialog() }
+            .doOnError { Timber.e(it) }
+            .subscribeBy(
+                onSuccess = {
+                    view.showToast(
+                        R.string.buy_sell_awaiting_funds_cancel_trade_success,
+                        ToastCustom.TYPE_OK
+                    )
+                    view.finishPage()
+                },
+                onError = {
+                    view.showToast(
+                        R.string.buy_sell_awaiting_funds_cancel_trade_failed,
+                        ToastCustom.TYPE_ERROR
+                    )
+                }
             )
     }
 }

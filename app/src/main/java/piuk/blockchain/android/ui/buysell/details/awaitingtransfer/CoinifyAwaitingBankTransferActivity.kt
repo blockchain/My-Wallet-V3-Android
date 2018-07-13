@@ -112,8 +112,16 @@ class CoinifyAwaitingBankTransferActivity :
         consume { menuInflater.inflate(R.menu.menu_coinify_transaction_detail, menu) }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId ?: -1) {
-        R.id.action_cancel -> consume { presenter.cancelTrade(dataModel.tradeId) }
+        R.id.action_cancel -> consume { showFundsSentDisclaimer() }
         else -> false
+    }
+
+    private fun showFundsSentDisclaimer() {
+        AlertDialog.Builder(this, R.style.AlertDialogStyle)
+            .setTitle(R.string.buy_sell_awaiting_funds_cancel_trade_dialog_title)
+            .setMessage(R.string.buy_sell_awaiting_funds_cancel_trade_dialog_disclaimer)
+            .setPositiveButton(android.R.string.ok) { _, _ -> presenter.cancelTrade(dataModel.tradeId) }
+            .show()
     }
 
     override fun showToast(message: Int, toastType: String) {

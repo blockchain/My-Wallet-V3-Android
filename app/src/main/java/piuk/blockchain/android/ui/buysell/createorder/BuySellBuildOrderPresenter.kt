@@ -78,7 +78,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             if (isSell) loadMax(new)
         }
     }
-    var selectedCurrency: String? by Delegates.observable<String?>(null) { _, old, new ->
+    var selectedCurrency: String by Delegates.observable("EUR") { _, old, new ->
         if (old != new) initialiseUi(); subscribeToSubjects()
     }
     private var latestQuote: Quote? = null
@@ -97,7 +97,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
     // The outbound fee - ie for Buying, this is the BTC cost of the transaction. This will be
     // zero if Selling, as fee is on our side, not Coinify's.
     private var outFixedFee: Double = 0.0
-    private var defaultCurrency: String = "usd"
+    private var defaultCurrency: String = "EUR"
     private var initialLoad = true
     // For comparison to avoid double logging
     private var lastLog: LogItem? = null
@@ -110,7 +110,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     private val emptyQuote
-        get() = Quote(null, selectedCurrency!!, "BTC", 0.0, 0.0, "", "")
+        get() = Quote(null, selectedCurrency, "BTC", 0.0, 0.0, "", "")
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
@@ -160,13 +160,10 @@ class BuySellBuildOrderPresenter @Inject constructor(
     internal fun onMinClicked() {
         val updateAmount = minimumInAmount.toString()
         if (isSell) {
+            view.requestReceiveFocus()
             view.updateReceiveAmount(updateAmount)
-            // For some reason, the TextWatcher won't be triggered from the above method, so here we
-            // emit the value manually instead.
-            receiveSubject.onNext("0")
-            // This allows multiple clicks as it won't be debounced
-            receiveSubject.onNext(updateAmount)
         } else {
+            view.requestSendFocus()
             view.updateSendAmount(updateAmount)
         }
     }
@@ -348,7 +345,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                     coinifyDataManager.getQuote(
                         it,
                         if (isSell) amount else amount.unaryMinus(),
-                        selectedCurrency!!,
+                        selectedCurrency,
                         "BTC"
                     ).doOnSuccess { latestQuote = it }
                         .onErrorReturn { emptyQuote }
@@ -374,7 +371,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         it,
                         if (isSell) amount.unaryMinus() else amount,
                         "BTC",
-                        selectedCurrency!!
+                        selectedCurrency
                     ).doOnSuccess { latestQuote = it }
                         .onErrorReturn { emptyQuote }
                         .doAfterSuccess { view.showQuoteInProgress(false) }
@@ -487,16 +484,18 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         return@BiFunction trader to inMedium
                     }
                 ).flatMap { (trader, inMedium) ->
-                    getExchangeRate(token, -1.0, trader.defaultCurrency)
+                    val currency = if (initialLoad) getDefaultCurrency(trader.defaultCurrency) else selectedCurrency
+
+                    getExchangeRate(token, -1.0, currency)
                         .toObservable()
                         .doOnNext {
                             maximumInCardAmount = trader.level?.limits?.card?.inX?.daily ?: 0.0
                         }
                         .flatMap { getPaymentMethods(token, inMedium).toObservable() }
-                        .doOnNext { defaultCurrency = trader.defaultCurrency }
+                        .doOnNext { defaultCurrency = getDefaultCurrency(trader.defaultCurrency) }
                         .doOnNext {
                             if (initialLoad) {
-                                selectCurrencies(it, inMedium, trader.defaultCurrency)
+                                selectCurrencies(it, inMedium, defaultCurrency)
                                 initialLoad = false
                             }
 
@@ -507,12 +506,12 @@ class BuySellBuildOrderPresenter @Inject constructor(
                             minimumInAmount = if (view.orderType == OrderType.Sell) {
                                 it.minimumInAmounts.getLimitsForCurrency("btc")
                             } else {
-                                it.minimumInAmounts.getLimitsForCurrency(selectedCurrency!!)
+                                it.minimumInAmounts.getLimitsForCurrency(selectedCurrency)
                             }
                             maximumInAmounts = if (view.orderType == OrderType.Sell) {
                                 it.limitInAmounts.getLimitsForCurrency("btc")
                             } else {
-                                it.limitInAmounts.getLimitsForCurrency(selectedCurrency!!)
+                                it.limitInAmounts.getLimitsForCurrency(selectedCurrency)
                             }
                         }
                         .doOnNext { renderLimits(it.limitInAmounts) }
@@ -527,6 +526,16 @@ class BuySellBuildOrderPresenter @Inject constructor(
             )
     }
 
+    private fun getDefaultCurrency(userDefaultCurrency: String): String = if (!isSell) {
+        userDefaultCurrency
+    } else {
+        if (userDefaultCurrency.equals("usd", ignoreCase = true)) {
+            defaultCurrency
+        } else {
+            userDefaultCurrency
+        }
+    }
+
     private fun updateReceiveAmount(quoteAmount: Double) {
         val formatted = currencyFormatManager
             .getFormattedBchValue(BigDecimal.valueOf(quoteAmount), BTCDenomination.BTC)
@@ -535,7 +544,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
 
     private fun updateSendAmount(quoteAmount: Double) {
         val formatted = currencyFormatManager
-            .getFiatFormat(selectedCurrency!!).format(quoteAmount)
+            .getFiatFormat(selectedCurrency).format(quoteAmount)
         view.updateSendAmount(formatted)
     }
 
@@ -560,6 +569,9 @@ class BuySellBuildOrderPresenter @Inject constructor(
             Medium.Blockchain -> paymentMethod.outCurrencies.toMutableList() // Sell
             else -> paymentMethod.inCurrencies.toMutableList() // Buy
         }
+
+        // Selling USD is not allowed
+        if (isSell) currencies.remove("USD")
 
         selectedCurrency = if (currencies.contains(userCurrency)) {
             val index = currencies.indexOf(userCurrency)
@@ -636,7 +648,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     private fun getLocalisedCardLimit(): BigDecimal {
-        val exchangeRateSelected = getExchangeRate(selectedCurrency!!)
+        val exchangeRateSelected = getExchangeRate(selectedCurrency)
         val exchangeRateDefault = getExchangeRate(defaultCurrency)
         val rate = exchangeRateSelected.div(exchangeRateDefault)
         return rate.multiply(maximumInCardAmount.toBigDecimal()).setScale(2, RoundingMode.DOWN)

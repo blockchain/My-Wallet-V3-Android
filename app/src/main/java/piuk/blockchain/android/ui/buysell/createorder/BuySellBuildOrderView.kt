@@ -26,6 +26,10 @@ interface BuySellBuildOrderView : View {
 
     fun updateReceiveAmount(amount: String)
 
+    fun requestReceiveFocus()
+
+    fun requestSendFocus()
+
     fun updateSendAmount(amount: String)
 
     fun showToast(@StringRes message: Int, @ToastCustom.ToastType toastType: String)

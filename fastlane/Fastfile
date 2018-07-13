@@ -28,6 +28,10 @@ platform :android do
         text: "Enter APK version name: "
       )
 
+      ticket = prompt(
+        text: "Enter release ticket number (AND-1234): "
+      )
+
       # Retrieves arguments from the command line
       unit_tests = options[:unit_tests]
       bump_version = options[:bump_version]
@@ -51,6 +55,7 @@ platform :android do
 
       pipeline(
         version_name_update: name,
+        release_ticket_code: ticket,
         unit_tests: unit_tests,
         bump_version: bump_version,
         vcs: vcs,
@@ -74,16 +79,18 @@ platform :android do
             test
         end
 
-       # Increment version code, update version name via param: version_name_update
+       # Increment version code, update version name via param: version_name_update, add
+       # corresponding JIRA ticket code via release_ticket_code
         if options[:bump_version]
-          bump_version_code(version_name_update: options[:version_name_update])
+          bump_version_code(version_name_update: options[:version_name_update],
+                            release_ticket_code: options[:release_ticket_code])
         end
 
         # Commit and push the new version code + name
         if options[:vcs]
           git_commit(
             path: "buildSrc/src/main/java/Dependencies.kt",
-            message: "Increment version code: " + options[:version_name_update]
+            message: "chore(Release): " + options[:release_ticket_code] + " Increment version code: " + options[:version_name_update]
           )
 
           push_to_git_remote(
@@ -236,7 +243,7 @@ platform :android do
       end
 
       # This is nasty but there's no integration to allow access to GDrive just yet
-      sh("cp ../app/build/outputs/apk/envStaging#{environment}/release/*.apk #{Shellwords.escape drive_folder}")
+      sh("cp ../app/build/outputs/apk/env#{environment}/release/*.apk #{Shellwords.escape drive_folder}")
 
     end
 
