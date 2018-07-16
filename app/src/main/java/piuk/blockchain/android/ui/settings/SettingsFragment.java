@@ -82,7 +82,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
     public static final String EXTRA_SHOW_ADD_EMAIL_DIALOG = "show_add_email_dialog";
     public static final String URL_TOS_POLICY = "https://blockchain.com/terms";
     public static final String URL_PRIVACY_POLICY = "https://blockchain.com/privacy";
-    public static final String URL_LOGIN = "<a href=\"https://blockchain.info/wallet/login/\">blockchain.info/wallet/login</a>";
+    public static final String URL_LOGIN = "<a href=\"https://login.blockchain.com/\">login.blockchain.com</a>";
 
     // Profile
     private Preference guidPref;

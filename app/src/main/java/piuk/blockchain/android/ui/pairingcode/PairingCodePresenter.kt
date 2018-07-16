@@ -68,6 +68,6 @@ class PairingCodePresenter @Inject constructor(
     }
 
     companion object {
-        private const val WEB_WALLET_URL = "blockchain.info/wallet/login"
+        private const val WEB_WALLET_URL = "login.blockchain.com"
     }
 }
