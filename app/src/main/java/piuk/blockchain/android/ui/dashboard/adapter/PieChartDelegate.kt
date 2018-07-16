@@ -93,13 +93,12 @@ class PieChartDelegate<in T>(
 
     private fun renderData(data: PieChartsState.Data) {
         // Store values for comparisons
-        bitcoinValue = data.bitcoinValue
-        etherValue = data.etherValue
-        bitcoinCashValue = data.bitcoinCashValue
+        bitcoinValue = data.bitcoin.fiatValue
+        etherValue = data.ether.fiatValue
+        bitcoinCashValue = data.bitcoinCash.fiatValue
         fiatSymbol = data.fiatSymbol
 
-        val isEmpty = (data.bitcoinValue + data.etherValue + data.bitcoinCashValue)
-            .compareTo(BigDecimal.ZERO) == 0
+        val isEmpty = data.isZero
         // Prevent issue where chart won't render if NOT first fun AND data has recently gone from
         // empty to non-empty.
         if (isEmpty) firstRender = true
@@ -118,12 +117,12 @@ class PieChartDelegate<in T>(
         val chartData = PieData(dataSet).apply { setDrawValues(false) }
 
         viewHolder?.apply {
-            bitcoinValue.text = data.bitcoinValueString
-            etherValue.text = data.etherValueString
-            bitcoinCashValue.text = data.bitcoinCashValueString
-            bitcoinAmount.text = data.bitcoinAmountString
-            etherAmount.text = data.etherAmountString
-            bitcoinCashAmount.text = data.bitcoinCashAmountString
+            bitcoinValue.text = data.bitcoin.fiatValueString
+            etherValue.text = data.ether.fiatValueString
+            bitcoinCashValue.text = data.bitcoinCash.fiatValueString
+            bitcoinAmount.text = data.bitcoin.cryptoValueString
+            etherAmount.text = data.ether.cryptoValueString
+            bitcoinCashAmount.text = data.bitcoinCash.cryptoValueString
 
             progressBar.gone()
             chart.apply {
@@ -140,9 +139,9 @@ class PieChartDelegate<in T>(
         listOf(PieEntry(100.0f, ""))
     } else {
         listOf(
-            PieEntry(data.bitcoinValue.toFloat(), context.getString(R.string.bitcoin)),
-            PieEntry(data.etherValue.toFloat(), context.getString(R.string.ether)),
-            PieEntry(data.bitcoinCashValue.toFloat(), context.getString(R.string.bitcoin_cash))
+            PieEntry(data.bitcoin.fiatValue.toFloat(), context.getString(R.string.bitcoin)),
+            PieEntry(data.ether.fiatValue.toFloat(), context.getString(R.string.ether)),
+            PieEntry(data.bitcoinCash.fiatValue.toFloat(), context.getString(R.string.bitcoin_cash))
         )
     }
 

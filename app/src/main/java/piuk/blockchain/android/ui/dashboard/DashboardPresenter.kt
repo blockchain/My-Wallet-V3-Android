@@ -224,19 +224,21 @@ class DashboardPresenter @Inject constructor(
 
                         cachedData = PieChartsState.Data(
                             fiatSymbol = getCurrencySymbol(),
-                            // Amounts in Fiat
-                            bitcoinValue = BigDecimal.valueOf(btcFiat),
-                            etherValue = ethFiat,
-                            bitcoinCashValue = BigDecimal.valueOf(bchFiat),
-                            // Formatted fiat value Strings
-                            bitcoinValueString = getBtcFiatString(btcBalance.amount),
-                            etherValueString = getEthFiatString(ethBalance),
-                            bitcoinCashValueString = getBchFiatString(bchBalance.amount),
-                            // Formatted Amount Strings
-                            bitcoinAmountString = getBtcBalanceString(btcBalance.amount),
-                            etherAmountString = getEthBalanceString(ethBalance),
-                            bitcoinCashAmountString = getBchBalanceString(bchBalance.amount),
-                            // Total
+                            bitcoin = PieChartsState.DataPoint(
+                                fiatValue = BigDecimal.valueOf(btcFiat),
+                                fiatValueString = getBtcFiatString(btcBalance.amount),
+                                cryptoValueString = getBtcBalanceString(btcBalance.amount)
+                            ),
+                            bitcoinCash = PieChartsState.DataPoint(
+                                fiatValue = BigDecimal.valueOf(bchFiat),
+                                fiatValueString = getBchFiatString(bchBalance.amount),
+                                cryptoValueString = getBchBalanceString(bchBalance.amount)
+                            ),
+                            ether = PieChartsState.DataPoint(
+                                fiatValue = ethFiat,
+                                fiatValueString = getEthFiatString(ethBalance),
+                                cryptoValueString = getEthBalanceString(ethBalance)
+                            ),
                             totalValueString = totalString
                         ).also { view.updatePieChartState(it) }
                     }
@@ -526,23 +528,23 @@ class DashboardPresenter @Inject constructor(
 
 sealed class PieChartsState {
 
+    data class DataPoint(
+        val fiatValue: BigDecimal,
+        val fiatValueString: String,
+        val cryptoValueString: String
+    ) {
+        val isZero: Boolean = fiatValue == BigDecimal.ZERO
+    }
+
     data class Data(
         val fiatSymbol: String,
-        // Amounts in Fiat
-        val bitcoinValue: BigDecimal,
-        val etherValue: BigDecimal,
-        val bitcoinCashValue: BigDecimal,
-        // Formatted fiat value Strings
-        val bitcoinValueString: String,
-        val etherValueString: String,
-        val bitcoinCashValueString: String,
-        // Formatted Amount Strings
-        val bitcoinAmountString: String,
-        val etherAmountString: String,
-        val bitcoinCashAmountString: String,
-        // Total String
+        val bitcoin: DataPoint,
+        val ether: DataPoint,
+        val bitcoinCash: DataPoint,
         val totalValueString: String
-    ) : PieChartsState()
+    ) : PieChartsState() {
+        val isZero: Boolean = bitcoin.isZero && bitcoinCash.isZero && ether.isZero
+    }
 
     object Loading : PieChartsState()
     object Error : PieChartsState()
