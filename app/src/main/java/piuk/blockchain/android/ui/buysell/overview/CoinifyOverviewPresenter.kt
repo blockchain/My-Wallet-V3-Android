@@ -30,6 +30,7 @@ import piuk.blockchain.androidbuysell.models.coinify.Subscription
 import piuk.blockchain.androidbuysell.models.coinify.TradeState
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidbuysell.utils.fromIso8601
+import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
@@ -37,10 +38,7 @@ import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import timber.log.Timber
 import java.math.RoundingMode
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.util.Calendar
-import java.util.Currency
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
@@ -49,7 +47,8 @@ class CoinifyOverviewPresenter @Inject constructor(
     private val exchangeService: ExchangeService,
     private val coinifyDataManager: CoinifyDataManager,
     private val metadataManager: MetadataManager,
-    private val stringUtils: StringUtils
+    private val stringUtils: StringUtils,
+    private val currencyFormatUtil: CurrencyFormatUtil
 ) : BasePresenter<CoinifyOverviewView>() {
 
     // Display States
@@ -241,7 +240,7 @@ class CoinifyOverviewPresenter @Inject constructor(
 
     private fun getAwaitingFundsModel(coinifyTrade: CoinifyTrade): AwaitingFundsModel {
         val (referenceText, account, bank, holder, _, _) = coinifyTrade.transferIn.details as BankDetails
-        val formattedAmount = formatFiatWithSymbol(
+        val formattedAmount = currencyFormatUtil.formatFiatWithSymbol(
             coinifyTrade.transferIn.sendAmount,
             coinifyTrade.transferIn.currency,
             view.locale
@@ -443,12 +442,11 @@ class CoinifyOverviewPresenter @Inject constructor(
             detailAmount = "$received $receiveCurrency"
             // Exchange rate (always in fiat)
             val exchangeRate = sent / received
-            exchangeRateString = formatFiatWithSymbol(exchangeRate, sendCurrency, view.locale)
+            exchangeRateString = currencyFormatUtil.formatFiatWithSymbol(exchangeRate, sendCurrency, view.locale)
             // Fiat in
-            amountString = formatFiatWithSymbol(sent, sendCurrency, view.locale)
-            paymentFeeString =
-                formatFiatWithSymbol(paymentFee.toDouble(), sendCurrency, view.locale)
-            totalString = formatFiatWithSymbol(sentWithFee, sendCurrency, view.locale)
+            amountString = currencyFormatUtil.formatFiatWithSymbol(sent, sendCurrency, view.locale)
+            paymentFeeString = currencyFormatUtil.formatFiatWithSymbol(paymentFee.toDouble(), sendCurrency, view.locale)
+            totalString = currencyFormatUtil.formatFiatWithSymbol(sentWithFee, sendCurrency, view.locale)
             // Received/Sold title
             receiveTitleString = getReceiveTitleString(
                 isEndState,
@@ -459,11 +457,11 @@ class CoinifyOverviewPresenter @Inject constructor(
         } else {
             // Fiat out (from Coinify's perspective)
             headlineAmount =
-                formatFiatWithSymbol(received - sellPaymentFee, receiveCurrency, view.locale)
+                currencyFormatUtil.formatFiatWithSymbol(received - sellPaymentFee, receiveCurrency, view.locale)
             detailAmount = "$sent $sendCurrency"
             // Exchange rate (always in fiat)
             val exchangeRate = received / sent
-            exchangeRateString = formatFiatWithSymbol(exchangeRate, receiveCurrency, view.locale)
+            exchangeRateString = currencyFormatUtil.formatFiatWithSymbol(exchangeRate, receiveCurrency, view.locale)
             // Crypto in
             paymentFeeString = "Not rendered"
             totalString = "Not rendered"
@@ -494,20 +492,6 @@ class CoinifyOverviewPresenter @Inject constructor(
         )
     }
     // endregion
-
-    // region Formatting helpers
-    private fun formatFiatWithSymbol(
-        fiatValue: Double,
-        currencyCode: String,
-        locale: Locale
-    ): String {
-        val numberFormat = NumberFormat.getCurrencyInstance(locale)
-        val decimalFormatSymbols = (numberFormat as DecimalFormat).decimalFormatSymbols
-        numberFormat.decimalFormatSymbols = decimalFormatSymbols.apply {
-            this.currencySymbol = Currency.getInstance(currencyCode).getSymbol(locale)
-        }
-        return numberFormat.format(fiatValue)
-    }
 
     private fun getReceiveTitleString(
         isEndState: Boolean,

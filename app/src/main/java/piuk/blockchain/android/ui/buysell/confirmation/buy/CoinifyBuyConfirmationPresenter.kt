@@ -19,17 +19,14 @@ import piuk.blockchain.androidbuysell.models.coinify.CoinifyTradeRequest
 import piuk.blockchain.androidbuysell.models.coinify.exceptions.CoinifyApiException
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidbuysell.utils.fromIso8601
+import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import timber.log.Timber
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.util.Calendar
-import java.util.Currency
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -38,7 +35,8 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
     private val coinifyDataManager: CoinifyDataManager,
     private val exchangeService: ExchangeService,
     private val stringUtils: StringUtils,
-    private val metadataManager: MetadataManager
+    private val metadataManager: MetadataManager,
+    private val currencyFormatUtil: CurrencyFormatUtil
 ) : BasePresenter<CoinifyBuyConfirmationView>() {
 
     private val tokenSingle: Single<String>
@@ -210,7 +208,7 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
 
     private fun getAwaitingFundsModel(it: CoinifyTrade): AwaitingFundsModel {
         val (referenceText, account, bank, holder, _, _) = (it.transferIn.details as BankDetails)
-        val formattedAmount = formatFiatWithSymbol(
+        val formattedAmount = currencyFormatUtil.formatFiatWithSymbol(
             it.transferIn.sendAmount,
             it.transferIn.currency,
             view.locale
@@ -226,18 +224,5 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
             account.bic,
             "${bank.name}, ${bank.address.getFormattedAddressString()}"
         )
-    }
-
-    private fun formatFiatWithSymbol(
-        fiatValue: Double,
-        currencyCode: String,
-        locale: Locale
-    ): String {
-        val numberFormat = NumberFormat.getCurrencyInstance(locale)
-        val decimalFormatSymbols = (numberFormat as DecimalFormat).decimalFormatSymbols
-        numberFormat.decimalFormatSymbols = decimalFormatSymbols.apply {
-            this.currencySymbol = Currency.getInstance(currencyCode).getSymbol(locale)
-        }
-        return numberFormat.format(fiatValue)
     }
 }
