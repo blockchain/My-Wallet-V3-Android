@@ -169,8 +169,6 @@ class CoinifyTransactionDetailActivity :
         finish()
     }
 
-    override fun onSupportNavigateUp(): Boolean = consume { finish() }
-
     override fun createPresenter(): CoinifyTransactionDetailPresenter = presenter
 
     override fun getView(): CoinifyTransactionDetailView = this
