@@ -498,7 +498,7 @@ class AccountPresenter @Inject internal constructor(
 
     private fun getUiString(amount: Long): String {
         return if (currencyState.isDisplayingCryptoCurrency) {
-            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(amount.toBigDecimal())
+            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(amount.toBigInteger())
         } else {
             currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(amount.toBigDecimal())
         }

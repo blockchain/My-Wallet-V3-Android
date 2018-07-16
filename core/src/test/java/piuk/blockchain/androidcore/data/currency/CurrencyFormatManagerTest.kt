@@ -235,22 +235,64 @@ class CurrencyFormatManagerTest {
     fun `getFormattedSelectedCoinValue BTC`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
-        whenever(currencyFormatUtil.format(eq(CryptoValue.bitcoinFromSatoshis(1L)))).thenReturn("one Satoshi")
+        whenever(
+            currencyFormatUtil.format(
+                eq(CryptoValue.bitcoinFromSatoshis(1L)),
+                eq(CurrencyFormatUtil.Precision.Full)
+            )
+        ).thenReturn("one")
 
         // Act
         // Assert
-        assertEquals("one Satoshi", subject.getFormattedSelectedCoinValue(BigInteger.valueOf(1L)))
+        assertEquals("one", subject.getFormattedSelectedCoinValue(BigInteger.valueOf(1L)))
     }
 
     @Test
     fun `getFormattedSelectedCoinValue ETH`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
-        whenever(currencyFormatUtil.format(eq(CryptoValue.etherFromWei(2L)))).thenReturn("two Wei")
+        whenever(
+            currencyFormatUtil.format(
+                eq(CryptoValue.etherFromWei(2L)),
+                eq(CurrencyFormatUtil.Precision.Full)
+            )
+        ).thenReturn("two")
 
         // Act
         // Assert
-        assertEquals("two Wei", subject.getFormattedSelectedCoinValue(BigInteger.valueOf(2L)))
+        assertEquals("two", subject.getFormattedSelectedCoinValue(BigInteger.valueOf(2L)))
+    }
+
+    @Test
+    fun `getFormattedSelectedCoinValueWithUnit BTC`() {
+        // Arrange
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
+        whenever(
+            currencyFormatUtil.formatWithUnit(
+                eq(CryptoValue.bitcoinCashFromSatoshis(2L)),
+                eq(CurrencyFormatUtil.Precision.Full)
+            )
+        ).thenReturn("two BCH Satoshi")
+
+        // Act
+        // Assert
+        assertEquals("two BCH Satoshi", subject.getFormattedSelectedCoinValueWithUnit(BigInteger.valueOf(2L)))
+    }
+
+    @Test
+    fun `getFormattedSelectedCoinValueWithUnit ETH`() {
+        // Arrange
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
+        whenever(
+            currencyFormatUtil.formatWithUnit(
+                eq(CryptoValue.etherFromWei(2L)),
+                eq(CurrencyFormatUtil.Precision.Full)
+            )
+        ).thenReturn("two Wei")
+
+        // Act
+        // Assert
+        assertEquals("two Wei", subject.getFormattedSelectedCoinValueWithUnit(BigInteger.valueOf(2L)))
     }
 
     // endregion

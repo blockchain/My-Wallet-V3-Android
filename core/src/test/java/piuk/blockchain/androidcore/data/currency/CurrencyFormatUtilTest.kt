@@ -141,6 +141,24 @@ class CurrencyFormatUtilTest {
     }
 
     @Test
+    fun `formatWithUnit ETH with tiny fractions - full precision`() {
+        val formatWithUnit =
+            { wei: Long -> subject.formatWithUnit(CryptoValue.etherFromWei(wei), CurrencyFormatUtil.Precision.Full) }
+        formatWithUnit(1L) `should equal` "0.000000000000000001 ETH"
+        formatWithUnit(10L) `should equal` "0.00000000000000001 ETH"
+        formatWithUnit(100L) `should equal` "0.0000000000000001 ETH"
+        formatWithUnit(1_000L) `should equal` "0.000000000000001 ETH"
+        formatWithUnit(10_000L) `should equal` "0.00000000000001 ETH"
+        formatWithUnit(100_000L) `should equal` "0.0000000000001 ETH"
+        formatWithUnit(1_000_000L) `should equal` "0.000000000001 ETH"
+        formatWithUnit(10_000_000L) `should equal` "0.00000000001 ETH"
+        formatWithUnit(100_000_000L) `should equal` "0.0000000001 ETH"
+        formatWithUnit(1_000_000_000L) `should equal` "0.000000001 ETH"
+        formatWithUnit(10_000_000_000L) `should equal` "0.00000001 ETH"
+        formatWithUnit(100_000_000_000L) `should equal` "0.0000001 ETH"
+    }
+
+    @Test
     fun `formatWithUnit ETH fractions`() {
         subject.formatWithUnit(CryptoValue.etherFromWei(10_000_000_000L)) `should equal` "0.00000001 ETH"
         subject.formatWithUnit(CryptoValue.etherFromWei(100_000_000_000L)) `should equal` "0.0000001 ETH"

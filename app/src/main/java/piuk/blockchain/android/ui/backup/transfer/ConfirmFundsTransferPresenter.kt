@@ -98,12 +98,10 @@ class ConfirmFundsTransferPresenter @Inject constructor(
             currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(totalFee.toBigDecimal())
 
         view.updateTransferAmountBtc(
-            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(
-                totalToSend.toBigDecimal()
-            )
+            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(totalToSend.toBigInteger())
         )
         view.updateTransferAmountFiat(fiatAmount)
-        view.updateFeeAmountBtc(currencyFormatManager.getFormattedSelectedCoinValueWithUnit(totalFee.toBigDecimal()))
+        view.updateFeeAmountBtc(currencyFormatManager.getFormattedSelectedCoinValueWithUnit(totalFee.toBigInteger()))
         view.updateFeeAmountFiat(fiatFee)
         view.setPaymentButtonEnabled(true)
 

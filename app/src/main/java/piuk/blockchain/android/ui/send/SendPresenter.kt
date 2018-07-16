@@ -1128,7 +1128,7 @@ class SendPresenter @Inject constructor(
         // Format for display
         view.updateMaxAvailable(
             stringUtils.getString(R.string.max_available) +
-                " ${currencyFormatManager.getFormattedSelectedCoinValueWithUnit(maxAvailable.toBigDecimal())}"
+                " ${currencyFormatManager.getFormattedSelectedCoinValueWithUnit(maxAvailable)}"
         )
 
         if (balanceAfterFee <= Payment.DUST) {

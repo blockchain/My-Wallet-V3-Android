@@ -84,23 +84,14 @@ class CurrencyFormatManager @Inject constructor(
     fun getFormattedSelectedCoinValue(coinValue: BigInteger) =
         getFormattedCoinValue(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
-    fun getFormattedCoinValue(cryptoValue: CryptoValue) = currencyFormatUtil.format(cryptoValue)
+    fun getFormattedCoinValue(cryptoValue: CryptoValue) =
+        currencyFormatUtil.format(cryptoValue, CurrencyFormatUtil.Precision.Full)
 
-    fun getFormattedSelectedCoinValueWithUnit(
-        coinValue: BigDecimal,
-        convertEthDenomination: ETHDenomination? = null,
-        convertBtcDenomination: BTCDenomination? = BTCDenomination.SATOSHI
-    ): String {
-        val convertedCoinValue =
-            getConvertedCoinValue(coinValue, convertEthDenomination, convertBtcDenomination)
+    fun getFormattedSelectedCoinValueWithUnit(coinValue: BigInteger) =
+        getFormattedCoinValueWithUnit(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
-        return when (currencyState.cryptoCurrency) {
-            CryptoCurrency.BTC -> currencyFormatUtil.formatBtcWithUnit(convertedCoinValue)
-            CryptoCurrency.ETHER -> currencyFormatUtil.formatEthWithUnit(convertedCoinValue)
-            CryptoCurrency.BCH -> currencyFormatUtil.formatBchWithUnit(convertedCoinValue)
-            else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
-        }
-    }
+    fun getFormattedCoinValueWithUnit(cryptoValue: CryptoValue) =
+        currencyFormatUtil.formatWithUnit(cryptoValue, CurrencyFormatUtil.Precision.Full)
 
     /**
      * @return Formatted String of crypto amount from fiat currency amount.

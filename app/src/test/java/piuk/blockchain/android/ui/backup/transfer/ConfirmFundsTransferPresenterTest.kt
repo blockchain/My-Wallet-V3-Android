@@ -108,15 +108,11 @@ class ConfirmFundsTransferPresenterTest {
 
         whenever(stringUtils.getQuantityString(anyInt(), anyInt())).thenReturn("test string")
         whenever(
-            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(
-                BigDecimal.valueOf(total)
-            )
+            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(total.toBigInteger())
         )
             .thenReturn("1.0 BTC")
         whenever(
-            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(
-                BigDecimal.valueOf(fee)
-            )
+            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(fee.toBigInteger())
         )
             .thenReturn("0.0001 BTC")
         whenever(
