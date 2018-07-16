@@ -104,6 +104,8 @@ class CoinifyVerifyEmailPresenter @Inject constructor(
     }
 
     fun onContinueClicked(countryCode: String) {
+        require(countryCode.isNotEmpty()) { "Country code should not be empty" }
+
         verifiedEmailAddress?.run {
             createCoinifyAccount(this, countryCode)
                 .applySchedulers()
@@ -138,32 +140,31 @@ class CoinifyVerifyEmailPresenter @Inject constructor(
      */
     private fun createCoinifyAccount(
         verifiedEmailAddress: String,
-        countryCode: String?
-    ): Observable<KycResponse> {
-        if (countryCode == null) {
-            return Observable.error(Throwable("Country code not set"))
-        } else {
-            return walletOptionsDataManager.getCoinifyPartnerId()
-                .flatMap {
-                    coinifyDataManager.getEmailTokenAndSignUp(
-                        payloadDataManager.guid,
-                        payloadDataManager.sharedKey,
-                        verifiedEmailAddress,
-                        currencyState.fiatUnit,
-                        countryCode,
-                        it
-                    ).toObservable()
-                        .applySchedulers()
-                }
-                .flatMap {
-                    saveCoinifyMetadata(it).toObservable()
-                }
-                .flatMap {
-                    coinifyDataManager.startKycReview(it.offlineToken)
-                        .toObservable()
-                        .applySchedulers()
-                }
+        countryCode: String
+    ): Observable<KycResponse> = walletOptionsDataManager.getCoinifyPartnerId()
+        .flatMap {
+            coinifyDataManager.getEmailTokenAndSignUp(
+                payloadDataManager.guid,
+                payloadDataManager.sharedKey,
+                verifiedEmailAddress,
+                getDefaultCurrency(),
+                countryCode,
+                it
+            ).toObservable()
+                .applySchedulers()
         }
+        .flatMap {
+            saveCoinifyMetadata(it).toObservable()
+        }
+        .flatMap {
+            coinifyDataManager.startKycReview(it.offlineToken)
+                .toObservable()
+                .applySchedulers()
+        }
+
+    private fun getDefaultCurrency(): String = when (currencyState.fiatUnit) {
+        "GBP", "USD", "EUR", "DKK" -> currencyState.fiatUnit
+        else -> "EUR"
     }
 
     /**
