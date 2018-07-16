@@ -1,5 +1,7 @@
 package piuk.blockchain.android.ui.chooser
 
+import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.contacts.data.Contact
 import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.Observable
@@ -104,9 +106,9 @@ class AccountChooserPresenter @Inject internal constructor(
 
             itemAccounts.add(ItemAccount().apply {
                 label = stringUtils.getString(R.string.all_accounts)
-                displayBalance = getBtcBalanceString(
+                displayBalance = getBalanceString(
                     currencyState.isDisplayingCryptoCurrency,
-                    bigIntBalance.toLong()
+                    bigIntBalance
                 )
                 absoluteBalance = bigIntBalance.toLong()
                 type = ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY
@@ -121,9 +123,9 @@ class AccountChooserPresenter @Inject internal constructor(
                     val bigIntBalance = payloadDataManager.importedAddressesBalance
 
                     itemAccounts.add(ItemAccount().apply {
-                        displayBalance = getBtcBalanceString(
+                        displayBalance = getBalanceString(
                             currencyState.isDisplayingCryptoCurrency,
-                            bigIntBalance.toLong()
+                            bigIntBalance
                         )
                         label = stringUtils.getString(R.string.imported_addresses)
                         absoluteBalance = bigIntBalance.toLong()
@@ -148,9 +150,9 @@ class AccountChooserPresenter @Inject internal constructor(
 
             itemAccounts.add(ItemAccount().apply {
                 label = stringUtils.getString(R.string.all_accounts)
-                displayBalance = getBtcBalanceString(
+                displayBalance = getBalanceString(
                     currencyState.isDisplayingCryptoCurrency,
-                    bigIntBalance.toLong()
+                    bigIntBalance
                 )
                 absoluteBalance = bigIntBalance.toLong()
                 type = ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY
@@ -165,9 +167,9 @@ class AccountChooserPresenter @Inject internal constructor(
                     val bigIntBalance = bchDataManager.getImportedAddressBalance()
 
                     itemAccounts.add(ItemAccount().apply {
-                        displayBalance = getBtcBalanceString(
+                        displayBalance = getBalanceString(
                             currencyState.isDisplayingCryptoCurrency,
-                            bigIntBalance.toLong()
+                            bigIntBalance
                         )
                         label = stringUtils.getString(R.string.imported_addresses)
                         absoluteBalance = bigIntBalance.toLong()
@@ -282,12 +284,9 @@ class AccountChooserPresenter @Inject internal constructor(
     private fun getEthAccount(): Observable<ItemAccount> =
         Observable.just(walletAccountHelper.getEthAccount()[0])
 
-    private fun getBtcBalanceString(isBtc: Boolean, btcBalance: Long): String {
-        return if (isBtc) {
-            currencyFormatManager.getFormattedBtcValueWithUnit(
-                btcBalance.toBigDecimal(),
-                BTCDenomination.SATOSHI
-            )
+    private fun getBalanceString(displayAsBtc: Boolean, btcBalance: BigInteger): String {
+        return if (displayAsBtc) {
+            currencyFormatManager.getFormattedValueWithUnit(CryptoValue(CryptoCurrency.BTC, btcBalance))
         } else {
             currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(
                 coinValue = btcBalance.toBigDecimal(),

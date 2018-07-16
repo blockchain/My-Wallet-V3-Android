@@ -46,27 +46,6 @@ class ExchangeRateDataStore @Inject constructor(
 
     fun getCurrencyLabels(): Array<String> = btcTickerData!!.keys.toTypedArray()
 
-    @Deprecated(
-        "Use getLastPrice",
-        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.BTC, currencyName)")
-    )
-    fun getLastBtcPrice(currencyName: String) =
-        getLastPrice(CryptoCurrency.BTC, currencyName.toUpperCase())
-
-    @Deprecated(
-        "Use getLastPrice",
-        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.BCH, currencyName)")
-    )
-    fun getLastBchPrice(currencyName: String) =
-        getLastPrice(CryptoCurrency.BCH, currencyName.toUpperCase())
-
-    @Deprecated(
-        "Use getLastPrice",
-        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.ETHER, currencyName)")
-    )
-    fun getLastEthPrice(currencyName: String) =
-        getLastPrice(CryptoCurrency.ETHER, currencyName.toUpperCase())
-
     fun getLastPrice(cryptoCurrency: CryptoCurrency, currencyName: String): Double {
         val prefsKey: String
         val tickerData: Map<String, PriceDatum>?

@@ -1,6 +1,7 @@
 package piuk.blockchain.android.ui.shapeshift.newexchange
 
 import info.blockchain.api.data.UnspentOutputs
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.payload.data.Account
@@ -24,7 +25,6 @@ import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -390,15 +390,7 @@ class NewExchangePresenter @Inject constructor(
     private fun getExchangeRate(
         cryptoCurrency: CryptoCurrency,
         currencyCode: String
-    ): BigDecimal {
-        val price = when (cryptoCurrency) {
-            CryptoCurrency.BTC -> exchangeRateFactory.getLastBtcPrice(currencyCode)
-            CryptoCurrency.ETHER -> exchangeRateFactory.getLastEthPrice(currencyCode)
-            CryptoCurrency.BCH -> exchangeRateFactory.getLastBchPrice(currencyCode)
-        }
-
-        return BigDecimal.valueOf(price)
-    }
+    ) = exchangeRateFactory.getLastPrice(cryptoCurrency, currencyCode).toBigDecimal()
 
     private fun getUnspentApiResponseBtc(address: String): Observable<UnspentOutputs> {
         return if (payloadDataManager.getAddressBalance(address).toLong() > 0) {

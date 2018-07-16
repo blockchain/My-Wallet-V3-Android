@@ -3,6 +3,7 @@ package piuk.blockchain.android.ui.buysell.createorder
 import com.crashlytics.android.answers.AddToCartEvent
 import com.crashlytics.android.answers.StartCheckoutEvent
 import info.blockchain.api.data.UnspentOutputs
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.payload.data.Account
 import io.reactivex.Observable
@@ -654,10 +655,8 @@ class BuySellBuildOrderPresenter @Inject constructor(
         return rate.multiply(maximumInCardAmount.toBigDecimal()).setScale(2, RoundingMode.DOWN)
     }
 
-    private fun getExchangeRate(currencyCode: String): BigDecimal {
-        val price = exchangeRateDataManager.getLastBtcPrice(currencyCode)
-        return BigDecimal.valueOf(price)
-    }
+    private fun getExchangeRate(currencyCode: String) =
+        exchangeRateDataManager.getLastPrice(CryptoCurrency.BTC, currencyCode).toBigDecimal()
 
     // region Observables
     private fun getExchangeRate(token: String, amount: Double, currency: String): Single<Quote> =

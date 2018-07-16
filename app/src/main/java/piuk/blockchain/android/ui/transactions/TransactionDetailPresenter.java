@@ -273,7 +273,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
 
             TransactionDetailModel transactionDetailModel = new TransactionDetailModel(
                     label,
-                    currencyFormatManager.getFormattedSelectedCoinValue(BigDecimal.valueOf(value), null, BTCDenomination.SATOSHI),
+                    currencyFormatManager.getFormattedSelectedCoinValue(BigInteger.valueOf(value)),
                     unit);
 
             if (transactionDetailModel.getAddress().equals(MultiAddressFactory.ADDRESS_DECODE_ERROR)) {
@@ -321,7 +321,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
 
             TransactionDetailModel transactionDetailModel = new TransactionDetailModel(
                     label,
-                    currencyFormatManager.getFormattedSelectedCoinValue(BigDecimal.valueOf(value), null, BTCDenomination.SATOSHI),
+                    currencyFormatManager.getFormattedSelectedCoinValue(BigInteger.valueOf(value)),
                     unit);
 
             if (displayModel != null && displayable.getDirection().equals(Direction.SENT)) {

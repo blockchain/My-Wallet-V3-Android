@@ -34,14 +34,12 @@ import piuk.blockchain.androidcore.data.contacts.comparators.FctxDateComparator;
 import piuk.blockchain.androidcore.data.currency.BTCDenomination;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
-import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import timber.log.Timber;
 
 import static piuk.blockchain.android.ui.contacts.list.ContactsListActivity.KEY_BUNDLE_CONTACT_ID;
-
 
 public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
 
@@ -54,7 +52,6 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
     private RxBus rxBus;
     private TransactionListDataManager transactionListDataManager;
     private CurrencyState currencyState;
-    private ExchangeRateDataManager exchangeRateFactory;
     private CurrencyFormatManager currencyFormatManager;
 
     @Inject
@@ -63,7 +60,6 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
                            PrefsUtil prefsUtil,
                            RxBus rxBus,
                            TransactionListDataManager transactionListDataManager,
-                           ExchangeRateDataManager exchangeRateFactory,
                            CurrencyState currencyState,
                            CurrencyFormatManager currencyFormatManager) {
 
@@ -72,7 +68,6 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
         this.prefsUtil = prefsUtil;
         this.rxBus = rxBus;
         this.transactionListDataManager = transactionListDataManager;
-        this.exchangeRateFactory = exchangeRateFactory;
         this.currencyState = currencyState;
         this.currencyFormatManager = currencyFormatManager;
     }
@@ -382,10 +377,6 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
                 BigDecimal.valueOf(btcBalance), null, BTCDenomination.SATOSHI);
     }
 
-    private String getFiatCurrency() {
-        return prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY);
-    }
-
     private void showErrorAndQuitPage() {
         getView().showToast(R.string.contacts_not_found_error, ToastCustom.TYPE_ERROR);
         getView().finishPage();
@@ -395,9 +386,5 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
     public void onViewDestroyed() {
         super.onViewDestroyed();
         rxBus.unregister(NotificationPayload.class, notificationObservable);
-    }
-
-    public double getEthExchangeRate() {
-        return exchangeRateFactory.getLastEthPrice(getFiatCurrency());
     }
 }

@@ -1,5 +1,6 @@
 package piuk.blockchain.android.ui.shapeshift.overview
 
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import io.reactivex.Observable
@@ -60,10 +61,11 @@ class ShapeShiftPresenter @Inject constructor(
 
     internal fun onResume() {
         // Here we check the Fiat and Btc formats and let the UI handle any potential updates
+        val fiat = getFiatCurrency()
         view.onExchangeRateUpdated(
-            getLastBtcPrice(getFiatCurrency()),
-            getLastEthPrice(getFiatCurrency()),
-            getLastBchPrice(getFiatCurrency()),
+            exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, fiat),
+            exchangeRateFactory.getLastPrice(CryptoCurrency.ETHER, fiat),
+            exchangeRateFactory.getLastPrice(CryptoCurrency.BCH, fiat),
             currencyState.isDisplayingCryptoCurrency
         )
         view.onViewTypeChanged(currencyState.isDisplayingCryptoCurrency)
@@ -163,12 +165,6 @@ class ShapeShiftPresenter @Inject constructor(
         Trade.STATUS.COMPLETE, Trade.STATUS.FAILED, Trade.STATUS.RESOLVED -> true
         else -> true
     }
-
-    private fun getLastBtcPrice(fiat: String) = exchangeRateFactory.getLastBtcPrice(fiat)
-
-    private fun getLastEthPrice(fiat: String) = exchangeRateFactory.getLastEthPrice(fiat)
-
-    private fun getLastBchPrice(fiat: String) = exchangeRateFactory.getLastBchPrice(fiat)
 
     private fun getFiatCurrency() =
         prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)

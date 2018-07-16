@@ -81,34 +81,10 @@ class CurrencyFormatManager @Inject constructor(
         }
     }
 
-    /**
-     * Accepts a [BigDecimal] value in Satoshis/Wei and returns the display amount as a [String]
-     * based on the chosen denomination type.
-     *
-     * eg. 10_000 Satoshi -> "0.0001" when unit == UNIT_BTC
-     * eg. 1_000_000_000_000_000_000 Wei -> "1.0" when unit == UNIT_ETH
-     *
-     * TODO: Note: a default denomination of SATOSHI was set since this method is used in so many places.
-     * Not technically correct and should be improved.
-     *
-     * @param value The amount to be formatted in Satoshis
-     * @return An amount formatted as a [String]
-     */
-    fun getFormattedSelectedCoinValue(
-        coinValue: BigDecimal,
-        convertEthDenomination: ETHDenomination? = null,
-        convertBtcDenomination: BTCDenomination? = BTCDenomination.SATOSHI
-    ): String {
-        val convertedCoinValue =
-            getConvertedCoinValue(coinValue, convertEthDenomination, convertBtcDenomination)
+    fun getFormattedSelectedCoinValue(coinValue: BigInteger) =
+        getFormattedCoinValue(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
-        return when (currencyState.cryptoCurrency) {
-            CryptoCurrency.BTC -> currencyFormatUtil.formatBtc(convertedCoinValue)
-            CryptoCurrency.ETHER -> currencyFormatUtil.formatEth(convertedCoinValue)
-            CryptoCurrency.BCH -> currencyFormatUtil.formatBch(convertedCoinValue)
-            else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
-        }
-    }
+    fun getFormattedCoinValue(cryptoValue: CryptoValue) = currencyFormatUtil.format(cryptoValue)
 
     fun getFormattedSelectedCoinValueWithUnit(
         coinValue: BigDecimal,
@@ -445,8 +421,8 @@ class CurrencyFormatManager @Inject constructor(
      *
      * @return btc, mbtc or bits relative to what is set in monetaryUtil
      */
-    fun getTextFromSatoshis(satoshis: Long, decimalSeparator: String): String {
-        var displayAmount = getFormattedSelectedCoinValue(satoshis.toBigDecimal())
+    fun getTextFromSatoshis(satoshis: BigInteger, decimalSeparator: String): String {
+        var displayAmount = getFormattedSelectedCoinValue(satoshis)
         displayAmount = displayAmount.replace(".", decimalSeparator)
         return displayAmount
     }

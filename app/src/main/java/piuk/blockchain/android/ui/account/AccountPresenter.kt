@@ -3,6 +3,7 @@ package piuk.blockchain.android.ui.account
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.annotation.VisibleForTesting
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.BitcoinCashWallet
 import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.coin.GenericMetadataAccount
@@ -22,7 +23,6 @@ import piuk.blockchain.android.data.websocket.WebSocketService
 import piuk.blockchain.android.util.LabelUtil
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
@@ -503,9 +503,6 @@ class AccountPresenter @Inject internal constructor(
             currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(amount.toBigDecimal())
         }
     }
-
-    private fun getFiatFormat(): String =
-        prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)
 
     private fun getBalanceFromBtcAddress(address: String): Long =
         payloadDataManager.getAddressBalance(address).toLong()

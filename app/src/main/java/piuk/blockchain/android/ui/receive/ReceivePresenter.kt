@@ -369,11 +369,7 @@ class ReceivePresenter @Inject internal constructor(
      * @return BTC, mBTC or bits relative to what is set in [CurrencyFormatManager]
      */
     private fun getTextFromSatoshis(satoshis: Long): String {
-        var displayAmount = currencyFormatManager.getFormattedSelectedCoinValue(
-            satoshis.toBigDecimal(),
-            null,
-            BTCDenomination.SATOSHI
-        )
+        var displayAmount = currencyFormatManager.getFormattedSelectedCoinValue(satoshis.toBigInteger())
         displayAmount = displayAmount.replace(".", getDefaultDecimalSeparator())
         return displayAmount
     }

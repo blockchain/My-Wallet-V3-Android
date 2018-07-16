@@ -36,7 +36,6 @@ import piuk.blockchain.android.ui.contacts.list.ContactsListActivity.KEY_BUNDLE_
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
-import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.utils.PrefsUtil
@@ -54,7 +53,6 @@ class ContactDetailPresenterTest {
     private val mockPrefsUtil: PrefsUtil = mock()
     private val mockRxBus: RxBus = mock()
     private val mockTransactionListDataManager: TransactionListDataManager = mock()
-    private val mockExchangeRateFactory: ExchangeRateDataManager = mock()
     private val mockCurrencyState: CurrencyState = mock()
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
@@ -66,7 +64,6 @@ class ContactDetailPresenterTest {
             mockPrefsUtil,
             mockRxBus,
             mockTransactionListDataManager,
-            mockExchangeRateFactory,
             mockCurrencyState,
             currencyFormatManager
         )

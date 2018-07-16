@@ -55,7 +55,6 @@ import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.ArrayList
 import java.util.Arrays
@@ -205,7 +204,7 @@ class AccountEditPresenterTest {
             .thenReturn("USD")
         whenever(sendDataManager.estimateSize(anyInt(), anyInt())).thenReturn(1337)
 
-        whenever(currencyFormatManager.getFormattedSelectedCoinValue(BigDecimal.TEN))
+        whenever(currencyFormatManager.getFormattedSelectedCoinValue(BigInteger.TEN))
             .thenReturn("")
 
         // Act

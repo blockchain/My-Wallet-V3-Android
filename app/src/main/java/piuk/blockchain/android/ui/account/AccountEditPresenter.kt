@@ -8,6 +8,7 @@ import android.support.annotation.VisibleForTesting
 import android.view.View
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.BitcoinCashWallet
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.payload.data.Account
@@ -39,7 +40,6 @@ import piuk.blockchain.android.util.LabelUtil
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -318,17 +318,14 @@ class AccountEditPresenter @Inject internal constructor(
         val btcUnit = CryptoCurrency.BTC.name
 
         with(details) {
-            cryptoAmount =
-                currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntAmount.toBigDecimal())
-            cryptoFee =
-                currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee.toBigDecimal())
-            btcSuggestedFee =
-                currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee.toBigDecimal())
+            cryptoAmount = currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntAmount)
+            cryptoFee = currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee)
+            btcSuggestedFee = currencyFormatManager.getFormattedSelectedCoinValue(pendingTransaction.bigIntFee)
             cryptoUnit = btcUnit
             this.fiatUnit = fiatUnit
 
             cryptoTotal = currencyFormatManager.getFormattedSelectedCoinValue(
-                pendingTransaction.bigIntAmount.add(pendingTransaction.bigIntFee).toBigDecimal()
+                pendingTransaction.bigIntAmount + pendingTransaction.bigIntFee
             )
 
             fiatFee = currencyFormatManager.getFormattedFiatValueFromSelectedCoinValue(

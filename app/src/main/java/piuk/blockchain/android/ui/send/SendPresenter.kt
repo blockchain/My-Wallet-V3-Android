@@ -6,6 +6,7 @@ import android.text.Editable
 import android.widget.EditText
 import com.fasterxml.jackson.databind.ObjectMapper
 import info.blockchain.api.data.UnspentOutputs
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
@@ -40,7 +41,6 @@ import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
@@ -759,20 +759,20 @@ class SendPresenter @Inject constructor(
             CryptoCurrency.BTC -> {
                 details.isLargeTransaction = isLargeTransaction()
                 details.btcSuggestedFee = currencyFormatManager.getTextFromSatoshis(
-                    absoluteSuggestedFee.toLong(),
+                    absoluteSuggestedFee,
                     getDefaultDecimalSeparator()
                 )
 
                 details.cryptoTotal = currencyFormatManager.getTextFromSatoshis(
-                    pendingTransaction.total.toLong(),
+                    pendingTransaction.total,
                     getDefaultDecimalSeparator()
                 )
                 details.cryptoAmount = currencyFormatManager.getTextFromSatoshis(
-                    pendingTransaction.bigIntAmount.toLong(),
+                    pendingTransaction.bigIntAmount,
                     getDefaultDecimalSeparator()
                 )
                 details.cryptoFee = currencyFormatManager.getTextFromSatoshis(
-                    pendingTransaction.bigIntFee.toLong(),
+                    pendingTransaction.bigIntFee,
                     getDefaultDecimalSeparator()
                 )
 
@@ -825,15 +825,15 @@ class SendPresenter @Inject constructor(
             CryptoCurrency.BCH -> {
 
                 details.cryptoTotal = currencyFormatManager.getTextFromSatoshis(
-                    pendingTransaction.total.toLong(),
+                    pendingTransaction.total,
                     getDefaultDecimalSeparator()
                 )
                 details.cryptoAmount = currencyFormatManager.getTextFromSatoshis(
-                    pendingTransaction.bigIntAmount.toLong(),
+                    pendingTransaction.bigIntAmount,
                     getDefaultDecimalSeparator()
                 )
                 details.cryptoFee = currencyFormatManager.getTextFromSatoshis(
-                    pendingTransaction.bigIntFee.toLong(),
+                    pendingTransaction.bigIntFee,
                     getDefaultDecimalSeparator()
                 )
 
@@ -1092,8 +1092,7 @@ class SendPresenter @Inject constructor(
 
         when (currencyState.cryptoCurrency) {
             CryptoCurrency.BTC -> {
-                cryptoPrice =
-                    currencyFormatManager.getFormattedSelectedCoinValue(absoluteSuggestedFee.toBigDecimal())
+                cryptoPrice = currencyFormatManager.getFormattedSelectedCoinValue(absoluteSuggestedFee)
                 fiatPrice =
                     currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
                         absoluteSuggestedFee.toBigDecimal()
@@ -1108,8 +1107,7 @@ class SendPresenter @Inject constructor(
                 )
             }
             CryptoCurrency.BCH -> {
-                cryptoPrice =
-                    currencyFormatManager.getFormattedSelectedCoinValue(absoluteSuggestedFee.toBigDecimal())
+                cryptoPrice = currencyFormatManager.getFormattedSelectedCoinValue(absoluteSuggestedFee)
                 fiatPrice =
                     currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
                         absoluteSuggestedFee.toBigDecimal()
@@ -1294,7 +1292,7 @@ class SendPresenter @Inject constructor(
             amount = sweepableAmount
             view?.updateCryptoAmount(
                 currencyFormatManager.getTextFromSatoshis(
-                    sweepableAmount.toLong(),
+                    sweepableAmount,
                     getDefaultDecimalSeparator()
                 )
             )
@@ -1413,7 +1411,7 @@ class SendPresenter @Inject constructor(
 
             // Convert to correct units
             try {
-                amount = currencyFormatManager.getFormattedSelectedCoinValue(amount.toBigDecimal())
+                amount = currencyFormatManager.getFormattedSelectedCoinValue(amount.toBigInteger())
                 view?.updateCryptoAmount(amount)
 
                 val fiat = when (currencyState.cryptoCurrency) {
@@ -2013,7 +2011,7 @@ class SendPresenter @Inject constructor(
     private fun isLargeTransaction(): Boolean {
         val valueString = currencyFormatManager.getFiatFormat("USD")
             .format(
-                exchangeRateFactory.getLastBtcPrice("USD") *
+                exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD") *
                     absoluteSuggestedFee.toDouble() / 1e8
             )
         val usdValue =

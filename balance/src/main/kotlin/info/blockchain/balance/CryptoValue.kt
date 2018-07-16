@@ -31,11 +31,14 @@ data class CryptoValue(
         fun bitcoinCashFromSatoshis(satoshi: Long) = CryptoValue(CryptoCurrency.BCH, satoshi.toBigInteger())
         fun etherFromWei(wei: Long) = CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
 
-        fun bitcoinFromMajor(bitcoin: Int) = fromMajor(CryptoCurrency.BTC, bitcoin.toBigDecimal())
+        fun bitcoinFromMajor(bitcoin: Int) = bitcoinFromMajor(bitcoin.toBigDecimal())
+        fun bitcoinFromMajor(bitcoin: BigDecimal) = fromMajor(CryptoCurrency.BTC, bitcoin)
 
-        fun bitcoinCashFromMajor(bitcoinCash: Int) = fromMajor(CryptoCurrency.BCH, bitcoinCash.toBigDecimal())
+        fun bitcoinCashFromMajor(bitcoinCash: Int) = bitcoinCashFromMajor(bitcoinCash.toBigDecimal())
+        fun bitcoinCashFromMajor(bitcoin: BigDecimal) = fromMajor(CryptoCurrency.BCH, bitcoin)
 
-        fun etherFromMajor(ether: Long) = fromMajor(CryptoCurrency.ETHER, ether.toBigDecimal())
+        fun etherFromMajor(ether: Long) = etherFromMajor(ether.toBigDecimal())
+        fun etherFromMajor(ether: BigDecimal) = fromMajor(CryptoCurrency.ETHER, ether)
 
         private fun fromMajor(
             currency: CryptoCurrency,

@@ -37,13 +37,14 @@ class CurrencyFormatUtil @Inject constructor() {
     fun getFiatSymbol(currencyCode: String, locale: Locale): String =
         Currency.getInstance(currencyCode).getSymbol(locale)
 
-    @Deprecated("Use format")
-    fun formatBtc(btc: BigDecimal): String = btcFormat.format(btc.toPositiveDouble()).toWebZero()
+    @Deprecated("Use format", replaceWith = ReplaceWith("format(CryptoValue.bitcoinFromMajor(btc))"))
+    fun formatBtc(btc: BigDecimal): String = format(CryptoValue.bitcoinFromMajor(btc))
 
-    fun formatSatoshi(satoshi: Long): String =
-        btcFormat.format(satoshi.div(BTC_DEC).toPositiveDouble()).toWebZero()
+    @Deprecated("Use format", replaceWith = ReplaceWith("format(CryptoValue.bitcoinFromSatoshis(satoshi))"))
+    fun formatSatoshi(satoshi: Long): String = format(CryptoValue.bitcoinFromSatoshis(satoshi))
 
-    fun formatBch(bch: BigDecimal): String = formatBtc(bch)
+    @Deprecated("Use format", replaceWith = ReplaceWith("format(CryptoValue.bitcoinCashFromMajor(bch))"))
+    fun formatBch(bch: BigDecimal): String = format(CryptoValue.bitcoinCashFromMajor(bch))
 
     fun formatEth(eth: BigDecimal): String = ethFormat.format(eth.toPositiveDouble()).toWebZero()
 

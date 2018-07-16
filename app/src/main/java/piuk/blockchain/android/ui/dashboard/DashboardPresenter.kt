@@ -26,6 +26,7 @@ import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
+import piuk.blockchain.androidcore.data.exchangerate.toFiat
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.utils.PrefsUtil
@@ -199,8 +200,8 @@ class DashboardPresenter @Inject constructor(
                         val bchFiat = calculateFiatValue(bchBalance, fiatCurrency)
                         val ethFiat = calculateFiatValue(ethBalance, fiatCurrency)
 
-                        val totalDouble = btcFiat + ethFiat + bchFiat
-                        val totalString = getFormattedCurrencyString(totalDouble)
+                        val total = btcFiat + ethFiat + bchFiat
+                        val totalString = getFormattedCurrencyString(total.toDouble())
 
                         Logging.logCustom(
                             BalanceLoadedEvent(
@@ -213,17 +214,17 @@ class DashboardPresenter @Inject constructor(
                         cachedData = PieChartsState.Data(
                             fiatSymbol = getCurrencySymbol(),
                             bitcoin = PieChartsState.DataPoint(
-                                fiatValue = BigDecimal.valueOf(btcFiat),
+                                fiatValue = btcFiat,
                                 fiatValueString = getFiatString(btcBalance),
                                 cryptoValueString = getBalanceString(btcBalance)
                             ),
                             bitcoinCash = PieChartsState.DataPoint(
-                                fiatValue = BigDecimal.valueOf(bchFiat),
+                                fiatValue = bchFiat,
                                 fiatValueString = getFiatString(bchBalance),
                                 cryptoValueString = getBalanceString(bchBalance)
                             ),
                             ether = PieChartsState.DataPoint(
-                                fiatValue = BigDecimal.valueOf(ethFiat),
+                                fiatValue = ethFiat,
                                 fiatValueString = getFiatString(ethBalance),
                                 cryptoValueString = getBalanceString(ethBalance)
                             ),
@@ -241,7 +242,7 @@ class DashboardPresenter @Inject constructor(
     private fun calculateFiatValue(
         cryptoValue: CryptoValue,
         fiatCurrency: String
-    ) = exchangeRateFactory.getLastPrice(cryptoValue.currency, fiatCurrency) * cryptoValue.toMajorUnitDouble()
+    ) = cryptoValue.toFiat(exchangeRateFactory, fiatCurrency)
 
     private fun showAnnouncement(index: Int, announcementData: AnnouncementData) {
         displayList.add(index, announcementData)
