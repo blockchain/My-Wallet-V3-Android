@@ -113,6 +113,7 @@ class CoinifyAwaitingBankTransferActivity :
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId ?: -1) {
         R.id.action_cancel -> consume { showFundsSentDisclaimer() }
+        android.R.id.home -> consume { finish() }
         else -> false
     }
 
@@ -149,8 +150,6 @@ class CoinifyAwaitingBankTransferActivity :
             progressDialog = null
         }
     }
-
-    override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
 
     override fun createPresenter(): CoinifyAwaitingBankTransferPresenter = presenter
 

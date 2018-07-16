@@ -126,10 +126,11 @@ class CoinifyTransactionDetailActivity :
     override fun onCreateOptionsMenu(menu: Menu?): Boolean =
         if (orderDetails.isAwaitingCardPayment) {
             consume { menuInflater.inflate(R.menu.menu_coinify_transaction_detail, menu) }
-        } else false
+        } else true
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId ?: -1) {
         R.id.action_cancel -> consume { presenter.cancelTrade(orderDetails.tradeId) }
+        android.R.id.home -> consume { finish() }
         else -> false
     }
 
