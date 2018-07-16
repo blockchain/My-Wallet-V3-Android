@@ -23,13 +23,13 @@ class BitcoinBalanceReportAdapterTest {
     @Test
     fun `value of entire balance comes from payload manager wallet balance`() {
         whenever(payloadManager.walletBalance).thenReturn(BigInteger.valueOf(1234L))
-        balanceReporter.entireBalance() `should equal` CryptoValue.bitcoin(1234L)
+        balanceReporter.entireBalance() `should equal` CryptoValue.bitcoinFromSatoshis(1234L)
     }
 
     @Test
     fun `value of imported address balance comes from payload manager imported address balance`() {
         whenever(payloadManager.importedAddressesBalance).thenReturn(BigInteger.valueOf(4567L))
-        balanceReporter.importedAddressBalance() `should equal` CryptoValue.bitcoin(4567L)
+        balanceReporter.importedAddressBalance() `should equal` CryptoValue.bitcoinFromSatoshis(4567L)
     }
 
     @Test
@@ -40,6 +40,6 @@ class BitcoinBalanceReportAdapterTest {
             )
         )
         balanceReporter.addressBalance("mjoGVXRDjxqA2oY23Qm1kaLTQoNUmxd6jq") `should equal`
-            CryptoValue.bitcoin(8901L)
+            CryptoValue.bitcoinFromSatoshis(8901L)
     }
 }

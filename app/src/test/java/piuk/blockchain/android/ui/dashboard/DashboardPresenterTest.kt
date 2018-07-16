@@ -92,9 +92,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn("USD")
-        whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
-        whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
-        whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BTC), any())).thenReturn(5000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.ETHER), any())).thenReturn(4000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BCH), any())).thenReturn(3000.00)
 
         // getOnboardingStatusObservable()
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
@@ -112,9 +112,9 @@ class DashboardPresenterTest {
         givenBchBalance(20_000_000_000L)
         val ethBalance = 22_000_000_000L
         whenever(combinedEthModel.getTotalBalance()).thenReturn(BigInteger.valueOf(ethBalance))
-        whenever(exchangeRateFactory.getLastBtcPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastEthPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastBchPrice("USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.ETHER, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BCH, "USD")).thenReturn(2.0)
 
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
@@ -125,11 +125,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
             .thenReturn("$2.00")
 
-        whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
+        whenever(currencyFormatManager.getFormattedValueWithUnit(any()))
             .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-            .thenReturn("$2.00")
-        whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
             .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
@@ -153,9 +151,9 @@ class DashboardPresenterTest {
         verify(prefsUtil, atLeastOnce()).getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false)
 
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
-        verify(exchangeRateFactory, atLeastOnce()).getLastBtcPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastBchPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastEthPrice(any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BCH), any())
         verify(ethDataManager).fetchEthAddress()
         verify(payloadDataManager).updateAllBalances()
         verify(payloadDataManager).updateAllTransactions()
@@ -192,9 +190,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn("USD")
-        whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
-        whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
-        whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BTC), any())).thenReturn(5000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.ETHER), any())).thenReturn(4000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BCH), any())).thenReturn(3000.00)
 
         // getOnboardingStatusObservable()
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
@@ -212,9 +210,9 @@ class DashboardPresenterTest {
         givenBchBalance(20_000_000_000L)
         val ethBalance = 22_000_000_000L
         whenever(combinedEthModel.getTotalBalance()).thenReturn(BigInteger.valueOf(ethBalance))
-        whenever(exchangeRateFactory.getLastBtcPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastEthPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastBchPrice("USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.ETHER, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BCH, "USD")).thenReturn(2.0)
 
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
@@ -225,11 +223,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
             .thenReturn("$2.00")
 
-        whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
+        whenever(currencyFormatManager.getFormattedValueWithUnit(any()))
             .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-            .thenReturn("$2.00")
-        whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
             .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
@@ -251,9 +247,9 @@ class DashboardPresenterTest {
         verify(view, atLeastOnce()).locale
         verify(view, atLeastOnce()).scrollToTop()
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
-        verify(exchangeRateFactory, atLeastOnce()).getLastBtcPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastBchPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastEthPrice(any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BCH), any())
         verify(ethDataManager).fetchEthAddress()
         verify(payloadDataManager).updateAllBalances()
         verify(payloadDataManager).updateAllTransactions()
@@ -289,9 +285,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn("USD")
-        whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
-        whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
-        whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BTC), any())).thenReturn(5000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.ETHER), any())).thenReturn(4000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BCH), any())).thenReturn(3000.00)
 
         // getOnboardingStatusObservable()
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
@@ -309,9 +305,9 @@ class DashboardPresenterTest {
         givenBchBalance(20_000_000_000L)
         val ethBalance = 22_000_000_000L
         whenever(combinedEthModel.getTotalBalance()).thenReturn(BigInteger.valueOf(ethBalance))
-        whenever(exchangeRateFactory.getLastBtcPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastEthPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastBchPrice("USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.ETHER, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BCH, "USD")).thenReturn(2.0)
 
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
@@ -322,11 +318,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
             .thenReturn("$2.00")
 
-        whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
+        whenever(currencyFormatManager.getFormattedValueWithUnit(any()))
             .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-            .thenReturn("$2.00")
-        whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
             .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
@@ -349,9 +343,9 @@ class DashboardPresenterTest {
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
         verify(view, atLeastOnce()).locale
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
-        verify(exchangeRateFactory, atLeastOnce()).getLastBtcPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastBchPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastEthPrice(any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BCH), any())
         verify(ethDataManager).fetchEthAddress()
         verify(payloadDataManager).updateAllBalances()
         verify(payloadDataManager).updateAllTransactions()
@@ -403,9 +397,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn("USD")
-        whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
-        whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
-        whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BTC), any())).thenReturn(5000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.ETHER), any())).thenReturn(4000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BCH), any())).thenReturn(3000.00)
 
         // getOnboardingStatusObservable()
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
@@ -423,9 +417,9 @@ class DashboardPresenterTest {
         givenBchBalance(20_000_000_000L)
         val ethBalance = 22_000_000_000L
         whenever(combinedEthModel.getTotalBalance()).thenReturn(BigInteger.valueOf(ethBalance))
-        whenever(exchangeRateFactory.getLastBtcPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastEthPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastBchPrice("USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.ETHER, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BCH, "USD")).thenReturn(2.0)
 
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
@@ -436,11 +430,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
             .thenReturn("$2.00")
 
-        whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
+        whenever(currencyFormatManager.getFormattedValueWithUnit(any()))
             .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-            .thenReturn("$2.00")
-        whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
             .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
@@ -461,9 +453,9 @@ class DashboardPresenterTest {
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
         verify(view, atLeastOnce()).locale
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
-        verify(exchangeRateFactory, atLeastOnce()).getLastBtcPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastBchPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastEthPrice(any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BCH), any())
         verify(ethDataManager).fetchEthAddress()
         verify(payloadDataManager).updateAllBalances()
         verify(payloadDataManager).updateAllTransactions()
@@ -508,9 +500,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueWithSymbol(any())).thenReturn("$2.00")
         whenever(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
             .thenReturn("USD")
-        whenever(exchangeRateFactory.getLastBtcPrice(any())).thenReturn(5000.00)
-        whenever(exchangeRateFactory.getLastEthPrice(any())).thenReturn(4000.00)
-        whenever(exchangeRateFactory.getLastBchPrice(any())).thenReturn(3000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BTC), any())).thenReturn(5000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.ETHER), any())).thenReturn(4000.00)
+        whenever(exchangeRateFactory.getLastPrice(eq(CryptoCurrency.BCH), any())).thenReturn(3000.00)
 
         // getOnboardingStatusObservable()
         val metadataObservable = Observable.just(MetadataEvent.SETUP_COMPLETE)
@@ -528,9 +520,9 @@ class DashboardPresenterTest {
         givenBchBalance(20_000_000_000L)
         val ethBalance = 22_000_000_000L
         whenever(combinedEthModel.getTotalBalance()).thenReturn(BigInteger.valueOf(ethBalance))
-        whenever(exchangeRateFactory.getLastBtcPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastEthPrice("USD")).thenReturn(2.0)
-        whenever(exchangeRateFactory.getLastBchPrice("USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.ETHER, "USD")).thenReturn(2.0)
+        whenever(exchangeRateFactory.getLastPrice(CryptoCurrency.BCH, "USD")).thenReturn(2.0)
 
         // PieChartsState
         whenever(currencyFormatManager.getFiatSymbol(any(), any())).thenReturn("$")
@@ -541,11 +533,9 @@ class DashboardPresenterTest {
         whenever(currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(any(), any()))
             .thenReturn("$2.00")
 
-        whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any()))
+        whenever(currencyFormatManager.getFormattedValueWithUnit(any()))
             .thenReturn("$2.00")
         whenever(currencyFormatManager.getFormattedEthShortValueWithUnit(any(), any()))
-            .thenReturn("$2.00")
-        whenever(currencyFormatManager.getFormattedBchValueWithUnit(any(), any()))
             .thenReturn("$2.00")
 
         // storeSwipeToReceiveAddresses()
@@ -560,9 +550,9 @@ class DashboardPresenterTest {
         verify(view, atLeastOnce()).scrollToTop()
 
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
-        verify(exchangeRateFactory, atLeastOnce()).getLastBtcPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastBchPrice(any())
-        verify(exchangeRateFactory, atLeastOnce()).getLastEthPrice(any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
+        verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BCH), any())
         verify(ethDataManager).fetchEthAddress()
         verify(payloadDataManager).updateAllBalances()
         verify(payloadDataManager).updateAllTransactions()

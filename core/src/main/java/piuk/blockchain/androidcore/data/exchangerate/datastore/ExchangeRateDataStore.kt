@@ -1,9 +1,9 @@
 package piuk.blockchain.androidcore.data.exchangerate.datastore
 
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.prices.data.PriceDatum
 import io.reactivex.Completable
 import io.reactivex.Observable
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
 import piuk.blockchain.androidcore.utils.Optional
 import piuk.blockchain.androidcore.utils.PrefsUtil
@@ -46,16 +46,28 @@ class ExchangeRateDataStore @Inject constructor(
 
     fun getCurrencyLabels(): Array<String> = btcTickerData!!.keys.toTypedArray()
 
+    @Deprecated(
+        "Use getLastPrice",
+        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.BTC, currencyName)")
+    )
     fun getLastBtcPrice(currencyName: String) =
-        getLastPrice(currencyName.toUpperCase(), CryptoCurrency.BTC)
+        getLastPrice(CryptoCurrency.BTC, currencyName.toUpperCase())
 
+    @Deprecated(
+        "Use getLastPrice",
+        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.BCH, currencyName)")
+    )
     fun getLastBchPrice(currencyName: String) =
-        getLastPrice(currencyName.toUpperCase(), CryptoCurrency.BCH)
+        getLastPrice(CryptoCurrency.BCH, currencyName.toUpperCase())
 
+    @Deprecated(
+        "Use getLastPrice",
+        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.ETHER, currencyName)")
+    )
     fun getLastEthPrice(currencyName: String) =
-        getLastPrice(currencyName.toUpperCase(), CryptoCurrency.ETHER)
+        getLastPrice(CryptoCurrency.ETHER, currencyName.toUpperCase())
 
-    private fun getLastPrice(currencyName: String, cryptoCurrency: CryptoCurrency): Double {
+    fun getLastPrice(cryptoCurrency: CryptoCurrency, currencyName: String): Double {
         val prefsKey: String
         val tickerData: Map<String, PriceDatum>?
 

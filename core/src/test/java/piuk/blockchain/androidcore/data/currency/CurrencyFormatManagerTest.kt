@@ -38,7 +38,6 @@ class CurrencyFormatManagerTest {
     fun `getCryptoMaxDecimalLength BTC`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
-        whenever(currencyFormatUtil.getBtcMaxFractionDigits()).thenReturn(8)
 
         // Act
         val result = subject.getSelectedCoinMaxFractionDigits()
@@ -51,7 +50,6 @@ class CurrencyFormatManagerTest {
     fun `getCryptoMaxDecimalLength BCH`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
-        whenever(currencyFormatUtil.getBchMaxFractionDigits()).thenReturn(8)
 
         // Act
         val result = subject.getSelectedCoinMaxFractionDigits()
@@ -64,7 +62,6 @@ class CurrencyFormatManagerTest {
     fun `getCryptoMaxDecimalLength ETH`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
-        whenever(currencyFormatUtil.getEthMaxFractionDigits()).thenReturn(18)
 
         // Act
         val result = subject.getSelectedCoinMaxFractionDigits()
@@ -77,7 +74,6 @@ class CurrencyFormatManagerTest {
     fun `getCryptoUnit BTC`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
-        whenever(currencyFormatUtil.getBtcUnit()).thenReturn("BTC")
 
         // Act
         val result = subject.getSelectedCoinUnit()
@@ -90,8 +86,6 @@ class CurrencyFormatManagerTest {
     fun `getCryptoUnit BCH`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BCH)
-        whenever(currencyFormatUtil.getBchUnit()).thenReturn("BCH")
-
         // Act
         val result = subject.getSelectedCoinUnit()
 
@@ -103,7 +97,6 @@ class CurrencyFormatManagerTest {
     fun `getCryptoUnit ETH`() {
         // Arrange
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.ETHER)
-        whenever(currencyFormatUtil.getEthUnit()).thenReturn("ETH")
 
         // Act
         val result = subject.getSelectedCoinUnit()

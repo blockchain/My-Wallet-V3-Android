@@ -2,6 +2,7 @@ package piuk.blockchain.androidcore.data.currency
 
 import android.support.annotation.VisibleForTesting
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import org.web3j.utils.Convert
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
@@ -52,26 +53,14 @@ class CurrencyFormatManager @Inject constructor(
      *
      * @return decimal length.
      */
-    fun getSelectedCoinMaxFractionDigits() =
-        when (currencyState.cryptoCurrency) {
-            CryptoCurrency.BTC -> currencyFormatUtil.getBtcMaxFractionDigits()
-            CryptoCurrency.ETHER -> currencyFormatUtil.getEthMaxFractionDigits()
-            CryptoCurrency.BCH -> currencyFormatUtil.getBchMaxFractionDigits()
-            else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
-        }
+    fun getSelectedCoinMaxFractionDigits() = currencyState.cryptoCurrency.dp
 
     /**
      * Crypto unit based on current crypto currency state.
      *
      * @return BTC, BCH or ETH.
      */
-    fun getSelectedCoinUnit() =
-        when (currencyState.cryptoCurrency) {
-            CryptoCurrency.BTC -> currencyFormatUtil.getBtcUnit()
-            CryptoCurrency.ETHER -> currencyFormatUtil.getEthUnit()
-            CryptoCurrency.BCH -> currencyFormatUtil.getBchUnit()
-            else -> throw IllegalArgumentException(currencyState.cryptoCurrency.toString() + " not supported.")
-        }
+    fun getSelectedCoinUnit() = currencyState.cryptoCurrency.symbol
 
     @VisibleForTesting
     fun getConvertedCoinValue(
@@ -351,6 +340,7 @@ class CurrencyFormatManager @Inject constructor(
      * @param coinDenomination Denomination of the coinValue supplied
      * @return BTC decimal formatted amount with appended BTC unit
      */
+    @Deprecated("Use getFormattedValueWithUnit")
     fun getFormattedBtcValueWithUnit(
         coinValue: BigDecimal,
         coinDenomination: BTCDenomination
@@ -365,20 +355,12 @@ class CurrencyFormatManager @Inject constructor(
 
     /**
      * Returns formatted string of supplied coin value.
-     * (ie 1,000.00, 0.0001)
+     * (ie 1,000.00 BTC, 0.0001 BCH)
      *
-     * @param coinValue Value of the coin
-     * @param coinDenomination Denomination of the coinValue supplied
-     * @return BTC decimal formatted amount
+     * @param cryptoValue Value and currency of the coin
+     * @return decimal formatted amount with appended unit
      */
-    fun getFormattedBtcValue(coinValue: BigDecimal, coinDenomination: BTCDenomination): String {
-        val value = when (coinDenomination) {
-            BTCDenomination.BTC -> coinValue
-            else -> coinValue.divide(BTC_DEC.toBigDecimal(), 8, RoundingMode.HALF_UP)
-        }
-
-        return currencyFormatUtil.formatBtc(value)
-    }
+    fun getFormattedValueWithUnit(cryptoValue: CryptoValue) = currencyFormatUtil.formatWithUnit(cryptoValue)
 
     /**
      * Returns formatted string of supplied coin value.
@@ -388,6 +370,7 @@ class CurrencyFormatManager @Inject constructor(
      * @param coinDenomination Denomination of the coinValue supplied
      * @return BTC decimal formatted amount with appended BTC unit
      */
+    @Deprecated("Use getFormattedValueWithUnit")
     fun getFormattedBchValueWithUnit(
         coinValue: BigDecimal,
         coinDenomination: BTCDenomination
@@ -425,26 +408,6 @@ class CurrencyFormatManager @Inject constructor(
      * @param coinDenomination Denomination of the coinValue supplied
      * @return ETH decimal formatted amount with appended ETH unit
      */
-    fun getFormattedEthValueWithUnit(
-        coinValue: BigDecimal,
-        coinDenomination: ETHDenomination
-    ): String {
-        val value = when (coinDenomination) {
-            ETHDenomination.ETH -> coinValue
-            else -> coinValue.divide(ETH_DEC.toBigDecimal(), 18, RoundingMode.HALF_UP)
-        }
-
-        return currencyFormatUtil.formatEthWithUnit(value)
-    }
-
-    /**
-     * Returns formatted string of supplied coin value.
-     * (ie 1,000.00 ETH, 0.0001 ETH)
-     *
-     * @param coinValue Value of the coin
-     * @param coinDenomination Denomination of the coinValue supplied
-     * @return ETH decimal formatted amount with appended ETH unit
-     */
     fun getFormattedEthShortValueWithUnit(
         coinValue: BigDecimal,
         coinDenomination: ETHDenomination
@@ -465,6 +428,7 @@ class CurrencyFormatManager @Inject constructor(
      * @param coinDenomination Denomination of the coinValue supplied
      * @return ETH decimal formatted amount
      */
+    @Deprecated("Use getFormattedValueWithUnit")
     fun getFormattedEthValue(coinValue: BigDecimal, coinDenomination: ETHDenomination): String {
         val value = when (coinDenomination) {
             ETHDenomination.ETH -> coinValue
@@ -472,26 +436,6 @@ class CurrencyFormatManager @Inject constructor(
         }
 
         return currencyFormatUtil.formatEth(value)
-    }
-
-    /**
-     * Returns formatted string of supplied coin value.
-     * (ie 1,000.00, 0.0001)
-     *
-     * @param coinValue Value of the coin
-     * @param coinDenomination Denomination of the coinValue supplied
-     * @return ETH decimal formatted amount
-     */
-    fun getFormattedEthShortValue(
-        coinValue: BigDecimal,
-        coinDenomination: ETHDenomination
-    ): String {
-        val value = when (coinDenomination) {
-            ETHDenomination.ETH -> coinValue
-            else -> coinValue.divide(ETH_DEC.toBigDecimal(), 18, RoundingMode.HALF_UP)
-        }
-
-        return currencyFormatUtil.formatEthShort(value)
     }
     // endregion
 

@@ -44,4 +44,19 @@ class CryptoCurrencyTests {
     fun `not recognised should return null`() {
         CryptoCurrency.fromSymbol("NONE") `should be` null
     }
+
+    @Test
+    fun `btc dp is 8`() {
+        CryptoCurrency.BTC.dp `should be` 8
+    }
+
+    @Test
+    fun `bch dp is 8`() {
+        CryptoCurrency.BCH.dp `should be` 8
+    }
+
+    @Test
+    fun `ether dp is 18`() {
+        CryptoCurrency.ETHER.dp `should be` 18
+    }
 }

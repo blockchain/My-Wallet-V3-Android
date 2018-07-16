@@ -23,13 +23,13 @@ class BitcoinCashBalanceReportAdapterTest {
     @Test
     fun `value of entire balance comes from data manager wallet balance`() {
         whenever(dataManager.getWalletBalance()).thenReturn(BigInteger.valueOf(1234L))
-        balanceReporter.entireBalance() `should equal` CryptoValue.bitcoinCash(1234L)
+        balanceReporter.entireBalance() `should equal` CryptoValue.bitcoinCashFromSatoshis(1234L)
     }
 
     @Test
     fun `value of imported address balance comes from data manager imported address balance`() {
         whenever(dataManager.getImportedAddressBalance()).thenReturn(BigInteger.valueOf(4567L))
-        balanceReporter.importedAddressBalance() `should equal` CryptoValue.bitcoinCash(4567L)
+        balanceReporter.importedAddressBalance() `should equal` CryptoValue.bitcoinCashFromSatoshis(4567L)
     }
 
     @Test
@@ -40,6 +40,6 @@ class BitcoinCashBalanceReportAdapterTest {
             )
         )
         balanceReporter.addressBalance("mpxqy2yDLebDHuUVugcHrbS729HtxzRZtM") `should equal`
-            CryptoValue.bitcoinCash(8901L)
+            CryptoValue.bitcoinCashFromSatoshis(8901L)
     }
 }

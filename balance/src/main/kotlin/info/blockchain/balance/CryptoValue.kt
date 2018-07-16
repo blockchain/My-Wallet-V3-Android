@@ -15,7 +15,7 @@ data class CryptoValue(
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */
     fun toMajorUnit(): BigDecimal {
-        return currency.smallestUnitLongToBigDecimal(amount)
+        return currency.smallestUnitValueToBigDecimal(amount)
     }
 
     fun isPositive(): Boolean {
@@ -23,12 +23,24 @@ data class CryptoValue(
     }
 
     companion object {
-        val ZeroBtc = bitcoin(0L)
-        val ZeroBch = bitcoinCash(0L)
+        val ZeroBtc = bitcoinFromSatoshis(0L)
+        val ZeroBch = bitcoinCashFromSatoshis(0L)
         val ZeroEth = CryptoValue(CryptoCurrency.ETHER, BigInteger.ZERO)
 
-        fun bitcoin(amount: Long) = CryptoValue(CryptoCurrency.BTC, amount.toBigInteger())
-        fun bitcoinCash(amount: Long) = CryptoValue(CryptoCurrency.BCH, amount.toBigInteger())
+        fun bitcoinFromSatoshis(satoshi: Long) = CryptoValue(CryptoCurrency.BTC, satoshi.toBigInteger())
+        fun bitcoinCashFromSatoshis(satoshi: Long) = CryptoValue(CryptoCurrency.BCH, satoshi.toBigInteger())
+        fun etherFromWei(wei: Long) = CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
+
+        fun bitcoinFromMajor(bitcoin: Int) = fromMajor(CryptoCurrency.BTC, bitcoin.toBigDecimal())
+
+        fun bitcoinCashFromMajor(bitcoinCash: Int) = fromMajor(CryptoCurrency.BCH, bitcoinCash.toBigDecimal())
+
+        fun etherFromMajor(ether: Long) = fromMajor(CryptoCurrency.ETHER, ether.toBigDecimal())
+
+        private fun fromMajor(
+            currency: CryptoCurrency,
+            bitcoin: BigDecimal
+        ) = CryptoValue(currency, bitcoin.movePointRight(currency.dp).toBigInteger())
     }
 
     /**

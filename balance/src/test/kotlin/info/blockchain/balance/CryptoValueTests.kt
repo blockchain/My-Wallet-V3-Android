@@ -25,12 +25,12 @@ class CryptoValueTests {
 
     @Test
     fun `toMajorUnit BTC`() {
-        CryptoValue.bitcoin(12345678901L).toMajorUnit() `should equal` BigDecimal("123.45678901")
+        CryptoValue.bitcoinFromSatoshis(12345678901L).toMajorUnit() `should equal` BigDecimal("123.45678901")
     }
 
     @Test
     fun `toMajorUnit BCH`() {
-        CryptoValue.bitcoinCash(234L).toMajorUnit() `should equal` BigDecimal("0.00000234")
+        CryptoValue.bitcoinCashFromSatoshis(234L).toMajorUnit() `should equal` BigDecimal("0.00000234")
     }
 
     @Test
@@ -61,16 +61,16 @@ class CryptoValueTests {
 
     @Test
     fun `1 Satoshi is positive`() {
-        CryptoValue.bitcoin(1).isPositive() `should be` true
+        CryptoValue.bitcoinFromSatoshis(1).isPositive() `should be` true
     }
 
     @Test
     fun `2 Satoshis is positive`() {
-        CryptoValue.bitcoin(2).isPositive() `should be` true
+        CryptoValue.bitcoinFromSatoshis(2).isPositive() `should be` true
     }
 
     @Test
     fun `-1 Satoshi is not positive`() {
-        CryptoValue.bitcoin(-1).isPositive() `should be` false
+        CryptoValue.bitcoinFromSatoshis(-1).isPositive() `should be` false
     }
 }

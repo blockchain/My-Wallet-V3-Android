@@ -1,5 +1,6 @@
 package piuk.blockchain.androidcore.data.exchangerate
 
+import info.blockchain.balance.CryptoCurrency
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataStore
 import piuk.blockchain.androidcore.data.rxjava.RxBus
@@ -22,18 +23,33 @@ class ExchangeRateDataManager @Inject constructor(
     rxBus: RxBus
 ) {
 
-    private final val rxPinning = RxPinning(rxBus)
+    private val rxPinning = RxPinning(rxBus)
 
     fun updateTickers() =
         rxPinning.call { exchangeRateDataStore.updateExchangeRates() }
             .applySchedulers()
 
+    fun getLastPrice(cryptoCurrency: CryptoCurrency, currencyName: String) =
+        exchangeRateDataStore.getLastPrice(cryptoCurrency, currencyName)
+
+    @Deprecated(
+        "Use getLastPrice",
+        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.BTC, currencyName)")
+    )
     fun getLastBtcPrice(currencyName: String) =
         exchangeRateDataStore.getLastBtcPrice(currencyName)
 
+    @Deprecated(
+        "Use getLastPrice",
+        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.BCH, currencyName)")
+    )
     fun getLastBchPrice(currencyName: String) =
         exchangeRateDataStore.getLastBchPrice(currencyName)
 
+    @Deprecated(
+        "Use getLastPrice",
+        replaceWith = ReplaceWith("getLastPrice(CryptoCurrency.ETHER, currencyName)")
+    )
     fun getLastEthPrice(currencyName: String) =
         exchangeRateDataStore.getLastEthPrice(currencyName)
 
