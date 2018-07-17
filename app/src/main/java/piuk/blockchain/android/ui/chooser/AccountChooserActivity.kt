@@ -142,12 +142,8 @@ enum class AccountMode {
     Bitcoin,
     // Show all bitcoin accounts, no legacy addresses
     BitcoinHdOnly,
-    // Show bitcoin accounts + summarised legacy addresses + "All wallets"
-    BitcoinSummary,
     // Show all bitcoin cash HD accounts, but no legacy addresses
     BitcoinCash,
     // Show all bitcoin cash HD accounts + all legacy addresses with balances + headers
-    BitcoinCashSend,
-    // Show bitcoin cash accounts + summarised legacy addresses + "All wallets"
-    BitcoinCashSummary
+    BitcoinCashSend
 }
