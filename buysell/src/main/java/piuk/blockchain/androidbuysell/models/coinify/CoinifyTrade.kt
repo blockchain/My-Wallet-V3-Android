@@ -158,8 +158,15 @@ data class BlockchainDetails(
     /** Either the trader's or Coinify's bitcoin address */
     val account: String,
     /** The BTC transaction that sent out the BTC to the above address. Not present if unconfirmed */
-    val tx: String? = null
+    val eventData: EventData? = null
 ) : Details
+
+data class EventData(
+    /** The transaction hash */
+    val txId: String,
+    /** Timestamp for when this trade was completed (ISO 8601). */
+    val receiveTime: String
+)
 
 data class CardDetails(
     /**	String identifying the PSP. Current possible values are (‘isignthis’,'isignthis-staging’,'paylike’) */
@@ -219,7 +226,8 @@ data class DetailsJson(
     val bank: Bank?,
     val holder: Holder?,
     val updateTime: String?,
-    val createTime: String?
+    val createTime: String?,
+    val eventData: EventData?
 ) : Details
 
 data class Account(
@@ -257,7 +265,7 @@ class DetailsAdapter {
             // Blockchain Details
             return BlockchainDetails(
                 detailsJson.account.toString(),
-                detailsJson.tx
+                detailsJson.eventData
             )
         } else if (detailsJson.bank != null) {
             // Bank Details

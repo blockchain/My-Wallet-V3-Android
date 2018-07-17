@@ -1,3 +1,5 @@
+@file:JvmName("SerialisationUtils")
+
 package piuk.blockchain.androidcore.utils.extensions
 
 import com.fasterxml.jackson.core.JsonProcessingException

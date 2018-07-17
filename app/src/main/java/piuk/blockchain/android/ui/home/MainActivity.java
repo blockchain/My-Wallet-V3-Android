@@ -35,7 +35,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
@@ -44,19 +43,10 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.BasePermissionListener;
 import com.karumi.dexter.listener.single.CompositePermissionListener;
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
-
 import info.blockchain.wallet.util.FormatsUtil;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import kotlin.Unit;
+import org.jetbrains.annotations.NotNull;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.rxjava.RxUtil;
@@ -99,6 +89,11 @@ import piuk.blockchain.androidcoreui.utils.helperfunctions.CustomFont;
 import piuk.blockchain.androidcoreui.utils.helperfunctions.FontHelpersKt;
 import timber.log.Timber;
 
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import static piuk.blockchain.android.ui.contacts.list.ContactsListActivity.EXTRA_METADATA_URI;
 
 public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> implements
@@ -136,16 +131,21 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     public static final int SETTINGS_EDIT = 2009;
     public static final int CONTACTS_EDIT = 2010;
 
-    @Thunk boolean drawerIsOpen = false;
+    @Thunk
+    boolean drawerIsOpen = false;
     private boolean handlingResult = false;
 
-    @Inject MainPresenter mainPresenter;
-    @Inject AppUtil appUtil;
-    @Thunk ActivityMainBinding binding;
+    @Inject
+    MainPresenter mainPresenter;
+    @Inject
+    AppUtil appUtil;
+    @Thunk
+    ActivityMainBinding binding;
     private MaterialProgressDialog materialProgressDialog;
     private long backPressed;
     private Toolbar toolbar;
-    @Thunk boolean paymentMade = false;
+    @Thunk
+    boolean paymentMade = false;
     private BalanceFragment balanceFragment;
     private FrontendJavascriptManager frontendJavascriptManager;
     private WebViewLoginDetails webViewLoginDetails;
@@ -662,8 +662,9 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     }
 
     @Override
-    public void setBuySellEnabled(boolean enabled) {
-        if (enabled) {
+    public void setBuySellEnabled(boolean enabled, boolean useWebView) {
+        if (enabled && useWebView) {
+            // For legacy SFOX + Unocoin only
             setupBuyWebView();
         }
         setBuyBitcoinVisible(enabled);
@@ -677,6 +678,9 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok_cap, null)
                 .setNegativeButton(R.string.view_details, (dialog, whichButton) -> {
+                    // Add balance page to back stack
+                    onStartBalanceFragment(false);
+                    // Show transaction detail
                     Bundle bundle = new Bundle();
                     bundle.putString(BalanceFragment.KEY_TRANSACTION_HASH, txHash);
                     TransactionDetailActivity.start(this, bundle);

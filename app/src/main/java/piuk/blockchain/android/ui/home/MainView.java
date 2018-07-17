@@ -29,7 +29,7 @@ interface MainView extends View {
 
     void showMetadataNodeFailure();
 
-    void setBuySellEnabled(boolean enabled);
+    void setBuySellEnabled(boolean enabled, boolean useWebView);
 
     void onTradeCompleted(String txHash);
 

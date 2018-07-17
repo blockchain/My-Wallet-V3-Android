@@ -46,6 +46,7 @@ import piuk.blockchain.androidcore.data.currency.ETHDenomination;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
+import timber.log.Timber;
 
 import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION_HASH;
 import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION_LIST_POSITION;
@@ -120,6 +121,7 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
                                     this::updateUiFromTransaction,
                                     throwable -> getView().pageFinish()));
         } else {
+            Timber.e("Transaction hash not found");
             getView().pageFinish();
         }
     }
