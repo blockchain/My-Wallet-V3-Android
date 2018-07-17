@@ -93,9 +93,9 @@ class PieChartDelegate<in T>(
 
     private fun renderData(data: PieChartsState.Data) {
         // Store values for comparisons
-        bitcoinValue = data.bitcoin.fiatValue
-        etherValue = data.ether.fiatValue
-        bitcoinCashValue = data.bitcoinCash.fiatValue
+        bitcoinValue = data.bitcoin.fiatValue.value
+        etherValue = data.ether.fiatValue.value
+        bitcoinCashValue = data.bitcoinCash.fiatValue.value
         fiatSymbol = data.fiatSymbol
 
         val isEmpty = data.isZero
@@ -139,9 +139,9 @@ class PieChartDelegate<in T>(
         listOf(PieEntry(100.0f, ""))
     } else {
         listOf(
-            PieEntry(data.bitcoin.fiatValue.toFloat(), context.getString(R.string.bitcoin)),
-            PieEntry(data.ether.fiatValue.toFloat(), context.getString(R.string.ether)),
-            PieEntry(data.bitcoinCash.fiatValue.toFloat(), context.getString(R.string.bitcoin_cash))
+            PieEntry(data.bitcoin.fiatValue.value.toFloat(), context.getString(R.string.bitcoin)),
+            PieEntry(data.ether.fiatValue.value.toFloat(), context.getString(R.string.ether)),
+            PieEntry(data.bitcoinCash.fiatValue.value.toFloat(), context.getString(R.string.bitcoin_cash))
         )
     }
 

@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting
 import info.blockchain.balance.AccountKey
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -22,9 +23,7 @@ import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.androidcore.data.access.AccessState
-import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
-import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.toFiat
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -36,9 +35,8 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.utils.logging.BalanceLoadedEvent
 import piuk.blockchain.androidcoreui.utils.logging.Logging
 import timber.log.Timber
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.text.DecimalFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class DashboardPresenter @Inject constructor(
@@ -201,7 +199,7 @@ class DashboardPresenter @Inject constructor(
                         val ethFiat = calculateFiatValue(ethBalance, fiatCurrency)
 
                         val total = btcFiat + ethFiat + bchFiat
-                        val totalString = getFormattedCurrencyString(total.toDouble())
+                        val totalString = total.toStringWithSymbol(view.locale)
 
                         Logging.logCustom(
                             BalanceLoadedEvent(
@@ -215,17 +213,14 @@ class DashboardPresenter @Inject constructor(
                             fiatSymbol = getCurrencySymbol(),
                             bitcoin = PieChartsState.DataPoint(
                                 fiatValue = btcFiat,
-                                fiatValueString = getFiatString(btcBalance),
                                 cryptoValueString = getBalanceString(btcBalance)
                             ),
                             bitcoinCash = PieChartsState.DataPoint(
                                 fiatValue = bchFiat,
-                                fiatValueString = getFiatString(bchBalance),
                                 cryptoValueString = getBalanceString(bchBalance)
                             ),
                             ether = PieChartsState.DataPoint(
                                 fiatValue = ethFiat,
-                                fiatValueString = getFiatString(ethBalance),
                                 cryptoValueString = getBalanceString(ethBalance)
                             ),
                             totalValueString = totalString
@@ -428,31 +423,6 @@ class DashboardPresenter @Inject constructor(
     private fun getBalanceString(balance: CryptoValue) =
         currencyFormatManager.getFormattedValueWithUnit(balance)
 
-    private fun getFiatString(balance: CryptoValue): String {
-        fun getBtcFiatString(btcBalance: BigInteger): String =
-            currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(
-                btcBalance.toBigDecimal(),
-                BTCDenomination.SATOSHI
-            )
-
-        fun getBchFiatString(bchBalance: BigInteger): String =
-            currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(
-                bchBalance.toBigDecimal(),
-                BTCDenomination.SATOSHI
-            )
-
-        fun getEthFiatString(ethBalance: BigInteger): String =
-            currencyFormatManager.getFormattedFiatValueFromEthValueWithSymbol(
-                ethBalance.toBigDecimal(),
-                ETHDenomination.WEI
-            )
-        return when (balance.currency) {
-            CryptoCurrency.BTC -> getBtcFiatString(balance.amount)
-            CryptoCurrency.BCH -> getBchFiatString(balance.amount)
-            CryptoCurrency.ETHER -> getEthFiatString(balance.amount)
-        }
-    }
-
     private fun getPriceString(cryptoCurrency: CryptoCurrency): String =
         getLastPrice(cryptoCurrency, getFiatCurrency()).run { getFormattedCurrencyString(this) }
 
@@ -506,11 +476,11 @@ class DashboardPresenter @Inject constructor(
 sealed class PieChartsState {
 
     data class DataPoint(
-        val fiatValue: BigDecimal,
-        val fiatValueString: String,
+        val fiatValue: FiatValue,
         val cryptoValueString: String
     ) {
-        val isZero: Boolean = fiatValue == BigDecimal.ZERO
+        val isZero: Boolean = fiatValue.isZero
+        val fiatValueString: String = fiatValue.toStringWithSymbol(Locale.getDefault())
     }
 
     data class Data(

@@ -4,6 +4,7 @@ import com.crashlytics.android.answers.AddToCartEvent
 import com.crashlytics.android.answers.StartCheckoutEvent
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.FiatValue
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.payload.data.Account
 import io.reactivex.Observable
@@ -544,8 +545,8 @@ class BuySellBuildOrderPresenter @Inject constructor(
     }
 
     private fun updateSendAmount(quoteAmount: Double) {
-        val formatted = currencyFormatManager
-            .getFiatFormat(selectedCurrency).format(quoteAmount)
+        val formatted = FiatValue(selectedCurrency, quoteAmount.toBigDecimal())
+            .toStringWithSymbol(view.locale)
         view.updateSendAmount(formatted)
     }
 

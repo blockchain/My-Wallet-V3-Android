@@ -182,7 +182,7 @@ class ExchangeRateDataManagerTest {
     fun `BTC toFiat`() {
         givenExchangeRate(CryptoCurrency.BTC, "USD", 5000.0)
 
-        CryptoValue.bitcoinFromSatoshis(1_000_000L).toFiat(subject, "USD")
+        CryptoValue.bitcoinFromSatoshis(1_000_000L).toFiat(subject, "USD").value
             .compareTo(BigDecimal.valueOf(50)) `should equal` 0
     }
 
@@ -190,7 +190,7 @@ class ExchangeRateDataManagerTest {
     fun `BCH toFiat`() {
         givenExchangeRate(CryptoCurrency.BCH, "USD", 1000.0)
 
-        CryptoValue.bitcoinCashFromSatoshis(10_000_000L).toFiat(subject, "USD")
+        CryptoValue.bitcoinCashFromSatoshis(10_000_000L).toFiat(subject, "USD").value
             .compareTo(BigDecimal.valueOf(100)) `should equal` 0
     }
 
@@ -198,7 +198,7 @@ class ExchangeRateDataManagerTest {
     fun `ETH toFiat`() {
         givenExchangeRate(CryptoCurrency.ETHER, "USD", 1000.0)
 
-        CryptoValue.etherFromMajor(2).toFiat(subject, "USD")
+        CryptoValue.etherFromMajor(2).toFiat(subject, "USD").value
             .compareTo(BigDecimal.valueOf(2000)) `should equal` 0
     }
 

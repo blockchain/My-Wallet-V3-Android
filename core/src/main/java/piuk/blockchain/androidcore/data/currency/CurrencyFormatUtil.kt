@@ -2,6 +2,7 @@ package piuk.blockchain.androidcore.data.currency
 
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -23,16 +24,16 @@ class CurrencyFormatUtil @Inject constructor() {
     private val ethShortFormat = createDecimalFormat(1, MaxEthShortDecimalLength)
 
     fun formatFiat(fiatBalance: BigDecimal, fiatUnit: String): String =
-        getFiatFormat(fiatUnit).format(fiatBalance)
+        formatFiat(FiatValue(fiatUnit, fiatBalance))
 
-    fun formatFiatWithSymbol(fiatValue: Double, currencyCode: String, locale: Locale): String {
-        val numberFormat = LocaleCurrencyNumberFormat[locale]
-        val decimalFormatSymbols = (numberFormat as DecimalFormat).decimalFormatSymbols
-        numberFormat.decimalFormatSymbols = decimalFormatSymbols.apply {
-            this.currencySymbol = Currency.getInstance(currencyCode).getSymbol(locale)
-        }
-        return numberFormat.format(fiatValue)
-    }
+    fun formatFiat(fiatValue: FiatValue): String =
+        fiatValue.toStringWithoutSymbol(Locale.getDefault())
+
+    fun formatFiatWithSymbol(fiatValue: FiatValue, locale: Locale) =
+        fiatValue.toStringWithSymbol(locale)
+
+    fun formatFiatWithSymbol(fiatValue: Double, currencyCode: String, locale: Locale) =
+        formatFiatWithSymbol(FiatValue(currencyCode, fiatValue.toBigDecimal()), locale)
 
     fun getFiatSymbol(currencyCode: String, locale: Locale): String =
         Currency.getInstance(currencyCode).getSymbol(locale)

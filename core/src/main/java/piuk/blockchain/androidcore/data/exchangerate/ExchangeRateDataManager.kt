@@ -2,6 +2,7 @@ package piuk.blockchain.androidcore.data.exchangerate
 
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataStore
 import piuk.blockchain.androidcore.data.rxjava.RxBus
@@ -149,6 +150,5 @@ class ExchangeRateDataManager @Inject constructor(
     }
 }
 
-fun CryptoValue.toFiat(exchangeRateDataManager: ExchangeRateDataManager, fiatUnit: String): BigDecimal {
-    return exchangeRateDataManager.getLastPrice(currency, fiatUnit).toBigDecimal() * toMajorUnit()
-}
+fun CryptoValue.toFiat(exchangeRateDataManager: ExchangeRateDataManager, fiatUnit: String) =
+    FiatValue(fiatUnit, exchangeRateDataManager.getLastPrice(currency, fiatUnit).toBigDecimal() * toMajorUnit())

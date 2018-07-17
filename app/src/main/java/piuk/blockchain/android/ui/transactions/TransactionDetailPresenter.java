@@ -3,14 +3,36 @@ package piuk.blockchain.android.ui.transactions;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-
+import info.blockchain.balance.CryptoCurrency;
+import info.blockchain.balance.FiatValue;
 import info.blockchain.wallet.contacts.data.FacilitatedTransaction;
 import info.blockchain.wallet.multiaddress.MultiAddressFactory;
 import info.blockchain.wallet.multiaddress.TransactionSummary.Direction;
 import info.blockchain.wallet.util.FormatsUtil;
-
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 import org.apache.commons.lang3.tuple.Pair;
+import piuk.blockchain.android.R;
+import piuk.blockchain.android.data.bitcoincash.BchDataManager;
+import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel;
+import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
+import piuk.blockchain.android.data.ethereum.EthDataManager;
+import piuk.blockchain.android.data.rxjava.RxUtil;
+import piuk.blockchain.android.util.StringUtils;
+import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
+import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
+import piuk.blockchain.androidcore.data.currency.BTCDenomination;
+import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
+import piuk.blockchain.androidcore.data.currency.CurrencyState;
+import piuk.blockchain.androidcore.data.currency.ETHDenomination;
+import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
+import piuk.blockchain.androidcore.data.transactions.models.Displayable;
+import piuk.blockchain.androidcore.utils.PrefsUtil;
+import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
@@ -21,31 +43,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.inject.Inject;
-
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import piuk.blockchain.android.R;
-import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel;
-import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
-import piuk.blockchain.android.data.ethereum.EthDataManager;
-import piuk.blockchain.android.data.rxjava.RxUtil;
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
-import piuk.blockchain.androidcore.data.transactions.models.Displayable;
-import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
-import piuk.blockchain.android.util.StringUtils;
-import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
-import piuk.blockchain.androidcore.data.currency.BTCDenomination;
-import info.blockchain.balance.CryptoCurrency;
-import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
-import piuk.blockchain.androidcore.data.currency.CurrencyState;
-import piuk.blockchain.androidcore.data.currency.ETHDenomination;
-import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
-import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
-import piuk.blockchain.androidcore.utils.PrefsUtil;
 
 import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION_HASH;
 import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION_LIST_POSITION;
@@ -66,12 +63,12 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
     private EthDataManager ethDataManager;
     private BchDataManager bchDataManager;
     private EnvironmentConfig environmentSettings;
-    private CurrencyState currencyState;
     private CurrencyFormatManager currencyFormatManager;
 
     private String fiatType;
 
-    @VisibleForTesting Displayable displayable;
+    @VisibleForTesting
+    Displayable displayable;
 
     @Inject
     public TransactionDetailPresenter(TransactionHelper transactionHelper,
@@ -84,7 +81,6 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
                                       EthDataManager ethDataManager,
                                       BchDataManager bchDataManager,
                                       EnvironmentConfig environmentSettings,
-                                      CurrencyState currencyState,
                                       CurrencyFormatManager currencyFormatManager) {
 
         this.transactionHelper = transactionHelper;
@@ -97,7 +93,6 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
         this.ethDataManager = ethDataManager;
         this.bchDataManager = bchDataManager;
         this.environmentSettings = environmentSettings;
-        this.currencyState = currencyState;
         this.currencyFormatManager = currencyFormatManager;
     }
 
@@ -505,9 +500,8 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
                 stringId = R.string.transaction_detail_value_at_time_received;
                 break;
         }
-        return stringUtils.getString(stringId)
-                + currencyState.getCurrencySymbol(fiatType, Locale.getDefault())
-                + currencyFormatManager.getFiatFormat(fiatType).format(aDouble);
+        return stringUtils.getString(stringId) +
+                new FiatValue(fiatType, aDouble).toStringWithSymbol(Locale.getDefault());
     }
 
     private String getDisplayUnitsBtc() {

@@ -7,6 +7,7 @@ import android.widget.EditText
 import com.fasterxml.jackson.databind.ObjectMapper
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
@@ -46,6 +47,7 @@ import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
+import piuk.blockchain.androidcore.data.exchangerate.toFiat
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
@@ -62,6 +64,7 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import java.text.DecimalFormatSymbols
 import java.util.HashMap
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -2009,11 +2012,9 @@ class SendPresenter @Inject constructor(
      * If the ratio of fee/amount is over 1%
      */
     private fun isLargeTransaction(): Boolean {
-        val valueString = currencyFormatManager.getFiatFormat("USD")
-            .format(
-                exchangeRateFactory.getLastPrice(CryptoCurrency.BTC, "USD") *
-                    absoluteSuggestedFee.toDouble() / 1e8
-            )
+        val valueString = CryptoValue(CryptoCurrency.BTC, absoluteSuggestedFee)
+            .toFiat(exchangeRateFactory, "USD")
+            .toStringWithoutSymbol(Locale.getDefault())
         val usdValue =
             currencyFormatManager.stripSeparator(valueString, getDefaultDecimalSeparator())
                 .toDouble()
