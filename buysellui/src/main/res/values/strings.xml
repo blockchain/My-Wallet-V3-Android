@@ -225,4 +225,7 @@
     <string name="buy_sell_recurring_frequency_daily">Every day</string>
     <string name="buy_sell_recurring_frequency_monthly">On the %1$s of every month</string>
 
+    <!-- Transaction List -->
+    <string name="buy_sell_transaction_list_label">Coinify Order ID #%1$s</string>
+
 </resources>

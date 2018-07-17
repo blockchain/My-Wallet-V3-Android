@@ -24,7 +24,7 @@ class TxFeedAdapter(
      * Observes the items list and automatically notifies the adapter of changes to the data
      */
     override var items: List<Any> by Delegates.observable(emptyList()) { _, oldList, newList ->
-        if (newList != oldList) notifyDataSetChanged()
+        if (newList.toTypedArray() contentDeepEquals oldList.toTypedArray()) notifyDataSetChanged()
     }
 
     /**

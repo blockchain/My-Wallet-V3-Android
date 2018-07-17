@@ -22,6 +22,8 @@ import piuk.blockchain.android.ui.receive.WalletAccountHelper
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
+import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager
+import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidcore.data.access.AuthEvent
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
@@ -55,6 +57,8 @@ class BalancePresenterTest {
     private val walletAccountHelper: WalletAccountHelper = mock()
     private val environmentSettings: EnvironmentConfig = mock()
     private val currencyFormatManager: CurrencyFormatManager = mock()
+    private val exchangeService: ExchangeService = mock()
+    private val coinifyDataManager: CoinifyDataManager = mock()
 
     @Before
     fun setUp() {
@@ -74,7 +78,9 @@ class BalancePresenterTest {
             bchDataManager,
             walletAccountHelper,
             environmentSettings,
-            currencyFormatManager
+            currencyFormatManager,
+            exchangeService,
+            coinifyDataManager
         )
         subject.initView(view)
     }
