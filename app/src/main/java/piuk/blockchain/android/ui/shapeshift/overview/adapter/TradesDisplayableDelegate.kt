@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.FiatValue
 import info.blockchain.wallet.shapeshift.data.Trade
 import kotlinx.android.synthetic.main.item_shapeshift_trade.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.utils.extensions.getContext
@@ -168,9 +169,10 @@ class TradesDisplayableDelegate<in T>(
             }
 
             displayAmount = currencyFormatUtil.formatFiatWithSymbol(
-                fiatAmount.toDouble(),
-                getPreferredFiatUnit(),
-                Locale.getDefault()
+                FiatValue(
+                    getPreferredFiatUnit(),
+                    fiatAmount
+                ), Locale.getDefault()
             )
         }
 

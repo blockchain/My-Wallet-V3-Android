@@ -73,14 +73,9 @@ public class TransactionDetailPresenterTest extends RxTest {
     @Mock EnvironmentConfig environmentSettings;
     @Mock CurrencyFormatManager currencyFormatManager;
 
-    DecimalFormat dm = new DecimalFormat();
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        dm.setMinimumFractionDigits(2);
-        dm.setMaximumFractionDigits(2);
 
         when(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)).thenReturn(PrefsUtil.DEFAULT_CURRENCY);
 
@@ -235,8 +230,6 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(currencyFormatManager.getFormattedBtcValueWithUnit(
                 any(),
                 any())).thenReturn("0.1");
-        when(currencyFormatManager.getFiatFormat(
-                any())).thenReturn(dm);
 
         // Act
         subject.onViewReady();
@@ -305,8 +298,6 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(currencyFormatManager.getFormattedBtcValueWithUnit(
                 any(),
                 any())).thenReturn("0.1");
-        when(currencyFormatManager.getFiatFormat(
-                any())).thenReturn(dm);
 
         // Act
         subject.onViewReady();
@@ -377,8 +368,6 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(currencyFormatManager.getFormattedEthShortValueWithUnit(
                 any(),
                 any())).thenReturn("0.1");
-        when(currencyFormatManager.getFiatFormat(
-                any())).thenReturn(dm);
 
         // Act
         subject.onViewReady();
@@ -410,8 +399,6 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(exchangeRateFactory.getBtcHistoricPrice(anyLong(), anyString(), anyLong()))
                 .thenReturn(Observable.just(price));
         when(stringUtils.getString(anyInt())).thenReturn("Value when sent: ");
-        when(currencyFormatManager.getFiatFormat(
-                any())).thenReturn(dm);
         when(currencyFormatManager.getFormattedBtcValueWithUnit(
                 any(),
                 any())).thenReturn("0.1");
@@ -442,8 +429,6 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(currencyFormatManager.getFormattedEthShortValueWithUnit(
                 any(),
                 any())).thenReturn("0.1");
-        when(currencyFormatManager.getFiatFormat(
-                any())).thenReturn(dm);
 
         // Act
         TestObserver<String> observer = subject.getTransactionValueString("USD", displayable).test();
@@ -467,8 +452,6 @@ public class TransactionDetailPresenterTest extends RxTest {
         when(stringUtils.getString(anyInt())).thenReturn("Value when transferred: ");
         when(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
                 .thenReturn("USD");
-        when(currencyFormatManager.getFiatFormat(
-                any())).thenReturn(dm);
         // Act
         TestObserver<String> observer = subject.getTransactionValueString("USD", displayable).test();
         // Assert

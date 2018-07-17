@@ -1,5 +1,7 @@
 package piuk.blockchain.android.ui.receive
 
+import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.payload.PayloadManager
 import info.blockchain.wallet.payload.data.Account
@@ -12,7 +14,6 @@ import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.currency.ETHDenomination
@@ -465,9 +466,11 @@ class WalletAccountHelper @Inject constructor(
         return ItemAccount().apply {
             label = stringUtils.getString(R.string.all_accounts)
             absoluteBalance = bigIntBalance.toLong()
-            displayBalance = getBtcBalanceString(
+            displayBalance = getBalanceString(
                 currencyState.isDisplayingCryptoCurrency,
-                bigIntBalance.toLong()
+                CryptoValue(
+                    CryptoCurrency.BTC, bigIntBalance
+                )
             )
             type = ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY
         }
@@ -479,9 +482,11 @@ class WalletAccountHelper @Inject constructor(
         return ItemAccount().apply {
             label = stringUtils.getString(R.string.bch_all_accounts)
             absoluteBalance = bigIntBalance.toLong()
-            displayBalance = getBchBalanceString(
+            displayBalance = getBalanceString(
                 currencyState.isDisplayingCryptoCurrency,
-                bigIntBalance.toLong()
+                CryptoValue(
+                    CryptoCurrency.BCH, bigIntBalance
+                )
             )
             type = ItemAccount.TYPE.ALL_ACCOUNTS_AND_LEGACY
         }
@@ -493,9 +498,9 @@ class WalletAccountHelper @Inject constructor(
         return ItemAccount().apply {
             label = stringUtils.getString(R.string.imported_addresses)
             absoluteBalance = bigIntBalance.toLong()
-            displayBalance = getBtcBalanceString(
+            displayBalance = getBalanceString(
                 currencyState.isDisplayingCryptoCurrency,
-                bigIntBalance.toLong()
+                CryptoValue(CryptoCurrency.BTC, bigIntBalance)
             )
             type = ItemAccount.TYPE.ALL_LEGACY
         }
@@ -507,37 +512,19 @@ class WalletAccountHelper @Inject constructor(
         return ItemAccount().apply {
             label = stringUtils.getString(R.string.bch_imported_addresses)
             absoluteBalance = bigIntBalance.toLong()
-            displayBalance = getBchBalanceString(
+            displayBalance = getBalanceString(
                 currencyState.isDisplayingCryptoCurrency,
-                bigIntBalance.toLong()
+                CryptoValue(CryptoCurrency.BCH, bigIntBalance)
             )
             type = ItemAccount.TYPE.ALL_LEGACY
         }
     }
 
-    private fun getBtcBalanceString(showCrypto: Boolean, btcBalance: Long): String {
+    private fun getBalanceString(showCrypto: Boolean, balance: CryptoValue): String {
         return if (showCrypto) {
-            currencyFormatManager.getFormattedBtcValueWithUnit(
-                btcBalance.toBigDecimal(),
-                BTCDenomination.SATOSHI
-            )
+            currencyFormatManager.getFormattedValueWithUnit(balance)
         } else {
-            currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(
-                btcBalance.toBigDecimal()
-            )
-        }
-    }
-
-    private fun getBchBalanceString(showCrypto: Boolean, bchBalance: Long): String {
-        return if (showCrypto) {
-            currencyFormatManager.getFormattedBchValueWithUnit(
-                bchBalance.toBigDecimal(),
-                BTCDenomination.SATOSHI
-            )
-        } else {
-            currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(
-                bchBalance.toBigDecimal()
-            )
+            currencyFormatManager.getFormattedFiatValueFromCryptoValueWithSymbol(balance)
         }
     }
 

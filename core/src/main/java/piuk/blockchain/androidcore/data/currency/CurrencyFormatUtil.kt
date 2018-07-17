@@ -16,13 +16,12 @@ private const val MaxEthShortDecimalLength = 8
  * This class allows us to format decimal values for clean UI display.
  */
 class CurrencyFormatUtil @Inject constructor() {
-    private val btcFormat = createDecimalFormat(1, CryptoCurrency.BTC.dp)
-    private val bchFormat = createDecimalFormat(1, CryptoCurrency.BCH.dp)
-    private val ethFormat = createDecimalFormat(1, CryptoCurrency.ETHER.dp)
-    private val fiatFormat = createDecimalFormat(2, 2)
+    private val btcFormat = createCryptoDecimalFormat(CryptoCurrency.BTC.dp)
+    private val bchFormat = createCryptoDecimalFormat(CryptoCurrency.BCH.dp)
+    private val ethFormat = createCryptoDecimalFormat(CryptoCurrency.ETHER.dp)
+    private val ethShortFormat = createCryptoDecimalFormat(MaxEthShortDecimalLength)
 
-    private val ethShortFormat = createDecimalFormat(1, MaxEthShortDecimalLength)
-
+    @Deprecated("", replaceWith = ReplaceWith("formatFiat(FiatValue(fiatUnit, fiatBalance))"))
     fun formatFiat(fiatBalance: BigDecimal, fiatUnit: String): String =
         formatFiat(FiatValue(fiatUnit, fiatBalance))
 
@@ -32,6 +31,10 @@ class CurrencyFormatUtil @Inject constructor() {
     fun formatFiatWithSymbol(fiatValue: FiatValue, locale: Locale) =
         fiatValue.toStringWithSymbol(locale)
 
+    @Deprecated(
+        "", replaceWith =
+        ReplaceWith("formatFiatWithSymbol(FiatValue(currencyCode, fiatValue.toBigDecimal()), locale)")
+    )
     fun formatFiatWithSymbol(fiatValue: Double, currencyCode: String, locale: Locale) =
         formatFiatWithSymbol(FiatValue(currencyCode, fiatValue.toBigDecimal()), locale)
 
@@ -105,17 +108,6 @@ class CurrencyFormatUtil @Inject constructor() {
     private fun DecimalFormat.formatWithoutUnit(value: BigDecimal) =
         format(value.toPositiveDouble()).toWebZero()
 
-    /**
-     * Returns the Fiat format as a [NumberFormat] object for a given currency code.
-     *
-     * @param fiat The currency code (ie USD) for the format you wish to return
-     * @return A [NumberFormat] object with the correct decimal fractions for the chosen Fiat format
-     * @see ExchangeRateFactory.getCurrencyLabels
-     */
-    // TODO This should be private but is exposed for CurrencyFormatManager for now until usage removed
-    internal fun getFiatFormat(currencyCode: String) =
-        fiatFormat.apply { currency = Currency.getInstance(currencyCode) }
-
     companion object {
 
         private const val ETH_DEC = 1e18
@@ -138,8 +130,8 @@ private fun Double.toPositiveDouble() = Math.max(this, 0.0)
 // Replace 0.0 with 0 to match web
 private fun String.toWebZero() = if (this == "0.0" || this == "0.00") "0" else this
 
-private fun createDecimalFormat(minDigits: Int, maxDigits: Int) =
+private fun createCryptoDecimalFormat(maxDigits: Int) =
     (NumberFormat.getInstance(Locale.getDefault()) as DecimalFormat).apply {
-        minimumFractionDigits = minDigits
+        minimumFractionDigits = 1
         maximumFractionDigits = maxDigits
     }

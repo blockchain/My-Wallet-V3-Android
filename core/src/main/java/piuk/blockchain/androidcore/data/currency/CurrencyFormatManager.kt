@@ -3,8 +3,10 @@ package piuk.blockchain.androidcore.data.currency
 import android.support.annotation.VisibleForTesting
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import org.web3j.utils.Convert
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
+import piuk.blockchain.androidcore.data.exchangerate.toFiat
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.annotations.Mockable
@@ -135,9 +137,6 @@ class CurrencyFormatManager @Inject constructor(
     fun getFiatSymbol(currencyCode: String, locale: Locale): String =
         currencyFormatUtil.getFiatSymbol(currencyCode, locale)
 
-    // TODO This should be private but there are a few places that still use this
-    fun getFiatFormat(currencyCode: String) = currencyFormatUtil.getFiatFormat(currencyCode)
-
     private fun getFiatValueFromSelectedCoin(
         coinValue: BigDecimal,
         convertEthDenomination: ETHDenomination? = null,
@@ -207,7 +206,7 @@ class CurrencyFormatManager @Inject constructor(
             convertEthDenomination,
             convertBtcDenomination
         )
-        return currencyFormatUtil.formatFiat(fiatBalance, fiatUnit)
+        return currencyFormatUtil.formatFiat(FiatValue(fiatUnit, fiatBalance))
     }
 
     fun getFormattedFiatValueFromSelectedCoinValueWithSymbol(
@@ -228,18 +227,27 @@ class CurrencyFormatManager @Inject constructor(
         coinValue: BigDecimal,
         convertBtcDenomination: BTCDenomination? = null
     ): String {
-        val fiatUnit = fiatCountryCode
         val fiatBalance = getFiatValueFromBch(coinValue, convertBtcDenomination)
-        return currencyFormatUtil.formatFiatWithSymbol(fiatBalance.toDouble(), fiatUnit, locale)
+        return currencyFormatUtil.formatFiatWithSymbol(
+            FiatValue(fiatCountryCode, fiatBalance),
+            locale
+        )
     }
+
+    fun getFormattedFiatValueFromCryptoValueWithSymbol(coinValue: CryptoValue) =
+        coinValue
+            .toFiat(exchangeRateDataManager, fiatCountryCode)
+            .toStringWithSymbol(locale)
 
     fun getFormattedFiatValueFromBtcValueWithSymbol(
         coinValue: BigDecimal,
         convertBtcDenomination: BTCDenomination? = null
     ): String {
-        val fiatUnit = fiatCountryCode
         val fiatBalance = getFiatValueFromBtc(coinValue, convertBtcDenomination)
-        return currencyFormatUtil.formatFiatWithSymbol(fiatBalance.toDouble(), fiatUnit, locale)
+        return currencyFormatUtil.formatFiatWithSymbol(
+            FiatValue(fiatCountryCode, fiatBalance),
+            locale
+        )
     }
 
     fun getFormattedFiatValueFromEthValueWithSymbol(
