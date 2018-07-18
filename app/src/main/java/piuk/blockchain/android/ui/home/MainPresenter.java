@@ -460,7 +460,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     private void notifyCompletedCoinifyTrades() {
         getCompositeDisposable().add(
                 new CoinifyTradeCompleteListener(exchangeService, coinifyDataManager, metadataManager)
-                        .getCompletedCoinifyTrades()
+                        .getCompletedCoinifyTradesAndUpdateMetaData()
                         .firstElement()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

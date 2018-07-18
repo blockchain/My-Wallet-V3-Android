@@ -51,7 +51,7 @@ class CoinifyTradeCompleteListenerTest {
         whenever(exchangeService.getExchangeMetaData())
             .thenReturn(Observable.just(ExchangeData()))
         // Act
-        val testObserver = subject.getCompletedCoinifyTrades().test()
+        val testObserver = subject.getCompletedCoinifyTradesAndUpdateMetaData().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
@@ -69,7 +69,7 @@ class CoinifyTradeCompleteListenerTest {
             .thenReturn(Observable.just(exchangeData))
         whenever(coinifyDataManager.getTrades(token)).thenReturn(Observable.empty())
         // Act
-        val testObserver = subject.getCompletedCoinifyTrades().test()
+        val testObserver = subject.getCompletedCoinifyTradesAndUpdateMetaData().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
@@ -89,7 +89,7 @@ class CoinifyTradeCompleteListenerTest {
             .thenReturn(Observable.just(exchangeData))
         whenever(coinifyDataManager.getTrades(token)).thenReturn(Observable.empty())
         // Act
-        val testObserver = subject.getCompletedCoinifyTrades().test()
+        val testObserver = subject.getCompletedCoinifyTradesAndUpdateMetaData().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
@@ -113,7 +113,7 @@ class CoinifyTradeCompleteListenerTest {
         whenever(coinifyTrade.isSellTransaction()).thenReturn(true)
         whenever(coinifyDataManager.getTrades(token)).thenReturn(Observable.just(coinifyTrade))
         // Act
-        val testObserver = subject.getCompletedCoinifyTrades().test()
+        val testObserver = subject.getCompletedCoinifyTradesAndUpdateMetaData().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
@@ -143,7 +143,7 @@ class CoinifyTradeCompleteListenerTest {
         whenever(coinifyDataManager.getTrades(token)).thenReturn(Observable.just(coinifyTrade))
         whenever(metadataManager.saveToMetadata(any(), any())).thenReturn(Completable.complete())
         // Act
-        val testObserver = subject.getCompletedCoinifyTrades().test()
+        val testObserver = subject.getCompletedCoinifyTradesAndUpdateMetaData().test()
         // Assert
         testObserver.assertNotComplete()
         testObserver.assertError(IllegalStateException::class.java)
@@ -175,7 +175,7 @@ class CoinifyTradeCompleteListenerTest {
         whenever(coinifyDataManager.getTrades(token)).thenReturn(Observable.just(coinifyTrade))
         whenever(metadataManager.saveToMetadata(any(), any())).thenReturn(Completable.complete())
         // Act
-        val testObserver = subject.getCompletedCoinifyTrades().test()
+        val testObserver = subject.getCompletedCoinifyTradesAndUpdateMetaData().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(txHash)
