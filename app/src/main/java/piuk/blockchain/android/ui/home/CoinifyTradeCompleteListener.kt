@@ -4,7 +4,9 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager
 import piuk.blockchain.androidbuysell.models.ExchangeData
+import piuk.blockchain.androidbuysell.models.TradeData
 import piuk.blockchain.androidbuysell.models.coinify.BlockchainDetails
+import piuk.blockchain.androidbuysell.models.coinify.CoinifyTrade
 import piuk.blockchain.androidbuysell.models.coinify.TradeState
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
@@ -17,40 +19,52 @@ class CoinifyTradeCompleteListener(
     private val metadataManager: MetadataManager
 ) {
 
-    fun getCompletedCoinifyTrades(): Observable<String> =
+    fun getCompletedCoinifyTrades() =
         exchangeService.getExchangeMetaData()
-            .flatMap { exchangeData ->
-                exchangeData.coinify?.token?.let {
-                    coinifyDataManager.getTrades(it)
-                        .map { exchangeData to it }
-                } ?: Observable.empty()
+            .flatMap(::pairExchangeDataWithTrades)
+            .filter { (_, trade) ->
+                !trade.isSellTransaction()
             }
-            .flatMap {
-                val exchangeData = it.first
-                val trade = it.second
-                val tradeMetadata = exchangeData.coinify?.trades ?: emptyList()
-                // Only buy transactions
-                if (trade.isSellTransaction()) {
-                    return@flatMap Observable.empty<String>()
-                }
+            .filter { (_, trade) ->
+                trade.state == TradeState.Completed
+            }
+            .map { (exchangeData, trade) ->
+                Triple(
+                    exchangeData,
+                    trade,
+                    tradeMetaData(exchangeData, trade)
+                )
+            }
+            .filter { (_, _, metaData) ->
+                metaData?.isConfirmed == false
+            }
+            .doOnNext { (exchangeData, _, metaData) ->
+                (metaData ?: throw IllegalStateException("metaData is null but shouldn't be at this point"))
+                    .isConfirmed = true
+                updateMetadataEntry(exchangeData)
+            }
+            .map { (_, trade, _) ->
+                (trade.transferOut.details as BlockchainDetails).eventData?.txId
+                    ?: throw IllegalStateException("TxId is null but shouldn't be at this point")
+            }
 
-                if (trade.state === TradeState.Completed) {
-                    // Check if unconfirmed in metadata
-                    val metadata = tradeMetadata.firstOrNull { it.id == trade.id }
-                    if (metadata?.isConfirmed == false) {
-                        // Update object to confirmed
-                        metadata.isConfirmed = true
-                        // Update metadata entry in the background
-                        updateMetadataEntry(exchangeData)
-                        // Return transaction hash
-                        return@flatMap Observable.just(
-                            (trade.transferOut.details as BlockchainDetails).eventData?.txId
-                                ?: throw IllegalStateException("TxId is null but shouldn't be at this point")
-                        )
-                    }
-                }
-                return@flatMap Observable.empty<String>()
-            }
+    private fun tradeMetaData(
+        exchangeData: ExchangeData,
+        trade: CoinifyTrade
+    ): TradeData? {
+        val tradeMetadata = exchangeData.coinify?.trades ?: emptyList()
+
+        // Check if unconfirmed in metadata
+        val metadata = tradeMetadata.firstOrNull { it.id == trade.id }
+        return metadata
+    }
+
+    private fun pairExchangeDataWithTrades(exchangeData: ExchangeData): Observable<Pair<ExchangeData, CoinifyTrade>> {
+        return exchangeData.coinify?.token?.let {
+            coinifyDataManager.getTrades(it)
+                .map { exchangeData to it }
+        } ?: Observable.empty()
+    }
 
     private fun updateMetadataEntry(exchangeData: ExchangeData) {
         metadataManager.saveToMetadata(
