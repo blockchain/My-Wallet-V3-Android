@@ -1,6 +1,7 @@
 package piuk.blockchain.android.ui.balance
 
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.isNull
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -10,19 +11,28 @@ import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.ethereum.data.EthAddressResponseMap
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.schedulers.TestScheduler
 import org.amshove.kluent.`should equal to`
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
 import piuk.blockchain.android.data.notifications.models.NotificationPayload
+import piuk.blockchain.android.testutils.rxInit
 import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager
+import piuk.blockchain.androidbuysell.models.CoinifyData
+import piuk.blockchain.androidbuysell.models.ExchangeData
+import piuk.blockchain.androidbuysell.models.coinify.BlockchainDetails
+import piuk.blockchain.androidbuysell.models.coinify.CoinifyTrade
+import piuk.blockchain.androidbuysell.models.coinify.EventData
+import piuk.blockchain.androidbuysell.models.coinify.Transfer
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidcore.data.access.AuthEvent
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
@@ -34,8 +44,10 @@ import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
+import piuk.blockchain.androidcore.data.transactions.models.BtcDisplayable
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.ui.base.UiState
+import java.math.BigInteger
 
 @Suppress("IllegalIdentifier")
 class BalancePresenterTest {
@@ -59,6 +71,14 @@ class BalancePresenterTest {
     private val currencyFormatManager: CurrencyFormatManager = mock()
     private val exchangeService: ExchangeService = mock()
     private val coinifyDataManager: CoinifyDataManager = mock()
+    private val testScheduler: TestScheduler = TestScheduler()
+
+    @get:Rule
+    val rxSchedulers = rxInit {
+        mainTrampoline()
+        ioTrampoline()
+        computation(testScheduler)
+    }
 
     @Before
     fun setUp() {
@@ -316,5 +336,60 @@ class BalancePresenterTest {
         // Assert
         verify(view).updateAccountsDataSet(mockList)
         verifyNoMoreInteractions(view)
+    }
+
+    @Test
+    fun `update transactions list with coinify labels`() {
+        // Arrange
+        // Transaction setup
+        val itemAccount = ItemAccount()
+        val txHash = "TX_HASH"
+        val displayable: BtcDisplayable = mock()
+        whenever(displayable.hash).thenReturn(txHash)
+        whenever(displayable.total).thenReturn(BigInteger.ZERO)
+        whenever(displayable.totalDisplayableCrypto).thenReturn("0")
+        whenever(displayable.totalDisplayableFiat).thenReturn("0")
+        whenever(transactionListDataManager.fetchTransactions(itemAccount, 50, 0))
+            .thenReturn(Observable.just(listOf(displayable)))
+        // Exchange token setup
+        val token = "TOKEN"
+        val coinifyData = CoinifyData(1, token)
+        val exchangeData = ExchangeData().apply { coinify = coinifyData }
+        whenever(exchangeService.getExchangeMetaData())
+            .thenReturn(Observable.just(exchangeData))
+        whenever(exchangeService.getExchangeMetaData()).thenReturn(Observable.just(exchangeData))
+        // Coinify trade setup
+        val coinifyTrade: CoinifyTrade = mock()
+        val tradeId = 12345
+        whenever(coinifyTrade.id).thenReturn(tradeId)
+        whenever(coinifyTrade.isSellTransaction()).thenReturn(false)
+        val transferOut: Transfer = mock()
+        whenever(coinifyTrade.transferOut).thenReturn(transferOut)
+        val details = BlockchainDetails("", EventData(txHash, ""))
+        whenever(transferOut.details).thenReturn(details)
+        whenever(coinifyDataManager.getTrades(token)).thenReturn(Observable.just(coinifyTrade))
+        // ShapeShift
+        whenever(shapeShiftDataManager.getTradesList()).thenReturn(Observable.just(emptyList()))
+        // Utils
+        whenever(stringUtils.getFormattedString(any(), any())).thenReturn(tradeId.toString())
+        whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrencies.BTC)
+        whenever(currencyFormatManager.getFormattedBtcValueWithUnit(any(), any())).thenReturn("")
+        whenever(
+            currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
+                any(),
+                any(),
+                isNull()
+            )
+        )
+            .thenReturn("")
+        // Act
+        val testObserver = subject.updateTransactionsListCompletable(itemAccount).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        verify(view).updateTransactionDataSet(any(), any())
+        verify(displayable).note = tradeId.toString()
+        verify(exchangeService).getExchangeMetaData()
+        verify(coinifyDataManager).getTrades(token)
     }
 }
