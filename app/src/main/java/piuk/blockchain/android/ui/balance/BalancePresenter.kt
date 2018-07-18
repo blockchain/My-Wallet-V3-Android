@@ -70,6 +70,7 @@ class BalancePresenter @Inject constructor(
     private var shortcutsGenerated = false
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
+            .cache()
             .addToCompositeDisposable(this)
             .applySchedulers()
             .singleOrError()
