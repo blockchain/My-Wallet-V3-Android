@@ -3,9 +3,7 @@ package piuk.blockchain.android.ui.balance.adapter
 import android.app.Activity
 import piuk.blockchain.android.ui.adapters.AdapterDelegatesManager
 import piuk.blockchain.android.ui.adapters.DelegationAdapter
-import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
 import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 class TxFeedAdapter(
