@@ -19,7 +19,7 @@ class CoinifyTradeCompleteListener(
     private val metadataManager: MetadataManager
 ) {
 
-    fun getCompletedCoinifyTradesAndUpdateMetaData() =
+    fun getCompletedCoinifyTradesAndUpdateMetaData(): Observable<String> =
         exchangeService.getExchangeMetaData()
             .flatMap(::pairExchangeDataWithTrades)
             .filter { (_, trade) ->
