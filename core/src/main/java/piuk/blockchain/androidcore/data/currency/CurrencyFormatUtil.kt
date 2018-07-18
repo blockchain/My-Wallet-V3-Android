@@ -21,10 +21,6 @@ class CurrencyFormatUtil @Inject constructor() {
     private val ethFormat = createCryptoDecimalFormat(CryptoCurrency.ETHER.dp)
     private val ethShortFormat = createCryptoDecimalFormat(MaxEthShortDecimalLength)
 
-    @Deprecated("", replaceWith = ReplaceWith("formatFiat(FiatValue(fiatUnit, fiatBalance))"))
-    fun formatFiat(fiatBalance: BigDecimal, fiatUnit: String): String =
-        formatFiat(FiatValue(fiatUnit, fiatBalance))
-
     fun formatFiat(fiatValue: FiatValue): String =
         fiatValue.toStringWithoutSymbol(Locale.getDefault())
 

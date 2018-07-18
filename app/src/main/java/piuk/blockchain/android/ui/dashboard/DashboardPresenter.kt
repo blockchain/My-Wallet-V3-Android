@@ -198,9 +198,6 @@ class DashboardPresenter @Inject constructor(
                         val bchFiat = calculateFiatValue(bchBalance, fiatCurrency)
                         val ethFiat = calculateFiatValue(ethBalance, fiatCurrency)
 
-                        val total = btcFiat + ethFiat + bchFiat
-                        val totalString = total.toStringWithSymbol(view.locale)
-
                         Logging.logCustom(
                             BalanceLoadedEvent(
                                 btcBalance.isPositive(),
@@ -210,7 +207,6 @@ class DashboardPresenter @Inject constructor(
                         )
 
                         cachedData = PieChartsState.Data(
-                            fiatSymbol = getCurrencySymbol(),
                             bitcoin = PieChartsState.DataPoint(
                                 fiatValue = btcFiat,
                                 cryptoValueString = getBalanceString(btcBalance)
@@ -222,8 +218,7 @@ class DashboardPresenter @Inject constructor(
                             ether = PieChartsState.DataPoint(
                                 fiatValue = ethFiat,
                                 cryptoValueString = getBalanceString(ethBalance)
-                            ),
-                            totalValueString = totalString
+                            )
                         ).also { view.updatePieChartState(it) }
                     }
             }
@@ -430,9 +425,6 @@ class DashboardPresenter @Inject constructor(
         return currencyFormatManager.getFormattedFiatValueWithSymbol(price)
     }
 
-    private fun getCurrencySymbol() =
-        currencyFormatManager.getFiatSymbol(getFiatCurrency(), view.locale)
-
     private fun getFiatCurrency() =
         prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)
 
@@ -484,13 +476,13 @@ sealed class PieChartsState {
     }
 
     data class Data(
-        val fiatSymbol: String,
         val bitcoin: DataPoint,
         val ether: DataPoint,
-        val bitcoinCash: DataPoint,
-        val totalValueString: String
+        val bitcoinCash: DataPoint
     ) : PieChartsState() {
         val isZero: Boolean = bitcoin.isZero && bitcoinCash.isZero && ether.isZero
+        private val totalValue: FiatValue = bitcoin.fiatValue + bitcoinCash.fiatValue + ether.fiatValue
+        val totalValueString: String = totalValue.toStringWithSymbol(Locale.getDefault())
     }
 
     object Loading : PieChartsState()

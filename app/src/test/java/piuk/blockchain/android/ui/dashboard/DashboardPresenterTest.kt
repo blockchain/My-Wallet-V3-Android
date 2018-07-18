@@ -146,7 +146,6 @@ class DashboardPresenterTest {
         // Assert
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
-        verify(view, atLeastOnce()).locale
         verify(view, atLeastOnce()).scrollToTop()
         verify(prefsUtil, atLeastOnce()).getValue(PrefsUtil.KEY_ONBOARDING_COMPLETE, false)
 
@@ -244,7 +243,6 @@ class DashboardPresenterTest {
         // Assert
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
-        verify(view, atLeastOnce()).locale
         verify(view, atLeastOnce()).scrollToTop()
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
         verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
@@ -341,7 +339,6 @@ class DashboardPresenterTest {
         // Assert
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
-        verify(view, atLeastOnce()).locale
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
         verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
         verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
@@ -451,7 +448,6 @@ class DashboardPresenterTest {
         // Assert
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
-        verify(view, atLeastOnce()).locale
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
         verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.BTC), any())
         verify(exchangeRateFactory, atLeastOnce()).getLastPrice(eq(CryptoCurrency.ETHER), any())
@@ -546,7 +542,6 @@ class DashboardPresenterTest {
         subject.updateBalances()
 
         // Assert
-        verify(view, atLeastOnce()).locale
         verify(view, atLeastOnce()).scrollToTop()
 
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()

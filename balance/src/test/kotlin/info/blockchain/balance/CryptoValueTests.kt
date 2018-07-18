@@ -73,4 +73,19 @@ class CryptoValueTests {
     fun `-1 Satoshi is not positive`() {
         CryptoValue.bitcoinFromSatoshis(-1).isPositive() `should be` false
     }
+
+    @Test
+    fun `amount is the minor part of the currency`() {
+        CryptoValue(CryptoCurrency.BTC, 1234.toBigInteger()).amount `should equal` 1234L.toBigInteger()
+    }
+
+    @Test
+    fun `amount is the total minor part of the currency`() {
+        CryptoValue.etherFromMajor(2L).amount `should equal` 2e18.toBigDecimal().toBigIntegerExact()
+    }
+
+    @Test
+    fun `amount when created from satoshis`() {
+        CryptoValue.bitcoinFromSatoshis(4567L).amount `should equal` 4567L.toBigInteger()
+    }
 }

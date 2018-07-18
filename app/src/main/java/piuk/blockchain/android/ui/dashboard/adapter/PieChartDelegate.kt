@@ -1,6 +1,5 @@
 package piuk.blockchain.android.ui.dashboard.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
@@ -32,10 +31,6 @@ import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.androidcoreui.utils.helperfunctions.CustomFont
 import piuk.blockchain.androidcoreui.utils.helperfunctions.loadFont
-import java.math.BigDecimal
-import java.math.RoundingMode
-import java.text.NumberFormat
-import java.util.Locale
 
 class PieChartDelegate<in T>(
     private val context: Context,
@@ -43,11 +38,6 @@ class PieChartDelegate<in T>(
 ) : AdapterDelegate<T> {
 
     private var viewHolder: PieChartViewHolder? = null
-    private var fiatSymbol: String? = null
-    // For working out labels in ValueMarker class
-    private var bitcoinValue = BigDecimal.ZERO
-    private var etherValue = BigDecimal.ZERO
-    private var bitcoinCashValue = BigDecimal.ZERO
     private var firstRender = true
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
@@ -92,12 +82,6 @@ class PieChartDelegate<in T>(
     }
 
     private fun renderData(data: PieChartsState.Data) {
-        // Store values for comparisons
-        bitcoinValue = data.bitcoin.fiatValue.value
-        etherValue = data.ether.fiatValue.value
-        bitcoinCashValue = data.bitcoinCash.fiatValue.value
-        fiatSymbol = data.fiatSymbol
-
         val isEmpty = data.isZero
         // Prevent issue where chart won't render if NOT first fun AND data has recently gone from
         // empty to non-empty.
@@ -139,11 +123,15 @@ class PieChartDelegate<in T>(
         listOf(PieEntry(100.0f, ""))
     } else {
         listOf(
-            PieEntry(data.bitcoin.fiatValue.value.toFloat(), context.getString(R.string.bitcoin)),
-            PieEntry(data.ether.fiatValue.value.toFloat(), context.getString(R.string.ether)),
-            PieEntry(data.bitcoinCash.fiatValue.value.toFloat(), context.getString(R.string.bitcoin_cash))
+            data.bitcoin withLabel context.getString(R.string.bitcoin),
+            data.ether withLabel context.getString(R.string.ether),
+            data.bitcoinCash withLabel context.getString(R.string.bitcoin_cash)
         )
     }
+
+    private infix fun PieChartsState.DataPoint.withLabel(
+        label: String
+    ) = PieEntry(fiatValue.value.toFloat(), label, this)
 
     private fun getCoinColors(empty: Boolean): List<Int> = if (empty) {
         listOf(ContextCompat.getColor(context, R.color.primary_gray_light))
@@ -191,31 +179,11 @@ class PieChartDelegate<in T>(
 
         private var mpPointF: MPPointF? = null
 
-        @SuppressLint("SetTextI18n")
         override fun refreshContent(e: Entry, highlight: Highlight) {
-            val amount = e.y.toBigDecimal()
-            price.text = "$fiatSymbol${NumberFormat.getNumberInstance(Locale.getDefault())
-                .apply {
-                    maximumFractionDigits = 2
-                    minimumFractionDigits = 2
-                }
-                .format(amount)}"
-
-            // Rounded for comparison as at some point in the stack we're truncating full BigDecimals
-            // to doubles and then converting them back again
-            coin.text = when (amount.setScale(2, RoundingMode.HALF_UP)) {
-                bitcoinValue.setScale(
-                    2,
-                    RoundingMode.HALF_UP
-                ) -> context.getString(R.string.bitcoin)
-                etherValue.setScale(2, RoundingMode.HALF_UP) -> context.getString(R.string.ether)
-                bitcoinCashValue.setScale(
-                    2,
-                    RoundingMode.HALF_UP
-                ) -> context.getString(R.string.bitcoin_cash)
-                else -> ""
-            }
-
+            val pieEntry = e as PieEntry
+            val dataPoint = e.data as PieChartsState.DataPoint
+            coin.text = pieEntry.label
+            price.text = dataPoint.fiatValueString
             super.refreshContent(e, highlight)
         }
 
