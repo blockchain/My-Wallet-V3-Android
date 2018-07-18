@@ -83,7 +83,7 @@
     <string name="pair_your_wallet">Pair Your Wallet</string>
     <string name="manual_pairing">Manual Pairing</string>
     <string name="pair_wallet_step_1">Log in to your Blockchain Wallet via your PC or Mac at %1$s.</string>
-    <string name="pair_wallet_step_2">Go to Settings / Wallet Information.</string>
+    <string name="pair_wallet_step_2">Go to Settings / General.</string>
     <string name="pair_wallet_step_3">Click Show Pairing Code to reveal a QR Code, a square black &amp; white barcode. Scan the code with your camera.</string>
     <string name="wallet_id">Wallet ID</string>
     <string name="default_wallet_name">My Bitcoin Wallet</string>
