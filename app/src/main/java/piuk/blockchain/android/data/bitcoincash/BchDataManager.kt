@@ -9,7 +9,7 @@ import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.coin.GenericMetadataWallet
 import info.blockchain.wallet.crypto.DeterministicAccount
 import info.blockchain.wallet.multiaddress.TransactionSummary
-import info.blockchain.wallet.payload.data.LegacyAddress
+import info.blockchain.wallet.payload.data.isArchived
 import io.reactivex.Completable
 import io.reactivex.Observable
 import piuk.blockchain.android.R
@@ -303,7 +303,7 @@ class BchDataManager @Inject constructor(
 
     fun updateAllBalances(): Completable {
         val legacyAddresses = payloadDataManager.legacyAddresses
-            .filterNot { it.isWatchOnly || it.tag == LegacyAddress.ARCHIVED_ADDRESS }
+            .filterNot { it.isWatchOnly || it.isArchived }
             .map { it.address }
         val all = getActiveXpubs().plus(legacyAddresses)
         return rxPinning.call { bchDataStore.bchWallet!!.updateAllBalances(legacyAddresses, all) }

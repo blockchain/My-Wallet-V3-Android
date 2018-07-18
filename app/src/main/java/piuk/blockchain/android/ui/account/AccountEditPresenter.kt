@@ -13,6 +13,9 @@ import info.blockchain.wallet.BitcoinCashWallet
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
+import info.blockchain.wallet.payload.data.archive
+import info.blockchain.wallet.payload.data.isArchived
+import info.blockchain.wallet.payload.data.unarchive
 import info.blockchain.wallet.payment.Payment
 import info.blockchain.wallet.util.DoubleEncryptionFactory
 import info.blockchain.wallet.util.PrivateKeyFactory
@@ -139,7 +142,7 @@ class AccountEditPresenter @Inject internal constructor(
                 xpubText = stringUtils.getString(R.string.address)
                 defaultAccountVisibility = View.GONE // No default for V2
                 updateArchivedUi(
-                    legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS,
+                    legacyAddress!!.isArchived,
                     ::isArchivableBtc
                 )
 
@@ -389,7 +392,7 @@ class AccountEditPresenter @Inject internal constructor(
             .doOnError { Timber.e(it) }
             .subscribe(
                 {
-                    legacyAddress.tag = LegacyAddress.ARCHIVED_ADDRESS
+                    legacyAddress.archive()
                     updateArchivedUi(true, ::isArchivableBtc)
 
                     view.showTransactionSuccess()
@@ -582,7 +585,7 @@ class AccountEditPresenter @Inject internal constructor(
 
         if (account != null && account!!.isArchived ||
             bchAccount != null && bchAccount!!.isArchived ||
-            legacyAddress != null && legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS
+            legacyAddress != null && legacyAddress!!.isArchived
         ) {
             title = stringUtils.getString(R.string.unarchive)
             subTitle = stringUtils.getString(R.string.unarchive_are_you_sure)
@@ -600,10 +603,10 @@ class AccountEditPresenter @Inject internal constructor(
             account!!.isArchived
         } else if (legacyAddress != null) {
             if (legacyAddress!!.tag == LegacyAddress.ARCHIVED_ADDRESS) {
-                legacyAddress!!.tag = LegacyAddress.NORMAL_ADDRESS
+                legacyAddress!!.unarchive()
                 false
             } else {
-                legacyAddress!!.tag = LegacyAddress.ARCHIVED_ADDRESS
+                legacyAddress!!.archive()
                 true
             }
         } else {

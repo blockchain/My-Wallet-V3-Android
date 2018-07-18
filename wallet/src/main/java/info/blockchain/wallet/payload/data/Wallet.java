@@ -485,9 +485,9 @@ public class Wallet {
 
     public List<String> getLegacyAddressStringList() {
 
-        List<String> addrs = new ArrayList<>();
+        List<String> addrs = new ArrayList<>(keys.size());
         for (LegacyAddress legacyAddress : keys) {
-            if (legacyAddress.getTag() != LegacyAddress.ARCHIVED_ADDRESS) {
+            if (!LegacyAddressExtensionsKt.isArchived(legacyAddress)) {
                 addrs.add(legacyAddress.getAddress());
             }
         }
@@ -497,7 +497,7 @@ public class Wallet {
 
     public List<String> getWatchOnlyAddressStringList() {
 
-        List<String> addrs = new ArrayList<>();
+        List<String> addrs = new ArrayList<>(keys.size());
         for (LegacyAddress legacyAddress : keys) {
             if (legacyAddress.isWatchOnly()) {
                 addrs.add(legacyAddress.getAddress());
@@ -509,22 +509,10 @@ public class Wallet {
 
     public List<String> getLegacyAddressStringList(long tag) {
 
-        List<String> addrs = new ArrayList<>();
+        List<String> addrs = new ArrayList<>(keys.size());
         for (LegacyAddress legacyAddress : keys) {
             if (legacyAddress.getTag() == tag) {
                 addrs.add(legacyAddress.getAddress());
-            }
-        }
-
-        return addrs;
-    }
-
-    public List<LegacyAddress> getLegacyAddressList(long tag) {
-
-        List<LegacyAddress> addrs = new ArrayList<>();
-        for (LegacyAddress legacyAddress : keys) {
-            if (legacyAddress.getTag() == tag) {
-                addrs.add(legacyAddress);
             }
         }
 

@@ -11,6 +11,7 @@ import info.blockchain.wallet.exceptions.DecryptionException
 import info.blockchain.wallet.exceptions.PayloadException
 import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
+import info.blockchain.wallet.payload.data.isArchived
 import info.blockchain.wallet.util.FormatsUtil
 import info.blockchain.wallet.util.PrivateKeyFactory
 import org.bitcoinj.core.ECKey
@@ -404,7 +405,7 @@ class AccountPresenter @Inject internal constructor(
                     label,
                     address,
                     balance,
-                    legacyAddress.tag == LegacyAddress.ARCHIVED_ADDRESS,
+                    legacyAddress.isArchived,
                     legacyAddress.isWatchOnly,
                     false,
                     AccountItem.TYPE_ACCOUNT_BTC
