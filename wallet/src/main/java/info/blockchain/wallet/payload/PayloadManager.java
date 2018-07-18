@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("ALL")
 public class PayloadManager {
@@ -990,10 +991,11 @@ public class PayloadManager {
      */
     public void updateAllBalances() throws ServerConnectionException, IOException {
         Wallet wallet = getPayload();
-        List<String> spendableLegacyAddressList = WalletExtensionsKt.spendableLegacyAddressStrings(wallet);
-        List<String> all = WalletExtensionsKt.allSpendableAccountsAndAddresses(wallet);
+        Set<String> nonArchivedStrings = WalletExtensionsKt.nonArchivedLegacyAddressStrings(wallet);
+        Set<String> allNonArchived = WalletExtensionsKt.allNonArchivedAccountsAndAddresses(wallet);
+        Set<String> excludeFromBalance = WalletExtensionsKt.nonSpendableLegacyAddressStrings(wallet);
 
-        balanceManager.updateAllBalances(spendableLegacyAddressList, all);
+        balanceManager.updateAllBalances(nonArchivedStrings, allNonArchived, excludeFromBalance);
     }
 
     /**

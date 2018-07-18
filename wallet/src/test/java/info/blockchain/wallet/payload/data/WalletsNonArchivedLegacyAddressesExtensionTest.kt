@@ -3,7 +3,7 @@ package info.blockchain.wallet.payload.data
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
-class WalletsSpendableLegacyAddressesExtensionTest {
+class WalletsNonArchivedLegacyAddressesExtensionTest {
 
     private fun legacyAddressWithPrivateKey(address: String, privateKey: String = "PRIVATE_KEY") =
         LegacyAddress().also {
@@ -13,21 +13,21 @@ class WalletsSpendableLegacyAddressesExtensionTest {
 
     @Test
     fun `empty list`() {
-        Wallet().spendableLegacyAddressStrings() `should equal` emptySet()
+        Wallet().nonArchivedLegacyAddressStrings() `should equal` emptySet()
     }
 
     @Test
     fun `one spendable`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1"))
-        }.spendableLegacyAddressStrings() `should equal` setOf("Address1")
+        }.nonArchivedLegacyAddressStrings() `should equal` setOf("Address1")
     }
 
     @Test
     fun `one archived`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1").apply { archive() })
-        }.spendableLegacyAddressStrings() `should equal` emptySet()
+        }.nonArchivedLegacyAddressStrings() `should equal` emptySet()
     }
 
     @Test
@@ -36,7 +36,7 @@ class WalletsSpendableLegacyAddressesExtensionTest {
             legacyAddressList.add(LegacyAddress().apply {
                 address = "Address1"
             })
-        }.spendableLegacyAddressStrings() `should equal` emptySet()
+        }.nonArchivedLegacyAddressStrings() `should equal` setOf("Address1")
     }
 
     @Test
@@ -44,7 +44,7 @@ class WalletsSpendableLegacyAddressesExtensionTest {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1", "PRIVATE_KEY1"))
             legacyAddressList.add(legacyAddressWithPrivateKey("Address2", "PRIVATE_KEY2"))
-        }.spendableLegacyAddressStrings() `should equal` setOf("Address1", "Address2")
+        }.nonArchivedLegacyAddressStrings() `should equal` setOf("Address1", "Address2")
     }
 
     @Test
@@ -52,6 +52,6 @@ class WalletsSpendableLegacyAddressesExtensionTest {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1", "PRIVATE_KEY1"))
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1", "PRIVATE_KEY2"))
-        }.spendableLegacyAddressStrings() `should equal` setOf("Address1")
+        }.nonArchivedLegacyAddressStrings() `should equal` setOf("Address1")
     }
 }

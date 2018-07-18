@@ -4,16 +4,16 @@ import info.blockchain.api.blockexplorer.BlockExplorer;
 import info.blockchain.api.blockexplorer.FilterType;
 import info.blockchain.api.data.Balance;
 import info.blockchain.wallet.exceptions.ServerConnectionException;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class BalanceManager {
 
@@ -59,10 +59,12 @@ public class BalanceManager {
         return balanceMap.get(IMPORTED_ADDRESSES_BALANCE);
     }
 
-    public void updateAllBalances(List<String> legacyAddressList, List<String> allAccountsAndAddresses) throws
-            ServerConnectionException,
-            IOException {
-        Call<HashMap<String, Balance>> call = getBalanceOfAddresses(allAccountsAndAddresses);
+    public void updateAllBalances(
+            Set<String> legacyAddressList,
+            Set<String> allAccountsAndAddresses,
+            Set<String> excludeFromTotals
+    ) throws ServerConnectionException, IOException {
+        Call<HashMap<String, Balance>> call = getBalanceOfAddresses(new ArrayList<>(allAccountsAndAddresses));
 
         BigInteger walletFinalBalance = BigInteger.ZERO;
         BigInteger importedFinalBalance = BigInteger.ZERO;
@@ -76,6 +78,10 @@ public class BalanceManager {
                 Balance balance = item.getValue();
 
                 balanceMap.put(address, balance.getFinalBalance());
+
+                if (excludeFromTotals.contains(address)) {
+                    continue;
+                }
 
                 //Consolidate 'All'
                 walletFinalBalance = walletFinalBalance.add(balance.getFinalBalance());

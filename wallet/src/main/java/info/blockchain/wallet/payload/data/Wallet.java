@@ -483,6 +483,10 @@ public class Wallet {
         return matchingAddressBody;
     }
 
+    /**
+     * @deprecated Use the kotlin extension: {@link WalletExtensionsKt#nonArchivedLegacyAddressStrings}
+     */
+    @Deprecated
     public List<String> getLegacyAddressStringList() {
 
         List<String> addrs = new ArrayList<>(keys.size());

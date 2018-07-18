@@ -1,17 +1,32 @@
 package info.blockchain.wallet.payload.data
 
+fun Wallet.nonSpendableLegacyAddressStrings() =
+    legacyAddressList
+        .filter { it.isArchived || it.isWatchOnly }
+        .addressSet()
+
+fun Wallet.nonArchivedLegacyAddressStrings() =
+    nonArchivedLegacyAddresses()
+        .addressSet()
+
 fun Wallet.spendableLegacyAddressStrings() =
+    nonArchivedLegacyAddresses()
+        .filterNot { it.isWatchOnly }
+        .addressSet()
+
+fun Wallet.allSpendableAccountsAndAddresses() =
+    activeXpubs() + spendableLegacyAddressStrings()
+
+fun Wallet.allNonArchivedAccountsAndAddresses() =
+    activeXpubs() + nonArchivedLegacyAddressStrings()
+
+private fun Wallet.nonArchivedLegacyAddresses() =
     legacyAddressList
         .filterNot { it.isArchived }
-        .filterNot { it.isWatchOnly }
-        .map { it.address }
-        .toSet()
-        .toList()
 
-fun Wallet.allSpendableAccountsAndAddresses(): List<String> =
-    (activeXpubs() + spendableLegacyAddressStrings())
+private fun Iterable<LegacyAddress>.addressSet() =
+    map { it.address }
         .toSet()
-        .toList()
 
-private fun Wallet.activeXpubs(): List<String> =
-    hdWallets?.let { it[0].activeXpubs } ?: emptyList()
+private fun Wallet.activeXpubs() =
+    hdWallets?.get(0)?.activeXpubs?.toSet() ?: emptySet()

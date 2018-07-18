@@ -293,8 +293,8 @@ class BchDataManager @Inject constructor(
         bchDataStore.bchMetadata?.accounts?.filterNot { it.isArchived }?.map { it.xpub }
             ?: emptyList()
 
-    fun getActiveXpubsAndImportedAddresses(): List<String> = getActiveXpubs().toMutableList()
-        .apply { addAll(getLegacyAddressStringList()) }
+    fun getActiveXpubsAndImportedAddresses(): List<String> =
+        getActiveXpubs() + getLegacyAddressStringList()
 
     fun getLegacyAddressStringList(): List<String> = payloadDataManager.legacyAddressStringList
 
@@ -305,7 +305,8 @@ class BchDataManager @Inject constructor(
         val legacyAddresses = payloadDataManager.legacyAddresses
             .filterNot { it.isWatchOnly || it.isArchived }
             .map { it.address }
-        val all = getActiveXpubs().plus(legacyAddresses)
+            .toSet()
+        val all = getActiveXpubs().toSet() + legacyAddresses
         return rxPinning.call { bchDataStore.bchWallet!!.updateAllBalances(legacyAddresses, all) }
             .applySchedulers()
     }

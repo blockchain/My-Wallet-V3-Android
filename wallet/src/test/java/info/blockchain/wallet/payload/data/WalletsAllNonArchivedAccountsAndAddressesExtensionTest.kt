@@ -3,7 +3,7 @@ package info.blockchain.wallet.payload.data
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
-class WalletsAllSpendableAccountsAndAddressesExtensionTest {
+class WalletsAllNonArchivedAccountsAndAddressesExtensionTest {
 
     private fun legacyAddressWithPrivateKey(address: String) =
         LegacyAddress().also {
@@ -13,21 +13,21 @@ class WalletsAllSpendableAccountsAndAddressesExtensionTest {
 
     @Test
     fun `empty list`() {
-        Wallet().allSpendableAccountsAndAddresses() `should equal` emptySet()
+        Wallet().allNonArchivedAccountsAndAddresses() `should equal` emptySet()
     }
 
     @Test
     fun `one spendable`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1"))
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("Address1")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("Address1")
     }
 
     @Test
     fun `one archived`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1").apply { archive() })
-        }.allSpendableAccountsAndAddresses() `should equal` emptySet()
+        }.allNonArchivedAccountsAndAddresses() `should equal` emptySet()
     }
 
     @Test
@@ -36,7 +36,7 @@ class WalletsAllSpendableAccountsAndAddressesExtensionTest {
             legacyAddressList.add(LegacyAddress().apply {
                 address = "Address1"
             })
-        }.allSpendableAccountsAndAddresses() `should equal` emptySet()
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("Address1")
     }
 
     @Test
@@ -44,7 +44,7 @@ class WalletsAllSpendableAccountsAndAddressesExtensionTest {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1"))
             legacyAddressList.add(legacyAddressWithPrivateKey("Address2"))
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("Address1", "Address2")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("Address1", "Address2")
     }
 
     @Test
@@ -52,28 +52,28 @@ class WalletsAllSpendableAccountsAndAddressesExtensionTest {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1"))
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1"))
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("Address1")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("Address1")
     }
 
     @Test
     fun `one xpub`() {
         Wallet().apply {
             hdWallets = listOf(hdWallet("XPub1"))
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("XPub1")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("XPub1")
     }
 
     @Test
     fun `two xpubs`() {
         Wallet().apply {
             hdWallets = listOf(hdWallet("XPub1", "XPub2"))
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("XPub1", "XPub2")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("XPub1", "XPub2")
     }
 
     @Test
     fun `repeated xpubs`() {
         Wallet().apply {
             hdWallets = listOf(hdWallet("XPub1", "XPub1"))
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("XPub1")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf("XPub1")
     }
 
     @Test
@@ -84,7 +84,13 @@ class WalletsAllSpendableAccountsAndAddressesExtensionTest {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address2"))
             legacyAddressList.add(LegacyAddress().also { it.address = "Address3" })
             legacyAddressList.add(legacyAddressWithPrivateKey("Address4").apply { archive() })
-        }.allSpendableAccountsAndAddresses() `should equal` setOf("XPub1", "XPub2", "Address1", "Address2")
+        }.allNonArchivedAccountsAndAddresses() `should equal` setOf(
+            "XPub1",
+            "XPub2",
+            "Address1",
+            "Address2",
+            "Address3"
+        )
     }
 
     private fun hdWallet(vararg xpubs: String) =
