@@ -188,77 +188,78 @@ class BalancePresenter @Inject constructor(
      * API call - Fetches latest transactions for selected currency and account, and updates UI tx list
      */
     @VisibleForTesting
-    internal fun updateTransactionsListCompletable(account: ItemAccount): Completable =
-        transactionListDataManager.fetchTransactions(account, 50, 0)
-            .doAfterTerminate(this::storeSwipeReceiveAddresses)
-            .map { txs ->
-                Observable.zip(
-                    getShapeShiftTxNotesObservable(),
-                    getCoinifyTxNotesObservable(),
-                    mergeReduce()
-                ).addToCompositeDisposable(this)
-                    .subscribe(
-                        { txNotesMap ->
-                            for (tx in txs) {
-                                // Add shapeShift notes
-                                txNotesMap[tx.hash]?.let { tx.note = it }
+    internal fun updateTransactionsListCompletable(account: ItemAccount): Completable {
+        return Completable.fromObservable(
+            transactionListDataManager.fetchTransactions(account, 50, 0)
+                .doAfterTerminate(this::storeSwipeReceiveAddresses)
+                .map { txs ->
+                    Observable.zip(
+                        getShapeShiftTxNotesObservable(),
+                        getCoinifyTxNotesObservable(),
+                        mergeReduce()
+                    ).addToCompositeDisposable(this)
+                        .subscribe(
+                            { txNotesMap ->
+                                for (tx in txs) {
+                                    // Add shapeShift notes
+                                    txNotesMap[tx.hash]?.let { tx.note = it }
 
-                                when (currencyState.cryptoCurrency) {
-                                    CryptoCurrencies.BTC -> {
-                                        tx.totalDisplayableCrypto =
-                                            getBtcBalanceString(
-                                                true,
-                                                tx.total.toLong()
-                                            )
-                                        tx.totalDisplayableFiat =
-                                            getBtcBalanceString(
-                                                false,
-                                                tx.total.toLong()
-                                            )
+                                    when (currencyState.cryptoCurrency) {
+                                        CryptoCurrencies.BTC -> {
+                                            tx.totalDisplayableCrypto =
+                                                getBtcBalanceString(
+                                                    true,
+                                                    tx.total.toLong()
+                                                )
+                                            tx.totalDisplayableFiat =
+                                                getBtcBalanceString(
+                                                    false,
+                                                    tx.total.toLong()
+                                                )
+                                        }
+                                        CryptoCurrencies.ETHER -> {
+                                            tx.totalDisplayableCrypto =
+                                                getEthBalanceString(
+                                                    true,
+                                                    BigDecimal(tx.total)
+                                                )
+                                            tx.totalDisplayableFiat =
+                                                getEthBalanceString(
+                                                    false,
+                                                    BigDecimal(tx.total)
+                                                )
+                                        }
+                                        CryptoCurrencies.BCH -> {
+                                            tx.totalDisplayableCrypto =
+                                                getBchBalanceString(
+                                                    true,
+                                                    tx.total.toLong()
+                                                )
+                                            tx.totalDisplayableFiat =
+                                                getBchBalanceString(
+                                                    false,
+                                                    tx.total.toLong()
+                                                )
+                                        }
+                                        else -> throw IllegalArgumentException(
+                                            "${currencyState.cryptoCurrency.unit} is not currently supported"
+                                        )
                                     }
-                                    CryptoCurrencies.ETHER -> {
-                                        tx.totalDisplayableCrypto =
-                                            getEthBalanceString(
-                                                true,
-                                                BigDecimal(tx.total)
-                                            )
-                                        tx.totalDisplayableFiat =
-                                            getEthBalanceString(
-                                                false,
-                                                BigDecimal(tx.total)
-                                            )
-                                    }
-                                    CryptoCurrencies.BCH -> {
-                                        tx.totalDisplayableCrypto =
-                                            getBchBalanceString(
-                                                true,
-                                                tx.total.toLong()
-                                            )
-                                        tx.totalDisplayableFiat =
-                                            getBchBalanceString(
-                                                false,
-                                                tx.total.toLong()
-                                            )
-                                    }
-                                    else -> throw IllegalArgumentException(
-                                        "${currencyState.cryptoCurrency.unit} is not currently supported"
-                                    )
                                 }
-                            }
 
-                            when {
-                                txs.isEmpty() -> view.setUiState(UiState.EMPTY)
-                                else -> view.setUiState(UiState.CONTENT)
-                            }
+                                when {
+                                    txs.isEmpty() -> view.setUiState(UiState.EMPTY)
+                                    else -> view.setUiState(UiState.CONTENT)
+                                }
 
-                            view.updateTransactionDataSet(
-                                currencyState.isDisplayingCryptoCurrency,
-                                txs
-                            )
-                        },
-                        { Timber.e(it) })
-            }
-            .ignoreElements()
+                                view.updateTransactionDataSet(
+                                    currencyState.isDisplayingCryptoCurrency,
+                                    txs
+                                )
+                            },
+                            { Timber.e(it) })
+                })
+    }
     // endregion
 
     // region Incoming UI events
