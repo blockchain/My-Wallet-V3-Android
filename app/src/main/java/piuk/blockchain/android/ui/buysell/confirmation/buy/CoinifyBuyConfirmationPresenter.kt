@@ -81,6 +81,9 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
     }
 
     private fun completeCardBuy(quote: BuyConfirmationDisplayModel) {
+        val addressPosition =
+            payloadDataManager.getNextReceiveAddressPosition(payloadDataManager.accounts[quote.accountIndex])
+
         getAddressAndReserve(quote).flatMapSingle { address ->
             tokenSingle.flatMap {
                 return@flatMap coinifyDataManager.createNewTrade(
@@ -89,6 +92,13 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
                 )
             }
         }.singleOrError()
+            .flatMap { trade ->
+                updateMetadataCompletable(
+                    addressPosition,
+                    quote.accountIndex,
+                    trade
+                )
+            }
             .doOnSubscribe { view.displayProgressDialog() }
             .doAfterTerminate { view.dismissProgressDialog() }
             .subscribeBy(

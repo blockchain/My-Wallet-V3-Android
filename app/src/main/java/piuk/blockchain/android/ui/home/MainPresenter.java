@@ -2,7 +2,6 @@ package piuk.blockchain.android.ui.home;
 
 import android.content.Context;
 import android.util.Pair;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import info.blockchain.wallet.api.Environment;
 import info.blockchain.wallet.api.data.FeeOptions;
 import info.blockchain.wallet.exceptions.HDWalletException;
@@ -10,7 +9,6 @@ import info.blockchain.wallet.exceptions.InvalidCredentialsException;
 import info.blockchain.wallet.payload.PayloadManager;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.android.R;
@@ -27,11 +25,6 @@ import piuk.blockchain.android.ui.launcher.LauncherActivity;
 import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager;
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager;
-import piuk.blockchain.androidbuysell.models.ExchangeData;
-import piuk.blockchain.androidbuysell.models.TradeData;
-import piuk.blockchain.androidbuysell.models.coinify.BlockchainDetails;
-import piuk.blockchain.androidbuysell.models.coinify.CoinifyTrade;
-import piuk.blockchain.androidbuysell.models.coinify.TradeState;
 import piuk.blockchain.androidbuysell.services.ExchangeService;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
@@ -47,8 +40,6 @@ import piuk.blockchain.androidcore.data.settings.SettingsDataManager;
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager;
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
-import piuk.blockchain.androidcore.utils.extensions.SerialisationUtils;
-import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver;
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.androidcoreui.utils.AppUtil;
@@ -57,8 +48,6 @@ import piuk.blockchain.androidcoreui.utils.logging.SecondPasswordEvent;
 import timber.log.Timber;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class MainPresenter extends BasePresenter<MainView> {
@@ -469,67 +458,16 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     private void notifyCompletedCoinifyTrades() {
-        exchangeService.getExchangeMetaData()
-                .compose(RxUtil.addObservableToCompositeDisposable(this))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMapSingle(exchangeData -> {
-                    if (exchangeData.getCoinify() == null
-                            || exchangeData.getCoinify().getToken() == null) {
-                        return Single.never();
-                    } else {
-                        return coinifyDataManager.getTrades(exchangeData.getCoinify().getToken())
-                                .toList()
-                                .map(coinifyTrades -> Pair.create(exchangeData, coinifyTrades));
-                    }
-                })
-                .subscribe(tradePair -> {
-                    ExchangeData exchangeData = tradePair.first;
-                    List<TradeData> tradeMetadata = exchangeData.getCoinify().getTrades();
-                    if (tradeMetadata == null) tradeMetadata = new ArrayList<>();
-                    List<CoinifyTrade> coinifyTrades = tradePair.second;
-
-                    for (CoinifyTrade trade : coinifyTrades) {
-                        // Only notify buy transactions
-                        if (trade.isSellTransaction()) continue;
-
-                        if (trade.getState() == TradeState.Completed.INSTANCE) {
-                            // Check if unconfirmed in metadata
-                            TradeData metadata = getTradeMetadataFromTradeId(tradeMetadata, trade.getId());
-                            if (metadata != null && metadata.isConfirmed() == false) {
-                                // Update object to confirmed
-                                metadata.setConfirmed(true);
-                                // Update metadata entry
-                                updateMetadataEntry(exchangeData);
-                                // Notify user
-                                String hash = ((BlockchainDetails) trade.getTransferOut().getDetails())
-                                        .getEventData()
-                                        .getTxId();
-
-                                getView().onTradeCompleted(hash);
-                                // Notify only once
-                                break;
-                            }
-                        }
-                    }
-                }, throwable -> Timber.e(throwable));
-    }
-
-    private void updateMetadataEntry(ExchangeData exchangeData) throws JsonProcessingException {
-        String json = SerialisationUtils.toSerialisedString(exchangeData);
-
-        metadataManager.saveToMetadata(json, ExchangeService.METADATA_TYPE_EXCHANGE)
-                .subscribeOn(Schedulers.io())
-                // Not a big problem if updating this record fails here
-                .subscribe(new IgnorableDefaultObserver());
-    }
-
-    private TradeData getTradeMetadataFromTradeId(List<TradeData> tradeData, int tradeId) {
-        for (TradeData trade : tradeData) {
-            if (trade.getId() == tradeId) return trade;
-        }
-
-        return null;
+        getCompositeDisposable().add(
+                new CoinifyTradeCompleteListener(exchangeService, coinifyDataManager, metadataManager)
+                        .getCompletedCoinifyTrades()
+                        .firstElement()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                txHash -> getView().onTradeCompleted(txHash),
+                                Timber::e)
+        );
     }
 
     private void dismissAnnouncementIfOnboardingCompleted() {
@@ -559,12 +497,11 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .compose(RxUtil.addObservableToCompositeDisposable(this))
                 .subscribe(coinifyAllowed -> {
 
-                            if (coinifyAllowed) {
-                                getView().onStartBuySell();
-                            } else {
-                                getView().onStartLegacyBuySell();
-                            }
-                        }
-                        , Throwable::printStackTrace);
+                    if (coinifyAllowed) {
+                        getView().onStartBuySell();
+                    } else {
+                        getView().onStartLegacyBuySell();
+                    }
+                }, Throwable::printStackTrace);
     }
 }
