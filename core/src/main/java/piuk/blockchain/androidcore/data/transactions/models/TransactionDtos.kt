@@ -2,7 +2,6 @@ package piuk.blockchain.androidcore.data.transactions.models
 
 import info.blockchain.wallet.ethereum.data.EthTransaction
 import info.blockchain.wallet.multiaddress.TransactionSummary
-import org.spongycastle.asn1.x500.style.RFC4519Style.name
 import piuk.blockchain.androidcore.data.currency.CryptoCurrencies
 import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.utils.annotations.Mockable
@@ -66,7 +65,6 @@ abstract class Displayable {
 
     override fun hashCode(): Int {
         var result = 17
-        result = 31 * result + name.hashCode()
         result = 31 * result + cryptoCurrency.hashCode()
         result = 31 * result + direction.hashCode()
         result = 31 * result + timeStamp.hashCode()
