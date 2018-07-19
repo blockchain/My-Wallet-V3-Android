@@ -44,4 +44,12 @@ class AccountKeyTests {
                 currency `should be` CryptoCurrency.BTC
             }
     }
+
+    @Test
+    fun `watch only BTC`() {
+        AccountKey.WatchOnly(CryptoCurrency.BTC)
+            .apply {
+                currency `should be` CryptoCurrency.BTC
+            }
+    }
 }

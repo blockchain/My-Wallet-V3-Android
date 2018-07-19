@@ -3,7 +3,7 @@ package info.blockchain.wallet.payload.data
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
-class WalletsNonSpendableLegacyAddressesExtensionTest {
+class WalletsNonArchivedWatchOnlyLegacyAddressesExtensionTest {
 
     private fun legacyAddressWithPrivateKey(address: String, privateKey: String = "PRIVATE_KEY") =
         LegacyAddress().also {
@@ -18,28 +18,28 @@ class WalletsNonSpendableLegacyAddressesExtensionTest {
 
     @Test
     fun `empty list`() {
-        Wallet().nonSpendableLegacyAddressStrings() `should equal` emptySet()
+        Wallet().nonArchivedWatchOnlyLegacyAddressStrings() `should equal` emptySet()
     }
 
     @Test
     fun `one spendable`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1"))
-        }.nonSpendableLegacyAddressStrings() `should equal` emptySet()
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` emptySet()
     }
 
     @Test
     fun `one archived`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1").apply { archive() })
-        }.nonSpendableLegacyAddressStrings() `should equal` setOf("Address1")
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` emptySet()
     }
 
     @Test
     fun `one without private key`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithoutPrivateKey("Address1"))
-        }.nonSpendableLegacyAddressStrings() `should equal` setOf("Address1")
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` setOf("Address1")
     }
 
     @Test
@@ -47,15 +47,23 @@ class WalletsNonSpendableLegacyAddressesExtensionTest {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithPrivateKey("Address1", "PRIVATE_KEY1"))
             legacyAddressList.add(legacyAddressWithPrivateKey("Address2", "PRIVATE_KEY2"))
-        }.nonSpendableLegacyAddressStrings() `should equal` emptySet()
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` emptySet()
     }
 
     @Test
-    fun `two non spendable`() {
+    fun `one watch only and one archived`() {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithoutPrivateKey("Address1"))
-            legacyAddressList.add(legacyAddressWithPrivateKey("Address1").apply { archive() })
-        }.nonSpendableLegacyAddressStrings() `should equal` setOf("Address1")
+            legacyAddressList.add(legacyAddressWithPrivateKey("Address2").apply { archive() })
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` setOf("Address1")
+    }
+
+    @Test
+    fun `two watch only`() {
+        Wallet().apply {
+            legacyAddressList.add(legacyAddressWithoutPrivateKey("Address1"))
+            legacyAddressList.add(legacyAddressWithoutPrivateKey("Address2"))
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` setOf("Address1", "Address2")
     }
 
     @Test
@@ -63,6 +71,6 @@ class WalletsNonSpendableLegacyAddressesExtensionTest {
         Wallet().apply {
             legacyAddressList.add(legacyAddressWithoutPrivateKey("Address1"))
             legacyAddressList.add(legacyAddressWithoutPrivateKey("Address1"))
-        }.nonSpendableLegacyAddressStrings() `should equal` setOf("Address1")
+        }.nonArchivedWatchOnlyLegacyAddressStrings() `should equal` setOf("Address1")
     }
 }

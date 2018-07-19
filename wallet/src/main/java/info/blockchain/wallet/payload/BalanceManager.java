@@ -3,103 +3,76 @@ package info.blockchain.wallet.payload;
 import info.blockchain.api.blockexplorer.BlockExplorer;
 import info.blockchain.api.blockexplorer.FilterType;
 import info.blockchain.api.data.Balance;
-import info.blockchain.wallet.exceptions.ServerConnectionException;
+import info.blockchain.balance.CryptoCurrency;
+import info.blockchain.balance.CryptoValue;
 import retrofit2.Call;
-import retrofit2.Response;
 
-import java.io.IOException;
+import javax.annotation.Nonnull;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
-public class BalanceManager {
-
-    private static final String WALLET_BALANCE = "all";
-    private static final String IMPORTED_ADDRESSES_BALANCE = "all_legacy";
+public abstract class BalanceManager {
 
     private BlockExplorer blockExplorer;
+    private CryptoCurrency cryptoCurrency;
 
-    private HashMap<String, BigInteger> balanceMap;
+    @Nonnull
+    private CryptoBalanceMap balanceMap;
 
-    BalanceManager(BlockExplorer blockExplorer) {
+    BalanceManager(@Nonnull BlockExplorer blockExplorer, @Nonnull CryptoCurrency cryptoCurrency) {
         this.blockExplorer = blockExplorer;
-        this.balanceMap = new HashMap<>();
+        this.cryptoCurrency = cryptoCurrency;
+        balanceMap = CryptoBalanceMap.zero(cryptoCurrency);
     }
 
-    public void subtractAmountFromAddressBalance(String address, BigInteger amount) throws Exception {
-        //Update individual address
-        BigInteger currentBalance = balanceMap.get(address);
-        if (currentBalance == null) {
-            throw new Exception("No info for this address. updateAllBalances should be called first.");
-        }
-        BigInteger newBalance = currentBalance.subtract(amount);
-        balanceMap.put(address, newBalance);
-
-        //Update wallet balance
-        currentBalance = balanceMap.get(WALLET_BALANCE);
-        if (currentBalance == null) {
-            throw new Exception("No info for this address. updateAllBalances should be called first.");
-        }
-        newBalance = currentBalance.subtract(amount);
-        balanceMap.put(WALLET_BALANCE, newBalance);
+    public void subtractAmountFromAddressBalance(String address, BigInteger amount) {
+        balanceMap = balanceMap.subtractAmountFromAddress(address, new CryptoValue(cryptoCurrency, amount));
     }
 
+    @Nonnull
     public BigInteger getAddressBalance(String address) {
-        return balanceMap.get(address);
+        return balanceMap.get(address).getAmount();
     }
 
+    @Nonnull
     public BigInteger getWalletBalance() {
-        return balanceMap.get(WALLET_BALANCE);
+        return balanceMap.getTotalSpendable().getAmount();
     }
 
+    @Nonnull
     public BigInteger getImportedAddressesBalance() {
-        return balanceMap.get(IMPORTED_ADDRESSES_BALANCE);
+        return balanceMap.getTotalSpendableLegacy().getAmount();
+    }
+
+    @Nonnull
+    public BigInteger getWatchOnlyBalance() {
+        return balanceMap.getTotalWatchOnly().getAmount();
     }
 
     public void updateAllBalances(
-            Set<String> legacyAddressList,
-            Set<String> allAccountsAndAddresses,
-            Set<String> excludeFromTotals
-    ) throws ServerConnectionException, IOException {
-        Call<HashMap<String, Balance>> call = getBalanceOfAddresses(new ArrayList<>(allAccountsAndAddresses));
-
-        BigInteger walletFinalBalance = BigInteger.ZERO;
-        BigInteger importedFinalBalance = BigInteger.ZERO;
-
-        Response<HashMap<String, Balance>> exe = call.execute();
-        if (exe.isSuccessful()) {
-
-            Set<Entry<String, Balance>> set = exe.body().entrySet();
-            for (Entry<String, Balance> item : set) {
-                String address = item.getKey();
-                Balance balance = item.getValue();
-
-                balanceMap.put(address, balance.getFinalBalance());
-
-                if (excludeFromTotals.contains(address)) {
-                    continue;
-                }
-
-                //Consolidate 'All'
-                walletFinalBalance = walletFinalBalance.add(balance.getFinalBalance());
-
-                //Consolidate 'Imported'
-                if (legacyAddressList.contains(address)) {
-                    importedFinalBalance = importedFinalBalance.add(balance.getFinalBalance());
-                }
-            }
-
-            balanceMap.put(WALLET_BALANCE, walletFinalBalance);
-            balanceMap.put(IMPORTED_ADDRESSES_BALANCE, importedFinalBalance);
-
-        } else {
-            throw new ServerConnectionException(exe.errorBody().string());
-        }
+            Set<String> xpubs,
+            Set<String> legacyAddresses,
+            Set<String> legacyWatchOnlyAddresses
+    ) {
+        balanceMap = CryptoBalanceMapKt.calculateCryptoBalanceMap(
+                cryptoCurrency,
+                getBalanceQuery(),
+                xpubs,
+                legacyAddresses,
+                legacyWatchOnlyAddresses
+        );
     }
 
+    private BalanceCall getBalanceQuery() {
+        return new BalanceCall(blockExplorer, cryptoCurrency);
+    }
+
+    /**
+     * @deprecated Use getBalanceQuery
+     */
+    @Deprecated
     public Call<HashMap<String, Balance>> getBalanceOfAddresses(List<String> addresses) {
         return getBlockExplorer().getBalance("btc", addresses, FilterType.RemoveUnspendable);
     }

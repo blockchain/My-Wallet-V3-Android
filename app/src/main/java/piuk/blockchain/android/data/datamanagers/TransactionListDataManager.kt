@@ -134,6 +134,7 @@ class TransactionListDataManager @Inject constructor(
         accountKey.currency.toBalanceReporter().run {
             return when (accountKey) {
                 is AccountKey.EntireWallet -> entireBalance()
+                is AccountKey.WatchOnly -> watchOnlyBalance()
                 is AccountKey.OnlyImported -> importedAddressBalance()
                 is AccountKey.SingleAddress -> addressBalance(accountKey.address)
             }

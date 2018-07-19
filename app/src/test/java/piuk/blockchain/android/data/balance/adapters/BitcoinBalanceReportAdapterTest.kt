@@ -42,4 +42,10 @@ class BitcoinBalanceReportAdapterTest {
         balanceReporter.addressBalance("mjoGVXRDjxqA2oY23Qm1kaLTQoNUmxd6jq") `should equal`
             CryptoValue.bitcoinFromSatoshis(8901L)
     }
+
+    @Test
+    fun `value of watch only balance comes from data manager watch only wallet balance`() {
+        whenever(payloadManager.walletWatchOnlyBalance).thenReturn(BigInteger.valueOf(5678L))
+        balanceReporter.watchOnlyBalance() `should equal` CryptoValue.bitcoinFromSatoshis(5678L)
+    }
 }

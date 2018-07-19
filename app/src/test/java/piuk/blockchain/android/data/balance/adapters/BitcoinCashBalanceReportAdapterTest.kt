@@ -42,4 +42,9 @@ class BitcoinCashBalanceReportAdapterTest {
         balanceReporter.addressBalance("mpxqy2yDLebDHuUVugcHrbS729HtxzRZtM") `should equal`
             CryptoValue.bitcoinCashFromSatoshis(8901L)
     }
+
+    @Test
+    fun `watch only just returns zero as no watch only addresses on BCH`() {
+        balanceReporter.watchOnlyBalance() `should equal` CryptoValue.ZeroBch
+    }
 }

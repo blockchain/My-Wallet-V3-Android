@@ -70,15 +70,15 @@ open class BitcoinCashWallet : DeterministicWallet {
      * addresses
      */
     fun updateAllBalances(
-        legacyAddressList: Set<String>,
-        allAccountsAndAddresses: Set<String>
+        allAccountsAndAddresses: Set<String>,
+        legacyAddressList: Set<String>
     ): Completable =
         if (isTestnet()) {
             // TODO(bch testnet explorer coming soon)
             Completable.complete()
         } else {
             Completable.fromCallable {
-                balanceManager.updateAllBalances(legacyAddressList, allAccountsAndAddresses, emptySet())
+                balanceManager.updateAllBalances(allAccountsAndAddresses, legacyAddressList, emptySet())
             }
         }
 

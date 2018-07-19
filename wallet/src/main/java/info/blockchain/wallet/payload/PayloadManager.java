@@ -100,7 +100,7 @@ public class PayloadManager {
                 BlockchainFramework.getApiCode());
         // Bitcoin
         multiAddressFactory = new MultiAddressFactory(blockExplorer);
-        balanceManager = new BalanceManager(blockExplorer);
+        balanceManager = new BalanceManagerBtc(blockExplorer);
         // Bitcoin Cash
         balanceManagerBch = new BalanceManagerBch(blockExplorer);
     }
@@ -962,24 +962,28 @@ public class PayloadManager {
      * Balance API - Final balance for address.
      */
     public BigInteger getAddressBalance(String address) {
-        BigInteger result = balanceManager.getAddressBalance(address);
-        return result == null ? BigInteger.ZERO : result;
+        return balanceManager.getAddressBalance(address);
     }
 
     /**
      * Balance API - Final balance for all accounts + addresses.
      */
     public BigInteger getWalletBalance() {
-        BigInteger result = balanceManager.getWalletBalance();
-        return result == null ? BigInteger.ZERO : result;
+        return balanceManager.getWalletBalance();
+    }
+
+    /**
+     * Balance API - Watch only balances
+     */
+    public BigInteger getWalletWatchOnlyBalance() {
+        return balanceManager.getWatchOnlyBalance();
     }
 
     /**
      * Balance API - Final balance imported addresses.
      */
     public BigInteger getImportedAddressesBalance() {
-        BigInteger result = balanceManager.getImportedAddressesBalance();
-        return result == null ? BigInteger.ZERO : result;
+        return balanceManager.getImportedAddressesBalance();
     }
 
     /**
@@ -991,11 +995,11 @@ public class PayloadManager {
      */
     public void updateAllBalances() throws ServerConnectionException, IOException {
         Wallet wallet = getPayload();
-        Set<String> nonArchivedStrings = WalletExtensionsKt.nonArchivedLegacyAddressStrings(wallet);
-        Set<String> allNonArchived = WalletExtensionsKt.allNonArchivedAccountsAndAddresses(wallet);
-        Set<String> excludeFromBalance = WalletExtensionsKt.nonSpendableLegacyAddressStrings(wallet);
+        Set<String> xpubs = WalletExtensionsKt.activeXpubs(wallet);
+        Set<String> allLegacy = WalletExtensionsKt.nonArchivedLegacyAddressStrings(wallet);
+        Set<String> watchOnlyLegacy = WalletExtensionsKt.nonArchivedWatchOnlyLegacyAddressStrings(wallet);
 
-        balanceManager.updateAllBalances(nonArchivedStrings, allNonArchived, excludeFromBalance);
+        balanceManager.updateAllBalances(xpubs, allLegacy, watchOnlyLegacy);
     }
 
     /**

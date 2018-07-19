@@ -12,6 +12,11 @@ sealed class AccountKey(val currency: CryptoCurrency) {
     class EntireWallet(currency: CryptoCurrency) : AccountKey(currency)
 
     /**
+     * Represents the watch only part of your wallet in the given [currency]
+     */
+    class WatchOnly(currency: CryptoCurrency) : AccountKey(currency)
+
+    /**
      * Represents just the imported addresses in the given [currency]
      */
     class OnlyImported(currency: CryptoCurrency) : AccountKey(currency)
