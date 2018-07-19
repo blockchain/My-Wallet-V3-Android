@@ -19,27 +19,12 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true">
 
-            <Button
-                android:id="@+id/button_finish_payment"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="32dp"
-                android:text="@string/buy_sell_awaiting_funds_finish_payment"
-                android:theme="@style/ButtonLightBlueTheme"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/text_view_order_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginRight="32dp"
                 android:height="43dp"
                 android:fontFamily="@font/montserrat"
@@ -222,6 +207,27 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider_total"
                 tools:text="206.00 GBP" />
+
+            <!-- Finish Payment -->
+
+            <Button
+                android:id="@+id/button_finish_payment"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/buy_sell_awaiting_funds_finish_payment"
+                android:theme="@style/ButtonLightBlueTheme"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_total_text"
+                app:layout_constraintVertical_bias="0.0"
+                tools:visibility="visible" />
 
             <!-- Sell in Progress Specific -->
 
