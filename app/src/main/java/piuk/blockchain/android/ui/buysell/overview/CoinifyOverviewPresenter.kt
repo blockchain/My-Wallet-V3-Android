@@ -392,7 +392,11 @@ class CoinifyOverviewPresenter @Inject constructor(
             transactionId = coinifyTrade.id,
             time = coinifyTrade.createTime.fromIso8601()!!,
             displayAmount = displayString,
-            tradeStateString = tradeStateToStringRes(coinifyTrade.state),
+            tradeStateString = if (coinifyTrade.isAwaitingCardPayment()) {
+                R.string.buy_sell_state_pending_buy
+            } else {
+                tradeStateToStringRes(coinifyTrade.state)
+            },
             tradeState = coinifyTrade.state,
             isSellTransaction = coinifyTrade.isSellTransaction()
         )
@@ -407,7 +411,11 @@ class CoinifyOverviewPresenter @Inject constructor(
             } else {
                 R.string.buy_sell_detail_title_buy
             }
-        val titleString = stringUtils.getFormattedString(titleStringRes, stateString)
+        val titleString = if (coinifyTrade.isAwaitingCardPayment()) {
+            stringUtils.getString(R.string.buy_sell_state_pending_buy)
+        } else {
+            stringUtils.getFormattedString(titleStringRes, stateString)
+        }
         // Date
         val time = coinifyTrade.updateTime.fromIso8601() ?: Date()
         val calendar = Calendar.getInstance()
