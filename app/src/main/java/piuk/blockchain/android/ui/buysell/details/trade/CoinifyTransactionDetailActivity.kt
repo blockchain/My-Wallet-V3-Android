@@ -20,7 +20,6 @@ import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.button_finish_payment as buttonFinishPayment
-import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.constraint_layout_coinify_detail as constraintLayoutRoot
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_amount_text as textViewAmountDetail
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_amount_title as textViewAmountTitle
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_bank_disclaimer as textViewBankDisclaimer
