@@ -50,10 +50,7 @@ class CoinifySignUpPresenter @Inject constructor(
      */
     private fun startKycOrGoToOverviewCompletable(coinifyToken: String) =
         coinifyDataManager.getTrader(coinifyToken)
-            .flatMap {
-                // Trader exists - Check for any KYC reviews
-                coinifyDataManager.getKycReviews(coinifyToken)
-            }
+            .flatMap { coinifyDataManager.getKycReviews(coinifyToken) }
             .flatMapCompletable { kycList ->
                 if (kycList.isEmpty()) {
                     // Kyc review not started yet
