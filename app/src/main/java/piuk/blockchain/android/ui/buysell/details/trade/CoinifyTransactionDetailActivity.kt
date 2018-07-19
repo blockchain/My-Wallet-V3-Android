@@ -3,7 +3,6 @@ package piuk.blockchain.android.ui.buysell.details.trade
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintSet
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -102,22 +101,6 @@ class CoinifyTransactionDetailActivity :
         }
 
         if (model.isAwaitingCardPayment) {
-            ConstraintSet().apply {
-                clone(constraintLayoutRoot)
-                connect(
-                    // Target
-                    R.id.text_view_order_amount,
-                    // constraintTop
-                    ConstraintSet.TOP,
-                    // @+id/
-                    R.id.button_finish_payment,
-                    // _toBottomOf
-                    ConstraintSet.BOTTOM,
-                    16
-                )
-                applyTo(constraintLayoutRoot)
-            }
-
             buttonFinishPayment.visible()
             buttonFinishPayment.setOnClickListener { presenter.onFinishCardPayment() }
         }
