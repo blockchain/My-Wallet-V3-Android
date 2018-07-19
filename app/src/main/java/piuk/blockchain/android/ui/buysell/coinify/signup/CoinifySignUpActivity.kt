@@ -175,7 +175,7 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
     }
 
     override fun requestFinish() {
-        finish()
+        onStartOverview()
     }
 
     override fun onStartWelcome() {
@@ -216,7 +216,7 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
     }
 
     override fun onStartReviewInProgress() {
-        setupToolbar(R.string.buy_sell_verification_in_review)
+        setupToolbar(R.string.buy_sell_verification_status_title)
         progressBar(0)
         replaceFragment(CoinifyIdentityInReviewFragment.newInstance())
     }

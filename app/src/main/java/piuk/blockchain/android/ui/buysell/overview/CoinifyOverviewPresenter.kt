@@ -61,7 +61,9 @@ class CoinifyOverviewPresenter @Inject constructor(
     // Observables
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
-            .map { it.coinify?.token ?: throw IllegalStateException("Coinify offline token is null") }
+            .map {
+                it.coinify?.token ?: throw IllegalStateException("Coinify offline token is null")
+            }
             .firstOrError()
             .cache()
 
@@ -170,7 +172,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                     .flatMap { coinifyDataManager.getKycReviews(token) }
             }
             .map {
-                it.firstOrNull { it.state == ReviewState.Pending  || it.state == ReviewState.DocumentsRequested }
+                it.firstOrNull { it.state == ReviewState.Pending || it.state == ReviewState.DocumentsRequested }
                     ?: throw IllegalStateException("No pending KYC found")
             }
             .subscribeOn(Schedulers.io())
@@ -180,7 +182,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                 onSuccess = { view.onStartVerifyIdentification(it.redirectUrl, it.externalId) },
                 onError = {
                     Timber.e(it)
-                        view.showAlertDialog(R.string.buy_sell_overview_pending_kyc_not_found)
+                    view.showAlertDialog(R.string.buy_sell_overview_pending_kyc_not_found)
                 }
             )
     }
@@ -344,9 +346,7 @@ class CoinifyOverviewPresenter @Inject constructor(
         ).subscribeBy(
             onSuccess = {
                 if (!it.isEmpty()) {
-                    it.map {
-                        val subscription = it.first
-                        val trade = it.second
+                    it.map { (subscription, trade) ->
 
                         val calendar = Calendar.getInstance()
                             .apply { time = trade.createTime.fromIso8601()!! }
@@ -543,7 +543,7 @@ class CoinifyOverviewPresenter @Inject constructor(
             totalString
         )
     }
-// endregion
+    // endregion
 
     // region Formatting helpers
     private fun formatFiatWithSymbol(
@@ -568,7 +568,7 @@ class CoinifyOverviewPresenter @Inject constructor(
         if (isEndState) completeString else pendingString,
         currencyCode.capitalize()
     )
-// endregion
+    // endregion
 
     // region Extension functions
     private fun List<KycResponse>.kycUnverified(): Boolean =
@@ -589,7 +589,7 @@ class CoinifyOverviewPresenter @Inject constructor(
      */
     private fun TradeData.isFailureState(): Boolean =
         this.state == "cancelled" || this.state == "rejected" || this.state == "expired"
-// endregion
+    // endregion
 }
 
 sealed class OverViewState {

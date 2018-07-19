@@ -64,7 +64,7 @@ class CoinifyIdentityInReviewFragment :
     }
 
     private fun closeAndRestartBuySell() {
-        signUpListener?.requestFinish()
+        onFinish()
     }
 
     override fun onShowLoading() {
@@ -166,7 +166,7 @@ class CoinifyIdentityInReviewFragment :
     }
 
     override fun onFinish() {
-        activity?.finish()
+        signUpListener?.requestFinish()
     }
 
     override fun createPresenter() = presenter

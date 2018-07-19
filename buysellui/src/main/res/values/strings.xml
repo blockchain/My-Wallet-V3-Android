@@ -20,7 +20,7 @@
     <string name="buy_sell_overview_in_review_button">Buy now with card</string>
     <string name="buy_sell_overview_denied_button">Try again</string>
     <string name="buy_sell_overview_pending_button">Finish verification</string>
-    <string name="buy_sell_overview_in_review_message">Your identity verification is still in review, so you cannot sell bitcoin at this time.</string>
+    <string name="buy_sell_overview_in_review_message">Your identity verification has not been completed, so you cannot sell bitcoin at this time.</string>
     <string name="buy_sell_overview_denied_message">Please try completing your identity verification again. Bank transfers will be unavailable until then.</string>
     <string name="buy_sell_overview_pending_message">Bank transfers and selling will be unavailable until verification is complete.</string>
     <string name="buy_sell_overview_next_recurring_order">Your next recurring order</string>
@@ -29,7 +29,7 @@
     <string name="buy_sell_overview_subscription_monthly">Monthly, on the %1$s</string>
 
     <!-- Buy Sell Transaction States -->
-    <string name="buy_sell_state_awaiting_funds">Awaiting funds</string>
+    <string name="buy_sell_state_awaiting_funds">Complete Payment</string>
     <string name="buy_sell_state_awaiting_reference">Awaiting reference number</string>
     <string name="buy_sell_state_processing">Processing</string>
     <string name="buy_sell_state_completed">Completed</string>
@@ -177,7 +177,7 @@
     <string name="buy_sell_identification_verification">Identify verification</string>
     <string name="buy_sell_verify_your_identity">Verify your identity</string>
     <string name="buy_sell_identification_verification_message">Government Anti Money Laundering require us to verify your identity</string>
-    <string name="buy_sell_verification_in_review">Verification in review</string>
+    <string name="buy_sell_verification_status_title">Verification status</string>
 
     <!-- Invalid coinify country -->
     <string name="buy_sell_invalid_country_title">Buying &amp; Selling Bitcoin is not yet available in your country</string>
