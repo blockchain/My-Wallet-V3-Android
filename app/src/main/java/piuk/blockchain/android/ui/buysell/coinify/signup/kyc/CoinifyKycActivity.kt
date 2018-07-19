@@ -56,6 +56,7 @@ class CoinifyKycActivity : BaseAuthActivity() {
         webView.webViewClient = object : WebViewClient() {
             override fun onLoadResource(view: WebView?, url: String?) {
                 super.onLoadResource(view, url)
+                Timber.d("URL loaded $url")
                 if (url?.contains("$REDIRECT_URL_PARTIAL$externalKycId") == true) {
                     setResult(Activity.RESULT_OK)
                     finish()

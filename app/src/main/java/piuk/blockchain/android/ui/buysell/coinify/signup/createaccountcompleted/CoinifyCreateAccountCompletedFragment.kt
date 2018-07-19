@@ -25,7 +25,7 @@ class CoinifyCreateAccountCompletedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         createAccountCompletedContinueButton.setOnClickListener {
-            signUpListener?.requestStartVerifyIdentification()
+            signUpListener?.requestContinueVerification()
         }
     }
 

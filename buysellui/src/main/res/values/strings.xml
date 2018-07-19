@@ -16,7 +16,7 @@
     <string name="buy_sell_overview_empty_list">Your order history will show here</string>
     <string name="buy_sell_overview_in_review_title">Identity verification\nin review</string>
     <string name="buy_sell_overview_denied_title">Identity verification\ndenied</string>
-    <string name="buy_sell_overview_pending_title">Complete\nidentity verification</string>
+    <string name="buy_sell_overview_pending_title">Complete identity\nverification</string>
     <string name="buy_sell_overview_in_review_button">Buy now with card</string>
     <string name="buy_sell_overview_denied_button">Try again</string>
     <string name="buy_sell_overview_pending_button">Finish verification</string>
@@ -93,6 +93,7 @@
     <string name="buy_sell_review_status_in_completed">Completed</string>
     <string name="buy_sell_review_status_in_reviewing">Reviewing</string>
     <string name="buy_sell_review_status_in_docs_requested">Documents Requested</string>
+    <string name="buy_sell_review_status_fetching">Please wait while we check your information…</string>
 
     <!-- iSignThis Payments -->
     <string name="buy_sell_isignthis_payment_method">Payment Method</string>

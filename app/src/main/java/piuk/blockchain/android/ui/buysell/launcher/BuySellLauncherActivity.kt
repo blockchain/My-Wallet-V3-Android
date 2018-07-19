@@ -35,7 +35,7 @@ class BuySellLauncherActivity : BaseMvpActivity<BuySellLauncherView, BuySellLaun
     }
 
     override fun onStartCoinifySignUp() {
-        CoinifySignUpActivity.start(this)
+        CoinifySignUpActivity.start(this, false)
         finishPage()
     }
 

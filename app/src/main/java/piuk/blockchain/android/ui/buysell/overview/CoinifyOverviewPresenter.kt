@@ -74,7 +74,6 @@ class CoinifyOverviewPresenter @Inject constructor(
     private val kycReviewsObservable: Single<List<KycResponse>> by unsafeLazy {
         tokenSingle
             .flatMap { coinifyDataManager.getKycReviews(it) }
-            .cache()
     }
 
     private val recurringBuySingle: Single<List<Subscription>> by unsafeLazy {

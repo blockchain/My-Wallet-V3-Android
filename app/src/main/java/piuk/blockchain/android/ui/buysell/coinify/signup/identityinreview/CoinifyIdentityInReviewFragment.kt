@@ -119,7 +119,7 @@ class CoinifyIdentityInReviewFragment :
         finishKyc.apply {
             visible()
             paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
-            setOnClickListener { signUpListener?.requestStartVerifyIdentification() }
+            setOnClickListener { signUpListener?.requestContinueVerification() }
         }
     }
 
@@ -176,7 +176,7 @@ class CoinifyIdentityInReviewFragment :
     private fun displayProgressDialog() {
         if (activity?.isFinishing == false) {
             progressDialog = MaterialProgressDialog(context).apply {
-                setMessage(getString(R.string.please_wait))
+                setMessage(getString(R.string.buy_sell_review_status_fetching))
                 setCancelable(false)
                 show()
             }

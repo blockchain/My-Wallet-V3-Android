@@ -150,6 +150,13 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
         )
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CoinifySignUpActivity.REQUEST_CODE_COINIFY_KYC_WEB_VIEW) {
+            finish()
+            CoinifySignUpActivity.start(this, true)
+        } else super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun showAlertDialog(message: Int) {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
             .setTitle(R.string.app_name)

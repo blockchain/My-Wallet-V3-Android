@@ -24,7 +24,8 @@ class CoinifyIdentityInReviewPresenter @Inject constructor(
 ) : BasePresenter<CoinifyIdentityInReviewView>() {
 
     override fun onViewReady() {
-        Observable.timer(2, TimeUnit.SECONDS, Schedulers.computation())
+        // Leave enough of a delay for KYC to move from Pending to Reviewing
+        Observable.timer(10, TimeUnit.SECONDS, Schedulers.computation())
             .applySchedulers()
             .addToCompositeDisposable(this)
             .doOnSubscribe { view.onShowLoading() }
