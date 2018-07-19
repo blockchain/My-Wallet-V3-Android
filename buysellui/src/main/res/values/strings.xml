@@ -11,6 +11,8 @@
     <string name="buy_sell_buy">Buy</string>
     <string name="buy_sell_sell">Sell</string>
     <string name="buy_sell_overview_error_loading_transactions">Error fetching transactions</string>
+    <string name="buy_sell_overview_pending_kyc_not_found">Pending KYC not found, please try again later.</string>
+    <string name="buy_sell_overview_could_not_start_kyc">Could not restart KYC, please try again later.</string>
     <string name="buy_sell_overview_empty_list">Your order history will show here</string>
     <string name="buy_sell_overview_in_review_title">Identity verification\nin review</string>
     <string name="buy_sell_overview_denied_title">Identity verification\ndenied</string>

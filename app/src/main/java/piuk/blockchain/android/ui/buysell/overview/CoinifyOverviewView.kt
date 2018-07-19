@@ -30,4 +30,6 @@ interface CoinifyOverviewView : View {
     fun launchAwaitingTransferPage(dataModel: AwaitingFundsModel)
 
     fun launchRecurringTradeDetail(displayModel: RecurringTradeDisplayModel)
+
+    fun onStartVerifyIdentification(redirectUrl: String, externalKycId: String)
 }

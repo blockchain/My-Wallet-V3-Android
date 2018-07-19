@@ -3,8 +3,10 @@ package piuk.blockchain.android.ui.buysell.overview
 import android.support.annotation.StringRes
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.buysell.details.models.AwaitingFundsModel
 import piuk.blockchain.android.ui.buysell.details.models.BuySellDetailsModel
@@ -16,6 +18,7 @@ import piuk.blockchain.android.ui.buysell.overview.models.EmptyTransactionList
 import piuk.blockchain.android.ui.buysell.overview.models.KycStatus
 import piuk.blockchain.android.ui.buysell.overview.models.RecurringBuyOrder
 import piuk.blockchain.android.util.StringUtils
+import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.android.util.extensions.toFormattedString
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager
 import piuk.blockchain.androidbuysell.models.TradeData
@@ -56,24 +59,25 @@ class CoinifyOverviewPresenter @Inject constructor(
     // Display List
     private val displayList: MutableList<BuySellDisplayable> = mutableListOf(buttons)
     // Observables
-    private val tokenObservable: Observable<String>
+    private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
-            .map { it.coinify!!.token }
+            .map { it.coinify?.token ?: throw IllegalStateException("Coinify offline token is null") }
+            .firstOrError()
+            .cache()
 
     private val tradesObservable: Observable<CoinifyTrade>
-        get() = tokenObservable
-            .flatMap { coinifyDataManager.getTrades(it) }
+        get() = tokenSingle
+            .flatMapObservable { coinifyDataManager.getTrades(it) }
 
     private val kycReviewsObservable: Single<List<KycResponse>> by unsafeLazy {
-        tokenObservable
-            .flatMapSingle { coinifyDataManager.getKycReviews(it) }
+        tokenSingle
+            .flatMap { coinifyDataManager.getKycReviews(it) }
             .cache()
-            .singleOrError()
     }
 
     private val recurringBuySingle: Single<List<Subscription>> by unsafeLazy {
-        tokenObservable
-            .flatMap { coinifyDataManager.getSubscriptions(it) }
+        tokenSingle
+            .flatMapObservable { coinifyDataManager.getSubscriptions(it) }
             .filter { it.isActive }
             .toList()
             .cache()
@@ -155,6 +159,43 @@ class CoinifyOverviewPresenter @Inject constructor(
                 },
                 onError = {
                     view.renderViewState(OverViewState.Failure(R.string.buy_sell_overview_error_loading_transactions))
+                }
+            )
+    }
+
+    internal fun onCompleteKycSelected() {
+        tokenSingle
+            .flatMap { token ->
+                coinifyDataManager.getTrader(token)
+                    .flatMap { coinifyDataManager.getKycReviews(token) }
+            }
+            .map {
+                it.firstOrNull { it.state == ReviewState.Pending  || it.state == ReviewState.DocumentsRequested }
+                    ?: throw IllegalStateException("No pending KYC found")
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .addToCompositeDisposable(this)
+            .subscribeBy(
+                onSuccess = { view.onStartVerifyIdentification(it.redirectUrl, it.externalId) },
+                onError = {
+                    Timber.e(it)
+                        view.showAlertDialog(R.string.buy_sell_overview_pending_kyc_not_found)
+                }
+            )
+    }
+
+    internal fun onRestartKycSelected() {
+        tokenSingle
+            .flatMap { coinifyDataManager.startKycReview(it) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .addToCompositeDisposable(this)
+            .subscribeBy(
+                onSuccess = { view.onStartVerifyIdentification(it.redirectUrl, it.externalId) },
+                onError = {
+                    Timber.e(it)
+                    view.showAlertDialog(R.string.buy_sell_overview_could_not_start_kyc)
                 }
             )
     }
@@ -272,7 +313,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                         }
 
                         statusCard?.let {
-                            displayList.add(0, KycStatus.Denied)
+                            displayList.add(0, it)
                             view.renderViewState(OverViewState.Data(displayList.toList()))
                         }
                     }
@@ -502,7 +543,7 @@ class CoinifyOverviewPresenter @Inject constructor(
             totalString
         )
     }
-    // endregion
+// endregion
 
     // region Formatting helpers
     private fun formatFiatWithSymbol(
@@ -527,7 +568,7 @@ class CoinifyOverviewPresenter @Inject constructor(
         if (isEndState) completeString else pendingString,
         currencyCode.capitalize()
     )
-    // endregion
+// endregion
 
     // region Extension functions
     private fun List<KycResponse>.kycUnverified(): Boolean =
@@ -548,7 +589,7 @@ class CoinifyOverviewPresenter @Inject constructor(
      */
     private fun TradeData.isFailureState(): Boolean =
         this.state == "cancelled" || this.state == "rejected" || this.state == "expired"
-    // endregion
+// endregion
 }
 
 sealed class OverViewState {

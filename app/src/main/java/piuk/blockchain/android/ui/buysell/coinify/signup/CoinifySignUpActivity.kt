@@ -271,7 +271,7 @@ class CoinifySignUpActivity : BaseMvpActivity<CoinifySignupView, CoinifySignUpPr
 
         private const val CURRENT_FRAGMENT_TAG =
             "piuk.blockchain.android.ui.buysell.coinify.signup.CoinifySignUpActivity.CURRENT_FRAGMENT_TAG"
-        private const val REQUEST_CODE_COINIFY_KYC_WEB_VIEW = 8765
+        internal const val REQUEST_CODE_COINIFY_KYC_WEB_VIEW = 8765
 
         fun start(context: Context) {
             val intent = Intent(context, CoinifySignUpActivity::class.java)

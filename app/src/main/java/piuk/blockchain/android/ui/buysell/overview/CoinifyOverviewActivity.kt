@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
+import piuk.blockchain.android.ui.buysell.coinify.signup.CoinifySignUpActivity
+import piuk.blockchain.android.ui.buysell.coinify.signup.kyc.CoinifyKycActivity
 import piuk.blockchain.android.ui.buysell.createorder.BuySellBuildOrderActivity
 import piuk.blockchain.android.ui.buysell.createorder.models.OrderType
 import piuk.blockchain.android.ui.buysell.details.awaitingtransfer.CoinifyAwaitingBankTransferActivity
@@ -45,8 +47,8 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
                 override fun onKycReviewClicked(kycStatus: KycStatus) {
                     when (kycStatus) {
                         KycStatus.InReview -> launchCardBuyFlow()
-                        KycStatus.Denied -> TODO()
-                        KycStatus.NotYetCompleted -> TODO()
+                        KycStatus.Denied -> presenter.onRestartKycSelected()
+                        KycStatus.NotYetCompleted -> presenter.onCompleteKycSelected()
                     }
                 }
 
@@ -137,6 +139,22 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
 
     override fun launchRecurringTradeDetail(displayModel: RecurringTradeDisplayModel) {
         RecurringTradeDetailActivity.start(this, displayModel)
+    }
+
+    override fun onStartVerifyIdentification(redirectUrl: String, externalKycId: String) {
+        CoinifyKycActivity.startForResult(
+            this,
+            redirectUrl,
+            externalKycId,
+            CoinifySignUpActivity.REQUEST_CODE_COINIFY_KYC_WEB_VIEW
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CoinifySignUpActivity.REQUEST_CODE_COINIFY_KYC_WEB_VIEW) {
+            // TODO: Not sure how to handle this just yet
+//                onStartReviewInProgress()
+        } else super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun showAlertDialog(message: Int) {
