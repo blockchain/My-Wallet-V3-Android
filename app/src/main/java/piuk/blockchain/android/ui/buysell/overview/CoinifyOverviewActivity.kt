@@ -20,6 +20,7 @@ import piuk.blockchain.android.ui.buysell.details.trade.CoinifyTransactionDetail
 import piuk.blockchain.android.ui.buysell.overview.adapter.CoinifyOverviewAdapter
 import piuk.blockchain.android.ui.buysell.overview.adapter.CoinifyTxFeedListener
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellDisplayable
+import piuk.blockchain.android.ui.buysell.overview.models.KycStatus
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
@@ -41,8 +42,12 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
     private val adapter by unsafeLazy {
         CoinifyOverviewAdapter(
             object : CoinifyTxFeedListener {
-                override fun onKycReviewClicked() {
-                    launchCardBuyFlow()
+                override fun onKycReviewClicked(kycStatus: KycStatus) {
+                    when (kycStatus) {
+                        KycStatus.InReview -> launchCardBuyFlow()
+                        KycStatus.Denied -> TODO()
+                        KycStatus.NotYetCompleted -> TODO()
+                    }
                 }
 
                 override fun onTransactionClicked(transactionId: Int) {
@@ -160,7 +165,7 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
+    override fun onSupportNavigateUp(): Boolean = consume { finish() }
 
     override fun createPresenter(): CoinifyOverviewPresenter = presenter
 

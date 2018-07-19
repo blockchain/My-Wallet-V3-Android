@@ -20,9 +20,13 @@ class BuySellButtons : BuySellDisplayable
 class EmptyTransactionList : BuySellDisplayable
 
 /**
- * Represents a KYC review still in progress
+ * Represents the current KYC status
  */
-class KycInProgress : BuySellDisplayable
+sealed class KycStatus : BuySellDisplayable {
+    object InReview : KycStatus()
+    object Denied : KycStatus()
+    object NotYetCompleted : KycStatus()
+}
 
 /**
  * Represents a currently active recurring buy order/subscription.

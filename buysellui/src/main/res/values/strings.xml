@@ -13,8 +13,14 @@
     <string name="buy_sell_overview_error_loading_transactions">Error fetching transactions</string>
     <string name="buy_sell_overview_empty_list">Your order history will show here</string>
     <string name="buy_sell_overview_in_review_title">Identity verification\nin review</string>
+    <string name="buy_sell_overview_denied_title">Identity verification\ndenied</string>
+    <string name="buy_sell_overview_pending_title">Complete\nidentity verification</string>
     <string name="buy_sell_overview_in_review_button">Buy now with card</string>
-    <string name="buy_sell_overview_sell_unavailable">Your identity verification is still in review, so you cannot sell bitcoin at this time.</string>
+    <string name="buy_sell_overview_denied_button">Try again</string>
+    <string name="buy_sell_overview_pending_button">Finish verification</string>
+    <string name="buy_sell_overview_in_review_message">Your identity verification is still in review, so you cannot sell bitcoin at this time.</string>
+    <string name="buy_sell_overview_denied_message">Please try completing your identity verification again. Bank transfers will be unavailable until then.</string>
+    <string name="buy_sell_overview_pending_message">Bank transfers and selling will be unavailable until verification is complete.</string>
     <string name="buy_sell_overview_next_recurring_order">Your next recurring order</string>
     <string name="buy_sell_overview_subscription_daily">Daily</string>
     <string name="buy_sell_overview_subscription_weekly">Weekly, every %1$s</string>

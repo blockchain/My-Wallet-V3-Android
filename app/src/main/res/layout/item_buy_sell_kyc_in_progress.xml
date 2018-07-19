@@ -32,7 +32,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/montserrat"
+            android:fontFamily="@font/montserrat_semi_bold"
             android:gravity="right"
             android:text="@string/buy_sell_overview_in_review_title"
             android:textAllCaps="true"

@@ -13,10 +13,9 @@ import piuk.blockchain.android.ui.buysell.overview.models.BuySellButtons
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellDisplayable
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellTransaction
 import piuk.blockchain.android.ui.buysell.overview.models.EmptyTransactionList
-import piuk.blockchain.android.ui.buysell.overview.models.KycInProgress
+import piuk.blockchain.android.ui.buysell.overview.models.KycStatus
 import piuk.blockchain.android.ui.buysell.overview.models.RecurringBuyOrder
 import piuk.blockchain.android.util.StringUtils
-import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.android.util.extensions.toFormattedString
 import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager
 import piuk.blockchain.androidbuysell.models.TradeData
@@ -31,7 +30,6 @@ import piuk.blockchain.androidbuysell.models.coinify.TradeState
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidbuysell.utils.fromIso8601
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
@@ -54,26 +52,23 @@ class CoinifyOverviewPresenter @Inject constructor(
 
     // Display States
     private val buttons = BuySellButtons()
-    private val kycInReview = KycInProgress()
     private val empty = EmptyTransactionList()
     // Display List
     private val displayList: MutableList<BuySellDisplayable> = mutableListOf(buttons)
     // Observables
     private val tokenObservable: Observable<String>
         get() = exchangeService.getExchangeMetaData()
-            .addToCompositeDisposable(this)
-            .applySchedulers()
             .map { it.coinify!!.token }
 
     private val tradesObservable: Observable<CoinifyTrade>
         get() = tokenObservable
             .flatMap { coinifyDataManager.getTrades(it) }
 
-    private val kycReviewsObservable: Observable<Boolean> by unsafeLazy {
+    private val kycReviewsObservable: Single<List<KycResponse>> by unsafeLazy {
         tokenObservable
             .flatMapSingle { coinifyDataManager.getKycReviews(it) }
-            .map { it.hasPendingKyc() }
             .cache()
+            .singleOrError()
     }
 
     private val recurringBuySingle: Single<List<Subscription>> by unsafeLazy {
@@ -113,8 +108,8 @@ class CoinifyOverviewPresenter @Inject constructor(
             .doOnSubscribe { view.displayProgressDialog() }
             .doAfterTerminate { view.dismissProgressDialog() }
             .subscribeBy(
-                onNext = { hasPendingKyc ->
-                    if (hasPendingKyc) {
+                onSuccess = {
+                    if (it.kycUnverified()) {
                         view.launchCardBuyFlow()
                     } else {
                         view.launchBuyPaymentSelectionFlow()
@@ -131,9 +126,9 @@ class CoinifyOverviewPresenter @Inject constructor(
             .doOnSubscribe { view.displayProgressDialog() }
             .doAfterTerminate { view.dismissProgressDialog() }
             .subscribeBy(
-                onNext = { hasPendingKyc ->
-                    if (hasPendingKyc) {
-                        view.showAlertDialog(R.string.buy_sell_overview_sell_unavailable)
+                onSuccess = {
+                    if (it.kycUnverified()) {
+                        view.showAlertDialog(R.string.buy_sell_overview_in_review_message)
                     } else {
                         view.launchSellFlow()
                     }
@@ -262,10 +257,24 @@ class CoinifyOverviewPresenter @Inject constructor(
     private fun checkKycStatus() {
         kycReviewsObservable
             .subscribeBy(
-                onNext = { hasPendingKyc ->
-                    if (hasPendingKyc) {
-                        displayList.add(0, kycInReview)
-                        view.renderViewState(OverViewState.Data(displayList.toList()))
+                onSuccess = {
+                    if (it.kycUnverified()) {
+                        val statusCard: KycStatus? = when {
+                        // Unlikely to see this result - after supplying docs status will be pending
+                        // otherwise we will go straight to overview
+                            it.any { it.state == ReviewState.Reviewing } -> KycStatus.InReview
+                            it.any { it.state == ReviewState.Pending } ||
+                                it.any { it.state == ReviewState.DocumentsRequested } -> KycStatus.NotYetCompleted
+                            it.any { it.state == ReviewState.Failed } ||
+                                it.any { it.state == ReviewState.Rejected } ||
+                                it.any { it.state == ReviewState.Expired } -> KycStatus.Denied
+                            else -> null
+                        }
+
+                        statusCard?.let {
+                            displayList.add(0, KycStatus.Denied)
+                            view.renderViewState(OverViewState.Data(displayList.toList()))
+                        }
                     }
                 },
                 onError = { Timber.e(it) }
@@ -521,9 +530,8 @@ class CoinifyOverviewPresenter @Inject constructor(
     // endregion
 
     // region Extension functions
-    private fun List<KycResponse>.hasPendingKyc(): Boolean =
-        this.any { it.state.isProcessing() } &&
-            this.none { it.state == ReviewState.Completed }
+    private fun List<KycResponse>.kycUnverified(): Boolean =
+        this.none { it.state == ReviewState.Completed }
 
     private fun CoinifyTrade.isAwaitingTransferIn(): Boolean =
         (!this.isSellTransaction() &&
