@@ -15,7 +15,6 @@ import piuk.blockchain.androidcoreui.utils.extensions.getContext
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
-import piuk.blockchain.androidcoreui.utils.extensions.visible
 import java.util.Calendar
 
 internal class BuySellTransactionDelegate(
@@ -51,12 +50,11 @@ internal class BuySellTransactionDelegate(
         private val direction = itemView.direction
         private val result = itemView.result
         private val root = itemView
-        private val warning = itemView.double_spend_warning
 
         init {
             itemView.watch_only.gone()
             itemView.tx_note.gone()
-            warning.gone()
+            itemView.double_spend_warning.gone()
         }
 
         fun bind(
@@ -78,12 +76,8 @@ internal class BuySellTransactionDelegate(
             direction.setText(transaction.tradeStateString)
 
             when (transaction.tradeState) {
-                TradeState.AwaitingTransferIn, TradeState.Processing, TradeState.Reviewing -> {
+                TradeState.AwaitingTransferIn, TradeState.Processing, TradeState.Reviewing ->
                     onProcessing(transaction.isSellTransaction)
-                    if (transaction.tradeState == TradeState.AwaitingTransferIn && !transaction.isSellTransaction) {
-                        warning.visible()
-                    }
-                }
                 TradeState.Completed -> onCompleted(transaction.isSellTransaction)
                 TradeState.Cancelled, TradeState.Rejected, TradeState.Expired -> onFailed()
             }

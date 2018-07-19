@@ -29,7 +29,8 @@
     <string name="buy_sell_overview_subscription_monthly">Monthly, on the %1$s</string>
 
     <!-- Buy Sell Transaction States -->
-    <string name="buy_sell_state_awaiting_funds">Complete Payment</string>
+    <string name="buy_sell_state_awaiting_funds">Awaiting funds</string>
+    <string name="buy_sell_state_pending_buy">Pending buy</string>
     <string name="buy_sell_state_awaiting_reference">Awaiting reference number</string>
     <string name="buy_sell_state_processing">Processing</string>
     <string name="buy_sell_state_completed">Completed</string>
