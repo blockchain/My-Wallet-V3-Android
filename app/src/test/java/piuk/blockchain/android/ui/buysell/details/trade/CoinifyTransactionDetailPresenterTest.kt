@@ -58,7 +58,6 @@ class CoinifyTransactionDetailPresenterTest {
             tradeIdDisplay = "",
             tradeId = tradeId,
             currencyReceivedTitle = "",
-            exchangeRate = "",
             amountSent = "",
             paymentFee = "",
             totalCost = ""
@@ -112,7 +111,6 @@ class CoinifyTransactionDetailPresenterTest {
             tradeIdDisplay = "",
             tradeId = tradeId,
             currencyReceivedTitle = "",
-            exchangeRate = "",
             amountSent = "",
             paymentFee = "",
             totalCost = ""
