@@ -17,7 +17,7 @@ import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
-import piuk.blockchain.androidcoreui.utils.extensions.invisible
+import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.dialog_fragment_coinify_id_in_review.text_view_finish_verification as finishKyc
@@ -69,8 +69,7 @@ class CoinifyIdentityInReviewFragment :
 
     override fun onShowLoading() {
         displayProgressDialog()
-        textviewReviewMessage.invisible()
-        textviewReviewStatus.invisible()
+        updateStatusVisibility(false)
     }
 
     override fun dismissLoading() {
@@ -82,8 +81,7 @@ class CoinifyIdentityInReviewFragment :
             R.string.buy_sell_review_status,
             getString(R.string.buy_sell_review_status_in_completed)
         )
-        textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        updateStatusVisibility(true)
     }
 
     override fun onShowReviewing() {
@@ -91,8 +89,7 @@ class CoinifyIdentityInReviewFragment :
             R.string.buy_sell_review_status,
             getString(R.string.buy_sell_review_status_in_reviewing)
         )
-        textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        updateStatusVisibility(true)
     }
 
     override fun onShowPending() {
@@ -111,11 +108,10 @@ class CoinifyIdentityInReviewFragment :
                 DrawableCompat.setTint(this, getResolvedColor(R.color.primary_navy_medium))
                 setCompoundDrawablesWithIntrinsicBounds(this, null, null, null)
             }
-            visible()
         }
 
-        textviewReviewMessage.visible()
         textviewReviewMessage.setText(R.string.buy_sell_review_status_pending_message)
+        updateStatusVisibility(true)
         finishKyc.apply {
             visible()
             paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -130,8 +126,7 @@ class CoinifyIdentityInReviewFragment :
         )
         textviewReviewTitle.setText(R.string.buy_sell_review_failed)
         textviewReviewMessage.text = getString(R.string.buy_sell_review_status_failed)
-        textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        updateStatusVisibility(true)
     }
 
     override fun onShowExpired() {
@@ -141,8 +136,7 @@ class CoinifyIdentityInReviewFragment :
         )
         textviewReviewTitle.setText(R.string.buy_sell_review_failed)
         textviewReviewMessage.text = getString(R.string.buy_sell_review_status_failed)
-        textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        updateStatusVisibility(true)
     }
 
     override fun onShowFailed() {
@@ -152,8 +146,7 @@ class CoinifyIdentityInReviewFragment :
         )
         textviewReviewTitle.setText(R.string.buy_sell_review_failed)
         textviewReviewMessage.text = getString(R.string.buy_sell_review_status_failed)
-        textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        updateStatusVisibility(true)
     }
 
     override fun onShowDocumentsRequested() {
@@ -161,8 +154,13 @@ class CoinifyIdentityInReviewFragment :
             R.string.buy_sell_review_status,
             getString(R.string.buy_sell_review_status_in_docs_requested)
         )
-        textviewReviewMessage.visible()
-        textviewReviewStatus.visible()
+        updateStatusVisibility(true)
+    }
+
+    private fun updateStatusVisibility(visible: Boolean) {
+        textviewReviewMessage.invisibleIf { !visible }
+        textviewReviewStatus.invisibleIf { !visible }
+        textviewReviewTitle.invisibleIf { !visible }
     }
 
     override fun onFinish() {
