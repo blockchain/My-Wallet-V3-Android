@@ -159,7 +159,7 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
                     .apply {
                         id = trade.id
                         state = trade.state.toString()
-                        isBuy = false
+                        isBuy = true
                         this.accountIndex = accountIndex
                         receiveIndex = addressPosition
                         isConfirmed = false
