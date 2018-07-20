@@ -15,7 +15,6 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.auth.PinEntryActivity
 import piuk.blockchain.android.ui.zxing.CaptureActivity
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
