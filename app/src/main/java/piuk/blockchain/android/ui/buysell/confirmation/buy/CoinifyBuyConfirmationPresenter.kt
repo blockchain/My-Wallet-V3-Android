@@ -48,7 +48,9 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
             .singleOrError()
             .map { it.coinify!!.token }
 
-    override fun onViewReady() {
+    override fun onViewReady() = Unit
+
+    internal fun startCountdownTimer() {
         val expiryDateGmt = view.displayableQuote.originalQuote.expiryTime.fromIso8601()!!
         val calendar = Calendar.getInstance()
         val timeZone = calendar.timeZone

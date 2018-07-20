@@ -112,6 +112,7 @@ class CoinifyBuyConfirmationActivity :
                 buttonConfirm.isEnabled = isChecked
             }
         } else {
+            presenter.startCountdownTimer()
             checkBoxDisclaimer.gone()
         }
     }
