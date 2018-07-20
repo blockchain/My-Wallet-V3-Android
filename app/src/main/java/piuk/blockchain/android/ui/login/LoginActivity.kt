@@ -32,8 +32,6 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
     lateinit var loginPresenter: LoginPresenter
     @Inject
     lateinit var appUtil: AppUtil
-    @Inject
-    lateinit var environmentConfig: EnvironmentConfig
 
     private var progressDialog: MaterialProgressDialog? = null
 
@@ -48,7 +46,7 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
         setupToolbar(toolbar_general, R.string.pair_your_wallet)
 
         pairingFirstStep.text =
-            getString(R.string.pair_wallet_step_1, environmentConfig.explorerUrl + "wallet")
+            getString(R.string.pair_wallet_step_1, WEB_WALLET_URL_PROD)
 
         button_manual_pair.setOnClickListener { onClickManualPair() }
         button_scan.setOnClickListener { requestCameraPermissionIfNeeded() }
@@ -134,6 +132,7 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
     }
 
     companion object {
+        private const val WEB_WALLET_URL_PROD = "https://login.blockchain.com/"
         const val PAIRING_QR = 2005
     }
 }
