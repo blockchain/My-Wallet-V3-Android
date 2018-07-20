@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/non_spendable_pane"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="@+id/linear_layout_bitcoin_cash"
+    app:layout_constraintStart_toStartOf="@+id/linear_layout_bitcoin"
+    app:layout_constraintTop_toBottomOf="@+id/linear_layout_bitcoin"
+    tools:showIn="@layout/item_pie_chart"
+    tools:visibility="visible">
+
+    <View
+        android:id="@+id/view_non_spendable_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFDDDDDD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/DashboardCoinTitle.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bitcoin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textview_bitcoin_non_spendable_toggle" />
+
+    <TextView
+        android:id="@+id/textview_bitcoin_non_spendable_toggle"
+        style="@style/DashboardCoinAmounts.NonSpendable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/view_non_spendable_separator"
+        tools:text="50.12345678 BTC Non-Spendable" />
+
+</android.support.constraint.ConstraintLayout>

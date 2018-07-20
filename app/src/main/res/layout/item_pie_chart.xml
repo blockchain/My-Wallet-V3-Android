@@ -76,19 +76,19 @@
 
             <TextView
                 android:id="@+id/textview_title_bitcoin"
-                style="@style/DashboardCoinTitle"
+                style="@style/DashboardCoinTitle.LayoutMatchParentWidth"
                 android:text="@string/bitcoin" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_value_bitcoin"
-                style="@style/DashboardCoinAmounts"
+                style="@style/DashboardCoinAmounts.LayoutMatchParentWidth"
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 app:autoSizeTextType="uniform"
                 tools:text="$17,000.23" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_amount_bitcoin"
-                style="@style/DashboardCoinAmounts"
+                style="@style/DashboardCoinAmounts.LayoutMatchParentWidth"
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 app:autoSizeTextType="uniform"
                 tools:text="1.2352003 BTC" />
@@ -108,19 +108,19 @@
 
             <TextView
                 android:id="@+id/textview_title_ether"
-                style="@style/DashboardCoinTitle"
+                style="@style/DashboardCoinTitle.LayoutMatchParentWidth"
                 android:text="@string/ether" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_value_ether"
-                style="@style/DashboardCoinAmounts"
+                style="@style/DashboardCoinAmounts.LayoutMatchParentWidth"
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 app:autoSizeTextType="uniform"
                 tools:text="$1,103.01" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_amount_ether"
-                style="@style/DashboardCoinAmounts"
+                style="@style/DashboardCoinAmounts.LayoutMatchParentWidth"
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 app:autoSizeTextType="uniform"
                 tools:text="1.73472884 ETH" />
@@ -140,24 +140,26 @@
 
             <TextView
                 android:id="@+id/textview_title_bitcoin_cash"
-                style="@style/DashboardCoinTitle"
+                style="@style/DashboardCoinTitle.LayoutMatchParentWidth"
                 android:text="@string/bitcoin_cash" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_value_bitcoin_cash"
-                style="@style/DashboardCoinAmounts"
+                style="@style/DashboardCoinAmounts.LayoutMatchParentWidth"
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 app:autoSizeTextType="uniform"
                 tools:text="$3,301.35" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_amount_bitcoin_cash"
-                style="@style/DashboardCoinAmounts"
+                style="@style/DashboardCoinAmounts.LayoutMatchParentWidth"
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 app:autoSizeTextType="uniform"
                 tools:text="0.6352324 BCH" />
 
         </LinearLayout>
+
+        <include layout="@layout/item_pie_chart_bitcoin_unspendable"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"

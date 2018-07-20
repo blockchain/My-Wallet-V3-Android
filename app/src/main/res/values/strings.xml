@@ -784,6 +784,7 @@
     <string name="dashboard_price_charts">Price charts</string>
     <string name="dashboard_see_charts">See charts</string>
     <string name="dashboard_price">%1$s price</string>
+    <string name="dashboard_non_spendable_value">%1$s Non-Spendable</string>
 
     <!-- ONBOARDING -->
     <string name="onboarding_cta">Get Started</string>

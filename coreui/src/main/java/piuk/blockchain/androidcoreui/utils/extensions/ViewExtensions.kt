@@ -42,10 +42,19 @@ fun View?.gone() {
  * @param func If true, the visibility of the [View] will be set to [View.GONE], else [View.VISIBLE]
  */
 fun View?.goneIf(func: () -> Boolean) {
-    if (func()) {
-        if (this != null) visibility = View.GONE
-    } else {
-        if (this != null) visibility = View.VISIBLE
+    if (this != null) {
+        visibility = if (func()) View.GONE else View.VISIBLE
+    }
+}
+
+/**
+ * Sets the visibility of a [View] to [View.GONE] depending on a value
+ *
+ * @param value If true, the visibility of the [View] will be set to [View.GONE], else [View.VISIBLE]
+ */
+fun View?.goneIf(value: Boolean) {
+    if (this != null) {
+        visibility = if (value) View.GONE else View.VISIBLE
     }
 }
 
@@ -55,10 +64,19 @@ fun View?.goneIf(func: () -> Boolean) {
  * @param func If true, the visibility of the [View] will be set to [View.INVISIBLE], else [View.VISIBLE]
  */
 fun View?.invisibleIf(func: () -> Boolean) {
-    if (func()) {
-        if (this != null) visibility = View.INVISIBLE
-    } else {
-        if (this != null) visibility = View.VISIBLE
+    if (this != null) {
+        visibility = if (func()) View.INVISIBLE else View.VISIBLE
+    }
+}
+
+/**
+ * Sets the visibility of a [View] to [View.INVISIBLE] depending on a value
+ *
+ * @param value If true, the visibility of the [View] will be set to [View.INVISIBLE], else [View.VISIBLE]
+ */
+fun View?.invisibleIf(value: Boolean) {
+    if (this != null) {
+        visibility = if (value) View.INVISIBLE else View.VISIBLE
     }
 }
 

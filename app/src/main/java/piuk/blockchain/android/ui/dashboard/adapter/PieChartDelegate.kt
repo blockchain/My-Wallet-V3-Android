@@ -19,12 +19,14 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.item_pie_chart.view.*
+import kotlinx.android.synthetic.main.item_pie_chart_bitcoin_unspendable.view.*
+import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.ui.dashboard.PieChartsState
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.extensions.gone
+import piuk.blockchain.androidcoreui.utils.extensions.goneIf
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.toast
@@ -107,6 +109,7 @@ class PieChartDelegate<in T>(
             bitcoinAmount.text = data.bitcoin.cryptoValueString
             etherAmount.text = data.ether.cryptoValueString
             bitcoinCashAmount.text = data.bitcoinCash.cryptoValueString
+            nonSpendableDataPoint = data.bitcoinWatchOnly
 
             progressBar.gone()
             chart.apply {
@@ -202,12 +205,43 @@ class PieChartDelegate<in T>(
         private val coinSelector: (CryptoCurrency) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
+        private var displayNonSpendableAsFiat = false
+            set(value) {
+                if (value == field) return
+                field = value
+                updateNonSpendable(nonSpendableDataPoint)
+            }
+
+        var nonSpendableDataPoint: PieChartsState.DataPoint? = null
+            set(value) {
+                if (value == field) return
+                field = value
+                updateNonSpendable(field)
+            }
+
+        private fun updateNonSpendable(nonSpendableDataPoint: PieChartsState.DataPoint?) {
+            bitcoinNonSpendablePane.goneIf(nonSpendableDataPoint?.isZero ?: true)
+            nonSpendableDataPoint?.let {
+                bitcoinNonSpendableValue.text =
+                    itemView.context.getString(
+                        R.string.dashboard_non_spendable_value,
+                        if (displayNonSpendableAsFiat) it.fiatValueString else it.cryptoValueString
+                    )
+            }
+        }
+
         internal var chart: PieChart = itemView.pie_chart
         internal val progressBar: ProgressBar = itemView.progress_bar
         // Bitcoin
         internal var bitcoinValue: TextView = itemView.textview_value_bitcoin
         internal var bitcoinAmount: TextView = itemView.textview_amount_bitcoin
         internal var bitcoinButton: LinearLayout = itemView.linear_layout_bitcoin
+        internal var bitcoinNonSpendableValue: TextView = itemView.textview_bitcoin_non_spendable_toggle.apply {
+            setOnClickListener {
+                displayNonSpendableAsFiat = !displayNonSpendableAsFiat
+            }
+        }
+        internal var bitcoinNonSpendablePane: View = itemView.non_spendable_pane
         // Ether
         internal var etherValue: TextView = itemView.textview_value_ether
         internal var etherAmount: TextView = itemView.textview_amount_ether

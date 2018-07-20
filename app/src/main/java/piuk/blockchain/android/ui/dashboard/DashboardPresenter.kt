@@ -5,7 +5,6 @@ import android.support.annotation.VisibleForTesting
 import info.blockchain.balance.AccountKey
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.FiatValue
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -36,7 +35,6 @@ import piuk.blockchain.androidcoreui.utils.logging.BalanceLoadedEvent
 import piuk.blockchain.androidcoreui.utils.logging.Logging
 import timber.log.Timber
 import java.text.DecimalFormat
-import java.util.Locale
 import javax.inject.Inject
 
 class DashboardPresenter @Inject constructor(
@@ -69,9 +67,6 @@ class DashboardPresenter @Inject constructor(
             MetadataEvent::class.java
         )
     }
-    private var btcBalance = CryptoValue.ZeroBtc
-    private var bchBalance = CryptoValue.ZeroBch
-    private var ethBalance = CryptoValue.ZeroEth
 
     override fun onViewReady() {
         with(view) {
@@ -166,11 +161,7 @@ class DashboardPresenter @Inject constructor(
 
         val firstPosition = displayList.indexOfFirst { it is AssetPriceCardState }
 
-        val positions = listOf(
-            firstPosition,
-            firstPosition + 1,
-            firstPosition + 2
-        )
+        val positions = (firstPosition until firstPosition + list.size).toList()
 
         view.notifyItemUpdated(displayList, positions)
     }
@@ -189,14 +180,13 @@ class DashboardPresenter @Inject constructor(
                             .onErrorComplete()
                     )
                     .doOnComplete {
-                        btcBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BTC))
-                        bchBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BCH))
-                        ethBalance = CryptoValue(CryptoCurrency.ETHER, ethAddressResponse.getTotalBalance())
+                        val btcBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BTC))
+                        val btcwatchOnlyBalance =
+                            transactionListDataManager.balance(AccountKey.WatchOnly(CryptoCurrency.BTC))
+                        val bchBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BCH))
+                        val ethBalance = CryptoValue(CryptoCurrency.ETHER, ethAddressResponse.getTotalBalance())
 
                         val fiatCurrency = getFiatCurrency()
-                        val btcFiat = calculateFiatValue(btcBalance, fiatCurrency)
-                        val bchFiat = calculateFiatValue(bchBalance, fiatCurrency)
-                        val ethFiat = calculateFiatValue(ethBalance, fiatCurrency)
 
                         Logging.logCustom(
                             BalanceLoadedEvent(
@@ -207,18 +197,10 @@ class DashboardPresenter @Inject constructor(
                         )
 
                         cachedData = PieChartsState.Data(
-                            bitcoin = PieChartsState.DataPoint(
-                                fiatValue = btcFiat,
-                                cryptoValueString = getBalanceString(btcBalance)
-                            ),
-                            bitcoinCash = PieChartsState.DataPoint(
-                                fiatValue = bchFiat,
-                                cryptoValueString = getBalanceString(bchBalance)
-                            ),
-                            ether = PieChartsState.DataPoint(
-                                fiatValue = ethFiat,
-                                cryptoValueString = getBalanceString(ethBalance)
-                            )
+                            bitcoin = btcBalance.toPieChartDataPoint(fiatCurrency),
+                            bitcoinWatchOnly = btcwatchOnlyBalance.toPieChartDataPoint(fiatCurrency),
+                            bitcoinCash = bchBalance.toPieChartDataPoint(fiatCurrency),
+                            ether = ethBalance.toPieChartDataPoint(fiatCurrency)
                         ).also { view.updatePieChartState(it) }
                     }
             }
@@ -229,10 +211,11 @@ class DashboardPresenter @Inject constructor(
             )
     }
 
-    private fun calculateFiatValue(
-        cryptoValue: CryptoValue,
-        fiatCurrency: String
-    ) = cryptoValue.toFiat(exchangeRateFactory, fiatCurrency)
+    private fun CryptoValue.toPieChartDataPoint(fiatCurrency: String) =
+        PieChartsState.DataPoint(
+            fiatValue = this.toFiat(exchangeRateFactory, fiatCurrency),
+            cryptoValueString = currencyFormatManager.getFormattedValueWithUnit(this)
+        )
 
     private fun showAnnouncement(index: Int, announcementData: AnnouncementData) {
         displayList.add(index, announcementData)
@@ -415,9 +398,6 @@ class DashboardPresenter @Inject constructor(
         )
     }
 
-    private fun getBalanceString(balance: CryptoValue) =
-        currencyFormatManager.getFormattedValueWithUnit(balance)
-
     private fun getPriceString(cryptoCurrency: CryptoCurrency): String =
         getLastPrice(cryptoCurrency, getFiatCurrency()).run { getFormattedCurrencyString(this) }
 
@@ -463,30 +443,6 @@ class DashboardPresenter @Inject constructor(
             cachedData = null
         }
     }
-}
-
-sealed class PieChartsState {
-
-    data class DataPoint(
-        val fiatValue: FiatValue,
-        val cryptoValueString: String
-    ) {
-        val isZero: Boolean = fiatValue.isZero
-        val fiatValueString: String = fiatValue.toStringWithSymbol(Locale.getDefault())
-    }
-
-    data class Data(
-        val bitcoin: DataPoint,
-        val ether: DataPoint,
-        val bitcoinCash: DataPoint
-    ) : PieChartsState() {
-        val isZero: Boolean = bitcoin.isZero && bitcoinCash.isZero && ether.isZero
-        private val totalValue: FiatValue = bitcoin.fiatValue + bitcoinCash.fiatValue + ether.fiatValue
-        val totalValueString: String = totalValue.toStringWithSymbol(Locale.getDefault())
-    }
-
-    object Loading : PieChartsState()
-    object Error : PieChartsState()
 }
 
 sealed class AssetPriceCardState(val currency: CryptoCurrency) {

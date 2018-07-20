@@ -372,21 +372,39 @@
     </style>
 
     <style name="DashboardCoinTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/primary_gray_dark</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
-    <style name="DashboardCoinAmounts">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="DashboardCoinTitle.LayoutMatchParentWidth">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DashboardCoinTitle.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="DashboardCoinAmounts">
         <item name="android:textColor">@color/primary_gray_dark</item>
         <item name="android:textSize">12sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
         <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="DashboardCoinAmounts.LayoutMatchParentWidth">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DashboardCoinAmounts.NonSpendable">
+        <item name="android:background">@drawable/rounded_non_spendable_button</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingTop">5dp</item>
     </style>
 
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
