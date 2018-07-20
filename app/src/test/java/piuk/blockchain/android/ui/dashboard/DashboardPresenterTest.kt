@@ -128,10 +128,8 @@ class DashboardPresenterTest : RxTest() {
             .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
-        // No bch or sfox announcements
-        whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
-            .thenReturn(true)
-        whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(false))
+        // Native Buy/Sell not available
+        whenever(buyDataManager.isCoinifyAllowed).thenReturn(Observable.just(false))
 
         // Act
         subject.onViewReady()
@@ -161,8 +159,7 @@ class DashboardPresenterTest : RxTest() {
         verify(view, atLeastOnce()).startWebsocketService()
 
         // checkLatestAnnouncements()
-        verify(prefsUtil).getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false)
-        verify(buyDataManager).isSfoxAllowed
+        verify(buyDataManager).isCoinifyAllowed
 
         verify(swipeToReceiveHelper).storeEthAddress()
 
@@ -231,10 +228,10 @@ class DashboardPresenterTest : RxTest() {
             .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
-        // No bch or sfox announcements
-        whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
+        // No Native Buy/Sell announcement
+        whenever(prefsUtil.getValue(DashboardPresenter.NATIVE_BUY_SELL_DISMISSED, false))
             .thenReturn(true)
-        whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(false))
+        whenever(buyDataManager.isCoinifyAllowed).thenReturn(Observable.just(false))
 
         // Act
         subject.onViewReady()
@@ -275,7 +272,7 @@ class DashboardPresenterTest : RxTest() {
     }
 
     @Test
-    fun `onViewReady onboarding complete with bch and Sfox announcement`() {
+    fun `onViewReady onboarding complete native buy sell announcement`() {
         // Arrange
         whenever(stringUtils.getString(any())).thenReturn("")
 
@@ -331,11 +328,11 @@ class DashboardPresenterTest : RxTest() {
             .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
-        // No bch or sfox announcements
-        whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
+        // No Native Buy/Sell announcement
+        whenever(prefsUtil.getValue(DashboardPresenter.NATIVE_BUY_SELL_DISMISSED, false))
             .thenReturn(false)
-        whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(true))
-        whenever(prefsUtil.getValue(DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED, false))
+        whenever(buyDataManager.isCoinifyAllowed).thenReturn(Observable.just(true))
+        whenever(prefsUtil.getValue(DashboardPresenter.NATIVE_BUY_SELL_DISMISSED, false))
             .thenReturn(false)
 
         // Act
@@ -363,19 +360,11 @@ class DashboardPresenterTest : RxTest() {
         verify(view, atLeastOnce()).startWebsocketService()
 
         // checkLatestAnnouncements()
-        // BCH
-        verify(prefsUtil).getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false)
-        verify(
-            prefsUtil,
-            atLeastOnce()
-        ).setValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, true)
-        verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
-        verify(view, atLeastOnce()).scrollToTop()
-        // SFOX
-        verify(buyDataManager).isSfoxAllowed
-        verify(prefsUtil).getValue(DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED, false)
+        // Native Buy/Sell
+        verify(buyDataManager).isCoinifyAllowed
+        verify(prefsUtil).getValue(DashboardPresenter.NATIVE_BUY_SELL_DISMISSED, false)
         verify(prefsUtil, atLeastOnce()).setValue(
-            DashboardPresenter.SFOX_ANNOUNCEMENT_DISMISSED,
+            DashboardPresenter.NATIVE_BUY_SELL_DISMISSED,
             true
         )
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
@@ -392,7 +381,7 @@ class DashboardPresenterTest : RxTest() {
     }
 
     @Test
-    fun `onViewReady onboarding complete with bch but no Sfox announcement`() {
+    fun `onViewReady onboarding complete with no native buy sell announcement`() {
         // Arrange
         whenever(stringUtils.getString(any())).thenReturn("")
 
@@ -448,10 +437,10 @@ class DashboardPresenterTest : RxTest() {
             .thenReturn(Observable.empty())
 
         // checkLatestAnnouncements()
-        // No bch or sfox announcements
-        whenever(prefsUtil.getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false))
+        // No Native Buy/Sell announcement
+        whenever(prefsUtil.getValue(DashboardPresenter.NATIVE_BUY_SELL_DISMISSED, false))
             .thenReturn(false)
-        whenever(buyDataManager.isSfoxAllowed).thenReturn(Observable.just(false))
+        whenever(buyDataManager.isCoinifyAllowed).thenReturn(Observable.just(false))
 
         // Act
         subject.onViewReady()
@@ -459,6 +448,7 @@ class DashboardPresenterTest : RxTest() {
         // Assert
         verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
         verify(view, atLeastOnce()).notifyItemUpdated(any(), any())
+        verify(view, atLeastOnce()).scrollToTop()
         verify(view, atLeastOnce()).locale
         verify(exchangeRateFactory, atLeastOnce()).updateTickers()
         verify(exchangeRateFactory, atLeastOnce()).getLastBtcPrice(any())
@@ -478,16 +468,8 @@ class DashboardPresenterTest : RxTest() {
         verify(view, atLeastOnce()).startWebsocketService()
 
         // checkLatestAnnouncements()
-        // BCH
-        verify(prefsUtil).getValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, false)
-        verify(
-            prefsUtil,
-            atLeastOnce()
-        ).setValue(DashboardPresenter.BITCOIN_CASH_ANNOUNCEMENT_DISMISSED, true)
-        verify(view, atLeastOnce()).notifyItemAdded(any(), eq(0))
-        verify(view, atLeastOnce()).scrollToTop()
-        // SFOX
-        verify(buyDataManager).isSfoxAllowed
+        // Native Buy/Sell
+        verify(buyDataManager).isCoinifyAllowed
 
         verify(swipeToReceiveHelper).storeEthAddress()
 

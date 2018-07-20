@@ -43,7 +43,7 @@
                 android:layout_marginBottom="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"
-                app:srcCompat="@drawable/vector_bch_onboarding"
+                app:srcCompat="@drawable/vector_buy_offset"
                 tools:ignore="RtlHardcoded" />
 
             <LinearLayout

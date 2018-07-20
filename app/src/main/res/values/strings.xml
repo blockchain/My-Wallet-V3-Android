@@ -785,10 +785,6 @@
     <string name="dashboard_see_charts">See charts</string>
     <string name="dashboard_price">%1$s price</string>
 
-    <!-- ONBOARDING -->
-    <string name="onboarding_cta">Get Started</string>
-    <string name="onboarding_bitcoin_cash_description">We are excited to announce that your Blockchain wallet will allow to seamlessly send, receive and exchange Bitcoin Cash!</string>
-
     <!-- KV STORE -->
     <string name="metadata_load_failure">Error loading full wallet functionality. Service might temporarily be unavailable.</string>
 
@@ -881,8 +877,8 @@
     <string name="error_bitpay_not_supported">Bitpay URIs are not currently supported</string>
 
     <!--Buy & Sell-->
-    <string name="announcement_trading_cta">The wait is over</string>
-    <string name="announcement_trading_description" translatable="false">Buy and sell bitcoin directly from your Blockchain wallet. Start by creating an account in the Buy &amp; Sell tab</string>
+    <string name="announcement_trading_cta">A better buy &amp; sell</string>
+    <string name="announcement_trading_description">An improved flow for your mobile buy &amp; sell experience is now available in your wallet. It\'s simple, seamless and secure.</string>
     <string name="announcement_trading_link">Get started</string>
 
     <!-- TESTNET -->
