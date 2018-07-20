@@ -622,7 +622,7 @@ class NewExchangePresenter @Inject constructor(
                                     transactionFee = fee,
                                     networkFee = quote.minerFee,
                                     returnAddress = addresses.returnAddress,
-                                    xPub = account!!.xpub,
+                                    xPub = getSelectedXpub(),
                                     expiration = quote.expiration,
                                     gasLimit = BigInteger.valueOf(
                                         feeOptions?.gasLimit ?: 0L
@@ -650,6 +650,12 @@ class NewExchangePresenter @Inject constructor(
             }
             .doOnError { setUnknownErrorState(it) }
             .doOnError { Timber.e(it) }
+
+    private fun getSelectedXpub(): String = if (fromCurrency == CryptoCurrencies.BCH) {
+        bchAccount?.xpub ?: throw IllegalStateException("BCH Selected but bchAccount was null")
+    } else {
+        account?.xpub ?: throw IllegalStateException("account should never be null at this point")
+    }
 
     private fun hasEmptyBalances(): Observable<Boolean> =
         Observable.zip(
