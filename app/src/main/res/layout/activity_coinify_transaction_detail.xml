@@ -116,26 +116,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_currency_received_title" />
 
-            <!-- Exchange Rate -->
-
-            <TextView
-                android:id="@+id/text_view_exchange_rate_title"
-                style="@style/BuySellDetailTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/buy_sell_detail_exchange_rate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider_currency_received" />
-
-            <TextView
-                android:id="@+id/text_view_exchange_rate_text"
-                style="@style/BuySellDetailMessage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider_currency_received"
-                tools:text="8,654.04 GBP" />
-
             <!-- Amount -->
 
             <TextView
@@ -145,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buy_sell_detail_amount"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_exchange_rate_title" />
+                app:layout_constraintTop_toBottomOf="@+id/view_divider_currency_received" />
 
             <TextView
                 android:id="@+id/text_view_amount_text"
@@ -153,7 +133,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_exchange_rate_text"
+                app:layout_constraintTop_toBottomOf="@+id/view_divider_currency_received"
                 tools:text="200.00 GBP" />
 
             <!-- Payment Fee -->
@@ -231,14 +211,6 @@
 
             <!-- Sell in Progress Specific -->
 
-            <View
-                android:id="@+id/view_divider_bank_disclaimer"
-                style="@style/BuySellDetailDivider"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_exchange_rate_title" />
-
             <TextView
                 android:id="@+id/text_view_bank_disclaimer"
                 android:layout_width="0dp"
@@ -251,7 +223,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_divider_bank_disclaimer" />
+                app:layout_constraintTop_toBottomOf="@id/view_divider_total" />
 
 
         </android.support.constraint.ConstraintLayout>

@@ -486,7 +486,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                 ).flatMap { (trader, inMedium) ->
                     val currency = if (initialLoad) getDefaultCurrency(trader.defaultCurrency) else selectedCurrency
 
-                    getExchangeRate(token, -1.0, currency)
+                    getExchangeRate(token, if (isSell) -1.0 else 1.0, currency)
                         .toObservable()
                         .doOnNext {
                             maximumInCardAmount = trader.level?.limits?.card?.inX?.daily ?: 0.0
@@ -665,7 +665,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
             .doOnSuccess {
                 val valueWithSymbol =
                     currencyFormatManager.getFormattedFiatValueWithSymbol(
-                        it.quoteAmount,
+                        it.quoteAmount.absoluteValue,
                         it.quoteCurrency,
                         view.locale
                     )

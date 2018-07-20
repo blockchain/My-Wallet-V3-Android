@@ -18,7 +18,6 @@ data class BuySellDetailsModel(
     val tradeIdDisplay: String,
     val tradeId: Int,
     val currencyReceivedTitle: String,
-    val exchangeRate: String,
     val amountSent: String,
     val paymentFee: String,
     val totalCost: String

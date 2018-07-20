@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_v
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_bank_disclaimer as textViewBankDisclaimer
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_currency_received_text as textViewCurrencyReceivedDetail
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_currency_received_title as textViewCurrencyReceivedTitle
-import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_exchange_rate_text as textViewExchangeRate
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_order_amount as textViewOrderAmountHeader
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_payment_fee_text as textViewPaymentFeeDetail
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_payment_fee_title as textViewPaymentFeeTitle
@@ -33,7 +32,6 @@ import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_v
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_total_title as textViewTotalTitle
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_trade_id_text as textViewTradeId
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_transaction_date as textViewDateHeader
-import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.view_divider_bank_disclaimer as dividerBankDisclaimer
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.view_divider_total as dividerTotal
 
 class CoinifyTransactionDetailActivity :
@@ -50,10 +48,7 @@ class CoinifyTransactionDetailActivity :
     }
 
     private val bankSellInProgressViewsToShow by unsafeLazy {
-        listOf<View>(
-            dividerBankDisclaimer,
-            textViewBankDisclaimer
-        )
+        listOf<View>(textViewBankDisclaimer)
     }
     private val bankSellInProgressViewsToHide by unsafeLazy {
         listOf<View>(
@@ -89,7 +84,6 @@ class CoinifyTransactionDetailActivity :
         textViewTradeId.text = model.tradeIdDisplay
         textViewCurrencyReceivedTitle.text = model.currencyReceivedTitle
         textViewCurrencyReceivedDetail.text = model.detailAmount
-        textViewExchangeRate.text = model.exchangeRate
         textViewAmountDetail.text = model.amountSent
         textViewPaymentFeeDetail.text = model.paymentFee
         textViewTotalDetail.text = model.totalCost
