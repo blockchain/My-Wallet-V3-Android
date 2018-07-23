@@ -22,10 +22,11 @@ class EmptyTransactionList : BuySellDisplayable
 /**
  * Represents the current KYC status
  */
+@Suppress("unused")
 sealed class KycStatus : BuySellDisplayable {
-    object InReview : KycStatus()
-    object Denied : KycStatus()
-    object NotYetCompleted : KycStatus()
+    class InReview(val limitString: String) : KycStatus()
+    class Denied(val limitString: String) : KycStatus()
+    class NotYetCompleted(val limitString: String) : KycStatus()
 }
 
 /**

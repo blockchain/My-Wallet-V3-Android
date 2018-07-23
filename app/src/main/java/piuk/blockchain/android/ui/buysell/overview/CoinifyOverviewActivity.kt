@@ -46,9 +46,9 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
             object : CoinifyTxFeedListener {
                 override fun onKycReviewClicked(kycStatus: KycStatus) {
                     when (kycStatus) {
-                        KycStatus.InReview -> launchCardBuyFlow()
-                        KycStatus.Denied -> presenter.onRestartKycSelected()
-                        KycStatus.NotYetCompleted -> presenter.onCompleteKycSelected()
+                        is KycStatus.InReview -> launchCardBuyFlow()
+                        is KycStatus.Denied -> presenter.onRestartKycSelected()
+                        is KycStatus.NotYetCompleted -> presenter.onCompleteKycSelected()
                     }
                 }
 
@@ -61,7 +61,7 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
                 }
 
                 override fun onSellClicked() {
-                    presenter.onSellSelected()
+                    launchSellFlow()
                 }
 
                 override fun onSubscriptionClicked(subscriptionId: Int) {
@@ -133,7 +133,7 @@ class CoinifyOverviewActivity : BaseMvpActivity<CoinifyOverviewView, CoinifyOver
         BuySellBuildOrderActivity.start(this, OrderType.Buy)
     }
 
-    override fun launchSellFlow() {
+    private fun launchSellFlow() {
         BuySellBuildOrderActivity.start(this, OrderType.Sell)
     }
 

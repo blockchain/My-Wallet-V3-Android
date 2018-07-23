@@ -17,8 +17,6 @@ interface CoinifyOverviewView : View {
 
     fun launchCardBuyFlow()
 
-    fun launchSellFlow()
-
     fun showAlertDialog(@StringRes message: Int)
 
     fun displayProgressDialog()

@@ -20,9 +20,9 @@
     <string name="buy_sell_overview_in_review_button">Buy now with card</string>
     <string name="buy_sell_overview_denied_button">Try again</string>
     <string name="buy_sell_overview_pending_button">Finish verification</string>
-    <string name="buy_sell_overview_in_review_message">Your identity verification has not been completed, so you cannot sell bitcoin at this time.</string>
+    <string name="buy_sell_overview_in_review_message">Your identity verification has not been completed, so you cannot sell more than %1$s of bitcoin at this time.</string>
     <string name="buy_sell_overview_denied_message">Please try completing your identity verification again. Bank transfers will be unavailable until then.</string>
-    <string name="buy_sell_overview_pending_message">Bank transfers and selling will be unavailable until verification is complete.</string>
+    <string name="buy_sell_overview_pending_message">Bank transfers and selling amounts greater than %1$s will be unavailable until verification is complete.</string>
     <string name="buy_sell_overview_next_recurring_order">Your next recurring order</string>
     <string name="buy_sell_overview_subscription_daily">Daily</string>
     <string name="buy_sell_overview_subscription_weekly">Weekly, every %1$s</string>

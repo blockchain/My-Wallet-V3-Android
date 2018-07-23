@@ -170,66 +170,6 @@ class CoinifyOverviewPresenterTest {
     }
 
     @Test
-    fun `onSellSelected no pending kyc`() {
-        // Arrange
-        givenValidAccessToken()
-
-        val kycResponse: KycResponse = mock()
-        val reviewState = ReviewState.Completed
-        whenever(kycResponse.state).thenReturn(reviewState)
-        whenever(coinifyDataManager.getKycReviews(token))
-            .thenReturn(Single.just(listOf(kycResponse)))
-        // Act
-        subject.onSellSelected()
-        // Assert
-        verify(exchangeService).getExchangeMetaData()
-        verify(coinifyDataManager).getKycReviews(token)
-        verify(view).displayProgressDialog()
-        verify(view).dismissProgressDialog()
-        verify(view).launchSellFlow()
-        verifyNoMoreInteractions(view)
-    }
-
-    @Test
-    fun `onSellSelected reviewing kyc`() {
-        // Arrange
-        givenValidAccessToken()
-
-        val kycResponse: KycResponse = mock()
-        val reviewState = ReviewState.Reviewing
-        whenever(kycResponse.state).thenReturn(reviewState)
-        whenever(coinifyDataManager.getKycReviews(token))
-            .thenReturn(Single.just(listOf(kycResponse)))
-        // Act
-        subject.onSellSelected()
-        // Assert
-        verify(exchangeService).getExchangeMetaData()
-        verify(coinifyDataManager).getKycReviews(token)
-        verify(view).displayProgressDialog()
-        verify(view).dismissProgressDialog()
-        verify(view).showAlertDialog(any(Int::class))
-        verifyNoMoreInteractions(view)
-    }
-
-    @Test
-    fun `onSellSelected failure`() {
-        // Arrange
-        givenValidAccessToken()
-
-        whenever(coinifyDataManager.getKycReviews(token))
-            .thenReturn(Single.error { Throwable() })
-        // Act
-        subject.onSellSelected()
-        // Assert
-        verify(exchangeService).getExchangeMetaData()
-        verify(coinifyDataManager).getKycReviews(token)
-        verify(view).displayProgressDialog()
-        verify(view).dismissProgressDialog()
-        verify(view).renderViewState(any(OverViewState.Failure::class))
-        verifyNoMoreInteractions(view)
-    }
-
-    @Test
     fun `complete kyc selected, no pending kyc found`() {
         // Arrange
         givenValidAccessToken()

@@ -67,13 +67,19 @@ class CoinifyOverviewPresenter @Inject constructor(
             .firstOrError()
             .cache()
 
-    private val tradesObservable: Observable<CoinifyTrade>
+    private val tradesSingle: Observable<CoinifyTrade>
         get() = tokenSingle
             .flatMapObservable { coinifyDataManager.getTrades(it) }
 
-    private val kycReviewsObservable: Single<List<KycResponse>> by unsafeLazy {
+    private val kycReviewsSingle: Single<List<KycResponse>> by unsafeLazy {
         tokenSingle
             .flatMap { coinifyDataManager.getKycReviews(it) }
+    }
+
+    private val traderSellLimitSingle: Single<Pair<Double, String>> by unsafeLazy {
+        tokenSingle
+            .flatMap { coinifyDataManager.getTrader(it) }
+            .map { it.level.limits.bank.outLimits.daily to it.defaultCurrency }
     }
 
     private val recurringBuySingle: Single<List<Subscription>> by unsafeLazy {
@@ -92,7 +98,7 @@ class CoinifyOverviewPresenter @Inject constructor(
     }
 
     internal fun refreshTransactionList() {
-        tradesObservable
+        tradesSingle
             .toList()
             .doOnSuccess { updateMetadataAsNeeded(it) }
             .toObservable()
@@ -109,7 +115,7 @@ class CoinifyOverviewPresenter @Inject constructor(
     }
 
     internal fun onBuySelected() {
-        kycReviewsObservable
+        kycReviewsSingle
             .doOnSubscribe { view.displayProgressDialog() }
             .doAfterTerminate { view.dismissProgressDialog() }
             .subscribeBy(
@@ -126,26 +132,8 @@ class CoinifyOverviewPresenter @Inject constructor(
             )
     }
 
-    internal fun onSellSelected() {
-        kycReviewsObservable
-            .doOnSubscribe { view.displayProgressDialog() }
-            .doAfterTerminate { view.dismissProgressDialog() }
-            .subscribeBy(
-                onSuccess = {
-                    if (it.kycUnverified()) {
-                        view.showAlertDialog(R.string.buy_sell_overview_in_review_message)
-                    } else {
-                        view.launchSellFlow()
-                    }
-                },
-                onError = {
-                    view.renderViewState(OverViewState.Failure(R.string.unexpected_error))
-                }
-            )
-    }
-
     internal fun onTransactionSelected(transactionId: Int) {
-        tradesObservable
+        tradesSingle
             .doOnSubscribe { view.displayProgressDialog() }
             .filter { it.id == transactionId }
             .firstOrError()
@@ -204,7 +192,7 @@ class CoinifyOverviewPresenter @Inject constructor(
     internal fun onSubscriptionClicked(subscriptionId: Int) {
         Single.zip(
             recurringBuySingle,
-            tradesObservable
+            tradesSingle
                 .filter { it.tradeSubscriptionId == subscriptionId }
                 .firstOrError(),
             BiFunction { subscriptions: List<Subscription>, trade: CoinifyTrade ->
@@ -297,36 +285,44 @@ class CoinifyOverviewPresenter @Inject constructor(
     }
 
     private fun checkKycStatus() {
-        kycReviewsObservable
-            .subscribeBy(
-                onSuccess = {
-                    if (it.kycUnverified()) {
-                        val statusCard: KycStatus? = when {
-                        // Unlikely to see this result - after supplying docs status will be pending
-                        // otherwise we will go straight to overview
-                            it.any { it.state == ReviewState.Reviewing } -> KycStatus.InReview
-                            it.any { it.state == ReviewState.Pending } ||
-                                it.any { it.state == ReviewState.DocumentsRequested } -> KycStatus.NotYetCompleted
-                            it.any { it.state == ReviewState.Failed } ||
-                                it.any { it.state == ReviewState.Rejected } ||
-                                it.any { it.state == ReviewState.Expired } -> KycStatus.Denied
-                            else -> null
-                        }
-
-                        statusCard?.let {
-                            displayList.add(0, it)
-                            view.renderViewState(OverViewState.Data(displayList.toList()))
-                        }
+        Single.zip(
+            kycReviewsSingle,
+            traderSellLimitSingle,
+            BiFunction { kycReviews: List<KycResponse>, sellLimit: Pair<Double, String> -> kycReviews to sellLimit }
+        ).subscribeBy(
+            onSuccess = { (kycReviews, sellLimits) ->
+                if (kycReviews.kycUnverified()) {
+                    val limitString =
+                        formatFiatWithSymbol(sellLimits.first, sellLimits.second, view.locale)
+                    val statusCard: KycStatus? = when {
+                    // Unlikely to see this result - after supplying docs status will be pending
+                    // otherwise we will go straight to overview
+                        kycReviews.any { it.state == ReviewState.Reviewing } -> KycStatus.InReview(limitString)
+                        kycReviews.any { it.state == ReviewState.Pending } ||
+                            kycReviews.any { it.state == ReviewState.DocumentsRequested } ->
+                            KycStatus.NotYetCompleted(limitString)
+                        kycReviews.any { it.state == ReviewState.Failed } ||
+                            kycReviews.any { it.state == ReviewState.Rejected } ||
+                            kycReviews.any { it.state == ReviewState.Expired } -> KycStatus.Denied(
+                            limitString
+                        )
+                        else -> null
                     }
-                },
-                onError = { Timber.e(it) }
-            )
+
+                    statusCard?.let {
+                        displayList.add(0, it)
+                        view.renderViewState(OverViewState.Data(displayList.toList()))
+                    }
+                }
+            },
+            onError = { Timber.e(it) }
+        )
     }
 
     private fun checkSubscriptionStatus() {
         Single.zip(
             recurringBuySingle,
-            tradesObservable
+            tradesSingle
                 .filter { it.tradeSubscriptionId != null }
                 .toList(),
             // Returns a pair of subscription objects with the first trade created by the subscription

@@ -15,7 +15,7 @@ data class Trader(
     val defaultCurrency: String,
     val email: String,
     val profile: Profile,
-    val level: Level? = null
+    val level: Level
 )
 
 data class Profile(
@@ -47,15 +47,20 @@ data class Level(
     val name: String,
     val currency: String,
     val feePercentage: Double,
-    val limits: Limits? = null
+    val limits: Limits
 )
 
-data class Limits(val card: Card)
+data class Limits(val card: CardLimits, val bank: BankLimits)
 
-data class Card(@field:Json(name = "in") val inX: In)
+data class CardLimits(@field:Json(name = "in") val inLimits: LimitValues)
+
+data class BankLimits(
+    @field:Json(name = "in") val inLimits: LimitValues,
+    @field:Json(name = "out") val outLimits: LimitValues
+)
 
 /**
  * These values are the max limits denominated in the user's default currency
  * and must therefore be converted if another currency is chosen.
  */
-data class In(val daily: Double, val yearly: Double)
+data class LimitValues(val daily: Double, val yearly: Double?)

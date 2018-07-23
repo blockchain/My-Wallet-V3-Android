@@ -46,15 +46,16 @@ internal class BuySellKycStatusDelegate(
             button.setOnClickListener { listener.onKycReviewClicked(kycStatus) }
 
             when (kycStatus) {
-                KycStatus.InReview -> renderInReview()
-                KycStatus.Denied -> renderDenied()
-                KycStatus.NotYetCompleted -> renderNotYetCompleted()
+                is KycStatus.InReview -> renderInReview(kycStatus.limitString)
+                is KycStatus.Denied -> renderDenied()
+                is KycStatus.NotYetCompleted -> renderNotYetCompleted(kycStatus.limitString)
             }
         }
 
-        private fun renderInReview() {
+        private fun renderInReview(limit: String) {
             header.setText(R.string.buy_sell_overview_in_review_title)
-            message.setText(R.string.buy_sell_overview_in_review_message)
+            message.text =
+                getContext().getString(R.string.buy_sell_overview_in_review_message, limit)
             button.setText(R.string.buy_sell_overview_in_review_button)
         }
 
@@ -65,9 +66,9 @@ internal class BuySellKycStatusDelegate(
             button.setText(R.string.buy_sell_overview_denied_button)
         }
 
-        private fun renderNotYetCompleted() {
+        private fun renderNotYetCompleted(limit: String) {
             header.setText(R.string.buy_sell_overview_pending_title)
-            message.setText(R.string.buy_sell_overview_pending_message)
+            message.text = getContext().getString(R.string.buy_sell_overview_pending_message, limit)
             button.setText(R.string.buy_sell_overview_pending_button)
         }
     }

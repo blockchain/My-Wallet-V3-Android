@@ -489,7 +489,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                     getExchangeRate(token, if (isSell) -1.0 else 1.0, currency)
                         .toObservable()
                         .doOnNext {
-                            maximumInCardAmount = trader.level?.limits?.card?.inX?.daily ?: 0.0
+                            maximumInCardAmount = trader.level.limits.card.inLimits.daily
                         }
                         .flatMap { getPaymentMethods(token, inMedium).toObservable() }
                         .doOnNext { defaultCurrency = getDefaultCurrency(trader.defaultCurrency) }
