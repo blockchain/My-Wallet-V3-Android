@@ -23,14 +23,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp">
+                    android:hint="@string/wallet_id">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/wallet_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/wallet_id"
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:maxLines="1" />
@@ -41,14 +41,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp">
+                    android:hint="@string/password">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/wallet_pass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/password"
                         android:imeOptions="actionGo"
                         android:inputType="textPassword"
                         android:maxLines="1" />
