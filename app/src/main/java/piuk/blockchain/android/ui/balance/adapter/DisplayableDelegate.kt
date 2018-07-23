@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.item_balance.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.transactions.models.Displayable
 import piuk.blockchain.androidcoreui.utils.extensions.getContext
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
@@ -157,10 +156,7 @@ class DisplayableDelegate<in T>(
         tx: Displayable,
         @DrawableRes colorLight: Int,
         @DrawableRes colorDark: Int
-    ) = if (tx.confirmations < getRequiredConfirmations(tx)) colorLight else colorDark
-
-    private fun getRequiredConfirmations(tx: Displayable) =
-        if (tx.cryptoCurrency == CryptoCurrency.BTC) CONFIRMATIONS_BTC else CONFIRMATIONS_ETH
+    ) = if (tx.confirmations < tx.cryptoCurrency.requiredConfirmations) colorLight else colorDark
 
     private fun getRealTxPosition(position: Int, items: List<T>): Int {
         val diff = items.size - items.count { it is Displayable }
@@ -177,11 +173,5 @@ class DisplayableDelegate<in T>(
         internal var watchOnly: TextView = itemView.watch_only
         internal var doubleSpend: ImageView = itemView.double_spend_warning
         internal var note: TextView = itemView.tx_note
-    }
-
-    companion object {
-
-        private const val CONFIRMATIONS_BTC = 3
-        private const val CONFIRMATIONS_ETH = 12
     }
 }

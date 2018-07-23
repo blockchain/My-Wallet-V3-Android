@@ -3,10 +3,30 @@ package info.blockchain.balance
 import java.math.BigDecimal
 import java.math.BigInteger
 
-enum class CryptoCurrency(val symbol: String, val unit: String, val dp: Int) {
-    BTC("BTC", "Bitcoin", 8),
-    ETHER("ETH", "Ether", 18),
-    BCH("BCH", "Bitcoin Cash", 8);
+enum class CryptoCurrency(
+    val symbol: String,
+    val unit: String,
+    val dp: Int,
+    val requiredConfirmations: Int
+) {
+    BTC(
+        symbol = "BTC",
+        unit = "Bitcoin",
+        dp = 8,
+        requiredConfirmations = 3
+    ),
+    ETHER(
+        symbol = "ETH",
+        unit = "Ether",
+        dp = 18,
+        requiredConfirmations = 12
+    ),
+    BCH(
+        symbol = "BCH",
+        unit = "Bitcoin Cash",
+        dp = 8,
+        requiredConfirmations = 3
+    );
 
     internal fun smallestUnitValueToBigDecimal(amount: BigInteger): BigDecimal {
         return amount.toBigDecimal().movePointLeft(dp)

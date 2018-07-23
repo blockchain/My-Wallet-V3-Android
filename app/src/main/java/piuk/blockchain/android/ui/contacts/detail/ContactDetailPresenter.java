@@ -3,6 +3,7 @@ package piuk.blockchain.android.ui.contacts.detail;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 
+import info.blockchain.balance.CryptoCurrency;
 import info.blockchain.wallet.contacts.data.Contact;
 import info.blockchain.wallet.contacts.data.FacilitatedTransaction;
 import info.blockchain.wallet.contacts.data.PaymentRequest;
@@ -352,7 +353,7 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailView> {
                     summary.setConfirmations(transactionListDataManager.getTxConfirmationsMap().get(summary.getHash()));
                 } else {
                     // Assume confirmed
-                    summary.setConfirmations(3);
+                    summary.setConfirmations(CryptoCurrency.BTC.getRequiredConfirmations());
                 }
 
                 if (fctx.getRole().equals(FacilitatedTransaction.ROLE_RPR_RECEIVER)

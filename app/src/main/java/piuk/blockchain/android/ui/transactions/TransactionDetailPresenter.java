@@ -50,10 +50,6 @@ import static piuk.blockchain.android.ui.balance.BalanceFragment.KEY_TRANSACTION
 @SuppressWarnings("WeakerAccess")
 public class TransactionDetailPresenter extends BasePresenter<TransactionDetailView> {
 
-    private static final int CONFIRMATIONS_BTC = 3;
-    private static final int CONFIRMATIONS_ETH = 12;
-    private static final int CONFIRMATIONS_BCH = 3;
-
     private TransactionHelper transactionHelper;
     private PayloadDataManager payloadDataManager;
     private StringUtils stringUtils;
@@ -416,25 +412,12 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
 
     @VisibleForTesting
     void setConfirmationStatus(CryptoCurrency cryptoCurrency, String txHash, long confirmations) {
-        if (confirmations >= getRequiredConfirmations(cryptoCurrency)) {
+        if (confirmations >= cryptoCurrency.getRequiredConfirmations()) {
             getView().setStatus(cryptoCurrency, stringUtils.getString(R.string.transaction_detail_confirmed), txHash);
         } else {
             String pending = stringUtils.getString(R.string.transaction_detail_pending);
-            pending = String.format(Locale.getDefault(), pending, confirmations, getRequiredConfirmations(cryptoCurrency));
+            pending = String.format(Locale.getDefault(), pending, confirmations, cryptoCurrency.getRequiredConfirmations());
             getView().setStatus(cryptoCurrency, pending, txHash);
-        }
-    }
-
-    private int getRequiredConfirmations(CryptoCurrency cryptoCurrency) {
-        switch (cryptoCurrency) {
-            case BTC:
-                return CONFIRMATIONS_BTC;
-            case ETHER:
-                return CONFIRMATIONS_ETH;
-            case BCH:
-                return CONFIRMATIONS_BCH;
-            default:
-                throw new IllegalArgumentException(cryptoCurrency + " is not currently supported");
         }
     }
 
@@ -453,13 +436,13 @@ public class TransactionDetailPresenter extends BasePresenter<TransactionDetailV
     @VisibleForTesting
     void setTransactionColor(Displayable transaction) {
         if (transaction.getDirection() == Direction.TRANSFERRED) {
-            getView().setTransactionColour(transaction.getConfirmations() < getRequiredConfirmations(transaction.getCryptoCurrency())
+            getView().setTransactionColour(transaction.getConfirmations() < transaction.getCryptoCurrency().getRequiredConfirmations()
                     ? R.color.product_gray_transferred_50 : R.color.product_gray_transferred);
         } else if (transaction.getDirection() == Direction.SENT) {
-            getView().setTransactionColour(transaction.getConfirmations() < getRequiredConfirmations(transaction.getCryptoCurrency())
+            getView().setTransactionColour(transaction.getConfirmations() < transaction.getCryptoCurrency().getRequiredConfirmations()
                     ? R.color.product_red_sent_50 : R.color.product_red_sent);
         } else {
-            getView().setTransactionColour(transaction.getConfirmations() < getRequiredConfirmations(transaction.getCryptoCurrency())
+            getView().setTransactionColour(transaction.getConfirmations() < transaction.getCryptoCurrency().getRequiredConfirmations()
                     ? R.color.product_green_received_50 : R.color.product_green_received);
         }
     }

@@ -59,4 +59,19 @@ class CryptoCurrencyTests {
     fun `ether dp is 18`() {
         CryptoCurrency.ETHER.dp `should be` 18
     }
+
+    @Test
+    fun `btc required confirmations is 3`() {
+        CryptoCurrency.BTC.requiredConfirmations `should be` 3
+    }
+
+    @Test
+    fun `bch required confirmations is 3`() {
+        CryptoCurrency.BCH.requiredConfirmations `should be` 3
+    }
+
+    @Test
+    fun `ether required confirmations is 12`() {
+        CryptoCurrency.ETHER.requiredConfirmations `should be` 12
+    }
 }
