@@ -1,126 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tx_row"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:minHeight="72dp"
+    android:theme="@style/PlainTheme">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
+        android:maxLines="1"
+        android:textColor="@color/primary_gray_dark"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="September 29, 2015" />
+
+    <TextView
+        android:id="@+id/direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:textColor="@color/primary_gray"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        tools:text="@string/RECEIVED" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_view_green"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_horizontal|center_vertical"
+        android:minWidth="140dp"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="50.12345678 BTC" />
+
+    <ImageView
+        android:id="@+id/double_spend_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:tint="@color/product_red_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/result"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_warning_white_24dp" />
+
+    <TextView
+        android:id="@+id/watch_only"
+        style="@style/DashboardCoinAmounts.NonSpendable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/watch_only"
+        app:layout_constraintStart_toStartOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/direction" />
+
+    <TextView
+        android:id="@+id/tx_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_view_navy"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textAppearance="?attr/textAppearanceListItemSmall"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/watch_only"
+        tools:text="Deposited from ShapeShift" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@color/primary_gray_light" />
+        android:layout_marginTop="16dp"
+        android:background="@color/primary_gray_light"
+        app:layout_constraintTop_toBottomOf="@id/tx_note" />
 
-    <RelativeLayout
-        android:id="@+id/tx_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:foreground="?attr/selectableItemBackground"
-        android:minHeight="72dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:theme="@style/PlainTheme">
-
-        <!-- DATE -->
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|left"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat"
-            android:maxLines="1"
-            android:textColor="@color/product_gray_hint"
-            android:textSize="14sp"
-            tools:text="September 29, 2015" />
-
-        <!-- WATCH ONLY AND RECEIVED/SENT/TRANSFERRED -->
-        <TextView
-            android:id="@+id/direction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/date"
-            android:ellipsize="end"
-            android:fontFamily="@font/montserrat"
-            android:maxLines="1"
-            android:textAllCaps="true"
-            android:textColor="@color/primary_gray"
-            android:textSize="16sp"
-            tools:text="@string/RECEIVED" />
-
-        <TextView
-            android:id="@+id/watch_only"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/direction"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/double_spend_warning"
-            android:background="@drawable/rounded_view_grey"
-            android:ellipsize="end"
-            android:fontFamily="@font/montserrat"
-            android:maxLines="1"
-            android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
-            android:text="@string/watch_only"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
-
-        <ImageView
-            android:id="@+id/double_spend_warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/result"
-            android:padding="8dp"
-            android:tint="@color/product_red_medium"
-            app:srcCompat="@drawable/ic_warning_white_24dp" />
-
-        <!-- VALUE -->
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/rounded_view_green"
-            android:fontFamily="@font/montserrat"
-            android:gravity="center_horizontal|center_vertical"
-            android:minWidth="140dp"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:text="0.123456 BTC" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/result"
-            android:layout_marginTop="28dp"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/tx_note"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/rounded_view_navy"
-                android:ellipsize="end"
-                android:fontFamily="@font/montserrat"
-                android:gravity="left"
-                android:maxLines="1"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textAppearance="?attr/textAppearanceListItemSmall"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                tools:text="Deposited from ShapeShift" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

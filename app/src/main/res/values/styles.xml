@@ -400,6 +400,8 @@
     </style>
 
     <style name="DashboardCoinAmounts.NonSpendable">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
         <item name="android:background">@drawable/rounded_non_spendable_button</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:paddingEnd">10dp</item>
