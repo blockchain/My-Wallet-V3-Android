@@ -37,4 +37,5 @@ fun <T> RecyclerView.Adapter<*>.autoNotify(
 /**
  * Returns the current [Context] for the [RecyclerView.ViewHolder].
  */
-fun RecyclerView.ViewHolder.getContext(): Context = this.itemView.context
+val RecyclerView.ViewHolder.context: Context
+    get() = this.itemView.context

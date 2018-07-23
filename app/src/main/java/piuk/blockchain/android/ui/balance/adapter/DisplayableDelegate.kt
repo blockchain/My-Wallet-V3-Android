@@ -1,20 +1,17 @@
 package piuk.blockchain.android.ui.balance.adapter
 
 import android.app.Activity
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import info.blockchain.wallet.multiaddress.TransactionSummary
 import kotlinx.android.synthetic.main.item_balance.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.androidcore.data.transactions.models.Displayable
-import piuk.blockchain.androidcoreui.utils.extensions.getContext
+import piuk.blockchain.androidcoreui.utils.extensions.context
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.goneIf
@@ -47,26 +44,22 @@ class DisplayableDelegate<in T>(
 
         viewHolder.timeSince.text = dateUtil.formatted(tx.timeStamp)
 
-        when (tx.direction) {
-            TransactionSummary.Direction.TRANSFERRED -> displayTransferred(viewHolder, tx)
-            TransactionSummary.Direction.RECEIVED -> displayReceived(viewHolder, tx)
-            TransactionSummary.Direction.SENT -> displaySent(viewHolder, tx)
-            else -> throw IllegalStateException("Tx direction isn't SENT, RECEIVED or TRANSFERRED")
-        }
+        tx.formatting()
+            .applyTransactionFormatting(viewHolder)
 
         tx.note?.let {
             viewHolder.note.text = it
             viewHolder.note.visible()
         } ?: viewHolder.note.gone()
 
-        if (showCrypto) {
-            viewHolder.result.text = tx.totalDisplayableCrypto
+        viewHolder.result.text = if (showCrypto) {
+            tx.totalDisplayableCrypto
         } else {
-            viewHolder.result.text = tx.totalDisplayableFiat
+            tx.totalDisplayableFiat
         }
 
-        viewHolder.watchOnly.goneIf { !tx.watchOnly }
-        viewHolder.doubleSpend.goneIf { !tx.doubleSpend }
+        viewHolder.watchOnly.goneIf(!tx.watchOnly)
+        viewHolder.doubleSpend.goneIf(!tx.doubleSpend)
 
         // TODO: Move this click listener to the ViewHolder to avoid unnecessary object instantiation during binding
         viewHolder.result.setOnClickListener {
@@ -82,81 +75,9 @@ class DisplayableDelegate<in T>(
         }
     }
 
-    fun onViewFormatUpdated(isBtc: Boolean) {
-        this.showCrypto = isBtc
+    fun onViewFormatUpdated(showCrypto: Boolean) {
+        this.showCrypto = showCrypto
     }
-
-    private fun getResolvedColor(viewHolder: RecyclerView.ViewHolder, @ColorRes color: Int): Int =
-        viewHolder.getContext().getResolvedColor(color)
-
-    private fun displayTransferred(viewHolder: TxViewHolder, tx: Displayable) {
-        viewHolder.direction.setText(R.string.MOVED)
-        viewHolder.result.setBackgroundResource(
-            getColorForConfirmations(
-                tx,
-                R.drawable.rounded_view_transferred_50,
-                R.drawable.rounded_view_transferred
-            )
-        )
-
-        viewHolder.direction.setTextColor(
-            getResolvedColor(
-                viewHolder, getColorForConfirmations(
-                    tx,
-                    R.color.product_gray_transferred_50,
-                    R.color.product_gray_transferred
-                )
-            )
-        )
-    }
-
-    private fun displayReceived(viewHolder: TxViewHolder, tx: Displayable) {
-        viewHolder.direction.setText(R.string.RECEIVED)
-        viewHolder.result.setBackgroundResource(
-            getColorForConfirmations(
-                tx,
-                R.drawable.rounded_view_green_50,
-                R.drawable.rounded_view_green
-            )
-        )
-
-        viewHolder.direction.setTextColor(
-            getResolvedColor(
-                viewHolder, getColorForConfirmations(
-                    tx,
-                    R.color.product_green_received_50,
-                    R.color.product_green_received
-                )
-            )
-        )
-    }
-
-    private fun displaySent(viewHolder: TxViewHolder, tx: Displayable) {
-        viewHolder.direction.setText(R.string.SENT)
-        viewHolder.result.setBackgroundResource(
-            getColorForConfirmations(
-                tx,
-                R.drawable.rounded_view_red_50,
-                R.drawable.rounded_view_red
-            )
-        )
-
-        viewHolder.direction.setTextColor(
-            getResolvedColor(
-                viewHolder, getColorForConfirmations(
-                    tx,
-                    R.color.product_red_sent_50,
-                    R.color.product_red_sent
-                )
-            )
-        )
-    }
-
-    private fun getColorForConfirmations(
-        tx: Displayable,
-        @DrawableRes colorLight: Int,
-        @DrawableRes colorDark: Int
-    ) = if (tx.confirmations < tx.cryptoCurrency.requiredConfirmations) colorLight else colorDark
 
     private fun getRealTxPosition(position: Int, items: List<T>): Int {
         val diff = items.size - items.count { it is Displayable }
@@ -173,5 +94,15 @@ class DisplayableDelegate<in T>(
         internal var watchOnly: TextView = itemView.watch_only
         internal var doubleSpend: ImageView = itemView.double_spend_warning
         internal var note: TextView = itemView.tx_note
+    }
+
+    private fun DisplayableFormatting.applyTransactionFormatting(viewHolder: DisplayableDelegate.TxViewHolder) {
+        viewHolder.direction.setText(text)
+        viewHolder.result.setBackgroundResource(valueBackground)
+        viewHolder.direction.setTextColor(
+            viewHolder.context.getResolvedColor(
+                directionColour
+            )
+        )
     }
 }

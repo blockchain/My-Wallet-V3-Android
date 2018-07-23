@@ -14,7 +14,7 @@ import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.android.util.StringUtils
 import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcoreui.utils.extensions.getContext
+import piuk.blockchain.androidcoreui.utils.extensions.context
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 
 @Suppress("UNUSED_PARAMETER", "unused")
@@ -184,7 +184,7 @@ class FctxDelegate<in T>(
 //    }
 
     private fun getResolvedColor(viewHolder: RecyclerView.ViewHolder, @ColorRes color: Int) =
-        ContextCompat.getColor(viewHolder.getContext(), color)
+        ContextCompat.getColor(viewHolder.context, color)
 
     private fun getDisplaySpannable(
         btcAmount: Double,

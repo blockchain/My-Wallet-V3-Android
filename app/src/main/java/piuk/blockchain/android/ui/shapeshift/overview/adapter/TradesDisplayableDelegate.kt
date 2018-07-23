@@ -17,7 +17,7 @@ import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcoreui.utils.extensions.getContext
+import piuk.blockchain.androidcoreui.utils.extensions.context
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import java.math.BigDecimal
 import java.util.Locale
@@ -83,7 +83,7 @@ class TradesDisplayableDelegate<in T>(
     }
 
     private fun getResolvedColor(viewHolder: RecyclerView.ViewHolder, @ColorRes color: Int): Int =
-        ContextCompat.getColor(viewHolder.getContext(), color)
+        ContextCompat.getColor(viewHolder.context, color)
 
     private fun determineStatus(viewHolder: TradeViewHolder, trade: Trade): Int {
         val pair = trade.quote.pair
