@@ -184,6 +184,8 @@ class DashboardPresenter @Inject constructor(
                         val btcwatchOnlyBalance =
                             transactionListDataManager.balance(AccountKey.WatchOnly(CryptoCurrency.BTC))
                         val bchBalance = transactionListDataManager.balance(AccountKey.EntireWallet(CryptoCurrency.BCH))
+                        val bchwatchOnlyBalance =
+                            transactionListDataManager.balance(AccountKey.WatchOnly(CryptoCurrency.BCH))
                         val ethBalance = CryptoValue(CryptoCurrency.ETHER, ethAddressResponse.getTotalBalance())
 
                         val fiatCurrency = getFiatCurrency()
@@ -197,10 +199,18 @@ class DashboardPresenter @Inject constructor(
                         )
 
                         cachedData = PieChartsState.Data(
-                            bitcoin = btcBalance.toPieChartDataPoint(fiatCurrency),
-                            bitcoinWatchOnly = btcwatchOnlyBalance.toPieChartDataPoint(fiatCurrency),
-                            bitcoinCash = bchBalance.toPieChartDataPoint(fiatCurrency),
-                            ether = ethBalance.toPieChartDataPoint(fiatCurrency)
+                            bitcoin = PieChartsState.Coin(
+                                spendable = btcBalance.toPieChartDataPoint(fiatCurrency),
+                                watchOnly = btcwatchOnlyBalance.toPieChartDataPoint(fiatCurrency)
+                            ),
+                            bitcoinCash = PieChartsState.Coin(
+                                spendable = bchBalance.toPieChartDataPoint(fiatCurrency),
+                                watchOnly = bchwatchOnlyBalance.toPieChartDataPoint(fiatCurrency)
+                            ),
+                            ether = PieChartsState.Coin(
+                                spendable = ethBalance.toPieChartDataPoint(fiatCurrency),
+                                watchOnly = CryptoValue.ZeroEth.toPieChartDataPoint(fiatCurrency)
+                            )
                         ).also { view.updatePieChartState(it) }
                     }
             }

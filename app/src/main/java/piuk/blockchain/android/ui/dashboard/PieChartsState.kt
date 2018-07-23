@@ -9,19 +9,30 @@ sealed class PieChartsState {
         val fiatValue: FiatValue,
         val cryptoValueString: String
     ) {
-        val isZero: Boolean = fiatValue.isZero
-        val fiatValueString: String = fiatValue.toStringWithSymbol(Locale.getDefault())
+        val isZero = fiatValue.isZero
+        val fiatValueString = fiatValue.toStringWithSymbol(Locale.getDefault())
+    }
+
+    data class Coin(
+        val spendable: DataPoint,
+        val watchOnly: DataPoint
+    ) {
+        val isZero = spendable.isZero && watchOnly.isZero
     }
 
     data class Data(
-        val bitcoin: DataPoint,
-        val bitcoinWatchOnly: DataPoint? = null,
-        val ether: DataPoint,
-        val bitcoinCash: DataPoint
+        val bitcoin: Coin,
+        val ether: Coin,
+        val bitcoinCash: Coin
     ) : PieChartsState() {
-        val isZero: Boolean = bitcoin.isZero && bitcoinCash.isZero && ether.isZero
-        private val totalValue: FiatValue = bitcoin.fiatValue + bitcoinCash.fiatValue + ether.fiatValue
-        val totalValueString: String = totalValue.toStringWithSymbol(Locale.getDefault())
+        private val totalValue =
+            bitcoin.spendable.fiatValue +
+                bitcoinCash.spendable.fiatValue +
+                ether.spendable.fiatValue
+
+        val totalValueString = totalValue.toStringWithSymbol(Locale.getDefault())
+
+        val isZero = bitcoin.isZero && bitcoinCash.isZero && ether.isZero
     }
 
     object Loading : PieChartsState()

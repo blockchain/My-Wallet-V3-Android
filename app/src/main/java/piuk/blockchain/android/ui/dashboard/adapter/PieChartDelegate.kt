@@ -40,7 +40,6 @@ class PieChartDelegate<in T>(
 ) : AdapterDelegate<T> {
 
     private var viewHolder: PieChartViewHolder? = null
-    private var firstRender = true
 
     override fun isForViewType(items: List<T>, position: Int): Boolean =
         items[position] is PieChartsState
@@ -85,9 +84,6 @@ class PieChartDelegate<in T>(
 
     private fun renderData(data: PieChartsState.Data) {
         val isEmpty = data.isZero
-        // Prevent issue where chart won't render if NOT first fun AND data has recently gone from
-        // empty to non-empty.
-        if (isEmpty) firstRender = true
         configureChart(isEmpty)
 
         val entries = getEntries(isEmpty, data)
@@ -103,13 +99,13 @@ class PieChartDelegate<in T>(
         val chartData = PieData(dataSet).apply { setDrawValues(false) }
 
         viewHolder?.apply {
-            bitcoinValue.text = data.bitcoin.fiatValueString
-            etherValue.text = data.ether.fiatValueString
-            bitcoinCashValue.text = data.bitcoinCash.fiatValueString
-            bitcoinAmount.text = data.bitcoin.cryptoValueString
-            etherAmount.text = data.ether.cryptoValueString
-            bitcoinCashAmount.text = data.bitcoinCash.cryptoValueString
-            nonSpendableDataPoint = data.bitcoinWatchOnly
+            bitcoinValue.text = data.bitcoin.spendable.fiatValueString
+            etherValue.text = data.ether.spendable.fiatValueString
+            bitcoinCashValue.text = data.bitcoinCash.spendable.fiatValueString
+            bitcoinAmount.text = data.bitcoin.spendable.cryptoValueString
+            etherAmount.text = data.ether.spendable.cryptoValueString
+            bitcoinCashAmount.text = data.bitcoinCash.spendable.cryptoValueString
+            nonSpendableDataPoint = data.bitcoin.watchOnly
 
             progressBar.gone()
             chart.apply {
@@ -126,9 +122,9 @@ class PieChartDelegate<in T>(
         listOf(PieEntry(100.0f, ""))
     } else {
         listOf(
-            data.bitcoin withLabel context.getString(R.string.bitcoin),
-            data.ether withLabel context.getString(R.string.ether),
-            data.bitcoinCash withLabel context.getString(R.string.bitcoin_cash)
+            data.bitcoin.spendable withLabel context.getString(R.string.bitcoin),
+            data.ether.spendable withLabel context.getString(R.string.ether),
+            data.bitcoinCash.spendable withLabel context.getString(R.string.bitcoin_cash)
         )
     }
 
@@ -160,7 +156,7 @@ class PieChartDelegate<in T>(
             setHoleColor(Color.TRANSPARENT)
             holeRadius = 70f
 
-            if (firstRender) animateY(1000, Easing.EasingOption.EaseInOutQuad)
+            if (empty) animateY(1000, Easing.EasingOption.EaseInOutQuad)
             isRotationEnabled = false
             legend.isEnabled = false
             description.isEnabled = false
@@ -169,7 +165,6 @@ class PieChartDelegate<in T>(
             setNoDataTextColor(ContextCompat.getColor(context, R.color.primary_gray_medium))
             if (!empty) marker = ValueMarker(context, R.layout.item_pie_chart_marker)
         }
-        firstRender = false
     }
 
     private inner class ValueMarker(

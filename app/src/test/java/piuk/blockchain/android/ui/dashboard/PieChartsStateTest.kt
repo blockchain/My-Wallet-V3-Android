@@ -10,7 +10,10 @@ class PieChartsStateTest {
 
     @Test
     fun `data point isZero`() {
-        zeroDataPoint().apply {
+        PieChartsState.DataPoint(
+            fiatValue = FiatValue("USD", 0.toBigDecimal()),
+            cryptoValueString = "anything"
+        ).apply {
             isZero `should be` true
         }
     }
@@ -51,17 +54,26 @@ class PieChartsStateTest {
     fun `can calculate total value`() {
         givenUsLocale()
         PieChartsState.Data(
-            bitcoin = PieChartsState.DataPoint(
-                fiatValue = FiatValue("USD", 100.toBigDecimal()),
-                cryptoValueString = "1 BTC"
+            bitcoin = PieChartsState.Coin(
+                spendable = PieChartsState.DataPoint(
+                    fiatValue = FiatValue("USD", 100.toBigDecimal()),
+                    cryptoValueString = "1 BTC"
+                ),
+                watchOnly = zeroDataPoint()
             ),
-            bitcoinCash = PieChartsState.DataPoint(
-                fiatValue = FiatValue("USD", 200.toBigDecimal()),
-                cryptoValueString = "2 BCH"
+            bitcoinCash = PieChartsState.Coin(
+                spendable = PieChartsState.DataPoint(
+                    fiatValue = FiatValue("USD", 200.toBigDecimal()),
+                    cryptoValueString = "2 BCH"
+                ),
+                watchOnly = zeroDataPoint()
             ),
-            ether = PieChartsState.DataPoint(
-                fiatValue = FiatValue("USD", 300.toBigDecimal()),
-                cryptoValueString = "3 ETH"
+            ether = PieChartsState.Coin(
+                spendable = PieChartsState.DataPoint(
+                    fiatValue = FiatValue("USD", 300.toBigDecimal()),
+                    cryptoValueString = "3 ETH"
+                ),
+                watchOnly = zeroDataPoint()
             )
         ).apply {
             totalValueString `should equal` "$600.00"
@@ -72,9 +84,9 @@ class PieChartsStateTest {
     fun `all zero`() {
         givenUsLocale()
         PieChartsState.Data(
-            bitcoin = zeroDataPoint(),
-            bitcoinCash = zeroDataPoint(),
-            ether = zeroDataPoint()
+            bitcoin = zeroCoin(),
+            bitcoinCash = zeroCoin(),
+            ether = zeroCoin()
         ).apply {
             isZero `should be` true
         }
@@ -84,9 +96,9 @@ class PieChartsStateTest {
     fun `btc not zero`() {
         givenUsLocale()
         PieChartsState.Data(
-            bitcoin = nonZeroDataPoint(),
-            bitcoinCash = zeroDataPoint(),
-            ether = zeroDataPoint()
+            bitcoin = nonZeroCoin(),
+            bitcoinCash = zeroCoin(),
+            ether = zeroCoin()
         ).apply {
             isZero `should be` false
         }
@@ -96,9 +108,9 @@ class PieChartsStateTest {
     fun `bch not zero`() {
         givenUsLocale()
         PieChartsState.Data(
-            bitcoin = zeroDataPoint(),
-            bitcoinCash = nonZeroDataPoint(),
-            ether = zeroDataPoint()
+            bitcoin = zeroCoin(),
+            bitcoinCash = nonZeroCoin(),
+            ether = zeroCoin()
         ).apply {
             isZero `should be` false
         }
@@ -108,24 +120,84 @@ class PieChartsStateTest {
     fun `eth not zero`() {
         givenUsLocale()
         PieChartsState.Data(
-            bitcoin = zeroDataPoint(),
-            bitcoinCash = zeroDataPoint(),
-            ether = nonZeroDataPoint()
+            bitcoin = zeroCoin(),
+            bitcoinCash = zeroCoin(),
+            ether = nonZeroCoin()
         ).apply {
             isZero `should be` false
         }
     }
 
-    private fun zeroDataPoint(): PieChartsState.DataPoint {
-        return PieChartsState.DataPoint(
-            fiatValue = FiatValue("USD", 0.toBigDecimal()),
-            cryptoValueString = "anything"
-        )
+    @Test
+    fun `bitcoin watch-only not zero`() {
+        givenUsLocale()
+        PieChartsState.Data(
+            bitcoin = nonZeroWatchOnlyCoin(),
+            bitcoinCash = zeroCoin(),
+            ether = zeroCoin()
+        ).apply {
+            isZero `should be` false
+        }
     }
+
+    @Test
+    fun `bitcoin cash watch-only not zero`() {
+        givenUsLocale()
+        PieChartsState.Data(
+            bitcoin = zeroCoin(),
+            bitcoinCash = nonZeroWatchOnlyCoin(),
+            ether = zeroCoin()
+        ).apply {
+            isZero `should be` false
+        }
+    }
+
+    @Test
+    fun `ether watch-only not zero`() {
+        givenUsLocale()
+        PieChartsState.Data(
+            bitcoin = zeroCoin(),
+            bitcoinCash = zeroCoin(),
+            ether = nonZeroWatchOnlyCoin()
+        ).apply {
+            isZero `should be` false
+        }
+    }
+
+    @Test
+    fun `coin watch-only not zero`() {
+        nonZeroWatchOnlyCoin()
+            .isZero `should be` false
+    }
+
+    private fun zeroCoin() =
+        PieChartsState.Coin(
+            spendable = zeroDataPoint(),
+            watchOnly = zeroDataPoint()
+        )
+
+    private fun nonZeroCoin() =
+        PieChartsState.Coin(
+            spendable = nonZeroDataPoint(),
+            watchOnly = zeroDataPoint()
+        )
+
+    private fun nonZeroWatchOnlyCoin() =
+        PieChartsState.Coin(
+            spendable = zeroDataPoint(),
+            watchOnly = nonZeroDataPoint()
+        )
 
     private fun nonZeroDataPoint(): PieChartsState.DataPoint {
         return PieChartsState.DataPoint(
             fiatValue = FiatValue("USD", 1.toBigDecimal()),
+            cryptoValueString = "anything"
+        )
+    }
+
+    private fun zeroDataPoint(): PieChartsState.DataPoint {
+        return PieChartsState.DataPoint(
+            fiatValue = FiatValue("USD", 0.toBigDecimal()),
             cryptoValueString = "anything"
         )
     }

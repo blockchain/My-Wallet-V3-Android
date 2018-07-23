@@ -591,6 +591,9 @@ class DashboardPresenterTest {
         verify(transactionListDataManager).balance(argThat {
             currency == CryptoCurrency.BCH && this is AccountKey.EntireWallet
         })
+        verify(transactionListDataManager).balance(argThat {
+            currency == CryptoCurrency.BCH && this is AccountKey.WatchOnly
+        })
     }
 
     @Test
