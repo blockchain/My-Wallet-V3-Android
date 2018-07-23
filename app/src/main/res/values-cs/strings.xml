@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Nelze odeslat na stejnou adresu.</string>
     <string name="make_default">Nastavit jako výchozí</string>
     <string name="privx_required">Je vyžadován privátní klíč</string>
-    <string name="watch_only_spend_instructionss">Tato akce vyžaduje privátní klíč pro bitcoinovou adresu %1$s. Naskenujte prosím QR kód.</string>
+    <string name="watch_only_spend_instructions">Tato akce vyžaduje privátní klíč pro bitcoinovou adresu %1$s. Naskenujte prosím QR kód.</string>
     <string name="invalid_private_key">Neplatný privátní klíč</string>
     <string name="watch_only_import_warning">Chystáte se importovat adresu pouze ke sledování, tedy adresu (nebo skript veřejného klíče) uloženou v peněžence bez odpovídajícího privátního klíče. To znamená, že prostředky lze použít POUZE tehdy, pokud máte privátní klíč uložený jinde. Pokud nemáte privátní klíč uložený, NEMĚLI byste nikoho instruovat, aby Vám na adresu pouze ke sledování zasílal bitcoiny.\n\nTyto možnosti doporučujeme pouze pokročilým uživatelům. Pokračovat? </string>
     <string name="scan_private_key">Naskenovat privátní klíč</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Zálohová fráze</string>
     <string name="invalid_recovery_phrase">Neplatná zálohová fráze. Zkuste to prosím znovu</string>
     <string name="about">Peněženka Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nVšechna práva vyhrazena.</string>
-    <string name="watch_only_label">(pouze pro sledování)</string>
     <string name="watchonly_address_receive_warning">Na adresu pouze pro sledování obdržíte bitcoin. Tyto prostředky můžete použít jen tehdy, pokud máte přístup k privátnímu klíči. Pokračovat?</string>
     <string name="label_name_match">Jméno je již použito</string>
     <string name="private_key_not_matching_address">POZNÁMKA: Naskenovaný privátní klíč neodpovídá vaší adrese pouze pro sledování. Chcete-li odeslat prostředky z této adresy, naskenujte prosím správný privátní klíč.</string>

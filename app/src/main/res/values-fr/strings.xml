@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Impossible d\'envoyer à la même adresse.</string>
     <string name="make_default">Définir par défaut</string>
     <string name="privx_required">Clé privée nécessaire</string>
-    <string name="watch_only_spend_instructionss">Cette action nécessite la clé privée de l\'adresse Bitcoin %1$s. Veuillez scanner le code QR.</string>
+    <string name="watch_only_spend_instructions">Cette action nécessite la clé privée de l\'adresse Bitcoin %1$s. Veuillez scanner le code QR.</string>
     <string name="invalid_private_key">Clé privée non valide</string>
     <string name="watch_only_import_warning">Vous êtes sur le point d\'importer une adresse en lecture seule. C\'est une adresse (ou clé publique) stockée dans le portefeuille sans la clé privée lui correspondant. Cela signifie que les fonds pourront être utilisés UNIQUEMENT si vous détenez la clé privée dans un autre endroit. Si vous n\'avez pas enregistré la clé privée, NE demandez JAMAIS à qui que ce soit de vous envoyer des bitcoin à cette adresse en lecture seule.\n\nSeuls les utilisateurs avancés devraient utiliser ces options. Continuer ? </string>
     <string name="scan_private_key">Scannez la clé privée</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Phrase de récupération</string>
     <string name="invalid_recovery_phrase">Phrase de récuperation non valide. Veuillez réessayer</string>
     <string name="about">Portefeuille Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nTous droits réservés.</string>
-    <string name="watch_only_label">(lecture seule)</string>
     <string name="watchonly_address_receive_warning">Vous allez recevoir des bitcoin à une adresse en lecture seule. Vous pouvez dépenser ces fonds uniquement si vous avez accès à la clé privée. Continuer ?</string>
     <string name="label_name_match">Nom déjà utilisé</string>
     <string name="private_key_not_matching_address">REMARQUE : La clé privée scannée ne correspond pas à votre adresse en lecture seule. Pour dépenser vos fonds depuis cette adresse, veuillez scanner la clé privée correcte.</string>

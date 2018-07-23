@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Impossibile inviare allo stesso indirizzo.</string>
     <string name="make_default">Impostalo come predefinito</string>
     <string name="privx_required">Chiave privata necessaria</string>
-    <string name="watch_only_spend_instructionss">Questa azione richiede la chiave privata per l\'indirizzo Bitcoin %1$s. Effettua la scansione del codice QR.</string>
+    <string name="watch_only_spend_instructions">Questa azione richiede la chiave privata per l\'indirizzo Bitcoin %1$s. Effettua la scansione del codice QR.</string>
     <string name="invalid_private_key">Chiave privata non valida</string>
     <string name="watch_only_import_warning">Stai per importare un indirizzo solo watch, un indirizzo (o script a chiave pubblica) conservato nel portafoglio senza la corrispondente chiave privata. Questo significa che i fondi possono essere spesi SOLO se hai la chiave privata conservata altrove. Se non disponi della chiave privata memorizzata, NON autorizzare nessuno ad inviare bitcoin all\'indirizzo solo watch.\n\nQueste opzioni sono raccomandate solo per utenti esperti. Vuoi continuare? </string>
     <string name="scan_private_key">Fai la scansione della chiave privata</string>
@@ -565,7 +565,6 @@
     <string name="recovery_passphrase">Frase di backup</string>
     <string name="invalid_recovery_phrase">Frase di backup non valida. Riprova</string>
     <string name="about">Blockchain Wallet %1$s\n©%2$s Blockchain Luxembourg S.A.\nTutti i diritti riservati.</string>
-    <string name="watch_only_label">(solo visualizzazione)</string>
     <string name="watchonly_address_receive_warning">Stai per ricevere dei Bitcoin su un indirizzo abilitato alla sola visualizzazione. Potrai spendere questi fondi solo se disponi della chiave privata. Vuoi continuare?</string>
     <string name="label_name_match">Nome già esistente</string>
     <string name="private_key_not_matching_address">NOTA: la chiave privata scansionata non corrisponde al tuo indirizzo di sola visualizzazione. Per spendere i tuoi fondi da questo indirizzo, fai la scansione della chiave privata giusta.</string>

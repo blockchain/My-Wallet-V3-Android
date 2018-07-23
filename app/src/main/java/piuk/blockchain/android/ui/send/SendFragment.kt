@@ -823,8 +823,8 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
             AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(R.string.privx_required)
                 .setMessage(
-                    String.format(
-                        getString(R.string.watch_only_spend_instructionss),
+                    getString(
+                        R.string.watch_only_spend_instructions,
                         address
                     )
                 )

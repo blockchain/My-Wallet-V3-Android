@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Kan niet naar hetzelfde adres verzenden.</string>
     <string name="make_default">Instellen als standaard</string>
     <string name="privx_required">Privésleutel nodig</string>
-    <string name="watch_only_spend_instructionss">Deze actie vereist de privésleutel voor Bitcoin-adres %1$s. Scan de QR-code.</string>
+    <string name="watch_only_spend_instructions">Deze actie vereist de privésleutel voor Bitcoin-adres %1$s. Scan de QR-code.</string>
     <string name="invalid_private_key">Ongeldige privésleutel</string>
     <string name="watch_only_import_warning">U staat op het punt om een alleen-lezen-adres te importeren, een adres (of openbare sleutelscript) dat is opgeslagen in de portemonnee zonder de bijbehorende privésleutel. Dit betekent dat de tegoeden ALLEEN kunnen worden uitgegeven als u de privésleutel elders heeft bewaard. Als u de privésleutel niet heeft opgeslagen, vraag dan NIEMAND om u Bitcoins te verzenden naar het alleen-lezen-adres.\n\nDeze opties worden alleen aanbevolen aan gevorderde gebruikers. Doorgaan? </string>
     <string name="scan_private_key">Privésleutel scannen</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Back-upregel</string>
     <string name="invalid_recovery_phrase">Ongeldige back-upregel. Probeer het opnieuw</string>
     <string name="about">Blockchain-portemonnee %1$s\n©%2$s Blockchain Luxemburg S.A.\nAlle rechten voorbehouden.</string>
-    <string name="watch_only_label">(alleen-bekijken)</string>
     <string name="watchonly_address_receive_warning">U zult zo meteen bitcoin ontvangen op een alleen-bekijken-adres. U kunt dit saldo alleen besteden als u toegang heeft tot de privésleutel. Doorgaan?</string>
     <string name="label_name_match">Naam reeds in gebruik</string>
     <string name="private_key_not_matching_address">OPMERKING: De gescande privésleutel komt niet overeen met het alleen-bekijken-adres. Om uw saldo vanaf dit adres te kunnen besteden, dient u de juiste privésleutel te scannen.</string>

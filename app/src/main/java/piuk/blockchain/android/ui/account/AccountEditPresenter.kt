@@ -559,8 +559,8 @@ class AccountEditPresenter @Inject internal constructor(
     fun onClickScanXpriv(view: View) {
         if (payloadDataManager.wallet!!.isDoubleEncryption) {
             getView().promptPrivateKey(
-                String.format(
-                    stringUtils.getString(R.string.watch_only_spend_instructionss),
+                stringUtils.getFormattedString(
+                    R.string.watch_only_spend_instructions,
                     legacyAddress!!.address
                 )
             )

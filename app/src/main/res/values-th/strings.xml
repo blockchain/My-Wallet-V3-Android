@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">ไม่สามารถส่งไปยังที่อยู่เดียวกันได้</string>
     <string name="make_default">ทำให้เป็นค่าเริ่มต้น</string>
     <string name="privx_required">จำเป็นต้องมีคีย์ส่วนตัว</string>
-    <string name="watch_only_spend_instructionss">การกระทำนี้ต้องการคีย์ส่วนตัวสำหรับที่อยู่ Bitcoin %1$s โปรดสแกนรหัส QR</string>
+    <string name="watch_only_spend_instructions">การกระทำนี้ต้องการคีย์ส่วนตัวสำหรับที่อยู่ Bitcoin %1$s โปรดสแกนรหัส QR</string>
     <string name="invalid_private_key">คีย์ส่วนตัวไม่ถูกต้อง</string>
     <string name="watch_only_import_warning">คุณกำลังจะนำเข้าที่อยู่แบบชมอย่างเดียว ที่อยู่ (หรือรหัสคีย์สาธารณะ) ซึ่งจัดเก็บในกระเป๋าเงินโดยไม่มีคีย์ส่วนตัวที่สอดคล้องกัน มันหมายความว่า คุณจะสามารถใช้เงินได้หากคุณจัดเก็บคีย์ส่วนตัวไว้ที่อื่นเท่านั้น หากคุณไม่ได้จัดเก็บคีย์ส่วนตัวไว้ อย่าขอให้ผู้ใด ๆ ส่ง bitcoin ให้คุณไปยังที่อยู่แบบชมอย่างเดียวนี้\n\nแนะนำตัวเลือกเหล่านี้สำหรับผู้ใช้ขั้นสูงเท่านั้น ดำเนินการต่อ? </string>
     <string name="scan_private_key">สแกนคีย์ส่วนตัว</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">วลีสำรอง</string>
     <string name="invalid_recovery_phrase">โปรดลองอีกครั้ง โปรดลองอีกครั้ง</string>
     <string name="about">กระเป๋าเงิน Blockchain %1$s\n©?%2$s Blockchain ลักเซมเบิร์กS.A.\nสงวนสิทธิ์ทั้งหมด</string>
-    <string name="watch_only_label">(ชมอย่างเดียว)</string>
     <string name="watchonly_address_receive_warning">คุณกำลังจะได้รับ bitcoin ไปยังที่อยู่แบบชมอย่างเดียว คุณสามารถใช้เงินเหล่านี้ได้หากคุณสามารถเข้าถึงคีย์ส่วนตัวได้เท่านั้น ดำเนินการต่อ?</string>
     <string name="label_name_match">มีการใช้ชื่ออยู่แล้ว</string>
     <string name="private_key_not_matching_address">หมายเหตุ: คีย์ส่วนตัวที่ได้รับการสแกนไม่สอดคล้องกับที่อยู่แบบชมอย่างเดียวของคุณ เพื่อใช้เงินของคุณจากที่อยู่นี้ โปรดสแกนคีย์ส่วนตัวที่ถูกต้อง</string>

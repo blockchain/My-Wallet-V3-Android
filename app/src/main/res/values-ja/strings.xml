@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">同一アドレスに送信できません。</string>
     <string name="make_default">既定にする</string>
     <string name="privx_required">秘密鍵が必要です</string>
-    <string name="watch_only_spend_instructionss">ビットコインアドレス%1$sの秘密鍵がこのアクションには必要です。QRコードをスキャンしてください。</string>
+    <string name="watch_only_spend_instructions">ビットコインアドレス%1$sの秘密鍵がこのアクションには必要です。QRコードをスキャンしてください。</string>
     <string name="invalid_private_key">無効な秘密鍵</string>
     <string name="watch_only_import_warning">閲覧のみアドレス、対応する秘密鍵のない、財布に保存したアドレス（もしくは秘密鍵スクリプト）をインポートしようとしています。これは秘密鍵が別の場所に保管されている場合のみ、資金を使用できるという意味です。秘密鍵が保管されていない場合、閲覧のみアドレスにビットコインが送信されないように注意してください。\n\nこれらのオプションは上級ユーザーにのみ推奨されています。続行しますか？ </string>
     <string name="scan_private_key">秘密鍵をスキャン</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">バックアップフレーズ</string>
     <string name="invalid_recovery_phrase">無効なバックアップフレーズです。再試行してください</string>
     <string name="about">Blockchainウォレット%1$s\n©%2$sBlockchain Luxembourg S.A.\n全著作権所有。</string>
-    <string name="watch_only_label">(読み取り専用)</string>
     <string name="watchonly_address_receive_warning">読み取り専用アドレスにビットコインを受け取ろうとしています。これらの資金は秘密鍵にアクセスがある場合のみ使用できます。続行しますか？</string>
     <string name="label_name_match">名前はすでに使用されています</string>
     <string name="private_key_not_matching_address">注: スキャンした秘密鍵は読み取り専用アドレスに対応するものではありません。このアドレスから資金を使用するには、正しい秘密鍵をスキャンしてください。</string>

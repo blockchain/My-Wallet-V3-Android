@@ -250,7 +250,7 @@
     <string name="send_to_same_address_warning">Tidak dapat mengirim ke alamat yang sama.</string>
     <string name="make_default">Jadikan default</string>
     <string name="privx_required">Kunci Pribadi Diperlukan</string>
-    <string name="watch_only_spend_instructionss">Tindakan ini memerlukan kunci pribadi untuk alamat Bitcoin %1$s. Harap Pindai kode QR.</string>
+    <string name="watch_only_spend_instructions">Tindakan ini memerlukan kunci pribadi untuk alamat Bitcoin %1$s. Harap Pindai kode QR.</string>
     <string name="invalid_private_key">Kunci pribadi tidak valid</string>
     <string name="watch_only_import_warning">Anda akan mengimpor alamat yang hanya dapat dilihat, sebuah alamat (atau skrip kunci publik) yang disimpan di dalam dompet tanpa kunci pribadi yang sesuai. Hal ini berarti bahwa dana HANYA dapat digunakan jika Anda memiliki kunci pribadi yang disimpan di tempat lain. Jika Anda tidak memiliki kunci privat yang disimpan, JANGAN meminta siapa pun untuk mengirimkan bitcoin kepada Anda ke alamat yang hanya dapat dilihat.\n\nPilihan ini hanya disarankan untuk pengguna tingkat lanjut. Lanjutkan? </string>
     <string name="scan_private_key">Pindai kunci pribadi</string>
@@ -564,7 +564,6 @@
     <string name="recovery_passphrase">Frasa cadangan</string>
     <string name="invalid_recovery_phrase">Frasa cadangan tidak sah. Harap coba lagi</string>
     <string name="about">Dompet Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nSemua hak dilindungi.</string>
-    <string name="watch_only_label">(untuk dilihat saja)</string>
     <string name="watchonly_address_receive_warning">Anda akan menerima bitcoin pada alamat untuk dilihat saja. Anda hanya dapat menghabiskan dana ini jika Anda memiliki akses pada kunci pribadi. Lanjutkan?</string>
     <string name="label_name_match">Nama sudah digunakan</string>
     <string name="private_key_not_matching_address">CATATAN: kunci pribadi yang dipindai tidak sesuai dengan alamat Anda untuk dilihat saja. Untuk menggunakan dana Anda dari alamat ini, harap pindai kunci pribadi yang benar.</string>

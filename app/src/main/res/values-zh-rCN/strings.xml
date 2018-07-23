@@ -208,7 +208,6 @@
     <string name="click">点击</string>
     <string name="to_start_sending_and_receiving_btc">开始发送和接收比特币</string>
 
-    <string name="watch_only_label">(只看)</string>
     <string name="address_book_label">(地址薄)</string>
     <string name="archived_label">已存档</string>
 
@@ -286,7 +285,7 @@
     <string name="send_to_same_address_warning">无法发送到同一个地址。</string>
     <string name="make_default">设为默认</string>
     <string name="privx_required">需要私钥</string>
-    <string name="watch_only_spend_instructionss">此操作需要比特币地址 %1$s的私钥。请扫描二维码。</string>
+    <string name="watch_only_spend_instructions">此操作需要比特币地址 %1$s的私钥。请扫描二维码。</string>
     <string name="invalid_private_key">无效私钥</string>
     <string name="watch_only_import_warning">您将导入一个只看地址,这个地址（或公钥脚本）存储在钱包中当没有对应的私钥。这意味着资金只有你拥有存储在其他地方的私钥时才能被支出，如果您没有私钥，请不要指导任何人向该地址发送资金。 \n\n这些选项仅推荐高级用户使用。继续？
     </string>

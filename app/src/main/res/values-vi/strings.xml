@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Không thể gửi đến cùng địa chỉ.</string>
     <string name="make_default">Làm mặc định</string>
     <string name="privx_required">Yêu cầu Khóa riêng</string>
-    <string name="watch_only_spend_instructionss">Hành động này yêu cầu khóa riêng cho địa chỉ Bitcoin %1$s. Vui lòng quét mã QR.</string>
+    <string name="watch_only_spend_instructions">Hành động này yêu cầu khóa riêng cho địa chỉ Bitcoin %1$s. Vui lòng quét mã QR.</string>
     <string name="invalid_private_key">Khóa riêng không hợp lệ</string>
     <string name="watch_only_import_warning">Bạn sắp nhập một địa chỉ chỉ-xem, địa chỉ (hay đoạn mã xPub) được lưu trữ trong ví mà không có khóa riêng tương ứng. Điều này có nghĩa các khoản tiền CHỈ CÓ THỂ sử dụng nếu bạn có khóa riêng được lưu trữ. Nếu bạn không có khóa riêng được lưu trữ, KHÔNG hướng dẫn bất kỳ ai gửi bitcoin cho bạn đến địa chỉ chỉ-xem.\n\nCác tùy chọn này chỉ được khuyến nghị cho người dùng cao cấp. Tiếp tục? </string>
     <string name="scan_private_key">Quét khóa riêng</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Nhóm từ sao lưu</string>
     <string name="invalid_recovery_phrase">Nhóm từ sao lưu không hợp lệ. Vui lòng thử lại</string>
     <string name="about">Ví Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nBảo lưu mọi quyền.</string>
-    <string name="watch_only_label">(chỉ xem)</string>
     <string name="watchonly_address_receive_warning">Bạn sắp nhận bitcoin đến một địa chỉ chỉ xem. Bạn chỉ có thể sử dụng số tiền này nếu bạn có quyền truy cập vào khóa riêng. Tiếp tục?</string>
     <string name="label_name_match">Tên đã được sử dụng</string>
     <string name="private_key_not_matching_address">LƯU Ý: Khóa riêng đã được quét không tương ứng với địa chỉ chỉ xem của bạn. Để sử dụng các khoản tiền của bạn từ địa chỉ này, vui lòng quét khóa riêng đúng.</string>

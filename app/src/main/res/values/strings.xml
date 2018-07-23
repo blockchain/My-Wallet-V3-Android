@@ -215,7 +215,6 @@
     <string name="click">Click</string>
     <string name="to_start_sending_and_receiving_btc">to start sending and receiving bitcoin.</string>
 
-    <string name="watch_only_label">(watch only)</string>
     <string name="address_book_label">(address book)</string>
     <string name="archived_label">Archived</string>
 
@@ -238,7 +237,7 @@
     <string name="upgrade_fail_info">There was an error upgrading your wallet. Please try again later.</string>
     <string name="not_sane_error">Your Blockchain Wallet installation is incomplete. Please re-pair your wallet or create a new one.</string>
 
-    <string name="watchonly_address_receive_warning">You are about to receive bitcoin to a watch only address. You can only spend these funds if you have access to the private key. Continue?</string>
+    <string name="watchonly_address_receive_warning">You are about to receive bitcoin to a non-spendable address. You can only spend these funds if you have access to the private key. Continue?</string>
 
     <string name="camera_unavailable">The camera is currently opened by another application. Please close other application and try again.</string>
 
@@ -294,24 +293,24 @@
     <string name="send_to_same_address_warning">Can\'t send to the same address.</string>
     <string name="make_default">Make default</string>
     <string name="privx_required">Private Key Needed</string>
-    <string name="watch_only_spend_instructionss">This action requires the private key for the Bitcoin address %1$s. Please scan the QR code.</string>
+    <string name="watch_only_spend_instructions">This action requires the private key for the Bitcoin address %1$s. Please scan the QR code.</string>
     <string name="invalid_private_key">Invalid private key</string>
-    <string name="watch_only_import_warning">You are about to import a watch only address, an address (or public key script)
+    <string name="watch_only_import_warning">You are about to import a non-spendable address, an address (or public key script)
         stored in the wallet without the corresponding private key. This
         means that the funds can be spent ONLY if you have the private key stored elsewhere. If you do
-        not have the private key stored, do NOT instruct anyone to send you bitcoin to the watch only
+        not have the private key stored, do NOT instruct anyone to send you bitcoin to the non-spendable
         address.\n\nThese options are recommended for advanced users only. Continue?
     </string>
     <string name="scan_private_key">Scan private key</string>
     <string name="private_key_successfully_imported">Private key successfully imported.</string>
-    <string name="private_key_not_matching_address">NOTE: The scanned private key does not correspond to your watch only address. To spend your funds from this address, please scan the correct private key.</string>
-    <string name="watch_only">Watch Only</string>
+    <string name="private_key_not_matching_address">NOTE: The scanned private key does not correspond to your non-spendable address. To spend your funds from this address, please scan the correct private key.</string>
+    <string name="watch_only">Non-Spendable</string>
     <string name="extended_public_key_description">If you are a merchant, show your xPub and use the
         Blockchain Merchant app to receive funds safely and privately.\n\nKeep your xPub private.
         Someone with access to your xPub will be able to see all your funds and transactions.
     </string>
     <string name="extended_public_key_description_bch_only">Keep your xPub private. Someone with access to your xPub will be able to see all your funds and transactions.</string>
-    <string name="watch_only_description">This is a watch only address. To spend your funds from
+    <string name="watch_only_description">This is a non-spendable address. To spend your funds from
         this wallet, please scan your private key.
     </string>
     <string name="success">Success</string>

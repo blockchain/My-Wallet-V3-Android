@@ -8,6 +8,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.api.data.UnspentOutputs
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
 import info.blockchain.wallet.payload.data.Options
@@ -49,7 +50,6 @@ import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -477,11 +477,18 @@ class AccountEditPresenterTest {
     @Test
     fun onClickScanXprivDoubleEncrypted() {
         // Arrange
-        subject.legacyAddress = LegacyAddress()
+        subject.legacyAddress = LegacyAddress().apply {
+            address = "1Address"
+        }
         val mockPayload: Wallet = mock()
         whenever(mockPayload.isDoubleEncryption).thenReturn(true)
         whenever(payloadDataManager.wallet).thenReturn(mockPayload)
-        whenever(stringUtils.getString(R.string.watch_only_spend_instructionss)).thenReturn("%1\$s")
+        whenever(
+            stringUtils.getFormattedString(
+                eq(R.string.watch_only_spend_instructions),
+                eq("1Address")
+            )
+        ).thenReturn("Watch only 1Address")
         // Act
         subject.onClickScanXpriv(mock())
         // Assert

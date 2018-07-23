@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Não é possível enviar ao mesmo endereço.</string>
     <string name="make_default">Tornar padrão</string>
     <string name="privx_required">Chave Privada Requerida</string>
-    <string name="watch_only_spend_instructionss">Esta ação requer a chave privada do endereço Bitcoin %1$s. Por favor, escaneie o código QR.</string>
+    <string name="watch_only_spend_instructions">Esta ação requer a chave privada do endereço Bitcoin %1$s. Por favor, escaneie o código QR.</string>
     <string name="invalid_private_key">Chave privada inválida</string>
     <string name="watch_only_import_warning">Você está prestes a importar um endereço watch only, um endereço (ou script de chave pública) armazenado na carteira sem a chave privada correspondente. Isto significa que os fundos podem ser utilizados SOMENTE se você tiver a chave privada armazenada em algum lugar. Se você não tiver a chave privada armazenada, NÃO instrua ninguém a enviar bitcoins para o endereço watch only.\n\nEstas opções são recomendadas apenas para usuários avançados. Deseja continuar? </string>
     <string name="scan_private_key">Escanear chave privada</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Frase de backup</string>
     <string name="invalid_recovery_phrase">Frase de backup inválida. Por favor, tente novamente</string>
     <string name="about">Carteira Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nTodos os direitos reservados.</string>
-    <string name="watch_only_label">(somente visualização)</string>
     <string name="watchonly_address_receive_warning">Você está prestes a receber bitcoin em um endereço somente visualização. Você só poderá usar estes fundos se tiver acesso à chave privada. Deseja continuar?</string>
     <string name="label_name_match">Nome já em uso</string>
     <string name="private_key_not_matching_address">NOTA: a chave privada escaneada não corresponde ao seu endereço somente visualização. Para utilizar os fundos deste endereço, escaneie a chave privada correta.</string>

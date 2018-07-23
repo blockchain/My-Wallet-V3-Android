@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Неможливо відправити на одну і ту ж адресу.</string>
     <string name="make_default">Встановити за замовчуванням</string>
     <string name="privx_required">Необхідно Особистий ключ</string>
-    <string name="watch_only_spend_instructionss">Ця дія вимагає особистого ключа для Bitcoin-адреси %1$s. Будь ласка, відскануйте QR-код.</string>
+    <string name="watch_only_spend_instructions">Ця дія вимагає особистого ключа для Bitcoin-адреси %1$s. Будь ласка, відскануйте QR-код.</string>
     <string name="invalid_private_key">Невірний особистий ключ</string>
     <string name="watch_only_import_warning">Ви збираєтесь імпортувати адресу лише для перегляду, адресу (чи скрипт ключа), збережені в гаманці без відповідного особистого ключа. Це означає, що кошти можуть витрачатись, ЛИШЕ якщо у вас є особистий ключ, який зберігається десь в іншому місці. Якщо ви не маєте збереженого особистого ключа, НЕ просіть відправляти вам bitcoin на адресу, яка тільки для перегляду.\n\nЦі опції лише для досвідчених користувачів. Продовжити? </string>
     <string name="scan_private_key">Сканувати особистий ключ</string>
@@ -561,7 +561,6 @@
     <string name="recovery_passphrase">Фраза для відновлення доступу</string>
     <string name="invalid_recovery_phrase">Неправильна фраза для відновлення доступу. Будь ласка, спробуйте ще раз</string>
     <string name="about">Blockchain гаманець %1$s\n©%2$s Blockchain Luxembourg S.A.\nВсі права захищено.</string>
-    <string name="watch_only_label">(тільки для перегляду)</string>
     <string name="watchonly_address_receive_warning">Ви збираєтесь отримати біткойн на адресу, яка дійсна тільки для перегляду. Ви можете витрачати ці кошти лише за умови, що у вас є доступ до особистого ключа. Продовжити?</string>
     <string name="label_name_match">Ім\'я вже використовується</string>
     <string name="private_key_not_matching_address">УВАГА: Відсканований особистий ключ не збігається з вашою адресою, яка дійсна тільки для перегляду. Щоб витрачати кошти з цієї адреси, будь ласка, відскануйте правильний особистий ключ.</string>

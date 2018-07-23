@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Nie można wysłać pod ten sam adres.</string>
     <string name="make_default">Ustaw jako domyślne</string>
     <string name="privx_required">Potrzebny klucz prywatny</string>
-    <string name="watch_only_spend_instructionss">To działanie wymaga klucza prywatnego dla adresu bitcoin %1$s. Proszę zeskanować kod QR.</string>
+    <string name="watch_only_spend_instructions">To działanie wymaga klucza prywatnego dla adresu bitcoin %1$s. Proszę zeskanować kod QR.</string>
     <string name="invalid_private_key">Nieprawidłowy klucz prywatny</string>
     <string name="watch_only_import_warning">Zamierzasz importować adres tylko do odczytu, adres (lub skrypt klucza publicznego) przechowywany w portfelu bez odpowiadającego mu klucza prywatnego. Oznacza to, że środki z tego adresu możesz wydawać tylko, jeśli masz klucz prywatny przechowywany gdzie indziej. Jeśli nie masz takiego klucza, NIE podawaj adresu tylko do odczytu jako adresu do otrzymywania bitcoinów. \n\nTe opcje są zalecane tylko dla zaawansowanych użytkowników. Kontynuować? </string>
     <string name="scan_private_key">Skanuj klucz prywatny</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Zwrot zapasowy</string>
     <string name="invalid_recovery_phrase">Nieprawidłowy zwrot zapasowy. Spróbuj ponownie.</string>
     <string name="about">Portfel Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nWszelkie prawa zastrzeżone.</string>
-    <string name="watch_only_label">(tylko do odczytu)</string>
     <string name="watchonly_address_receive_warning">Masz zamiar otrzymać bitcoiny na adres tylko do odczytu. Możesz wydać te środki jedynie, jeśli masz dostęp do prywatnego klucza. Kontynuować?</string>
     <string name="label_name_match">Nazwa jest już używana.</string>
     <string name="private_key_not_matching_address">UWAGA: zeskanowany prywatny klucz nie odpowiada Twojemu adresowi tylko do odczytu. Aby móc wydać środki z tego adresu, zeskanuj prawidłowy prywatny klucz.</string>

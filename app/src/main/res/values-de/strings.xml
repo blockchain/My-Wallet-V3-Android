@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Ein Versand an die gleiche Adresse ist nicht möglich.</string>
     <string name="make_default">Als Standard festlegen</string>
     <string name="privx_required">Privater Schlüssel erforderlich</string>
-    <string name="watch_only_spend_instructionss">Diese Aktion erfordert den privaten Schlüssel der Bitcoin-Adresse %1$s. Bitte QR-Code scannen.</string>
+    <string name="watch_only_spend_instructions">Diese Aktion erfordert den privaten Schlüssel der Bitcoin-Adresse %1$s. Bitte QR-Code scannen.</string>
     <string name="invalid_private_key">Ungültiger privater Schlüssel</string>
     <string name="watch_only_import_warning">Sie sind dabei, eine Watch Only Adresse - eine Adresse (oder ein öffentliches Schlüsselscript), die/das in der Wallet ohne den dazugehörigen privaten Schlüssel gespeichert wird - zu importieren. Das bedeutet, dass dieses Guthaben NUR dann ausgegeben werden kann, wenn Sie den privaten Schlüssel anderenorts aufbewahrt haben. Sollten Sie nicht über den privaten Schlüssel verfügen, geben Sie diese Watch Only Adresse NICHT zum Empfang von Bitcoin an.\n\nDiese Optionen empfehlen sich nur für erfahrene Benutzer. Weiter? </string>
     <string name="scan_private_key">Privaten Schlüssel scannen</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Wiederherstellungspasswort</string>
     <string name="invalid_recovery_phrase">Ungültiges Wiederherstellungspasswort. Bitte erneut versuchen</string>
     <string name="about">Blockchain Wallet %1$s\n©%2$s Blockchain Luxembourg S.A.\nAlle Rechte vorbehalten.</string>
-    <string name="watch_only_label">(Watch-Only)</string>
     <string name="watchonly_address_receive_warning">In Kürze werden Sie Bitcoin über eine Watch-Only-Adresse empfangen. Dieses Guthaben können Sie nur dann ausgeben, wenn Sie Zugriff auf einen privaten Schlüssel haben. Weiter?</string>
     <string name="label_name_match">Der Name wird bereits verwendet</string>
     <string name="private_key_not_matching_address">HINWEIS: Der gescannte private Schlüssel entspricht nicht Ihrer Watch-Only-Adresse. Zur Ausgabe Ihres unter dieser Adresse vorhandenen Guthabens scannen Sie bitte den zutreffenden privaten Schlüssel.</string>

@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">No se puede enviar a la misma dirección.</string>
     <string name="make_default">Establecer como predeterminada</string>
     <string name="privx_required">Se requiere la clave privada</string>
-    <string name="watch_only_spend_instructionss">Esta acción requiere la clave privada de la dirección Bitcoin %1$s. Por favor, escanea el código QR.</string>
+    <string name="watch_only_spend_instructions">Esta acción requiere la clave privada de la dirección Bitcoin %1$s. Por favor, escanea el código QR.</string>
     <string name="invalid_private_key">Clave privada inválida</string>
     <string name="watch_only_import_warning">Estás a punto de importar una dirección Sólo Ver, una dirección (o secuencia de comandos de clave pública) guardada en el monedero sin la clave privada correspondiente. Esto significa que se pueden gastar los fondos SÓLO si tienes la clave privada guardada en otro lugar. Si no tienes la clave privada guardada, NO le pidas a nadie que te envíe Bitcoin a la dirección Sólo Ver.\n\nEstas opciones sólo se recomiendan para usuarios avanzados. ¿Continuar? </string>
     <string name="scan_private_key">Escanear la clave privada</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Frase de copia de seguridad</string>
     <string name="invalid_recovery_phrase">La frase de copia de seguridad no es válida. Inténtalo de nuevo.</string>
     <string name="about">Billetera de Blockchain %1$s\n©%2$s Blockchain Luxembourg S.A.\nTodos los derechos reservados.</string>
-    <string name="watch_only_label">(solo ver)</string>
     <string name="watchonly_address_receive_warning">Estás a punto de recibir bitcoins de una dirección de tipo "solo ver". Solo puedes gastar estos fondos si tienes acceso a la clave privada. ¿Continuar?</string>
     <string name="label_name_match">El nombre ya está en uso.</string>
     <string name="private_key_not_matching_address">NOTA: La clave privada escaneada no corresponde con st dirección de tipo "solo ver". Si deseas gastar los fondos de esta dirección, por favor escanea la clave privada correcta.</string>

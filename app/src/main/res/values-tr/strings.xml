@@ -249,7 +249,7 @@
     <string name="send_to_same_address_warning">Aynı adrese gönderemez.</string>
     <string name="make_default">Varsayılan yap</string>
     <string name="privx_required">Özel Anahtar Gerekli</string>
-    <string name="watch_only_spend_instructionss">Bu eylem %1$s Bitcoin adresi için özel anahtarın girilmesini gerektirir. Lütfen QR kodunu tarayın.</string>
+    <string name="watch_only_spend_instructions">Bu eylem %1$s Bitcoin adresi için özel anahtarın girilmesini gerektirir. Lütfen QR kodunu tarayın.</string>
     <string name="invalid_private_key">Geçersiz özel anahtar</string>
     <string name="watch_only_import_warning">Cüzdanda özel anahtar karşılığı olmayan şekilde depolanan yalnızda izlenebilen bir adres (veya ortak anahtar kodu) almak üzeresiniz. Bu da paranın SADECE özel anahtarı başka bir yerde kaydetmiş olmanız durumunda harcanabileceği anlamına gelir. Eğer özel anahtarı kaydetmemişseniz kimsenin size bu adres üzerinden para göndermesini talep ETMEMELİSİNİZ.\n\n Bu özellikler sadece ileri düzey kullanıcılar için tavsiye edilir. Devam? </string>
     <string name="scan_private_key">Özel anahtarı tara</string>
@@ -563,7 +563,6 @@
     <string name="recovery_passphrase">Yedekleme ifadesi</string>
     <string name="invalid_recovery_phrase">Geçersiz yedekleme ifadesi Lütfen tekrar deneyin.</string>
     <string name="about">Blockchain Cüzdanı %1$s\n©%2$s Blockchain Luxembourg S.A.\nTüm hakları saklıdır.</string>
-    <string name="watch_only_label">(sadece izlenebilir)</string>
     <string name="watchonly_address_receive_warning">Sadece izlenebilir bir adrese bitcoin almak üzeresiniz. Bu paraları sadece özel anahtara sahipseniz harcayabilirsiniz. Devam?</string>
     <string name="label_name_match">Ad zaten kullanılmaktadır.</string>
     <string name="private_key_not_matching_address">NOT: Taranmış özel anahtar sadece izlenebilir adresinizle eşleşmemektedir. Bu adresteki paranızı harcamak için lütfen doğru özel anahtarı tarayın.</string>
