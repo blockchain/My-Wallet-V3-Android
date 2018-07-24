@@ -31,7 +31,7 @@ class AddAddressActivity : BaseMvpActivity<AddAddressView, AddAddressPresenter>(
     lateinit var presenter: AddAddressPresenter
     override val iban: String by unsafeLazy { intent.getStringExtra(EXTRA_IBAN) }
     override val bic: String by unsafeLazy { intent.getStringExtra(EXTRA_BIC) }
-    private val displayModel by unsafeLazy {
+    override val displayModel by unsafeLazy {
         intent.getParcelableExtra(EXTRA_DISPLAY_MODEL) as SellConfirmationDisplayModel
     }
     override val accountHolderName: String

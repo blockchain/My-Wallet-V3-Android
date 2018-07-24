@@ -65,7 +65,7 @@ class AddAddressPresenter @Inject constructor(
                         token,
                         BankAccount(
                             account = Account(
-                                it.defaultCurrency,
+                                view.displayModel.currencyToReceive,
                                 null,
                                 view.bic,
                                 view.iban
