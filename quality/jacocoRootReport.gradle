@@ -37,7 +37,8 @@ def coverageSourceDirs = [
         'coreui/src/main/java',
         'core/src/main/java',
         'wallet/src/main/java',
-        'balance/src/main/kotlin'
+        'balance/src/main/kotlin',
+        'kyc/src/main/java',
 ]
 
 def coverageClassDirectories = [
@@ -55,9 +56,12 @@ def coverageClassDirectories = [
         fileTree(dir: 'wallet/build/classes/kotlin/main', excludes: excludedDirs),
         fileTree(dir: 'balance/build/classes/java/main', excludes: excludedDirs),
         fileTree(dir: 'balance/build/classes/kotlin/main', excludes: excludedDirs),
+        fileTree(dir: 'kyc/build/intermediates/classes/debug', excludes: excludedDirs),
+        fileTree(dir: 'kyc/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
 ]
 
 task jacocoRootReport(type: JacocoReport) {
+    dependsOn "kyc:testCoverage"
     dependsOn "wallet:testCoverage"
     dependsOn "balance:testCoverage"
     dependsOn "core:testCoverage"
@@ -74,6 +78,7 @@ task jacocoRootReport(type: JacocoReport) {
     sourceDirectories = files(coverageSourceDirs)
 
     executionData = files(
+            tasks.getByPath("kyc:testCoverage").executionData,
             tasks.getByPath("wallet:testCoverage").executionData,
             tasks.getByPath("balance:testCoverage").executionData,
             tasks.getByPath("core:testCoverage").executionData,
