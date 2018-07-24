@@ -352,6 +352,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         .doAfterSuccess { view.showQuoteInProgress(false) }
                 }
             }
+            .doOnNext { updateExchangeRate(it) }
             .doOnNext { updateReceiveAmount(it.quoteAmount.absoluteValue) }
             .doOnNext { updateSendAmount(it.baseAmount.absoluteValue) }
             .doOnNext { compareToLimits(it) }
@@ -377,6 +378,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         .doAfterSuccess { view.showQuoteInProgress(false) }
                 }
             }
+            .doOnNext { updateExchangeRate(it) }
             .doOnNext { updateSendAmount(it.quoteAmount.absoluteValue) }
             .doOnNext { updateReceiveAmount(it.baseAmount.absoluteValue) }
             .doOnNext { compareToLimits(it) }
@@ -388,6 +390,17 @@ class BuySellBuildOrderPresenter @Inject constructor(
                 logAddToCart(currency, amount, itemName, itemType)
             }
             .subscribeBy(onError = { setUnknownErrorState(it) })
+    }
+
+    private fun updateExchangeRate(quote: Quote) {
+        val currency = if (quote.isBtcBase()) quote.quoteCurrency else quote.baseCurrency
+        val numerator = if (quote.isBtcBase()) quote.quoteAmount.absoluteValue else quote.baseAmount.absoluteValue
+        val denominator = if (quote.isBtcBase()) quote.baseAmount.absoluteValue else quote.quoteAmount.absoluteValue
+        currencyFormatManager.getFormattedFiatValueWithSymbol(
+            numerator / denominator,
+            currency,
+            view.locale
+        ).run { view.renderExchangeRate(ExchangeRateStatus.Data("@ $this")) }
     }
 
     private fun compareToLimits(quote: Quote) {
@@ -484,7 +497,8 @@ class BuySellBuildOrderPresenter @Inject constructor(
                         return@BiFunction trader to inMedium
                     }
                 ).flatMap { (trader, inMedium) ->
-                    val currency = if (initialLoad) getDefaultCurrency(trader.defaultCurrency) else selectedCurrency
+                    val currency =
+                        if (initialLoad) getDefaultCurrency(trader.defaultCurrency) else selectedCurrency
 
                     getExchangeRate(token, if (isSell) -1.0 else 1.0, currency)
                         .toObservable()
@@ -720,6 +734,8 @@ class BuySellBuildOrderPresenter @Inject constructor(
         this.none { it.state == ReviewState.Completed }
 
     private fun BigDecimal.sanitise() = this.stripTrailingZeros().toPlainString()
+
+    private fun Quote.isBtcBase() = baseCurrency.equals("btc", ignoreCase = true)
     // endregion
 
     // region Bitcoin helpers

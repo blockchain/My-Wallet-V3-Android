@@ -60,7 +60,8 @@ class CoinifyTransactionDetailPresenterTest {
             currencyReceivedTitle = "",
             amountSent = "",
             paymentFee = "",
-            totalCost = ""
+            totalCost = "",
+            exchangeRate = ""
         )
         whenever(view.orderDetails).thenReturn(orderDetails)
         val token = "TOKEN"
@@ -113,7 +114,8 @@ class CoinifyTransactionDetailPresenterTest {
             currencyReceivedTitle = "",
             amountSent = "",
             paymentFee = "",
-            totalCost = ""
+            totalCost = "",
+            exchangeRate = ""
         )
         whenever(view.orderDetails).thenReturn(orderDetails)
         val token = "TOKEN"

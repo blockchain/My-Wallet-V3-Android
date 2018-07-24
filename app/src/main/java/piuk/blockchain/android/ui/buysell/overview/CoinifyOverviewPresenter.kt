@@ -486,6 +486,7 @@ class CoinifyOverviewPresenter @Inject constructor(
         val headlineAmount: String
         val detailAmount: String
         val paymentFeeString: String
+        val exchangeRateString: String
         val receiveTitleString: String
         val amountString: String
         val totalString: String
@@ -494,6 +495,9 @@ class CoinifyOverviewPresenter @Inject constructor(
             // Crypto out (from Coinify's perspective)
             headlineAmount = "$receivedWithFee $receiveCurrency"
             detailAmount = "$receivedWithFee $receiveCurrency"
+            // Exchange rate (always in fiat)
+            val exchangeRate = sent / received
+            exchangeRateString = formatFiatWithSymbol(exchangeRate, sendCurrency, view.locale)
             // Fiat in
             amountString = formatFiatWithSymbol(sent, sendCurrency, view.locale)
             paymentFeeString =
@@ -511,6 +515,9 @@ class CoinifyOverviewPresenter @Inject constructor(
             headlineAmount =
                 formatFiatWithSymbol(received - sellPaymentFee, receiveCurrency, view.locale)
             detailAmount = "$sent $sendCurrency"
+            // Exchange rate (always in fiat)
+            val exchangeRate = received / sentWithFee
+            exchangeRateString = formatFiatWithSymbol(exchangeRate, receiveCurrency, view.locale)
             // Crypto in
             paymentFeeString = "Not rendered"
             totalString = "Not rendered"
@@ -534,6 +541,7 @@ class CoinifyOverviewPresenter @Inject constructor(
             "#${coinifyTrade.id}",
             coinifyTrade.id,
             receiveTitleString,
+            exchangeRateString,
             amountString,
             paymentFeeString,
             totalString
