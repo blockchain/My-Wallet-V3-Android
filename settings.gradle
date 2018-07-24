@@ -7,4 +7,5 @@ include ':app',
         ':buysellui',
         ':buysell',
         ':kyc',
+        ':kycdemoapp',
         ':testutils'
