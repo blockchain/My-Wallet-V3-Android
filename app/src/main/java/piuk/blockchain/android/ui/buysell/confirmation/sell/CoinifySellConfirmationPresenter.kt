@@ -15,6 +15,7 @@ import piuk.blockchain.androidbuysell.models.coinify.CoinifyTradeRequest
 import piuk.blockchain.androidbuysell.models.coinify.exceptions.CoinifyApiException
 import piuk.blockchain.androidbuysell.services.ExchangeService
 import piuk.blockchain.androidbuysell.utils.fromIso8601
+import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
@@ -30,8 +31,11 @@ class CoinifySellConfirmationPresenter @Inject constructor(
     private val exchangeService: ExchangeService,
     private val payloadDataManager: PayloadDataManager,
     private val sendDataManager: SendDataManager,
-    private val stringUtils: StringUtils
+    private val stringUtils: StringUtils,
+    private val environmentConfig: EnvironmentConfig
 ) : BasePresenter<CoinifySellConfirmationView>() {
+
+    internal var validatedSecondPassword: String? = null
 
     private val tokenSingle: Single<String>
         get() = exchangeService.getExchangeMetaData()
@@ -50,6 +54,22 @@ class CoinifySellConfirmationPresenter @Inject constructor(
     }
 
     internal fun onConfirmClicked() {
+        if (payloadDataManager.isDoubleEncrypted && validatedSecondPassword == null) {
+            view.displaySecondPasswordDialog()
+            return
+        }
+
+        if (payloadDataManager.isDoubleEncrypted) {
+            payloadDataManager.decryptHDWallet(
+                environmentConfig.bitcoinNetworkParameters,
+                validatedSecondPassword
+            )
+        }
+
+        makeTransaction()
+    }
+
+    private fun makeTransaction() {
         val displayModel = view.displayableQuote
         val quote = displayModel.originalQuote
         val bankAccountId = view.bankAccountId

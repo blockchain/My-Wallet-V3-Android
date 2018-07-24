@@ -25,4 +25,6 @@ interface CoinifySellConfirmationView : View {
     fun showErrorDialog(errorMessage: String)
 
     fun showTransactionComplete()
+
+    fun displaySecondPasswordDialog()
 }

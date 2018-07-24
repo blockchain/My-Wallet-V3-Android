@@ -112,6 +112,10 @@ sealed class TransferState {
 
     // Transfer is in review
     object Reviewing : TransferState()
+
+    // You will potentially see this state shortly after making a sell trade, when the crypto funds have been sent
+    // but Coinify haven't seen it yet
+    object Unknown : TransferState()
 }
 
 @Suppress("unused")
@@ -126,6 +130,7 @@ class TransferStateAdapter {
         EXPIRED -> TransferState.Expired
         REJECTED -> TransferState.Rejected
         REVIEWING -> TransferState.Reviewing
+        UNKNOWN -> TransferState.Unknown
         else -> throw JsonDataException("Unknown transfer state object $input, unsupported data type")
     }
 
@@ -138,6 +143,7 @@ class TransferStateAdapter {
         TransferState.Expired -> EXPIRED
         TransferState.Rejected -> REJECTED
         TransferState.Reviewing -> REVIEWING
+        TransferState.Unknown -> UNKNOWN
     }
 
     private companion object {
@@ -148,6 +154,7 @@ class TransferStateAdapter {
         private const val EXPIRED = "expired"
         private const val REJECTED = "rejected"
         private const val REVIEWING = "reviewing"
+        private const val UNKNOWN = "unknown"
     }
 }
 
