@@ -23,7 +23,8 @@ import piuk.blockchain.androidcoreui.injector.ContextModule;
         ApiModule.class,
         PersistentStoreModule.class,
         ServiceModule.class,
-        ContextModule.class
+        ContextModule.class,
+        KycModule.class,
 })
 public interface ApplicationComponent {
 

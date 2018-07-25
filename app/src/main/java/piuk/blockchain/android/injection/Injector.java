@@ -23,17 +23,20 @@ public enum Injector {
         ApplicationModule applicationModule = new ApplicationModule();
         ApiModule apiModule = new ApiModule();
         ContextModule contextModule = new ContextModule(applicationContext);
+        KycModule kycModule = new KycModule();
 
-        initAppComponent(applicationModule, apiModule, contextModule);
+        initAppComponent(applicationModule, apiModule, contextModule, kycModule);
     }
 
     protected void initAppComponent(ApplicationModule applicationModule,
                                     ApiModule apiModule,
-                                    ContextModule contextModule) {
+                                    ContextModule contextModule,
+                                    KycModule kycModule) {
         applicationComponent = DaggerApplicationComponent.builder()
                 .contextModule(contextModule)
                 .applicationModule(applicationModule)
                 .apiModule(apiModule)
+                .kycModule(kycModule)
                 .build();
 
         getPresenterComponent();
