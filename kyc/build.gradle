@@ -38,6 +38,8 @@ kapt {
     useBuildCache = true
 }
 dependencies {
+    api Libraries.rxKotlin
+
     // Unit Test dependencies
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
