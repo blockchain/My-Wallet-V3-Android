@@ -3,8 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.novoda.build-properties'
 apply from: '../quality/jacocoLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
+
+buildProperties {
+    secrets {
+        using project.file('../app/secrets.properties')
+    }
+}
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -16,11 +23,18 @@ android {
         versionName Versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        buildConfigString "ONFIDO_SANDBOX_KEY", buildProperties.secrets['onfidoSandbox']
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes{
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
     }
 
     testOptions {
@@ -37,10 +51,40 @@ android {
 kapt {
     useBuildCache = true
 }
-dependencies {
-    api Libraries.rxKotlin
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath Libraries.buildProperties
+    }
+}
+
+repositories {
+    maven { url 'https://onfido.bintray.com/maven/' }
+}
+
+dependencies {
+    api Libraries.onfido
+    implementation(Libraries.googlePlayServicesBase) {
+        exclude group: 'com.android.support'
+    }
+    api Libraries.annotations
+    // Networking
+    api(Libraries.retrofit) { exclude module: 'okhttp' }
+    api Libraries.retrofitRxMoshiConverter
+    api Libraries.retrofitRxJavaAdapter
+    api Libraries.okHttpInterceptor
+    // Dagger
+    api Libraries.dagger
+    kapt Libraries.daggerKapt
+    // RxJava
+    api Libraries.rxKotlin
+    // Logging
+    api Libraries.timber
     // Unit Test dependencies
+    testImplementation project(':testutils')
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.hamcrestJunit

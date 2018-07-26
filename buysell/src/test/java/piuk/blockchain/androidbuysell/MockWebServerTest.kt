@@ -5,7 +5,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 
-// TODO: This class should be changed to a TestRule - favour composition over inheritance
+@Deprecated("Use mockWebServerInit")
 abstract class MockWebServerTest {
 
     protected lateinit var server: MockWebServer

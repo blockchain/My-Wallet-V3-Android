@@ -4,14 +4,16 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.amshove.kluent.`should be instance of`
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should equal`
 import org.amshove.kluent.mock
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.androidbuysell.MockWebServerTest
+import piuk.blockchain.android.testutils.mockWebServerInit
 import piuk.blockchain.androidbuysell.api.PATH_COINFY_AUTH
 import piuk.blockchain.androidbuysell.api.PATH_COINFY_BANK_ACCOUNTS
 import piuk.blockchain.androidbuysell.api.PATH_COINFY_CANCEL
@@ -54,7 +56,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class CoinifyServiceTest : MockWebServerTest() {
+class CoinifyServiceTest {
 
     private lateinit var subject: CoinifyService
     private val rxBus = RxBus()
@@ -72,10 +74,13 @@ class CoinifyServiceTest : MockWebServerTest() {
     private val rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
     private val environmentConfig: EnvironmentConfig = mock()
 
-    @Before
-    override fun setUp() {
-        super.setUp()
+    private val server = MockWebServer()
 
+    @get:Rule
+    val initMockServer = mockWebServerInit(server)
+
+    @Before
+    fun setUp() {
         val okHttpClient = OkHttpClient.Builder()
             .build()
         val retrofit = Retrofit.Builder()

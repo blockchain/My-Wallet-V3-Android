@@ -68,6 +68,9 @@ object Versions {
     const val wheelPicker = "1.1.2"
     const val konfetti = "1.1.1"
 
+    // Third Party SDKs
+    const val onfido = "4.3.0"
+
     // Logging
     const val timber = "4.6.0"
     const val slf4j = "1.7.20"
@@ -170,6 +173,9 @@ object Libraries {
     const val zxing = "com.google.zxing:core:${Versions.zxing}"
     const val wheelPicker = "cn.aigestudio.wheelpicker:WheelPicker:${Versions.wheelPicker}"
     const val konfetti = "nl.dionsegijn:konfetti:${Versions.konfetti}"
+
+    // Third Party SDKs
+    const val onfido = "com.onfido.sdk.capture:onfido-capture-sdk:${Versions.onfido}"
 
     // Logging
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"

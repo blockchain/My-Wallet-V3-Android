@@ -212,6 +212,7 @@ repositories {
     // Required for CountryPicker
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://onfido.bintray.com/maven/' }
 }
 
 // This must remain at the bottom of this file until Google work out a better way to do this

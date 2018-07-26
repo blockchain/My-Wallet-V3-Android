@@ -21,6 +21,8 @@ dependencies {
     api Libraries.rxJava
     api Libraries.rxKotlin
     api Libraries.rxAndroid
+    // Networking
+    api Libraries.okHttpMock
 
     // Unit Test dependencies
     api Libraries.junit

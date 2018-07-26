@@ -23,6 +23,10 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://onfido.bintray.com/maven/' }
+}
+
 dependencies {
     implementation project(':kyc')
 

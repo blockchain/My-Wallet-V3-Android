@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="onfidoColorPrimary">@color/primary_navy_medium</color>
+    <color name="onfidoColorPrimaryDark">@color/primary_navy_dark</color>
+    <color name="onfidoTextColorPrimary">@color/white</color>
+    <color name="onfidoTextColorSecondary">@color/white</color>
+    <color name="onfidoColorAccent">@color/primary_blue_accent</color>
+
+    <!--TODO: These are temporarily duplicated here whilst we develop the demo app -->
+    <color name="white">@android:color/white</color>
+    <color name="primary_navy_dark">#153A62</color>
+    <color name="primary_blue_light">#B2D5E5</color>
+    <color name="primary_blue_accent">#10ADE4</color>
+    <color name="primary_blue_medium">#3558A8</color>
+    <color name="primary_gray">#799EB2</color>
+    <color name="primary_navy_medium">#004A7C</color>
+</resources>
