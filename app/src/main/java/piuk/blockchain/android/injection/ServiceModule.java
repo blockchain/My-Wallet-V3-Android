@@ -12,6 +12,7 @@ import info.blockchain.wallet.payment.Payment;
 import info.blockchain.wallet.prices.PriceApi;
 import info.blockchain.wallet.settings.SettingsManager;
 import info.blockchain.wallet.shapeshift.ShapeShiftApi;
+import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints;
 import piuk.blockchain.android.data.fingerprint.FingerprintAuth;
 import piuk.blockchain.android.data.fingerprint.FingerprintAuthImpl;
 import retrofit2.Retrofit;
@@ -47,6 +48,12 @@ class ServiceModule {
     }
 
     @Provides
+    @Singleton
+    ShapeShiftEndpoints provideShapeShiftEndpoints(@Named("shapeshift") Retrofit retrofit) {
+        return retrofit.create(ShapeShiftEndpoints.class);
+    }
+
+    @Provides
     WalletApi provideWalletApi(WalletApiEndpoints walletApiEndpoints, WalletExplorerEndpoints walletExplorerEndpoints) {
         return new WalletApi(walletApiEndpoints, walletExplorerEndpoints);
     }
@@ -67,8 +74,8 @@ class ServiceModule {
     }
 
     @Provides
-    ShapeShiftApi provideShapeShiftApi() {
-        return new ShapeShiftApi();
+    ShapeShiftApi provideShapeShiftApi(ShapeShiftEndpoints shapeShiftEndpoints) {
+        return new ShapeShiftApi(shapeShiftEndpoints);
     }
 
     @Provides

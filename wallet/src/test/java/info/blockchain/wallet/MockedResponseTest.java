@@ -27,7 +27,7 @@ public abstract class MockedResponseTest {
         BlockchainFramework.init(frameworkInterface);
     }
 
-    private FrameworkInterface frameworkInterface = new FrameworkInterface() {
+    protected FrameworkInterface frameworkInterface = new FrameworkInterface() {
         private final OkHttpClient okHttpClient = getOkHttpClient();
 
         @Override

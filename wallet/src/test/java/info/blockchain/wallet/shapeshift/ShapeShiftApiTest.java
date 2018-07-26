@@ -8,19 +8,19 @@ import info.blockchain.wallet.shapeshift.data.QuoteResponseWrapper;
 import info.blockchain.wallet.shapeshift.data.TimeRemaining;
 import info.blockchain.wallet.shapeshift.data.Trade;
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse;
-
+import io.reactivex.observers.TestObserver;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-
-import io.reactivex.observers.TestObserver;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class ShapeShiftApiTest extends MockedResponseTest {
 
-    private ShapeShiftApi subject = new ShapeShiftApi();
+    private ShapeShiftApi subject = new ShapeShiftApi(
+            frameworkInterface.getRetrofitShapeShiftInstance()
+                    .create(ShapeShiftEndpoints.class));
 
     @Test
     public void getMarketInfo() {
