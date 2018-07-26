@@ -1,0 +1,43 @@
+apply plugin: 'kotlin'
+apply from: '../../quality/jacocoKtLibrary.gradle'
+apply from: '../../quality/ktlint.gradle'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath Libraries.kotlinGradlePlugin
+    }
+}
+
+sourceCompatibility = Versions.javaCompatibilityVersion
+targetCompatibility = Versions.javaCompatibilityVersion
+
+dependencies {
+    implementation project(':morph:common')
+
+    implementation Libraries.kotlin
+
+    // Testing
+    testImplementation Libraries.junit
+    testImplementation Libraries.mockito
+    testImplementation Libraries.kluent
+}
+
+test {
+    testLogging {
+        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+    }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = Versions.kotlinJvmTarget
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = Versions.kotlinJvmTarget
+    }
+}

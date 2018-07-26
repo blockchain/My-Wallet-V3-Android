@@ -8,4 +8,6 @@ include ':app',
         ':buysell',
         ':kyc',
         ':kycdemoapp',
+        ':morph:common',
+        ':morph:shapeshift',
         ':testutils'
