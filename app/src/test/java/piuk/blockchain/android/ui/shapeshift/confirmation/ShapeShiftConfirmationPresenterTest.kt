@@ -543,9 +543,6 @@ class ShapeShiftConfirmationPresenterTest {
 
     private fun initFramework() {
         BlockchainFramework.init(object : FrameworkInterface {
-            override fun getRetrofitShapeShiftInstance(): Retrofit {
-                throw NotImplementedException("Function should not be called")
-            }
 
             override fun getDevice(): String {
                 throw NotImplementedException("Function should not be called")

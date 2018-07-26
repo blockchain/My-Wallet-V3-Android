@@ -28,11 +28,6 @@ public final class BlockchainFramework {
     }
 
     @Deprecated
-    public static Retrofit getRetrofitShapeShiftInstance() {
-        return blockchainInterface.getRetrofitShapeShiftInstance();
-    }
-
-    @Deprecated
     public static Environment getEnvironment() {
         return blockchainInterface.getEnvironment();
     }

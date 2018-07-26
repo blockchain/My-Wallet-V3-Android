@@ -24,14 +24,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
-public class MetadataTest {
+public final class MetadataTest {
 
     boolean isEncrypted = false;
 
     MockInterceptor mockInterceptor;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
 
         mockInterceptor = MockInterceptor.getInstance();
 
@@ -53,11 +53,6 @@ public class MetadataTest {
 
             @Override
             public Retrofit getRetrofitExplorerInstance() {
-                return null;
-            }
-
-            @Override
-            public Retrofit getRetrofitShapeShiftInstance() {
                 return null;
             }
 

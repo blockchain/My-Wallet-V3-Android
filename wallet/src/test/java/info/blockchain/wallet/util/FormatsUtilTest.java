@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class FormatsUtilTest {
+public final class FormatsUtilTest {
 
     /**
      * {@link FormatsUtil#isValidBitcoinAddress(String)} has a dependency on PersistentUrls, which
@@ -35,11 +35,6 @@ public class FormatsUtilTest {
 
             @Override
             public Retrofit getRetrofitExplorerInstance() {
-                return null;
-            }
-
-            @Override
-            public Retrofit getRetrofitShapeShiftInstance() {
                 return null;
             }
 

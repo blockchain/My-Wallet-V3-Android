@@ -39,7 +39,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
-public class ContactsTest {
+public final class ContactsTest {
 
     MockInterceptor mockInterceptor;
 
@@ -48,7 +48,7 @@ public class ContactsTest {
     private final String fail = "{\"status\":\"fail\"}";
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
 
         mockInterceptor = MockInterceptor.getInstance();
 
@@ -69,11 +69,6 @@ public class ContactsTest {
 
             @Override
             public Retrofit getRetrofitExplorerInstance() {
-                return null;
-            }
-
-            @Override
-            public Retrofit getRetrofitShapeShiftInstance() {
                 return null;
             }
 

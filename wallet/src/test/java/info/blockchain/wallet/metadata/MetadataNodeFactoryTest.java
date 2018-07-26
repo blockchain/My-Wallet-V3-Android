@@ -20,7 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
-public class MetadataNodeFactoryTest {
+public final class MetadataNodeFactoryTest {
 
     String masterKeyHex = "cbf9a5a77a913ee6cbdd560510c8d40020431479edb582e81262cc5e14fdc921";
     String guid = "5381b28a-290b-4ce5-bc7f-11bb40a3600c";
@@ -52,11 +52,6 @@ public class MetadataNodeFactoryTest {
 
             @Override
             public Retrofit getRetrofitExplorerInstance() {
-                return null;
-            }
-
-            @Override
-            public Retrofit getRetrofitShapeShiftInstance() {
                 return null;
             }
 

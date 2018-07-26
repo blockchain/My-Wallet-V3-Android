@@ -19,12 +19,6 @@ public interface FrameworkInterface {
     Retrofit getRetrofitExplorerInstance();
 
     /**
-     * Provides an instance of Retrofit with it's base URL set to {@link
-     * info.blockchain.wallet.shapeshift.ShapeShiftUrls#SHAPESHIFT_URL}
-     */
-    Retrofit getRetrofitShapeShiftInstance();
-
-    /**
      * Provides the currently chosen environment, as dictated by the top-level app
      */
     Environment getEnvironment();

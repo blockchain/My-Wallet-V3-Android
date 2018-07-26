@@ -2,26 +2,20 @@ package info.blockchain.wallet;
 
 import info.blockchain.wallet.api.Environment;
 import info.blockchain.wallet.api.PersistentUrls;
-import info.blockchain.wallet.shapeshift.ShapeShiftUrls;
-
+import io.reactivex.Scheduler;
+import io.reactivex.functions.Function;
+import io.reactivex.internal.schedulers.TrampolineScheduler;
+import io.reactivex.plugins.RxJavaPlugins;
+import okhttp3.OkHttpClient;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.BitcoinCashMainNetParams;
 import org.bitcoinj.params.BitcoinMainNetParams;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-
-import java.util.concurrent.Callable;
-
-import io.reactivex.Scheduler;
-import io.reactivex.functions.Function;
-import io.reactivex.internal.schedulers.TrampolineScheduler;
-import io.reactivex.plugins.RxJavaPlugins;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-
 
 public abstract class BaseIntegTest {
 
@@ -37,11 +31,6 @@ public abstract class BaseIntegTest {
             @Override
             public Retrofit getRetrofitExplorerInstance() {
                 return getRetrofit(PersistentUrls.EXPLORER_URL, getOkHttpClient());
-            }
-
-            @Override
-            public Retrofit getRetrofitShapeShiftInstance() {
-                return getRetrofit(ShapeShiftUrls.SHAPESHIFT_URL, getOkHttpClient());
             }
 
             @Override

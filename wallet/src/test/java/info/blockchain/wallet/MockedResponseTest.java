@@ -16,11 +16,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import java.util.concurrent.Callable;
-
 public abstract class MockedResponseTest {
 
     public MockInterceptor mockInterceptor = MockInterceptor.getInstance();
+
+    private final OkHttpClient okHttpClient = getOkHttpClient();
+
+    protected Retrofit getRetrofitShapeShiftInstance() {
+        return getRetrofit(ShapeShiftUrls.SHAPESHIFT_URL, okHttpClient);
+    }
 
     @Before
     public void initBlockchainFramework() {
@@ -28,7 +32,6 @@ public abstract class MockedResponseTest {
     }
 
     protected FrameworkInterface frameworkInterface = new FrameworkInterface() {
-        private final OkHttpClient okHttpClient = getOkHttpClient();
 
         @Override
         public Retrofit getRetrofitApiInstance() {
@@ -38,11 +41,6 @@ public abstract class MockedResponseTest {
         @Override
         public Retrofit getRetrofitExplorerInstance() {
             return getRetrofit("https://explorer.staging.blockchain.info/", okHttpClient);
-        }
-
-        @Override
-        public Retrofit getRetrofitShapeShiftInstance() {
-            return getRetrofit(ShapeShiftUrls.SHAPESHIFT_URL, okHttpClient);
         }
 
         @Override

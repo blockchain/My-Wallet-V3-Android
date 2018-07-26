@@ -67,9 +67,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
     @Inject
     @Named("explorer")
     protected Lazy<Retrofit> retrofitExplorer;
-    @Inject
-    @Named("shapeshift")
-    protected Lazy<Retrofit> retrofitShapeShift;
 
     @Inject PrefsUtil prefsUtil;
     @Inject RxBus rxBus;
@@ -156,11 +153,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
     @Override
     public Retrofit getRetrofitExplorerInstance() {
         return retrofitExplorer.get();
-    }
-
-    @Override
-    public Retrofit getRetrofitShapeShiftInstance() {
-        return retrofitShapeShift.get();
     }
 
     @Override
