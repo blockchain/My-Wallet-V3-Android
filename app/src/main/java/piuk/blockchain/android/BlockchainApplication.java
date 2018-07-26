@@ -17,6 +17,8 @@ import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.FrameworkInterface;
 import info.blockchain.wallet.api.Environment;
 
+import info.blockchain.wallet.api.WalletApi;
+import info.blockchain.wallet.api.WalletApiAccess;
 import org.bitcoinj.core.NetworkParameters;
 
 import javax.inject.Inject;
@@ -56,6 +58,9 @@ public class BlockchainApplication extends Application implements FrameworkInter
 
     public static final String RX_ERROR_TAG = "RxJava Error";
 
+    // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301 and AND-1194
+    @Inject
+    protected WalletApi walletApi;
     @Inject
     @Named("api")
     protected Lazy<Retrofit> retrofitApi;
@@ -97,6 +102,10 @@ public class BlockchainApplication extends Application implements FrameworkInter
         Injector.getInstance().init(this);
         // Inject into Application
         Injector.getInstance().getAppComponent().inject(this);
+
+        // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301 and AND-1194
+        WalletApiAccess.INSTANCE.setWalletApi(walletApi);
+
         // Pass objects to JAR
         BlockchainFramework.init(this);
 

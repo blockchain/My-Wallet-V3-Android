@@ -1,7 +1,7 @@
 package info.blockchain.wallet.payload.data;
 
 import info.blockchain.api.data.UnspentOutputs;
-import info.blockchain.wallet.MockedResponseTest;
+import info.blockchain.wallet.WalletApiMockedResponseTest;
 import info.blockchain.wallet.crypto.AESUtil;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.HDWalletException;
@@ -28,7 +28,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -42,7 +41,7 @@ WalletBase
             |
             |__Wallet
  */
-public class WalletTest extends MockedResponseTest {
+public final class WalletTest extends WalletApiMockedResponseTest {
 
     private NetworkParameters networkParameters = BitcoinMainNetParams.get();
 

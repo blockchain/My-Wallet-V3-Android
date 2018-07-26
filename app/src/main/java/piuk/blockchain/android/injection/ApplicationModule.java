@@ -74,10 +74,11 @@ public class ApplicationModule {
     @Singleton
     protected NotificationTokenManager provideNotificationTokenManager(PayloadManager payloadManager,
                                                                        PrefsUtil prefsUtil,
-                                                                       RxBus rxBus) {
+                                                                       RxBus rxBus,
+                                                                       WalletApi walletApi) {
 
         return new NotificationTokenManager(
-                new NotificationService(new WalletApi()),
+                new NotificationService(walletApi),
                 payloadManager,
                 prefsUtil,
                 FirebaseInstanceId.getInstance(),

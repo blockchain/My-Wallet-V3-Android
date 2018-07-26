@@ -55,16 +55,11 @@ public class SettingsManager {
 
     private String guid;
     private String sharedKey;
-    // This is an explicit dependency and should be injected in the future
-    private WalletApi walletApi;
 
-    public SettingsManager() {
-        walletApi = new WalletApi();
-    }
+    private final WalletApi walletApi;
 
-    public SettingsManager(String guid, String sharedKey) {
-        this.guid = guid;
-        this.sharedKey = sharedKey;
+    public SettingsManager(WalletApi walletApi) {
+        this.walletApi = walletApi;
     }
 
     public void initSettings(String guid, String sharedKey) {

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.PersistentUrls;
 import info.blockchain.wallet.api.WalletApi;
+import info.blockchain.wallet.api.WalletApiAccess;
 import info.blockchain.wallet.util.Util;
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -180,8 +181,8 @@ public class LegacyAddress {
     }
 
     private static ECKey getRandomECKey() throws Exception {
-
-        Call<ResponseBody> call = new WalletApi().getRandomBytesCall();
+        // TODO: Unused apart from in tests, remove as part of AND-1194
+        Call<ResponseBody> call = WalletApiAccess.INSTANCE.getWalletApi().getRandomBytesCall();
         Response<ResponseBody> exe = call.execute();
 
         if(!exe.isSuccessful()){

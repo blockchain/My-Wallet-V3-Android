@@ -6,44 +6,38 @@ import info.blockchain.wallet.api.data.SignedToken;
 import info.blockchain.wallet.api.data.Status;
 import info.blockchain.wallet.api.data.WalletOptions;
 import info.blockchain.wallet.exceptions.ApiException;
-
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
+import okhttp3.ResponseBody;
 import org.apache.commons.lang3.StringUtils;
 import org.spongycastle.util.encoders.Hex;
+import retrofit2.Call;
+import retrofit2.Response;
 
+import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Response;
-
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class WalletApi {
 
-    private static WalletEndpoints walletApi;
-    private static WalletEndpoints walletServer;
+    private final WalletApiEndpoints walletApi;
+    private final WalletExplorerEndpoints walletServer;
 
-    private WalletEndpoints getApiInstance() {
-        if (walletApi == null) {
-            walletApi = BlockchainFramework.getRetrofitApiInstance().
-                    create(WalletEndpoints.class);
-        }
+    public WalletApi(WalletApiEndpoints walletApi, WalletExplorerEndpoints walletServer) {
+        this.walletApi = walletApi;
+        this.walletServer = walletServer;
+    }
+
+    private WalletApiEndpoints getApiInstance() {
         return walletApi;
     }
 
-    private WalletEndpoints getExplorerInstance() {
-        if (walletServer == null) {
-            walletServer = BlockchainFramework.getRetrofitExplorerInstance()
-                    .create(WalletEndpoints.class);
-        }
+    private WalletExplorerEndpoints getExplorerInstance() {
         return walletServer;
     }
 

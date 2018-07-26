@@ -1,6 +1,7 @@
 package info.blockchain.wallet.api;
 
 import info.blockchain.wallet.BaseIntegTest;
+import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.data.Status;
 import info.blockchain.wallet.exceptions.ApiException;
 
@@ -21,12 +22,18 @@ import static org.junit.Assert.assertNotNull;
  * Simple integration test.
  * Ensures endpoints are reachable even if responses return an error body.
  */
-public class WalletApiIntegTest extends BaseIntegTest {
+public final class WalletApiIntegTest extends BaseIntegTest {
 
     // Unverified details
     private String guid = "cfd055ed-1a7f-4a92-8584-2f4d01365034";
     private String sharedKey = "b4ff6bf5-17a9-4905-b54b-a526816aa100";
-    private WalletApi walletApi = new WalletApi();
+
+    private WalletApi walletApi = new WalletApi(
+            BlockchainFramework.getRetrofitApiInstance().
+                    create(WalletApiEndpoints.class),
+            BlockchainFramework.getRetrofitExplorerInstance()
+                    .create(WalletExplorerEndpoints.class)
+    );
 
     @Test
     public void getRandomBytesCall() throws Exception {

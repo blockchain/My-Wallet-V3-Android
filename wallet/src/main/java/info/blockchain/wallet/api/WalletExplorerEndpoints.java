@@ -21,8 +21,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-@SuppressWarnings("SameParameterValue")
-public interface WalletEndpoints {
+public interface WalletExplorerEndpoints {
 
     @FormUrlEncoded
     @POST("wallet")
@@ -114,16 +113,6 @@ public interface WalletEndpoints {
             @Query("format") String format,
             @Query("resend_code") boolean resendCode,
             @Query("api_code") String apiCode);
-
-    @GET("v2/randombytes")
-    Call<ResponseBody> getRandomBytesCall(
-            @Query("bytes") int bytes,
-            @Query("format") String format);
-
-    @GET("v2/randombytes")
-    Observable<ResponseBody> getRandomBytes(
-            @Query("bytes") int bytes,
-            @Query("format") String format);
 
     @POST("pin-store")
     Observable<Response<Status>> pinStore(

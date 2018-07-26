@@ -4,6 +4,7 @@ import info.blockchain.api.blockexplorer.BlockExplorer;
 import info.blockchain.api.data.Balance;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.WalletApi;
+import info.blockchain.wallet.api.WalletApiAccess;
 import info.blockchain.wallet.bip44.HDAccount;
 import info.blockchain.wallet.exceptions.AccountLockedException;
 import info.blockchain.wallet.exceptions.ApiException;
@@ -94,7 +95,7 @@ public class PayloadManager {
     }
 
     private void init() {
-        walletApi = new WalletApi();
+        walletApi = WalletApiAccess.INSTANCE.getWalletApi();
         final BlockExplorer blockExplorer = new BlockExplorer(BlockchainFramework.getRetrofitExplorerInstance(),
                 BlockchainFramework.getRetrofitApiInstance(),
                 BlockchainFramework.getApiCode());

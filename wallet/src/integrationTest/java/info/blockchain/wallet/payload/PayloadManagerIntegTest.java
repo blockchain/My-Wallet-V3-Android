@@ -7,19 +7,27 @@ import info.blockchain.wallet.payload.data.Wallet;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.BitcoinMainNetParams;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class PayloadManagerIntegTest extends BaseIntegTest {
+public final class PayloadManagerIntegTest extends BaseIntegTest {
+
+    private PayloadManager payloadManager;
+
+    @Before
+    public void setup() {
+        payloadManager = PayloadManager.getInstance();
+    }
 
     @Test
     public void upgradeV2PayloadToV3() throws Exception {
 
         //Create a wallet
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "MyTestWallet");
+        payloadManager.create("My HDWallet", "name@email.com", "MyTestWallet");
 
-        Wallet walletBody = PayloadManager.getInstance().getPayload();
+        Wallet walletBody = payloadManager.getPayload();
 
         //Remove HD part
         walletBody.setHdWallets(new ArrayList<HDWallet>());
@@ -59,9 +67,9 @@ public class PayloadManagerIntegTest extends BaseIntegTest {
         String mnemonic = "all all all all all all all all all all all all";
         String seedHex = "0660cc198330660cc198330660cc1983";
 
-        PayloadManager.getInstance().recoverFromMnemonic(mnemonic, "My Bitcoin Wallet", "name@email.com", "SomePassword");
+        payloadManager.recoverFromMnemonic(mnemonic, "My Bitcoin Wallet", "name@email.com", "SomePassword");
 
-        Wallet walletBody = PayloadManager.getInstance()
+        Wallet walletBody = payloadManager
                 .getPayload();
 
         Assert.assertEquals(seedHex, walletBody.getHdWallets().get(0).getSeedHex());
@@ -77,10 +85,9 @@ public class PayloadManagerIntegTest extends BaseIntegTest {
         String mnemonic = "one defy stock very oven junk neutral weather sweet pyramid celery sorry";
         String seedHex = "9aa737587979dcf2a53fc5dbb5e09467";
 
-        PayloadManager.getInstance().recoverFromMnemonic(mnemonic, "My HDWallet", "name@email.com", "SomePassword");
+        payloadManager.recoverFromMnemonic(mnemonic, "My HDWallet", "name@email.com", "SomePassword");
 
-        Wallet walletBody = PayloadManager.getInstance()
-                .getPayload();
+        Wallet walletBody = payloadManager.getPayload();
 
         Assert.assertEquals(seedHex, walletBody.getHdWallets().get(0).getSeedHex());
     }
@@ -93,7 +100,6 @@ public class PayloadManagerIntegTest extends BaseIntegTest {
         String pw = "testtesttest";
         NetworkParameters networkParameters = BitcoinMainNetParams.get();
 
-        PayloadManager payloadManager = PayloadManager.getInstance();
         payloadManager.initializeAndDecrypt(networkParameters, sharedKey, guid, pw);
 
         Assert.assertEquals(guid, payloadManager.getPayload().getGuid());

@@ -1,6 +1,6 @@
 package info.blockchain.wallet.payload;
 
-import info.blockchain.wallet.MockedResponseTest;
+import info.blockchain.wallet.WalletApiMockedResponseTest;
 import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
 import info.blockchain.wallet.exceptions.ServerConnectionException;
@@ -11,7 +11,6 @@ import info.blockchain.wallet.payload.data.Account;
 import info.blockchain.wallet.payload.data.AddressLabel;
 import info.blockchain.wallet.payload.data.LegacyAddress;
 import info.blockchain.wallet.payload.data.Wallet;
-
 import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
@@ -19,6 +18,7 @@ import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.params.BitcoinMainNetParams;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URI;
@@ -29,18 +29,24 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PayloadManagerTest extends MockedResponseTest {
+public final class PayloadManagerTest extends WalletApiMockedResponseTest {
 
     private NetworkParameters networkParameters = BitcoinMainNetParams.get();
+    private PayloadManager payloadManager;
+
+    @Before
+    public void setup() {
+        payloadManager = PayloadManager.getInstance();
+    }
 
     @After
     public void tearDown() {
-        PayloadManager.getInstance().wipe();
+        payloadManager.wipe();
     }
 
     @Test
     public void getInstance() {
-        Assert.assertNotNull(PayloadManager.getInstance());
+        Assert.assertNotNull(payloadManager);
     }
 
     @Test
@@ -53,9 +59,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "SomePassword");
+        payloadManager.create("My HDWallet", "name@email.com", "SomePassword");
 
-        Wallet walletBody = PayloadManager.getInstance()
+        Wallet walletBody = payloadManager
                 .getPayload();
 
         Assert.assertEquals(36, walletBody.getGuid().length());//GUIDs are 36 in length
@@ -73,7 +79,7 @@ public class PayloadManagerTest extends MockedResponseTest {
 
         mockInterceptor.setResponseString("Save failed.");
         mockInterceptor.setResponseCode(500);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "SomePassword");
+        payloadManager.create("My HDWallet", "name@email.com", "SomePassword");
     }
 
     @Test
@@ -106,9 +112,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
 
-        PayloadManager.getInstance().recoverFromMnemonic(mnemonic, "My HDWallet", "name@email.com", "SomePassword");
+        payloadManager.recoverFromMnemonic(mnemonic, "My HDWallet", "name@email.com", "SomePassword");
 
-        Wallet walletBody = PayloadManager.getInstance()
+        Wallet walletBody = payloadManager
                 .getPayload();
 
         Assert.assertEquals(36, walletBody.getGuid().length());//GUIDs are 36 in length
@@ -145,9 +151,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         codes.add(500);
         mockInterceptor.setResponseCodeList(codes);
 
-        PayloadManager.getInstance().recoverFromMnemonic(mnemonic, "My HDWallet", "name@email.com", "SomePassword");
+        payloadManager.recoverFromMnemonic(mnemonic, "My HDWallet", "name@email.com", "SomePassword");
 
-        Wallet walletBody = PayloadManager.getInstance()
+        Wallet walletBody = payloadManager
                 .getPayload();
 
         Assert.assertEquals(36, walletBody.getGuid().length());//GUIDs are 36 in length
@@ -170,7 +176,7 @@ public class PayloadManagerTest extends MockedResponseTest {
                 Charset.forName("utf-8"));
 
         mockInterceptor.setResponseString(walletBase);
-        PayloadManager.getInstance().initializeAndDecrypt(networkParameters,"any_shared_key", "any_guid", "SomeTestPassword");
+        payloadManager.initializeAndDecrypt(networkParameters, "any_shared_key", "any_guid", "SomeTestPassword");
     }
 
     @Test
@@ -186,7 +192,7 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().initializeAndDecrypt(networkParameters, "any", "any", "SomeTestPassword");
+        payloadManager.initializeAndDecrypt(networkParameters, "any", "any", "SomeTestPassword");
     }
 
     @Test(expected = InvalidCredentialsException.class)
@@ -198,13 +204,13 @@ public class PayloadManagerTest extends MockedResponseTest {
 
         mockInterceptor.setResponseString(walletBase);
         mockInterceptor.setResponseCode(500);
-        PayloadManager.getInstance().initializeAndDecrypt(networkParameters, "any", "any", "SomeTestPassword");
+        payloadManager.initializeAndDecrypt(networkParameters, "any", "any", "SomeTestPassword");
     }
 
     @Test(expected = HDWalletException.class)
     public void save_HDWalletException() throws Exception {
         //Nothing to save
-        PayloadManager.getInstance().save();
+        payloadManager.save();
     }
 
     @Test
@@ -216,10 +222,10 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "SomePassword");
+        payloadManager.create("My HDWallet", "name@email.com", "SomePassword");
 
         mockInterceptor.setResponseString("MyWallet save successful.");
-        PayloadManager.getInstance().save();
+        payloadManager.save();
     }
 
     @Test
@@ -236,9 +242,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "MyTestWallet");
+        payloadManager.create("My HDWallet", "name@email.com", "MyTestWallet");
 
-        Assert.assertEquals(1, PayloadManager.getInstance().getPayload().getHdWallets().get(0).getAccounts().size());
+        Assert.assertEquals(1, payloadManager.getPayload().getHdWallets().get(0).getAccounts().size());
 
         responseList = new LinkedList<>();
         responseList.add("MyWallet save successful");
@@ -247,8 +253,8 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addAccount(networkParameters, "Some Label", null);
-        Assert.assertEquals(2, PayloadManager.getInstance().getPayload().getHdWallets().get(0).getAccounts().size());
+        payloadManager.addAccount(networkParameters, "Some Label", null);
+        Assert.assertEquals(2, payloadManager.getPayload().getHdWallets().get(0).getAccounts().size());
 
         responseList = new LinkedList<>();
         responseList.add("MyWallet save successful");
@@ -258,8 +264,8 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addAccount(networkParameters, "Some Label", null);
-        Assert.assertEquals(3, PayloadManager.getInstance().getPayload().getHdWallets().get(0).getAccounts().size());
+        payloadManager.addAccount(networkParameters, "Some Label", null);
+        Assert.assertEquals(3, payloadManager.getPayload().getHdWallets().get(0).getAccounts().size());
 
     }
 
@@ -273,9 +279,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "MyTestWallet");
+        payloadManager.create("My HDWallet", "name@email.com", "MyTestWallet");
 
-        Assert.assertEquals(0, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
         responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
@@ -285,8 +291,8 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addLegacyAddress("Some Label", null);
-        Assert.assertEquals(1, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        payloadManager.addLegacyAddress("Some Label", null);
+        Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
         responseList.add("3e2b33d63ba45320f42d2b1de6d7ebd3ea810c35348927fd34424fe9bc53c07a");
@@ -297,8 +303,8 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addLegacyAddress("Some Label", null);
-        Assert.assertEquals(2, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        payloadManager.addLegacyAddress("Some Label", null);
+        Assert.assertEquals(2, payloadManager.getPayload().getLegacyAddressList().size());
 
     }
 
@@ -311,9 +317,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "MyTestWallet");
+        payloadManager.create("My HDWallet", "name@email.com", "MyTestWallet");
 
-        Assert.assertEquals(0, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
         responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
@@ -323,10 +329,10 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addLegacyAddress("Some Label", null);
-        Assert.assertEquals(1, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        payloadManager.addLegacyAddress("Some Label", null);
+        Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
-        LegacyAddress legacyAddressBody = PayloadManager.getInstance().getPayload()
+        LegacyAddress legacyAddressBody = payloadManager.getPayload()
                 .getLegacyAddressList().get(0);
 
         ECKey ecKey = DeterministicKey
@@ -335,7 +341,7 @@ public class PayloadManagerTest extends MockedResponseTest {
 
         legacyAddressBody.setPrivateKey(null);
         mockInterceptor.setResponseString("MyWallet save successful.");
-        PayloadManager.getInstance().setKeyForLegacyAddress(ecKey, null);
+        payloadManager.setKeyForLegacyAddress(ecKey, null);
     }
 
     @Test
@@ -347,9 +353,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "MyTestWallet");
+        payloadManager.create("My HDWallet", "name@email.com", "MyTestWallet");
 
-        Assert.assertEquals(0, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
         responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
@@ -359,10 +365,10 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addLegacyAddress("Some Label", null);
-        Assert.assertEquals(1, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        payloadManager.addLegacyAddress("Some Label", null);
+        Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
-        LegacyAddress existingLegacyAddressBody = PayloadManager.getInstance().getPayload()
+        LegacyAddress existingLegacyAddressBody = payloadManager.getPayload()
                 .getLegacyAddressList().get(0);
 
         //Try non matching ECKey
@@ -377,7 +383,7 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
 
-        LegacyAddress newlyAdded = PayloadManager.getInstance()
+        LegacyAddress newlyAdded = payloadManager
                 .setKeyForLegacyAddress(ecKey, null);
 
         //Ensure new address is created if no match found
@@ -397,9 +403,9 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().create("My HDWallet", "name@email.com", "MyTestWallet");
+        payloadManager.create("My HDWallet", "name@email.com", "MyTestWallet");
 
-        Assert.assertEquals(0, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
         responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
@@ -409,10 +415,10 @@ public class PayloadManagerTest extends MockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        PayloadManager.getInstance().addLegacyAddress("Some Label", null);
-        Assert.assertEquals(1, PayloadManager.getInstance().getPayload().getLegacyAddressList().size());
+        payloadManager.addLegacyAddress("Some Label", null);
+        Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
-        LegacyAddress legacyAddressBody = PayloadManager.getInstance().getPayload()
+        LegacyAddress legacyAddressBody = payloadManager.getPayload()
                 .getLegacyAddressList().get(0);
 
         ECKey ecKey = DeterministicKey
@@ -421,7 +427,7 @@ public class PayloadManagerTest extends MockedResponseTest {
         legacyAddressBody.setPrivateKey(null);
         mockInterceptor.setResponseCode(500);
         mockInterceptor.setResponseString("Oops something went wrong");
-        PayloadManager.getInstance().setKeyForLegacyAddress(ecKey, null);
+        payloadManager.setKeyForLegacyAddress(ecKey, null);
 
         //Ensure private key reverted on save fail
         Assert.assertNull(legacyAddressBody.getPrivateKey());
@@ -446,9 +452,9 @@ public class PayloadManagerTest extends MockedResponseTest {
                 "multiaddress/wallet_v3_5_m4.txt").toURI())), Charset.forName("utf-8")));
         mockInterceptor.setResponseStringList(responseList);
 
-        PayloadManager.getInstance().initializeAndDecrypt(networkParameters, "06f6fa9c-d0fe-403d-815a-111ee26888e2", "4750d125-5344-4b79-9cf9-6e3c97bc9523", "MyTestWallet");
+        payloadManager.initializeAndDecrypt(networkParameters, "06f6fa9c-d0fe-403d-815a-111ee26888e2", "4750d125-5344-4b79-9cf9-6e3c97bc9523", "MyTestWallet");
 
-        Wallet wallet = PayloadManager.getInstance().getPayload();
+        Wallet wallet = payloadManager.getPayload();
 
         //Reserve an address to ensure it gets skipped
         List<AddressLabel> labelList = new ArrayList<>();
@@ -461,24 +467,24 @@ public class PayloadManagerTest extends MockedResponseTest {
         account.setAddressLabels(labelList);
 
         //set up indexes first
-        PayloadManager.getInstance().getAccountTransactions(account.getXpub(), 50, 0);
+        payloadManager.getAccountTransactions(account.getXpub(), 50, 0);
 
         //Next Receive
-        String nextReceiveAddress = PayloadManager.getInstance().getNextReceiveAddress(account);
+        String nextReceiveAddress = payloadManager.getNextReceiveAddress(account);
         Assert.assertEquals("1H9FdkaryqzB9xacDbJrcjXsJ9By4UVbQw", nextReceiveAddress);
 
         //Increment receive and check
-        PayloadManager.getInstance().incrementNextReceiveAddress(account);
-        nextReceiveAddress = PayloadManager.getInstance().getNextReceiveAddress(account);
+        payloadManager.incrementNextReceiveAddress(account);
+        nextReceiveAddress = payloadManager.getNextReceiveAddress(account);
         Assert.assertEquals("18DU2RjyadUmRK7sHTBHtbJx5VcwthHyF7", nextReceiveAddress);
 
         //Next Change
-        String nextChangeAddress = PayloadManager.getInstance().getNextChangeAddress(account);
+        String nextChangeAddress = payloadManager.getNextChangeAddress(account);
         Assert.assertEquals("1GEXfMa4SMh3iUZxP8HHQy7Wo3aqce72Nm", nextChangeAddress);
 
         //Increment Change and check
-        PayloadManager.getInstance().incrementNextChangeAddress(account);
-        nextChangeAddress = PayloadManager.getInstance().getNextChangeAddress(account);
+        payloadManager.incrementNextChangeAddress(account);
+        nextChangeAddress = payloadManager.getNextChangeAddress(account);
         Assert.assertEquals("1NzpLHV6LLVFCYdYA5woYL9pHJ48KQJc9K", nextChangeAddress);
     }
 
@@ -498,14 +504,13 @@ public class PayloadManagerTest extends MockedResponseTest {
 
         mockInterceptor.setResponseStringList(responseList);
 
-        PayloadManager payloadManager = PayloadManager.getInstance();
         payloadManager.initializeAndDecrypt(networkParameters, "any", "any", "MyTestWallet");
 
         //'All' wallet balance and transactions
         Assert.assertEquals(743071, payloadManager.getWalletBalance().longValue());
 
         //Imported addresses consolidated
-        Assert.assertEquals(137505, PayloadManager.getInstance().getImportedAddressesBalance().longValue());
+        Assert.assertEquals(137505, payloadManager.getImportedAddressesBalance().longValue());
 
         //Account and address balances
         String first = "xpub6CdH6yzYXhTtR7UHJHtoTeWm3nbuyg9msj3rJvFnfMew9CBff6Rp62zdTrC57Spz4TpeRPL8m9xLiVaddpjEx4Dzidtk44rd4N2xu9XTrSV";
@@ -540,7 +545,6 @@ public class PayloadManagerTest extends MockedResponseTest {
                 "multiaddress/wallet_v3_6_m1.txt").toURI())), Charset.forName("utf-8")));
         mockInterceptor.setResponseStringList(responseList);
 
-        PayloadManager payloadManager = PayloadManager.getInstance();
         payloadManager.initializeAndDecrypt(networkParameters, "0f28735d-0b89-405d-a40f-ee3e85c3c78c", "5350e5d5-bd65-456f-b150-e6cc089f0b26", "MyTestWallet");
 
         //Account 1
