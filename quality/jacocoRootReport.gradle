@@ -61,7 +61,7 @@ def coverageClassDirectories = [
         fileTree(dir: 'morph/common/build/classes/java/main', excludes: excludedDirs),
         fileTree(dir: 'morph/common/build/classes/kotlin/main', excludes: excludedDirs),
         fileTree(dir: 'morph/shapeshift/build/classes/java/main', excludes: excludedDirs),
-        fileTree(dir: 'morph/shapeshift/build/classes/kotlin/main', excludes: excludedDirs),
+        fileTree(dir: 'morph/shapeshift/build/tmp/kotlin-classes/kotlin/main', excludes: excludedDirs),
         fileTree(dir: 'kyc/build/intermediates/classes/debug', excludes: excludedDirs),
         fileTree(dir: 'kyc/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
 ]

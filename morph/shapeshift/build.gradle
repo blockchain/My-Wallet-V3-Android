@@ -1,43 +1,51 @@
-apply plugin: 'kotlin'
-apply from: '../../quality/jacocoKtLibrary.gradle'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: '../../quality/jacocoLibrary.gradle'
 apply from: '../../quality/ktlint.gradle'
 
-buildscript {
-    repositories {
-        mavenCentral()
+android {
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    dependencies {
-        classpath Libraries.kotlinGradlePlugin
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        // Always show the result of every unit test, even if it passes.
+        unitTests.all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+            reports.junitXml.destination = file('../build/test-results/')
+        }
     }
 }
 
-sourceCompatibility = Versions.javaCompatibilityVersion
-targetCompatibility = Versions.javaCompatibilityVersion
-
 dependencies {
     implementation project(':morph:common')
+    implementation project(':core')
+    implementation project(':balance')
 
     implementation Libraries.kotlin
+
+    implementation Libraries.retrofitJacksonConverter
+
+    implementation Libraries.rxKotlin
+
+    implementation(Libraries.retrofit) { exclude module: 'okhttp' }
 
     // Testing
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.kluent
-}
-
-test {
-    testLogging {
-        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-    }
-}
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = Versions.kotlinJvmTarget
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = Versions.kotlinJvmTarget
-    }
+    testImplementation project(':testutils')
 }

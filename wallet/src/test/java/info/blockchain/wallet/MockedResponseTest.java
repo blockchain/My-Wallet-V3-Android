@@ -1,7 +1,6 @@
 package info.blockchain.wallet;
 
 import info.blockchain.wallet.api.Environment;
-import info.blockchain.wallet.shapeshift.ShapeShiftUrls;
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 import io.reactivex.internal.schedulers.TrampolineScheduler;
@@ -21,10 +20,6 @@ public abstract class MockedResponseTest {
     public MockInterceptor mockInterceptor = MockInterceptor.getInstance();
 
     private final OkHttpClient okHttpClient = getOkHttpClient();
-
-    protected Retrofit getRetrofitShapeShiftInstance() {
-        return getRetrofit(ShapeShiftUrls.SHAPESHIFT_URL, okHttpClient);
-    }
 
     @Before
     public void initBlockchainFramework() {

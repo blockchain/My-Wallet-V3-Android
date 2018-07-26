@@ -1,6 +1,9 @@
-package info.blockchain.wallet.shapeshift;
+package piuk.blockchain.androidcore.data.shapeshift;
 
-import info.blockchain.wallet.MockedResponseTest;
+import info.blockchain.wallet.shapeshift.ShapeShiftApi;
+import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints;
+import info.blockchain.wallet.shapeshift.ShapeShiftPairs;
+import info.blockchain.wallet.shapeshift.ShapeShiftUrls;
 import info.blockchain.wallet.shapeshift.data.MarketInfo;
 import info.blockchain.wallet.shapeshift.data.Quote;
 import info.blockchain.wallet.shapeshift.data.QuoteRequest;
@@ -10,6 +13,7 @@ import info.blockchain.wallet.shapeshift.data.Trade;
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse;
 import io.reactivex.observers.TestObserver;
 import org.junit.Test;
+import retrofit2.Retrofit;
 
 import java.math.BigDecimal;
 
@@ -17,6 +21,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public final class ShapeShiftApiTest extends MockedResponseTest {
+
+    private Retrofit getRetrofitShapeShiftInstance() {
+        return getRetrofit(ShapeShiftUrls.SHAPESHIFT_URL, okHttpClient);
+    }
 
     private ShapeShiftApi subject = new ShapeShiftApi(
             getRetrofitShapeShiftInstance().create(ShapeShiftEndpoints.class)

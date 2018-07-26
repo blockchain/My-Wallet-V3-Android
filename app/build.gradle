@@ -152,6 +152,7 @@ dependencies {
     implementation project(':coreui')
     implementation project(':buysellui')
     implementation project(':kyc')
+    implementation project(':morph:shapeshift')
 
     implementation Libraries.multidex
     kapt Libraries.dataBindingKapt
