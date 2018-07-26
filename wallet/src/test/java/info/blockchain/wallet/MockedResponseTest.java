@@ -80,21 +80,21 @@ public abstract class MockedResponseTest {
     public void setupRxCalls() {
         RxJavaPlugins.reset();
 
-        RxJavaPlugins.setInitIoSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
+        RxJavaPlugins.setIoSchedulerHandler(new Function<Scheduler, Scheduler>() {
             @Override
-            public Scheduler apply(Callable<Scheduler> schedulerCallable) {
+            public Scheduler apply(Scheduler schedulerCallable) {
                 return TrampolineScheduler.instance();
             }
         });
-        RxJavaPlugins.setInitComputationSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
+        RxJavaPlugins.setComputationSchedulerHandler(new Function<Scheduler, Scheduler>() {
             @Override
-            public Scheduler apply(Callable<Scheduler> schedulerCallable) {
+            public Scheduler apply(Scheduler schedulerCallable) {
                 return TrampolineScheduler.instance();
             }
         });
-        RxJavaPlugins.setInitNewThreadSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
+        RxJavaPlugins.setNewThreadSchedulerHandler(new Function<Scheduler, Scheduler>() {
             @Override
-            public Scheduler apply(Callable<Scheduler> schedulerCallable) {
+            public Scheduler apply(Scheduler schedulerCallable) {
                 return TrampolineScheduler.instance();
             }
         });
