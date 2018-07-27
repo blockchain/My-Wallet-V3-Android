@@ -1,6 +1,7 @@
 package info.blockchain.wallet.payload.data;
 
 import info.blockchain.api.data.UnspentOutputs;
+import info.blockchain.wallet.LegacyAddressHelper;
 import info.blockchain.wallet.WalletApiMockedResponseTest;
 import info.blockchain.wallet.crypto.AESUtil;
 import info.blockchain.wallet.exceptions.DecryptionException;
@@ -32,7 +33,6 @@ import java.util.Map.Entry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /*
 WalletBase
@@ -218,7 +218,7 @@ public final class WalletTest extends WalletApiMockedResponseTest {
 
         assertEquals(0, wallet.getLegacyAddressList().size());
         mockInterceptor.setResponseString("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
-        wallet.addLegacyAddress("Some Label", null);
+        wallet.addLegacyAddress(LegacyAddressHelper.getLegacyAddress(), null);
         assertEquals(1, wallet.getLegacyAddressList().size());
 
         LegacyAddress address = wallet.getLegacyAddressList().get(wallet.getLegacyAddressList().size() - 1);
@@ -237,7 +237,7 @@ public final class WalletTest extends WalletApiMockedResponseTest {
 
         assertEquals(19, wallet.getLegacyAddressList().size());
         mockInterceptor.setResponseString("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
-        wallet.addLegacyAddress("Some Label", "hello");
+        wallet.addLegacyAddress(LegacyAddressHelper.getLegacyAddress(), "hello");
         assertEquals(20, wallet.getLegacyAddressList().size());
 
         LegacyAddress address = wallet.getLegacyAddressList().get(wallet.getLegacyAddressList().size() - 1);
@@ -256,7 +256,7 @@ public final class WalletTest extends WalletApiMockedResponseTest {
         Wallet wallet = givenWalletFromResouce("wallet_body_6.txt");
 
         mockInterceptor.setResponseString("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
-        wallet.addLegacyAddress("Some Label", null);
+        wallet.addLegacyAddress(LegacyAddressHelper.getLegacyAddress(), null);
 
         LegacyAddress address = wallet.getLegacyAddressList().get(wallet.getLegacyAddressList().size() - 1);
 
@@ -272,7 +272,7 @@ public final class WalletTest extends WalletApiMockedResponseTest {
         Wallet wallet = givenWalletFromResouce("wallet_body_6.txt");
 
         mockInterceptor.setResponseString("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
-        wallet.addLegacyAddress("Some Label", null);
+        wallet.addLegacyAddress(LegacyAddressHelper.getLegacyAddress(), null);
 
         LegacyAddress address = wallet.getLegacyAddressList().get(wallet.getLegacyAddressList().size() - 1);
 
@@ -288,7 +288,7 @@ public final class WalletTest extends WalletApiMockedResponseTest {
         Wallet wallet = givenWalletFromResouce("wallet_body_1.txt");
 
         mockInterceptor.setResponseString("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
-        wallet.addLegacyAddress("Some Label", "hello");
+        wallet.addLegacyAddress(LegacyAddressHelper.getLegacyAddress(), "hello");
 
         LegacyAddress address = wallet.getLegacyAddressList().get(wallet.getLegacyAddressList().size() - 1);
 
@@ -322,7 +322,7 @@ public final class WalletTest extends WalletApiMockedResponseTest {
         Wallet wallet = givenWalletFromResouce("wallet_body_1.txt");
 
         mockInterceptor.setResponseString("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
-        wallet.addLegacyAddress("Some Label", "hello");
+        wallet.addLegacyAddress(LegacyAddressHelper.getLegacyAddress(), "hello");
 
         LegacyAddress address = wallet.getLegacyAddressList().get(wallet.getLegacyAddressList().size() - 1);
 

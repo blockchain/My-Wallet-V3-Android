@@ -1,5 +1,6 @@
 package info.blockchain.wallet.payload;
 
+import info.blockchain.wallet.LegacyAddressHelper;
 import info.blockchain.wallet.WalletApiMockedResponseTest;
 import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
@@ -284,18 +285,16 @@ public final class PayloadManagerTest extends WalletApiMockedResponseTest {
         Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
-        responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
         responseList.add("MyWallet save successful");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        payloadManager.addLegacyAddress("Some Label", null);
+        payloadManager.addLegacyAddress(LegacyAddressHelper.getLegacyAddress());
         Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
-        responseList.add("3e2b33d63ba45320f42d2b1de6d7ebd3ea810c35348927fd34424fe9bc53c07a");
         responseList.add("MyWallet save successful");
         responseList.add("{}");
         responseList.add("{}");
@@ -303,7 +302,7 @@ public final class PayloadManagerTest extends WalletApiMockedResponseTest {
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        payloadManager.addLegacyAddress("Some Label", null);
+        payloadManager.addLegacyAddress(LegacyAddressHelper.getLegacyAddress());
         Assert.assertEquals(2, payloadManager.getPayload().getLegacyAddressList().size());
 
     }
@@ -322,14 +321,13 @@ public final class PayloadManagerTest extends WalletApiMockedResponseTest {
         Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
-        responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
         responseList.add("MyWallet save successful");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        payloadManager.addLegacyAddress("Some Label", null);
+        payloadManager.addLegacyAddress(LegacyAddressHelper.getLegacyAddress());
         Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
         LegacyAddress legacyAddressBody = payloadManager.getPayload()
@@ -358,14 +356,13 @@ public final class PayloadManagerTest extends WalletApiMockedResponseTest {
         Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
-        responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
         responseList.add("MyWallet save successful");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        payloadManager.addLegacyAddress("Some Label", null);
+        payloadManager.addLegacyAddress(LegacyAddressHelper.getLegacyAddress());
         Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
         LegacyAddress existingLegacyAddressBody = payloadManager.getPayload()
@@ -408,14 +405,13 @@ public final class PayloadManagerTest extends WalletApiMockedResponseTest {
         Assert.assertEquals(0, payloadManager.getPayload().getLegacyAddressList().size());
 
         responseList = new LinkedList<>();
-        responseList.add("cb600366ef7a94b991aa04557fc1d9c272ba00df6b1d9791d71c66efa0ae7fe9");
         responseList.add("MyWallet save successful");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         responseList.add("{}");
         mockInterceptor.setResponseStringList(responseList);
-        payloadManager.addLegacyAddress("Some Label", null);
+        payloadManager.addLegacyAddress(LegacyAddressHelper.getLegacyAddress());
         Assert.assertEquals(1, payloadManager.getPayload().getLegacyAddressList().size());
 
         LegacyAddress legacyAddressBody = payloadManager.getPayload()

@@ -2,7 +2,7 @@ package info.blockchain.wallet.api;
 
 /**
  * @deprecated Inject WalletApi directly.
- * TODO: Remove this once as part of AND-1301 and AND-1194 which should remove the last accesses of this.
+ * TODO: Remove this once as part of AND-1301 which should remove the last access of this.
  */
 public enum WalletApiAccess {
     INSTANCE;

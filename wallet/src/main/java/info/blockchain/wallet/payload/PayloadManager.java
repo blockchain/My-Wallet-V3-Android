@@ -444,27 +444,6 @@ public class PayloadManager {
     }
 
     /**
-     * NB! When called from Android - First apply PRNGFixes
-     * Generates new legacy address and saves to server.
-     * Reverts on save failure.
-     */
-    public boolean addLegacyAddress(String label, @Nullable String secondPassword) throws Exception {
-        LegacyAddress legacyAddressBody = walletBaseBody.getWalletBody()
-                .addLegacyAddress(label, secondPassword);
-
-        boolean success = save();
-
-        if (!success) {
-            //Revert on save fail
-            walletBaseBody.getWalletBody().getLegacyAddressList().remove(legacyAddressBody);
-        }
-
-        updateAllBalances();
-
-        return success;
-    }
-
-    /**
      * Inserts a {@link LegacyAddress} into the user's {@link Wallet} and then syncs the wallet with
      * the server. Will remove/revert the LegacyAddress if the sync was unsuccessful.
      *

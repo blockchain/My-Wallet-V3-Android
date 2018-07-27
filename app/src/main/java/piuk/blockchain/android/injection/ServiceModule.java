@@ -4,7 +4,6 @@ import dagger.Module;
 import dagger.Provides;
 import info.blockchain.wallet.api.FeeApi;
 import info.blockchain.wallet.api.WalletApi;
-import info.blockchain.wallet.api.WalletApiEndpoints;
 import info.blockchain.wallet.api.WalletExplorerEndpoints;
 import info.blockchain.wallet.contacts.Contacts;
 import info.blockchain.wallet.ethereum.EthAccountApi;
@@ -37,12 +36,6 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    WalletApiEndpoints provideWalletApiEndpoints(@Named("api") Retrofit retrofit) {
-        return retrofit.create(WalletApiEndpoints.class);
-    }
-
-    @Provides
-    @Singleton
     WalletExplorerEndpoints provideWalletExplorerEndpoints(@Named("explorer") Retrofit retrofit) {
         return retrofit.create(WalletExplorerEndpoints.class);
     }
@@ -54,8 +47,8 @@ class ServiceModule {
     }
 
     @Provides
-    WalletApi provideWalletApi(WalletApiEndpoints walletApiEndpoints, WalletExplorerEndpoints walletExplorerEndpoints) {
-        return new WalletApi(walletApiEndpoints, walletExplorerEndpoints);
+    WalletApi provideWalletApi(WalletExplorerEndpoints walletExplorerEndpoints) {
+        return new WalletApi(walletExplorerEndpoints);
     }
 
     @Provides

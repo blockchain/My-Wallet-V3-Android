@@ -31,17 +31,6 @@ public final class WalletApiTest extends WalletApiMockedResponseTest {
     }
 
     @Test
-    public void getRandomBytes() throws Exception {
-        mockInterceptor.setResponseString("2191f7564486869d6b08c56f496008d7c9741cf7111ed23d4ca4178a35446827");
-        final TestObserver<ResponseBody> testObserver = subject.getRandomBytes().test();
-
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        assertEquals("2191f7564486869d6b08c56f496008d7c9741cf7111ed23d4ca4178a35446827",
-                testObserver.values().get(0).string());
-    }
-
-    @Test
     public void getEncryptedPayload() throws IOException, URISyntaxException {
         URI uri = getClass().getClassLoader().getResource("encrypted-payload.txt").toURI();
         String encryptedPayload = new String(Files.readAllBytes(Paths.get(uri)), Charset.forName("utf-8"));

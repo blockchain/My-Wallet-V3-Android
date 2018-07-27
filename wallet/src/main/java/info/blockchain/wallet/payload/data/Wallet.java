@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.google.common.annotations.VisibleForTesting;
 import info.blockchain.wallet.api.PersistentUrls;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.EncryptionException;
@@ -16,7 +16,6 @@ import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.NoSuchAddressException;
 import info.blockchain.wallet.util.DoubleEncryptionFactory;
 import info.blockchain.wallet.util.FormatsUtil;
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.StringUtils;
 import org.bitcoinj.core.Base58;
@@ -27,6 +26,7 @@ import org.bitcoinj.crypto.MnemonicException.MnemonicLengthException;
 import org.bitcoinj.crypto.MnemonicException.MnemonicWordException;
 import org.spongycastle.crypto.InvalidCipherTextException;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -35,8 +35,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.annotation.Nullable;
 
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -356,51 +354,33 @@ public class Wallet {
         }
     }
 
-    public LegacyAddress addLegacyAddress(String label, @Nullable String secondPassword)
-        throws Exception {
-        validateSecondPassword(secondPassword);
-        LegacyAddress addressBody = LegacyAddress.generateNewLegacy();
-        addressBody.setLabel(label);
+    @VisibleForTesting
+    public LegacyAddress addLegacyAddress(LegacyAddress address, @Nullable String secondPassword)
+            throws Exception {
 
-        if(secondPassword != null) {
+        validateSecondPassword(secondPassword);
+
+        if (secondPassword != null) {
             //Double encryption
-            String unencryptedKey = addressBody.getPrivateKey();
+            String unencryptedKey = address.getPrivateKey();
 
             String encryptedKey = DoubleEncryptionFactory.encrypt(unencryptedKey,
-                getSharedKey(),
-                secondPassword,
-                getOptions().getPbkdf2Iterations());
+                    getSharedKey(),
+                    secondPassword,
+                    getOptions().getPbkdf2Iterations());
 
-            addressBody.setPrivateKey(encryptedKey);
+            address.setPrivateKey(encryptedKey);
 
         }
 
-        keys.add(addressBody);
+        keys.add(address);
 
-        return addressBody;
+        return address;
     }
 
     public LegacyAddress addLegacyAddressFromKey(ECKey key, @Nullable String secondPassword)
-        throws Exception {
-        validateSecondPassword(secondPassword);
-        LegacyAddress addressBody = LegacyAddress.fromECKey(key);
-
-        if(secondPassword != null) {
-            //Double encryption
-            String unencryptedKey = addressBody.getPrivateKey();
-
-            String encryptedKey = DoubleEncryptionFactory.encrypt(unencryptedKey,
-                getSharedKey(),
-                secondPassword,
-                getOptions().getPbkdf2Iterations());
-
-            addressBody.setPrivateKey(encryptedKey);
-
-        }
-
-        keys.add(addressBody);
-
-        return addressBody;
+            throws Exception {
+        return addLegacyAddress(LegacyAddress.fromECKey(key), secondPassword);
     }
 
     public void decryptHDWallet(NetworkParameters networkParameters, int hdWalletIndex, String secondPassword)

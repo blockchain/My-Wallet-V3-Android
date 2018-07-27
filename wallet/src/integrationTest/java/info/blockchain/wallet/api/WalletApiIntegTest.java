@@ -29,29 +29,9 @@ public final class WalletApiIntegTest extends BaseIntegTest {
     private String sharedKey = "b4ff6bf5-17a9-4905-b54b-a526816aa100";
 
     private WalletApi walletApi = new WalletApi(
-            BlockchainFramework.getRetrofitApiInstance().
-                    create(WalletApiEndpoints.class),
             BlockchainFramework.getRetrofitExplorerInstance()
                     .create(WalletExplorerEndpoints.class)
     );
-
-    @Test
-    public void getRandomBytesCall() throws Exception {
-        Response<ResponseBody> call = walletApi.getRandomBytesCall().execute();
-
-        assertNotNull(call.body());
-        assertNotNull(call.body().string());
-    }
-
-    @Test
-    public void getRandomBytesObservable() {
-        final TestObserver<ResponseBody> testObserver = walletApi.getRandomBytes().test();
-
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        assertNotNull(testObserver.values().get(0));
-        assertNotNull(testObserver.values().get(0).toString());
-    }
 
     @Test
     public void updateFirebaseNotificationToken() {

@@ -25,28 +25,14 @@ import java.util.Map;
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class WalletApi {
 
-    private final WalletApiEndpoints walletApi;
     private final WalletExplorerEndpoints walletServer;
 
-    public WalletApi(WalletApiEndpoints walletApi, WalletExplorerEndpoints walletServer) {
-        this.walletApi = walletApi;
+    public WalletApi(WalletExplorerEndpoints walletServer) {
         this.walletServer = walletServer;
-    }
-
-    private WalletApiEndpoints getApiInstance() {
-        return walletApi;
     }
 
     private WalletExplorerEndpoints getExplorerInstance() {
         return walletServer;
-    }
-
-    public Call<ResponseBody> getRandomBytesCall() {
-        return getApiInstance().getRandomBytesCall(32, "hex");
-    }
-
-    public Observable<ResponseBody> getRandomBytes() {
-        return getApiInstance().getRandomBytes(32, "hex");
     }
 
     public Observable<ResponseBody> updateFirebaseNotificationToken(String token,

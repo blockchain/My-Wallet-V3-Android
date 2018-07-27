@@ -8,27 +8,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.PersistentUrls;
-import info.blockchain.wallet.api.WalletApi;
-import info.blockchain.wallet.api.WalletApiAccess;
-import info.blockchain.wallet.util.Util;
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nonnull;
-import okhttp3.ResponseBody;
 import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.ECKey;
-import org.spongycastle.util.encoders.Hex;
-import retrofit2.Call;
-import retrofit2.Response;
+
+import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = Visibility.NONE,
-    getterVisibility = Visibility.NONE,
-    setterVisibility = Visibility.NONE,
-    creatorVisibility = Visibility.NONE,
-    isGetterVisibility = Visibility.NONE)
+        getterVisibility = Visibility.NONE,
+        setterVisibility = Visibility.NONE,
+        creatorVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.NONE)
 public class LegacyAddress {
 
     public static final int NORMAL_ADDRESS = 0;
@@ -67,7 +57,7 @@ public class LegacyAddress {
         try {
             Base58.decode(privateKey);
             return false;
-        }catch (Exception e){
+        } catch (Exception e) {
             return true;
         }
     }
@@ -98,10 +88,6 @@ public class LegacyAddress {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setAddressFromPublicKeyBytes(byte[] pubKeyBytes) {
-        this.address = Base58.encode(pubKeyBytes);
     }
 
     public void setLabel(String label) {
@@ -140,34 +126,7 @@ public class LegacyAddress {
         return new ObjectMapper().writeValueAsString(this);
     }
 
-    public static List<LegacyAddress> filterAddress(int filter, @Nonnull List<LegacyAddress> keys) {
-
-        List<LegacyAddress> addressList = new ArrayList<>();
-
-        for(LegacyAddress key : keys) {
-            if(key.getTag() == filter) {
-                addressList.add(key);
-            }
-        }
-
-        return addressList;
-    }
-
-    public static LegacyAddress generateNewLegacy() throws Exception {
-
-        ECKey ecKey = getRandomECKey();
-
-        LegacyAddress legacyAddress = new LegacyAddress();
-        legacyAddress.setPrivateKeyFromBytes(ecKey.getPrivKeyBytes());
-        legacyAddress.setAddress(ecKey.toAddress(PersistentUrls.getInstance().getBitcoinParams()).toString());
-        legacyAddress.setCreatedDeviceName(BlockchainFramework.getDevice());
-        legacyAddress.setCreatedTime(System.currentTimeMillis());
-        legacyAddress.setCreatedDeviceVersion(BlockchainFramework.getAppVersion());
-
-        return legacyAddress;
-    }
-
-    public static LegacyAddress fromECKey(ECKey ecKey) throws Exception {
+    public static LegacyAddress fromECKey(ECKey ecKey) {
 
         LegacyAddress legacyAddress = new LegacyAddress();
         legacyAddress.setPrivateKeyFromBytes(ecKey.getPrivKeyBytes());
@@ -178,34 +137,5 @@ public class LegacyAddress {
         legacyAddress.setCreatedDeviceVersion(BlockchainFramework.getAppVersion());
 
         return legacyAddress;
-    }
-
-    private static ECKey getRandomECKey() throws Exception {
-        // TODO: Unused apart from in tests, remove as part of AND-1194
-        Call<ResponseBody> call = WalletApiAccess.INSTANCE.getWalletApi().getRandomBytesCall();
-        Response<ResponseBody> exe = call.execute();
-
-        if(!exe.isSuccessful()){
-            throw new Exception("ExternalEntropy.getRandomBytesCall failed.");
-        }
-
-        byte[] data = Hex.decode(exe.body().string());
-
-        if (data == null) throw new Exception("ExternalEntropy.getRandomBytesCall failed.");
-
-        byte[] rdata = new byte[32];
-        SecureRandom random = new SecureRandom();
-        random.nextBytes(rdata);
-        byte[] privbytes = Util.xor(data, rdata);
-        if (privbytes == null) {
-            return null;
-        }
-        ECKey ecKey = ECKey.fromPrivate(privbytes, true);
-        // erase all byte arrays:
-        random.nextBytes(privbytes);
-        random.nextBytes(rdata);
-        random.nextBytes(data);
-
-        return ecKey;
     }
 }

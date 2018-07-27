@@ -58,7 +58,7 @@ public class BlockchainApplication extends Application implements FrameworkInter
 
     public static final String RX_ERROR_TAG = "RxJava Error";
 
-    // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301 and AND-1194
+    // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301
     @Inject
     protected WalletApi walletApi;
     @Inject
@@ -100,7 +100,7 @@ public class BlockchainApplication extends Application implements FrameworkInter
         // Inject into Application
         Injector.getInstance().getAppComponent().inject(this);
 
-        // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301 and AND-1194
+        // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301
         WalletApiAccess.INSTANCE.setWalletApi(walletApi);
 
         // Pass objects to JAR

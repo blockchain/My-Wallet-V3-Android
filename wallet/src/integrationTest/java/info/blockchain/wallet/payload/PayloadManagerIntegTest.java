@@ -33,7 +33,10 @@ public final class PayloadManagerIntegTest extends BaseIntegTest {
         walletBody.setHdWallets(new ArrayList<HDWallet>());
 
         //Add legacy so we have at least 1 address
-        LegacyAddress newlyAdded = walletBody.addLegacyAddress("HDAddress label", null);
+        LegacyAddress address = new LegacyAddress();
+        address.setLabel("HDAddress label");
+        address.setAddress("1PbCM934wxCoVc2y5dJqWpi2w8eHur1W2T");
+        LegacyAddress newlyAdded = walletBody.addLegacyAddress(address, null);
 
         final String guidOriginal = walletBody.getGuid();
 
