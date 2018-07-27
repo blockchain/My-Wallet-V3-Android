@@ -1,6 +1,7 @@
 package piuk.blockchain.android.ui.shapeshift.detail
 
 import com.blockchain.morph.CoinPair
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import io.reactivex.Observable
@@ -9,7 +10,6 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -88,8 +88,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
             val toCoin: CryptoCurrency = CryptoCurrency.fromSymbol(outgoingType ?: "eth")!!
             val fromAmount: BigDecimal? = incomingCoin
             val toAmount: BigDecimal? = outgoingCoin
-            val pairCode = """${fromCoin.symbol.toLowerCase()}_${toCoin.symbol.toLowerCase()}"""
-            val pair = CoinPair.getPair(pairCode)
+            val pair = CoinPair.getPair(fromCoin, toCoin)
 
             fromAmount?.let { updateDeposit(pair.from, it) }
             toAmount?.let { updateReceive(pair.to, it) }
