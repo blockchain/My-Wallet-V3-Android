@@ -18,6 +18,9 @@ dependencies {
     implementation project(':balance')
     implementation Libraries.kotlin
 
+    // Rx
+    implementation Libraries.rxKotlin
+
     // Testing
     testImplementation Libraries.junit
     testImplementation Libraries.mockito

@@ -35,12 +35,12 @@ data class CryptoValue(
         fun bitcoinFromMajor(bitcoin: BigDecimal) = fromMajor(CryptoCurrency.BTC, bitcoin)
 
         fun bitcoinCashFromMajor(bitcoinCash: Int) = bitcoinCashFromMajor(bitcoinCash.toBigDecimal())
-        fun bitcoinCashFromMajor(bitcoin: BigDecimal) = fromMajor(CryptoCurrency.BCH, bitcoin)
+        fun bitcoinCashFromMajor(bitcoinCash: BigDecimal) = fromMajor(CryptoCurrency.BCH, bitcoinCash)
 
         fun etherFromMajor(ether: Long) = etherFromMajor(ether.toBigDecimal())
         fun etherFromMajor(ether: BigDecimal) = fromMajor(CryptoCurrency.ETHER, ether)
 
-        private fun fromMajor(
+        fun fromMajor(
             currency: CryptoCurrency,
             bitcoin: BigDecimal
         ) = CryptoValue(currency, bitcoin.movePointRight(currency.dp).toBigInteger())
