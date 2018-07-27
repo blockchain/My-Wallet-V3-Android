@@ -29,7 +29,7 @@ import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
-import com.blockchain.morph.CoinPairings
+import com.blockchain.morph.CoinPair
 import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.Optional
 
@@ -399,16 +399,16 @@ class ShapeShiftDataManagerTest : RxTest() {
     @Test
     fun getRate() {
         // Arrange
-        val coinPairing = CoinPairings.ETH_TO_BTC
+        val coinPair = CoinPair.ETH_TO_BTC
         val marketInfo: MarketInfo = mock()
-        whenever(shapeShiftApi.getRate(coinPairing.pairCode)).thenReturn(Observable.just(marketInfo))
+        whenever(shapeShiftApi.getRate(coinPair)).thenReturn(Observable.just(marketInfo))
         // Act
-        val testObserver = subject.getRate(coinPairing).test()
+        val testObserver = subject.getRate(coinPair).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(marketInfo)
-        verify(shapeShiftApi).getRate(coinPairing.pairCode)
+        verify(shapeShiftApi).getRate(coinPair)
         verifyNoMoreInteractions(shapeShiftApi)
     }
 

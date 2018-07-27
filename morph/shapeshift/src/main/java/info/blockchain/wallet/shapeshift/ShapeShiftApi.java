@@ -1,5 +1,6 @@
 package info.blockchain.wallet.shapeshift;
 
+import com.blockchain.morph.CoinPair;
 import info.blockchain.wallet.shapeshift.data.MarketInfo;
 import info.blockchain.wallet.shapeshift.data.QuoteRequest;
 import info.blockchain.wallet.shapeshift.data.QuoteResponseWrapper;
@@ -16,8 +17,8 @@ public class ShapeShiftApi {
         shift = shapeShiftEndpoints;
     }
 
-    public Observable<MarketInfo> getRate(String coinPair) {
-        return shift.getMarketInfo(coinPair);
+    public Observable<MarketInfo> getRate(CoinPair coinPair) {
+        return shift.getMarketInfo(coinPair.getPairCode());
     }
 
     public Observable<SendAmountResponseWrapper> getQuote(QuoteRequest request) {

@@ -1,8 +1,8 @@
 package piuk.blockchain.androidcore.data.shapeshift;
 
+import com.blockchain.morph.CoinPair;
 import info.blockchain.wallet.shapeshift.ShapeShiftApi;
 import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints;
-import com.blockchain.morph.C2cPairStrings;
 import info.blockchain.wallet.shapeshift.ShapeShiftUrls;
 import info.blockchain.wallet.shapeshift.data.MarketInfo;
 import info.blockchain.wallet.shapeshift.data.Quote;
@@ -34,7 +34,7 @@ public final class ShapeShiftApiTest extends MockedResponseTest {
     public void getMarketInfo() {
         mockInterceptor
                 .setResponseString("{\"pair\":\"btc_eth\",\"rate\":15.06742777,\"minerFee\":0.001,\"limit\":2.17562517,\"minimum\":0.0001324,\"maxLimit\":1.08781258}");
-        final TestObserver<MarketInfo> testObserver = subject.getRate(C2cPairStrings.BTC_ETH).test();
+        final TestObserver<MarketInfo> testObserver = subject.getRate(CoinPair.BTC_TO_ETH).test();
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -44,7 +44,7 @@ public final class ShapeShiftApiTest extends MockedResponseTest {
         assertEquals(BigDecimal.valueOf(0.0001324), response.getMinimum());
         assertEquals(BigDecimal.valueOf(1.08781258), response.getMaxLimit());
         assertEquals(BigDecimal.valueOf(0.001), response.getMinerFee());
-        assertEquals(C2cPairStrings.BTC_ETH, response.getPair());
+        assertEquals("btc_eth", response.getPair());
     }
 
     @Test

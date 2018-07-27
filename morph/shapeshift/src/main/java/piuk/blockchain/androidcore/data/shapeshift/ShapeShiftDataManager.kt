@@ -1,7 +1,6 @@
 package piuk.blockchain.androidcore.data.shapeshift
 
 import info.blockchain.wallet.shapeshift.ShapeShiftApi
-import com.blockchain.morph.C2cPairStrings
 import info.blockchain.wallet.shapeshift.ShapeShiftTrades
 import info.blockchain.wallet.shapeshift.data.MarketInfo
 import info.blockchain.wallet.shapeshift.data.Quote
@@ -16,7 +15,7 @@ import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
-import com.blockchain.morph.CoinPairings
+import com.blockchain.morph.CoinPair
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.Optional
@@ -228,13 +227,13 @@ class ShapeShiftDataManager @Inject constructor(
         }.applySchedulers()
 
     /**
-     * Gets the current approximate [MarketInfo] for a given [CoinPairings] object.
+     * Gets the current approximate [MarketInfo] for a given [CoinPair] object.
      *
-     * @param coinPairings A [CoinPairings] wrapper object for a [C2cPairStrings]
+     * @param coinPair A [CoinPair]
      * @return An [Observable] wrapping the most recent [MarketInfo]
      */
-    fun getRate(coinPairings: CoinPairings): Observable<MarketInfo> =
-        rxPinning.call<MarketInfo> { shapeShiftApi.getRate(coinPairings.pairCode) }
+    fun getRate(coinPair: CoinPair): Observable<MarketInfo> =
+        rxPinning.call<MarketInfo> { shapeShiftApi.getRate(coinPair) }
             .applySchedulers()
 
     /**
