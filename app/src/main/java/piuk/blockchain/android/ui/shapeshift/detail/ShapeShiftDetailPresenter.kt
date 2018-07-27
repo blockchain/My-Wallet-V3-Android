@@ -1,6 +1,7 @@
 package piuk.blockchain.android.ui.shapeshift.detail
 
 import com.blockchain.morph.CoinPair
+import com.blockchain.morph.to
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
@@ -88,7 +89,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
             val toCoin: CryptoCurrency = CryptoCurrency.fromSymbol(outgoingType ?: "eth")!!
             val fromAmount: BigDecimal? = incomingCoin
             val toAmount: BigDecimal? = outgoingCoin
-            val pair = CoinPair.getPair(fromCoin, toCoin)
+            val pair = fromCoin to toCoin
 
             fromAmount?.let { updateDeposit(pair.from, it) }
             toAmount?.let { updateReceive(pair.to, it) }
@@ -115,7 +116,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
             if (quote.pair.isNullOrEmpty() || quote.pair == "_") {
                 quote.pair = "btc_eth"
             }
-            val pair = CoinPair.getPair(quote.pair)
+            val pair = CoinPair.fromPairCode(quote.pair)
 
             updateDeposit(pair.from, quote.depositAmount ?: BigDecimal.ZERO)
             updateReceive(pair.to, quote.withdrawalAmount ?: BigDecimal.ZERO)
@@ -186,7 +187,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
 
     // region UI State
     private fun handleTrade(trade: Trade) {
-        val pair = CoinPair.getPair(trade.quote.pair)
+        val pair = CoinPair.fromPairCode(trade.quote.pair)
         if (pair.sameInputOutput) {
             onRefunded()
         } else {

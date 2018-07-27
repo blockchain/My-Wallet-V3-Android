@@ -30,7 +30,7 @@ import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
-import com.blockchain.morph.CoinPair
+import com.blockchain.morph.to
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
@@ -441,7 +441,7 @@ class NewExchangePresenter @Inject constructor(
     }
 
     private fun getShapeShiftPair(fromCurrency: CryptoCurrency, toCurrency: CryptoCurrency) =
-        CoinPair.getPair(fromCurrency, toCurrency)
+        fromCurrency to toCurrency
 
     private fun getMaximum() = marketInfo?.maxLimit ?: BigDecimal.ZERO
 
@@ -563,7 +563,7 @@ class NewExchangePresenter @Inject constructor(
         fromCurrency: CryptoCurrency,
         toCurrency: CryptoCurrency
     ): Observable<MarketInfo> =
-        shapeShiftDataManager.getRate(CoinPair.getPair(fromCurrency, toCurrency))
+        shapeShiftDataManager.getRate(fromCurrency to toCurrency)
 
     private fun getQuoteObservable(
         quoteRequest: QuoteRequest,

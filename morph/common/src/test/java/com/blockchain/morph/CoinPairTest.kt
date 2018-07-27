@@ -11,47 +11,47 @@ class CoinPairTest {
 
     @Test
     fun `get pair BTC - BCH`() {
-        CoinPair.getPair(CryptoCurrency.BTC, CryptoCurrency.BCH) `should be` CoinPair.BTC_TO_BCH
+        CryptoCurrency.BTC to CryptoCurrency.BCH `should be` CoinPair.BTC_TO_BCH
     }
 
     @Test
     fun `get pair BCH - BTC`() {
-        CoinPair.getPair(CryptoCurrency.BCH, CryptoCurrency.BTC) `should be` CoinPair.BCH_TO_BTC
+        CryptoCurrency.BCH to CryptoCurrency.BTC `should be` CoinPair.BCH_TO_BTC
     }
 
     @Test
     fun `get pair BTC - ETH`() {
-        CoinPair.getPair(CryptoCurrency.BTC, CryptoCurrency.ETHER) `should be` CoinPair.BTC_TO_ETH
+        CryptoCurrency.BTC to CryptoCurrency.ETHER `should be` CoinPair.BTC_TO_ETH
     }
 
     @Test
     fun `get pair ETH - BTC`() {
-        CoinPair.getPair(CryptoCurrency.ETHER, CryptoCurrency.BTC) `should be` CoinPair.ETH_TO_BTC
+        CryptoCurrency.ETHER to CryptoCurrency.BTC `should be` CoinPair.ETH_TO_BTC
     }
 
     @Test
     fun `get pair BCH - ETH`() {
-        CoinPair.getPair(CryptoCurrency.BCH, CryptoCurrency.ETHER) `should be` CoinPair.BCH_TO_ETH
+        CryptoCurrency.BCH to CryptoCurrency.ETHER `should be` CoinPair.BCH_TO_ETH
     }
 
     @Test
     fun `get pair ETH - BCH`() {
-        CoinPair.getPair(CryptoCurrency.ETHER, CryptoCurrency.BCH) `should be` CoinPair.ETH_TO_BCH
+        CryptoCurrency.ETHER to CryptoCurrency.BCH `should be` CoinPair.ETH_TO_BCH
     }
 
     @Test
     fun `get pair BTC - BTC`() {
-        CoinPair.getPair(CryptoCurrency.BTC, CryptoCurrency.BTC) `should be` CoinPair.BTC_TO_BTC
+        CryptoCurrency.BTC to CryptoCurrency.BTC `should be` CoinPair.BTC_TO_BTC
     }
 
     @Test
     fun `get pair BCH - BCH`() {
-        CoinPair.getPair(CryptoCurrency.BCH, CryptoCurrency.BCH) `should be` CoinPair.BCH_TO_BCH
+        CryptoCurrency.BCH to CryptoCurrency.BCH `should be` CoinPair.BCH_TO_BCH
     }
 
     @Test
     fun `get pair ETH - ETH`() {
-        CoinPair.getPair(CryptoCurrency.ETHER, CryptoCurrency.ETHER) `should be` CoinPair.ETH_TO_ETH
+        CryptoCurrency.ETHER to CryptoCurrency.ETHER `should be` CoinPair.ETH_TO_ETH
     }
 
     @Test
@@ -127,15 +127,16 @@ class CoinPairTest {
 
                 formedPairCode `should equal` it.pairCode
 
-                CoinPair.getPair(formedPairCode) `should be` it
-                CoinPair.getPair(it.pairCode) `should be` it
+                CoinPair.fromPairCode(formedPairCode) `should be` it
+                CoinPair.fromPairCode(formedPairCode.toUpperCase()) `should be` it
+                CoinPair.fromPairCode(it.pairCode) `should be` it
             }
     }
 
     @Test
     fun `from invalid pair code, empty`() {
         {
-            CoinPair.getPair("")
+            CoinPair.fromPairCode("")
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair "
@@ -144,7 +145,7 @@ class CoinPairTest {
     @Test
     fun `from invalid pair code, one code`() {
         {
-            CoinPair.getPair("btc")
+            CoinPair.fromPairCode("btc")
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btc"
@@ -153,7 +154,7 @@ class CoinPairTest {
     @Test
     fun `from invalid pair code, no _`() {
         {
-            CoinPair.getPair("btcbtc")
+            CoinPair.fromPairCode("btcbtc")
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btcbtc"
@@ -162,7 +163,7 @@ class CoinPairTest {
     @Test
     fun `from invalid pair code, unknown code`() {
         {
-            CoinPair.getPair("btc_abc")
+            CoinPair.fromPairCode("btc_abc")
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btc_abc"
@@ -171,7 +172,7 @@ class CoinPairTest {
     @Test
     fun `from invalid pair code, double _`() {
         {
-            CoinPair.getPair("btc__btc")
+            CoinPair.fromPairCode("btc__btc")
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btc__btc"
@@ -180,7 +181,7 @@ class CoinPairTest {
     @Test
     fun `from invalid pair code, three parts`() {
         {
-            CoinPair.getPair("btc_btc_btc")
+            CoinPair.fromPairCode("btc_btc_btc")
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btc_btc_btc"

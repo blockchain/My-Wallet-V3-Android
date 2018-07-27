@@ -1,5 +1,14 @@
 package com.blockchain.morph
 
+import com.blockchain.morph.CoinPair.BCH_TO_BCH
+import com.blockchain.morph.CoinPair.BCH_TO_BTC
+import com.blockchain.morph.CoinPair.BCH_TO_ETH
+import com.blockchain.morph.CoinPair.BTC_TO_BCH
+import com.blockchain.morph.CoinPair.BTC_TO_BTC
+import com.blockchain.morph.CoinPair.BTC_TO_ETH
+import com.blockchain.morph.CoinPair.ETH_TO_BCH
+import com.blockchain.morph.CoinPair.ETH_TO_BTC
+import com.blockchain.morph.CoinPair.ETH_TO_ETH
 import info.blockchain.balance.CryptoCurrency
 
 enum class CoinPair(
@@ -24,32 +33,13 @@ enum class CoinPair(
 
     companion object {
 
-        fun getPair(fromCurrency: CryptoCurrency, toCurrency: CryptoCurrency): CoinPair =
-            when (fromCurrency) {
-                CryptoCurrency.BTC -> when (toCurrency) {
-                    CryptoCurrency.BTC -> BTC_TO_BTC
-                    CryptoCurrency.ETHER -> BTC_TO_ETH
-                    CryptoCurrency.BCH -> BTC_TO_BCH
-                }
-                CryptoCurrency.ETHER -> when (toCurrency) {
-                    CryptoCurrency.ETHER -> ETH_TO_ETH
-                    CryptoCurrency.BTC -> ETH_TO_BTC
-                    CryptoCurrency.BCH -> ETH_TO_BCH
-                }
-                CryptoCurrency.BCH -> when (toCurrency) {
-                    CryptoCurrency.BCH -> BCH_TO_BCH
-                    CryptoCurrency.BTC -> BCH_TO_BTC
-                    CryptoCurrency.ETHER -> BCH_TO_ETH
-                }
-            }
-
-        fun getPair(pairCode: String): CoinPair {
+        fun fromPairCode(pairCode: String): CoinPair {
             pairCode.split('_').let {
                 if (it.size == 2) {
                     val from = CryptoCurrency.fromSymbol(it.first())
                     val to = CryptoCurrency.fromSymbol(it.last())
                     if (from != null && to != null) {
-                        return getPair(from, to)
+                        return from to to
                     }
                 }
                 throw IllegalStateException("Attempt to get invalid pair $pairCode")
@@ -57,3 +47,22 @@ enum class CoinPair(
         }
     }
 }
+
+infix fun CryptoCurrency.to(other: CryptoCurrency) =
+    when (this) {
+        CryptoCurrency.BTC -> when (other) {
+            CryptoCurrency.BTC -> BTC_TO_BTC
+            CryptoCurrency.ETHER -> BTC_TO_ETH
+            CryptoCurrency.BCH -> BTC_TO_BCH
+        }
+        CryptoCurrency.ETHER -> when (other) {
+            CryptoCurrency.ETHER -> ETH_TO_ETH
+            CryptoCurrency.BTC -> ETH_TO_BTC
+            CryptoCurrency.BCH -> ETH_TO_BCH
+        }
+        CryptoCurrency.BCH -> when (other) {
+            CryptoCurrency.BCH -> BCH_TO_BCH
+            CryptoCurrency.BTC -> BCH_TO_BTC
+            CryptoCurrency.ETHER -> BCH_TO_ETH
+        }
+    }
