@@ -1,7 +1,12 @@
 package piuk.blockchain.android.ui.shapeshift.newexchange
 
+import com.blockchain.morph.CoinPair
+import com.blockchain.morph.map
+import com.blockchain.morph.quote.ExchangeQuoteRequest
+import com.blockchain.morph.to
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.payload.data.Account
@@ -30,7 +35,6 @@ import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
-import com.blockchain.morph.to
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
@@ -521,29 +525,27 @@ class NewExchangePresenter @Inject constructor(
         fromAmount: BigDecimal,
         fromCurrency: CryptoCurrency,
         toCurrency: CryptoCurrency
-    ): Observable<Quote> {
-        val quoteRequest = QuoteRequest().apply {
-            depositAmount = fromAmount.setScale(8, RoundingMode.HALF_DOWN)
-            pair = getShapeShiftPair(fromCurrency, toCurrency).pairCode
-            apiKey = view.shapeShiftApiKey
-        }
-
-        return getQuoteObservable(quoteRequest, fromCurrency, toCurrency)
-    }
+    ): Observable<Quote> =
+        getQuoteObservable(
+            ExchangeQuoteRequest
+                .Selling(
+                    offering = CryptoValue.fromMajor(fromCurrency, fromAmount),
+                    wanted = toCurrency
+                )
+        )
 
     private fun getQuoteToRequest(
         toAmount: BigDecimal,
         fromCurrency: CryptoCurrency,
         toCurrency: CryptoCurrency
-    ): Observable<Quote> {
-        val quoteRequest = QuoteRequest().apply {
-            withdrawalAmount = toAmount.setScale(8, RoundingMode.HALF_DOWN)
-            pair = getShapeShiftPair(fromCurrency, toCurrency).pairCode
-            apiKey = view.shapeShiftApiKey
-        }
-
-        return getQuoteObservable(quoteRequest, fromCurrency, toCurrency)
-    }
+    ): Observable<Quote> =
+        getQuoteObservable(
+            ExchangeQuoteRequest
+                .Buying(
+                    offering = fromCurrency,
+                    wanted = CryptoValue.fromMajor(toCurrency, toAmount)
+                )
+        )
 
     private fun fetchFeesObservable(selectedCurrency: CryptoCurrency) = when (selectedCurrency) {
         CryptoCurrency.BTC -> feeDataManager.btcFeeOptions
@@ -564,6 +566,19 @@ class NewExchangePresenter @Inject constructor(
         toCurrency: CryptoCurrency
     ): Observable<MarketInfo> =
         shapeShiftDataManager.getRate(fromCurrency to toCurrency)
+
+    private fun getQuoteObservable(
+        quoteRequest: ExchangeQuoteRequest
+    ): Observable<Quote> = getQuoteObservable(
+        quoteRequest.map().apply {
+            apiKey = view.shapeShiftApiKey
+        }, quoteRequest.pair
+    )
+
+    private fun getQuoteObservable(
+        quoteRequest: QuoteRequest,
+        pair: CoinPair
+    ): Observable<Quote> = getQuoteObservable(quoteRequest, pair.from, pair.to)
 
     private fun getQuoteObservable(
         quoteRequest: QuoteRequest,
