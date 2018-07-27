@@ -89,6 +89,8 @@ task jacocoRootReport(type: JacocoReport) {
             tasks.getByPath("kyc:testCoverage").executionData,
             tasks.getByPath("wallet:testCoverage").executionData,
             tasks.getByPath("balance:testCoverage").executionData,
+            tasks.getByPath("morph:common:testCoverage").executionData,
+            tasks.getByPath("morph:shapeshift:testCoverage").executionData,
             tasks.getByPath("core:testCoverage").executionData,
             tasks.getByPath("coreui:testCoverage").executionData,
             tasks.getByPath("buysell:testCoverage").executionData,
