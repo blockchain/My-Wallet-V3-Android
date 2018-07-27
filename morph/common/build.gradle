@@ -15,6 +15,7 @@ sourceCompatibility = Versions.javaCompatibilityVersion
 targetCompatibility = Versions.javaCompatibilityVersion
 
 dependencies {
+    implementation project(':balance')
     implementation Libraries.kotlin
 
     // Testing

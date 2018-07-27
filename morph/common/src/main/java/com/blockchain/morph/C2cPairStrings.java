@@ -1,6 +1,6 @@
-package info.blockchain.wallet.shapeshift;
+package com.blockchain.morph;
 
-public final class ShapeShiftPairs {
+public final class C2cPairStrings {
 
     public static final String ETH_BTC = "eth_btc";
     public static final String ETH_BCH = "eth_bch";

@@ -29,7 +29,7 @@ import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
-import piuk.blockchain.androidcore.data.shapeshift.models.CoinPairings
+import com.blockchain.morph.CoinPairings
 import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.Optional
 

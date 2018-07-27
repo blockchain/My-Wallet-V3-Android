@@ -1,6 +1,6 @@
 package piuk.blockchain.android.ui.shapeshift.detail
 
-import info.blockchain.wallet.shapeshift.ShapeShiftPairs
+import com.blockchain.morph.C2cPairStrings
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import io.reactivex.Observable
@@ -114,7 +114,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
             updateOrderId(quote.orderId)
             // Web don't store everything, but we do. Check here and make an assumption
             if (quote.pair.isNullOrEmpty() || quote.pair == "_") {
-                quote.pair = ShapeShiftPairs.BTC_ETH
+                quote.pair = C2cPairStrings.BTC_ETH
             }
             val (to, from) = getToFromPair(quote.pair)
 
@@ -267,12 +267,12 @@ class ShapeShiftDetailPresenter @Inject constructor(
     // TODO: This is kind of ridiculous, but it'll do for now
     private fun getToFromPair(pair: String): ToFromPair {
         return when (pair.toLowerCase()) {
-            ShapeShiftPairs.ETH_BTC -> ToFromPair(CryptoCurrency.BTC, CryptoCurrency.ETHER)
-            ShapeShiftPairs.ETH_BCH -> ToFromPair(CryptoCurrency.BCH, CryptoCurrency.ETHER)
-            ShapeShiftPairs.BTC_ETH -> ToFromPair(CryptoCurrency.ETHER, CryptoCurrency.BTC)
-            ShapeShiftPairs.BTC_BCH -> ToFromPair(CryptoCurrency.BCH, CryptoCurrency.BTC)
-            ShapeShiftPairs.BCH_BTC -> ToFromPair(CryptoCurrency.BTC, CryptoCurrency.BCH)
-            ShapeShiftPairs.BCH_ETH -> ToFromPair(CryptoCurrency.ETHER, CryptoCurrency.BCH)
+            C2cPairStrings.ETH_BTC -> ToFromPair(CryptoCurrency.BTC, CryptoCurrency.ETHER)
+            C2cPairStrings.ETH_BCH -> ToFromPair(CryptoCurrency.BCH, CryptoCurrency.ETHER)
+            C2cPairStrings.BTC_ETH -> ToFromPair(CryptoCurrency.ETHER, CryptoCurrency.BTC)
+            C2cPairStrings.BTC_BCH -> ToFromPair(CryptoCurrency.BCH, CryptoCurrency.BTC)
+            C2cPairStrings.BCH_BTC -> ToFromPair(CryptoCurrency.BTC, CryptoCurrency.BCH)
+            C2cPairStrings.BCH_ETH -> ToFromPair(CryptoCurrency.ETHER, CryptoCurrency.BCH)
             else -> {
                 // Refunded trade pairs
                 return when {
