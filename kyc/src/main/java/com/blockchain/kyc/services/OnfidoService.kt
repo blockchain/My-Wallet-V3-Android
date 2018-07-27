@@ -1,11 +1,14 @@
 package com.blockchain.kyc.services
 
-import io.reactivex.Single
 import com.blockchain.kyc.api.APPLICANTS
+import com.blockchain.kyc.api.CHECKS
 import com.blockchain.kyc.api.ONFIDO_LIVE_BASE
 import com.blockchain.kyc.api.Onfido
 import com.blockchain.kyc.models.ApplicantRequest
 import com.blockchain.kyc.models.ApplicantResponse
+import com.blockchain.kyc.models.OnfidoCheckOptions
+import com.blockchain.kyc.models.OnfidoCheckResponse
+import io.reactivex.Single
 import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,6 +28,17 @@ class OnfidoService @Inject constructor(@Named("kotlin") retrofit: Retrofit) {
         service.createApplicant(
             path,
             ApplicantRequest(firstName, lastName),
+            getFormattedToken(apiToken)
+        )
+
+    internal fun createCheck(
+        path: String = "$ONFIDO_LIVE_BASE$APPLICANTS",
+        applicantId: String,
+        apiToken: String
+    ): Single<OnfidoCheckResponse> =
+        service.createCheck(
+            "$path$applicantId/$CHECKS",
+            OnfidoCheckOptions.getDefault(),
             getFormattedToken(apiToken)
         )
 

@@ -1,8 +1,9 @@
 package com.blockchain.kyc.datamanagers
 
-import io.reactivex.Single
 import com.blockchain.kyc.models.ApplicantResponse
+import com.blockchain.kyc.models.OnfidoCheckResponse
 import com.blockchain.kyc.services.OnfidoService
+import io.reactivex.Single
 import javax.inject.Inject
 
 class OnfidoDataManager @Inject constructor(
@@ -26,6 +27,23 @@ class OnfidoDataManager @Inject constructor(
         onfidoService.createApplicant(
             firstName = firstName,
             lastName = lastName,
+            apiToken = apiToken
+        )
+
+    /**
+     * Creates an express KYC check with Onfido once documents are submitted. Returns an [OnfidoCheckResponse] object.
+     *
+     * @param applicantId The ID of the applicant you wish to create a check for
+     * @param apiToken Our mobile Onfido API token
+     *
+     * * @return An [OnfidoCheckResponse] wrapped in a [Single]
+     */
+    fun createCheck(
+        applicantId: String,
+        apiToken: String
+    ): Single<OnfidoCheckResponse> =
+        onfidoService.createCheck(
+            applicantId = applicantId,
             apiToken = apiToken
         )
 }
