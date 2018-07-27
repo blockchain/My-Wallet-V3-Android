@@ -1,13 +1,13 @@
-package com.blockchain.kyc.services
+package com.blockchain.kyc.services.onfido
 
 import com.blockchain.kyc.api.APPLICANTS
 import com.blockchain.kyc.api.CHECKS
 import com.blockchain.kyc.api.ONFIDO_LIVE_BASE
 import com.blockchain.kyc.api.Onfido
-import com.blockchain.kyc.models.ApplicantRequest
-import com.blockchain.kyc.models.ApplicantResponse
-import com.blockchain.kyc.models.OnfidoCheckOptions
-import com.blockchain.kyc.models.OnfidoCheckResponse
+import com.blockchain.kyc.models.onfido.ApplicantRequest
+import com.blockchain.kyc.models.onfido.ApplicantResponse
+import com.blockchain.kyc.models.onfido.OnfidoCheckOptions
+import com.blockchain.kyc.models.onfido.OnfidoCheckResponse
 import io.reactivex.Single
 import retrofit2.Retrofit
 import javax.inject.Inject

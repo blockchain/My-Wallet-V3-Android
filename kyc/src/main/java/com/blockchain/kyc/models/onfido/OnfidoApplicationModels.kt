@@ -1,4 +1,4 @@
-package com.blockchain.kyc.models
+package com.blockchain.kyc.models.onfido
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Json
@@ -67,25 +67,41 @@ data class Report(
 )
 
 enum class CheckStatus(val value: String) {
-    // Applicant has not yet submitted the Applicant Form, either because they have not started filling
-    // the form out or because they have started but have not finished.
+    /**
+     * Applicant has not yet submitted the Applicant Form, either because they have not started filling
+     * the form out or because they have started but have not finished.
+     */
     AwaitingApplicant("awaiting_applicant"),
-    // Onfido has made a request to one of its data providers and we are waiting on their reply.
+    /**
+     *  Onfido has made a request to one of its data providers and we are waiting on their reply.
+     */
     AwaitingData("awaiting_data"),
-    // Report is going through manual review.
+    /**
+     * Report is going through manual review.
+     */
     AwaitingApproval("awaiting_approval"),
-    // Report is done.
+    /**
+     * Report is done.
+     */
     Complete("complete"),
-    // Report has been cancelled.
+    /**
+     * Report has been cancelled.
+     */
     Withdrawn("withdrawn"),
-    // Report is paused until you, i.e. the client, switch it on manually. Special case used by clients
-    // who wants to collect data and run the reports when they want and not immediately.
+    /**
+     * Report is paused until you, i.e. the client, switch it on manually. Special case used by clients
+     * who wants to collect data and run the reports when they want and not immediately.
+     */
     Paused("paused"),
-    // Special status for conditional checks: When you, i.e. the client, request two reports and one of
-    // them is conditional on the other, then the status will be complete if the condition is met or cancelled if not.
+    /**
+     * Special status for conditional checks: When you, i.e. the client, request two reports and one of
+     * them is conditional on the other, then the status will be complete if the condition is met or cancelled if not.
+     */
     Cancelled("cancelled"),
-    // Insufficient/inconsistent information is provided by the applicant, and the report has been bounced back
-    // for further information.
+    /**
+     * Insufficient/inconsistent information is provided by the applicant, and the report has been bounced back
+     * for further information.
+     */
     Reopened("reopened");
 
     override fun toString(): String = value
@@ -110,12 +126,18 @@ class CheckStatusAdapter {
 }
 
 enum class CheckResult(val value: String) {
-    // If all underlying verifications pass, the overall result will be clear.
+    /**
+     * If all underlying verifications pass, the overall result will be clear.
+     */
     Clear("clear"),
-    // If the report has returned information that needs to be evaluated, the overall result will be consider.
+    /**
+     * If the report has returned information that needs to be evaluated, the overall result will be consider.
+     */
     Consider("consider"),
-    // Identity report (standard variant) only - this is returned if the applicant fails an identity check.
-    // This indicates there is no identity match for this applicant on any of the databases searched.
+    /**
+     * Identity report (standard variant) only - this is returned if the applicant fails an identity check.
+     * This indicates there is no identity match for this applicant on any of the databases searched.
+     */
     Unidentified("unidentified");
 
     override fun toString(): String = value

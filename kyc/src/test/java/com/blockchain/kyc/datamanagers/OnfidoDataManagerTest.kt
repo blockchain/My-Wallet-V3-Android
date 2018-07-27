@@ -1,10 +1,10 @@
 package com.blockchain.kyc.datamanagers
 
-import com.blockchain.kyc.models.ApplicantResponse
-import com.blockchain.kyc.models.CheckResult
-import com.blockchain.kyc.models.CheckStatus
-import com.blockchain.kyc.models.OnfidoCheckResponse
-import com.blockchain.kyc.services.OnfidoService
+import com.blockchain.kyc.models.onfido.ApplicantResponse
+import com.blockchain.kyc.models.onfido.CheckResult
+import com.blockchain.kyc.models.onfido.CheckStatus
+import com.blockchain.kyc.models.onfido.OnfidoCheckResponse
+import com.blockchain.kyc.services.onfido.OnfidoService
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single

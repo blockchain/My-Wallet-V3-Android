@@ -66,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    api Libraries.onfido
+    implementation Libraries.onfido
     implementation(Libraries.googlePlayServicesBase) {
         exclude group: 'com.android.support'
     }

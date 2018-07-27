@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.blockchain.kyc.datamanagers.OnfidoDataManager
-import com.blockchain.kyc.models.CheckResultAdapter
-import com.blockchain.kyc.models.CheckStatusAdapter
-import com.blockchain.kyc.services.OnfidoService
+import com.blockchain.kyc.models.onfido.CheckResultAdapter
+import com.blockchain.kyc.models.onfido.CheckStatusAdapter
+import com.blockchain.kyc.services.onfido.OnfidoService
 import com.onfido.android.sdk.capture.ExitCode
 import com.onfido.android.sdk.capture.Onfido
 import com.onfido.android.sdk.capture.OnfidoConfig
@@ -54,7 +54,11 @@ class MainActivity : AppCompatActivity() {
         .build()
 
     private val onfido by lazy(LazyThreadSafetyMode.NONE) { OnfidoFactory.create(this).client }
-    private val onfidoDataManager = OnfidoDataManager(OnfidoService(retrofit))
+    private val onfidoDataManager = OnfidoDataManager(
+        OnfidoService(
+            retrofit
+        )
+    )
     private val apiKey = BuildConfig.ONFIDO_SANDBOX_KEY
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,8 +1,8 @@
 package com.blockchain.kyc.datamanagers
 
-import com.blockchain.kyc.models.ApplicantResponse
-import com.blockchain.kyc.models.OnfidoCheckResponse
-import com.blockchain.kyc.services.OnfidoService
+import com.blockchain.kyc.models.onfido.ApplicantResponse
+import com.blockchain.kyc.models.onfido.OnfidoCheckResponse
+import com.blockchain.kyc.services.onfido.OnfidoService
 import io.reactivex.Single
 import javax.inject.Inject
 

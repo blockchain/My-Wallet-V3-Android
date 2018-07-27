@@ -1,9 +1,9 @@
 package com.blockchain.kyc.api
 
-import com.blockchain.kyc.models.ApplicantRequest
-import com.blockchain.kyc.models.ApplicantResponse
-import com.blockchain.kyc.models.OnfidoCheckOptions
-import com.blockchain.kyc.models.OnfidoCheckResponse
+import com.blockchain.kyc.models.onfido.ApplicantRequest
+import com.blockchain.kyc.models.onfido.ApplicantResponse
+import com.blockchain.kyc.models.onfido.OnfidoCheckOptions
+import com.blockchain.kyc.models.onfido.OnfidoCheckResponse
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.Header

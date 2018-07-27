@@ -29,6 +29,7 @@ repositories {
 
 dependencies {
     implementation project(':kyc')
+    implementation Libraries.onfido
 
     implementation Libraries.kotlin
     implementation Libraries.appCompat
