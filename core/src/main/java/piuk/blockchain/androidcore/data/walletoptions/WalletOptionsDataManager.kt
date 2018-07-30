@@ -14,11 +14,14 @@ import javax.inject.Named
 
 @PresenterScope
 class WalletOptionsDataManager @Inject constructor(
-    private val authService: AuthService,
+    authService: AuthService,
     private val walletOptionsState: WalletOptionsState,
     private val settingsDataManager: SettingsDataManager,
     @Named("explorer-url") private val explorerUrl: String
 ) {
+
+    private val walletOptionsService = authService.getWalletOptions()
+        .cache()
 
     /**
      * ReplaySubjects will re-emit items it observed.
@@ -26,7 +29,7 @@ class WalletOptionsDataManager @Inject constructor(
      * the user's country code won't change during an active session.
      */
     private fun initWalletOptionsReplaySubjects() {
-        authService.getWalletOptions()
+        walletOptionsService
             .subscribeOn(Schedulers.io())
             .subscribeWith(walletOptionsState.walletOptionsSource)
     }

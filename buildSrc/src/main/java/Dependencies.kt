@@ -36,7 +36,7 @@ object Versions {
     const val moshi = "1.6.0"
     const val jacksonCore = "2.9.5"
     const val dagger = "2.16"
-    const val rxJava = "2.1.14"
+    const val rxJava = "2.1.17"
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
     const val rxBinding = "2.1.1"
