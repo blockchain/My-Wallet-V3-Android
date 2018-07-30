@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.injection.PresenterScope
+import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
@@ -20,8 +21,10 @@ class WalletOptionsDataManager @Inject constructor(
     @Named("explorer-url") private val explorerUrl: String
 ) {
 
-    private val walletOptionsService = authService.getWalletOptions()
-        .cache()
+    private val walletOptionsService by unsafeLazy {
+        authService.getWalletOptions()
+            .cache()
+    }
 
     /**
      * ReplaySubjects will re-emit items it observed.
