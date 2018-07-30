@@ -4,8 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.DrawableRes
+import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.view.ContextThemeWrapper
 import android.view.View
+import android.widget.Button
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.rxkotlin.subscribeBy
 import piuk.blockchain.android.R
@@ -103,6 +107,8 @@ class CoinifyBuyConfirmationActivity :
 
         confirmationViews.forEach { it.goneIf { view.orderType == OrderType.Buy } }
         methodSelectionViews.forEach { it.goneIf { view.orderType != OrderType.Buy } }
+        setVectorDrawableToButton(buttonCard, R.drawable.vector_card)
+        setVectorDrawableToButton(buttonBank, R.drawable.vector_bank)
 
         if (view.orderType == OrderType.BuyBank) {
             buttonConfirm.setText(R.string.submit)
@@ -114,6 +120,18 @@ class CoinifyBuyConfirmationActivity :
         } else {
             presenter.startCountdownTimer()
             checkBoxDisclaimer.gone()
+        }
+    }
+
+    private fun setVectorDrawableToButton(button: Button, @DrawableRes drawableRes: Int) {
+        button.apply {
+            VectorDrawableCompat.create(
+                resources,
+                drawableRes,
+                ContextThemeWrapper(this@CoinifyBuyConfirmationActivity, R.style.AppTheme).theme
+            )?.run {
+                setCompoundDrawablesWithIntrinsicBounds(this, null, null, null)
+            }
         }
     }
 
