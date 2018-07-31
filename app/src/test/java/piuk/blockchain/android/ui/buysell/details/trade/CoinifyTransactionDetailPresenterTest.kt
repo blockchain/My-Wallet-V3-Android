@@ -50,6 +50,7 @@ class CoinifyTransactionDetailPresenterTest {
         val tradeId = 12345
         val orderDetails = BuySellDetailsModel(
             isSell = true,
+            isRefunded = false,
             isAwaitingCardPayment = true,
             pageTitle = "",
             headlineAmount = "",
@@ -104,6 +105,7 @@ class CoinifyTransactionDetailPresenterTest {
         val tradeId = 12345
         val orderDetails = BuySellDetailsModel(
             isSell = true,
+            isRefunded = false,
             isAwaitingCardPayment = true,
             pageTitle = "",
             headlineAmount = "",
