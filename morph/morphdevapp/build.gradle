@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+
+    defaultConfig {
+        applicationId "com.blockchain.morph.dev"
+        targetSdkVersion Versions.targetSdk
+        minSdkVersion Versions.minSdk
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':morph:common')
+
+    implementation Libraries.kotlin
+    implementation Libraries.timber
+    implementation Libraries.appCompat
+    implementation Libraries.constraintLayout
+}

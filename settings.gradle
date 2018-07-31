@@ -13,6 +13,7 @@ include ':app',
         ':morph:common',
         ':morph:shapeshift',
         ':morph:homebrew',
+        ':morph:morphdevapp',
         ':nabu',
         ':testutils',
         ':testutils-android'
