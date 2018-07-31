@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class BuySellDetailsModel(
     val isSell: Boolean,
+    val isRefunded: Boolean,
     val isAwaitingCardPayment: Boolean,
     val pageTitle: String,
     val headlineAmount: String,

@@ -20,6 +20,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.button_finish_payment as buttonFinishPayment
+import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.card_view_refund_message as cardViewRefund
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_amount_text as textViewAmountDetail
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_amount_title as textViewAmountTitle
 import kotlinx.android.synthetic.main.activity_coinify_transaction_detail.text_view_bank_disclaimer as textViewBankDisclaimer
@@ -102,6 +103,13 @@ class CoinifyTransactionDetailActivity :
         if (model.isAwaitingCardPayment) {
             buttonFinishPayment.visible()
             buttonFinishPayment.setOnClickListener { presenter.onFinishCardPayment() }
+        }
+
+        if (model.isRefunded) {
+            textViewBankDisclaimer.gone()
+            dividerBankDisclaimer.gone()
+            textViewOrderAmountHeader.alpha = 0.3f
+            cardViewRefund.visible()
         }
     }
 

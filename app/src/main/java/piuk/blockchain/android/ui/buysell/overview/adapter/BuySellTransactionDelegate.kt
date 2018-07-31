@@ -80,6 +80,7 @@ internal class BuySellTransactionDelegate(
                     onProcessing(transaction.isSellTransaction)
                 TradeState.Completed -> onCompleted(transaction.isSellTransaction)
                 TradeState.Cancelled, TradeState.Rejected, TradeState.Expired -> onFailed()
+                TradeState.Refunded -> onRefunded()
             }
         }
 
@@ -106,6 +107,11 @@ internal class BuySellTransactionDelegate(
         private fun onFailed() {
             direction.setTextColor(context.getResolvedColor(R.color.product_red_medium))
             result.setBackgroundResource(R.drawable.rounded_view_failed)
+        }
+
+        private fun onRefunded() {
+            direction.setTextColor(context.getResolvedColor(R.color.product_gray_transferred))
+            result.setBackgroundResource(R.drawable.rounded_view_transferred)
         }
     }
 }

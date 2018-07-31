@@ -392,7 +392,7 @@ class CoinifyOverviewPresenter @Inject constructor(
     private fun tradeStateToStringRes(state: TradeState): Int = when (state) {
         TradeState.AwaitingTransferIn -> R.string.buy_sell_state_awaiting_funds
         TradeState.Completed, TradeState.CompletedTest -> R.string.buy_sell_state_completed
-        TradeState.Cancelled -> R.string.buy_sell_state_cancelled
+        TradeState.Cancelled, TradeState.Refunded -> R.string.buy_sell_state_cancelled
         TradeState.Rejected -> R.string.buy_sell_state_rejected
         TradeState.Expired -> R.string.buy_sell_state_expired
         TradeState.Processing, TradeState.Reviewing -> R.string.buy_sell_state_processing
@@ -425,11 +425,15 @@ class CoinifyOverviewPresenter @Inject constructor(
 
     // region Model helper functions
     private fun mapTradeToDisplayObject(coinifyTrade: CoinifyTrade): BuySellTransaction {
-        val displayString = if (coinifyTrade.isSellTransaction()) {
-            "-${coinifyTrade.inAmount} ${coinifyTrade.inCurrency.capitalize()}"
-        } else {
-            val amount = coinifyTrade.transferOut.receiveAmount
-            "+$amount ${coinifyTrade.outCurrency.capitalize()}"
+        val displayString = when {
+            coinifyTrade.state == TradeState.Refunded ->
+                "${coinifyTrade.inAmount} ${coinifyTrade.inCurrency.capitalize()}"
+            coinifyTrade.isSellTransaction() ->
+                "-${coinifyTrade.inAmount} ${coinifyTrade.inCurrency.capitalize()}"
+            else -> {
+                val amount = coinifyTrade.transferOut.receiveAmount
+                "+$amount ${coinifyTrade.outCurrency.capitalize()}"
+            }
         }
 
         return BuySellTransaction(
@@ -531,6 +535,7 @@ class CoinifyOverviewPresenter @Inject constructor(
 
         return BuySellDetailsModel(
             coinifyTrade.isSellTransaction(),
+            coinifyTrade.state == TradeState.Refunded,
             coinifyTrade.isAwaitingCardPayment(),
             titleString,
             headlineAmount,

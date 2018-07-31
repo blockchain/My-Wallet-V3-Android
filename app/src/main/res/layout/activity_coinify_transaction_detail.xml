@@ -251,7 +251,58 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_divider_total" />
+                app:layout_constraintTop_toBottomOf="@id/view_divider_bank_disclaimer" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_refund_message"
+                style="@style/DefaultCardStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_exchange_rate_title"
+                app:layout_constraintVertical_bias="0.0"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/product_red_error_12"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/image_view_refund_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:srcCompat="@drawable/shapeshift_progress_failed" />
+
+                    <TextView
+                        android:id="@+id/text_view_refunded_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/montserrat"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/buy_sell_detail_refund_message"
+                        tools:ignore="RtlHardcoded" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

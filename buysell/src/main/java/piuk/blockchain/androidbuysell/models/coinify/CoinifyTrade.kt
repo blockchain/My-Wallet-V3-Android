@@ -372,14 +372,19 @@ sealed class TradeState {
     // (Ending state) Trade expired before it completed.
     object Expired : TradeState()
 
+    // (Ending state) Trade is being refunded
+    object Refunded : TradeState()
+
     fun isEndState(): Boolean = (this === Completed ||
         this === CompletedTest ||
         this === Cancelled ||
         this === Rejected ||
+        this === Refunded ||
         this === Expired)
 
     fun isFailureState(): Boolean = (this === Cancelled ||
         this === Rejected ||
+        this === Refunded ||
         this === Expired)
 
     override fun toString(): String = when (this) {
@@ -391,6 +396,7 @@ sealed class TradeState {
         TradeState.Cancelled -> TradeStateAdapter.CANCELLED
         TradeState.Rejected -> TradeStateAdapter.REJECTED
         TradeState.Expired -> TradeStateAdapter.EXPIRED
+        TradeState.Refunded -> TradeStateAdapter.REFUNDED
     }
 }
 
@@ -407,6 +413,7 @@ class TradeStateAdapter {
         CANCELLED -> TradeState.Cancelled
         REJECTED -> TradeState.Rejected
         EXPIRED -> TradeState.Expired
+        REFUNDED -> TradeState.Refunded
         else -> throw JsonDataException("Unknown trade state $input, unsupported data type")
     }
 
@@ -420,6 +427,7 @@ class TradeStateAdapter {
         TradeState.Cancelled -> CANCELLED
         TradeState.Rejected -> REJECTED
         TradeState.Expired -> EXPIRED
+        TradeState.Refunded -> REFUNDED
     }
 
     internal companion object {
@@ -431,5 +439,6 @@ class TradeStateAdapter {
         const val CANCELLED = "cancelled"
         const val REJECTED = "rejected"
         const val EXPIRED = "expired"
+        const val REFUNDED = "refunded"
     }
 }

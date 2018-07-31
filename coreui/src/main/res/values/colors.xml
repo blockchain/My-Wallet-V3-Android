@@ -51,6 +51,7 @@
     <color name="product_gray_transferred_50">#807b9eb1</color>
     <color name="product_red_sent">#f26c57</color>
     <color name="product_red_sent_50">#80f26c57</color>
+    <color name="product_red_error_12">#1FCA3A3C</color>
     <color name="product_green_received">#0bbabc</color>
     <color name="product_green_received_50">#800bbabc</color>
     <color name="product_gray_watch_only">#757575</color>
