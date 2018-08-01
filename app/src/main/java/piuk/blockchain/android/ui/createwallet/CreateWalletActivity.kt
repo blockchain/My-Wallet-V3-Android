@@ -22,9 +22,9 @@ import kotlinx.android.synthetic.main.activity_create_wallet.*
 import kotlinx.android.synthetic.main.include_entropy_meter.view.*
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
+import piuk.blockchain.android.constants.URL_TOS_POLICY
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.auth.PinEntryActivity
-import piuk.blockchain.android.ui.settings.SettingsFragment
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
@@ -107,7 +107,7 @@ class CreateWalletActivity : BaseMvpActivity<CreateWalletView, CreateWalletPrese
         tos.setText(spannable, TextView.BufferType.SPANNABLE)
         tos.setOnClickListener {
             startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse(SettingsFragment.URL_TOS_POLICY))
+                Intent(Intent.ACTION_VIEW, Uri.parse(URL_TOS_POLICY))
             )
         }
 

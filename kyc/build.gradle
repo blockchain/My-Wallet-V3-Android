@@ -66,23 +66,16 @@ repositories {
 }
 
 dependencies {
+    api project(':coreui')
     implementation Libraries.onfido
     implementation(Libraries.googlePlayServicesBase) {
         exclude group: 'com.android.support'
     }
-    api Libraries.annotations
-    // Networking
-    api(Libraries.retrofit) { exclude module: 'okhttp' }
-    api Libraries.retrofitRxMoshiConverter
-    api Libraries.retrofitRxJavaAdapter
-    api Libraries.okHttpInterceptor
     // Dagger
-    api Libraries.dagger
     kapt Libraries.daggerKapt
-    // RxJava
-    api Libraries.rxKotlin
-    // Logging
-    api Libraries.timber
+    // Navigation
+    implementation Libraries.navigationControllerCore
+    implementation Libraries.navigationControllerFragments
     // Unit Test dependencies
     testImplementation project(':testutils')
     testImplementation Libraries.junit

@@ -7,24 +7,15 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
+import piuk.blockchain.androidcore.data.access.AccessState;
+import piuk.blockchain.androidcore.utils.PrefsUtil;
+import piuk.blockchain.androidcoreui.ApplicationLifeCycle;
+import piuk.blockchain.androidcoreui.injector.CoreInjector;
 
 import javax.inject.Inject;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import piuk.blockchain.androidcore.data.access.AccessState;
-import piuk.blockchain.androidcore.data.connectivity.ConnectionEvent;
-import piuk.blockchain.androidcore.data.rxjava.RxBus;
-import piuk.blockchain.androidcore.utils.PrefsUtil;
-import piuk.blockchain.androidcore.utils.SSLVerifyUtil;
-import piuk.blockchain.androidcoreui.ApplicationLifeCycle;
-import piuk.blockchain.androidcoreui.R;
-import piuk.blockchain.androidcoreui.injector.CoreInjector;
 
 /**
  * A base Activity for all activities which need auth timeouts & screenshot prevention
@@ -32,8 +23,8 @@ import piuk.blockchain.androidcoreui.injector.CoreInjector;
 @SuppressLint("Registered")
 public class BaseAuthActivity extends AppCompatActivity {
 
-    @Inject protected PrefsUtil prefsUtil;
-    @Inject protected RxBus rxBus;
+    @Inject
+    protected PrefsUtil prefsUtil;
 
     {
         // Init objects first

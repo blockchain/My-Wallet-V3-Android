@@ -71,6 +71,8 @@ import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import static android.app.Activity.RESULT_OK;
 import static piuk.blockchain.android.R.string.email;
 import static piuk.blockchain.android.R.string.success;
+import static piuk.blockchain.android.constants.SettingsConstantsKt.URL_PRIVACY_POLICY;
+import static piuk.blockchain.android.constants.SettingsConstantsKt.URL_TOS_POLICY;
 import static piuk.blockchain.android.ui.auth.PinEntryFragment.KEY_VALIDATING_PIN_FOR_RESULT;
 import static piuk.blockchain.android.ui.auth.PinEntryFragment.REQUEST_CODE_VALIDATE_PIN;
 
@@ -80,8 +82,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
     public static final String EXTRA_SHOW_TWO_FA_DIALOG = "show_two_fa_dialog";
     public static final String EXTRA_SHOW_ADD_EMAIL_DIALOG = "show_add_email_dialog";
-    public static final String URL_TOS_POLICY = "https://blockchain.com/terms";
-    public static final String URL_PRIVACY_POLICY = "https://blockchain.com/privacy";
     public static final String URL_LOGIN = "<a href=\"https://login.blockchain.com/\">login.blockchain.com</a>";
 
     // Profile

@@ -12,7 +12,12 @@ android {
         minSdkVersion Versions.minSdk
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+    }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -29,9 +34,9 @@ repositories {
 
 dependencies {
     implementation project(':kyc')
-    implementation Libraries.onfido
-
-    implementation Libraries.kotlin
-    implementation Libraries.appCompat
-    implementation Libraries.constraintLayout
+    implementation(Libraries.onfido) {
+        exclude module: 'design'
+        exclude module: 'appcompat-v7'
+        exclude module: 'rxandroid'
+    }
 }

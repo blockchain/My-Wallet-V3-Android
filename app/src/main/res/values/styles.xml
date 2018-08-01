@@ -94,40 +94,6 @@
         <item name="android:gravity">center_vertical|right</item>
     </style>
 
-    <!-- Using a style to apply the font as it doesn't work in Themes -->
-    <style name="ButtonStyle">
-        <item name="android:fontFamily">@font/montserrat</item>
-    </style>
-
-    <!-- Using a Theme to apply the button color as it doesn't work in Styles -->
-    <style name="ButtonGreenTheme" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/product_green_medium</item>
-        <item name="colorControlHighlight">@color/product_green_received</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <!-- {@deprecated Use LightBlueButtonStyle instead} -->
-    <style name="ButtonLightBlueTheme" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/primary_blue_accent</item>
-        <item name="colorControlHighlight">@color/primary_navy_medium</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="ButtonBlueTheme" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/primary_navy_medium</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="ButtonRedTheme" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/product_red_medium</item>
-        <item name="colorControlHighlight">@color/secondary_red_light</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
     <style name="MegaButtonAccentBlue">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
@@ -407,10 +373,6 @@
         <item name="android:paddingEnd">10dp</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:paddingTop">5dp</item>
-    </style>
-
-    <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
     <style name="NavDrawerTextAppearance" parent="Widget.Design.NavigationView">

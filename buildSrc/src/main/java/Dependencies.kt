@@ -28,6 +28,7 @@ object Versions {
     const val constraintLayout = "1.0.2"
     const val supportTesting = "1.0.2"
     const val multidex = "1.0.2"
+    const val navigation = "1.0.0-alpha04"
 
     // Networking, RxJava
     const val retrofit = "2.4.0"
@@ -117,6 +118,8 @@ object Libraries {
         "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
     const val dataBindingKapt = "com.android.databinding:compiler:${Versions.androidPlugin}"
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
+    const val navigationControllerCore = "android.arch.navigation:navigation-ui:${Versions.navigation}"
+    const val navigationControllerFragments = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
 
     // Google & Firebase
     const val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
