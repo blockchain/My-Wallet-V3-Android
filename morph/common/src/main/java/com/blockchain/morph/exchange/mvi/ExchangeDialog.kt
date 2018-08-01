@@ -212,10 +212,10 @@ private data class InnerState(
     val toCrypto: CryptoCurrency = vm.to.cryptoValue.currency
 
     val lastUserInputField: FieldUpdateIntent.Field
-        get() {
-            if (vm.to.cryptoMode == Value.Mode.UserEntered) return FieldUpdateIntent.Field.TO_CRYPTO
-            if (vm.to.fiatMode == Value.Mode.UserEntered) return FieldUpdateIntent.Field.TO_FIAT
-            if (vm.from.fiatMode == Value.Mode.UserEntered) return FieldUpdateIntent.Field.FROM_FIAT
-            return FieldUpdateIntent.Field.FROM_CRYPTO
+        get() = when {
+            vm.to.cryptoMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.TO_CRYPTO
+            vm.to.fiatMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.TO_FIAT
+            vm.from.fiatMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.FROM_FIAT
+            else -> FieldUpdateIntent.Field.FROM_CRYPTO
         }
 }
