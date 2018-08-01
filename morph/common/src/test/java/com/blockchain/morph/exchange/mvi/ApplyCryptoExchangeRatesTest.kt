@@ -42,12 +42,12 @@ class ApplyCryptoExchangeRatesTest {
                 FieldUpdateIntent.Field.TO_CRYPTO,
                 "10"
             ),
-            coinExchangeRateUpdateIntent(CoinPair.ETH_TO_BTC rate 2.5.toBigDecimal())
+            coinExchangeRateUpdateIntent(CoinPair.BTC_TO_ETH rate 2.5.toBigDecimal())
         ) {
             assertValue(
                 ExchangeViewModel(
                     from = value(
-                        upToDate(CryptoValue.bitcoinFromMajor(25.toBigDecimal())),
+                        upToDate(CryptoValue.bitcoinFromMajor(4.toBigDecimal())),
                         outOfDate(zeroFiat("CAD"))
                     ),
                     to = value(

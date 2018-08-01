@@ -45,8 +45,8 @@ sealed class ExchangeRate(var rate: BigDecimal) {
         val to: CryptoCurrency,
         rate: BigDecimal
     ) : ExchangeRate(rate) {
-        fun applyRate(fiatValue: FiatValue): CryptoValue? {
-            if (fiatValue.currencyCode != from) return null
+        fun applyRate(fiatValue: FiatValue?): CryptoValue? {
+            if (fiatValue?.currencyCode != from) return null
             return CryptoValue.fromMajor(
                 to,
                 rate.multiply(fiatValue.value)
@@ -58,14 +58,20 @@ sealed class ExchangeRate(var rate: BigDecimal) {
     }
 }
 
-operator fun CryptoValue.times(rate: ExchangeRate.CryptoToCrypto?) =
+operator fun CryptoValue?.times(rate: ExchangeRate.CryptoToCrypto?) =
     rate?.applyRate(this)
 
-operator fun CryptoValue.div(rate: ExchangeRate.CryptoToCrypto?) =
+operator fun CryptoValue?.div(rate: ExchangeRate.CryptoToCrypto?) =
     rate?.inverse()?.applyRate(this)
 
-operator fun FiatValue.times(rate: ExchangeRate.FiatToCrypto?) =
+operator fun FiatValue?.times(rate: ExchangeRate.FiatToCrypto?) =
     rate?.applyRate(this)
 
-operator fun CryptoValue.times(exchangeRate: ExchangeRate.CryptoToFiat?) =
+operator fun CryptoValue?.times(exchangeRate: ExchangeRate.CryptoToFiat?) =
     exchangeRate?.applyRate(this)
+
+operator fun CryptoValue?.div(exchangeRate: ExchangeRate.FiatToCrypto?) =
+    exchangeRate?.inverse()?.applyRate(this)
+
+operator fun FiatValue?.div(exchangeRate: ExchangeRate.CryptoToFiat?) =
+    exchangeRate?.inverse()?.applyRate(this)

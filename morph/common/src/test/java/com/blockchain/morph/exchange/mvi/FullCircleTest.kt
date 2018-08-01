@@ -5,6 +5,7 @@ import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
 import org.junit.Test
+import java.math.RoundingMode
 
 /**
  * Tests that cover the conversion from one field to each of the other three.
@@ -23,13 +24,6 @@ class FullCircleTest {
                     CryptoCurrency.BCH,
                     CryptoCurrency.BTC,
                     0.49.toBigDecimal()
-                )
-            ),
-            coinExchangeRateUpdateIntent(
-                ExchangeRate.CryptoToCrypto(
-                    CryptoCurrency.BTC,
-                    CryptoCurrency.BCH,
-                    1.99.toBigDecimal()
                 )
             ),
             FieldUpdateIntent(FieldUpdateIntent.Field.FROM_CRYPTO, "5")
@@ -64,20 +58,18 @@ class FullCircleTest {
                     0.49.toBigDecimal()
                 )
             ),
-            coinExchangeRateUpdateIntent(
-                ExchangeRate.CryptoToCrypto(
-                    CryptoCurrency.BTC,
-                    CryptoCurrency.BCH,
-                    1.99.toBigDecimal()
-                )
-            ),
             FieldUpdateIntent(FieldUpdateIntent.Field.TO_CRYPTO, "5")
         ) {
             assertValue(
                 ExchangeViewModel(
                     from = value(
-                        upToDate(CryptoValue.bitcoinCashFromMajor(9.95.toBigDecimal())),
-                        upToDate(FiatValue("GBP", 34825.toBigDecimal().setScale(8)))
+                        upToDate(CryptoValue.bitcoinCashFromMajor(10.20408163.toBigDecimal())),
+                        upToDate(
+                            FiatValue(
+                                "GBP",
+                                (10.20408163 * 3500).toBigDecimal().setScale(8, RoundingMode.HALF_UP)
+                            )
+                        )
                     ),
                     to = value(
                         userEntered(CryptoValue.bitcoinFromMajor(5.toBigDecimal())),
@@ -100,13 +92,6 @@ class FullCircleTest {
                     CryptoCurrency.BCH,
                     CryptoCurrency.BTC,
                     0.49.toBigDecimal()
-                )
-            ),
-            coinExchangeRateUpdateIntent(
-                ExchangeRate.CryptoToCrypto(
-                    CryptoCurrency.BTC,
-                    CryptoCurrency.BCH,
-                    1.99.toBigDecimal()
                 )
             ),
             FieldUpdateIntent(FieldUpdateIntent.Field.FROM_FIAT, "35000")
@@ -140,20 +125,18 @@ class FullCircleTest {
                     0.49.toBigDecimal()
                 )
             ),
-            coinExchangeRateUpdateIntent(
-                ExchangeRate.CryptoToCrypto(
-                    CryptoCurrency.BTC,
-                    CryptoCurrency.BCH,
-                    1.99.toBigDecimal()
-                )
-            ),
             FieldUpdateIntent(FieldUpdateIntent.Field.TO_FIAT, "35000")
         ) {
             assertValue(
                 ExchangeViewModel(
                     from = value(
-                        upToDate(CryptoValue.bitcoinCashFromMajor(9.95.toBigDecimal())),
-                        upToDate(FiatValue("GBP", 34825.toBigDecimal().setScale(8)))
+                        upToDate(CryptoValue.bitcoinCashFromMajor(10.20408163.toBigDecimal())),
+                        upToDate(
+                            FiatValue(
+                                "GBP",
+                                (10.20408163 * 3500).toBigDecimal().setScale(8, RoundingMode.HALF_UP)
+                            )
+                        )
                     ),
                     to = value(
                         upToDate(CryptoValue.bitcoinFromMajor(5.toBigDecimal())),
@@ -217,21 +200,19 @@ class FullCircleTest {
                     0.49.toBigDecimal()
                 )
             ),
-            coinExchangeRateUpdateIntent(
-                ExchangeRate.CryptoToCrypto(
-                    CryptoCurrency.BTC,
-                    CryptoCurrency.BCH,
-                    1.99.toBigDecimal()
-                )
-            ),
             SwapIntent(),
             FieldUpdateIntent(FieldUpdateIntent.Field.TO_FIAT, "35000")
         ) {
             assertValue(
                 ExchangeViewModel(
                     from = value(
-                        upToDate(CryptoValue.bitcoinCashFromMajor(9.95.toBigDecimal())),
-                        upToDate(FiatValue("GBP", 34825.toBigDecimal().setScale(8)))
+                        upToDate(CryptoValue.bitcoinCashFromMajor(10.20408163.toBigDecimal())),
+                        upToDate(
+                            FiatValue(
+                                "GBP",
+                                (10.20408163 * 3500).toBigDecimal().setScale(8, RoundingMode.HALF_UP)
+                            )
+                        )
                     ),
                     to = value(
                         upToDate(CryptoValue.bitcoinFromMajor(5.toBigDecimal())),

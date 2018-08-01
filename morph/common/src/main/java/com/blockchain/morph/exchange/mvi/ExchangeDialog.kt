@@ -4,6 +4,7 @@ import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
+import info.blockchain.balance.div
 import info.blockchain.balance.times
 import io.reactivex.Observable
 import java.math.BigDecimal
@@ -28,8 +29,8 @@ private fun InnerState.mapSwap() =
     copy(
         fromFiatRate = toFiatRate,
         toFiatRate = fromFiatRate,
-        toFromCryptoRate = fromToCryptoRate,
-        fromToCryptoRate = toFromCryptoRate,
+        fromToCryptoRate = toFromCryptoRateForSwaps,
+        toFromCryptoRateForSwaps = fromToCryptoRate,
         vm = initial(
             vm.to.fiatValue.currencyCode,
             from = vm.to.cryptoValue.currency,
@@ -66,7 +67,7 @@ private fun InnerState.map(rateUpdateIntent: CoinExchangeRateUpdateIntent): Inne
         rateUpdateIntent.to == fromCrypto
     ) {
         return copy(
-            toFromCryptoRate = rateUpdateIntent.exchangeRate
+            toFromCryptoRateForSwaps = rateUpdateIntent.exchangeRate
         ).run { copy(vm = makeVm()) }
     }
     return this
@@ -133,35 +134,34 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
             fromCrypto = vm.from.cryptoValue
             toCrypto = fromCrypto * fromToCryptoRate
 
-            fromFiat = fromFiatRate?.applyRate(fromCrypto)
-            toFiat = toFiatRate?.applyRate(toCrypto)
+            fromFiat = fromCrypto * fromFiatRate
+            toFiat = toCrypto * toFiatRate
         }
 
         com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.TO_CRYPTO -> {
             toCrypto = vm.to.cryptoValue
-            fromCrypto = toCrypto * toFromCryptoRate
+            fromCrypto = toCrypto / fromToCryptoRate
 
-            fromFiat = fromFiatRate?.applyRate(fromCrypto)
-            toFiat = toFiatRate?.applyRate(toCrypto)
+            fromFiat = fromCrypto * fromFiatRate
+            toFiat = toCrypto * toFiatRate
         }
 
         com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.FROM_FIAT -> {
             fromFiat = vm.from.fiatValue
 
-            fromCrypto = fromFiatRate?.inverse()?.applyRate(fromFiat)
-            toCrypto = fromToCryptoRate?.applyRate(fromCrypto)
+            fromCrypto = fromFiat / fromFiatRate
+            toCrypto = fromCrypto * fromToCryptoRate
 
-            toFiat = toFiatRate?.applyRate(toCrypto)
+            toFiat = toCrypto * toFiatRate
         }
 
         com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.TO_FIAT -> {
             toFiat = vm.to.fiatValue
 
-            toCrypto = toFiatRate?.inverse()?.applyRate(toFiat)
+            toCrypto = toFiat / toFiatRate
+            fromCrypto = toCrypto / fromToCryptoRate
 
-            fromCrypto = toFromCryptoRate?.applyRate(toCrypto)
-
-            fromFiat = fromFiatRate?.applyRate(fromCrypto)
+            fromFiat = fromCrypto * fromFiatRate
         }
     }
 
@@ -198,7 +198,11 @@ private data class InnerState(
 
     val fromToCryptoRate: ExchangeRate.CryptoToCrypto? = null,
 
-    val toFromCryptoRate: ExchangeRate.CryptoToCrypto? = null,
+    /**
+     * This inverse rate should only be used for allowing swaps to know the rate of the new conversion.
+     * divide by [fromToCryptoRate] is usual way to get from a "to" to a "from" value.
+     */
+    val toFromCryptoRateForSwaps: ExchangeRate.CryptoToCrypto? = null,
 
     val fromFiatRate: ExchangeRate.CryptoToFiat? = null,
 

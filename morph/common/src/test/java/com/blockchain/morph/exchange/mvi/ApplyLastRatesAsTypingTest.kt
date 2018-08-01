@@ -38,16 +38,14 @@ class ApplyLastRatesAsTypingTest {
             initial("GBP", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(FieldUpdateIntent.Field.TO_CRYPTO, "1"),
-            coinExchangeRateUpdateIntent(CoinPair.ETH_TO_BCH rate 0.5.toBigDecimal()),
+            coinExchangeRateUpdateIntent(CoinPair.BCH_TO_ETH rate 0.5.toBigDecimal()),
             FieldUpdateIntent(FieldUpdateIntent.Field.TO_CRYPTO, "10")
         ) {
             assertValue(
                 ExchangeViewModel(
                     from = value(
-                        upToDate(CryptoValue.bitcoinCashFromMajor(5)),
-                        outOfDate(
-                            zeroFiat("GBP")
-                        )
+                        upToDate(CryptoValue.bitcoinCashFromMajor(20)),
+                        outOfDate(zeroFiat("GBP"))
                     ),
                     to = value(
                         userEntered(CryptoValue.etherFromMajor(10)),

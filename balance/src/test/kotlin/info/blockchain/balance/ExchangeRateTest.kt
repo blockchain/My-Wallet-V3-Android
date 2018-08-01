@@ -72,9 +72,28 @@ class ExchangeRateTest {
     }
 
     @Test
+    fun `crypto to fiat - divide`() {
+        FiatValue("USD", 200.toBigDecimal()) / ExchangeRate.CryptoToFiat(
+            CryptoCurrency.BTC,
+            "USD",
+            20.toBigDecimal()
+        ) `should equal` CryptoValue.bitcoinFromMajor(10)
+    }
+
+    @Test
     fun `fiat to crypto - inverse`() {
         ExchangeRate.FiatToCrypto("USD", CryptoCurrency.BTC, 20.toBigDecimal()).inverse()
             .applyRate(CryptoValue.bitcoinFromMajor(200)) `should equal`
+            FiatValue("USD", 10.toBigDecimal().setScale(10))
+    }
+
+    @Test
+    fun `fiat to crypto - divide`() {
+        CryptoValue.bitcoinFromMajor(200) / ExchangeRate.FiatToCrypto(
+            "USD",
+            CryptoCurrency.BTC,
+            20.toBigDecimal()
+        ) `should equal`
             FiatValue("USD", 10.toBigDecimal().setScale(10))
     }
 
