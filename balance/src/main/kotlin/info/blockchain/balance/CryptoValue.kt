@@ -27,6 +27,12 @@ data class CryptoValue(
         val ZeroBch = bitcoinCashFromSatoshis(0L)
         val ZeroEth = CryptoValue(CryptoCurrency.ETHER, BigInteger.ZERO)
 
+        fun zero(cryptoCurrency: CryptoCurrency) = when (cryptoCurrency) {
+            CryptoCurrency.BTC -> ZeroBtc
+            CryptoCurrency.BCH -> ZeroBch
+            CryptoCurrency.ETHER -> ZeroEth
+        }
+
         fun bitcoinFromSatoshis(satoshi: Long) = CryptoValue(CryptoCurrency.BTC, satoshi.toBigInteger())
         fun bitcoinCashFromSatoshis(satoshi: Long) = CryptoValue(CryptoCurrency.BCH, satoshi.toBigInteger())
         fun etherFromWei(wei: Long) = CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
@@ -42,8 +48,8 @@ data class CryptoValue(
 
         fun fromMajor(
             currency: CryptoCurrency,
-            bitcoin: BigDecimal
-        ) = CryptoValue(currency, bitcoin.movePointRight(currency.dp).toBigInteger())
+            major: BigDecimal
+        ) = CryptoValue(currency, major.movePointRight(currency.dp).toBigInteger())
     }
 
     /**

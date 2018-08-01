@@ -14,13 +14,28 @@ class CryptoValueTests {
     }
 
     @Test
+    fun `zero btc function`() {
+        CryptoValue.zero(CryptoCurrency.BTC) `should be` CryptoValue.ZeroBtc
+    }
+
+    @Test
     fun `zero bch`() {
         CryptoValue.ZeroBch `should equal` CryptoValue(CryptoCurrency.BCH, BigInteger.ZERO)
     }
 
     @Test
+    fun `zero bch function`() {
+        CryptoValue.zero(CryptoCurrency.BCH) `should be` CryptoValue.ZeroBch
+    }
+
+    @Test
     fun `zero eth`() {
         CryptoValue.ZeroEth `should equal` CryptoValue(CryptoCurrency.ETHER, BigInteger.ZERO)
+    }
+
+    @Test
+    fun `zero eth function`() {
+        CryptoValue.zero(CryptoCurrency.ETHER) `should be` CryptoValue.ZeroEth
     }
 
     @Test
