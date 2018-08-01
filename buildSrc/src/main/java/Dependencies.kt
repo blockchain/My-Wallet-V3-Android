@@ -46,7 +46,7 @@ object Versions {
     const val web3j = "3.3.1-android"
     const val spongycastle = "1.53.0.0"
     const val jjwt = "0.9.0"
-    const val lambdaWorks = "1.0.0"
+    const val scrypt = "1.4.0"
     // Keep at 1.3 to match Android
     const val commonsCodec = "1.3"
     const val commonsLang = "3.4"
@@ -149,7 +149,7 @@ object Libraries {
     const val web3j = "org.web3j:core:${Versions.web3j}"
     const val spongyCastle = "com.madgag.spongycastle:prov:${Versions.spongycastle}"
     const val jjwt = "io.jsonwebtoken:jjwt:${Versions.jjwt}"
-    const val lambdaWorks = "com.lambdaworks:codec:${Versions.lambdaWorks}"
+    const val scrypt = "com.lambdaworks:scrypt:${Versions.scrypt}"
     const val commonsCodec = "commons-codec:commons-codec:${Versions.commonsCodec}"
     const val commonsLang = "org.apache.commons:commons-lang3:${Versions.commonsLang}"
     const val commonsCli = "commons-cli:commons-cli:${Versions.commonsCli}"

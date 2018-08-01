@@ -45,6 +45,7 @@ dependencies {
     api files('libs/api-client-0.1.16-SNAPSHOT.jar')
     api(Libraries.web3j) { exclude module: 'jackson' }
     implementation Libraries.spongyCastle
+    implementation Libraries.scrypt
     compileOnly Libraries.json
     // Networking
     implementation Libraries.jacksonCore
@@ -59,7 +60,6 @@ dependencies {
     implementation Libraries.okIo
     implementation Libraries.commonsIo
     implementation Libraries.commonsCli
-    implementation Libraries.lambdaWorks
     api Libraries.commonsCodec
     api Libraries.commonsLang
     api Libraries.urlBuilder

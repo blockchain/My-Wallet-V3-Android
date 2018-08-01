@@ -120,6 +120,7 @@ android {
         exclude 'solidity/**'
         exclude 'org.bitcoin.test.checkpoints.txt'
         exclude 'org.bitcoin.production.checkpoints.txt'
+        exclude 'lib/x86_64/darwin/**'
     }
     dataBinding.enabled true
 
