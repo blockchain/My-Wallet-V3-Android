@@ -7,6 +7,8 @@ import com.blockchain.morph.to
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
+import info.blockchain.utils.parseBigDecimal
+import info.blockchain.utils.sanitiseEmptyNumber
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.payload.data.Account
@@ -47,8 +49,6 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.text.ParseException
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -895,7 +895,7 @@ class NewExchangePresenter @Inject constructor(
         // Here we kill any quotes in flight already, as they take up to ten seconds to fulfill
         .doOnNext { compositeDisposable.clear() }
         // Strip out localised information for predictable formatting
-        .map { it.sanitise().parse(view.locale) }
+        .map { it.sanitiseEmptyNumber().parseBigDecimal(view.locale) }
         // Logging
         .doOnError(Timber::wtf)
         // Return zero if empty or some other error
@@ -912,19 +912,6 @@ class NewExchangePresenter @Inject constructor(
         }
         // Don't pass zero events to the API as they're invalid
         .filter { it > BigDecimal.ZERO }
-    // endregion
-
-    // region Extension Functions
-    private fun String.sanitise() = if (isNotEmpty()) this else "0"
-
-    @Throws(ParseException::class)
-    private fun String.parse(locale: Locale): BigDecimal {
-        val format = NumberFormat.getNumberInstance(locale)
-        if (format is DecimalFormat) {
-            format.isParseBigDecimal = true
-        }
-        return format.parse(this.replace("[^\\d.,]".toRegex(), "")) as BigDecimal
-    }
     // endregion
 
     private data class ExchangeRates(val toRate: BigDecimal, val fromRate: BigDecimal)

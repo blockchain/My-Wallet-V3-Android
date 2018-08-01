@@ -5,6 +5,8 @@ import com.crashlytics.android.answers.StartCheckoutEvent
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.FiatValue
+import info.blockchain.utils.parseBigDecimal
+import info.blockchain.utils.sanitiseEmptyNumber
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.payload.data.Account
 import io.reactivex.Observable
@@ -52,9 +54,7 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.text.ParseException
 import java.util.Calendar
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.absoluteValue
@@ -695,7 +695,7 @@ class BuySellBuildOrderPresenter @Inject constructor(
         // Here we kill any quotes in flight already, as they take up to ten seconds to fulfill
         .doOnNext { compositeDisposable.clear() }
         // Strip out localised information for predictable formatting
-        .map { it.sanitise().parse(view.locale) }
+        .map { it.sanitiseEmptyNumber().parseBigDecimal(view.locale) }
         // Logging
         .doOnError(Timber::wtf)
         // Return zero if empty or some other error
@@ -719,17 +719,6 @@ class BuySellBuildOrderPresenter @Inject constructor(
     // endregion
 
     // region Extension Functions
-    private fun String.sanitise() = if (isNotEmpty()) this else "0"
-
-    @Throws(ParseException::class)
-    private fun String.parse(locale: Locale): BigDecimal {
-        val format = NumberFormat.getNumberInstance(locale)
-        if (format is DecimalFormat) {
-            format.isParseBigDecimal = true
-        }
-        return format.parse(this.replace("[^\\d.,]".toRegex(), "")) as BigDecimal
-    }
-
     private fun List<KycResponse>.hasPendingKyc(): Boolean = this.any { it.state.isProcessing() } &&
         this.none { it.state == ReviewState.Completed }
 
