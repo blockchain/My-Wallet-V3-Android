@@ -1,5 +1,6 @@
 package info.blockchain.balance
 
+import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
@@ -75,5 +76,22 @@ class ExchangeRateTest {
         ExchangeRate.FiatToCrypto("USD", CryptoCurrency.BTC, 20.toBigDecimal()).inverse()
             .applyRate(CryptoValue.bitcoinFromMajor(200)) `should equal`
             FiatValue("USD", 10.toBigDecimal().setScale(10))
+    }
+
+    @Test
+    fun `crypto to crypto - inverse`() {
+        ExchangeRate.CryptoToCrypto(CryptoCurrency.BTC, CryptoCurrency.BCH, 20.toBigDecimal()).inverse()
+            .apply {
+                from `should be` CryptoCurrency.BCH
+                to `should be` CryptoCurrency.BTC
+                rate `should equal` 0.05.toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `crypto to crypto - divide`() {
+        val rate = ExchangeRate.CryptoToCrypto(CryptoCurrency.BCH, CryptoCurrency.BTC, 20.toBigDecimal())
+        val cryptoValue = CryptoValue.bitcoinFromMajor(20)
+        cryptoValue / rate `should equal` CryptoValue.bitcoinCashFromMajor(1)
     }
 }
