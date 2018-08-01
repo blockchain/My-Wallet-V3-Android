@@ -2,7 +2,7 @@ package piuk.blockchain.androidcore.data.currency
 
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
-import info.blockchain.balance.Precision
+import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.format
 import info.blockchain.balance.formatWithUnit
 import java.math.BigDecimal
@@ -40,18 +40,18 @@ class CurrencyFormatUtil @Inject constructor() {
     @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.bitcoinCashFromMajor(bch).format()"))
     fun formatBch(bch: BigDecimal): String = format(CryptoValue.bitcoinCashFromMajor(bch))
 
-    @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.etherFromMajor(eth).format(Precision.Full)"))
-    fun formatEth(eth: BigDecimal): String = format(CryptoValue.etherFromMajor(eth), Precision.Full)
+    @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.etherFromMajor(eth).format(FormatPrecision.Full)"))
+    fun formatEth(eth: BigDecimal): String = format(CryptoValue.etherFromMajor(eth), FormatPrecision.Full)
 
-    @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.etherFromWei(wei).format(Precision.Full)"))
-    fun formatWei(wei: Long): String = format(CryptoValue.etherFromWei(wei), Precision.Full)
+    @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.etherFromWei(wei).format(FormatPrecision.Full)"))
+    fun formatWei(wei: Long): String = format(CryptoValue.etherFromWei(wei), FormatPrecision.Full)
 
     @Deprecated("Use format", replaceWith = ReplaceWith("cryptoValue.format(displayMode)"))
-    fun format(cryptoValue: CryptoValue, displayMode: Precision = Precision.Short): String =
+    fun format(cryptoValue: CryptoValue, displayMode: FormatPrecision = FormatPrecision.Short): String =
         cryptoValue.format(displayMode)
 
     @Deprecated("Use format", replaceWith = ReplaceWith("cryptoValue.formatWithUnit(displayMode)"))
-    fun formatWithUnit(cryptoValue: CryptoValue, displayMode: Precision = Precision.Short) =
+    fun formatWithUnit(cryptoValue: CryptoValue, displayMode: FormatPrecision = FormatPrecision.Short) =
         cryptoValue.formatWithUnit(displayMode)
 
     @Deprecated("Use formatWithUnit", replaceWith = ReplaceWith("formatWithUnit(CryptoValue.bitcoinFromMajor(btc))"))
@@ -65,13 +65,13 @@ class CurrencyFormatUtil @Inject constructor() {
 
     @Deprecated(
         "Use formatWithUnit",
-        replaceWith = ReplaceWith("formatWithUnit(CryptoValue.etherFromMajor(eth), Precision.Full)")
+        replaceWith = ReplaceWith("formatWithUnit(CryptoValue.etherFromMajor(eth), FormatPrecision.Full)")
     )
-    fun formatEthWithUnit(eth: BigDecimal) = formatWithUnit(CryptoValue.etherFromMajor(eth), Precision.Full)
+    fun formatEthWithUnit(eth: BigDecimal) = formatWithUnit(CryptoValue.etherFromMajor(eth), FormatPrecision.Full)
 
     @Deprecated(
         "Use formatWithUnit",
-        replaceWith = ReplaceWith("formatWithUnit(CryptoValue.etherFromMajor(eth), Precision.Short)")
+        replaceWith = ReplaceWith("formatWithUnit(CryptoValue.etherFromMajor(eth), FormatPrecision.Short)")
     )
-    fun formatEthShortWithUnit(eth: BigDecimal) = formatWithUnit(CryptoValue.etherFromMajor(eth), Precision.Short)
+    fun formatEthShortWithUnit(eth: BigDecimal) = formatWithUnit(CryptoValue.etherFromMajor(eth), FormatPrecision.Short)
 }

@@ -5,7 +5,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 
-enum class Precision {
+enum class FormatPrecision {
     /**
      * Some currencies will be displayed at a shorter length
      */
@@ -16,11 +16,11 @@ enum class Precision {
     Full
 }
 
-fun CryptoValue.format(displayMode: Precision = Precision.Short): String =
-    CryptoCurrencyFormatter.format(this, displayMode)
+fun CryptoValue.format(precision: FormatPrecision = FormatPrecision.Short): String =
+    CryptoCurrencyFormatter.format(this, precision)
 
-fun CryptoValue.formatWithUnit(displayMode: Precision = Precision.Short) =
-    CryptoCurrencyFormatter.formatWithUnit(this, displayMode)
+fun CryptoValue.formatWithUnit(precision: FormatPrecision = FormatPrecision.Short) =
+    CryptoCurrencyFormatter.formatWithUnit(this, precision)
 
 private const val MaxEthShortDecimalLength = 8
 
@@ -33,25 +33,25 @@ private object CryptoCurrencyFormatter {
 
     fun format(
         cryptoValue: CryptoValue,
-        displayMode: Precision = Precision.Short
+        precision: FormatPrecision = FormatPrecision.Short
     ): String =
-        cryptoValue.currency.decimalFormat(displayMode).formatWithoutUnit(cryptoValue.toMajorUnit())
+        cryptoValue.currency.decimalFormat(precision).formatWithoutUnit(cryptoValue.toMajorUnit())
 
     fun formatWithUnit(
         cryptoValue: CryptoValue,
-        displayMode: Precision = Precision.Short
+        precision: FormatPrecision = FormatPrecision.Short
     ) =
-        cryptoValue.currency.decimalFormat(displayMode).formatWithUnit(
+        cryptoValue.currency.decimalFormat(precision).formatWithUnit(
             cryptoValue.toMajorUnit(),
             cryptoValue.currency.symbol
         )
 
-    private fun CryptoCurrency.decimalFormat(displayMode: Precision) = when (this) {
+    private fun CryptoCurrency.decimalFormat(displayMode: FormatPrecision) = when (this) {
         CryptoCurrency.BTC -> btcFormat
         CryptoCurrency.BCH -> bchFormat
         CryptoCurrency.ETHER -> when (displayMode) {
-            Precision.Short -> ethShortFormat
-            Precision.Full -> ethFormat
+            FormatPrecision.Short -> ethShortFormat
+            FormatPrecision.Full -> ethFormat
         }
     }
 
@@ -66,7 +66,9 @@ private fun BigDecimal.toPositiveDouble() = this.toDouble().toPositiveDouble()
 
 private fun Double.toPositiveDouble() = Math.max(this, 0.0)
 
-// Replace 0.0 with 0 to match web
+/**
+ * Replace 0.0 with 0 to match web
+ */
 private fun String.toWebZero() = if (this == "0.0" || this == "0.00") "0" else this
 
 private fun createCryptoDecimalFormat(maxDigits: Int) =

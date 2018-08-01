@@ -2,7 +2,7 @@ package piuk.blockchain.androidcore.data.currency
 
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
-import info.blockchain.balance.Precision
+import info.blockchain.balance.FormatPrecision
 import org.amshove.kluent.`should equal`
 import java.math.BigDecimal
 import java.util.Locale
@@ -146,7 +146,7 @@ class CurrencyFormatUtilTest {
     @Test
     fun `formatWithUnit ETH with tiny fractions - full precision`() {
         val formatWithUnit =
-            { wei: Long -> subject.formatWithUnit(CryptoValue.etherFromWei(wei), Precision.Full) }
+            { wei: Long -> subject.formatWithUnit(CryptoValue.etherFromWei(wei), FormatPrecision.Full) }
         formatWithUnit(1L) `should equal` "0.000000000000000001 ETH"
         formatWithUnit(10L) `should equal` "0.00000000000000001 ETH"
         formatWithUnit(100L) `should equal` "0.0000000000000001 ETH"

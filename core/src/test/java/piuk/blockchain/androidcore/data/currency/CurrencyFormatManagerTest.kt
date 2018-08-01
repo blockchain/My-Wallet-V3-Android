@@ -1,10 +1,7 @@
 package piuk.blockchain.androidcore.data.currency
 
-import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.balance.CryptoCurrency
-import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.Precision
 import org.amshove.kluent.mock
 import org.junit.Before
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager

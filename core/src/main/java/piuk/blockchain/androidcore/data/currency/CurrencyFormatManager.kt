@@ -4,7 +4,7 @@ import android.support.annotation.VisibleForTesting
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
-import info.blockchain.balance.Precision
+import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.format
 import info.blockchain.balance.formatWithUnit
 import org.web3j.utils.Convert
@@ -90,13 +90,13 @@ class CurrencyFormatManager @Inject constructor(
         getFormattedCoinValue(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
     fun getFormattedCoinValue(cryptoValue: CryptoValue) =
-        cryptoValue.format(Precision.Full)
+        cryptoValue.format(FormatPrecision.Full)
 
     fun getFormattedSelectedCoinValueWithUnit(coinValue: BigInteger) =
         getFormattedCoinValueWithUnit(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
     fun getFormattedCoinValueWithUnit(cryptoValue: CryptoValue) =
-        cryptoValue.formatWithUnit(Precision.Full)
+        cryptoValue.formatWithUnit(FormatPrecision.Full)
 
     /**
      * @return Formatted String of crypto amount from fiat currency amount.

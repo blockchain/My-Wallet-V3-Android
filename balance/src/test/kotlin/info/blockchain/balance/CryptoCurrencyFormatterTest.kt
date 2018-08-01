@@ -1,9 +1,5 @@
 package info.blockchain.balance
 
-import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.Precision
-import info.blockchain.balance.format
-import info.blockchain.balance.formatWithUnit
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
@@ -35,7 +31,7 @@ class CryptoCurrencyFormatterTest {
 
     @Test
     fun `formatWithUnit 0 BTC`() {
-        CryptoValue.ZeroBtc.formatWithUnit(Precision.Short) `should equal` "0 BTC"
+        CryptoValue.ZeroBtc.formatWithUnit(FormatPrecision.Short) `should equal` "0 BTC"
     }
 
     @Test
@@ -112,7 +108,7 @@ class CryptoCurrencyFormatterTest {
     @Test
     fun `formatWithUnit ETH with tiny fractions - full precision`() {
         val formatWithUnit =
-            { wei: Long -> CryptoValue.etherFromWei(wei).formatWithUnit(Precision.Full) }
+            { wei: Long -> CryptoValue.etherFromWei(wei).formatWithUnit(FormatPrecision.Full) }
         formatWithUnit(1L) `should equal` "0.000000000000000001 ETH"
         formatWithUnit(10L) `should equal` "0.00000000000000001 ETH"
         formatWithUnit(100L) `should equal` "0.0000000000000001 ETH"
