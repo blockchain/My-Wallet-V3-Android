@@ -22,7 +22,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.RETURNS_DEEP_STUBS
-import piuk.blockchain.android.testutils.rxInit
+import com.blockchain.android.testutils.rxInit
 import java.util.LinkedHashMap
 
 @Suppress("IllegalIdentifier")

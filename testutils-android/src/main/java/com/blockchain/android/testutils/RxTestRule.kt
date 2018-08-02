@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.android.testutils
 
 import com.blockchain.testutils.after
 import com.blockchain.testutils.before

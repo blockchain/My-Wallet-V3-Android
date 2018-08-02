@@ -1,5 +1,6 @@
 package piuk.blockchain.android.testutils
 
+import com.blockchain.android.testutils.rxInit
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Rule
