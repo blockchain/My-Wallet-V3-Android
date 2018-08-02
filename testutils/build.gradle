@@ -1,4 +1,5 @@
 apply plugin: 'kotlin'
+apply from: '../quality/jacocoKtLibrary.gradle'
 
 buildscript {
     repositories {
