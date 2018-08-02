@@ -50,16 +50,14 @@ class KycSplashFragment : Fragment() {
         val privacyClickSpan = ClickableIntentSpan(URL_PRIVACY_POLICY)
 
         textViewTerms.formatLinks(
-            listOf(
-                disclaimerStart to defaultClickSpan,
-                terms to termsClickSpan,
-                ampersand to defaultClickSpan,
-                privacy to privacyClickSpan
-            )
+            disclaimerStart to defaultClickSpan,
+            terms to termsClickSpan,
+            ampersand to defaultClickSpan,
+            privacy to privacyClickSpan
         )
     }
 
-    private fun TextView.formatLinks(linkPairs: List<Pair<String, ClickableSpan>>) {
+    private fun TextView.formatLinks(vararg linkPairs: Pair<String, ClickableSpan>) {
         val finalString = linkPairs.joinToString(separator = " ") { it.first }
         val spannableString = SpannableString(finalString)
 
