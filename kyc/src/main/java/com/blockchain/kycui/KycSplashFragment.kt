@@ -46,51 +46,41 @@ class KycSplashFragment : Fragment() {
             override fun onClick(view: View) = Unit
             override fun updateDrawState(ds: TextPaint?) = Unit
         }
-        val termsClickSpan = object : ClickableSpan() {
-            override fun onClick(view: View) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL_TOS_POLICY)))
-            }
-        }
-        val privacyClickSpan = object : ClickableSpan() {
-            override fun onClick(view: View) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL_PRIVACY_POLICY)))
-            }
-        }
+        val termsClickSpan = ClickableIntentSpan(URL_TOS_POLICY)
+        val privacyClickSpan = ClickableIntentSpan(URL_PRIVACY_POLICY)
 
-        formatLinks(
-            textViewTerms,
-            listOf(disclaimerStart, terms, ampersand, privacy),
-            listOf(defaultClickSpan, termsClickSpan, defaultClickSpan, privacyClickSpan)
+        textViewTerms.formatLinks(
+            listOf(
+                disclaimerStart to defaultClickSpan,
+                terms to termsClickSpan,
+                ampersand to defaultClickSpan,
+                privacy to privacyClickSpan
+            )
         )
     }
 
-    private fun formatLinks(
-        textView: TextView,
-        links: List<String>,
-        clickableSpans: List<ClickableSpan>
-    ) {
-        require(links.size == clickableSpans.size) {
-            "List of links and ClickableSpans must not differ in size "
-        }
-
-        val finalString = links.joinToString(separator = " ")
+    private fun TextView.formatLinks(linkPairs: List<Pair<String, ClickableSpan>>) {
+        val finalString = linkPairs.joinToString(separator = " ") { it.first }
         val spannableString = SpannableString(finalString)
 
-        links.zip(clickableSpans)
-            .forEach { (link, span) ->
-                val startIndexOfLink = finalString.indexOf(link)
-                spannableString.setSpan(
-                    span,
-                    startIndexOfLink,
-                    startIndexOfLink + link.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
+        linkPairs.forEach { (link, span) ->
+            val startIndexOfLink = finalString.indexOf(link)
+            spannableString.setSpan(
+                span,
+                startIndexOfLink,
+                startIndexOfLink + link.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
 
-        textView.apply {
-            highlightColor = Color.TRANSPARENT
-            movementMethod = LinkMovementMethod.getInstance()
-            setText(spannableString, TextView.BufferType.SPANNABLE)
+        highlightColor = Color.TRANSPARENT
+        movementMethod = LinkMovementMethod.getInstance()
+        setText(spannableString, TextView.BufferType.SPANNABLE)
+    }
+
+    private inner class ClickableIntentSpan(val url: String) : ClickableSpan() {
+        override fun onClick(widget: View?) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
 }
