@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.testutils
 
 import okhttp3.mockwebserver.MockWebServer
 

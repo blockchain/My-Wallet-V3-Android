@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.testutils
 
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should throw`

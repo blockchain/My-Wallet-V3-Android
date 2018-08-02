@@ -12,8 +12,8 @@ import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.android.testutils.MockedRetrofitTest
-import piuk.blockchain.android.testutils.mockWebServerInit
+import com.blockchain.testutils.MockedRetrofitTest
+import com.blockchain.testutils.mockWebServerInit
 import piuk.blockchain.androidbuysell.api.PATH_COINFY_AUTH
 import piuk.blockchain.androidbuysell.api.PATH_COINFY_BANK_ACCOUNTS
 import piuk.blockchain.androidbuysell.api.PATH_COINFY_CANCEL

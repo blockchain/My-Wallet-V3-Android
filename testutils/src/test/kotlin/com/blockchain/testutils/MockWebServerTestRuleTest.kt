@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.testutils
 
 import com.nhaarman.mockito_kotlin.verify
 import okhttp3.mockwebserver.MockWebServer

@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.testutils
 
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient

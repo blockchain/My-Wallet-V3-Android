@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.testutils
 
 fun Any.getStringFromResource(filePath: String): String =
     this::class.java.getResource("/$filePath").readText()

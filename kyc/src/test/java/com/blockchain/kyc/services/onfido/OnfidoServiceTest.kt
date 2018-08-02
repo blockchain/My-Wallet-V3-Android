@@ -12,9 +12,9 @@ import org.amshove.kluent.`should equal`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.android.testutils.MockedRetrofitTest
-import piuk.blockchain.android.testutils.getStringFromResource
-import piuk.blockchain.android.testutils.mockWebServerInit
+import com.blockchain.testutils.MockedRetrofitTest
+import com.blockchain.testutils.getStringFromResource
+import com.blockchain.testutils.mockWebServerInit
 
 class OnfidoServiceTest {
 

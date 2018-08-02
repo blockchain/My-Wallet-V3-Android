@@ -1,5 +1,4 @@
 apply plugin: 'kotlin'
-apply from: '../quality/ktlint.gradle'
 
 buildscript {
     repositories {

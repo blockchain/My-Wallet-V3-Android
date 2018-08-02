@@ -1,4 +1,4 @@
-package piuk.blockchain.android.testutils
+package com.blockchain.testutils
 
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -9,7 +9,7 @@ class Before internal constructor(internal val beforeBlock: () -> Unit)
 fun before(beforeBlock: () -> Unit) = Before(beforeBlock)
 
 infix fun Before.after(afterBlock: () -> Unit): TestRule =
-        TryFinallyTestRule(this.beforeBlock, afterBlock)
+    TryFinallyTestRule(this.beforeBlock, afterBlock)
 
 private class TryFinallyTestRule(private val setupBlock: () -> Any, private val teardownBlock: () -> Unit) : TestRule {
 
