@@ -33,17 +33,6 @@ def excludedDirs = [
 def coverageSourceDirs = allDirsMatching(/.*src\/main\/java$/) + allDirsMatching(/.*src\/main\/kotlin$/)
 
 task jacocoRootReport(type: JacocoReport) {
-    dependsOn "kyc:testCoverage"
-    dependsOn "wallet:testCoverage"
-    dependsOn "balance:testCoverage"
-    dependsOn "morph:common:testCoverage"
-    dependsOn "morph:shapeshift:testCoverage"
-    dependsOn "core:testCoverage"
-    dependsOn "coreui:testCoverage"
-    dependsOn "buysell:testCoverage"
-    dependsOn "buysellui:testCoverage"
-    dependsOn "app:testCoverage"
-
     group = "Reporting"
     description = "Generate Jacoco coverage reports on the Debug build."
 
@@ -66,6 +55,16 @@ task jacocoRootReport(type: JacocoReport) {
                         allDirsMatching(/\/build\/classes\/java\/main$/) +
                         allDirsMatching(/\/build\/classes\/kotlin\/main$/),
                 excludedDirs)
+    }
+}
+
+subprojects {
+    it.tasks.whenTaskAdded { newTask ->
+        if (newTask.name == 'testCoverage') {
+            jacocoRootReport.configure {
+                dependsOn(newTask)
+            }
+        }
     }
 }
 
