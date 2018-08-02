@@ -32,29 +32,6 @@ def excludedDirs = [
 
 def coverageSourceDirs = allDirsMatching(/.*src\/main\/java$/) + allDirsMatching(/.*src\/main\/kotlin$/)
 
-def coverageClassDirectories = [
-        fileTree(dir: 'app/build/intermediates/classes/envProdDebug', excludes: excludedDirs),
-        fileTree(dir: 'app/build/tmp/kotlin-classes/envProdDebug', excludes: excludedDirs),
-        fileTree(dir: 'buysell/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'buysell/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'buysellui/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'buysellui/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'coreui/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'coreui/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'core/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'core/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'wallet/build/classes/java/main', excludes: excludedDirs),
-        fileTree(dir: 'wallet/build/classes/kotlin/main', excludes: excludedDirs),
-        fileTree(dir: 'balance/build/classes/java/main', excludes: excludedDirs),
-        fileTree(dir: 'balance/build/classes/kotlin/main', excludes: excludedDirs),
-        fileTree(dir: 'morph/common/build/classes/java/main', excludes: excludedDirs),
-        fileTree(dir: 'morph/common/build/classes/kotlin/main', excludes: excludedDirs),
-        fileTree(dir: 'morph/shapeshift/build/classes/java/main', excludes: excludedDirs),
-        fileTree(dir: 'morph/shapeshift/build/tmp/kotlin-classes/kotlin/main', excludes: excludedDirs),
-        fileTree(dir: 'kyc/build/intermediates/classes/debug', excludes: excludedDirs),
-        fileTree(dir: 'kyc/build/tmp/kotlin-classes/debug', excludes: excludedDirs),
-]
-
 task jacocoRootReport(type: JacocoReport) {
     dependsOn "kyc:testCoverage"
     dependsOn "wallet:testCoverage"
@@ -70,7 +47,7 @@ task jacocoRootReport(type: JacocoReport) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports on the Debug build."
 
-    classDirectories = files(coverageClassDirectories)
+    classDirectories = files()
     sourceDirectories = coverageSourceDirs
 
     executionData = fileTree(dir: '.').matching { include '**/build/jacoco/*.exec' }
@@ -81,6 +58,23 @@ task jacocoRootReport(type: JacocoReport) {
     }
 
     onlyIf = { true }
+
+    doFirst {
+        classDirectories = dirsToFileTrees(
+                allDirsMatching(/\/intermediates\/classes\/.*[Dd]ebug$/) +
+                        allDirsMatching(/\/tmp\/kotlin-classes\/.*[Dd]ebug$/) +
+                        allDirsMatching(/\/build\/classes\/java\/main$/) +
+                        allDirsMatching(/\/build\/classes\/kotlin\/main$/),
+                excludedDirs)
+    }
+}
+
+private def dirsToFileTrees(FileCollection coverageClassDirectories, excludedDirs) {
+    def classFiles = []
+    coverageClassDirectories.forEach {
+        classFiles += fileTree(dir: it, excludes: excludedDirs)
+    }
+    files(classFiles)
 }
 
 def allDirsMatching(regex) {
