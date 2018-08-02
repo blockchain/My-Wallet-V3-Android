@@ -85,18 +85,7 @@ task jacocoRootReport(type: JacocoReport) {
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
 
-    executionData = files(
-            tasks.getByPath("kyc:testCoverage").executionData,
-            tasks.getByPath("wallet:testCoverage").executionData,
-            tasks.getByPath("balance:testCoverage").executionData,
-            tasks.getByPath("morph:common:testCoverage").executionData,
-            tasks.getByPath("morph:shapeshift:testCoverage").executionData,
-            tasks.getByPath("core:testCoverage").executionData,
-            tasks.getByPath("coreui:testCoverage").executionData,
-            tasks.getByPath("buysell:testCoverage").executionData,
-            tasks.getByPath("buysellui:testCoverage").executionData,
-            tasks.getByPath("app:testCoverage").executionData
-    )
+    executionData = fileTree(dir: '.').matching { include "**/build/jacoco/*.exec" }
 
     reports {
         xml.enabled = true
