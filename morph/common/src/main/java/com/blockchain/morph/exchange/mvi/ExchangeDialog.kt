@@ -79,7 +79,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
             FieldUpdateIntent.Field.FROM_CRYPTO -> {
                 val newFrom = CryptoValue.fromMajor(
                     vm.from.cryptoValue.currency,
-                    intent.userText.toBigDecimal()
+                    intent.userValue
                 )
                 vm.copy(
                     from = vm.from.copy(
@@ -90,7 +90,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
             FieldUpdateIntent.Field.TO_CRYPTO -> {
                 val newToValue = CryptoValue.fromMajor(
                     vm.to.cryptoValue.currency,
-                    intent.userText.toBigDecimal()
+                    intent.userValue
                 )
                 vm.copy(
                     to = vm.to.copy(
@@ -102,7 +102,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
                 from = vm.from.copy(
                     fiatValue = FiatValue(
                         vm.from.fiatValue.currencyCode,
-                        intent.userText.toBigDecimal()
+                        intent.userValue
                     )
                 )
             )
@@ -110,7 +110,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
                 to = vm.to.copy(
                     fiatValue = FiatValue(
                         vm.to.fiatValue.currencyCode,
-                        intent.userText.toBigDecimal()
+                        intent.userValue
                     )
                 )
             )

@@ -1,6 +1,8 @@
 package com.blockchain.morph.exchange.mvi
 
 import info.blockchain.balance.ExchangeRate
+import info.blockchain.utils.tryParseBigDecimal
+import java.math.BigDecimal
 
 /**
  * The intents represent user/system actions
@@ -8,6 +10,7 @@ import info.blockchain.balance.ExchangeRate
 sealed class ExchangeIntent
 
 class FieldUpdateIntent(val field: Field, val userText: String) : ExchangeIntent() {
+    val userValue: BigDecimal = userText.tryParseBigDecimal() ?: BigDecimal.ZERO
 
     enum class Field {
         FROM_CRYPTO,
