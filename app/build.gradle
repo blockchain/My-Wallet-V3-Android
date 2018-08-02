@@ -192,7 +192,7 @@ dependencies {
     testImplementation Libraries.testRules
 
     testImplementation Libraries.json
-    testImplementation project(':testutils')
+    testImplementation project(':testutils-android')
 }
 
 buildscript {

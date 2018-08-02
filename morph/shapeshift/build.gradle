@@ -47,5 +47,5 @@ dependencies {
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.kluent
-    testImplementation project(':testutils')
+    testImplementation project(':testutils-android')
 }

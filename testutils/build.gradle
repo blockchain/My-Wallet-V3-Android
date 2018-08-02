@@ -1,34 +1,30 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+apply plugin: 'kotlin'
+apply from: '../quality/ktlint.gradle'
 
-android {
-    compileSdkVersion Versions.compileSdk
-    buildToolsVersion Versions.buildTools
-
-    defaultConfig {
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
+buildscript {
+    repositories {
+        mavenCentral()
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    dependencies {
+        classpath Libraries.kotlinGradlePlugin
     }
 }
 
+sourceCompatibility = Versions.javaCompatibilityVersion
+targetCompatibility = Versions.javaCompatibilityVersion
+
 dependencies {
     // RxJava
-    api Libraries.rxJava
-    api Libraries.rxKotlin
-    api Libraries.rxAndroid
+    implementation Libraries.rxJava
+    implementation Libraries.rxKotlin
     // Networking
-    api Libraries.okHttpMock
-    api Libraries.retrofit
-    api Libraries.moshi
-    api Libraries.retrofitRxMoshiConverter
-    api Libraries.retrofitRxJavaAdapter
+    implementation Libraries.okHttpMock
+    implementation Libraries.retrofit
+    implementation Libraries.moshi
+    implementation Libraries.retrofitRxMoshiConverter
+    implementation Libraries.retrofitRxJavaAdapter
 
     // Unit Test dependencies
-    api Libraries.junit
-    api Libraries.kluent
+    implementation Libraries.junit
+    implementation Libraries.kluent
 }
