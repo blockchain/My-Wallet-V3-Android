@@ -2,7 +2,7 @@
 <resources>
     <string name="kyc_splash_apply_now">Apply now</string>
     <string name="kyc_splash_message">Complete your Blockchain profile and identity verification to start buying and selling cryptocurrencies. This will only take 4 minutes.</string>
-    <string name="kyc_splash_terms_and_conditions">By tapping apply now, I agree to</string>
-    <string name="kyc_splash_terms_and_conditions_blockchain">Blockchain’s Terms of Service</string>
+    <string name="kyc_splash_terms_and_conditions">By tapping apply now, I agree to Blockchain’s</string>
+    <string name="kyc_splash_terms_and_conditions_terms">Terms of Service</string>
     <string name="kyc_splash_terms_and_conditions_privacy">Privacy Policy</string>
 </resources>

@@ -17,7 +17,9 @@ import android.widget.TextView
 import piuk.blockchain.android.constants.URL_PRIVACY_POLICY
 import piuk.blockchain.android.constants.URL_TOS_POLICY
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
+import kotlinx.android.synthetic.main.fragment_kyc_splash.text_view_kyc_terms_and_conditions as buttonContinue
 import kotlinx.android.synthetic.main.fragment_kyc_splash.text_view_kyc_terms_and_conditions as textViewTerms
 
 class KycSplashFragment : Fragment() {
@@ -30,9 +32,14 @@ class KycSplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        renderTermsLinks()
 
+        buttonContinue.setOnClickListener { toast("Apply now!") }
+    }
+
+    private fun renderTermsLinks() {
         val disclaimerStart = getString(R.string.kyc_splash_terms_and_conditions)
-        val terms = getString(R.string.kyc_splash_terms_and_conditions_blockchain)
+        val terms = getString(R.string.kyc_splash_terms_and_conditions_terms)
         val ampersand = "&"
         val privacy = getString(R.string.kyc_splash_terms_and_conditions_privacy)
         val defaultClickSpan = object : ClickableSpan() {
@@ -50,32 +57,36 @@ class KycSplashFragment : Fragment() {
             }
         }
 
-        makeLinks(
+        formatLinks(
             textViewTerms,
-            arrayOf(disclaimerStart, terms, ampersand, privacy),
-            arrayOf(defaultClickSpan, termsClickSpan, defaultClickSpan, privacyClickSpan)
+            listOf(disclaimerStart, terms, ampersand, privacy),
+            listOf(defaultClickSpan, termsClickSpan, defaultClickSpan, privacyClickSpan)
         )
     }
 
-    private fun makeLinks(
+    private fun formatLinks(
         textView: TextView,
-        links: Array<String>,
-        clickableSpans: Array<ClickableSpan>
+        links: List<String>,
+        clickableSpans: List<ClickableSpan>
     ) {
+        require(links.size == clickableSpans.size) {
+            "List of links and ClickableSpans must not differ in size "
+        }
+
         val finalString = links.joinToString(separator = " ")
         val spannableString = SpannableString(finalString)
-        for (i in links.indices) {
-            val clickableSpan = clickableSpans[i]
-            val link = links[i]
 
-            val startIndexOfLink = finalString.indexOf(link)
-            spannableString.setSpan(
-                clickableSpan,
-                startIndexOfLink,
-                startIndexOfLink + link.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
+        links.zip(clickableSpans)
+            .forEach { (link, span) ->
+                val startIndexOfLink = finalString.indexOf(link)
+                spannableString.setSpan(
+                    span,
+                    startIndexOfLink,
+                    startIndexOfLink + link.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
         textView.apply {
             highlightColor = Color.TRANSPARENT
             movementMethod = LinkMovementMethod.getInstance()
