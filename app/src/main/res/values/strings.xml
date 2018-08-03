@@ -860,8 +860,6 @@
     <string name="tx_decode_error">Unable to decode address</string>
 
     <!-- BCH UPDATE -->
-    <string name="ethereum" translatable="false">Ethereum</string>
-    <string name="bitcoin_cash" translatable="false">Bitcoin Cash</string>
     <string name="bch_default_account_label">My Bitcoin Cash Wallet</string>
     <string name="bch_all_accounts">All Bitcoin Cash Wallets</string>
     <string name="bch_imported_addresses">Imported Bitcoin Cash Addresses</string>

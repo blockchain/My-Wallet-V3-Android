@@ -101,7 +101,7 @@ class ContactConfirmRequestPresenter @Inject internal constructor(
             {
                 view.onRequestSuccessful(
                     paymentRequestType ?: throw IllegalStateException("Request type is null"),
-                    recipient!!.name,
+                    recipient!!.name!!,
                     "${confirmationDetails!!.cryptoAmount} ${confirmationDetails!!.cryptoUnit}"
                 )
             },
@@ -130,7 +130,7 @@ class ContactConfirmRequestPresenter @Inject internal constructor(
             .subscribe(
                 { contact ->
                     recipient = contact
-                    view.contactLoaded(recipient!!.name)
+                    view.contactLoaded(recipient!!.name!!)
                 },
                 {
                     view.showToast(R.string.contacts_not_found_error, ToastCustom.TYPE_ERROR)

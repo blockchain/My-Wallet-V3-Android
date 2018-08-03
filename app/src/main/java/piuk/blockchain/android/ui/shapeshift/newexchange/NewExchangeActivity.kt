@@ -148,7 +148,7 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     override fun launchAccountChooserActivityTo() {
         AccountChooserActivity.startForResult(
             this,
-            AccountMode.ShapeShift,
+            AccountMode.Exchange,
             REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT_FROM_SEND,
             getString(R.string.to)
         )
@@ -157,7 +157,7 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     override fun launchAccountChooserActivityFrom() {
         AccountChooserActivity.startForResult(
             this,
-            AccountMode.ShapeShift,
+            AccountMode.Exchange,
             REQUEST_CODE_CHOOSE_SENDING_ACCOUNT_FROM_SEND,
             getString(R.string.from)
         )

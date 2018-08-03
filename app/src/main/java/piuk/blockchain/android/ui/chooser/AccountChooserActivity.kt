@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -64,20 +63,18 @@ class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChoose
             onBackPressed()
         }
 
-    override fun updateUi(items: List<ItemAccount>) {
+    override fun updateUi(items: List<AccountChooserItem>) {
         val adapter = AccountChooserAdapter(items) { any ->
-            if (any != null) {
-                try {
-                    val intent = Intent().apply {
-                        putExtra(EXTRA_SELECTED_ITEM, any.toSerialisedString())
-                        putExtra(EXTRA_SELECTED_OBJECT_TYPE, any.javaClass.name)
-                    }
-
-                    setResult(Activity.RESULT_OK, intent)
-                    finish()
-                } catch (e: JsonProcessingException) {
-                    throw RuntimeException(e)
+            try {
+                val intent = Intent().apply {
+                    putExtra(EXTRA_SELECTED_ITEM, any.toSerialisedString())
+                    putExtra(EXTRA_SELECTED_OBJECT_TYPE, any.javaClass.name)
                 }
+
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            } catch (e: JsonProcessingException) {
+                throw RuntimeException(e)
             }
         }
         recyclerview.apply {
@@ -130,20 +127,4 @@ class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChoose
             putExtra(EXTRA_ACTIVITY_TITLE, title)
         }
     }
-}
-
-enum class AccountMode {
-
-    // Show all accounts for ShapeShift, ie BTC & BCH HD accounts, Ether
-    ShapeShift,
-    // Show only the contacts list
-    ContactsOnly,
-    // Show all bitcoin accounts, including HD + legacy addresses
-    Bitcoin,
-    // Show all bitcoin accounts, no legacy addresses
-    BitcoinHdOnly,
-    // Show all bitcoin cash HD accounts, but no legacy addresses
-    BitcoinCash,
-    // Show all bitcoin cash HD accounts + all legacy addresses with balances + headers
-    BitcoinCashSend
 }

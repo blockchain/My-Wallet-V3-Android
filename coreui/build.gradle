@@ -82,6 +82,7 @@ dependencies {
     api Libraries.dexter
 
     // Unit Test dependencies
+    testImplementation project(':testutils-android')
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.hamcrestJunit

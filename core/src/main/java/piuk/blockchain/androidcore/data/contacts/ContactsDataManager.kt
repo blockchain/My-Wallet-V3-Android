@@ -97,7 +97,7 @@ class ContactsDataManager @Inject constructor(
                                 it.role,
                                 it.state,
                                 it.note ?: "",
-                                contact.name
+                                contact.name ?: ""
                             )
                         })
                 )
@@ -413,7 +413,7 @@ class ContactsDataManager @Inject constructor(
                         it.state != FacilitatedTransaction.STATE_DECLINED
                     ) {
 
-                        val model = ContactTransactionModel(contact.name, it)
+                        val model = ContactTransactionModel(contact.name ?: "", it)
                         pendingTransactionListStore.insertTransaction(model)
                         transactions.add(model)
                     }

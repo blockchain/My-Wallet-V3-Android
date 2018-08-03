@@ -41,14 +41,8 @@ class WalletAccountHelper @Inject constructor(
      * @return Returns a list of [ItemAccount] objects
      */
     fun getAccountItems(): List<ItemAccount> = when (currencyState.cryptoCurrency) {
-        CryptoCurrency.BTC -> mutableListOf<ItemAccount>().apply {
-            addAll(getHdAccounts())
-            addAll(getLegacyAddresses())
-        }
-        CryptoCurrency.BCH -> mutableListOf<ItemAccount>().apply {
-            addAll(getHdBchAccounts())
-            addAll(getLegacyBchAddresses())
-        }
+        CryptoCurrency.BTC -> getHdAccounts() + getLegacyAddresses()
+        CryptoCurrency.BCH -> getHdBchAccounts() + getLegacyBchAddresses()
         else -> getEthAccount()
     }
 
@@ -197,9 +191,8 @@ class WalletAccountHelper @Inject constructor(
         else -> throw IllegalArgumentException("Cryptocurrency ${currencyState.cryptoCurrency.unit} not yet supported")
     }
 
-    fun getEthAccount() = mutableListOf<ItemAccount>().apply {
-        add(getDefaultEthAccount())
-    }
+    fun getEthAccount() =
+        listOf(getDefaultEthAccount())
 
     /**
      * Returns the balance of an [Account] in Satoshis (BTC)

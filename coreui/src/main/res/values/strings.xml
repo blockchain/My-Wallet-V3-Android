@@ -9,4 +9,16 @@
         is no threat you may continue.
     </string>
     <string name="dialog_continue">Continue</string>
+    <string name="watch_only">Non-Spendable</string>
+
+    <string name="wallets">Wallets</string>
+    <string name="imported_addresses">Imported Addresses</string>
+    <string name="contacts_title">Contacts</string>
+
+    <string name="bitcoin">Bitcoin</string>
+    <string name="ether">Ether</string>
+
+    <string name="ethereum" translatable="false">Ethereum</string>
+    <string name="bitcoin_cash" translatable="false">Bitcoin Cash</string>
+
 </resources>
