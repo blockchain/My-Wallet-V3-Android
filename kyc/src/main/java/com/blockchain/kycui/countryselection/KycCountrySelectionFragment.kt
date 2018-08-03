@@ -6,10 +6,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.blockchain.kycui.KycProgressListener
 import com.blockchain.kycui.countryselection.adapter.CountryCodeAdapter
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import piuk.blockchain.androidcore.utils.CountryHelper
+import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
@@ -20,8 +22,10 @@ import kotlinx.android.synthetic.main.fragment_kyc_country_selection.search_view
 
 class KycCountrySelectionFragment : Fragment() {
 
+    private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val countryList = CountryHelper(Locale.getDefault()).countryList
     private val countryCodeAdapter = CountryCodeAdapter {
+        // TODO: Here we need to check against valid countries + redirect as necessary
         toast("Country selected $it")
     }
 
@@ -42,8 +46,8 @@ class KycCountrySelectionFragment : Fragment() {
 
         RxSearchView.queryTextChanges(searchView)
             .debounce(100, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { query ->
                 countryCodeAdapter.items =
                     countryList.filter {
@@ -53,5 +57,7 @@ class KycCountrySelectionFragment : Fragment() {
             }
             .doOnNext { recyclerView.scrollToPosition(0) }
             .subscribe()
+
+        progressListener.onProgressUpdated(10)
     }
 }
