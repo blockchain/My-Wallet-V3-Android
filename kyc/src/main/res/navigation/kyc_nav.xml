@@ -5,6 +5,14 @@
 
     <fragment
         android:id="@+id/kycSplashFragment"
-        android:name="com.blockchain.kycui.KycSplashFragment"
-        android:label="KycSplashFragment" />
+        android:name="com.blockchain.kycui.splash.KycSplashFragment"
+        android:label="KycSplashFragment" >
+        <action
+            android:id="@+id/action_kycSplashFragment_to_kycCountrySelectionFragment"
+            app:destination="@id/kycCountrySelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/kycCountrySelectionFragment"
+        android:name="com.blockchain.kycui.countryselection.KycCountrySelectionFragment"
+        android:label="KycCountrySelectionFragment" />
 </navigation>

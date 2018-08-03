@@ -26,6 +26,18 @@
         app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
         tools:title="@string/app_name" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar_kyc"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_drawable_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_kyc"
+        tools:progress="30" />
+
     <fragment
         android:id="@+id/nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -35,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_kyc"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar_kyc"
         app:navGraph="@navigation/kyc_nav" />
 
 </android.support.constraint.ConstraintLayout>
