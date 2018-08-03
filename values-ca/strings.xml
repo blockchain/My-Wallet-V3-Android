@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="buy_sell_overview_denied_button">Torneu</string>
+  <string name="buy_sell_state_cancelled"></string>
+  <string name="buy_sell_detail_transaction_fee"></string>
+  <string name="buy_sell_detail_amount"></string>
+  <string name="buy_sell_review_finish_verification"></string>
+  <string name="buy_sell_review_status_in_rejected"></string>
+  <string name="buy_sell_review_status_in_failed"></string>
+  <string name="buy_sell_review_status_in_expired"></string>
+  <string name="buy_sell_review_status_in_completed"></string>
+  <string name="buy_sell_confirmation_transaction_fee"></string>
+  <string name="buy_sell_confirmation_amount"></string>
+  <string name="buy_sell_confirmation_payment_fee"></string>
+  <string name="buy_sell_confirmation_total_cost"></string>
+  <string name="buy_sell_confirmation_bank"></string>
+  <string name="buy_sell_recurring_frequency_weekly"></string>
+</resources>
