@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Köp</string>
+  <string name="buy_sell_sell">Sälj</string>
+  <string name="buy_sell_overview_denied_button">Försök igen</string>
+  <string name="buy_sell_state_processing">Bearbetas</string>
+  <string name="buy_sell_state_completed">Slutförd</string>
+  <string name="buy_sell_state_cancelled">Avbruten</string>
+  <string name="buy_sell_state_rejected">Avvisad</string>
+  <string name="buy_sell_state_expired">Löpte ut</string>
+  <string name="buy_sell_detail_transaction_fee"></string>
+  <string name="buy_sell_detail_exchange_rate">Växlingskurs</string>
+  <string name="buy_sell_detail_amount">Belopp</string>
+  <string name="buy_sell_detail_payment_fee">Betalningsavgift</string>
+  <string name="buy_sell_detail_total">Total kostnad</string>
+  <string name="buy_sell_review_finish_verification"></string>
+  <string name="buy_sell_review_status_in_rejected">Avvisad</string>
+  <string name="buy_sell_review_status_in_failed">Misslyckades</string>
+  <string name="buy_sell_review_status_in_expired">Löpte ut</string>
+  <string name="buy_sell_review_status_in_completed">Slutförd</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betalningsmetod</string>
+  <string name="buy_sell_confirmation_transaction_fee"></string>
+  <string name="buy_sell_confirmation_amount">Belopp</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalningsavgift</string>
+  <string name="buy_sell_confirmation_total_cost">Total kostnad</string>
+  <string name="buy_sell_confirmation_bank"></string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Bekräfta din e-post</string>
+  <string name="buy_sell_add_account_subtitle">Lägg till ett bankkonto</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Välj konto</string>
+  <string name="buy_sell_account_selection_delete_message">Är du säker på att du vill ta bort det här bankkontot?</string>
+  <string name="buy_sell_add_address_city_hint">Stad</string>
+  <string name="buy_sell_add_address_post_code_hint">Postnummer</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Upprepande beställning</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frekvens</string>
+  <string name="buy_sell_recurring_order_duration_title">Varaktighet</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Tills beställningen avbryts</string>
+  <string name="buy_sell_recurring_frequency_weekly"></string>
+</resources>
