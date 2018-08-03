@@ -1,15 +1,10 @@
 package com.blockchain.morph.exchange.mvi
 
 import com.blockchain.morph.CoinPair
-import com.blockchain.testutils.after
-import com.blockchain.testutils.before
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
-import org.amshove.kluent.`should equal`
-import org.junit.Rule
 import org.junit.Test
-import java.util.Locale
 
 class ApplyLastRatesAsTypingTest {
 
