@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Splash Screen -->
+    <string name="kyc_splash_title">Exchange</string>
     <string name="kyc_splash_apply_now">Apply now</string>
     <string name="kyc_splash_message">Complete your Blockchain profile and identity verification to start buying and selling cryptocurrencies. This will only take 4 minutes.</string>
     <string name="kyc_splash_terms_and_conditions">By tapping apply now, I agree to Blockchain’s</string>
@@ -8,7 +9,11 @@
     <string name="kyc_splash_terms_and_conditions_privacy">Privacy Policy</string>
 
     <!-- Country Selection -->
-    <string name="kyc_country_selection_title">Why do you need this?</string>
+    <string name="kyc_country_selection_title">Select Your Country</string>
+    <string name="kyc_country_selection_header">Why do you need this?</string>
     <string name="kyc_country_selection_message">Right now, digital cryptocurrency conversions on Blockchain are only available in select countries.</string>
     <string name="kyc_country_selection_search_hint">Search for your country</string>
+
+    <!-- Profile -->
+    <string name="kyc_profile_title">Profile</string>
 </resources>

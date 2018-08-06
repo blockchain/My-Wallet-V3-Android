@@ -15,14 +15,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.blockchain.kycui.KycProgressListener
 import piuk.blockchain.android.constants.URL_PRIVACY_POLICY
 import piuk.blockchain.android.constants.URL_TOS_POLICY
+import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.kyc.R
 import kotlinx.android.synthetic.main.fragment_kyc_splash.button_kyc_splash_apply_now as buttonContinue
 import kotlinx.android.synthetic.main.fragment_kyc_splash.text_view_kyc_terms_and_conditions as textViewTerms
 
 class KycSplashFragment : Fragment() {
+
+    private val progressListener: KycProgressListener by ParentActivityDelegate(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +41,8 @@ class KycSplashFragment : Fragment() {
         buttonContinue.setOnClickListener {
             findNavController(this).navigate(R.id.kycCountrySelectionFragment)
         }
+
+        progressListener.onProgressUpdated(0, R.string.kyc_splash_title)
     }
 
     private fun renderTermsLinks() {

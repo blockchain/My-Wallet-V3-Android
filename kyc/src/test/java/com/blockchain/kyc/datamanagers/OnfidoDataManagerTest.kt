@@ -1,5 +1,6 @@
 package com.blockchain.kyc.datamanagers
 
+import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
 import com.blockchain.kyc.models.onfido.ApplicantResponse
 import com.blockchain.kyc.models.onfido.CheckResult
 import com.blockchain.kyc.models.onfido.CheckStatus

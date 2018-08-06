@@ -14,5 +14,13 @@
     <fragment
         android:id="@+id/kycCountrySelectionFragment"
         android:name="com.blockchain.kycui.countryselection.KycCountrySelectionFragment"
-        android:label="KycCountrySelectionFragment" />
+        android:label="KycCountrySelectionFragment" >
+        <action
+            android:id="@+id/action_kycCountrySelectionFragment_to_kycProfileFragment"
+            app:destination="@id/kycProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/kycProfileFragment"
+        android:name="com.blockchain.kycui.KycProfileFragment"
+        android:label="KycProfileFragment" />
 </navigation>

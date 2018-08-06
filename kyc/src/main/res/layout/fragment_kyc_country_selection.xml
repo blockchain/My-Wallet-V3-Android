@@ -8,29 +8,21 @@
         android:id="@+id/text_view_country_selection_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:fontFamily="@font/montserrat_semi_bold"
-        android:text="@string/kyc_country_selection_title"
-        android:textSize="14sp"
+        android:text="@string/kyc_country_selection_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/KycFlowTitle" />
 
     <TextView
         android:id="@+id/text_view_country_selection_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:fontFamily="@font/montserrat"
         android:text="@string/kyc_country_selection_message"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_country_selection_title" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_country_selection_title"
+        style="@style/KycFlowMessage" />
 
     <android.support.v7.widget.SearchView
         android:id="@+id/search_view_kyc"

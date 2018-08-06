@@ -1,7 +1,7 @@
 package com.blockchain.kyc.services.onfido
 
-import com.blockchain.kyc.api.APPLICANTS
-import com.blockchain.kyc.api.CHECKS
+import com.blockchain.kyc.api.onfido.APPLICANTS
+import com.blockchain.kyc.api.onfido.CHECKS
 import com.blockchain.kyc.models.onfido.CheckResultAdapter
 import com.blockchain.kyc.models.onfido.CheckStatusAdapter
 import com.squareup.moshi.Moshi

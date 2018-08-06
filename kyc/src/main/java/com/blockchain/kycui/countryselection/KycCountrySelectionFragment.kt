@@ -58,6 +58,6 @@ class KycCountrySelectionFragment : Fragment() {
             .doOnNext { recyclerView.scrollToPosition(0) }
             .subscribe()
 
-        progressListener.onProgressUpdated(10)
+        progressListener.onProgressUpdated(10, R.string.kyc_country_selection_title)
     }
 }

@@ -6,11 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import com.blockchain.kyc.datamanagers.OnfidoDataManager
+import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
 import com.blockchain.kyc.models.onfido.CheckResultAdapter
 import com.blockchain.kyc.models.onfido.CheckStatusAdapter
 import com.blockchain.kyc.services.onfido.OnfidoService
-import com.blockchain.kycui.KycNavHostActivity
 import com.onfido.android.sdk.capture.ExitCode
 import com.onfido.android.sdk.capture.Onfido
 import com.onfido.android.sdk.capture.OnfidoConfig

@@ -1,4 +1,4 @@
-package com.blockchain.kyc.api
+package com.blockchain.kyc.api.onfido
 
 import com.blockchain.kyc.models.onfido.ApplicantRequest
 import com.blockchain.kyc.models.onfido.ApplicantResponse

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="KycFlowTitle">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="KycFlowMessage">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>

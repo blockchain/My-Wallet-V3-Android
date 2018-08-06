@@ -1,4 +1,4 @@
-package com.blockchain.kyc.datamanagers
+package com.blockchain.kyc.datamanagers.onfido
 
 import com.blockchain.kyc.models.onfido.ApplicantResponse
 import com.blockchain.kyc.models.onfido.OnfidoCheckResponse
@@ -19,7 +19,7 @@ class OnfidoDataManager @Inject constructor(
      *
      * @return An [ApplicantResponse] wrapped in a [Single]
      */
-    fun createApplicant(
+    internal fun createApplicant(
         firstName: String,
         lastName: String,
         apiToken: String
@@ -38,7 +38,7 @@ class OnfidoDataManager @Inject constructor(
      *
      * * @return An [OnfidoCheckResponse] wrapped in a [Single]
      */
-    fun createCheck(
+    internal fun createCheck(
         applicantId: String,
         apiToken: String
     ): Single<OnfidoCheckResponse> =

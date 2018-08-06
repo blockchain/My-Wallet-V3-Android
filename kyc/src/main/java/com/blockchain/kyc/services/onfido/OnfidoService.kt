@@ -1,9 +1,9 @@
 package com.blockchain.kyc.services.onfido
 
-import com.blockchain.kyc.api.APPLICANTS
-import com.blockchain.kyc.api.CHECKS
-import com.blockchain.kyc.api.ONFIDO_LIVE_BASE
-import com.blockchain.kyc.api.Onfido
+import com.blockchain.kyc.api.onfido.APPLICANTS
+import com.blockchain.kyc.api.onfido.CHECKS
+import com.blockchain.kyc.api.onfido.ONFIDO_LIVE_BASE
+import com.blockchain.kyc.api.onfido.Onfido
 import com.blockchain.kyc.models.onfido.ApplicantRequest
 import com.blockchain.kyc.models.onfido.ApplicantResponse
 import com.blockchain.kyc.models.onfido.OnfidoCheckOptions

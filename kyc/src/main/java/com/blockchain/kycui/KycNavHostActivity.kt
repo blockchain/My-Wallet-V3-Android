@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.IntRange
-import android.support.v7.widget.Toolbar
+import android.support.annotation.StringRes
 import android.view.animation.DecelerateInterpolator
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
@@ -19,10 +19,14 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kyc_nav_host)
-        setupToolbar(toolBar as Toolbar, "Exchange")
+        setupToolbar(toolBar, "Exchange")
     }
 
-    override fun onProgressUpdated(progress: Int) {
+    override fun onProgressUpdated(
+        @IntRange(from = 0, to = 100) progress: Int,
+        @StringRes title: Int
+    ) {
+        toolBar.title = getString(title)
         ObjectAnimator.ofInt(progressIndicator, "progress", progress).apply {
             duration = 200
             interpolator = DecelerateInterpolator()
@@ -42,5 +46,5 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
 }
 
 interface KycProgressListener {
-    fun onProgressUpdated(@IntRange(from = 0, to = 100) progress: Int)
+    fun onProgressUpdated(@IntRange(from = 0, to = 100) progress: Int, @StringRes title: Int)
 }
