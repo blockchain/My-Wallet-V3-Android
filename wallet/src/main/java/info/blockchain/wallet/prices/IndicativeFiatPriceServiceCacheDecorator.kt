@@ -6,7 +6,7 @@ import io.reactivex.Observable
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Yields a caching indicative price server
+ * Yields a caching indicative price service
  */
 fun CurrentPriceApi.toCachedIndicativeFiatPriceService(): IndicativeFiatPriceService =
     toIndicativeFiatPriceService().cache()

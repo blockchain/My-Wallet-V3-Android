@@ -18,6 +18,5 @@ class PriceDatumSerializationTests {
 }
 
 private fun priceDatum(json: String) = ObjectMapper().readValue(
-    json
-    , PriceDatum::class.java
+    json, PriceDatum::class.java
 )
