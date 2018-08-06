@@ -27,6 +27,14 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
         @StringRes title: Int
     ) {
         toolBar.title = getString(title)
+        updateProgressBar(progress)
+    }
+
+    override fun onIncrementProgress(progress: Int) {
+        updateProgressBar(progressIndicator.progress + progress)
+    }
+
+    private fun updateProgressBar(progress: Int) {
         ObjectAnimator.ofInt(progressIndicator, "progress", progress).apply {
             duration = 200
             interpolator = DecelerateInterpolator()
@@ -47,4 +55,6 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
 
 interface KycProgressListener {
     fun onProgressUpdated(@IntRange(from = 0, to = 100) progress: Int, @StringRes title: Int)
+
+    fun onIncrementProgress(@IntRange(from = -100, to = 100) progress: Int)
 }

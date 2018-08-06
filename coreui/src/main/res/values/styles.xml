@@ -39,6 +39,11 @@
         <item name="android:textColorPrimary">@color/black</item>
     </style>
 
+    <style name="DatePickerDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primary_blue_accent</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
     <style name="DefaultCardStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

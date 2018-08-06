@@ -20,4 +20,9 @@
 
     <!-- Profile -->
     <string name="kyc_profile_title">Profile</string>
+    <string name="kyc_profile_message">You must be 18 or older to buy and sell on Blockchain.</string>
+    <string name="kyc_profile_first_name_hint">First Name</string>
+    <string name="kyc_profile_last_name_hint">Last Name</string>
+    <string name="kyc_profile_dob_hint">Date of Birth</string>
+    <string name="kyc_profile_next">Next</string>
 </resources>
