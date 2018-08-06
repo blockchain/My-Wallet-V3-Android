@@ -71,6 +71,7 @@ dependencies {
     api Libraries.guava
 
     // Testing
+    testImplementation project(':testutils')
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.json

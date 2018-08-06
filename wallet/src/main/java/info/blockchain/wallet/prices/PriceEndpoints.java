@@ -7,7 +7,7 @@ import java.util.Map;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-interface PriceEndpoints {
+public interface PriceEndpoints {
 
     @GET(PriceUrls.PRICE_SERIES)
     Observable<List<PriceDatum>> getHistoricPriceSeries(@Query("base") String base,
