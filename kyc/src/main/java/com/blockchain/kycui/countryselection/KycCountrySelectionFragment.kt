@@ -12,7 +12,7 @@ import com.blockchain.kycui.KycProgressListener
 import com.blockchain.kycui.countryselection.adapter.CountryCodeAdapter
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import piuk.blockchain.androidcore.utils.CountryHelper
+import piuk.blockchain.androidcore.utils.countryList
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
@@ -32,7 +32,7 @@ class KycCountrySelectionFragment :
     @Inject
     lateinit var presenter: KycCountrySelectionPresenter
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
-    private val countryList = CountryHelper(Locale.getDefault()).countryList
+    private val countryList = Locale.getDefault().countryList()
     private val countryCodeAdapter = CountryCodeAdapter { presenter.onCountrySelected(it) }
     private var progressDialog: MaterialProgressDialog? = null
 
