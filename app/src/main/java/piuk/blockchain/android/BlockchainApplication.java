@@ -1,5 +1,7 @@
 package piuk.blockchain.android;
 
+import com.blockchain.injection.KycComponent;
+import com.blockchain.injection.KycDependencyGraph;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.security.ProviderInstaller;
@@ -28,6 +30,7 @@ import dagger.Lazy;
 import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.plugins.RxJavaPlugins;
+import org.jetbrains.annotations.NotNull;
 import piuk.blockchain.android.data.connectivity.ConnectivityManager;
 import piuk.blockchain.android.injection.Injector;
 import piuk.blockchain.android.ui.auth.LogoutActivity;
@@ -54,7 +57,7 @@ import timber.log.Timber;
  * Created by adambennett on 04/08/2016.
  */
 
-public class BlockchainApplication extends Application implements FrameworkInterface {
+public class BlockchainApplication extends Application implements FrameworkInterface, KycDependencyGraph {
 
     public static final String RX_ERROR_TAG = "RxJava Error";
 
@@ -142,6 +145,12 @@ public class BlockchainApplication extends Application implements FrameworkInter
         rxBus.register(ConnectionEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(connectionEvent -> SSLVerifyActivity.start(getApplicationContext(), connectionEvent));
+    }
+
+    @NotNull
+    @Override
+    public KycComponent getKycComponent() {
+        return Injector.getInstance().getKycComponent();
     }
 
     // Pass instances to JAR Framework, evaluate after object graph instantiated fully

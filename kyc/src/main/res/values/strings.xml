@@ -13,6 +13,10 @@
     <string name="kyc_country_selection_header">Why do you need this?</string>
     <string name="kyc_country_selection_message">Right now, digital cryptocurrency conversions on Blockchain are only available in select countries.</string>
     <string name="kyc_country_selection_search_hint">Search for your country</string>
+    <string name="kyc_country_selection_connection_error">Please check your connection</string>
+    <string name="kyc_country_selection_please_wait">Please wait…</string>
+    <string name="kyc_country_selection_invalid_country_title">Invalid Country</string>
+    <string name="kyc_country_selection_invalid_country_message">Unfortunately the country you selected isn\'t yet supported for Exchange.</string>
 
     <!-- Profile -->
     <string name="kyc_profile_title">Profile</string>

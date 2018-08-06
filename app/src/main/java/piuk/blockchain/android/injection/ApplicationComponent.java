@@ -1,5 +1,6 @@
 package piuk.blockchain.android.injection;
 
+import com.blockchain.injection.KycComponent;
 import info.blockchain.wallet.util.PrivateKeyFactory;
 
 import javax.inject.Singleton;
@@ -31,6 +32,8 @@ public interface ApplicationComponent {
     // Subcomponent with its own scope (technically unscoped now that we're not deliberately
     // destroying a module between pages)
     PresenterComponent presenterComponent();
+
+    KycComponent kycComponent();
 
     void inject(LoggingExceptionHandler loggingExceptionHandler);
 

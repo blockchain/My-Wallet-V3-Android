@@ -19,7 +19,7 @@ class OnfidoDataManager @Inject constructor(
      *
      * @return An [ApplicantResponse] wrapped in a [Single]
      */
-    internal fun createApplicant(
+    fun createApplicant(
         firstName: String,
         lastName: String,
         apiToken: String
@@ -38,7 +38,7 @@ class OnfidoDataManager @Inject constructor(
      *
      * * @return An [OnfidoCheckResponse] wrapped in a [Single]
      */
-    internal fun createCheck(
+    fun createCheck(
         applicantId: String,
         apiToken: String
     ): Single<OnfidoCheckResponse> =

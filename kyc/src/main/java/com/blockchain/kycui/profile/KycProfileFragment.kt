@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.blockchain.kycui.KycProgressListener
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.kyc.R
 
 class KycProfileFragment : Fragment() {
 
@@ -22,6 +23,6 @@ class KycProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressListener.onProgressUpdated(20, R.string.kyc_profile_title)
+        progressListener.onProgressUpdated(15, R.string.kyc_profile_title)
     }
 }
