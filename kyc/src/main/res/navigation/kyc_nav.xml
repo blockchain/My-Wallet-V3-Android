@@ -21,6 +21,6 @@
     </fragment>
     <fragment
         android:id="@+id/kycProfileFragment"
-        android:name="com.blockchain.kycui.KycProfileFragment"
+        android:name="com.blockchain.kycui.profile.KycProfileFragment"
         android:label="KycProfileFragment" />
 </navigation>
