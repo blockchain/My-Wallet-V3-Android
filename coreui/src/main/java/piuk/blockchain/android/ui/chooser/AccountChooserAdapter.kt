@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import info.blockchain.wallet.payload.data.LegacyAddress
 import piuk.blockchain.androidcoreui.R
+import piuk.blockchain.androidcoreui.utils.extensions.goneIf
 
 class AccountChooserAdapter(
     private val items: List<AccountChooserItem>,
@@ -54,31 +54,22 @@ class AccountChooserAdapter(
                 holder.itemView.setOnClickListener(clickListener(item.accountObject))
             }
             is AccountChooserItem.AccountSummary -> {
-                val ethereumViewHolder = holder as AccountViewHolder
-                ethereumViewHolder.label.text = item.label
-                ethereumViewHolder.balance.text = item.displayBalance
+                (holder as AccountViewHolder).apply {
+                    label.text = item.label
+                    balance.text = item.displayBalance
+                }
                 holder.itemView.setOnClickListener(clickListener(item.accountObject))
             }
             is AccountChooserItem.LegacyAddress -> {
-                val accountViewHolder = holder as AddressViewHolder
-                accountViewHolder.label.text = item.label
-                accountViewHolder.balance.text = item.displayBalance
-                val accountObject = item.accountObject
-                if (accountObject != null && accountObject is LegacyAddress) {
-                    accountViewHolder.address.text = item.address
-                    if (accountObject.isWatchOnly) {
-                        accountViewHolder.tag.text = holder.itemView.context.getString(R.string.watch_only)
-                        accountViewHolder.tag.visibility = View.VISIBLE
-                    } else {
-                        accountViewHolder.tag.visibility = View.GONE
-                    }
-                    accountViewHolder.address.visibility = View.VISIBLE
-                } else {
-                    accountViewHolder.address.text = null
-                    accountViewHolder.tag.visibility = View.GONE
-                    accountViewHolder.address.visibility = View.GONE
+                (holder as AddressViewHolder).apply {
+                    label.text = item.label
+                    balance.text = item.displayBalance
+                    address.text = item.address
+                    tag.setText(R.string.watch_only)
+                    address.goneIf(item.address == null)
+                    tag.goneIf(item.address == null || !item.isWatchOnly)
                 }
-                holder.itemView.setOnClickListener(clickListener(accountObject))
+                holder.itemView.setOnClickListener(clickListener(item.accountObject))
             }
         }
     }

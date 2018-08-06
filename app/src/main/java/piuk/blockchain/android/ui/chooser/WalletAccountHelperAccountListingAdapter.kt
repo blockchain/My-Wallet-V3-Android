@@ -1,6 +1,7 @@
 package piuk.blockchain.android.ui.chooser
 
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.Observable
 import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
@@ -37,11 +38,14 @@ class WalletAccountHelperAccountListingAdapter @Inject constructor(
             it.accountObject
         )
 
-    private fun mapLegacyAddress(itemAccount: ItemAccount): AccountChooserItem =
-        AccountChooserItem.LegacyAddress(
-            itemAccount.label ?: "",
-            itemAccount.address ?: "",
-            itemAccount.displayBalance ?: "",
-            itemAccount.accountObject
+    private fun mapLegacyAddress(itemAccount: ItemAccount): AccountChooserItem {
+        val legacyAddress = itemAccount.accountObject as? LegacyAddress
+        return AccountChooserItem.LegacyAddress(
+            label = itemAccount.label ?: "",
+            address = if (legacyAddress == null) null else itemAccount.address,
+            displayBalance = itemAccount.displayBalance ?: "",
+            isWatchOnly = legacyAddress?.isWatchOnly ?: true,
+            accountObject = itemAccount.accountObject
         )
+    }
 }

@@ -2,6 +2,7 @@ package piuk.blockchain.android.ui.chooser
 
 import com.nhaarman.mockito_kotlin.mock
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.Observable
 import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should be`
@@ -74,7 +75,7 @@ class WalletAccountHelperAccountListingAdapterTest {
 
     @Test
     fun `BTC imported (legacy) addresses`() {
-        val account = mock<Any>()
+        val account = mock<LegacyAddress>()
         val walletAccountHelper = mock<WalletAccountHelper> {
             on { getLegacyAddresses() } `it returns` listOf(
                 ItemAccount().apply {
@@ -96,7 +97,7 @@ class WalletAccountHelperAccountListingAdapterTest {
 
     @Test
     fun `BCH imported (legacy) addresses`() {
-        val account = mock<Any>()
+        val account = mock<LegacyAddress>()
         val walletAccountHelper = mock<WalletAccountHelper> {
             on { getLegacyBchAddresses() } `it returns` listOf(
                 ItemAccount().apply {
@@ -113,6 +114,59 @@ class WalletAccountHelperAccountListingAdapterTest {
                 address `should equal` "mpE7PuLdFQaKfHsFSFqM9FbTvLczB3j1QV"
                 displayBalance `should equal` "8 BCH"
                 accountObject `should be` account
+            }
+    }
+
+    @Test
+    fun `BTC imported (legacy) addresses - watch only`() {
+        val account = mock<LegacyAddress> {
+            on { isWatchOnly } `it returns` true
+        }
+        val walletAccountHelper = mock<WalletAccountHelper> {
+            on { getLegacyAddresses() } `it returns` listOf(
+                ItemAccount().apply {
+                    accountObject = account
+                })
+        }
+        givenAccountListing(walletAccountHelper)
+            .importedList(CryptoCurrency.BTC)
+            .assertSingleLegacyAddress {
+                isWatchOnly `should be` true
+            }
+    }
+
+    @Test
+    fun `BTC imported (legacy) addresses - non watch only`() {
+        val account = mock<LegacyAddress> {
+            on { isWatchOnly } `it returns` false
+        }
+        val walletAccountHelper = mock<WalletAccountHelper> {
+            on { getLegacyAddresses() } `it returns` listOf(
+                ItemAccount().apply {
+                    accountObject = account
+                })
+        }
+        givenAccountListing(walletAccountHelper)
+            .importedList(CryptoCurrency.BTC)
+            .assertSingleLegacyAddress {
+                isWatchOnly `should be` false
+            }
+    }
+
+    @Test
+    fun `BTC imported (legacy) addresses - null address when not a legacy`() {
+        val account = mock<Any>()
+        val walletAccountHelper = mock<WalletAccountHelper> {
+            on { getLegacyAddresses() } `it returns` listOf(
+                ItemAccount().apply {
+                    address = "mwfJF7GdsShHBtLCAhWUjymTwAwtf1E5LE"
+                    accountObject = account
+                })
+        }
+        givenAccountListing(walletAccountHelper)
+            .importedList(CryptoCurrency.BTC)
+            .assertSingleLegacyAddress {
+                address `should be` null
             }
     }
 

@@ -18,8 +18,9 @@ sealed class AccountChooserItem(val label: String) {
 
     class LegacyAddress(
         label: String,
-        val address: String,
+        val address: String?,
         val displayBalance: String,
+        val isWatchOnly: Boolean,
         val accountObject: Any?
     ) : AccountChooserItem(label)
 }

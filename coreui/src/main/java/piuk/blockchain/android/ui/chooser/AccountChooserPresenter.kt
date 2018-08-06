@@ -2,8 +2,8 @@ package piuk.blockchain.android.ui.chooser
 
 import android.support.annotation.StringRes
 import info.blockchain.balance.CryptoCurrency
-import info.blockchain.wallet.contacts.data.Contact
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
@@ -11,7 +11,6 @@ import piuk.blockchain.androidcore.data.contacts.ContactsPredicates
 import piuk.blockchain.androidcoreui.R
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import timber.log.Timber
-import java.util.ArrayList
 import javax.inject.Inject
 
 class AccountChooserPresenter @Inject constructor(
@@ -20,13 +19,9 @@ class AccountChooserPresenter @Inject constructor(
     private val contactsDataManager: ContactsDataManager
 ) : BasePresenter<AccountChooserView>() {
 
-    private val itemAccounts = ArrayList<AccountChooserItem>()
-
     override fun onViewReady() {
-        val mode = view.accountMode
-
-        when (mode) {
-            AccountMode.Exchange -> loadShapeShiftAccounts()
+        when (view.accountMode) {
+            AccountMode.Exchange -> loadExchangeAccounts()
             AccountMode.ContactsOnly -> loadContactsOnly()
             AccountMode.Bitcoin -> loadBitcoinOnly()
             AccountMode.BitcoinHdOnly -> loadBitcoinHdOnly()
@@ -36,66 +31,41 @@ class AccountChooserPresenter @Inject constructor(
     }
 
     private fun loadBitcoinOnly() {
-        itemAccounts.add(header(R.string.wallets))
-        parseBtcAccountList()
-            .addToCompositeDisposable(this)
-            .flatMap { parseBtcImportedList() }
-            .subscribe(
-                { view.updateUi(itemAccounts) },
-                { Timber.e(it) }
-            )
+        btcAccountListWithHeader(R.string.wallets)
+            .add(btcImportedListWithHeader())
+            .subscribeToUpdateList()
     }
 
     private fun loadBitcoinHdOnly() {
-        parseBtcAccountList()
-            .addToCompositeDisposable(this)
-            .subscribe(
-                { view.updateUi(itemAccounts) },
-                { Timber.e(it) }
-            )
+        btcAccountListWithoutHeader()
+            .subscribeToUpdateList()
     }
 
     private fun loadBitcoinCashOnly() {
-        itemAccounts.add(header(R.string.wallets))
-        parseBchAccountList()
-            .addToCompositeDisposable(this)
-            .subscribe(
-                { view.updateUi(itemAccounts) },
-                { Timber.e(it) }
-            )
+        bchAccountListWithHeader(R.string.wallets)
+            .subscribeToUpdateList()
     }
 
     private fun loadBitcoinCashSend() {
-        itemAccounts.add(header(R.string.wallets))
-        parseBchAccountList()
-            .addToCompositeDisposable(this)
-            .flatMap { parseBchImportedList() }
-            .subscribe(
-                { view.updateUi(itemAccounts) },
-                { Timber.e(it) }
-            )
+        bchAccountListWithHeader(R.string.wallets)
+            .add(bchImportedListWithHeader())
+            .subscribeToUpdateList()
     }
 
-    private fun loadShapeShiftAccounts() {
-        itemAccounts.add(header(R.string.bitcoin))
-        parseBtcAccountList()
-            .addToCompositeDisposable(this)
-            .flatMap { parseEthAccount() }
-            .doOnSuccess { itemAccounts.add(header(R.string.bitcoin_cash)) }
-            .flatMap { parseBchAccountList() }
-            .subscribe(
-                { view.updateUi(itemAccounts) },
-                { Timber.e(it) }
-            )
+    private fun loadExchangeAccounts() {
+        btcAccountListWithHeader(R.string.bitcoin)
+            .add(ethAccountWithHeader())
+            .add(bchAccountListWithHeader(R.string.bitcoin_cash))
+            .subscribeToUpdateList()
     }
 
     private fun loadContactsOnly() {
-        parseContactsList()
+        contactsList()
             .addToCompositeDisposable(this)
             .subscribe(
                 {
                     when {
-                        !it.isEmpty() -> view.updateUi(itemAccounts)
+                        !it.isEmpty() -> view.updateUi(it)
                         else -> view.showNoContacts()
                     }
                 },
@@ -103,70 +73,82 @@ class AccountChooserPresenter @Inject constructor(
             )
     }
 
-    private fun parseContactsList(): Single<List<Contact>> {
-        return if (!view.isContactsEnabled) {
-            Single.just(ArrayList())
+    private fun contactsList() =
+        if (!view.isContactsEnabled) {
+            Single.just(emptyList())
         } else {
             contactsDataManager.getContactList()
                 .filter(ContactsPredicates.filterByConfirmed())
+                .filter { it.name != null }
+                .map {
+                    AccountChooserItem.Contact(it.name!!, it)
+                }
                 .toList()
-                .doOnSuccess { contacts ->
-                    if (!contacts.isEmpty()) {
-                        itemAccounts.add(
-                            header(R.string.contacts_title)
-                        )
-                        contacts.filter { it.name != null }
-                            .mapTo(itemAccounts) {
-                                AccountChooserItem.Contact(it.name!!, it)
-                            }
-                    }
+                .map {
+                    if (!it.isEmpty()) {
+                        prefixHeader(R.string.contacts_title, it)
+                    } else it
                 }
         }
-    }
 
-    private fun parseBtcAccountList() =
-        accountHelper
-            .accountList(CryptoCurrency.BTC)
-            .doOnNext {
-                itemAccounts.addAll(it)
-            }.singleOrError()
+    private fun btcAccountListWithoutHeader() =
+        accountListWithoutHeader(CryptoCurrency.BTC)
 
-    private fun parseBchAccountList() =
-        accountHelper
-            .accountList(CryptoCurrency.BCH)
-            .doOnNext {
-                itemAccounts.addAll(it)
-            }.singleOrError()
+    private fun btcAccountListWithHeader(@StringRes stringResourceId: Int) =
+        accountListWithHeader(CryptoCurrency.BTC, stringResourceId)
 
-    private fun parseBtcImportedList() =
-        accountHelper
-            .importedList(CryptoCurrency.BTC)
-            .doOnNext {
-                if (!it.isEmpty()) {
-                    itemAccounts.add(header(R.string.imported_addresses))
-                    itemAccounts.addAll(it)
-                }
-            }.singleOrError()
+    private fun bchAccountListWithHeader(@StringRes stringResourceId: Int) =
+        accountListWithHeader(CryptoCurrency.BCH, stringResourceId)
 
-    private fun parseBchImportedList() =
-        accountHelper
-            .importedList(CryptoCurrency.BCH)
-            .doOnNext {
-                if (!it.isEmpty()) {
-                    itemAccounts.add(header(R.string.imported_addresses))
-                    itemAccounts.addAll(it)
-                }
-            }.singleOrError()
+    private fun btcImportedListWithHeader() =
+        importedListWithHeader(CryptoCurrency.BTC)
 
-    private fun parseEthAccount() =
+    private fun bchImportedListWithHeader() =
+        importedListWithHeader(CryptoCurrency.BCH)
+
+    private fun ethAccountWithHeader() =
+        accountListWithHeader(CryptoCurrency.ETHER, R.string.ether)
+
+    private fun importedListWithHeader(cryptoCurrency: CryptoCurrency) =
         accountHelper
-            .accountList(CryptoCurrency.ETHER)
-            .doOnNext {
-                itemAccounts.add(header(R.string.ether))
-                itemAccounts.addAll(it)
-            }.map { itemAccounts.toList() }
+            .importedList(cryptoCurrency)
             .singleOrError()
+            .map {
+                if (!it.isEmpty()) {
+                    prefixHeader(R.string.imported_addresses, it)
+                } else {
+                    it
+                }
+            }
+
+    private fun accountListWithHeader(
+        cryptoCurrency: CryptoCurrency,
+        @StringRes headerResourceId: Int
+    ) =
+        accountListWithoutHeader(cryptoCurrency)
+            .map { prefixHeader(headerResourceId, it) }
+
+    private fun accountListWithoutHeader(cryptoCurrency: CryptoCurrency) =
+        accountHelper
+            .accountList(cryptoCurrency)
+            .singleOrError()
+
+    private fun prefixHeader(
+        @StringRes stringResourceId: Int,
+        items: List<AccountChooserItem>
+    ) = listOf(header(stringResourceId)) + items
 
     private fun header(@StringRes stringResourceId: Int) =
         AccountChooserItem.Header(stringUtils.getString(stringResourceId))
+
+    private fun Single<List<AccountChooserItem>>.subscribeToUpdateList() =
+        addToCompositeDisposable(this@AccountChooserPresenter)
+            .subscribe(
+                { view.updateUi(it) },
+                { Timber.e(it) }
+            )
 }
+
+private fun <T> Single<List<T>>.add(other: Single<List<T>>) =
+    Single.zip(this, other,
+        BiFunction<List<T>, List<T>, List<T>> { l1, l2 -> l1 + l2 })
