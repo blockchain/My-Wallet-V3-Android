@@ -41,6 +41,7 @@ object Versions {
     const val rxKotlin = "2.2.0"
     const val rxAndroid = "2.0.2"
     const val rxBinding = "2.1.1"
+    const val rxReplayShare = "2.0.1"
     const val rxFingerprint = "2.2.1"
 
     // Utils, Ethereum
@@ -149,6 +150,7 @@ object Libraries {
     const val rxBindingV4 = "com.jakewharton.rxbinding2:rxbinding-support-v4:${Versions.rxBinding}"
     const val rxBindingV7 =
         "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${Versions.rxBinding}"
+    const val rxReplayShare = "com.jakewharton.rx2:replaying-share:${Versions.rxReplayShare}"
     const val rxFingerprint = "com.mtramin:rxfingerprint:${Versions.rxFingerprint}"
 
     // Utils, Ethereum

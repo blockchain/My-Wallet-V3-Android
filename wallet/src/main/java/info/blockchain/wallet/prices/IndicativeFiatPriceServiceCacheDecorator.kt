@@ -1,5 +1,6 @@
 package info.blockchain.wallet.prices
 
+import com.jakewharton.rx.ReplayingShare
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.ExchangeRate
 import io.reactivex.Observable
@@ -29,6 +30,6 @@ private class IndicativeFiatPriceServiceCacheDecorator(private val inner: Indica
     override fun indicativeRateStream(from: CryptoCurrency, toFiat: String) =
         c2fMap.getOrPut(from to toFiat) {
             inner.indicativeRateStream(from, toFiat)
-                .cache()
+                .compose(ReplayingShare.instance())
         }
 }
