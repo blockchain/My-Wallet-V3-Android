@@ -82,7 +82,7 @@ class KycProfilePresenterTest {
         // Arrange
         whenever(view.firstName).thenReturn("Adam")
         whenever(view.lastName).thenReturn("Bennett")
-        whenever(view.dateOfBirth).thenReturn(Calendar.getInstance());
+        whenever(view.dateOfBirth).thenReturn(Calendar.getInstance())
         // Act
         subject.onContinueClicked()
         // Assert
