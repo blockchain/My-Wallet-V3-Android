@@ -1,21 +1,30 @@
 package info.blockchain.wallet.prices;
 
+import info.blockchain.wallet.ApiCode;
 import info.blockchain.wallet.BaseIntegTest;
+import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.prices.data.PriceDatum;
-
+import io.reactivex.observers.TestObserver;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.observers.TestObserver;
-
 import static org.junit.Assert.assertEquals;
 
 public class PriceApiTest extends BaseIntegTest {
 
-    private PriceApi subject = new PriceApi();
+    private PriceApi subject = new PriceApi(
+            BlockchainFramework.getRetrofitApiInstance().create(PriceEndpoints.class),
+            new ApiCode() {
+                @NotNull
+                @Override
+                public String getApiCode() {
+                    return "integrationTest";
+                }
+            });
 
     @Test
     public void getHistoricPriceSeries() {
