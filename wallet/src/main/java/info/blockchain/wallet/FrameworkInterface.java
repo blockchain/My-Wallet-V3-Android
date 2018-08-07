@@ -4,7 +4,7 @@ import info.blockchain.wallet.api.Environment;
 import org.bitcoinj.core.NetworkParameters;
 import retrofit2.Retrofit;
 
-public interface FrameworkInterface {
+public interface FrameworkInterface extends ApiCode {
 
     /**
      * Provides an instance of Retrofit with it's base URL set to {@link
@@ -32,11 +32,6 @@ public interface FrameworkInterface {
      * Provides the currently chosen Network Parameters for Bitcoin Cash, as dictated by the top-level app
      */
     NetworkParameters getBitcoinCashParams();
-
-    /**
-     * Provides an ApiCode used for bci platform usage statistics.
-     */
-    String getApiCode();
 
     /*
      * Provides device/platform name for analytical use in wallet payload.

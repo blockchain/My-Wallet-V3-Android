@@ -2,6 +2,8 @@ package piuk.blockchain.android.injection;
 
 import dagger.Module;
 import dagger.Provides;
+import info.blockchain.wallet.ApiCode;
+import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.FeeApi;
 import info.blockchain.wallet.api.WalletApi;
 import info.blockchain.wallet.api.WalletExplorerEndpoints;
@@ -9,6 +11,7 @@ import info.blockchain.wallet.contacts.Contacts;
 import info.blockchain.wallet.ethereum.EthAccountApi;
 import info.blockchain.wallet.payment.Payment;
 import info.blockchain.wallet.prices.PriceApi;
+import info.blockchain.wallet.prices.PriceEndpoints;
 import info.blockchain.wallet.settings.SettingsManager;
 import info.blockchain.wallet.shapeshift.ShapeShiftApi;
 import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints;
@@ -47,6 +50,12 @@ class ServiceModule {
     }
 
     @Provides
+    @Singleton
+    PriceEndpoints providePriceEndpoints(@Named("api") Retrofit retrofit) {
+        return retrofit.create(PriceEndpoints.class);
+    }
+
+    @Provides
     WalletApi provideWalletApi(WalletExplorerEndpoints walletExplorerEndpoints) {
         return new WalletApi(walletExplorerEndpoints);
     }
@@ -62,8 +71,13 @@ class ServiceModule {
     }
 
     @Provides
-    PriceApi providePriceApi() {
-        return new PriceApi();
+    ApiCode provideApiCode() {
+        return BlockchainFramework::getApiCode;
+    }
+
+    @Provides
+    PriceApi providePriceApi(PriceEndpoints priceEndpoints, ApiCode apiCode) {
+        return new PriceApi(priceEndpoints, apiCode);
     }
 
     @Provides

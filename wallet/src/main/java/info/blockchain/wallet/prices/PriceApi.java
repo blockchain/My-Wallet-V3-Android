@@ -1,7 +1,7 @@
 package info.blockchain.wallet.prices;
 
 import info.blockchain.balance.CryptoCurrency;
-import info.blockchain.wallet.BlockchainFramework;
+import info.blockchain.wallet.ApiCode;
 import info.blockchain.wallet.prices.data.PriceDatum;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -17,7 +17,13 @@ import java.util.Map;
  */
 public class PriceApi implements CurrentPriceApi {
 
-    private PriceEndpoints endpoints;
+    private final PriceEndpoints endpoints;
+    private final ApiCode apiCode;
+
+    public PriceApi(PriceEndpoints endpoints, ApiCode apiCode) {
+        this.endpoints = endpoints;
+        this.apiCode = apiCode;
+    }
 
     /**
      * Returns a {@link List} of {@link PriceDatum} objects, containing a timestamp and a price for
@@ -34,11 +40,11 @@ public class PriceApi implements CurrentPriceApi {
                                                                String quote,
                                                                long start,
                                                                int scale) {
-        return getApiInstance().getHistoricPriceSeries(base,
+        return endpoints.getHistoricPriceSeries(base,
                 quote,
                 start,
                 scale,
-                BlockchainFramework.getApiCode());
+                apiCode.getApiCode());
     }
 
     /**
@@ -61,9 +67,9 @@ public class PriceApi implements CurrentPriceApi {
     }
 
     private Observable<PriceDatum> getCurrentPriceDatum(String base, String quote) {
-        return getApiInstance().getCurrentPrice(base,
+        return endpoints.getCurrentPrice(base,
                 quote,
-                BlockchainFramework.getApiCode());
+                apiCode.getApiCode());
     }
 
     /**
@@ -78,10 +84,10 @@ public class PriceApi implements CurrentPriceApi {
     public Observable<Double> getHistoricPrice(String base,
                                                String quote,
                                                long time) {
-        return getApiInstance().getHistoricPrice(base,
+        return endpoints.getHistoricPrice(base,
                 quote,
                 time,
-                BlockchainFramework.getApiCode())
+                apiCode.getApiCode())
                 .map(new Function<PriceDatum, Double>() {
                     @Override
                     public Double apply(PriceDatum priceDatum) throws Exception {
@@ -99,18 +105,7 @@ public class PriceApi implements CurrentPriceApi {
      * @return A {@link Map} of {@link PriceDatum} objects.
      */
     public Observable<Map<String, PriceDatum>> getPriceIndexes(String base) {
-        return getApiInstance().getPriceIndexes(base, BlockchainFramework.getApiCode());
-    }
-
-    /**
-     * Lazily evaluates an instance of {@link PriceEndpoints}.
-     */
-    private PriceEndpoints getApiInstance() {
-        if (endpoints == null) {
-            endpoints = BlockchainFramework.getRetrofitApiInstance().
-                    create(PriceEndpoints.class);
-        }
-        return endpoints;
+        return endpoints.getPriceIndexes(base, apiCode.getApiCode());
     }
 
     @NotNull
