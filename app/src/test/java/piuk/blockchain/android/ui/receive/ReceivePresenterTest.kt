@@ -4,7 +4,6 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.BlockchainFramework
-import info.blockchain.wallet.FrameworkInterface
 import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.ethereum.data.EthAddressResponse
@@ -15,10 +14,7 @@ import io.reactivex.Observable
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should equal`
-import org.apache.commons.lang3.NotImplementedException
-import org.bitcoinj.core.NetworkParameters
 import org.bitcoinj.params.BitcoinCashMainNetParams
-import org.bitcoinj.params.BitcoinMainNetParams
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -32,6 +28,7 @@ import org.mockito.Mockito.verifyZeroInteractions
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
+import piuk.blockchain.android.ui.NotImplementedFrameworkInterface
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
@@ -41,7 +38,6 @@ import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
-import retrofit2.Retrofit
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.Locale
@@ -732,39 +728,6 @@ class ReceivePresenterTest {
     }
 
     private fun initFramework() {
-        BlockchainFramework.init(object : FrameworkInterface {
-
-            override fun getDevice(): String {
-                throw NotImplementedException("Function should not be called")
-            }
-
-            override fun getRetrofitExplorerInstance(): Retrofit {
-                throw NotImplementedException("Function should not be called")
-            }
-
-            override fun getEnvironment(): Environment {
-                throw NotImplementedException("Function should not be called")
-            }
-
-            override fun getRetrofitApiInstance(): Retrofit {
-                throw NotImplementedException("Function should not be called")
-            }
-
-            override fun getApiCode(): String {
-                throw NotImplementedException("Function should not be called")
-            }
-
-            override fun getAppVersion(): String {
-                throw NotImplementedException("Function should not be called")
-            }
-
-            override fun getBitcoinParams(): NetworkParameters {
-                return BitcoinMainNetParams.get()
-            }
-
-            override fun getBitcoinCashParams(): NetworkParameters {
-                return BitcoinCashMainNetParams.get()
-            }
-        })
+        BlockchainFramework.init(NotImplementedFrameworkInterface)
     }
 }
