@@ -150,7 +150,7 @@ object Libraries {
     const val rxBindingV4 = "com.jakewharton.rxbinding2:rxbinding-support-v4:${Versions.rxBinding}"
     const val rxBindingV7 =
         "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${Versions.rxBinding}"
-    const val rxReplayShare = "com.jakewharton.rx2:replaying-share:${Versions.rxReplayShare}"
+    const val rxReplayShare = "com.jakewharton.rx2:replaying-share-kotlin:${Versions.rxReplayShare}"
     const val rxFingerprint = "com.mtramin:rxfingerprint:${Versions.rxFingerprint}"
 
     // Utils, Ethereum
