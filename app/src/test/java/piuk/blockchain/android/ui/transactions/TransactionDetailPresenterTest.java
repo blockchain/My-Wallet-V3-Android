@@ -14,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -26,7 +25,7 @@ import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel;
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionDisplayModel;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;

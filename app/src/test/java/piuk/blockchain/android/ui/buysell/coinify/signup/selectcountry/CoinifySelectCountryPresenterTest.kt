@@ -1,4 +1,4 @@
-package piuk.blockchain.androidbuysellui.ui.signup
+package piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -9,8 +9,6 @@ import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import piuk.blockchain.android.testutils.RxTest
-import piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry.CoinifySelectCountryPresenter
-import piuk.blockchain.android.ui.buysell.coinify.signup.selectcountry.CoinifySelectCountryView
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 
 class CoinifySelectCountryPresenterTest : RxTest() {

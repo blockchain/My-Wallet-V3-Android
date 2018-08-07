@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import piuk.blockchain.android.data.contacts.models.ContactTransactionModel;
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionModel;
 import piuk.blockchain.androidcore.data.datastores.ListStore;
 
 @Singleton

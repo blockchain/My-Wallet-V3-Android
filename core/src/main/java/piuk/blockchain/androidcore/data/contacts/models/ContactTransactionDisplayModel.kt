@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.contacts.models
+package piuk.blockchain.androidcore.data.contacts.models
 
 data class ContactTransactionDisplayModel(
     val role: String,

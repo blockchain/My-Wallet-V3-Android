@@ -95,7 +95,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/button_kyc_splash_apply_now"
+            android:id="@+id/button_kyc_profile_next"
             style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,6 +104,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="32dp"
+            android:enabled="false"
             android:text="@string/kyc_profile_next"
             android:theme="@style/ButtonLightBlueTheme"
             app:layout_constraintBottom_toBottomOf="parent"

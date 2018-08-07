@@ -26,7 +26,7 @@ fi
 
 # Install ktlint - this is only really used for style setup as we generally run ktlint from the Gradle wrapper
 printf "Installing ktlint - this may require a password\n"
-curl -sSLO https://github.com/shyiko/ktlint/releases/download/0.24.0/ktlint &&
+curl -sSLO https://github.com/shyiko/ktlint/releases/download/0.27.0/ktlint &&
   chmod a+x ktlint &&
   sudo mv ktlint /usr/local/bin/
 

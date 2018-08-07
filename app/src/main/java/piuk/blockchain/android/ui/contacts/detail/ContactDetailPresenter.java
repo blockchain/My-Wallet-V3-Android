@@ -22,8 +22,8 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import piuk.blockchain.android.R;
-import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel;
-import piuk.blockchain.android.data.contacts.models.ContactTransactionModel;
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionDisplayModel;
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionModel;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
 import piuk.blockchain.android.data.notifications.models.NotificationPayload;
 import piuk.blockchain.android.data.rxjava.RxUtil;

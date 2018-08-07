@@ -198,6 +198,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 payloadDataManager.getWallet().getGuid(),
                 payloadDataManager.getWallet().getSharedKey())
                 .doOnNext(this::setShapeShiftVisibility)
+                .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxUtil.addObservableToCompositeDisposable(this))
                 .subscribe(ignored -> {
                     //no-op

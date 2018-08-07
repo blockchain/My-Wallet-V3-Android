@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 import org.apache.commons.lang3.tuple.Pair;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel;
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionDisplayModel;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
 import piuk.blockchain.android.data.rxjava.RxUtil;

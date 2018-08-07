@@ -16,7 +16,7 @@ object Versions {
     const val googleServicesPlugin = "4.0.1"
     const val coveralls = "2.8.2"
     const val buildProperties = "0.4"
-    const val ktlint = "0.24.0"
+    const val ktlint = "0.27.0"
     const val kotlinJvmTarget = "1.6"
     const val javaCompatibilityVersion = 1.7
 

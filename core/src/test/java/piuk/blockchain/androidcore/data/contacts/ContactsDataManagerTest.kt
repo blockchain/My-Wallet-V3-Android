@@ -15,7 +15,7 @@ import org.amshove.kluent.shouldEqual
 import org.bitcoinj.crypto.DeterministicKey
 import org.junit.Before
 import org.junit.Test
-import piuk.blockchain.android.data.contacts.models.ContactTransactionModel
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionModel
 import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.data.contacts.datastore.ContactsMapStore
 import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionListStore

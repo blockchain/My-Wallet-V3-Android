@@ -1,6 +1,6 @@
 package piuk.blockchain.androidcore.data.contacts.datastore
 
-import piuk.blockchain.android.data.contacts.models.ContactTransactionDisplayModel
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionDisplayModel
 import piuk.blockchain.androidcore.data.datastores.SimpleDataStore
 import javax.inject.Inject
 import javax.inject.Singleton

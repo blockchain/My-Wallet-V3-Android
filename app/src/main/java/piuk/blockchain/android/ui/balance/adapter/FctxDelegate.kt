@@ -8,7 +8,7 @@ import android.text.Spannable
 import android.view.View
 import android.view.ViewGroup
 import piuk.blockchain.android.R
-import piuk.blockchain.android.data.contacts.models.ContactTransactionModel
+import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionModel
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.android.util.StringUtils

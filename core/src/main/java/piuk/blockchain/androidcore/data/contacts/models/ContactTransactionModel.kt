@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.contacts.models
+package piuk.blockchain.androidcore.data.contacts.models
 
 import info.blockchain.wallet.contacts.data.FacilitatedTransaction
 
