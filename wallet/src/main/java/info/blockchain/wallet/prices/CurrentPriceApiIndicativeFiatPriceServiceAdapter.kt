@@ -17,17 +17,15 @@ private class CurrentPriceApiIndicativeFiatPriceServiceAdapter(
     override fun indicativeRateStream(from: CryptoCurrency, toFiat: String): Observable<ExchangeRate.CryptoToFiat> =
         repeat {
             currentPriceApi.currentPrice(from, toFiat)
-        }.retry()
-            .map {
-                ExchangeRate.CryptoToFiat(
-                    from,
-                    toFiat,
-                    it
-                )
-            }
+        }.map {
+            ExchangeRate.CryptoToFiat(
+                from,
+                toFiat,
+                it
+            )
+        }
 }
 
 private fun <T> repeat(function: () -> Single<T>): Observable<T> =
-    Observable.fromCallable(function)
-        .flatMap { it.toObservable() }
+    Observable.defer { function().toObservable() }
         .repeatWhen { o -> o.concatMap { _ -> Observable.timer(1, TimeUnit.SECONDS) } }

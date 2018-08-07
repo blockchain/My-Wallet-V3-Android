@@ -24,9 +24,6 @@ class MockCurrentPriceApi(
         } else {
             Single.timer(delaySeconds, TimeUnit.SECONDS)
                 .map { BigDecimal.valueOf(price) }
-                .doOnSuccess {
-                    println(it)
-                }
         }
         return this
     }
