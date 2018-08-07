@@ -8,8 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.injection.getKycComponent
-import com.blockchain.kycui.KycProgressListener
+import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.countryselection.adapter.CountryCodeAdapter
+import com.blockchain.kycui.navhost.models.KycStep
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import piuk.blockchain.androidcore.utils.countryList
@@ -70,7 +71,8 @@ class KycCountrySelectionFragment :
             .doOnNext { recyclerView.scrollToPosition(0) }
             .subscribe()
 
-        progressListener.onProgressUpdated(10, R.string.kyc_country_selection_title)
+        progressListener.setHostTitle(R.string.kyc_country_selection_title)
+        progressListener.incrementProgress(KycStep.CountrySelection)
     }
 
     override fun continueFlow() {

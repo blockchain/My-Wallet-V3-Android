@@ -1,13 +1,13 @@
-package com.blockchain.kycui
+package com.blockchain.kycui.navhost
 
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.IntRange
 import android.support.annotation.StringRes
 import android.view.animation.DecelerateInterpolator
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.blockchain.kycui.navhost.models.KycStep
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.kyc.R
 import kotlinx.android.synthetic.main.activity_kyc_nav_host.nav_host as navHostFragment
@@ -22,16 +22,28 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
         setupToolbar(toolBar, "Exchange")
     }
 
-    override fun onProgressUpdated(
-        @IntRange(from = 0, to = 100) progress: Int,
-        @StringRes title: Int
-    ) {
+    override fun setHostTitle(title: Int) {
         toolBar.title = getString(title)
+    }
+
+    override fun incrementProgress(kycStep: KycStep) {
+        val progress =
+            100 * (
+                KycStep.values()
+                    .takeWhile { it != kycStep }
+                    .sumBy { it.relativeValue } + kycStep.relativeValue
+                ) / KycStep.values().sumBy { it.relativeValue }
+
         updateProgressBar(progress)
     }
 
-    override fun onIncrementProgress(progress: Int) {
-        updateProgressBar(progressIndicator.progress + progress)
+    override fun decrementProgress(kycStep: KycStep) {
+        val progress =
+            100 * KycStep.values()
+                .takeWhile { it != kycStep }
+                .sumBy { it.relativeValue } / KycStep.values().sumBy { it.relativeValue }
+
+        updateProgressBar(progress)
     }
 
     private fun updateProgressBar(progress: Int) {
@@ -54,7 +66,10 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
 }
 
 interface KycProgressListener {
-    fun onProgressUpdated(@IntRange(from = 0, to = 100) progress: Int, @StringRes title: Int)
 
-    fun onIncrementProgress(@IntRange(from = -100, to = 100) progress: Int)
+    fun setHostTitle(@StringRes title: Int)
+
+    fun incrementProgress(kycStep: KycStep)
+
+    fun decrementProgress(kycStep: KycStep)
 }

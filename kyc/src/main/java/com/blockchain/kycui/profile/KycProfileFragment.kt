@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import com.blockchain.injection.getKycComponent
-import com.blockchain.kycui.KycProgressListener
+import com.blockchain.kycui.navhost.KycProgressListener
+import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
-import com.jakewharton.rxbinding2.widget.TextViewAfterTextChangeEvent
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
@@ -37,6 +39,7 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
     @Inject
     lateinit var presenter: KycProfilePresenter
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
+    private val compositeDisposable = CompositeDisposable()
     override val firstName: String
         get() = editTextFirstName.getTextString()
     override val lastName: String
@@ -57,7 +60,8 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressListener.onProgressUpdated(15, R.string.kyc_profile_title)
+        progressListener.setHostTitle(R.string.kyc_profile_title)
+        progressListener.incrementProgress(KycStep.ProfilePage)
 
         editTextFirstName.setOnEditorActionListener { _, i, _ ->
             consume { if (i == EditorInfo.IME_ACTION_NEXT) editTextLastName.requestFocus() }
@@ -73,14 +77,12 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
             }
         }
 
-        editTextFirstName.afterTextChangeEvents()
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .watchTextChangeEvents { presenter.firstNameSet = !it.isBlank() }
+        compositeDisposable += editTextFirstName
+            .onDelayedChange(KycStep.FirstName) { presenter.firstNameSet = it }
             .subscribe()
 
-        editTextLastName.afterTextChangeEvents()
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .watchTextChangeEvents { presenter.lastNameSet = !it.isBlank() }
+        compositeDisposable += editTextLastName
+            .onDelayedChange(KycStep.LastName) { presenter.lastNameSet = it }
             .subscribe()
 
         editTextDob.setOnClickListener { onDateOfBirthClicked() }
@@ -91,16 +93,19 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
         toast(profileModel.toString())
     }
 
-    private fun Observable<TextViewAfterTextChangeEvent>.watchTextChangeEvents(
-        presenterPropAssignment: (String) -> Unit
-    ) = this.debounce(300, TimeUnit.MILLISECONDS)
-        .map { it.editable()?.toString() ?: "" }
-        .skip(1)
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnNext(presenterPropAssignment)
-        .map { mapToProgress(it) }
-        .distinctUntilChanged()
-        .doOnNext { progressListener.onIncrementProgress(it) }
+    private fun TextView.onDelayedChange(
+        kycStep: KycStep,
+        presenterPropAssignment: (Boolean) -> Unit
+    ) =
+        this.afterTextChangeEvents()
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map { it.editable()?.toString() ?: "" }
+            .skip(1)
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { mapToCompleted(it) }
+            .doOnNext(presenterPropAssignment)
+            .distinctUntilChanged()
+            .doOnNext { updateProgress(it, kycStep) }
 
     private fun onDateOfBirthClicked() {
         val calendar = Calendar.getInstance().apply { add(Calendar.YEAR, -18) }
@@ -120,7 +125,7 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
     private val datePickerCallback: DatePickerDialog.OnDateSetListener
         @SuppressLint("SimpleDateFormat")
         get() = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            progressListener.onIncrementProgress(5)
+            progressListener.incrementProgress(KycStep.Birthday)
             presenter.dateSet = true
             dateOfBirth = Calendar.getInstance().apply {
                 set(year, month, dayOfMonth)
@@ -131,10 +136,23 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
             }
         }
 
-    private fun mapToProgress(text: String): Int = if (text.isEmpty()) -5 else 5
+    private fun mapToCompleted(text: String): Boolean = !text.isEmpty()
+
+    private fun updateProgress(stepCompleted: Boolean, kycStep: KycStep) {
+        if (stepCompleted) {
+            progressListener.incrementProgress(kycStep)
+        } else {
+            progressListener.decrementProgress(kycStep)
+        }
+    }
 
     override fun setButtonEnabled(enabled: Boolean) {
         buttonNext.isEnabled = enabled
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        compositeDisposable.clear()
     }
 
     override fun createPresenter(): KycProfilePresenter = presenter

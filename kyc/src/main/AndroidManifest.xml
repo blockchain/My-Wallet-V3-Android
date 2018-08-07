@@ -2,6 +2,6 @@
     package="piuk.blockchain.kyc">
 
     <application>
-        <activity android:name="com.blockchain.kycui.KycNavHostActivity" />
+        <activity android:name="com.blockchain.kycui.navhost.KycNavHostActivity" />
     </application>
 </manifest>

@@ -15,7 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.blockchain.kycui.KycProgressListener
+import com.blockchain.kycui.navhost.KycProgressListener
+import com.blockchain.kycui.navhost.models.KycStep
 import piuk.blockchain.android.constants.URL_PRIVACY_POLICY
 import piuk.blockchain.android.constants.URL_TOS_POLICY
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
@@ -42,7 +43,8 @@ class KycSplashFragment : Fragment() {
             findNavController(this).navigate(R.id.kycCountrySelectionFragment)
         }
 
-        progressListener.onProgressUpdated(0, R.string.kyc_splash_title)
+        progressListener.setHostTitle(R.string.kyc_splash_title)
+        progressListener.incrementProgress(KycStep.SplashPage)
     }
 
     private fun renderTermsLinks() {

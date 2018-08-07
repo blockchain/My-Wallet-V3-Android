@@ -1,0 +1,22 @@
+package com.blockchain.kycui.navhost.models
+
+enum class KycStep(val relativeValue: Int) {
+    SplashPage(0),
+    CountrySelection(10),
+    ProfilePage(10),
+    FirstName(5),
+    LastName(5),
+    Birthday(5),
+    AddressPage(10),
+    AptNameOrNumber(5),
+    AddressFirstLine(5),
+    City(5),
+    State(5),
+    ZipCode(5),
+    Country(5),
+    MobileNumberPage(10),
+    MobileNumber(10),
+    MobileVerified(10),
+    OnfidoSplashPage(10),
+    CompletePage(30)
+}
