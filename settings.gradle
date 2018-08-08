@@ -1,6 +1,7 @@
 include ':app',
         ':wallet',
         ':balance',
+        ':common:network',
         ':core',
         ':coreui',
         ':coreui',
