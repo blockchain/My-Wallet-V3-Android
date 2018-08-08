@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Số tiền</string>
   <string name="buy_sell_detail_payment_fee">Phí Thanh toán</string>
   <string name="buy_sell_detail_total">Tổng Chi phí</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Từ chối</string>
   <string name="buy_sell_review_status_in_failed">Không thành công</string>
   <string name="buy_sell_review_status_in_expired">Đã hết hạn</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Tần suất</string>
   <string name="buy_sell_recurring_order_duration_title">Thời gian</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Cho đến khi bạn hủy</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

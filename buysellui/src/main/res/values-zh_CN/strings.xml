@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">数额</string>
   <string name="buy_sell_detail_payment_fee">付款服务费</string>
   <string name="buy_sell_detail_total">总计</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">已拒绝</string>
   <string name="buy_sell_review_status_in_failed">失败</string>
   <string name="buy_sell_review_status_in_expired">已过期</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">频率</string>
   <string name="buy_sell_recurring_order_duration_title">时间</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">直到您取消</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

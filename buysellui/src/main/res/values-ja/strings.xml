@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">金額</string>
   <string name="buy_sell_detail_payment_fee">支払手数料</string>
   <string name="buy_sell_detail_total">総額</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">拒否されました</string>
   <string name="buy_sell_review_status_in_failed">失敗しました</string>
   <string name="buy_sell_review_status_in_expired">期限が切れました</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">頻度</string>
   <string name="buy_sell_recurring_order_duration_title">期間</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">キャンセルするまでの間</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

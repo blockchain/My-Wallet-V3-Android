@@ -9,23 +9,19 @@
   <string name="buy_sell_state_cancelled">Ακυρώθηκε</string>
   <string name="buy_sell_state_rejected">Απορρίφθηκε</string>
   <string name="buy_sell_state_expired">Έληξε</string>
-  <string name="buy_sell_detail_transaction_fee"></string>
   <string name="buy_sell_detail_exchange_rate">Ισοτιμία Ανταλλαγής</string>
   <string name="buy_sell_detail_amount">Ποσό</string>
   <string name="buy_sell_detail_payment_fee">Αμοιβή Πληρωμής</string>
   <string name="buy_sell_detail_total">Συνολικό Κόστος</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Απορρίφθηκε</string>
   <string name="buy_sell_review_status_in_failed">Απέτυχε</string>
   <string name="buy_sell_review_status_in_expired">Έληξε</string>
   <string name="buy_sell_review_status_in_completed">Ολοκληρώθηκε</string>
   <!-- iSignThis Payments -->
   <string name="buy_sell_isignthis_payment_method">Τρόπος Πληρωμής</string>
-  <string name="buy_sell_confirmation_transaction_fee"></string>
   <string name="buy_sell_confirmation_amount">Ποσό</string>
   <string name="buy_sell_confirmation_payment_fee">Αμοιβή Πληρωμής</string>
   <string name="buy_sell_confirmation_total_cost">Συνολικό Κόστος</string>
-  <string name="buy_sell_confirmation_bank"></string>
   <!-- Unverified Email -->
   <string name="buy_sell_unverified_email_title">Επαλήθευση του Email σας</string>
   <string name="buy_sell_add_account_subtitle">Προσθήκη Τραπεζικού Λογαριασμού</string>
@@ -40,5 +36,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Συχνότητα</string>
   <string name="buy_sell_recurring_order_duration_title">Διάρκεια</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Μέχρι να ακυρώσετε</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

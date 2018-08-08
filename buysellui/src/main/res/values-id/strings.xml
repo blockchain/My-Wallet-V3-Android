@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Jumlah</string>
   <string name="buy_sell_detail_payment_fee">Biaya Pembayaran</string>
   <string name="buy_sell_detail_total">Total Biaya</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Ditolak</string>
   <string name="buy_sell_review_status_in_failed">Gagal</string>
   <string name="buy_sell_review_status_in_expired">Kedaluwarsa</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Frekuensi</string>
   <string name="buy_sell_recurring_order_duration_title">Durasi</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Sampai Anda membatalkannya</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

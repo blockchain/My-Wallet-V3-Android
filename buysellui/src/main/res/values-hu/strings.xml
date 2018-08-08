@@ -9,23 +9,19 @@
   <string name="buy_sell_state_cancelled">Törölve</string>
   <string name="buy_sell_state_rejected">Elutasítva</string>
   <string name="buy_sell_state_expired">Lejárt</string>
-  <string name="buy_sell_detail_transaction_fee"></string>
   <string name="buy_sell_detail_exchange_rate">Átváltási árfolyam</string>
   <string name="buy_sell_detail_amount">Összeg</string>
   <string name="buy_sell_detail_payment_fee">Kifizetési díj</string>
   <string name="buy_sell_detail_total">Teljes költség</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Elutasítva</string>
   <string name="buy_sell_review_status_in_failed">Sikertelen</string>
   <string name="buy_sell_review_status_in_expired">Lejárt</string>
   <string name="buy_sell_review_status_in_completed">Teljesítve</string>
   <!-- iSignThis Payments -->
   <string name="buy_sell_isignthis_payment_method">Fizetési mód</string>
-  <string name="buy_sell_confirmation_transaction_fee"></string>
   <string name="buy_sell_confirmation_amount">Összeg</string>
   <string name="buy_sell_confirmation_payment_fee">Kifizetési díj</string>
   <string name="buy_sell_confirmation_total_cost">Teljes költség</string>
-  <string name="buy_sell_confirmation_bank"></string>
   <!-- Unverified Email -->
   <string name="buy_sell_unverified_email_title">Hitelesítse e-mail-címét</string>
   <string name="buy_sell_add_account_subtitle">Bankszámla hozzáadása</string>
@@ -40,5 +36,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Gyakoriság</string>
   <string name="buy_sell_recurring_order_duration_title">Időtartam</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Amíg Ön visszavonja</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

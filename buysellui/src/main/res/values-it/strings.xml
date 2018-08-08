@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Importo</string>
   <string name="buy_sell_detail_payment_fee">Commissione di pagamento</string>
   <string name="buy_sell_detail_total">Costo totale</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Respinto</string>
   <string name="buy_sell_review_status_in_failed">Fallito</string>
   <string name="buy_sell_review_status_in_expired">Scaduto</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Frequenza</string>
   <string name="buy_sell_recurring_order_duration_title">Durata</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Fino a che cancella</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

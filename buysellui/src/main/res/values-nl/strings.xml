@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Bedrag</string>
   <string name="buy_sell_detail_payment_fee">Betalingskosten</string>
   <string name="buy_sell_detail_total">Totale kosten</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Afgewezen</string>
   <string name="buy_sell_review_status_in_failed">Mislukt</string>
   <string name="buy_sell_review_status_in_expired">Verlopen</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Frequentie</string>
   <string name="buy_sell_recurring_order_duration_title">Duur</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Totdat u annuleert</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

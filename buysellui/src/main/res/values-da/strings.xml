@@ -9,23 +9,19 @@
   <string name="buy_sell_state_cancelled">Annulleret</string>
   <string name="buy_sell_state_rejected">Afvist</string>
   <string name="buy_sell_state_expired">Udløbet</string>
-  <string name="buy_sell_detail_transaction_fee"></string>
   <string name="buy_sell_detail_exchange_rate">Vekselkurs</string>
   <string name="buy_sell_detail_amount">Beløb</string>
   <string name="buy_sell_detail_payment_fee">Betalingsgebyr</string>
   <string name="buy_sell_detail_total">Pris i alt</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Afvist</string>
   <string name="buy_sell_review_status_in_failed">Mislykket</string>
   <string name="buy_sell_review_status_in_expired">Udløbet</string>
   <string name="buy_sell_review_status_in_completed">Fuldført</string>
   <!-- iSignThis Payments -->
   <string name="buy_sell_isignthis_payment_method">Betalingsmetode</string>
-  <string name="buy_sell_confirmation_transaction_fee"></string>
   <string name="buy_sell_confirmation_amount">Beløb</string>
   <string name="buy_sell_confirmation_payment_fee">Betalingsgebyr</string>
   <string name="buy_sell_confirmation_total_cost">Pris i alt</string>
-  <string name="buy_sell_confirmation_bank"></string>
   <!-- Unverified Email -->
   <string name="buy_sell_unverified_email_title">Bekræft din e-mail</string>
   <string name="buy_sell_add_account_subtitle">Tilføj bankkonto</string>
@@ -40,5 +36,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Frekvens</string>
   <string name="buy_sell_recurring_order_duration_title">Varighed</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Indtil du annullerer den</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

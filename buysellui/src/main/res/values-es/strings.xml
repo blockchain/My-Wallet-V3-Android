@@ -15,7 +15,6 @@
   <string name="buy_sell_detail_amount">Monto</string>
   <string name="buy_sell_detail_payment_fee">Comisión de pago</string>
   <string name="buy_sell_detail_total">Coste total</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Rechazada</string>
   <string name="buy_sell_review_status_in_failed">Fallida</string>
   <string name="buy_sell_review_status_in_expired">Vencida</string>

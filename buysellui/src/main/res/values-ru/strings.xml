@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Сумма</string>
   <string name="buy_sell_detail_payment_fee">Комиссия за платеж</string>
   <string name="buy_sell_detail_total">Общая стоимость</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Отклонено</string>
   <string name="buy_sell_review_status_in_failed">Ошибка</string>
   <string name="buy_sell_review_status_in_expired">Устарело</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Частота</string>
   <string name="buy_sell_recurring_order_duration_title">Продолжительность</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Пока вы не отмените</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

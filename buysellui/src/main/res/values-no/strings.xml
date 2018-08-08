@@ -3,29 +3,24 @@
   <!-- Overview Page -->
   <string name="buy_sell_buy">Kjøp</string>
   <string name="buy_sell_sell">Selg</string>
-  <string name="buy_sell_overview_denied_button"></string>
   <string name="buy_sell_state_processing">Behandles</string>
   <string name="buy_sell_state_completed">Fullført</string>
   <string name="buy_sell_state_cancelled">Kansellert</string>
   <string name="buy_sell_state_rejected">Avslått</string>
   <string name="buy_sell_state_expired">Utløpt</string>
-  <string name="buy_sell_detail_transaction_fee"></string>
   <string name="buy_sell_detail_exchange_rate">Vekslingskurs</string>
   <string name="buy_sell_detail_amount">Beløp</string>
   <string name="buy_sell_detail_payment_fee">Betalingsgebyr</string>
   <string name="buy_sell_detail_total">Total kostnad</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Avslått</string>
   <string name="buy_sell_review_status_in_failed">Mislyktes</string>
   <string name="buy_sell_review_status_in_expired">Utløpt</string>
   <string name="buy_sell_review_status_in_completed">Fullført</string>
   <!-- iSignThis Payments -->
   <string name="buy_sell_isignthis_payment_method">Betalingsmåte</string>
-  <string name="buy_sell_confirmation_transaction_fee"></string>
   <string name="buy_sell_confirmation_amount">Beløp</string>
   <string name="buy_sell_confirmation_payment_fee">Betalingsgebyr</string>
   <string name="buy_sell_confirmation_total_cost">Total kostnad</string>
-  <string name="buy_sell_confirmation_bank"></string>
   <!-- Unverified Email -->
   <string name="buy_sell_unverified_email_title">Bekreft e-postadressen din</string>
   <string name="buy_sell_add_account_subtitle">Legg til bankkonto</string>
@@ -40,5 +35,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Hyppighet</string>
   <string name="buy_sell_recurring_order_duration_title">Varighet</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Inntil du avbryter</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

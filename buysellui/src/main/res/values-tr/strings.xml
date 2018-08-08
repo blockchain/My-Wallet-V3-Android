@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Miktar</string>
   <string name="buy_sell_detail_payment_fee">Ödeme Ücreti</string>
   <string name="buy_sell_detail_total">Toplam Maliyet</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Reddedildi</string>
   <string name="buy_sell_review_status_in_failed">Başarısız</string>
   <string name="buy_sell_review_status_in_expired">Süresi Dolan</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Sıklık</string>
   <string name="buy_sell_recurring_order_duration_title">Süre</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Sen iptal edene kadar</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">จำนวน</string>
   <string name="buy_sell_detail_payment_fee">ค่าธรรมเนียมการชำระเงิน</string>
   <string name="buy_sell_detail_total">ค่าใช้จ่ายทั้งหมด</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">ถูกปฏิเสธ</string>
   <string name="buy_sell_review_status_in_failed">ล้มเหลว</string>
   <string name="buy_sell_review_status_in_expired">หมดอายุ</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">ความถี่</string>
   <string name="buy_sell_recurring_order_duration_title">ระยะเวลา</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">จนกระทั่งคุณยกเลิก</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

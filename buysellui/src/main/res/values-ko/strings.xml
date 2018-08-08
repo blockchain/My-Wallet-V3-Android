@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">금액</string>
   <string name="buy_sell_detail_payment_fee">결제 수수료</string>
   <string name="buy_sell_detail_total">비용 합계</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">거부됨</string>
   <string name="buy_sell_review_status_in_failed">실패함</string>
   <string name="buy_sell_review_status_in_expired">만료됨</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">빈도</string>
   <string name="buy_sell_recurring_order_duration_title">기간</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">취소 시까지</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>

@@ -14,7 +14,6 @@
   <string name="buy_sell_detail_amount">Kwota</string>
   <string name="buy_sell_detail_payment_fee">Opłata za płatność</string>
   <string name="buy_sell_detail_total">Łączny koszt</string>
-  <string name="buy_sell_review_finish_verification"></string>
   <string name="buy_sell_review_status_in_rejected">Odrzucono</string>
   <string name="buy_sell_review_status_in_failed">Niepowodzenie</string>
   <string name="buy_sell_review_status_in_expired">Wygasły</string>
@@ -40,5 +39,4 @@
   <string name="buy_sell_recurring_order_frequency_title">Częstotliwość</string>
   <string name="buy_sell_recurring_order_duration_title">Czas trwania</string>
   <string name="buy_sell_recurring_order_duration_you_cancelled">Do czasu anulowania</string>
-  <string name="buy_sell_recurring_frequency_weekly"></string>
 </resources>
