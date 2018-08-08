@@ -8,20 +8,9 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.LocalBroadcastManager;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import info.blockchain.balance.CryptoCurrency;
 import info.blockchain.wallet.exceptions.DecryptionException;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.web3j.utils.Convert;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -32,39 +21,45 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import org.apache.commons.lang3.NotImplementedException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.web3j.utils.Convert;
 import piuk.blockchain.android.R;
-import piuk.blockchain.android.ui.launcher.LauncherActivity;
-import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
-import piuk.blockchain.androidcore.data.currency.BTCDenomination;
-import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
-import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel;
-import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
-import piuk.blockchain.androidcore.data.websockets.WebSocketReceiveEvent;
-import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver;
-import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.data.websocket.models.EthWebsocketResponse;
 import piuk.blockchain.android.ui.balance.BalanceFragment;
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.android.ui.home.MainActivity;
-import piuk.blockchain.androidcoreui.utils.AppUtil;
+import piuk.blockchain.android.ui.launcher.LauncherActivity;
 import piuk.blockchain.android.util.NotificationsUtil;
+import piuk.blockchain.androidcore.data.access.AccessState;
+import piuk.blockchain.androidcore.data.api.EnvironmentUrls;
+import piuk.blockchain.androidcore.data.currency.BTCDenomination;
+import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
+import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel;
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
+import piuk.blockchain.androidcore.data.rxjava.RxBus;
+import piuk.blockchain.androidcore.data.websockets.WebSocketReceiveEvent;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
+import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver;
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
+import piuk.blockchain.androidcoreui.utils.AppUtil;
 import timber.log.Timber;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 @SuppressWarnings("WeakerAccess")
 class WebSocketHandler {
 
     private final static long RETRY_INTERVAL = 5 * 1000L;
-    /**
-     * Websocket status code as defined by <a href="http://tools.ietf.org/html/rfc6455#section-7.4">Section
-     * 7.4 of RFC 6455</a>
-     */
-    private static final int STATUS_CODE_NORMAL_CLOSURE = 1000;
 
     private boolean stoppedDeliberately = false;
     private String[] xpubsBtc;
@@ -73,20 +68,21 @@ class WebSocketHandler {
     private String[] addrsBch;
     private String ethAccount;
     private EthDataManager ethDataManager;
-    @Thunk BchDataManager bchDataManager;
+    @Thunk
+    BchDataManager bchDataManager;
     private NotificationManager notificationManager;
     private String guid;
-    private HashSet<String> btcSubHashSet = new HashSet<>();
     private HashSet<String> btcOnChangeHashSet = new HashSet<>();
-    private HashSet<String> bchSubHashSet = new HashSet<>();
-    private EnvironmentConfig environmentSettings;
+    private EnvironmentUrls environmentSettings;
     private CurrencyFormatManager currencyFormatManager;
     private Context context;
     private OkHttpClient okHttpClient;
-    private WebSocket btcConnection, ethConnection, bchConnection;
+    private Map<CryptoCurrency, CurrencySocket> sockets = new HashMap<>();
     boolean connected;
-    @Thunk PayloadDataManager payloadDataManager;
-    @Thunk CompositeDisposable compositeDisposable = new CompositeDisposable();
+    @Thunk
+    PayloadDataManager payloadDataManager;
+    @Thunk
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RxBus rxBus;
     private AccessState accessState;
     private AppUtil appUtil;
@@ -97,7 +93,7 @@ class WebSocketHandler {
                             EthDataManager ethDataManager,
                             BchDataManager bchDataManager,
                             NotificationManager notificationManager,
-                            EnvironmentConfig environmentSettings,
+                            EnvironmentUrls environmentSettings,
                             CurrencyFormatManager currencyFormatManager,
                             String guid,
                             String[] xpubsBtc,
@@ -189,54 +185,27 @@ class WebSocketHandler {
     }
 
     private void stop() {
-        if (isConnected()) {
-            btcConnection.close(STATUS_CODE_NORMAL_CLOSURE, "BTC Websocket deliberately stopped");
-            ethConnection.close(STATUS_CODE_NORMAL_CLOSURE, "ETH Websocket deliberately stopped");
-            bchConnection.close(STATUS_CODE_NORMAL_CLOSURE, "BCH Websocket deliberately stopped");
-            btcConnection = ethConnection = bchConnection = null;
+        for (CurrencySocket socket : sockets.values()) {
+            socket.stop();
         }
+        sockets.clear();
     }
 
     private void sendToBtcConnection(String message) {
-        // Make sure each message is only sent once per socket lifetime
-        if (!btcSubHashSet.contains(message)) {
-            try {
-                if (isConnected()) {
-                    btcConnection.send(message);
-                    btcSubHashSet.add(message);
-                }
-            } catch (Exception e) {
-                Timber.e(e, "Send to BTC websocket failed");
-            }
-        }
+        sendToConnection(message, CryptoCurrency.BTC);
     }
 
     private void sendToEthConnection(String message) {
-        // Make sure each message is only sent once per socket lifetime
-        if (!btcSubHashSet.contains(message)) {
-            try {
-                if (isConnected()) {
-                    ethConnection.send(message);
-                    btcSubHashSet.add(message);
-                }
-            } catch (Exception e) {
-                Timber.e(e, "Send to ETH websocket failed");
-            }
-        }
+        sendToConnection(message, CryptoCurrency.ETHER);
     }
 
     private void sendToBchConnection(String message) {
-        // Make sure each message is only sent once per socket lifetime
-        if (!bchSubHashSet.contains(message)) {
-            try {
-                if (isConnected()) {
-                    bchConnection.send(message);
-                    bchSubHashSet.add(message);
-                }
-            } catch (Exception e) {
-                Timber.e(e, "Send to BCH websocket failed");
-            }
-        }
+        sendToConnection(message, CryptoCurrency.BCH);
+    }
+
+    private void sendToConnection(String message, CryptoCurrency currency) {
+        CurrencySocket socket = sockets.get(currency);
+        if (socket != null) socket.sendToConnection(message);
     }
 
     @Thunk
@@ -268,12 +237,16 @@ class WebSocketHandler {
 
     private Observable<Long> getReconnectionObservable() {
         return Observable.interval(RETRY_INTERVAL, TimeUnit.MILLISECONDS)
-                .takeUntil((ObservableSource<Object>) aLong -> isConnected())
+                .takeUntil((ObservableSource<Object>) aLong -> areAllConnected())
                 .doOnNext(tick -> start());
     }
 
-    private boolean isConnected() {
-        return btcConnection != null && ethConnection != null && bchConnection != null && connected;
+    private boolean areAllConnected() {
+        boolean result = this.connected;
+        for (CryptoCurrency currency : CryptoCurrency.values()) {
+            result = result && sockets.get(currency) != null;
+        }
+        return result;
     }
 
     private void updateBtcBalancesAndTransactions() {
@@ -297,30 +270,35 @@ class WebSocketHandler {
     }
 
     private void startWebSocket() {
-        Request btcRequest = new Request.Builder()
-                .url(environmentSettings.getBtcWebsocketUrl())
-                .addHeader("Origin", "https://blockchain.info")
-                .build();
+        stop();
+        for (CryptoCurrency currency : CryptoCurrency.values()) {
+            sockets.get(currency);
+            final Request request = new Request.Builder()
+                    .url(environmentSettings.websocketUrl(currency))
+                    .addHeader("Origin", "https://blockchain.info")
+                    .build();
+            final WebSocketListener listener = listener(currency);
+            final WebSocket socket = okHttpClient.newWebSocket(request, listener);
+            sockets.put(currency, new CurrencySocket(currency, socket));
+        }
+    }
 
-        Request ethRequest = new Request.Builder()
-                .url(environmentSettings.getEthWebsocketUrl())
-                .addHeader("Origin", "https://blockchain.info")
-                .build();
-
-        Request bchRequest = new Request.Builder()
-                .url(environmentSettings.getBchWebsocketUrl())
-                .addHeader("Origin", "https://blockchain.info")
-                .build();
-
-        btcConnection = okHttpClient.newWebSocket(btcRequest, new BtcWebsocketListener());
-        ethConnection = okHttpClient.newWebSocket(ethRequest, new EthWebsocketListener());
-        bchConnection = okHttpClient.newWebSocket(bchRequest, new BchWebsocketListener());
+    @NonNull
+    private WebSocketListener listener(CryptoCurrency currency) {
+        switch (currency) {
+            case BTC:
+                return new BtcWebsocketListener();
+            case ETHER:
+                return new EthWebsocketListener();
+            case BCH:
+                return new BchWebsocketListener();
+            default:
+                throw new NotImplementedException("Currency not implemented");
+        }
     }
 
     private Completable connectToWebSocket() {
         return Completable.fromCallable(() -> {
-            btcSubHashSet.clear();
-            bchSubHashSet.clear();
             startWebSocket();
             return Void.TYPE;
         }).compose(RxUtil.applySchedulersToCompletable());

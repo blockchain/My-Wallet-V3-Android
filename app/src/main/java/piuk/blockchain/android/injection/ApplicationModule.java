@@ -24,6 +24,7 @@ import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.android.util.PrngHelper;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
+import piuk.blockchain.androidcore.data.api.EnvironmentUrls;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
@@ -89,6 +90,12 @@ public class ApplicationModule {
     @Singleton
     protected EnvironmentConfig provideEnvironmentConfig() {
         return new EnvironmentSettings();
+    }
+
+    @Provides
+    @Singleton
+    protected EnvironmentUrls provideEnvironmentUrls(EnvironmentConfig environmentConfig) {
+        return environmentConfig;
     }
 
     @Provides
