@@ -37,7 +37,7 @@ import piuk.blockchain.android.R;
 import piuk.blockchain.android.ui.launcher.LauncherActivity;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
-import piuk.blockchain.androidcore.data.api.EnvironmentUrls;
+import com.blockchain.network.EnvironmentUrls;
 import piuk.blockchain.androidcore.data.currency.BTCDenomination;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;

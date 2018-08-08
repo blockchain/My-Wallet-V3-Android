@@ -31,7 +31,7 @@ import piuk.blockchain.androidbuysell.models.coinify.TradeStateAdapter;
 import piuk.blockchain.androidbuysell.models.coinify.TransferStateAdapter;
 import piuk.blockchain.androidcore.BuildConfig;
 import piuk.blockchain.androidcore.data.api.ConnectionApi;
-import piuk.blockchain.androidcore.data.api.EnvironmentUrls;
+import com.blockchain.network.EnvironmentUrls;
 import piuk.blockchain.androidcore.data.api.interceptors.ApiInterceptor;
 import piuk.blockchain.androidcore.data.api.interceptors.UserAgentInterceptor;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;

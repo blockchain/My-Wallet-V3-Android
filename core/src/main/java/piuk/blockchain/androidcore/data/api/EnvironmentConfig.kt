@@ -1,14 +1,8 @@
 package piuk.blockchain.androidcore.data.api
 
-import info.blockchain.balance.CryptoCurrency
+import com.blockchain.network.EnvironmentUrls
 import info.blockchain.wallet.api.Environment
 import org.bitcoinj.core.NetworkParameters
-
-interface EnvironmentUrls {
-    val explorerUrl: String
-    val apiUrl: String
-    fun websocketUrl(currency: CryptoCurrency): String
-}
 
 interface EnvironmentConfig : EnvironmentUrls {
     val environment: Environment

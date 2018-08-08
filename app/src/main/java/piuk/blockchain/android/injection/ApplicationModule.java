@@ -2,7 +2,6 @@ package piuk.blockchain.android.injection;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
 
@@ -15,7 +14,6 @@ import java.util.Locale;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import piuk.blockchain.android.data.api.EnvironmentSettings;
@@ -24,7 +22,7 @@ import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.android.util.PrngHelper;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
-import piuk.blockchain.androidcore.data.api.EnvironmentUrls;
+import com.blockchain.network.EnvironmentUrls;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
