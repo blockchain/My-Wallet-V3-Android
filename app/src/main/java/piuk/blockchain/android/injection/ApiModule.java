@@ -1,6 +1,5 @@
 package piuk.blockchain.android.injection;
 
-
 import android.os.Build;
 
 import com.squareup.moshi.Moshi;
@@ -32,7 +31,7 @@ import piuk.blockchain.androidbuysell.models.coinify.TradeStateAdapter;
 import piuk.blockchain.androidbuysell.models.coinify.TransferStateAdapter;
 import piuk.blockchain.androidcore.BuildConfig;
 import piuk.blockchain.androidcore.data.api.ConnectionApi;
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
+import piuk.blockchain.androidcore.data.api.EnvironmentUrls;
 import piuk.blockchain.androidcore.data.api.interceptors.ApiInterceptor;
 import piuk.blockchain.androidcore.data.api.interceptors.UserAgentInterceptor;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
@@ -121,7 +120,7 @@ public class ApiModule {
     protected Retrofit provideRetrofitApiInstance(OkHttpClient okHttpClient,
                                                   JacksonConverterFactory converterFactory,
                                                   RxJava2CallAdapterFactory rxJavaCallFactory,
-                                                  EnvironmentConfig environmentSettings) {
+                                                  EnvironmentUrls environmentSettings) {
 
         return new Retrofit.Builder()
                 .baseUrl(environmentSettings.getApiUrl())
@@ -137,7 +136,7 @@ public class ApiModule {
     protected Retrofit provideRetrofitExplorerInstance(OkHttpClient okHttpClient,
                                                        JacksonConverterFactory converterFactory,
                                                        RxJava2CallAdapterFactory rxJavaCallFactory,
-                                                       EnvironmentConfig environmentSettings) {
+                                                       EnvironmentUrls environmentSettings) {
         return new Retrofit.Builder()
                 .baseUrl(environmentSettings.getExplorerUrl())
                 .client(okHttpClient)
@@ -178,7 +177,7 @@ public class ApiModule {
     protected Retrofit provideRetrofitKotlinInstance(OkHttpClient okHttpClient,
                                                       MoshiConverterFactory converterFactory,
                                                       RxJava2CallAdapterFactory rxJavaCallFactory,
-                                                      EnvironmentConfig environmentSettings) {
+                                                      EnvironmentUrls environmentSettings) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl(environmentSettings.getExplorerUrl())
