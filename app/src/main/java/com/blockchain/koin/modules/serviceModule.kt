@@ -5,7 +5,6 @@ import info.blockchain.wallet.BlockchainFramework
 import info.blockchain.wallet.api.FeeApi
 import info.blockchain.wallet.api.WalletApi
 import info.blockchain.wallet.api.WalletExplorerEndpoints
-import info.blockchain.wallet.contacts.Contacts
 import info.blockchain.wallet.ethereum.EthAccountApi
 import info.blockchain.wallet.payment.Payment
 import info.blockchain.wallet.prices.PriceApi
@@ -18,9 +17,8 @@ import piuk.blockchain.android.data.fingerprint.FingerprintAuthImpl
 import retrofit2.Retrofit
 
 val serviceModule = applicationContext {
-    bean { SettingsManager(get()) }
 
-    bean { Contacts() }
+    bean { SettingsManager(get()) }
 
     bean { get<Retrofit>("explorer").create(WalletExplorerEndpoints::class.java) }
 

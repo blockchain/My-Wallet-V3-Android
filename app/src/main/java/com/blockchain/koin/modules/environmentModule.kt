@@ -10,4 +10,6 @@ val environmentModule = applicationContext {
     bean { EnvironmentSettings() as EnvironmentConfig }
 
     bean { get<EnvironmentConfig>() as EnvironmentUrls }
+
+    bean("explorer-url") { get<EnvironmentUrls>().explorerUrl }
 }

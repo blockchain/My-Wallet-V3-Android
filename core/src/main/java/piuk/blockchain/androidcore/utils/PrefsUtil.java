@@ -5,15 +5,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-@Singleton
 public class PrefsUtil implements PersistentPrefs {
 
     private SharedPreferences preferenceManager;
 
-    @Inject
     public PrefsUtil(Context context) {
         preferenceManager = PreferenceManager.getDefaultSharedPreferences(context);
     }

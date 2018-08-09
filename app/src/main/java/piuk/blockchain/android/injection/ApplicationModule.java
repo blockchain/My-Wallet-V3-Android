@@ -1,32 +1,28 @@
 package piuk.blockchain.android.injection;
 
-import com.blockchain.koin.KoinDaggerModule;
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import android.app.NotificationManager;
 import android.content.Context;
-
+import com.blockchain.koin.KoinDaggerModule;
+import com.blockchain.network.EnvironmentUrls;
+import com.google.firebase.iid.FirebaseInstanceId;
+import dagger.Module;
+import dagger.Provides;
 import info.blockchain.wallet.api.WalletApi;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.util.PrivateKeyFactory;
-
-import java.util.Locale;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
 import piuk.blockchain.android.data.notifications.NotificationService;
 import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.android.util.PrngHelper;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
-import com.blockchain.network.EnvironmentUrls;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcore.utils.PrngFixer;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.util.Locale;
 
 @Module
 public class ApplicationModule extends KoinDaggerModule {
@@ -59,8 +55,8 @@ public class ApplicationModule extends KoinDaggerModule {
 
     @Provides
     @Named("explorer-url")
-    String provideExplorerUrl(EnvironmentConfig environmentSettings) {
-        return environmentSettings.getExplorerUrl();
+    String provideExplorerUrl() {
+        return get(String.class, "explorer-url");
     }
 
     @Provides

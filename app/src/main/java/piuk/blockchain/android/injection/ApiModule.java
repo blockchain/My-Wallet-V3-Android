@@ -4,7 +4,6 @@ import com.blockchain.koin.KoinDaggerModule;
 import dagger.Module;
 import dagger.Provides;
 import info.blockchain.api.blockexplorer.BlockExplorer;
-import info.blockchain.wallet.BlockchainFramework;
 import okhttp3.OkHttpClient;
 import piuk.blockchain.androidcore.data.api.ConnectionApi;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
@@ -14,7 +13,6 @@ import retrofit2.Retrofit;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-@SuppressWarnings("WeakerAccess")
 @Module
 public class ApiModule extends KoinDaggerModule {
 
@@ -54,11 +52,7 @@ public class ApiModule extends KoinDaggerModule {
     }
 
     @Provides
-    @Singleton
-    protected BlockExplorer provideBlockExplorer(@Named("explorer") Retrofit explorerRetrofit,
-                                                 @Named("api") Retrofit apiRetrofit) {
-        return new BlockExplorer(explorerRetrofit,
-                apiRetrofit,
-                BlockchainFramework.getApiCode());
+    protected BlockExplorer provideBlockExplorer() {
+        return get(BlockExplorer.class);
     }
 }

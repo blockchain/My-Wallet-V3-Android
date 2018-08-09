@@ -63,6 +63,7 @@ dependencies {
     // Dagger
     api Libraries.dagger
     kapt Libraries.daggerKapt
+    api Libraries.koin
     // RxJava
     api Libraries.rxJava
     api Libraries.rxKotlin

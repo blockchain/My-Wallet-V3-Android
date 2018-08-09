@@ -69,6 +69,7 @@ dependencies {
     api Libraries.constraintLayout
     // Dagger
     kapt Libraries.daggerKapt
+    api Libraries.koin
     // Rx UI Bindings
     api Libraries.rxBindingV4
     api Libraries.rxBindingV7

@@ -1,19 +1,15 @@
 package piuk.blockchain.android.injection;
 
-import javax.inject.Singleton;
-
+import com.blockchain.koin.KoinDaggerModule;
 import dagger.Module;
 import dagger.Provides;
-import piuk.blockchain.androidcore.data.settings.SettingsService;
 import piuk.blockchain.androidcore.data.settings.datastore.SettingsDataStore;
-import piuk.blockchain.androidcore.data.settings.datastore.SettingsMemoryStore;
 
 @Module
-public class PersistentStoreModule {
+public class PersistentStoreModule extends KoinDaggerModule {
 
     @Provides
-    @Singleton
-    SettingsDataStore provideSettingsDataStore(SettingsService settingsService) {
-        return new SettingsDataStore(new SettingsMemoryStore(), settingsService.getSettingsObservable());
+    SettingsDataStore provideSettingsDataStore() {
+        return get(SettingsDataStore.class);
     }
 }
