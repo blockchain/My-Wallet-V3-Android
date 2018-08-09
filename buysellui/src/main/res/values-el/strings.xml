@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Αγορά</string>
+  <string name="buy_sell_sell">Πώληση</string>
+  <string name="buy_sell_overview_denied_button">Δοκίμασε ξανά</string>
+  <string name="buy_sell_state_processing">Επεξεργασία</string>
+  <string name="buy_sell_state_completed">Ολοκληρώθηκε</string>
+  <string name="buy_sell_state_cancelled">Ακυρώθηκε</string>
+  <string name="buy_sell_state_rejected">Απορρίφθηκε</string>
+  <string name="buy_sell_state_expired">Έληξε</string>
+  <string name="buy_sell_detail_exchange_rate">Ισοτιμία Ανταλλαγής</string>
+  <string name="buy_sell_detail_amount">Ποσό</string>
+  <string name="buy_sell_detail_payment_fee">Αμοιβή Πληρωμής</string>
+  <string name="buy_sell_detail_total">Συνολικό Κόστος</string>
+  <string name="buy_sell_review_status_in_rejected">Απορρίφθηκε</string>
+  <string name="buy_sell_review_status_in_failed">Απέτυχε</string>
+  <string name="buy_sell_review_status_in_expired">Έληξε</string>
+  <string name="buy_sell_review_status_in_completed">Ολοκληρώθηκε</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Τρόπος Πληρωμής</string>
+  <string name="buy_sell_confirmation_amount">Ποσό</string>
+  <string name="buy_sell_confirmation_payment_fee">Αμοιβή Πληρωμής</string>
+  <string name="buy_sell_confirmation_total_cost">Συνολικό Κόστος</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Επαλήθευση του Email σας</string>
+  <string name="buy_sell_add_account_subtitle">Προσθήκη Τραπεζικού Λογαριασμού</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Επιλέξτε Λογαριασμό</string>
+  <string name="buy_sell_account_selection_delete_message">Σίγουρα θέλετε να διαγράψετε αυτόν τον τραπεζικό λογαριασμό;</string>
+  <string name="buy_sell_add_address_city_hint">Πόλη</string>
+  <string name="buy_sell_add_address_post_code_hint">Ταχυδρομικός Κώδικας</string>
+  <string name="buy_sell_add_address_post_country_hint">Χώρα</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Επαναλαμβανόμενη Εντολή</string>
+  <string name="buy_sell_recurring_order_frequency_title">Συχνότητα</string>
+  <string name="buy_sell_recurring_order_duration_title">Διάρκεια</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Μέχρι να ακυρώσετε</string>
+</resources>
