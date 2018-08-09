@@ -32,6 +32,9 @@ dependencies {
     api Libraries.retrofitRxMoshiConverter
     api Libraries.retrofitRxJavaAdapter
 
+    // Injection
+    api Libraries.koinTest
+
     // Unit Test dependencies
     api Libraries.junit
     api Libraries.kluent

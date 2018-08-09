@@ -24,6 +24,9 @@ dependencies {
     implementation Libraries.retrofitRxMoshiConverter
     implementation Libraries.retrofitRxJavaAdapter
 
+    // Injection
+    implementation Libraries.koinTest
+
     // Unit Test dependencies
     implementation Libraries.junit
     implementation Libraries.kluent
