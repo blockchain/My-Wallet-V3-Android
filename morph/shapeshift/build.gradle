@@ -41,6 +41,8 @@ dependencies {
 
     implementation Libraries.rxKotlin
 
+    implementation Libraries.koin
+
     implementation(Libraries.retrofit) { exclude module: 'okhttp' }
 
     // Testing

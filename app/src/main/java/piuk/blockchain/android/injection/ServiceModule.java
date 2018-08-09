@@ -1,5 +1,6 @@
 package piuk.blockchain.android.injection;
 
+import com.blockchain.koin.KoinDaggerModule;
 import dagger.Module;
 import dagger.Provides;
 import info.blockchain.wallet.ApiCode;
@@ -23,7 +24,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Module
-class ServiceModule {
+class ServiceModule extends KoinDaggerModule {
 
     @Provides
     @Singleton
@@ -44,9 +45,8 @@ class ServiceModule {
     }
 
     @Provides
-    @Singleton
-    ShapeShiftEndpoints provideShapeShiftEndpoints(@Named("shapeshift") Retrofit retrofit) {
-        return retrofit.create(ShapeShiftEndpoints.class);
+    ShapeShiftEndpoints provideShapeShiftEndpoints() {
+        return get(ShapeShiftEndpoints.class);
     }
 
     @Provides

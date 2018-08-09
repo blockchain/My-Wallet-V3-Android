@@ -2,6 +2,7 @@ package piuk.blockchain.android;
 
 import com.blockchain.injection.KycComponent;
 import com.blockchain.injection.KycDependencyGraph;
+import com.blockchain.koin.KoinStarter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.security.ProviderInstaller;
@@ -53,6 +54,8 @@ import piuk.blockchain.androidcoreui.utils.logging.Logging;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
+import static org.koin.android.ext.android.AndroidExtKt.startKoin;
+
 /**
  * Created by adambennett on 04/08/2016.
  */
@@ -88,6 +91,7 @@ public class BlockchainApplication extends Application implements FrameworkInter
     @Override
     public void onCreate() {
         super.onCreate();
+        KoinStarter.start(this);
         if (BuildConfig.USE_CRASHLYTICS) {
             // Init crash reporting
             Fabric.with(this, new Crashlytics(), new Answers());

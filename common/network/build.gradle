@@ -17,6 +17,13 @@ targetCompatibility = Versions.javaCompatibilityVersion
 dependencies {
     implementation project(":balance")
     implementation Libraries.kotlin
+    implementation Libraries.koin
+
+    // Network
+    implementation Libraries.retrofitJacksonConverter
+    implementation Libraries.retrofitRxJavaAdapter
+
+    implementation Libraries.timber
 
     // Testing
     testImplementation Libraries.junit

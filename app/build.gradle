@@ -163,6 +163,8 @@ dependencies {
     implementation Libraries.yearclass
     // Dagger
     kapt Libraries.daggerKapt
+    implementation Libraries.koin
+    implementation Libraries.koinAndroid
     // Views
     implementation(Libraries.zxing) { transitive = true }
     implementation Libraries.countryPicker
