@@ -91,7 +91,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
     @Override
     public void onCreate() {
         super.onCreate();
-        KoinStarter.start(this);
         if (BuildConfig.USE_CRASHLYTICS) {
             // Init crash reporting
             Fabric.with(this, new Crashlytics(), new Answers());
@@ -100,6 +99,7 @@ public class BlockchainApplication extends Application implements FrameworkInter
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        KoinStarter.start(this);
 
         // Init objects first
         CoreInjector.getInstance().init(this);
