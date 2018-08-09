@@ -1,5 +1,6 @@
 package piuk.blockchain.android.injection;
 
+import com.blockchain.koin.KoinDaggerModule;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import android.app.NotificationManager;
@@ -30,7 +31,7 @@ import piuk.blockchain.androidcore.utils.PrngFixer;
 
 
 @Module
-public class ApplicationModule {
+public class ApplicationModule extends KoinDaggerModule {
 
     @Provides
     AccessState provideAccessState() {
@@ -85,15 +86,13 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Singleton
     protected EnvironmentConfig provideEnvironmentConfig() {
-        return new EnvironmentSettings();
+        return get(EnvironmentSettings.class);
     }
 
     @Provides
-    @Singleton
-    protected EnvironmentUrls provideEnvironmentUrls(EnvironmentConfig environmentConfig) {
-        return environmentConfig;
+    protected EnvironmentUrls provideEnvironmentUrls() {
+        return get(EnvironmentUrls.class);
     }
 
     @Provides
