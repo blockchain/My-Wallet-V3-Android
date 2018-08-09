@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.fasterxml.jackson.core.JsonProcessingException
 import kotlinx.android.synthetic.main.activity_account_chooser.*
 import kotlinx.android.synthetic.main.toolbar_general.*
+import org.koin.android.ext.android.inject
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
@@ -18,14 +19,11 @@ import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.visible
-import javax.inject.Inject
 
 class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChooserPresenter>(),
     AccountChooserView {
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    @Inject
-    lateinit var accountChooserPresenter: AccountChooserPresenter
+    private val accountChooserPresenter: AccountChooserPresenter by inject()
 
     override val isContactsEnabled: Boolean = BuildConfig.CONTACTS_ENABLED
     override val accountMode: AccountMode by unsafeLazy {
