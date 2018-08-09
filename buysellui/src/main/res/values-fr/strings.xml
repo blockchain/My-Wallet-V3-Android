@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Achat</string>
+  <string name="buy_sell_sell">Vente</string>
+  <string name="buy_sell_overview_denied_button">Réessayez</string>
+  <string name="buy_sell_state_processing">En cours de traitement</string>
+  <string name="buy_sell_state_completed">Terminé</string>
+  <string name="buy_sell_state_cancelled">Annulé</string>
+  <string name="buy_sell_state_rejected">Rejeté</string>
+  <string name="buy_sell_state_expired">Expiré</string>
+  <string name="buy_sell_detail_transaction_fee">Frais de transaction</string>
+  <string name="buy_sell_detail_exchange_rate">Taux de change</string>
+  <string name="buy_sell_detail_amount">Montant</string>
+  <string name="buy_sell_detail_payment_fee">Frais de paiement</string>
+  <string name="buy_sell_detail_total">Coût total</string>
+  <string name="buy_sell_review_status_in_rejected">Rejeté</string>
+  <string name="buy_sell_review_status_in_failed">Échoué</string>
+  <string name="buy_sell_review_status_in_expired">Expiré</string>
+  <string name="buy_sell_review_status_in_completed">Terminé</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Méthode de paiement</string>
+  <string name="buy_sell_confirmation_transaction_fee">Frais de transaction</string>
+  <string name="buy_sell_confirmation_amount">Montant</string>
+  <string name="buy_sell_confirmation_payment_fee">Frais de paiement</string>
+  <string name="buy_sell_confirmation_total_cost">Coût total</string>
+  <string name="buy_sell_confirmation_bank">Transférer</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Vérifiez votre adresse e-mail</string>
+  <string name="buy_sell_add_account_subtitle">Ajouter un compte en banque</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Sélectionner compte</string>
+  <string name="buy_sell_account_selection_delete_message">Êtes-vous certain de vouloir supprimer ce compte en banque ?</string>
+  <string name="buy_sell_add_address_city_hint">Ville</string>
+  <string name="buy_sell_add_address_post_code_hint">Code postal</string>
+  <string name="buy_sell_add_address_post_country_hint">Pays</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Ordre récurrent</string>
+  <string name="buy_sell_recurring_order_frequency_title">Fréquence</string>
+  <string name="buy_sell_recurring_order_duration_title">Durée</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Jusqu\'à l\'annulation</string>
+</resources>
