@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kopen</string>
+  <string name="buy_sell_sell">Verkopen</string>
+  <string name="buy_sell_overview_denied_button">Probeer opnieuw</string>
+  <string name="buy_sell_state_processing">Wordt verwerkt</string>
+  <string name="buy_sell_state_completed">Voltooid</string>
+  <string name="buy_sell_state_cancelled">Geannuleerd</string>
+  <string name="buy_sell_state_rejected">Afgewezen</string>
+  <string name="buy_sell_state_expired">Verlopen</string>
+  <string name="buy_sell_detail_transaction_fee">Transactietarief</string>
+  <string name="buy_sell_detail_exchange_rate">Wisselkoers</string>
+  <string name="buy_sell_detail_amount">Bedrag</string>
+  <string name="buy_sell_detail_payment_fee">Betalingskosten</string>
+  <string name="buy_sell_detail_total">Totale kosten</string>
+  <string name="buy_sell_review_status_in_rejected">Afgewezen</string>
+  <string name="buy_sell_review_status_in_failed">Mislukt</string>
+  <string name="buy_sell_review_status_in_expired">Verlopen</string>
+  <string name="buy_sell_review_status_in_completed">Voltooid</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betaalmethode</string>
+  <string name="buy_sell_confirmation_transaction_fee">Transactietarief</string>
+  <string name="buy_sell_confirmation_amount">Bedrag</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalingskosten</string>
+  <string name="buy_sell_confirmation_total_cost">Totale kosten</string>
+  <string name="buy_sell_confirmation_bank">Overboeken</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifieer uw e-mailadres</string>
+  <string name="buy_sell_add_account_subtitle">Bankrekening toevoegen</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Account selecteren</string>
+  <string name="buy_sell_account_selection_delete_message">Weet u zeker dat u deze bankrekening wilt verwijderen?</string>
+  <string name="buy_sell_add_address_city_hint">Woonplaats</string>
+  <string name="buy_sell_add_address_post_code_hint">Postcode</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Terugkerende order</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frequentie</string>
+  <string name="buy_sell_recurring_order_duration_title">Duur</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Totdat u annuleert</string>
+</resources>
