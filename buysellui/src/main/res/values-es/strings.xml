@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Comprar</string>
+  <string name="buy_sell_sell">Vender</string>
+  <string name="buy_sell_overview_denied_button">Vuelve a intentarlo</string>
+  <string name="buy_sell_overview_subscription_weekly">Semanalmente, cada %1$s</string>
+  <string name="buy_sell_state_processing">Procesando</string>
+  <string name="buy_sell_state_completed">Completada</string>
+  <string name="buy_sell_state_cancelled">Cancelada</string>
+  <string name="buy_sell_state_rejected">Rechazada</string>
+  <string name="buy_sell_state_expired">Vencida</string>
+  <string name="buy_sell_detail_transaction_fee">Comisión de transacción</string>
+  <string name="buy_sell_detail_exchange_rate">Tipo de cambio</string>
+  <string name="buy_sell_detail_amount">Monto</string>
+  <string name="buy_sell_detail_payment_fee">Comisión de pago</string>
+  <string name="buy_sell_detail_total">Coste total</string>
+  <string name="buy_sell_review_status_in_rejected">Rechazada</string>
+  <string name="buy_sell_review_status_in_failed">Fallida</string>
+  <string name="buy_sell_review_status_in_expired">Vencida</string>
+  <string name="buy_sell_review_status_in_completed">Completada</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Método de pago</string>
+  <string name="buy_sell_confirmation_transaction_fee">Comisión de transacción</string>
+  <string name="buy_sell_confirmation_amount">Monto</string>
+  <string name="buy_sell_confirmation_payment_fee">Comisión de pago</string>
+  <string name="buy_sell_confirmation_total_cost">Coste total</string>
+  <string name="buy_sell_confirmation_bank">Transferir</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifique su correo electrónico</string>
+  <string name="buy_sell_add_account_subtitle">Añadir cuenta bancaria</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Seleccionar cuenta</string>
+  <string name="buy_sell_account_selection_delete_message">¿Está seguro de que quiere eliminar esta cuenta bancaria?</string>
+  <string name="buy_sell_add_address_city_hint">Ciudad</string>
+  <string name="buy_sell_add_address_post_code_hint">Código postal</string>
+  <string name="buy_sell_add_address_post_country_hint">País</string>
+  <string name="buy_sell_add_address_name_empty">El nombre no puede estar vacío</string>
+  <string name="buy_sell_add_address_street_empty">La calle no puede estar vacía</string>
+  <string name="buy_sell_add_address_city_empty">La ciudad no puede estar vacía</string>
+  <string name="buy_sell_add_address_postcode_empty">El código postal no puede estar vacío</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Orden periódica</string>
+  <string name="buy_sell_recurring_order_subtitle">Se ha programado su siguiente orden periódica</string>
+  <string name="buy_sell_recurring_order_description">Para administrar ordenes periódicas, inicie sesión en su monedero en el navegador web.</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frecuencia</string>
+  <string name="buy_sell_recurring_order_duration_title">Duración</string>
+  <string name="buy_sell_recurring_order_duration_until_cancelled">%1$s o alcance su límite; lo que ocurra antes.</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Hasta que la cancele</string>
+  <string name="buy_sell_recurring_order_duration_until">Hasta</string>
+  <string name="buy_sell_recurring_order_amount">%1$s %2$s (+%3$s %4$s Comisión de Pago)</string>
+  <string name="buy_sell_recurring_frequency_weekly">Semanalmente, cada %1$s</string>
+  <string name="buy_sell_recurring_frequency_daily">Cada día</string>
+  <string name="buy_sell_recurring_frequency_monthly">En el %1$s de cada mes</string>
+</resources>
