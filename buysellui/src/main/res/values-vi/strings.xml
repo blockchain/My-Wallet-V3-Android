@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Mua</string>
+  <string name="buy_sell_sell">Bán</string>
+  <string name="buy_sell_overview_denied_button">Thử lại</string>
+  <string name="buy_sell_state_processing">Đang xử lý</string>
+  <string name="buy_sell_state_completed">Đã hoàn thành</string>
+  <string name="buy_sell_state_cancelled">Đã hủy bỏ</string>
+  <string name="buy_sell_state_rejected">Từ chối</string>
+  <string name="buy_sell_state_expired">Đã hết hạn</string>
+  <string name="buy_sell_detail_transaction_fee">Phí giao dịch</string>
+  <string name="buy_sell_detail_exchange_rate">Tỷ Giá</string>
+  <string name="buy_sell_detail_amount">Số tiền</string>
+  <string name="buy_sell_detail_payment_fee">Phí Thanh toán</string>
+  <string name="buy_sell_detail_total">Tổng Chi phí</string>
+  <string name="buy_sell_review_status_in_rejected">Từ chối</string>
+  <string name="buy_sell_review_status_in_failed">Không thành công</string>
+  <string name="buy_sell_review_status_in_expired">Đã hết hạn</string>
+  <string name="buy_sell_review_status_in_completed">Đã hoàn thành</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Phương thức Thanh toán</string>
+  <string name="buy_sell_confirmation_transaction_fee">Phí giao dịch</string>
+  <string name="buy_sell_confirmation_amount">Số tiền</string>
+  <string name="buy_sell_confirmation_payment_fee">Phí Thanh toán</string>
+  <string name="buy_sell_confirmation_total_cost">Tổng Chi phí</string>
+  <string name="buy_sell_confirmation_bank">Chuyển khoản</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Xác minh Email của Bạn</string>
+  <string name="buy_sell_add_account_subtitle">Thêm Tài khoản Ngân hàng</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Chọn Tài khoản</string>
+  <string name="buy_sell_account_selection_delete_message">Bạn có chắc chắn muốn xóa tài khoản ngân hàng này không?</string>
+  <string name="buy_sell_add_address_city_hint">Thành phố</string>
+  <string name="buy_sell_add_address_post_code_hint">Mã Bưu điện</string>
+  <string name="buy_sell_add_address_post_country_hint">Quốc gia</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Đặt lệnh Định kỳ</string>
+  <string name="buy_sell_recurring_order_frequency_title">Tần suất</string>
+  <string name="buy_sell_recurring_order_duration_title">Thời gian</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Cho đến khi bạn hủy</string>
+</resources>

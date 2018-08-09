@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Cumpărare</string>
+  <string name="buy_sell_sell">Vânzare</string>
+  <string name="buy_sell_overview_denied_button">încearcă din nou</string>
+  <string name="buy_sell_state_processing">În curs de procesare</string>
+  <string name="buy_sell_state_completed">Finalizat</string>
+  <string name="buy_sell_state_cancelled">Anulat</string>
+  <string name="buy_sell_state_rejected">Respins(ă)</string>
+  <string name="buy_sell_state_expired">Expirat</string>
+  <string name="buy_sell_detail_exchange_rate">Rata de schimb</string>
+  <string name="buy_sell_detail_amount">Suma</string>
+  <string name="buy_sell_detail_payment_fee">Taxă de plată</string>
+  <string name="buy_sell_detail_total">Cost total</string>
+  <string name="buy_sell_review_status_in_rejected">Respins(ă)</string>
+  <string name="buy_sell_review_status_in_failed">Eșuat</string>
+  <string name="buy_sell_review_status_in_expired">Expirat</string>
+  <string name="buy_sell_review_status_in_completed">Finalizat</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metodă de plată</string>
+  <string name="buy_sell_confirmation_amount">Suma</string>
+  <string name="buy_sell_confirmation_payment_fee">Taxă de plată</string>
+  <string name="buy_sell_confirmation_total_cost">Cost total</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Confirmați email-ul</string>
+  <string name="buy_sell_add_account_subtitle">Adăugați contul bancar</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Selectați contul</string>
+  <string name="buy_sell_account_selection_delete_message">Sigur doriți să ștergeți acest cont bancar?</string>
+  <string name="buy_sell_add_address_city_hint">Oraș</string>
+  <string name="buy_sell_add_address_post_code_hint">Cod poștal</string>
+  <string name="buy_sell_add_address_post_country_hint">Țara</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Comandă periodică</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frecvență</string>
+  <string name="buy_sell_recurring_order_duration_title">Durata</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Până anulați</string>
+</resources>

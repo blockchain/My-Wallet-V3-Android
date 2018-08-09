@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kaufen</string>
+  <string name="buy_sell_sell">Verkaufen</string>
+  <string name="buy_sell_overview_denied_button">Erneut versuchen</string>
+  <string name="buy_sell_state_processing">Wird bearbeitet</string>
+  <string name="buy_sell_state_completed">Fertig</string>
+  <string name="buy_sell_state_cancelled">Abgebrochen</string>
+  <string name="buy_sell_state_rejected">Abgelehnt</string>
+  <string name="buy_sell_state_expired">Abgelaufen</string>
+  <string name="buy_sell_detail_exchange_rate">Umtauschkurs</string>
+  <string name="buy_sell_detail_amount">Betrag</string>
+  <string name="buy_sell_detail_payment_fee">Zahlungsgebühr</string>
+  <string name="buy_sell_detail_total">Gesamtkosten</string>
+  <string name="buy_sell_review_status_in_rejected">Abgelehnt</string>
+  <string name="buy_sell_review_status_in_failed">Fehlgeschlagen</string>
+  <string name="buy_sell_review_status_in_expired">Abgelaufen</string>
+  <string name="buy_sell_review_status_in_completed">Fertig</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Zahlungsmethode</string>
+  <string name="buy_sell_confirmation_amount">Betrag</string>
+  <string name="buy_sell_confirmation_payment_fee">Zahlungsgebühr</string>
+  <string name="buy_sell_confirmation_total_cost">Gesamtkosten</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifizieren Sie Ihre E-Mail-Adresse</string>
+  <string name="buy_sell_add_account_subtitle">Bankkonto hinzufügen</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Konto auswählen</string>
+  <string name="buy_sell_account_selection_delete_message">Wollen Sie dieses Bankkonto tatsächlich löschen?</string>
+  <string name="buy_sell_add_address_city_hint">Ort</string>
+  <string name="buy_sell_add_address_post_code_hint">Postleitzahl</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Wiederkehrender Auftrag</string>
+  <string name="buy_sell_recurring_order_frequency_title">Häufigkeit</string>
+  <string name="buy_sell_recurring_order_duration_title">Dauer</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Bis zur Kündigung</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Vétel</string>
+  <string name="buy_sell_sell">Eladás</string>
+  <string name="buy_sell_overview_denied_button">próbáld újra</string>
+  <string name="buy_sell_state_processing">Feldolgozás alatt</string>
+  <string name="buy_sell_state_completed">Teljesítve</string>
+  <string name="buy_sell_state_cancelled">Törölve</string>
+  <string name="buy_sell_state_rejected">Elutasítva</string>
+  <string name="buy_sell_state_expired">Lejárt</string>
+  <string name="buy_sell_detail_exchange_rate">Átváltási árfolyam</string>
+  <string name="buy_sell_detail_amount">Összeg</string>
+  <string name="buy_sell_detail_payment_fee">Kifizetési díj</string>
+  <string name="buy_sell_detail_total">Teljes költség</string>
+  <string name="buy_sell_review_status_in_rejected">Elutasítva</string>
+  <string name="buy_sell_review_status_in_failed">Sikertelen</string>
+  <string name="buy_sell_review_status_in_expired">Lejárt</string>
+  <string name="buy_sell_review_status_in_completed">Teljesítve</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Fizetési mód</string>
+  <string name="buy_sell_confirmation_amount">Összeg</string>
+  <string name="buy_sell_confirmation_payment_fee">Kifizetési díj</string>
+  <string name="buy_sell_confirmation_total_cost">Teljes költség</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Hitelesítse e-mail-címét</string>
+  <string name="buy_sell_add_account_subtitle">Bankszámla hozzáadása</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Számla kiválasztása</string>
+  <string name="buy_sell_account_selection_delete_message">Biztosan szeretné törölni ezt a bankszámlát?</string>
+  <string name="buy_sell_add_address_city_hint">Város</string>
+  <string name="buy_sell_add_address_post_code_hint">Irányítószám</string>
+  <string name="buy_sell_add_address_post_country_hint">Ország</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Ismétlődő megbízás</string>
+  <string name="buy_sell_recurring_order_frequency_title">Gyakoriság</string>
+  <string name="buy_sell_recurring_order_duration_title">Időtartam</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Amíg Ön visszavonja</string>
+</resources>

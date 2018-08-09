@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">खरीदें</string>
+  <string name="buy_sell_sell">बेचें</string>
+  <string name="buy_sell_overview_denied_button">फिर कोशिश करो</string>
+  <string name="buy_sell_state_processing">प्रोसेस हो रहा है</string>
+  <string name="buy_sell_state_completed">पूरा किया गया</string>
+  <string name="buy_sell_state_cancelled">रद्द कर दिया गया</string>
+  <string name="buy_sell_state_rejected">अस्वीकृत</string>
+  <string name="buy_sell_state_expired">मियाद समाप्त</string>
+  <string name="buy_sell_detail_exchange_rate">एक्सचेंज दर</string>
+  <string name="buy_sell_detail_amount">राशि</string>
+  <string name="buy_sell_detail_payment_fee">भुगतान शुल्क</string>
+  <string name="buy_sell_detail_total">कुल लागत</string>
+  <string name="buy_sell_review_status_in_rejected">अस्वीकृत</string>
+  <string name="buy_sell_review_status_in_failed">विफल</string>
+  <string name="buy_sell_review_status_in_expired">मियाद समाप्त</string>
+  <string name="buy_sell_review_status_in_completed">पूरा किया गया</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">भुगतान पद्धति</string>
+  <string name="buy_sell_confirmation_amount">राशि</string>
+  <string name="buy_sell_confirmation_payment_fee">भुगतान शुल्क</string>
+  <string name="buy_sell_confirmation_total_cost">कुल लागत</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">अपने ईमेल पते की पुष्टि करें</string>
+  <string name="buy_sell_add_account_subtitle">बैंक खाता जोड़ें</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">खाता चुनें</string>
+  <string name="buy_sell_account_selection_delete_message">क्या आप वाकई इस बैंक खाते को हटाना चाहते हैं?</string>
+  <string name="buy_sell_add_address_city_hint">शहर</string>
+  <string name="buy_sell_add_address_post_code_hint">पोस्टल कोड</string>
+  <string name="buy_sell_add_address_post_country_hint">देश</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">पुनरावर्ती ऑर्डर</string>
+  <string name="buy_sell_recurring_order_frequency_title">आवृति</string>
+  <string name="buy_sell_recurring_order_duration_title">अवधि</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">जब तक कि आप रद्द न करें</string>
+</resources>

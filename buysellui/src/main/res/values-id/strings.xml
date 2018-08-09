@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Beli</string>
+  <string name="buy_sell_sell">Jual</string>
+  <string name="buy_sell_overview_denied_button">Coba lagi</string>
+  <string name="buy_sell_state_processing">Memproses</string>
+  <string name="buy_sell_state_completed">Selesai</string>
+  <string name="buy_sell_state_cancelled">Dibatalkan</string>
+  <string name="buy_sell_state_rejected">Ditolak</string>
+  <string name="buy_sell_state_expired">Kedaluwarsa</string>
+  <string name="buy_sell_detail_transaction_fee">Biaya Transaksi</string>
+  <string name="buy_sell_detail_exchange_rate">Nilai Tukar</string>
+  <string name="buy_sell_detail_amount">Jumlah</string>
+  <string name="buy_sell_detail_payment_fee">Biaya Pembayaran</string>
+  <string name="buy_sell_detail_total">Total Biaya</string>
+  <string name="buy_sell_review_status_in_rejected">Ditolak</string>
+  <string name="buy_sell_review_status_in_failed">Gagal</string>
+  <string name="buy_sell_review_status_in_expired">Kedaluwarsa</string>
+  <string name="buy_sell_review_status_in_completed">Selesai</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metode Pembayaran</string>
+  <string name="buy_sell_confirmation_transaction_fee">Biaya Transaksi</string>
+  <string name="buy_sell_confirmation_amount">Jumlah</string>
+  <string name="buy_sell_confirmation_payment_fee">Biaya Pembayaran</string>
+  <string name="buy_sell_confirmation_total_cost">Total Biaya</string>
+  <string name="buy_sell_confirmation_bank">Transfer</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifikasikan Surel</string>
+  <string name="buy_sell_add_account_subtitle">Tambah Rekening Bank</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Pilih Rekening</string>
+  <string name="buy_sell_account_selection_delete_message">Anda yakin ingin menghapus rekening bank ini?</string>
+  <string name="buy_sell_add_address_city_hint">Kota</string>
+  <string name="buy_sell_add_address_post_code_hint">Kode Pos</string>
+  <string name="buy_sell_add_address_post_country_hint">Negara</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Order Berulang</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frekuensi</string>
+  <string name="buy_sell_recurring_order_duration_title">Durasi</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Sampai Anda membatalkannya</string>
+</resources>

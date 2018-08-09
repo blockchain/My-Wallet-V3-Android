@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">購入</string>
+  <string name="buy_sell_sell">販売</string>
+  <string name="buy_sell_overview_denied_button">再試行してください</string>
+  <string name="buy_sell_state_processing">処理中</string>
+  <string name="buy_sell_state_completed">完了</string>
+  <string name="buy_sell_state_cancelled">キャンセル済み</string>
+  <string name="buy_sell_state_rejected">拒否されました</string>
+  <string name="buy_sell_state_expired">期限が切れました</string>
+  <string name="buy_sell_detail_transaction_fee">取引手数料</string>
+  <string name="buy_sell_detail_exchange_rate">為替レート</string>
+  <string name="buy_sell_detail_amount">金額</string>
+  <string name="buy_sell_detail_payment_fee">支払手数料</string>
+  <string name="buy_sell_detail_total">総額</string>
+  <string name="buy_sell_review_status_in_rejected">拒否されました</string>
+  <string name="buy_sell_review_status_in_failed">失敗しました</string>
+  <string name="buy_sell_review_status_in_expired">期限が切れました</string>
+  <string name="buy_sell_review_status_in_completed">完了</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">支払い方法</string>
+  <string name="buy_sell_confirmation_transaction_fee">取引手数料</string>
+  <string name="buy_sell_confirmation_amount">金額</string>
+  <string name="buy_sell_confirmation_payment_fee">支払手数料</string>
+  <string name="buy_sell_confirmation_total_cost">総額</string>
+  <string name="buy_sell_confirmation_bank">移動</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Eメールアドレスを認証</string>
+  <string name="buy_sell_add_account_subtitle">銀行口座を追加</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">口座を選択</string>
+  <string name="buy_sell_account_selection_delete_message">この銀行口座を削除してよろしいですか？</string>
+  <string name="buy_sell_add_address_city_hint">市</string>
+  <string name="buy_sell_add_address_post_code_hint">郵便番号</string>
+  <string name="buy_sell_add_address_post_country_hint">国</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">繰り返し注文</string>
+  <string name="buy_sell_recurring_order_frequency_title">頻度</string>
+  <string name="buy_sell_recurring_order_duration_title">期間</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">キャンセルするまでの間</string>
+</resources>

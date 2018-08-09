@@ -1,242 +1,219 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <string name="buy_sell">Buy &amp; Sell</string>
+  <string name="buy_sell_create_account">Create Account</string>
+  <!-- Buy/Sell Launcher -->
+  <string name="buy_sell_launcher_error">Error fetching buy/sell data</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Buy</string>
+  <string name="buy_sell_sell">Sell</string>
+  <string name="buy_sell_overview_error_loading_transactions">Error fetching transactions</string>
+  <string name="buy_sell_overview_pending_kyc_not_found">Pending KYC not found, please try again later.</string>
+  <string name="buy_sell_overview_could_not_start_kyc">Could not restart KYC, please try again later.</string>
+  <string name="buy_sell_overview_empty_list">Your order history will show here</string>
+  <string name="buy_sell_overview_in_review_title">Identity verification
+in review</string>
+  <string name="buy_sell_overview_denied_title">Identity verification
+denied</string>
+  <string name="buy_sell_overview_pending_title">Complete identity
+verification</string>
+  <string name="buy_sell_overview_in_review_button">Buy now with card</string>
+  <string name="buy_sell_overview_denied_button">Try again</string>
+  <string name="buy_sell_overview_pending_button">Finish verification</string>
+  <string name="buy_sell_overview_in_review_message">Amounts greater than %1$s of bitcoin cannot be sold until your identity verification is completed.</string>
+  <string name="buy_sell_overview_denied_message">Please try completing your identity verification again. Bank transfers will be unavailable until then.</string>
+  <string name="buy_sell_overview_pending_message">Bank transfers and selling amounts greater than %1$s will be unavailable until verification is complete.</string>
+  <string name="buy_sell_overview_next_recurring_order">Your next recurring order</string>
+  <string name="buy_sell_overview_subscription_daily">Daily</string>
+  <string name="buy_sell_overview_subscription_weekly">Weekly, every %1$s</string>
+  <string name="buy_sell_overview_subscription_monthly">Monthly, on the %1$s</string>
+  <!-- Buy Sell Transaction States -->
+  <string name="buy_sell_state_awaiting_funds">Awaiting funds</string>
+  <string name="buy_sell_state_pending_buy">Pending buy</string>
+  <string name="buy_sell_state_awaiting_reference">Awaiting reference number</string>
+  <string name="buy_sell_state_processing">Processing</string>
+  <string name="buy_sell_state_completed">Completed</string>
+  <string name="buy_sell_state_cancelled">Cancelled</string>
+  <string name="buy_sell_state_rejected">Rejected</string>
+  <string name="buy_sell_state_expired">Expired</string>
+  <!-- Transaction Detail -->
+  <string name="buy_sell_detail_trade_id">Trade ID</string>
+  <string name="buy_sell_detail_transaction_fee">Transaction Fee</string>
+  <string name="buy_sell_detail_exchange_rate">Exchange Rate</string>
+  <string name="buy_sell_detail_amount">Amount</string>
+  <string name="buy_sell_detail_payment_fee">Payment Fee</string>
+  <string name="buy_sell_detail_total">Total Cost</string>
+  <string name="buy_sell_detail_title_buy">Buy %1$s</string>
+  <string name="buy_sell_detail_title_sell">Sell %1$s</string>
+  <string name="buy_sell_detail_currency_received">%1$s Received</string>
+  <string name="buy_sell_detail_currency_to_be_received">%1$s to be Received</string>
+  <string name="buy_sell_detail_currency_sold">%1$s Sold</string>
+  <string name="buy_sell_detail_currency_to_be_sold">%1$s to be Sold</string>
+  <string name="buy_sell_detail_bank_disclaimer">Receiving funds into your bank account usually takes between 2 to 3 working days.</string>
+  <!-- Awaiting Transfer Detail -->
+  <string name="buy_sell_details_whats_next">What\'s next?</string>
+  <string name="buy_sell_awaiting_funds_description">Send %1$s to Coinify within the next 48 hours.
 
-    <!-- Account created Success -->
-    <string name="coinify_account_created_success">Success!\n Account Created</string>
-
-    <!-- Buy/Sell Launcher -->
-    <string name="buy_sell_launcher_error">Error fetching buy/sell data</string>
-
-    <!-- Overview Page -->
-    <string name="buy_sell_buy">Buy</string>
-    <string name="buy_sell_sell">Sell</string>
-    <string name="buy_sell_overview_error_loading_transactions">Error fetching transactions</string>
-    <string name="buy_sell_overview_pending_kyc_not_found">Pending KYC not found, please try again later.</string>
-    <string name="buy_sell_overview_could_not_start_kyc">Could not restart KYC, please try again later.</string>
-    <string name="buy_sell_overview_empty_list">Your order history will show here</string>
-    <string name="buy_sell_overview_in_review_title">Identity verification\nin review</string>
-    <string name="buy_sell_overview_denied_title">Identity verification\ndenied</string>
-    <string name="buy_sell_overview_pending_title">Complete identity\nverification</string>
-    <string name="buy_sell_overview_in_review_button">Buy now with card</string>
-    <string name="buy_sell_overview_denied_button">Try again</string>
-    <string name="buy_sell_overview_pending_button">Finish verification</string>
-    <string name="buy_sell_overview_in_review_message">Amounts greater than %1$s of bitcoin cannot be sold until your identity verification is completed.</string>
-    <string name="buy_sell_overview_denied_message">Please try completing your identity verification again. Bank transfers will be unavailable until then.</string>
-    <string name="buy_sell_overview_pending_message">Bank transfers and selling amounts greater than %1$s will be unavailable until verification is complete.</string>
-    <string name="buy_sell_overview_next_recurring_order">Your next recurring order</string>
-    <string name="buy_sell_overview_subscription_daily">Daily</string>
-    <string name="buy_sell_overview_subscription_weekly">Weekly, every %1$s</string>
-    <string name="buy_sell_overview_subscription_monthly">Monthly, on the %1$s</string>
-
-    <!-- Buy Sell Transaction States -->
-    <string name="buy_sell_state_awaiting_funds">Awaiting funds</string>
-    <string name="buy_sell_state_pending_buy">Pending buy</string>
-    <string name="buy_sell_state_awaiting_reference">Awaiting reference number</string>
-    <string name="buy_sell_state_processing">Processing</string>
-    <string name="buy_sell_state_completed">Completed</string>
-    <string name="buy_sell_state_cancelled">Cancelled</string>
-    <string name="buy_sell_state_rejected">Rejected</string>
-    <string name="buy_sell_state_expired">Expired</string>
-
-    <!-- Transaction Detail -->
-    <string name="buy_sell_detail_trade_id">Trade ID</string>
-    <string name="buy_sell_detail_transaction_fee">Transaction Fee</string>
-    <string name="buy_sell_detail_exchange_rate">Exchange Rate</string>
-    <string name="buy_sell_detail_amount">Amount</string>
-    <string name="buy_sell_detail_payment_fee">Payment Fee</string>
-    <string name="buy_sell_detail_total">Total Cost</string>
-    <string name="buy_sell_detail_title_buy">Buy %1$s</string>
-    <string name="buy_sell_detail_title_sell">Sell %1$s</string>
-    <string name="buy_sell_detail_currency_received">%1$s Received</string>
-    <string name="buy_sell_detail_currency_to_be_received">%1$s to be Received</string>
-    <string name="buy_sell_detail_currency_sold">%1$s Sold</string>
-    <string name="buy_sell_detail_currency_to_be_sold">%1$s to be Sold</string>
-    <string name="buy_sell_detail_bank_disclaimer">Receiving funds into your bank account usually takes between 2 to 3 working days.</string>
-    <string name="buy_sell_detail_refund_message">Coinify has cancelled this sell order and sent you an email with instructions on how to get your funds refunded.</string>
-
-    <!-- Awaiting Transfer Detail -->
-    <string name="buy_sell_details_whats_next">What\'s next?</string>
-    <string name="buy_sell_awaiting_funds_description">Send %1$s to Coinify within the next 48 hours.\n\nBank account sending funds needs to be in the same name as your government issued ID. Otherwise it will be rejected.</string>
-    <string name="buy_sell_awaiting_funds_already_sent">I\'ve already sent the funds to Coinify</string>
-    <string name="buy_sell_awaiting_funds_reference_title">Reference/message</string>
-    <string name="buy_sell_awaiting_funds_reference_note">*Must be included!</string>
-    <string name="buy_sell_awaiting_funds_recipient_name_title">Recipient Name</string>
-    <string name="buy_sell_awaiting_funds_recipient_address_title">Recipient Address</string>
-    <string name="buy_sell_awaiting_funds_iban_title">IBAN</string>
-    <string name="buy_sell_awaiting_funds_bic_title">BIC</string>
-    <string name="buy_sell_awaiting_funds_bank_title">Bank</string>
-    <string name="buy_sell_awaiting_funds_copy_all">Copy all information to clipboard</string>
-    <string name="buy_sell_awaiting_funds_already_sent_title">Funds already sent?</string>
-    <string name="buy_sell_awaiting_funds_already_sent_message">It usually takes between 2 to 3 working days for Coinify to process orders and send funds to your bank account.</string>
-    <string name="buy_sell_awaiting_funds_finish_payment">Complete Payment</string>
-    <string name="buy_sell_awaiting_funds_cancel_trade">Cancel trade</string>
-    <string name="buy_sell_awaiting_funds_cancel_trade_success">Trade successfully cancelled</string>
-    <string name="buy_sell_awaiting_funds_cancel_trade_failed">Could not cancel trade</string>
-    <string name="buy_sell_awaiting_funds_cancel_trade_dialog_title">Cancel trade?</string>
-    <string name="buy_sell_awaiting_funds_cancel_trade_dialog_disclaimer">Note: if you have already sent funds from your bank account to Coinify, this trade will still be processed when they receive your transfer and you will be sent the bitcoin you purchased.</string>
-
-    <!-- KYC-->
-    <string name="buy_sell_id_verification_in_review">Identity Verification in Review</string>
-    <string name="buy_sell_id_verification_in_review_loading">Loading…</string>
-    <string name="buy_sell_review_status_thanks">Thanks for completing the Identity Verification Process</string>
-    <string name="buy_sell_review_in_progress">Identity Verification Process In Progress</string>
-    <string name="buy_sell_review_failed">Identity Verification Process Unsuccessful</string>
-    <string name="buy_sell_review_status_message">Our Buy &amp; Sell Partner Coinify will email you a status update within 48 hours.</string>
-    <string name="buy_sell_review_status_failed">Please contact our Buy &amp; Sell Partner Coinify</string>
-    <string name="buy_sell_review_status_pending_message">Transactions are unavailable until verification is complete. Please finish verifying your identity.</string>
-    <string name="buy_sell_review_finish_verification">Finish verification</string>
-    <string name="buy_sell_review_finish_verification_title">Complete Identity Verification</string>
-    <string name="buy_sell_review_status">Status: %1$s</string>
-    <string name="buy_sell_review_status_in_review">In Review</string>
-    <string name="buy_sell_review_status_in_pending">Incomplete</string>
-    <string name="buy_sell_review_status_in_rejected">Rejected</string>
-    <string name="buy_sell_review_status_in_failed">Failed</string>
-    <string name="buy_sell_review_status_in_expired">Expired</string>
-    <string name="buy_sell_review_status_in_completed">Completed</string>
-    <string name="buy_sell_review_status_in_reviewing">Reviewing</string>
-    <string name="buy_sell_review_status_in_docs_requested">Documents Requested</string>
-    <string name="buy_sell_review_status_fetching">Please wait while we check your information…</string>
-
-    <!-- iSignThis Payments -->
-    <string name="buy_sell_isignthis_payment_method">Payment Method</string>
-
-    <!-- Build Transaction -->
-    <string name="buy_sell_error_fetching_quote">Error fetching quote</string>
-    <string name="buy_sell_review_transaction">Review order</string>
-    <string name="buy_sell_remaining_buy_limit">Your remaining buy limit is %1$s</string>
-    <string name="buy_sell_remaining_sell_limit">Your remaining sell limit is %1$s</string>
-    <string name="buy_sell_remaining_sell_minimum_limit">The minimum sell limit is %1$s</string>
-    <string name="buy_sell_minimum_sell_limit">Unfortunately you need at least %1$s to sell, not including the transaction fee</string>
-    <string name="buy_sell_not_enough_bitcoin">%1$s BTC exceeds your current balance</string>
-    <string name="buy_sell_error_fetching_limit">Error fetching limit</string>
-    <string name="buy_sell_amount_too_low">Please enter an amount greater than %1$s</string>
-    <string name="buy_sell_sell_bitcoin_max">You can sell up to %1$s of your balance</string>
-    <string name="buy_sell_error_forced_delay">Your previous trade is in review. You cannot make another trade for %1$s hours. Please try again later.</string>
-    <string name="buy_sell_error_limits_exceeded">Your limits for today have been exceeded. Please try again tomorrow.</string>
-    <string name="buy_sell_error_trade_in_progress">You cannot create a new trade whilst a trade is in progress. Please try again when your current trade has completed.</string>
-
-    <!-- Buy Order Confirmation -->
-    <string name="buy_sell_confirmation_btc_amount">BTC Amount</string>
-    <string name="buy_sell_confirmation_transaction_fee">Transaction Fee</string>
-    <string name="buy_sell_confirmation_btc_total">Total BTC to be received</string>
-    <string name="buy_sell_confirmation_title_buy">Confirm Buy</string>
-    <string name="buy_sell_confirmation_title_preview_buy">Preview Buy</string>
-    <string name="buy_sell_confirmation_title_sell">Confirm Sell</string>
-    <string name="buy_sell_confirmation_amount">Amount</string>
-    <string name="buy_sell_confirmation_payment_fee">Payment Fee</string>
-    <string name="buy_sell_confirmation_total_cost">Total Cost</string>
-    <string name="buy_sell_confirmation_order_expired">Your quote has expired. Please return to the order page to create a new order.</string>
-    <string name="buy_sell_confirmation_order_id">Coinify order ID #</string>
-    <string name="buy_sell_confirmation_unexpected_error">An unexpected error occurred. Please try again later or contact Support if the issue persists.</string>
-    <string name="buy_sell_confirmation_card">Card</string>
-    <string name="buy_sell_confirmation_bank">Transfer</string>
-    <string name="buy_sell_confirmation_amount_too_high_title">Amount too high</string>
-    <string name="buy_sell_confirmation_amount_too_high_message">Orders over %1$s can only be processed by bank transfer.</string>
-    <string name="buy_sell_confirmation_amount_too_high_use_card">Use card</string>
-    <string name="buy_sell_confirmation_amount_too_high_use_transfer">Use transfer</string>
-    <string name="buy_sell_confirmation_bank_rate_disclaimer">I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.</string>
-
-    <!-- Sell Order Confirmation -->
-    <string name="buy_sell_confirmation_btc_sell_amount">BTC to sell</string>
-    <string name="buy_sell_confirmation_you_will_receive">Total credit owed</string>
-    <string name="buy_sell_confirmation_btc_to_receive_description">%1$s BTC will be sent directly from your Blockchain wallet to Coinify once you press Submit.</string>
-    <string name="buy_sell_confirmation_sell_rate_disclaimer">I accept that Coinify will process my order upon the completion of the bitcoin transaction, and that bitcoin will be traded at the available exchange rate at the time, which may differ from the displayed rate.</string>
-
-    <!-- Card payment complete -->
-    <string name="buy_sell_card_payment_success_title">Success!\nOrder Created</string>
-    <string name="buy_sell_card_payment_success_message">Funds should reach your account within 3 days.</string>
-    <string name="buy_sell_card_order_created_title">Order Created</string>
-    <string name="buy_sell_card_order_cancelled_title">Order Cancelled</string>
-    <string name="buy_sell_card_order_failed_title">Order Failed</string>
-    <string name="buy_sell_card_order_expired_title">Order Expired</string>
-    <string name="buy_sell_card_order_declined_title">Order Declined</string>
-    <string name="buy_sell_card_order_rejected_title">Order Rejected</string>
-    <string name="buy_sell_card_order_in_review_title">Reviewing Order</string>
-    <string name="buy_sell_card_order_failed_message">Your payment card has been declined. Please try again or contact your card provider.</string>
-    <string name="buy_sell_card_order_reviewing_message">Your order will remain in review for a few moments until all information is verified.</string>
-    <string name="buy_sell_card_order_cancelled_message">Your order has been cancelled. Please try again later.</string>
-    <string name="buy_sell_card_order_expired_message">Your order has expired as the payment was taking too long (15 minutes). Please create a new order.</string>
-
-    <!-- Welcome -->
-    <string name="buy_sell_welcome_message">Create an account now to start buying cryptocurrency in minutes.</string>
-    <string name="buy_sell_get_started">Get started</string>
-
-    <!-- Select Country -->
-    <string name="buy_sell_select_country">Select Your Country</string>
-
-    <!-- Unverified Email -->
-    <string name="buy_sell_unverified_email_title">Verify Your Email</string>
-    <string name="buy_sell_unverified_email_verify_message1">We sent a verification link to</string>
-    <string name="buy_sell_unverified_email_verify_message2">Click it and return here to continue with your transaction.</string>
-    <string name="buy_sell_unverified_email_verify_open_email">Open Email</string>
-    <string name="buy_sell_unverified_email_verify_agree_coinify_terms">Agree to Coinify <a href="ignored">terms and conditions</a></string>
-
-    <!-- Verified Email -->
-    <string name="coinify">Coinify</string>
-    <string name="buy_sell_verified_email_title">Email Verified!</string>
-    <string name="buy_sell_verified_email_message">Our partner %1$s will process your bitcoin transaction. By clicking Agree and ‘Continue’ you will create an account with %1$s.</string>
-
-    <!-- Account creation completed -->
-    <string name="buy_sell_identification_verification">Identify verification</string>
-    <string name="buy_sell_verify_your_identity">Verify your identity</string>
-    <string name="buy_sell_identification_verification_message">Government Anti Money Laundering require us to verify your identity</string>
-    <string name="buy_sell_verification_status_title">Verification status</string>
-
-    <!-- Invalid coinify country -->
-    <string name="buy_sell_invalid_country_title">Buying &amp; Selling Bitcoin is not yet available in your country</string>
-    <string name="buy_sell_invalid_country_message">We will be rolling out more countries soon.</string>
-    <string name="submit">Submit</string>
-
-    <!-- Coinify Verification -->
-    <string name="buy_sell_get_to_know_you_title">Let\’s Get to Know You</string>
-    <string name="buy_sell_get_to_know_you_message">We need to learn a bit about you before we can open your buy and sell account.</string>
-    <string name="buy_sell_cannot_open_file">Cannot open file chooser</string>
-    <string name="buy_sell_choose_file">Choose file</string>
-
-    <!-- Coinify Add Bank Account -->
-    <string name="buy_sell_add_account_title">Add Account</string>
-    <string name="buy_sell_add_account_subtitle">Add Bank Account</string>
-    <string name="buy_sell_add_account_iban_hint">International Bank Account Number (IBAN)</string>
-    <string name="buy_sell_add_account_bic_hint">Bank Identifier Code (SWIFT/BIC)</string>
-    <string name="buy_sell_add_account_iban_empty">SWIFT/BIC cannot be empty</string>
-    <string name="buy_sell_add_account_bic_empty">IBAN cannot be empty</string>
-
-    <!-- Bank Account Selection -->
-    <string name="buy_sell_account_selection_title">Select Account</string>
-    <string name="buy_sell_account_selection_description">Where would you like your funds sent?</string>
-    <string name="buy_sell_account_selection_error_message">Error loading bank accounts, please try again.</string>
-    <string name="buy_sell_account_selection_add_button">+ Add a new account</string>
-    <string name="buy_sell_account_selection_delete_title">Delete account</string>
-    <string name="buy_sell_account_selection_delete_message">Are you sure you want to delete this bank account?</string>
-    <string name="buy_sell_account_selection_delete_failure">Deleting bank account failed</string>
-
-    <!-- Add Address -->
-    <string name="buy_sell_add_address_subtitle">Add Address</string>
-    <string name="buy_sell_add_address_name_hint">Account holder\'s full name</string>
-    <string name="buy_sell_add_address_street_hint">Street and number</string>
-    <string name="buy_sell_add_address_city_hint">City</string>
-    <string name="buy_sell_add_address_post_code_hint">Post code</string>
-    <string name="buy_sell_add_address_post_country_hint">Country</string>
-    <string name="buy_sell_add_address_name_empty">Name cannot be empty</string>
-    <string name="buy_sell_add_address_street_empty">Street cannot be empty</string>
-    <string name="buy_sell_add_address_city_empty">City cannot be empty</string>
-    <string name="buy_sell_add_address_postcode_empty">Postcode cannot be empty</string>
-
-    <!-- Recurring Trade -->
-    <string name="buy_sell_recurring_order_title">Recurring Order</string>
-    <string name="buy_sell_recurring_order_subtitle">Your next recurring order is scheduled</string>
-    <string name="buy_sell_recurring_order_description">To manage recurring orders, log in to your wallet in the web browser.</string>
-    <string name="buy_sell_recurring_order_frequency_title">Frequency</string>
-    <string name="buy_sell_recurring_order_duration_title">Duration</string>
-    <string name="buy_sell_recurring_order_duration_until_cancelled">%1$s or reach your limit, whichever happens first.</string>
-    <string name="buy_sell_recurring_order_duration_you_cancelled">Until you cancel</string>
-    <string name="buy_sell_recurring_order_duration_until">Until</string>
-    <string name="buy_sell_recurring_order_amount">%1$s %2$s (+%3$s %4$s Payment Fee)</string>
-    <string name="buy_sell_recurring_frequency_weekly">Weekly, every %1$s</string>
-    <string name="buy_sell_recurring_frequency_daily">Every day</string>
-    <string name="buy_sell_recurring_frequency_monthly">On the %1$s of every month</string>
-
-    <!-- Transaction List -->
-    <string name="buy_sell_transaction_list_label">Coinify Order ID #%1$s</string>
-
+Bank account sending funds needs to be in the same name as your government issued ID. Otherwise it will be rejected.</string>
+  <string name="buy_sell_awaiting_funds_already_sent">I\'ve already sent the funds to Coinify</string>
+  <string name="buy_sell_awaiting_funds_reference_title">Reference/message</string>
+  <string name="buy_sell_awaiting_funds_reference_note">*Must be included!</string>
+  <string name="buy_sell_awaiting_funds_recipient_name_title">Recipient Name</string>
+  <string name="buy_sell_awaiting_funds_recipient_address_title">Recipient Address</string>
+  <string name="buy_sell_awaiting_funds_iban_title">IBAN</string>
+  <string name="buy_sell_awaiting_funds_bic_title">BIC</string>
+  <string name="buy_sell_awaiting_funds_bank_title">Bank</string>
+  <string name="buy_sell_awaiting_funds_copy_all">Copy all information to clipboard</string>
+  <string name="buy_sell_awaiting_funds_already_sent_title">Funds already sent?</string>
+  <string name="buy_sell_awaiting_funds_already_sent_message">It usually takes between 2 to 3 working days for Coinify to process orders and send funds to your bank account.</string>
+  <string name="buy_sell_awaiting_funds_finish_payment">Complete Payment</string>
+  <string name="buy_sell_awaiting_funds_cancel_trade">Cancel trade</string>
+  <string name="buy_sell_awaiting_funds_cancel_trade_success">Trade successfully cancelled</string>
+  <string name="buy_sell_awaiting_funds_cancel_trade_failed">Could not cancel trade</string>
+  <string name="buy_sell_awaiting_funds_cancel_trade_dialog_title">Cancel trade?</string>
+  <string name="buy_sell_awaiting_funds_cancel_trade_dialog_disclaimer">Note: if you have already sent funds from your bank account to Coinify, this trade will still be processed when they receive your transfer and you will be sent the bitcoin you purchased.</string>
+  <!-- KYC -->
+  <string name="buy_sell_id_verification_in_review">Identity Verification in Review</string>
+  <string name="buy_sell_id_verification_in_review_loading">Loading…</string>
+  <string name="buy_sell_review_status_thanks">Thanks for completing the Identity Verification Process</string>
+  <string name="buy_sell_review_in_progress">Identity Verification Process In Progress</string>
+  <string name="buy_sell_review_failed">Identity Verification Process Unsuccessful</string>
+  <string name="buy_sell_review_status_message">Our Buy &amp; Sell Partner Coinify will email you a status update within 48 hours.</string>
+  <string name="buy_sell_review_status_failed">Please contact our Buy &amp; Sell Partner Coinify</string>
+  <string name="buy_sell_review_status_pending_message">Transactions are unavailable until verification is complete. Please finish verifying your identity.</string>
+  <string name="buy_sell_review_finish_verification">Finish verification</string>
+  <string name="buy_sell_review_finish_verification_title">Complete Identity Verification</string>
+  <string name="buy_sell_review_status">Status: %1$s</string>
+  <string name="buy_sell_review_status_in_review">In Review</string>
+  <string name="buy_sell_review_status_in_pending">Incomplete</string>
+  <string name="buy_sell_review_status_in_rejected">Rejected</string>
+  <string name="buy_sell_review_status_in_failed">Failed</string>
+  <string name="buy_sell_review_status_in_expired">Expired</string>
+  <string name="buy_sell_review_status_in_completed">Completed</string>
+  <string name="buy_sell_review_status_in_reviewing">Reviewing</string>
+  <string name="buy_sell_review_status_in_docs_requested">Documents Requested</string>
+  <string name="buy_sell_review_status_fetching">Please wait while we check your information…</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Payment Method</string>
+  <!-- Build Transaction -->
+  <string name="buy_sell_error_fetching_quote">Error fetching quote</string>
+  <string name="buy_sell_review_transaction">Review order</string>
+  <string name="buy_sell_remaining_buy_limit">Your remaining buy limit is %1$s</string>
+  <string name="buy_sell_remaining_sell_limit">Your remaining sell limit is %1$s</string>
+  <string name="buy_sell_remaining_sell_minimum_limit">The minimum sell limit is %1$s</string>
+  <string name="buy_sell_minimum_sell_limit">Unfortunately you need at least %1$s to sell, not including the transaction fee</string>
+  <string name="buy_sell_not_enough_bitcoin">%1$s BTC exceeds your current balance</string>
+  <string name="buy_sell_error_fetching_limit">Error fetching limit</string>
+  <string name="buy_sell_amount_too_low">Please enter an amount greater than %1$s</string>
+  <string name="buy_sell_sell_bitcoin_max">You can sell up to %1$s of your balance</string>
+  <string name="buy_sell_error_forced_delay">Your previous trade is in review. You cannot make another trade for %1$s hours. Please try again later.</string>
+  <string name="buy_sell_error_limits_exceeded">Your limits for today have been exceeded. Please try again tomorrow.</string>
+  <string name="buy_sell_error_trade_in_progress">You cannot create a new trade whilst a trade is in progress. Please try again when your current trade has completed.</string>
+  <!-- Buy Order Confirmation -->
+  <string name="buy_sell_confirmation_btc_amount">BTC Amount</string>
+  <string name="buy_sell_confirmation_transaction_fee">Transaction Fee</string>
+  <string name="buy_sell_confirmation_btc_total">Total BTC to be received</string>
+  <string name="buy_sell_confirmation_title_buy">Confirm Buy</string>
+  <string name="buy_sell_confirmation_title_preview_buy">Preview Buy</string>
+  <string name="buy_sell_confirmation_title_sell">Confirm Sell</string>
+  <string name="buy_sell_confirmation_amount">Amount</string>
+  <string name="buy_sell_confirmation_payment_fee">Payment Fee</string>
+  <string name="buy_sell_confirmation_total_cost">Total Cost</string>
+  <string name="buy_sell_confirmation_order_expired">Your quote has expired. Please return to the order page to create a new order.</string>
+  <string name="buy_sell_confirmation_order_id">Coinify order ID #</string>
+  <string name="buy_sell_confirmation_unexpected_error">An unexpected error occurred. Please try again later or contact Support if the issue persists.</string>
+  <string name="buy_sell_confirmation_card">Card</string>
+  <string name="buy_sell_confirmation_bank">Transfer</string>
+  <string name="buy_sell_confirmation_amount_too_high_title">Amount too high</string>
+  <string name="buy_sell_confirmation_amount_too_high_message">Orders over %1$s can only be processed by bank transfer.</string>
+  <string name="buy_sell_confirmation_amount_too_high_use_card">Use card</string>
+  <string name="buy_sell_confirmation_amount_too_high_use_transfer">Use transfer</string>
+  <string name="buy_sell_confirmation_bank_rate_disclaimer">I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.</string>
+  <!-- Sell Order Confirmation -->
+  <string name="buy_sell_confirmation_btc_sell_amount">BTC to sell</string>
+  <string name="buy_sell_confirmation_you_will_receive">Total credit owed</string>
+  <string name="buy_sell_confirmation_btc_to_receive_description">%1$s BTC will be sent directly from your Blockchain wallet to Coinify once you press Submit.</string>
+  <string name="buy_sell_confirmation_sell_rate_disclaimer">I accept that Coinify will process my order upon the completion of the bitcoin transaction, and that bitcoin will be traded at the available exchange rate at the time, which may differ from the displayed rate.</string>
+  <!-- Card payment complete -->
+  <string name="buy_sell_card_payment_success_title">Success!
+Order Created</string>
+  <string name="buy_sell_card_payment_success_message">Funds should reach your account within 3 days.</string>
+  <string name="buy_sell_card_order_created_title">Order Created</string>
+  <string name="buy_sell_card_order_cancelled_title">Order Cancelled</string>
+  <string name="buy_sell_card_order_failed_title">Order Failed</string>
+  <string name="buy_sell_card_order_expired_title">Order Expired</string>
+  <string name="buy_sell_card_order_declined_title">Order Declined</string>
+  <string name="buy_sell_card_order_rejected_title">Order Rejected</string>
+  <string name="buy_sell_card_order_in_review_title">Reviewing Order</string>
+  <string name="buy_sell_card_order_failed_message">Your payment card has been declined. Please try again or contact your card provider.</string>
+  <string name="buy_sell_card_order_reviewing_message">Your order will remain in review for a few moments until all information is verified.</string>
+  <string name="buy_sell_card_order_cancelled_message">Your order has been cancelled. Please try again later.</string>
+  <string name="buy_sell_card_order_expired_message">Your order has expired as the payment was taking too long (15 minutes). Please create a new order.</string>
+  <!-- Welcome -->
+  <string name="buy_sell_welcome_message">Create an account now to start buying cryptocurrency in minutes.</string>
+  <string name="buy_sell_get_started">Get started</string>
+  <!-- Select Country -->
+  <string name="buy_sell_select_country">Select Your Country</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verify Your Email</string>
+  <string name="buy_sell_unverified_email_verify_message1">We sent a verification link to</string>
+  <string name="buy_sell_unverified_email_verify_message2">Click it and return here to continue with your transaction.</string>
+  <string name="buy_sell_unverified_email_verify_open_email">Open Email</string>
+  <string name="buy_sell_unverified_email_verify_agree_coinify_terms">Agree to Coinify <a href="ignored">terms and conditions</a></string>
+  <string name="buy_sell_verified_email_title">Email Verified!</string>
+  <string name="buy_sell_verified_email_message">Our partner %1$s will process your bitcoin transaction. By clicking Agree and ‘Continue’ you will create an account with %1$s.</string>
+  <!-- Account creation completed -->
+  <string name="buy_sell_identification_verification">Identify verification</string>
+  <string name="buy_sell_verify_your_identity">Verify your identity</string>
+  <string name="buy_sell_identification_verification_message">Government Anti Money Laundering require us to verify your identity</string>
+  <string name="buy_sell_verification_status_title">Verification status</string>
+  <!-- Invalid coinify country -->
+  <string name="buy_sell_invalid_country_title">Buying &amp; Selling Bitcoin is not yet available in your country</string>
+  <string name="buy_sell_invalid_country_message">We will be rolling out more countries soon.</string>
+  <!-- Coinify Verification -->
+  <string name="buy_sell_get_to_know_you_title">Let\’s Get to Know You</string>
+  <string name="buy_sell_get_to_know_you_message">We need to learn a bit about you before we can open your buy and sell account.</string>
+  <string name="buy_sell_cannot_open_file">Cannot open file chooser</string>
+  <string name="buy_sell_choose_file">Choose file</string>
+  <!-- Coinify Add Bank Account -->
+  <string name="buy_sell_add_account_title">Add Account</string>
+  <string name="buy_sell_add_account_subtitle">Add Bank Account</string>
+  <string name="buy_sell_add_account_iban_hint">International Bank Account Number (IBAN)</string>
+  <string name="buy_sell_add_account_bic_hint">Bank Identifier Code (SWIFT/BIC)</string>
+  <string name="buy_sell_add_account_iban_empty">SWIFT/BIC cannot be empty</string>
+  <string name="buy_sell_add_account_bic_empty">IBAN cannot be empty</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Select Account</string>
+  <string name="buy_sell_account_selection_description">Where would you like your funds sent?</string>
+  <string name="buy_sell_account_selection_error_message">Error loading bank accounts, please try again.</string>
+  <string name="buy_sell_account_selection_add_button">+ Add a new account</string>
+  <string name="buy_sell_account_selection_delete_title">Delete account</string>
+  <string name="buy_sell_account_selection_delete_message">Are you sure you want to delete this bank account?</string>
+  <string name="buy_sell_account_selection_delete_failure">Deleting bank account failed</string>
+  <!-- Add Address -->
+  <string name="buy_sell_add_address_subtitle">Add Address</string>
+  <string name="buy_sell_add_address_name_hint">Account holder\'s full name</string>
+  <string name="buy_sell_add_address_street_hint">Street and number</string>
+  <string name="buy_sell_add_address_city_hint">City</string>
+  <string name="buy_sell_add_address_post_code_hint">Postal code</string>
+  <string name="buy_sell_add_address_post_country_hint">Country</string>
+  <string name="buy_sell_add_address_name_empty">Name cannot be empty</string>
+  <string name="buy_sell_add_address_street_empty">Street cannot be empty</string>
+  <string name="buy_sell_add_address_city_empty">City cannot be empty</string>
+  <string name="buy_sell_add_address_postcode_empty">Postcode cannot be empty</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Recurring Order</string>
+  <string name="buy_sell_recurring_order_subtitle">Your next recurring order is scheduled</string>
+  <string name="buy_sell_recurring_order_description">To manage recurring orders, log in to your wallet in the web browser.</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frequency</string>
+  <string name="buy_sell_recurring_order_duration_title">Duration</string>
+  <string name="buy_sell_recurring_order_duration_until_cancelled">%1$s or reach your limit, whichever happens first.</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Until you cancel</string>
+  <string name="buy_sell_recurring_order_duration_until">Until</string>
+  <string name="buy_sell_recurring_order_amount">%1$s %2$s (+%3$s %4$s Payment Fee)</string>
+  <string name="buy_sell_recurring_frequency_weekly">Weekly, every %1$s</string>
+  <string name="buy_sell_recurring_frequency_daily">Every day</string>
+  <string name="buy_sell_recurring_frequency_monthly">On the %1$s of every month</string>
+  <!-- Transaction List -->
+  <string name="buy_sell_transaction_list_label">Coinify Order ID #%1$s</string>
 </resources>
