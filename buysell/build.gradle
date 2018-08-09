@@ -59,6 +59,7 @@ dependencies {
     api project(':core')
     // Dagger
     kapt Libraries.daggerKapt
+    api Libraries.koin
 
     // Unit Test dependencies
     testImplementation Libraries.junit

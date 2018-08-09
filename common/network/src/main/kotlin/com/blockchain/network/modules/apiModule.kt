@@ -2,6 +2,7 @@ package com.blockchain.network.modules
 
 import com.blockchain.network.EnvironmentUrls
 import com.blockchain.network.TLSSocketFactory
+import com.squareup.moshi.Moshi
 import okhttp3.CertificatePinner
 import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
@@ -10,13 +11,18 @@ import org.koin.dsl.module.applicationContext
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 private const val API_TIMEOUT = 30L
 private const val PING_INTERVAL = 10L
 
+class OkHttpInterceptors(val list: List<Interceptor>) : List<Interceptor> by list
+
 val apiModule = applicationContext {
+
     bean { JacksonConverterFactory.create() }
+
     bean { RxJava2CallAdapterFactory.create() }
 
     bean {
@@ -37,7 +43,7 @@ val apiModule = applicationContext {
             .retryOnConnectionFailure(false)
             .certificatePinner(get())
 
-        get<List<Interceptor>>().forEach {
+        get<OkHttpInterceptors>().forEach {
             builder.addInterceptor(it)
         }
 
@@ -65,6 +71,30 @@ val apiModule = applicationContext {
             .baseUrl(get<EnvironmentUrls>().explorerUrl)
             .client(get())
             .addConverterFactory(get<JacksonConverterFactory>())
+            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
+            .build()
+    }
+
+    bean {
+        MoshiConverterFactory.create(
+            Moshi.Builder()
+                .also {
+                    get<List<MoshiBuilderInterceptor>>()
+                        .forEach { interceptor -> interceptor.intercept(it) }
+                }
+                .build()
+        )
+    }
+
+    /**
+     * This instance converts to Kotlin data classes ONLY; it will break if used to parse data models
+     * written with Java + Jackson.
+     */
+    bean("kotlin") {
+        Retrofit.Builder()
+            .baseUrl(get<EnvironmentUrls>().explorerUrl)
+            .client(get())
+            .addConverterFactory(get<MoshiConverterFactory>())
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()
     }

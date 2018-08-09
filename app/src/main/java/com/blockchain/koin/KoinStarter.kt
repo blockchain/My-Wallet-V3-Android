@@ -1,8 +1,9 @@
 package com.blockchain.koin
 
 import android.app.Application
-import com.blockchain.koin.modules.apiInterceptors
-import com.blockchain.koin.modules.environment
+import com.blockchain.koin.modules.apiInterceptorsModule
+import com.blockchain.koin.modules.environmentModule
+import com.blockchain.koin.modules.moshiModule
 import com.blockchain.koin.modules.shapeShiftModule
 import com.blockchain.network.modules.apiModule
 import org.koin.android.ext.android.startKoin
@@ -20,10 +21,12 @@ object KoinStarter {
         application.startKoin(
             application,
             listOf(
-                environment,
+                environmentModule,
                 apiModule,
-                apiInterceptors,
-                shapeShiftModule
+                apiInterceptorsModule,
+                shapeShiftModule,
+                buySellModule,
+                moshiModule
             ),
             logger = TimberLogger()
         )

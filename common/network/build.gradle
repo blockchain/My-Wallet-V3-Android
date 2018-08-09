@@ -22,6 +22,7 @@ dependencies {
     // Network
     implementation Libraries.retrofitJacksonConverter
     implementation Libraries.retrofitRxJavaAdapter
+    implementation Libraries.retrofitRxMoshiConverter
 
     implementation Libraries.timber
 

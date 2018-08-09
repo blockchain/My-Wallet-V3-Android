@@ -5,7 +5,7 @@ import org.koin.dsl.module.applicationContext
 import piuk.blockchain.android.data.api.EnvironmentSettings
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 
-val environment = applicationContext {
+val environmentModule = applicationContext {
 
     bean { EnvironmentSettings() as EnvironmentConfig }
 
