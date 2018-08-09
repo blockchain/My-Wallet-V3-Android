@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">사기</string>
+  <string name="buy_sell_sell">판매</string>
+  <string name="buy_sell_overview_denied_button">다시 해 보세요</string>
+  <string name="buy_sell_state_processing">처리 중</string>
+  <string name="buy_sell_state_completed">완료됨</string>
+  <string name="buy_sell_state_cancelled">취소됨</string>
+  <string name="buy_sell_state_rejected">거부됨</string>
+  <string name="buy_sell_state_expired">만료됨</string>
+  <string name="buy_sell_detail_transaction_fee">거래 수수료</string>
+  <string name="buy_sell_detail_exchange_rate">환율</string>
+  <string name="buy_sell_detail_amount">금액</string>
+  <string name="buy_sell_detail_payment_fee">결제 수수료</string>
+  <string name="buy_sell_detail_total">비용 합계</string>
+  <string name="buy_sell_review_status_in_rejected">거부됨</string>
+  <string name="buy_sell_review_status_in_failed">실패함</string>
+  <string name="buy_sell_review_status_in_expired">만료됨</string>
+  <string name="buy_sell_review_status_in_completed">완료됨</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">결제 방법</string>
+  <string name="buy_sell_confirmation_transaction_fee">거래 수수료</string>
+  <string name="buy_sell_confirmation_amount">금액</string>
+  <string name="buy_sell_confirmation_payment_fee">결제 수수료</string>
+  <string name="buy_sell_confirmation_total_cost">비용 합계</string>
+  <string name="buy_sell_confirmation_bank">이체</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">이메일 인증</string>
+  <string name="buy_sell_add_account_subtitle">은행 계좌 추가</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">계좌 선택</string>
+  <string name="buy_sell_account_selection_delete_message">은행 계좌 삭제가 확실합니까?</string>
+  <string name="buy_sell_add_address_city_hint">도시</string>
+  <string name="buy_sell_add_address_post_code_hint">우편 번호</string>
+  <string name="buy_sell_add_address_post_country_hint">국가</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">반복 주문</string>
+  <string name="buy_sell_recurring_order_frequency_title">빈도</string>
+  <string name="buy_sell_recurring_order_duration_title">기간</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">취소 시까지</string>
+</resources>
