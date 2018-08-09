@@ -17,7 +17,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import piuk.blockchain.android.data.api.EnvironmentSettings;
 import piuk.blockchain.android.data.notifications.NotificationService;
 import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.android.util.PrngHelper;
@@ -28,7 +27,6 @@ import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcore.utils.PrngFixer;
-
 
 @Module
 public class ApplicationModule extends KoinDaggerModule {
@@ -87,7 +85,7 @@ public class ApplicationModule extends KoinDaggerModule {
 
     @Provides
     protected EnvironmentConfig provideEnvironmentConfig() {
-        return get(EnvironmentSettings.class);
+        return get(EnvironmentConfig.class);
     }
 
     @Provides
