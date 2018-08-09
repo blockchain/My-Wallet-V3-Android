@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="buy_sell_overview_denied_button">Спробувати ще раз</string>
+  <string name="buy_sell_detail_transaction_fee">Комісія за транзакцію</string>
+  <string name="buy_sell_detail_amount">Сума</string>
+  <string name="buy_sell_confirmation_transaction_fee">Комісія за транзакцію</string>
+  <string name="buy_sell_confirmation_amount">Сума</string>
+  <string name="buy_sell_confirmation_bank">Переказ</string>
+</resources>
