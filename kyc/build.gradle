@@ -9,7 +9,7 @@ apply from: '../quality/ktlint.gradle'
 
 buildProperties {
     secrets {
-        using project.file('../app/secrets.properties')
+        using(file('../app/secrets.properties')).or(file('../app/secretsDefaults.properties'))
     }
 }
 
