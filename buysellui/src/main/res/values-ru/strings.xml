@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Купить</string>
+  <string name="buy_sell_sell">Продать</string>
+  <string name="buy_sell_overview_denied_button">Повторить</string>
+  <string name="buy_sell_state_processing">Обрабатывается</string>
+  <string name="buy_sell_state_completed">Завершено</string>
+  <string name="buy_sell_state_cancelled">Отменено</string>
+  <string name="buy_sell_state_rejected">Отклонено</string>
+  <string name="buy_sell_state_expired">Устарело</string>
+  <string name="buy_sell_detail_transaction_fee">Комиссия транзакции</string>
+  <string name="buy_sell_detail_exchange_rate">Обменный курс</string>
+  <string name="buy_sell_detail_amount">Сумма</string>
+  <string name="buy_sell_detail_payment_fee">Комиссия за платеж</string>
+  <string name="buy_sell_detail_total">Общая стоимость</string>
+  <string name="buy_sell_review_status_in_rejected">Отклонено</string>
+  <string name="buy_sell_review_status_in_failed">Ошибка</string>
+  <string name="buy_sell_review_status_in_expired">Устарело</string>
+  <string name="buy_sell_review_status_in_completed">Завершено</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Способ оплаты</string>
+  <string name="buy_sell_confirmation_transaction_fee">Комиссия транзакции</string>
+  <string name="buy_sell_confirmation_amount">Сумма</string>
+  <string name="buy_sell_confirmation_payment_fee">Комиссия за платеж</string>
+  <string name="buy_sell_confirmation_total_cost">Общая стоимость</string>
+  <string name="buy_sell_confirmation_bank">Перевести</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Подтвердите свой адрес электронной почты</string>
+  <string name="buy_sell_add_account_subtitle">Добавить банковский счет</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Выбрать счет</string>
+  <string name="buy_sell_account_selection_delete_message">Вы действительно хотите удалить этот банковский счет?</string>
+  <string name="buy_sell_add_address_city_hint">Город</string>
+  <string name="buy_sell_add_address_post_code_hint">Почтовый индекс</string>
+  <string name="buy_sell_add_address_post_country_hint">Страна</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Повторяющееся распоряжение</string>
+  <string name="buy_sell_recurring_order_frequency_title">Частота</string>
+  <string name="buy_sell_recurring_order_duration_title">Продолжительность</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Пока вы не отмените</string>
+</resources>
