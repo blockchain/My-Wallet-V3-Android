@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="buy_sell_overview_denied_button">Erneut versuchen</string>
+  <string name="buy_sell_detail_transaction_fee">Transaktionsgebühr</string>
+  <string name="buy_sell_detail_amount">Betrag</string>
+  <string name="buy_sell_confirmation_transaction_fee">Transaktionsgebühr</string>
+  <string name="buy_sell_confirmation_amount">Betrag</string>
+  <string name="buy_sell_confirmation_bank">Überweisen</string>
+</resources>
