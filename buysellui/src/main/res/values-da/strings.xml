@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Køb</string>
+  <string name="buy_sell_sell">Sælg</string>
+  <string name="buy_sell_overview_denied_button">Prøv igen</string>
+  <string name="buy_sell_state_processing">Bearbejder</string>
+  <string name="buy_sell_state_completed">Fuldført</string>
+  <string name="buy_sell_state_cancelled">Annulleret</string>
+  <string name="buy_sell_state_rejected">Afvist</string>
+  <string name="buy_sell_state_expired">Udløbet</string>
+  <string name="buy_sell_detail_exchange_rate">Vekselkurs</string>
+  <string name="buy_sell_detail_amount">Beløb</string>
+  <string name="buy_sell_detail_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_detail_total">Pris i alt</string>
+  <string name="buy_sell_review_status_in_rejected">Afvist</string>
+  <string name="buy_sell_review_status_in_failed">Mislykket</string>
+  <string name="buy_sell_review_status_in_expired">Udløbet</string>
+  <string name="buy_sell_review_status_in_completed">Fuldført</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betalingsmetode</string>
+  <string name="buy_sell_confirmation_amount">Beløb</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_confirmation_total_cost">Pris i alt</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Bekræft din e-mail</string>
+  <string name="buy_sell_add_account_subtitle">Tilføj bankkonto</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Vælg konto</string>
+  <string name="buy_sell_account_selection_delete_message">Er du sikker på, at du ønsker at slette denne bankkonto?</string>
+  <string name="buy_sell_add_address_city_hint">By</string>
+  <string name="buy_sell_add_address_post_code_hint">Postnummer</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Tilbagevendende ordre</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frekvens</string>
+  <string name="buy_sell_recurring_order_duration_title">Varighed</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Indtil du annullerer den</string>
+</resources>
