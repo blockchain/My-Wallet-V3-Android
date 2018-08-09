@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kjøp</string>
+  <string name="buy_sell_sell">Selg</string>
+  <string name="buy_sell_state_processing">Behandles</string>
+  <string name="buy_sell_state_completed">Fullført</string>
+  <string name="buy_sell_state_cancelled">Kansellert</string>
+  <string name="buy_sell_state_rejected">Avslått</string>
+  <string name="buy_sell_state_expired">Utløpt</string>
+  <string name="buy_sell_detail_exchange_rate">Vekslingskurs</string>
+  <string name="buy_sell_detail_amount">Beløp</string>
+  <string name="buy_sell_detail_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_detail_total">Total kostnad</string>
+  <string name="buy_sell_review_status_in_rejected">Avslått</string>
+  <string name="buy_sell_review_status_in_failed">Mislyktes</string>
+  <string name="buy_sell_review_status_in_expired">Utløpt</string>
+  <string name="buy_sell_review_status_in_completed">Fullført</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betalingsmåte</string>
+  <string name="buy_sell_confirmation_amount">Beløp</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_confirmation_total_cost">Total kostnad</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Bekreft e-postadressen din</string>
+  <string name="buy_sell_add_account_subtitle">Legg til bankkonto</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Velg konto</string>
+  <string name="buy_sell_account_selection_delete_message">Er du sikker på at du vil slette denne bankkontoen?</string>
+  <string name="buy_sell_add_address_city_hint">By</string>
+  <string name="buy_sell_add_address_post_code_hint">Postnummer</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Løpende ordre</string>
+  <string name="buy_sell_recurring_order_frequency_title">Hyppighet</string>
+  <string name="buy_sell_recurring_order_duration_title">Varighet</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Inntil du avbryter</string>
+</resources>
