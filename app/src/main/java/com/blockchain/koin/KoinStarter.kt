@@ -7,6 +7,7 @@ import com.blockchain.koin.modules.shapeShiftModule
 import com.blockchain.network.modules.apiModule
 import org.koin.android.ext.android.startKoin
 import org.koin.log.Logger
+import org.koin.standalone.StandAloneContext
 import timber.log.Timber
 
 object KoinStarter {
@@ -15,6 +16,7 @@ object KoinStarter {
 
     @JvmStatic
     fun start(application: Application) {
+        StandAloneContext.closeKoin()
         application.startKoin(
             application,
             listOf(
