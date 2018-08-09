@@ -76,14 +76,16 @@ val apiModule = applicationContext {
     }
 
     bean {
-        MoshiConverterFactory.create(
-            Moshi.Builder()
-                .also {
-                    get<List<MoshiBuilderInterceptor>>()
-                        .forEach { interceptor -> interceptor.intercept(it) }
-                }
-                .build()
-        )
+        Moshi.Builder()
+            .also {
+                get<List<MoshiBuilderInterceptor>>()
+                    .forEach { interceptor -> interceptor.intercept(it) }
+            }
+            .build()
+    }
+
+    bean {
+        MoshiConverterFactory.create(get())
     }
 
     /**
