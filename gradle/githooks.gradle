@@ -6,6 +6,11 @@ task deleteGitHooksSamples(
     delete '.git/hooks'
 }
 
+task setFilePermissions(type: Exec) {
+    // Mark all files in the .git/hooks directory as executable
+    commandLine 'sh', '-c', 'find .git/hooks -type f -exec chmod 755 {} \\;'
+}
+
 task installGitHooks(
         type: Copy,
         dependsOn: 'deleteGitHooksSamples',
@@ -14,4 +19,7 @@ task installGitHooks(
 ) {
     from 'githooks/'
     into '.git/hooks'
+    doLast {
+      setFilePermissions.execute()
+    }
 }
