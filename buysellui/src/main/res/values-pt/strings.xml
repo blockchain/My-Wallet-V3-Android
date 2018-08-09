@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Comprar</string>
+  <string name="buy_sell_sell">Vender</string>
+  <string name="buy_sell_overview_denied_button">Tentar novamente</string>
+  <string name="buy_sell_state_processing">Em processamento</string>
+  <string name="buy_sell_state_completed">Concluída</string>
+  <string name="buy_sell_state_cancelled">Cancelado</string>
+  <string name="buy_sell_state_rejected">Recusada</string>
+  <string name="buy_sell_state_expired">Expirada</string>
+  <string name="buy_sell_detail_exchange_rate">Taxa de câmbio</string>
+  <string name="buy_sell_detail_amount">Valor</string>
+  <string name="buy_sell_detail_payment_fee">Taxa de pagamento</string>
+  <string name="buy_sell_detail_total">Custo total</string>
+  <string name="buy_sell_review_status_in_rejected">Recusada</string>
+  <string name="buy_sell_review_status_in_failed">Malsucedida</string>
+  <string name="buy_sell_review_status_in_expired">Expirada</string>
+  <string name="buy_sell_review_status_in_completed">Concluída</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Forma de Pagamento</string>
+  <string name="buy_sell_confirmation_amount">Valor</string>
+  <string name="buy_sell_confirmation_payment_fee">Taxa de pagamento</string>
+  <string name="buy_sell_confirmation_total_cost">Custo total</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifique seu e-mail</string>
+  <string name="buy_sell_add_account_subtitle">Adicionar conta bancária</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Selecionar Conta</string>
+  <string name="buy_sell_account_selection_delete_message">Tem certeza de que deseja excluir esta conta bancária?</string>
+  <string name="buy_sell_add_address_city_hint">Cidade</string>
+  <string name="buy_sell_add_address_post_country_hint">País</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Ordem periódica</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frequência</string>
+  <string name="buy_sell_recurring_order_duration_title">Duração</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Até você cancelar</string>
+</resources>

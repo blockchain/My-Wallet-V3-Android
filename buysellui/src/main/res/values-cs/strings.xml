@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="buy_sell_overview_denied_button">Zkusit znovu</string>
+  <string name="buy_sell_detail_transaction_fee">Poplatek za transakci</string>
+  <string name="buy_sell_detail_amount">Částka</string>
+  <string name="buy_sell_confirmation_transaction_fee">Poplatek za transakci</string>
+  <string name="buy_sell_confirmation_amount">Částka</string>
+  <string name="buy_sell_confirmation_bank">Převést</string>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">ซื้อ</string>
+  <string name="buy_sell_sell">ขาย</string>
+  <string name="buy_sell_overview_denied_button">ลองอีกครั้ง</string>
+  <string name="buy_sell_state_processing">กำลังประมวลผล</string>
+  <string name="buy_sell_state_completed">เสร็จแล้ว</string>
+  <string name="buy_sell_state_cancelled">ยกเลิกแล้ว</string>
+  <string name="buy_sell_state_rejected">ถูกปฏิเสธ</string>
+  <string name="buy_sell_state_expired">หมดอายุ</string>
+  <string name="buy_sell_detail_transaction_fee">ค่าธรรมเนียมธุรกรรม</string>
+  <string name="buy_sell_detail_exchange_rate">อัตราแลกเปลี่ยน</string>
+  <string name="buy_sell_detail_amount">จำนวน</string>
+  <string name="buy_sell_detail_payment_fee">ค่าธรรมเนียมการชำระเงิน</string>
+  <string name="buy_sell_detail_total">ค่าใช้จ่ายทั้งหมด</string>
+  <string name="buy_sell_review_status_in_rejected">ถูกปฏิเสธ</string>
+  <string name="buy_sell_review_status_in_failed">ล้มเหลว</string>
+  <string name="buy_sell_review_status_in_expired">หมดอายุ</string>
+  <string name="buy_sell_review_status_in_completed">เสร็จแล้ว</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">วิธีการชำระเงิน</string>
+  <string name="buy_sell_confirmation_transaction_fee">ค่าธรรมเนียมธุรกรรม</string>
+  <string name="buy_sell_confirmation_amount">จำนวน</string>
+  <string name="buy_sell_confirmation_payment_fee">ค่าธรรมเนียมการชำระเงิน</string>
+  <string name="buy_sell_confirmation_total_cost">ค่าใช้จ่ายทั้งหมด</string>
+  <string name="buy_sell_confirmation_bank">โอน</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">ยืนยันที่อยู่อีเมลของคุณ</string>
+  <string name="buy_sell_add_account_subtitle">เพิ่มบัญชีธนาคาร</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">เลือกบัญชี</string>
+  <string name="buy_sell_account_selection_delete_message">คุณแน่ใจหรือไม่ว่าต้องการลบบัญชีธนาคารนี้?</string>
+  <string name="buy_sell_add_address_city_hint">เมือง</string>
+  <string name="buy_sell_add_address_post_code_hint">รหัสไปรษณีย์</string>
+  <string name="buy_sell_add_address_post_country_hint">ประเทศ</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">คำสั่งแบบเกิดขึ้นซ้ำ</string>
+  <string name="buy_sell_recurring_order_frequency_title">ความถี่</string>
+  <string name="buy_sell_recurring_order_duration_title">ระยะเวลา</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">จนกระทั่งคุณยกเลิก</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Купи</string>
+  <string name="buy_sell_sell">Продай</string>
+  <string name="buy_sell_state_processing">В процес на обработка</string>
+  <string name="buy_sell_state_completed">Завършен</string>
+  <string name="buy_sell_state_cancelled">Анулирана</string>
+  <string name="buy_sell_state_rejected">Отхвърлена</string>
+  <string name="buy_sell_state_expired">Изтекъл срок</string>
+  <string name="buy_sell_detail_exchange_rate">Обменен курс</string>
+  <string name="buy_sell_detail_amount">Количество</string>
+  <string name="buy_sell_detail_payment_fee">Такса превод</string>
+  <string name="buy_sell_detail_total">Обща стойност</string>
+  <string name="buy_sell_review_status_in_rejected">Отхвърлена</string>
+  <string name="buy_sell_review_status_in_failed">Неуспешна</string>
+  <string name="buy_sell_review_status_in_expired">Изтекъл срок</string>
+  <string name="buy_sell_review_status_in_completed">Завършен</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Метод на плащане</string>
+  <string name="buy_sell_confirmation_amount">Количество</string>
+  <string name="buy_sell_confirmation_payment_fee">Такса превод</string>
+  <string name="buy_sell_confirmation_total_cost">Обща стойност</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Потвърдете имейл адреса си</string>
+  <string name="buy_sell_add_account_subtitle">Добавете банкова сметка</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Изберете сметка</string>
+  <string name="buy_sell_account_selection_delete_message">Сигурни ли сте, че желаете да изтриете тази банкова сметка?</string>
+  <string name="buy_sell_add_address_city_hint">Град</string>
+  <string name="buy_sell_add_address_post_code_hint">Пощенски код</string>
+  <string name="buy_sell_add_address_post_country_hint">Държава</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Повтаряща се поръчка</string>
+  <string name="buy_sell_recurring_order_frequency_title">Честота</string>
+  <string name="buy_sell_recurring_order_duration_title">Продължителност</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Докато я отмените</string>
+</resources>

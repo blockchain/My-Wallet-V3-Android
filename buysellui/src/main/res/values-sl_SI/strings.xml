@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Nakup</string>
+  <string name="buy_sell_sell">Prodaja</string>
+  <string name="buy_sell_overview_denied_button">poskusi znova</string>
+  <string name="buy_sell_state_processing">Obdelovanje</string>
+  <string name="buy_sell_state_completed">Končano</string>
+  <string name="buy_sell_state_cancelled">Preklicano</string>
+  <string name="buy_sell_state_rejected">Zavrnjeno</string>
+  <string name="buy_sell_state_expired">Poteklo</string>
+  <string name="buy_sell_detail_exchange_rate">Menjalni tečaj</string>
+  <string name="buy_sell_detail_amount">Vsota</string>
+  <string name="buy_sell_detail_payment_fee">Provizija za plačilo</string>
+  <string name="buy_sell_detail_total">Skupna cena</string>
+  <string name="buy_sell_review_status_in_rejected">Zavrnjeno</string>
+  <string name="buy_sell_review_status_in_failed">Ni uspelo</string>
+  <string name="buy_sell_review_status_in_expired">Poteklo</string>
+  <string name="buy_sell_review_status_in_completed">Končano</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metoda plačila</string>
+  <string name="buy_sell_confirmation_amount">Vsota</string>
+  <string name="buy_sell_confirmation_payment_fee">Provizija za plačilo</string>
+  <string name="buy_sell_confirmation_total_cost">Skupna cena</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Potrdite svoj e-poštni naslov</string>
+  <string name="buy_sell_add_account_subtitle">Dodaj bančni račun</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Izberi račun</string>
+  <string name="buy_sell_account_selection_delete_message">Ali ste prepričani, da želite izbrisati ta bančni račun?</string>
+  <string name="buy_sell_add_address_city_hint">Mesto</string>
+  <string name="buy_sell_add_address_post_code_hint">Poštna številka</string>
+  <string name="buy_sell_add_address_post_country_hint">Država</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Ponavljajoče naročilo</string>
+  <string name="buy_sell_recurring_order_frequency_title">Pogostost</string>
+  <string name="buy_sell_recurring_order_duration_title">Trajanje</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Do preklica</string>
+</resources>

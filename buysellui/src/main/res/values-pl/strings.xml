@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kup</string>
+  <string name="buy_sell_sell">Sprzedaj</string>
+  <string name="buy_sell_overview_denied_button">Spróbuj ponownie</string>
+  <string name="buy_sell_state_processing">Przetwarzanie</string>
+  <string name="buy_sell_state_completed">Ukończono</string>
+  <string name="buy_sell_state_cancelled">Anulowano</string>
+  <string name="buy_sell_state_rejected">Odrzucono</string>
+  <string name="buy_sell_state_expired">Wygasły</string>
+  <string name="buy_sell_detail_transaction_fee">Opłata transakcyjna</string>
+  <string name="buy_sell_detail_exchange_rate">Kurs wymiany</string>
+  <string name="buy_sell_detail_amount">Kwota</string>
+  <string name="buy_sell_detail_payment_fee">Opłata za płatność</string>
+  <string name="buy_sell_detail_total">Łączny koszt</string>
+  <string name="buy_sell_review_status_in_rejected">Odrzucono</string>
+  <string name="buy_sell_review_status_in_failed">Niepowodzenie</string>
+  <string name="buy_sell_review_status_in_expired">Wygasły</string>
+  <string name="buy_sell_review_status_in_completed">Ukończono</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metoda płatności</string>
+  <string name="buy_sell_confirmation_transaction_fee">Opłata transakcyjna</string>
+  <string name="buy_sell_confirmation_amount">Kwota</string>
+  <string name="buy_sell_confirmation_payment_fee">Opłata za płatność</string>
+  <string name="buy_sell_confirmation_total_cost">Łączny koszt</string>
+  <string name="buy_sell_confirmation_bank">Prześlij</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Zweryfikuj swój adres e-mail</string>
+  <string name="buy_sell_add_account_subtitle">Dodaj konto bankowe</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Wybierz konto</string>
+  <string name="buy_sell_account_selection_delete_message">Czy na pewno chcesz usunąć to konto bankowe?</string>
+  <string name="buy_sell_add_address_city_hint">Miasto</string>
+  <string name="buy_sell_add_address_post_code_hint">Kod pocztowy</string>
+  <string name="buy_sell_add_address_post_country_hint">Kraj</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Zlecenie stałe</string>
+  <string name="buy_sell_recurring_order_frequency_title">Częstotliwość</string>
+  <string name="buy_sell_recurring_order_duration_title">Czas trwania</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Do czasu anulowania</string>
+</resources>

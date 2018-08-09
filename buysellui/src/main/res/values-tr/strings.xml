@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Al</string>
+  <string name="buy_sell_sell">Sat</string>
+  <string name="buy_sell_overview_denied_button">Tekrar dene</string>
+  <string name="buy_sell_state_processing">İşleniyor</string>
+  <string name="buy_sell_state_completed">Tamamlandı</string>
+  <string name="buy_sell_state_cancelled">İptal Edilen</string>
+  <string name="buy_sell_state_rejected">Reddedildi</string>
+  <string name="buy_sell_state_expired">Süresi Dolan</string>
+  <string name="buy_sell_detail_transaction_fee">İşlem Ücreti</string>
+  <string name="buy_sell_detail_exchange_rate">Takas Oranı</string>
+  <string name="buy_sell_detail_amount">Miktar</string>
+  <string name="buy_sell_detail_payment_fee">Ödeme Ücreti</string>
+  <string name="buy_sell_detail_total">Toplam Maliyet</string>
+  <string name="buy_sell_review_status_in_rejected">Reddedildi</string>
+  <string name="buy_sell_review_status_in_failed">Başarısız</string>
+  <string name="buy_sell_review_status_in_expired">Süresi Dolan</string>
+  <string name="buy_sell_review_status_in_completed">Tamamlandı</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Ödeme Yöntemi</string>
+  <string name="buy_sell_confirmation_transaction_fee">İşlem Ücreti</string>
+  <string name="buy_sell_confirmation_amount">Miktar</string>
+  <string name="buy_sell_confirmation_payment_fee">Ödeme Ücreti</string>
+  <string name="buy_sell_confirmation_total_cost">Toplam Maliyet</string>
+  <string name="buy_sell_confirmation_bank">Transfer Et</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">E-postanı Doğrula</string>
+  <string name="buy_sell_add_account_subtitle">Banka Hesabı Ekle</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Hesap Seç</string>
+  <string name="buy_sell_account_selection_delete_message">Bu banka hesabını silmek istediğinden emin misin?</string>
+  <string name="buy_sell_add_address_city_hint">Şehir</string>
+  <string name="buy_sell_add_address_post_code_hint">Posta Kodu</string>
+  <string name="buy_sell_add_address_post_country_hint">Ülke</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Mükerrer Emir</string>
+  <string name="buy_sell_recurring_order_frequency_title">Sıklık</string>
+  <string name="buy_sell_recurring_order_duration_title">Süre</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Sen iptal edene kadar</string>
+</resources>
