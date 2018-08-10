@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.chooser
+package com.blockchain.ui.chooser
 
 sealed class AccountChooserItem(val label: String) {
     class Header(

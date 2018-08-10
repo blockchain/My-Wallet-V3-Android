@@ -34,7 +34,6 @@ import piuk.blockchain.android.ui.buysell.payment.bank.addaccount.AddBankAccount
 import piuk.blockchain.android.ui.buysell.payment.bank.addaddress.AddAddressActivity;
 import piuk.blockchain.android.ui.charts.ChartsActivity;
 import piuk.blockchain.android.ui.charts.ChartsFragment;
-import piuk.blockchain.android.ui.chooser.AccountChooserActivity;
 import piuk.blockchain.android.ui.confirm.ConfirmPaymentDialog;
 import piuk.blockchain.android.ui.contacts.detail.ContactDetailFragment;
 import piuk.blockchain.android.ui.contacts.list.ContactsListActivity;
@@ -71,11 +70,7 @@ import piuk.blockchain.androidcore.injection.PresenterScope;
  */
 @SuppressWarnings("NullableProblems")
 @PresenterScope
-@Subcomponent(
-        modules = {
-                PresenterModule.class,
-        }
-)
+@Subcomponent
 public interface PresenterComponent {
 
     // Requires access to DataManagers
@@ -129,8 +124,6 @@ public interface PresenterComponent {
     void inject(@NotNull ContactDetailFragment contactDetailFragment);
 
     void inject(@NotNull ContactConfirmRequestFragment contactConfirmRequestFragment);
-
-    void inject(@NotNull AccountChooserActivity accountChooserActivity);
 
     void inject(@NotNull OnboardingActivity onboardingActivity);
 

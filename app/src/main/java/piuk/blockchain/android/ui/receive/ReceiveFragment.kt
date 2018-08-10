@@ -50,10 +50,10 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
 import piuk.blockchain.android.ui.balance.BalanceFragment
-import piuk.blockchain.android.ui.chooser.AccountChooserActivity
-import piuk.blockchain.android.ui.chooser.AccountChooserActivity.Companion.EXTRA_SELECTED_ITEM
-import piuk.blockchain.android.ui.chooser.AccountChooserActivity.Companion.EXTRA_SELECTED_OBJECT_TYPE
-import piuk.blockchain.android.ui.chooser.AccountMode
+import com.blockchain.ui.chooser.AccountChooserActivity
+import com.blockchain.ui.chooser.AccountChooserActivity.Companion.EXTRA_SELECTED_ITEM
+import com.blockchain.ui.chooser.AccountChooserActivity.Companion.EXTRA_SELECTED_OBJECT_TYPE
+import com.blockchain.ui.chooser.AccountMode
 import piuk.blockchain.android.ui.contacts.IntroducingContactsPromptDialog
 import piuk.blockchain.android.ui.customviews.callbacks.OnTouchOutsideViewListener
 import piuk.blockchain.android.ui.home.MainActivity

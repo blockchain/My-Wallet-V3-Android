@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.chooser
+package com.blockchain.ui.chooser
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

@@ -4,6 +4,7 @@ import android.app.Application
 import com.blockchain.koin.modules.apiInterceptorsModule
 import com.blockchain.koin.modules.applicationModule
 import com.blockchain.koin.modules.environmentModule
+import com.blockchain.koin.modules.features
 import com.blockchain.koin.modules.moshiModule
 import com.blockchain.koin.modules.serviceModule
 import com.blockchain.koin.modules.shapeShiftModule
@@ -35,6 +36,7 @@ object KoinStarter {
                 buySellModule,
                 moshiModule
             ),
+            extraProperties = features,
             logger = TimberLogger()
         )
         KoinStarter.application = application

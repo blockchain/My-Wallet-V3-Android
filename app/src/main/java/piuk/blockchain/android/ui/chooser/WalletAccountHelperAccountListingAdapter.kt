@@ -1,15 +1,14 @@
 package piuk.blockchain.android.ui.chooser
 
+import com.blockchain.ui.chooser.AccountChooserItem
+import com.blockchain.ui.chooser.AccountListing
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.Observable
 import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
-import piuk.blockchain.androidcore.injection.PresenterScope
-import javax.inject.Inject
 
-@PresenterScope
-class WalletAccountHelperAccountListingAdapter @Inject constructor(
+class WalletAccountHelperAccountListingAdapter(
     private val walletAccountHelper: WalletAccountHelper
 ) : AccountListing {
 

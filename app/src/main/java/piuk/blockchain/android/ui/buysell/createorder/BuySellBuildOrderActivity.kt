@@ -38,8 +38,8 @@ import piuk.blockchain.android.ui.buysell.createorder.models.OrderType
 import piuk.blockchain.android.ui.buysell.createorder.models.SellConfirmationDisplayModel
 import piuk.blockchain.android.ui.buysell.payment.bank.accountoverview.BankAccountSelectionActivity
 import piuk.blockchain.android.ui.buysell.payment.bank.addaccount.AddBankAccountActivity
-import piuk.blockchain.android.ui.chooser.AccountChooserActivity
-import piuk.blockchain.android.ui.chooser.AccountMode
+import com.blockchain.ui.chooser.AccountChooserActivity
+import com.blockchain.ui.chooser.AccountMode
 import piuk.blockchain.android.util.extensions.MemorySafeSubscription
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.currency.toSafeDouble

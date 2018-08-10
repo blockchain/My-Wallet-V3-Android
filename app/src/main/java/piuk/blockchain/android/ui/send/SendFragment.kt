@@ -53,8 +53,8 @@ import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
 import piuk.blockchain.android.ui.account.SecondPasswordHandler
 import piuk.blockchain.android.ui.balance.BalanceFragment
-import piuk.blockchain.android.ui.chooser.AccountChooserActivity
-import piuk.blockchain.android.ui.chooser.AccountMode
+import com.blockchain.ui.chooser.AccountChooserActivity
+import com.blockchain.ui.chooser.AccountMode
 import piuk.blockchain.android.ui.confirm.ConfirmPaymentDialog
 import piuk.blockchain.android.ui.customviews.callbacks.OnTouchOutsideViewListener
 import piuk.blockchain.android.ui.home.MainActivity

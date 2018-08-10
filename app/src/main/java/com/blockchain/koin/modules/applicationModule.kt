@@ -3,7 +3,7 @@ package com.blockchain.koin.modules
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.android.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.ethereum.EthDataManager
-import piuk.blockchain.android.ui.chooser.AccountListing
+import com.blockchain.ui.chooser.AccountListing
 import piuk.blockchain.android.ui.chooser.WalletAccountHelperAccountListingAdapter
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
 import piuk.blockchain.android.util.StringUtils

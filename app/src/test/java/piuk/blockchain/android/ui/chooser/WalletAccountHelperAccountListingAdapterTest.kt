@@ -1,5 +1,7 @@
 package piuk.blockchain.android.ui.chooser
 
+import com.blockchain.ui.chooser.AccountChooserItem
+import com.blockchain.ui.chooser.AccountListing
 import com.nhaarman.mockito_kotlin.mock
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.payload.data.LegacyAddress

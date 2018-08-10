@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.chooser
+package com.blockchain.ui.chooser
 
 import info.blockchain.balance.CryptoCurrency
 import io.reactivex.Observable
