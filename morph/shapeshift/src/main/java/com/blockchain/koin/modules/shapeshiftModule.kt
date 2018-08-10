@@ -1,5 +1,6 @@
 package com.blockchain.koin.modules
 
+import info.blockchain.wallet.shapeshift.ShapeShiftApi
 import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints
 import info.blockchain.wallet.shapeshift.ShapeShiftUrls
 import org.koin.dsl.module.applicationContext
@@ -21,4 +22,6 @@ val shapeShiftModule = applicationContext {
     bean {
         get<Retrofit>("shapeshift").create(ShapeShiftEndpoints::class.java)
     }
+
+    factory { ShapeShiftApi(get()) }
 }

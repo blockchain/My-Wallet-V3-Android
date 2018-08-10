@@ -10,7 +10,6 @@ import info.blockchain.wallet.payment.Payment
 import info.blockchain.wallet.prices.PriceApi
 import info.blockchain.wallet.prices.PriceEndpoints
 import info.blockchain.wallet.settings.SettingsManager
-import info.blockchain.wallet.shapeshift.ShapeShiftApi
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.android.data.fingerprint.FingerprintAuth
 import piuk.blockchain.android.data.fingerprint.FingerprintAuthImpl
@@ -38,8 +37,6 @@ val serviceModule = applicationContext {
     }
 
     factory { PriceApi(get(), get()) }
-
-    factory { ShapeShiftApi(get()) }
 
     factory { FingerprintAuthImpl() as FingerprintAuth }
 
