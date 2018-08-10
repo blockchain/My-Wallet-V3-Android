@@ -5,6 +5,8 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="PlainTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- No colors defined here for default styling on AlertDialog buttons -->
     </style>

@@ -622,7 +622,6 @@
     <string name="contacts_pending_transaction">In Progress</string>
     <string name="contacts_transaction_history">Finished</string>
     <string name="contacts_request_money_receive">Request payment</string>
-    <string name="contacts_no_confirmed_contacts_found">No confirmed contacts found!</string>
     <string name="contacts_decline_pending_transaction">Are you sure you want to decline this pending transaction? Once you decline a payment, no further action can be taken.</string>
     <string name="contacts_cancel_pending_transaction">Are you sure you want to cancel this pending transaction? Once you cancel a payment, no further action can be taken.</string>
     <string name="contacts_pending_transaction_delete_success">Pending transaction successfully deleted</string>
