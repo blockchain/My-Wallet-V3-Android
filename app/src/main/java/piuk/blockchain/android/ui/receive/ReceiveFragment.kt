@@ -173,9 +173,10 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
     }
 
     private fun setupToolbar() {
-        if ((activity as AppCompatActivity).supportActionBar != null) {
+        val supportActionBar = (activity as AppCompatActivity).supportActionBar
+        if (supportActionBar != null) {
             (activity as BaseAuthActivity).setupToolbar(
-                (activity as MainActivity).supportActionBar, R.string.receive_bitcoin
+                supportActionBar, R.string.receive_bitcoin
             )
         } else {
             finishPage()

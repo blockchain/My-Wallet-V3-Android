@@ -270,9 +270,10 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
     }
 
     private fun setupToolbar() {
-        if ((activity as AppCompatActivity).supportActionBar != null) {
+        val supportActionBar = (activity as AppCompatActivity).supportActionBar
+        if (supportActionBar != null) {
             (activity as BaseAuthActivity).setupToolbar(
-                (activity as MainActivity).supportActionBar, R.string.send_bitcoin
+                supportActionBar, R.string.send_bitcoin
             )
         } else {
             finishPage()

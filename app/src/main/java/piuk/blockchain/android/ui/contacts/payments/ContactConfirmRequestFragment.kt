@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_contact_payment_request_notes.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
-import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
@@ -142,9 +141,10 @@ class ContactConfirmRequestFragment :
 
     private fun setupToolbar() {
         // TODO: For now this isn't reset when leaving this page as onResume isn't triggered ¯\_(ツ)_/¯
-        if ((activity as AppCompatActivity).supportActionBar != null) {
+        val supportActionBar = (activity as AppCompatActivity).supportActionBar
+        if (supportActionBar != null) {
             (activity as BaseAuthActivity).setupToolbar(
-                (activity as MainActivity).supportActionBar, R.string.contacts_confirm_title
+                supportActionBar, R.string.contacts_confirm_title
             )
         } else {
             finishPage()

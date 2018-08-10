@@ -197,9 +197,9 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
     }
 
     private fun setupToolbar() {
-        if ((activity as AppCompatActivity).supportActionBar != null) {
+        (activity as AppCompatActivity).supportActionBar?.let {
             (activity as BaseAuthActivity).setupToolbar(
-                (activity as MainActivity).supportActionBar, R.string.dashboard_title
+                it, R.string.dashboard_title
             )
         }
     }

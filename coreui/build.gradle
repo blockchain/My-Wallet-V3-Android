@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-allopen'
-apply plugin: 'kotlin-kapt'
 apply from: '../quality/jacocoLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
 
@@ -43,10 +42,6 @@ android {
     }
 }
 
-kapt {
-    useBuildCache = true
-}
-
 allOpen {
     annotation("piuk.blockchain.androidcore.utils.annotations.Mockable")
 }
@@ -57,6 +52,7 @@ androidExtensions {
 
 dependencies {
     api project(':core')
+
     // Support Libs
     api Libraries.appCompat
     api Libraries.recyclerView
@@ -67,19 +63,22 @@ dependencies {
     api Libraries.v14
     api Libraries.dynamicAnims
     api Libraries.constraintLayout
-    // Dagger
-    kapt Libraries.daggerKapt
+
+    // Injection
     api Libraries.koinAndroid
 
     // Rx UI Bindings
     api Libraries.rxBindingV4
     api Libraries.rxBindingV7
     api Libraries.rxFingerprint
+
     // Logging
     api(Libraries.crashlytics) { transitive = true }
+
     // Custom Views
     api Libraries.konfetti
     api Libraries.wheelPicker
+
     // Utils
     api Libraries.dexter
 

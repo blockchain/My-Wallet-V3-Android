@@ -47,14 +47,11 @@ import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import piuk.blockchain.androidcoreui.ApplicationLifeCycle;
 import piuk.blockchain.androidcoreui.BuildConfig;
-import piuk.blockchain.androidcoreui.injector.CoreInjector;
 import piuk.blockchain.androidcoreui.utils.AndroidUtils;
 import piuk.blockchain.androidcoreui.utils.logging.AppLaunchEvent;
 import piuk.blockchain.androidcoreui.utils.logging.Logging;
 import retrofit2.Retrofit;
 import timber.log.Timber;
-
-import static org.koin.android.ext.android.AndroidExtKt.startKoin;
 
 /**
  * Created by adambennett on 04/08/2016.
@@ -102,7 +99,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
         KoinStarter.start(this);
 
         // Init objects first
-        CoreInjector.getInstance().init(this);
         Injector.getInstance().init(this);
         // Inject into Application
         Injector.getInstance().getAppComponent().inject(this);

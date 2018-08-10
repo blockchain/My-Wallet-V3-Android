@@ -11,7 +11,6 @@ import piuk.blockchain.android.data.notifications.FcmCallbackService;
 import piuk.blockchain.android.data.notifications.InstanceIdService;
 import piuk.blockchain.android.util.exceptions.LoggingExceptionHandler;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
-import piuk.blockchain.androidcoreui.injector.ContextModule;
 
 /**
  * Created by adambennett on 08/08/2016.
@@ -26,6 +25,7 @@ import piuk.blockchain.androidcoreui.injector.ContextModule;
         ServiceModule.class,
         ContextModule.class,
         KycModule.class,
+        ContextModule.class,
 })
 public interface ApplicationComponent {
 

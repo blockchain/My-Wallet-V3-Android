@@ -1,4 +1,4 @@
-package piuk.blockchain.androidcoreui.injector
+package piuk.blockchain.android.injection
 
 import android.content.Context
 import com.blockchain.koin.KoinDaggerModule
