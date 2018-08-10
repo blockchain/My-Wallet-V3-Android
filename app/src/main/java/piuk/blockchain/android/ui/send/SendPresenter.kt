@@ -64,7 +64,6 @@ import java.math.BigInteger
 import java.math.RoundingMode
 import java.text.DecimalFormatSymbols
 import java.util.HashMap
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -2012,12 +2011,8 @@ class SendPresenter @Inject constructor(
      * If the ratio of fee/amount is over 1%
      */
     private fun isLargeTransaction(): Boolean {
-        val valueString = CryptoValue(CryptoCurrency.BTC, absoluteSuggestedFee)
+        val usdValue = CryptoValue(CryptoCurrency.BTC, absoluteSuggestedFee)
             .toFiat(exchangeRateFactory, "USD")
-            .toStringWithoutSymbol(Locale.getDefault())
-        val usdValue =
-            currencyFormatManager.stripSeparator(valueString, getDefaultDecimalSeparator())
-                .toDouble()
         val txSize = sendDataManager.estimateSize(
             pendingTransaction.unspentOutputBundle.spendableOutputs.size,
             2
@@ -2025,7 +2020,7 @@ class SendPresenter @Inject constructor(
         val relativeFee =
             absoluteSuggestedFee.toDouble() / pendingTransaction.bigIntAmount.toDouble() * 100.0
 
-        return usdValue > SendModel.LARGE_TX_FEE &&
+        return usdValue.value > SendModel.LARGE_TX_FEE.toBigDecimal() &&
             txSize > SendModel.LARGE_TX_SIZE &&
             relativeFee > SendModel.LARGE_TX_PERCENTAGE
     }

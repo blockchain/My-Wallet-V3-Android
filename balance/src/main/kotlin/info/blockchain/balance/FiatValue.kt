@@ -43,6 +43,7 @@ data class FiatValue(
     fun toStringWithoutSymbol(locale: Locale): String =
         FiatFormat[Key(locale, currencyCode, includeSymbol = false)]
             .format(value)
+            .trim()
 
     operator fun plus(other: FiatValue): FiatValue {
         if (currencyCode != other.currencyCode)
