@@ -116,6 +116,12 @@ class FiatValueTests {
     }
 
     @Test
+    fun `can format USD without symbol in ES`() {
+        FiatValue("USD", 0.07.toBigDecimal())
+            .toStringWithoutSymbol(Locale("es_ES")) `should equal` "0.07"
+    }
+
+    @Test
     fun `isZero`() {
         FiatValue("GBP", 0.toBigDecimal()).isZero `should be` true
     }
