@@ -22,6 +22,5 @@ val applicationModule = applicationContext {
     factory { WalletAccountHelper(get(), get(), get(), get(), get(), get(), get()) }
 
     factory { WalletAccountHelperAccountListingAdapter(get()) }
-
-    factory { get<WalletAccountHelperAccountListingAdapter>() as AccountListing }
+        .bind(AccountListing::class)
 }
