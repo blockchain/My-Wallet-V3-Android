@@ -67,8 +67,8 @@ import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
 import piuk.blockchain.androidcore.utils.extensions.toKotlinObject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
-import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
+import piuk.blockchain.androidcoreui.ui.base.ToolBarActivity
 import piuk.blockchain.androidcoreui.ui.customviews.NumericKeyboardCallback
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.AppUtil
@@ -175,7 +175,7 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
     private fun setupToolbar() {
         val supportActionBar = (activity as AppCompatActivity).supportActionBar
         if (supportActionBar != null) {
-            (activity as BaseAuthActivity).setupToolbar(
+            (activity as ToolBarActivity).setupToolbar(
                 supportActionBar, R.string.receive_bitcoin
             )
         } else {

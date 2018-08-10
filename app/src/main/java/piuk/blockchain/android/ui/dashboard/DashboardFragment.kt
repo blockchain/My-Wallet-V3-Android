@@ -27,8 +27,8 @@ import piuk.blockchain.android.ui.home.MainActivity.SETTINGS_EDIT
 import piuk.blockchain.android.util.OSUtil
 import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
-import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
+import piuk.blockchain.androidcoreui.ui.base.ToolBarActivity
 import piuk.blockchain.androidcoreui.utils.AndroidUtils
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -198,7 +198,7 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
 
     private fun setupToolbar() {
         (activity as AppCompatActivity).supportActionBar?.let {
-            (activity as BaseAuthActivity).setupToolbar(
+            (activity as ToolBarActivity).setupToolbar(
                 it, R.string.dashboard_title
             )
         }
