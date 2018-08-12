@@ -10,8 +10,6 @@ import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kyc.models.nabu.UserStateAdapter
-import com.blockchain.kyc.models.onfido.CheckResultAdapter
-import com.blockchain.kyc.models.onfido.CheckStatusAdapter
 import com.blockchain.testutils.MockedRetrofitTest
 import com.blockchain.testutils.getStringFromResource
 import com.blockchain.testutils.mockWebServerInit

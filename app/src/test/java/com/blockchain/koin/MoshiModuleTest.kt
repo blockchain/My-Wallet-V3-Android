@@ -1,5 +1,6 @@
 package com.blockchain.koin
 
+import com.blockchain.injection.kycModule
 import com.blockchain.koin.modules.moshiModule
 import com.blockchain.network.modules.apiModule
 import com.squareup.moshi.Moshi
@@ -18,6 +19,7 @@ class MoshiModuleTest : AutoCloseKoinTest() {
             listOf(
                 buySellModule,
                 apiModule,
+                kycModule,
                 moshiModule
             )
         )

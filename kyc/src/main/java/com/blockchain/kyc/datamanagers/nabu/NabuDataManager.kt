@@ -22,10 +22,11 @@ class NabuDataManager(
     private val appVersion: String,
     private val deviceId: String,
     private val settingsDataManager: SettingsDataManager,
-    payloadDataManager: PayloadDataManager
+    private val payloadDataManager: PayloadDataManager
 ) {
 
-    private val guid = payloadDataManager.guid
+    private val guid
+        get() = payloadDataManager.guid
     private val emailSingle
         get() = settingsDataManager.getSettings()
             .map { it.email }
