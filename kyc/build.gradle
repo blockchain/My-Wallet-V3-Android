@@ -71,8 +71,6 @@ dependencies {
     implementation(Libraries.googlePlayServicesBase) {
         exclude group: 'com.android.support'
     }
-    // Dagger
-    kapt Libraries.daggerKapt
     // Navigation
     implementation Libraries.navigationControllerCore
     implementation Libraries.navigationControllerFragments

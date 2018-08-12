@@ -1,37 +1,27 @@
 package piuk.blockchain.android;
 
-import com.blockchain.injection.KycComponent;
-import com.blockchain.injection.KycDependencyGraph;
-import com.blockchain.koin.KoinStarter;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.security.ProviderInstaller;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
-
+import com.blockchain.koin.KoinStarter;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.security.ProviderInstaller;
+import dagger.Lazy;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.FrameworkInterface;
 import info.blockchain.wallet.api.Environment;
-
 import info.blockchain.wallet.api.WalletApi;
 import info.blockchain.wallet.api.WalletApiAccess;
-import org.bitcoinj.core.NetworkParameters;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import dagger.Lazy;
 import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.plugins.RxJavaPlugins;
-import org.jetbrains.annotations.NotNull;
+import org.bitcoinj.core.NetworkParameters;
 import piuk.blockchain.android.data.connectivity.ConnectivityManager;
 import piuk.blockchain.android.injection.Injector;
 import piuk.blockchain.android.ui.auth.LogoutActivity;
@@ -53,11 +43,14 @@ import piuk.blockchain.androidcoreui.utils.logging.Logging;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  * Created by adambennett on 04/08/2016.
  */
 
-public class BlockchainApplication extends Application implements FrameworkInterface, KycDependencyGraph {
+public class BlockchainApplication extends Application implements FrameworkInterface {
 
     public static final String RX_ERROR_TAG = "RxJava Error";
 
@@ -147,12 +140,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
                 .subscribe(connectionEvent -> SSLVerifyActivity.start(getApplicationContext(), connectionEvent));
     }
 
-    @NotNull
-    @Override
-    public KycComponent getKycComponent() {
-        return Injector.getInstance().getKycComponent();
-    }
-
     // Pass instances to JAR Framework, evaluate after object graph instantiated fully
     @Override
     public Retrofit getRetrofitApiInstance() {
@@ -187,6 +174,14 @@ public class BlockchainApplication extends Application implements FrameworkInter
     @Override
     public String getDevice() {
         return "android";
+    }
+
+    @Override
+    public String getDeviceId() {
+        return Settings.Secure.getString(
+                getContentResolver(),
+                Settings.Secure.ANDROID_ID
+        );
     }
 
     @Override

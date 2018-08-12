@@ -2,8 +2,6 @@ package piuk.blockchain.android.injection;
 
 import android.content.Context;
 
-import com.blockchain.injection.KycComponent;
-
 /**
  * Created by adambennett on 08/08/2016.
  */
@@ -14,7 +12,6 @@ public enum Injector {
 
     private ApplicationComponent applicationComponent;
     private PresenterComponent presenterComponent;
-    private KycComponent kycComponent;
 
     public static Injector getInstance() {
         return INSTANCE;
@@ -52,13 +49,6 @@ public enum Injector {
             presenterComponent = applicationComponent.presenterComponent();
         }
         return presenterComponent;
-    }
-
-    public KycComponent getKycComponent() {
-        if (kycComponent == null) {
-            kycComponent = applicationComponent.kycComponent();
-        }
-        return kycComponent;
     }
 
 }

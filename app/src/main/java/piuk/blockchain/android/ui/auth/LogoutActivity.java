@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import com.blockchain.kyc.datamanagers.nabu.NabuDataManager;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
 import piuk.blockchain.android.data.websocket.WebSocketService;
@@ -32,6 +33,7 @@ public class LogoutActivity extends AppCompatActivity {
     @Inject protected WalletOptionsState walletOptionsState;
     @Inject protected ShapeShiftDataManager shapeShiftDataManager;
     @Inject protected CoinifyDataManager coinifyDataManager;
+    @Inject protected NabuDataManager nabuDataManager;
     @Inject protected OSUtil osUtil;
 
     {
@@ -62,6 +64,7 @@ public class LogoutActivity extends AppCompatActivity {
                 bchDataManager.clearBchAccountDetails();
                 shapeShiftDataManager.clearShapeShiftData();
                 coinifyDataManager.clearAccessToken();
+                nabuDataManager.clearAccessToken();
                 DashboardPresenter.onLogout();
 
                 buyConditions.wipe();

@@ -19,53 +19,6 @@ data class ApplicantResponse(
     val country: String
 )
 
-data class OnfidoCheckOptions(
-    val type: String,
-    val reports: List<ReportType>
-) {
-
-    companion object {
-        /**
-         * Returns the check configuration required for our intended KYC flow.
-         */
-        fun getDefault() = OnfidoCheckOptions(
-            type = "express",
-            reports = listOf(
-                ReportType("document"),
-                ReportType("facial_similarity", "video")
-            )
-        )
-    }
-}
-
-data class ReportType(
-    val name: String,
-    val variant: String? = null
-)
-
-data class OnfidoCheckResponse(
-    val id: String,
-    // ISO-8601 timestamp
-    @field:Json(name = "created_at") val createdAt: String,
-    val sandbox: Boolean,
-    val href: String,
-    val type: String,
-    val status: CheckStatus,
-    val result: CheckResult?,
-    @field:Json(name = "results_uri") val resultsUri: String,
-    @field:Json(name = "redirect_uri") val redirectUri: String?,
-    val reports: List<Report>
-)
-
-data class Report(
-    val id: String,
-    val name: String,
-    @field:Json(name = "created_at") val createdAt: String,
-    val status: CheckStatus,
-    val result: CheckResult?,
-    val href: String
-)
-
 enum class CheckStatus(val value: String) {
     /**
      * Applicant has not yet submitted the Applicant Form, either because they have not started filling
@@ -102,7 +55,13 @@ enum class CheckStatus(val value: String) {
      * Insufficient/inconsistent information is provided by the applicant, and the report has been bounced back
      * for further information.
      */
-    Reopened("reopened");
+    Reopened("reopened"),
+
+    /**
+     * Sometimes, reports take time to process, and their results do not return instantly. In this case,
+     * the check will return with an in_progress status.
+     */
+    InProgress("in_progress");
 
     override fun toString(): String = value
 }
@@ -118,6 +77,7 @@ class CheckStatusAdapter {
         "paused" -> CheckStatus.Paused
         "cancelled" -> CheckStatus.Cancelled
         "reopened" -> CheckStatus.Reopened
+        "in_progress" -> CheckStatus.InProgress
         else -> throw JsonDataException("Unknown CheckStatus $data, unsupported data type")
     }
 

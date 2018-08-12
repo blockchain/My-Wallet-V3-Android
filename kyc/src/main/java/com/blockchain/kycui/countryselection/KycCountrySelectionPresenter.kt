@@ -7,16 +7,15 @@ import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
-import javax.inject.Inject
 
-class KycCountrySelectionPresenter @Inject constructor(
+class KycCountrySelectionPresenter(
     private val nabuDataManager: NabuDataManager
 ) : BasePresenter<KycCountrySelectionView>() {
 
     override fun onViewReady() = Unit
 
     internal fun onCountrySelected(countryCode: String) {
-        nabuDataManager.isInEeaCountry(countryCode, "")
+        nabuDataManager.isInEeaCountry(countryCode)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { view.showProgress() }

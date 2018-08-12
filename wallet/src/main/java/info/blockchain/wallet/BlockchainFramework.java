@@ -53,4 +53,8 @@ public final class BlockchainFramework {
     public static String getAppVersion() {
         return blockchainInterface.getAppVersion();
     }
+
+    public static String getDeviceId() {
+        return blockchainInterface.getDeviceId();
+    }
 }

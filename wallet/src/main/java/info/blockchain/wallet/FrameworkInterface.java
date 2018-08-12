@@ -44,4 +44,9 @@ public interface FrameworkInterface extends ApiCode {
      * Flags wallets and addresses as created on a certain app version - for issue debugging.
      */
     String getAppVersion();
+
+    /**
+     * Provides a unique device ID for the user's handset.
+     */
+    String getDeviceId();
 }

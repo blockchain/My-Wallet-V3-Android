@@ -102,18 +102,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startOnfidoCheck(applicantId: String) {
-        onfidoDataManager.createCheck(applicantId, apiKey)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
-                    Toast.makeText(this, "KYC check creation success", LENGTH_LONG).show()
-                },
-                onError = {
-                    Timber.e(it)
-                    Toast.makeText(this, "KYC check creation failed", LENGTH_LONG).show()
-                }
-            )
+        // TODO: Here we need to send an auth'd request to Nabu with the applicantId, as they'll start
+        // The check process with Onfido themselves in order to use the webhook.
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

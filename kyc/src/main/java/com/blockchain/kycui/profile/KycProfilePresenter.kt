@@ -2,10 +2,9 @@ package com.blockchain.kycui.profile
 
 import com.blockchain.kycui.profile.models.ProfileModel
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
-import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class KycProfilePresenter @Inject constructor() : BasePresenter<KycProfileView>() {
+class KycProfilePresenter : BasePresenter<KycProfileView>() {
 
     var firstNameSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
     var lastNameSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }

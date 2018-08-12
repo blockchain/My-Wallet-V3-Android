@@ -48,6 +48,11 @@ class CheckStatusAdapterTest {
     }
 
     @Test
+    fun `from in progress`() {
+        CheckStatusAdapter().fromJson("in_progress") `should equal` CheckStatus.InProgress
+    }
+
+    @Test
     fun `from unknown, should throw JsonDataException`() {
         {
             CheckStatusAdapter().fromJson("")
@@ -92,5 +97,10 @@ class CheckStatusAdapterTest {
     @Test
     fun `to reopened`() {
         CheckStatusAdapter().toJson(CheckStatus.Reopened) `should equal` "reopened"
+    }
+
+    @Test
+    fun `to in progress`() {
+        CheckStatusAdapter().toJson(CheckStatus.InProgress) `should equal` "in_progress"
     }
 }

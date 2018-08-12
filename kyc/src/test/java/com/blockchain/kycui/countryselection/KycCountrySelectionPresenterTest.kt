@@ -3,7 +3,6 @@ package com.blockchain.kycui.countryselection
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
@@ -35,12 +34,12 @@ class KycCountrySelectionPresenterTest {
     fun `onCountrySelected valid country`() {
         // Arrange
         val countryCode = "UK"
-        whenever(nabuDataManager.isInEeaCountry(eq(countryCode), any()))
+        whenever(nabuDataManager.isInEeaCountry(countryCode))
             .thenReturn(Single.just(true))
         // Act
         subject.onCountrySelected(countryCode)
         // Assert
-        verify(nabuDataManager).isInEeaCountry(eq(countryCode), any())
+        verify(nabuDataManager).isInEeaCountry(countryCode)
         verify(view).showProgress()
         verify(view).hideProgress()
         verify(view).continueFlow()
@@ -50,12 +49,12 @@ class KycCountrySelectionPresenterTest {
     fun `onCountrySelected invalid country`() {
         // Arrange
         val countryCode = "US"
-        whenever(nabuDataManager.isInEeaCountry(eq(countryCode), any()))
+        whenever(nabuDataManager.isInEeaCountry(countryCode))
             .thenReturn(Single.just(false))
         // Act
         subject.onCountrySelected(countryCode)
         // Assert
-        verify(nabuDataManager).isInEeaCountry(eq(countryCode), any())
+        verify(nabuDataManager).isInEeaCountry(countryCode)
         verify(view).showProgress()
         verify(view).hideProgress()
         verify(view).invalidCountry()
@@ -65,12 +64,12 @@ class KycCountrySelectionPresenterTest {
     fun `onCountrySelected error`() {
         // Arrange
         val countryCode = "US"
-        whenever(nabuDataManager.isInEeaCountry(eq(countryCode), any()))
+        whenever(nabuDataManager.isInEeaCountry(countryCode))
             .thenReturn(Single.error { Throwable() })
         // Act
         subject.onCountrySelected(countryCode)
         // Assert
-        verify(nabuDataManager).isInEeaCountry(eq(countryCode), any())
+        verify(nabuDataManager).isInEeaCountry(countryCode)
         verify(view).showProgress()
         verify(view).hideProgress()
         verify(view).showErrorToast(any())

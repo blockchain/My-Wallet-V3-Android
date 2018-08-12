@@ -1,7 +1,6 @@
 package com.blockchain.kyc.services.onfido
 
 import com.blockchain.kyc.api.onfido.APPLICANTS
-import com.blockchain.kyc.api.onfido.CHECKS
 import com.blockchain.kyc.models.onfido.CheckResultAdapter
 import com.blockchain.kyc.models.onfido.CheckStatusAdapter
 import com.squareup.moshi.Moshi
@@ -65,37 +64,6 @@ class OnfidoServiceTest {
         // Check URL
         val request = server.takeRequest()
         request.path `should equal to` "/$APPLICANTS"
-        // Check Header
-        request.headers.get("Authorization") `should equal` "Token token=$apiToken"
-    }
-
-    @Test
-    fun createCheck() {
-        // Arrange
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(getStringFromResource("com/blockchain/kyc/services/onfido/CheckResponse.json"))
-        )
-        val applicantId = "12345"
-        val apiToken = "API_TOKEN"
-        // Act
-        val testObserver = subject.createCheck(
-            path = APPLICANTS,
-            applicantId = applicantId,
-            apiToken = apiToken
-        ).test()
-        // Assert
-        testObserver.awaitTerminalEvent()
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        // Check response
-        val checkResponse = testObserver.values().first()
-        checkResponse.id `should equal to` "8546921-123123-123123"
-        checkResponse.reports.size `should equal to` 2
-        // Check URL
-        val request = server.takeRequest()
-        request.path `should equal to` "/$APPLICANTS$applicantId/$CHECKS"
         // Check Header
         request.headers.get("Authorization") `should equal` "Token token=$apiToken"
     }

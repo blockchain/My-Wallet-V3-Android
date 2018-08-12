@@ -29,6 +29,10 @@ object NotImplementedFrameworkInterface : FrameworkInterface {
     override val apiCode: String
         get() = throw NotImplementedException("Function should not be called")
 
+    override fun getDeviceId(): String {
+        throw NotImplementedException("Function should not be called")
+    }
+
     override fun getAppVersion(): String {
         throw NotImplementedException("Function should not be called")
     }

@@ -28,7 +28,7 @@ object Versions {
     const val constraintLayout = "1.0.2"
     const val supportTesting = "1.0.2"
     const val multidex = "1.0.2"
-    const val navigation = "1.0.0-alpha04"
+    const val navigation = "1.0.0-alpha05"
 
     // Networking, RxJava
     const val retrofit = "2.4.0"

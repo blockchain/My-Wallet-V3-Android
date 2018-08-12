@@ -82,6 +82,11 @@ public final class MetadataTest {
             }
 
             @Override
+            public String getDeviceId() {
+                return "DeviceId";
+            }
+
+            @Override
             public String getAppVersion() {
                 return null;
             }

@@ -28,6 +28,8 @@ class EnvironmentSettings : EnvironmentConfig {
 
     override val apiUrl: String = BuildConfig.API_URL
 
+    override val appVersion: String = BuildConfig.VERSION_NAME
+
     override val coinifyUrl: String
         get() = if (environment != Environment.PRODUCTION) COINIFY_SANDBOX_BASE else COINIFY_LIVE_BASE
 

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import com.blockchain.injection.getKycComponent
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
@@ -16,6 +15,7 @@ import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
@@ -27,7 +27,6 @@ import piuk.blockchain.kyc.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_kyc_profile.button_kyc_profile_next as buttonNext
 import kotlinx.android.synthetic.main.fragment_kyc_profile.edit_text_date_of_birth as editTextDob
 import kotlinx.android.synthetic.main.fragment_kyc_profile.edit_text_kyc_first_name as editTextFirstName
@@ -36,8 +35,7 @@ import kotlinx.android.synthetic.main.fragment_kyc_profile.input_layout_kyc_date
 
 class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), KycProfileView {
 
-    @Inject
-    lateinit var presenter: KycProfilePresenter
+    private val presenter: KycProfilePresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val compositeDisposable = CompositeDisposable()
     override val firstName: String
@@ -51,11 +49,6 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.fragment_kyc_profile)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        getKycComponent().inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

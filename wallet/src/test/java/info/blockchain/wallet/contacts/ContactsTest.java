@@ -98,6 +98,11 @@ public final class ContactsTest {
             }
 
             @Override
+            public String getDeviceId() {
+                return "DeviceId";
+            }
+
+            @Override
             public String getAppVersion() {
                 return null;
             }

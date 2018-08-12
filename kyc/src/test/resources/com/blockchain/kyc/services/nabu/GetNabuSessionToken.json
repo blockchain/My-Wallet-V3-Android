@@ -1,0 +1,9 @@
+{
+  "id": "7af48b7c-af37-47da-b830-7cf5e6cbc52e",
+  "userId": "d753109e-34c2-42bd-82f1-cc90470234kf",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXRhaWwtY29yZSIsImV4cCI6MTUzMzY5NzI3MywiaWF0IjoxNTMzNjU0MDczLCJ1c2VySUQiOiJhMmMwODA1My0xNDQ4LTQ2NjEtYmNhZS0yYzA5NmFhNzdjOTgiLCJqdGkiOiI3YWY0OGI3Yy1hZjM3LTQ3ZGEtYjgzMC03Y2Y1ZTZjYmM1MmUifQ.UzawGRtKsYX96vGhm_Hv8yXWFDqrIpeZt4eH2p6Eelk",
+  "isActive": true,
+  "expiresAt": "2018-08-07T15:01:13.624Z",
+  "insertedAt": "2018-08-08T03:01:13.041Z",
+  "updatedAt": "2018-08-07T15:01:13.624Z"
+}

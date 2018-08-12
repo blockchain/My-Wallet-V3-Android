@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.blockchain.injection.getKycComponent
-import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.countryselection.adapter.CountryCodeAdapter
+import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.countryList
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
@@ -23,24 +23,17 @@ import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_kyc_country_selection.recycler_view_country_selection as recyclerView
 import kotlinx.android.synthetic.main.fragment_kyc_country_selection.search_view_kyc as searchView
 
 class KycCountrySelectionFragment :
     BaseFragment<KycCountrySelectionView, KycCountrySelectionPresenter>(), KycCountrySelectionView {
 
-    @Inject
-    lateinit var presenter: KycCountrySelectionPresenter
+    private val presenter: KycCountrySelectionPresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val countryList = Locale.getDefault().countryList()
     private val countryCodeAdapter = CountryCodeAdapter { presenter.onCountrySelected(it) }
     private var progressDialog: MaterialProgressDialog? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        getKycComponent().inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

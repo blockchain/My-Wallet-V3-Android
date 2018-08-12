@@ -3,6 +3,7 @@ package piuk.blockchain.android.injection;
 import android.app.NotificationManager;
 import android.content.Context;
 import com.blockchain.koin.KoinDaggerModule;
+import com.blockchain.kyc.datamanagers.nabu.NabuDataManager;
 import com.blockchain.network.EnvironmentUrls;
 import com.google.firebase.iid.FirebaseInstanceId;
 import dagger.Module;
@@ -93,5 +94,10 @@ public class ApplicationModule extends KoinDaggerModule {
     @Singleton
     protected PrngFixer providePrngFixer(Context context, AccessState accessState) {
         return new PrngHelper(context, accessState);
+    }
+
+    @Provides
+    NabuDataManager provideNabuDataManager() {
+        return get(NabuDataManager.class);
     }
 }
