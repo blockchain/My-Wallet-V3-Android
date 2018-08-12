@@ -4,6 +4,7 @@ package piuk.blockchain.androidcore.utils.extensions
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.squareup.moshi.Moshi
 import org.json.JSONException
 
 /**
@@ -26,4 +27,22 @@ inline fun <reified T> String.toKotlinObject(): T {
 fun Any.toSerialisedString(): String {
     val mapper = ObjectMapper()
     return mapper.writeValueAsString(this)
+}
+
+/**
+ * Serialises any object to a [String] using Moshi.
+ */
+inline fun <reified T> String.toMoshiKotlinObject(): T {
+    val moshi = Moshi.Builder().build()
+    val jsonAdapter = moshi.adapter(T::class.java)
+    return jsonAdapter.fromJson(this) ?: throw IllegalStateException("Error parsing JSON")
+}
+
+/**
+ * Serialises any object to a [String] using Moshi.
+ */
+inline fun <reified T> T.toMoshiSerialisedString(): String {
+    val moshi = Moshi.Builder().build()
+    val jsonAdapter = moshi.adapter(T::class.java)
+    return jsonAdapter.toJson(this)
 }
