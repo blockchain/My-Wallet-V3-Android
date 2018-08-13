@@ -17,7 +17,7 @@ val kycModule = applicationContext {
 
     bean { NabuService(get(), get("kotlin")) }
 
-    factory { NabuDataManager(get(), get(), get("app-version"), get("device-id")) }
+    factory { NabuDataManager(get(), get(), getProperty("app-version"), get("device-id")) }
 
     factory { OnfidoDataManager(get()) }
 

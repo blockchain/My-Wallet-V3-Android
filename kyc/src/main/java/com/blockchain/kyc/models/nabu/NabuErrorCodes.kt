@@ -18,14 +18,7 @@ enum class NabuErrorCodes(val code: Int) {
 
     companion object {
 
-        fun fromErrorCode(code: Int): NabuErrorCodes {
-            for (error in NabuErrorCodes.values()) {
-                if (code == error.code) {
-                    return error
-                }
-            }
-
-            return Unknown
-        }
+        fun fromErrorCode(code: Int): NabuErrorCodes =
+            NabuErrorCodes.values().firstOrNull { it.code == code } ?: Unknown
     }
 }

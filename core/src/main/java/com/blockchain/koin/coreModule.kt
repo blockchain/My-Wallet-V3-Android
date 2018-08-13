@@ -75,7 +75,7 @@ val coreModule = applicationContext {
 
     bean { BchDataStore() }
 
-    bean { BlockExplorer(get("explorer"), get("api"), get("api-code")) }
+    bean { BlockExplorer(get("explorer"), get("api"), getProperty("api-code")) }
 
     factory { ExchangeRateDataManager(get(), get()) }
 

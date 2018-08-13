@@ -13,9 +13,5 @@ val environmentModule = applicationContext {
 
     bean("explorer-url") { get<EnvironmentUrls>().explorerUrl }
 
-    bean("app-version") { get<EnvironmentConfig>().appVersion }
-
-    bean("api-code") { BlockchainFramework.getApiCode() }
-
     bean("device-id") { BlockchainFramework.getDeviceId() }
 }

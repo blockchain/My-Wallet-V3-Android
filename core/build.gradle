@@ -72,6 +72,7 @@ dependencies {
     api Libraries.timber
 
     // Unit Test dependencies
+    testImplementation Libraries.json
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.hamcrestJunit
