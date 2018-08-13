@@ -11,6 +11,10 @@ buildscript {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 sourceCompatibility = Versions.javaCompatibilityVersion
 targetCompatibility = Versions.javaCompatibilityVersion
 
@@ -18,6 +22,7 @@ dependencies {
     implementation project(":balance")
     implementation Libraries.kotlin
     implementation Libraries.koin
+    implementation Libraries.okHttp
 
     // Network
     implementation Libraries.retrofitJacksonConverter
@@ -26,12 +31,17 @@ dependencies {
 
     implementation Libraries.timber
 
+    implementation Libraries.moshiKotlin
+
     // Testing
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.json
     testImplementation Libraries.kluent
     testImplementation Libraries.koinTest
+    testImplementation Libraries.okHttpMock
+    testImplementation Libraries.mockWebServer
+    testImplementation project(':testutils')
 }
 
 test {

@@ -33,6 +33,7 @@ object Versions {
     // Networking, RxJava
     const val retrofit = "2.4.0"
     const val okHttp = "3.10.0"
+    const val mockWebServer = "v0.1.0"
     const val okIo = "1.14.1"
     const val moshi = "1.6.0"
     const val jacksonCore = "2.9.5"
@@ -207,5 +208,6 @@ object Libraries {
     const val espresso = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
     const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.retrofit}"
     const val okHttpMock = "com.squareup.okhttp3:mockwebserver:${Versions.okHttp}"
+    const val mockWebServer = "com.github.fabric8io:mockwebserver:${Versions.mockWebServer}"
     const val jacoco = "org.jacoco:org.jacoco.core:${Versions.jacoco}"
 }
