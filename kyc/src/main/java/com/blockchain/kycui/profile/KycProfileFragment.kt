@@ -12,12 +12,15 @@ import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
+import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.getTextString
@@ -43,6 +46,7 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
     override val lastName: String
         get() = editTextLastName.getTextString()
     override var dateOfBirth: Calendar? = null
+    private var progressDialog: MaterialProgressDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,6 +82,7 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
             .onDelayedChange(KycStep.LastName) { presenter.lastNameSet = it }
             .subscribe()
 
+        inputLayoutDob.setOnClickListener { onDateOfBirthClicked() }
         editTextDob.setOnClickListener { onDateOfBirthClicked() }
         buttonNext.setOnClickListener { presenter.onContinueClicked() }
     }
@@ -86,10 +91,27 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
         toast(profileModel.toString())
     }
 
+    override fun showErrorToast(message: Int) {
+        toast(message, ToastCustom.TYPE_ERROR)
+    }
+
+    override fun showProgressDialog() {
+        progressDialog = MaterialProgressDialog(activity).apply {
+            setOnCancelListener { presenter.onProgressCancelled() }
+            setMessage(R.string.kyc_country_selection_please_wait)
+            show()
+        }
+    }
+
+    override fun dismissProgressDialog() {
+        progressDialog?.apply { dismiss() }
+        progressDialog = null
+    }
+
     private fun TextView.onDelayedChange(
         kycStep: KycStep,
         presenterPropAssignment: (Boolean) -> Unit
-    ) =
+    ): Observable<Boolean> =
         this.afterTextChangeEvents()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.editable()?.toString() ?: "" }

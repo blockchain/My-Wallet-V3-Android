@@ -1,0 +1,17 @@
+{
+  "firstName": "satoshi",
+  "lastName": "nakamoto",
+  "email": "satoshi@btc.com",
+  "mobile": "+447123123123",
+  "mobileVerified": true,
+  "address": {
+    "city": "London",
+    "line1": "41 Great Street",
+    "line2": "42 Car Court",
+    "state": null,
+    "country": "United Kingdom",
+    "postCode": "E1E1"
+  },
+  "state": "CREATED",
+  "kycState": "NONE"
+}

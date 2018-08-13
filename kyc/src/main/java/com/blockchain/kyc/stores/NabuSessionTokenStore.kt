@@ -1,20 +1,20 @@
 package com.blockchain.kyc.stores
 
-import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
+import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.data.datastores.persistentstore.PersistentStore
 import piuk.blockchain.androidcore.utils.Optional
 
-class NabuSessionTokenStore : NabuTokenStore, PersistentStore<NabuOfflineTokenResponse> {
+class NabuSessionTokenStore : NabuTokenStore, PersistentStore<NabuSessionTokenResponse> {
 
-    private var token: Optional<NabuOfflineTokenResponse> = Optional.None
+    private var token: Optional<NabuSessionTokenResponse> = Optional.None
 
-    override fun store(data: NabuOfflineTokenResponse): Observable<NabuOfflineTokenResponse> {
+    override fun store(data: NabuSessionTokenResponse): Observable<NabuSessionTokenResponse> {
         token = Optional.Some(data)
         return Observable.just(getElement())
     }
 
-    override fun getAccessToken(): Observable<Optional<NabuOfflineTokenResponse>> =
+    override fun getAccessToken(): Observable<Optional<NabuSessionTokenResponse>> =
         Observable.just(token)
 
     override fun invalidate() {
@@ -26,5 +26,5 @@ class NabuSessionTokenStore : NabuTokenStore, PersistentStore<NabuOfflineTokenRe
         else -> false
     }
 
-    private fun getElement(): NabuOfflineTokenResponse = (token as Optional.Some).element
+    private fun getElement(): NabuSessionTokenResponse = (token as Optional.Some).element
 }

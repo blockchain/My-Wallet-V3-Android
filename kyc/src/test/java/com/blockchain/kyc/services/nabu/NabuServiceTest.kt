@@ -1,9 +1,15 @@
 package com.blockchain.kyc.services.nabu
 
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
-import com.blockchain.kyc.api.nabu.NABU_CREATE_USER
+import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
+import com.blockchain.kyc.api.nabu.NABU_USERS
+import com.blockchain.kyc.models.nabu.KycState
+import com.blockchain.kyc.models.nabu.KycStateAdapter
+import com.blockchain.kyc.models.nabu.NabuBasicUser
+import com.blockchain.kyc.models.nabu.UserState
+import com.blockchain.kyc.models.nabu.UserStateAdapter
 import com.blockchain.kyc.models.onfido.CheckResultAdapter
 import com.blockchain.kyc.models.onfido.CheckStatusAdapter
 import com.blockchain.testutils.MockedRetrofitTest
@@ -12,6 +18,7 @@ import com.blockchain.testutils.mockWebServerInit
 import com.squareup.moshi.Moshi
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should equal`
 import org.amshove.kluent.mock
@@ -24,8 +31,8 @@ class NabuServiceTest {
 
     private lateinit var subject: NabuService
     private val moshi: Moshi = Moshi.Builder()
-        .add(CheckResultAdapter())
-        .add(CheckStatusAdapter())
+        .add(UserStateAdapter())
+        .add(KycStateAdapter())
         .build()
     private val server: MockWebServer = MockWebServer()
     private val environmentConfig: EnvironmentConfig = mock()
@@ -52,8 +59,8 @@ class NabuServiceTest {
                 .setBody(CREATE_USER_RESPONSE)
         )
         // Act
-        val testObserver = subject.createUser(
-            path = NABU_CREATE_USER,
+        val testObserver = subject.createUserId(
+            path = NABU_CREATE_USER_ID,
             email = email,
             guid = guid
         ).test()
@@ -66,7 +73,7 @@ class NabuServiceTest {
         userId.userId `should equal to` "uniqueUserId"
         // Check URL
         val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_CREATE_USER"
+        request.path `should equal to` "/$NABU_CREATE_USER_ID"
     }
 
     @Test
@@ -158,6 +165,83 @@ class NabuServiceTest {
     }
 
     @Test
+    fun createBasicUser() {
+        // Arrange
+        val userId = "USER_ID"
+        val firstName = "FIRST_NAME"
+        val lastName = "LAST_NAME"
+        val email = "EMAIL"
+        val dateOfBirth = "12-12-1234"
+        val sessionToken = "SESSION_TOKEN"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(getStringFromResource(""))
+        )
+        // Act
+        val testObserver = subject.createBasicUser(
+            path = NABU_USERS,
+            userId = userId,
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            dateOfBirth = dateOfBirth,
+            sessionToken = sessionToken
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_USERS/$userId"
+        // Check Body
+        val requestString = request.requestToString()
+        val adapter = moshi.adapter(NabuBasicUser::class.java)
+        val basicUserBody = adapter.fromJson(requestString)!!
+        basicUserBody.id `should equal to` userId
+        basicUserBody.firstName `should equal to` firstName
+        basicUserBody.lastName `should equal to` lastName
+        basicUserBody.email `should equal to` email
+        basicUserBody.dateOfBirth `should equal to` dateOfBirth
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
+    fun getUser() {
+        // Arrange
+        val userId = "USER_ID"
+        val sessionToken = "SESSION_TOKEN"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetUser.json"))
+        )
+        // Act
+        val testObserver = subject.getUser(
+            path = NABU_USERS,
+            userId = userId,
+            sessionToken = sessionToken
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check Response
+        val nabuUser = testObserver.values().first()
+        nabuUser.firstName `should equal` "satoshi"
+        nabuUser.address?.city `should equal` "London"
+        nabuUser.state `should equal` UserState.Created
+        nabuUser.kycState `should equal` KycState.None
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_USERS/$userId"
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
     fun getEeaCountries() {
         // Arrange
         server.enqueue(
@@ -180,6 +264,9 @@ class NabuServiceTest {
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_COUNTRIES?region=eea"
     }
+
+    private fun RecordedRequest.requestToString(): String =
+        body.inputStream().bufferedReader().use { it.readText() }
 
     companion object {
         private const val CREATE_USER_RESPONSE = "{\n" +

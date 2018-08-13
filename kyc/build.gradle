@@ -75,6 +75,7 @@ dependencies {
     implementation Libraries.navigationControllerCore
     implementation Libraries.navigationControllerFragments
     // Unit Test dependencies
+    testImplementation project(':testutils')
     testImplementation project(':testutils-android')
     testImplementation Libraries.junit
     testImplementation Libraries.mockito

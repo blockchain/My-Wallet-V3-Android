@@ -19,7 +19,7 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kyc_nav_host)
-        setupToolbar(toolBar, "Exchange")
+        setupToolbar(toolBar, R.string.kyc_splash_title)
     }
 
     override fun setHostTitle(title: Int) {

@@ -25,4 +25,5 @@
     <string name="kyc_profile_last_name_hint">Last Name</string>
     <string name="kyc_profile_dob_hint">Date of Birth</string>
     <string name="kyc_profile_next">Next</string>
+    <string name="kyc_profile_error">Error creating user details, try again later</string>
 </resources>

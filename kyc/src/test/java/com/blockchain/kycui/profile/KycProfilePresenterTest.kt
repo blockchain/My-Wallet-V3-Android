@@ -1,5 +1,6 @@
 package com.blockchain.kycui.profile
 
+import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kycui.profile.models.ProfileModel
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -9,17 +10,28 @@ import org.amshove.kluent.any
 import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Test
+import piuk.blockchain.androidcore.data.metadata.MetadataManager
+import piuk.blockchain.androidcore.data.payload.PayloadDataManager
+import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import java.util.Calendar
 
 class KycProfilePresenterTest {
 
     private lateinit var subject: KycProfilePresenter
     private val view: KycProfileView = mock()
+    private val nabuDataManager: NabuDataManager = mock()
+    private val settingsDataManager: SettingsDataManager = mock()
+    private val payloadDataManager: PayloadDataManager = mock()
+    private val metadataManager: MetadataManager = mock()
 
     @Before
     fun setUp() {
-        subject = KycProfilePresenter()
-        subject.initView(view)
+        subject = KycProfilePresenter(
+            nabuDataManager,
+            settingsDataManager,
+            payloadDataManager,
+            metadataManager
+        ).apply { initView(view) }
     }
 
     @Test
