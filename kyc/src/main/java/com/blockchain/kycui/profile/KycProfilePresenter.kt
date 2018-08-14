@@ -33,6 +33,7 @@ class KycProfilePresenter(
     internal fun onContinueClicked() {
         check(!view.firstName.isEmpty()) { "firstName is empty" }
         check(!view.lastName.isEmpty()) { "lastName is empty" }
+        check(view.dateOfBirth != null) { "dateOfBirth is null" }
 
         metadataManager.fetchMetadata(USER_CREDENTIALS_METADATA_NODE)
             .subscribeOn(Schedulers.io())
@@ -65,12 +66,12 @@ class KycProfilePresenter(
 
     private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.createUserId()
         .subscribeOn(Schedulers.io())
-        .flatMapCompletable {
-            nabuDataManager.getAuthToken(it)
+        .flatMapCompletable { userId ->
+            nabuDataManager.getAuthToken(userId)
                 .subscribeOn(Schedulers.io())
-                .flatMapCompletable {
-                    metadataManager.saveToMetadata(it.mapToMetadata())
-                        .toSingle { it }
+                .flatMapCompletable { tokenResponse ->
+                    metadataManager.saveToMetadata(tokenResponse.mapToMetadata())
+                        .toSingle { tokenResponse }
                         .flatMapCompletable { createBasicUser(it) }
                 }
         }
