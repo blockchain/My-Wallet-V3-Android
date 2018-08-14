@@ -5,6 +5,7 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kyc.util.toISO8601DateString
+import com.blockchain.testutils.date
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -20,7 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
-import java.util.Calendar
+import java.util.Locale
 
 class KycProfilePresenterTest {
 
@@ -105,7 +106,7 @@ class KycProfilePresenterTest {
         // Arrange
         whenever(view.firstName).thenReturn("Adam")
         whenever(view.lastName).thenReturn("Bennett")
-        val dateOfBirth = date(2014, 8, 10)
+        val dateOfBirth = date(Locale.US, 2014, 8, 10)
         whenever(view.dateOfBirth).thenReturn(dateOfBirth)
         whenever(
             metadataManager.fetchMetadata(
@@ -125,7 +126,7 @@ class KycProfilePresenterTest {
         // Arrange
         val firstName = "Adam"
         val lastName = "Bennett"
-        val dateOfBirth = date(2014, 8, 10)
+        val dateOfBirth = date(Locale.US, 2014, 8, 10)
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.firstName).thenReturn(firstName)
         whenever(view.lastName).thenReturn(lastName)
@@ -156,7 +157,7 @@ class KycProfilePresenterTest {
         // Arrange
         val firstName = "Adam"
         val lastName = "Bennett"
-        val dateOfBirth = date(2014, 8, 10)
+        val dateOfBirth = date(Locale.US, 2014, 8, 10)
         val offlineToken = NabuCredentialsMetadata("", "")
         val userId = "USER_ID"
         whenever(view.firstName).thenReturn(firstName)
@@ -186,15 +187,5 @@ class KycProfilePresenterTest {
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
         verify(view).continueSignUp(any())
-    }
-
-    private fun date(
-        year: Int,
-        month: Int,
-        dayOfMonth: Int
-    ): Calendar = Calendar.getInstance().apply {
-        set(Calendar.YEAR, year)
-        set(Calendar.MONTH, month - 1)
-        set(Calendar.DAY_OF_MONTH, dayOfMonth)
     }
 }
