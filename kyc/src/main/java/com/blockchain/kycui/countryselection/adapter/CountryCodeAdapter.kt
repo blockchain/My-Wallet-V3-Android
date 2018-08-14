@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_country.view.*
-import piuk.blockchain.androidcore.utils.Country
+import com.blockchain.kycui.countryselection.util.CountryDisplayModel
 import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.kyc.R
@@ -14,7 +14,9 @@ class CountryCodeAdapter(
     private val countrySelector: (String) -> Unit
 ) : RecyclerView.Adapter<CountryCodeAdapter.CountryCodeViewHolder>() {
 
-    var items: List<Country> by Delegates.observable(emptyList()) { _, oldList, newList ->
+    var items: List<CountryDisplayModel> by Delegates.observable(
+        emptyList()
+    ) { _, oldList, newList ->
         autoNotify(oldList, newList) { o, n -> o == n }
     }
 
@@ -35,7 +37,7 @@ class CountryCodeAdapter(
         private val name = itemView.text_view_country_name
 
         fun bind(
-            country: Country,
+            country: CountryDisplayModel,
             countrySelector: (String) -> Unit
         ) {
             flag.text = country.flag

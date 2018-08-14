@@ -1,10 +1,10 @@
 package com.blockchain.kyc.services.nabu
 
-import com.blockchain.kyc.api.nabu.NABU_USERS
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
+import com.blockchain.kyc.api.nabu.NABU_USERS
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.NabuBasicUser
@@ -13,6 +13,7 @@ import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
 import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.NewUserRequest
+import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserId
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -97,11 +98,12 @@ class NabuService(
         sessionToken
     )
 
-    internal fun getEeaCountries(
-        path: String = apiPath + NABU_COUNTRIES
-    ): Single<List<NabuCountryResponse>> = service.getHomebrewRegions(
+    internal fun getCountriesList(
+        path: String = apiPath + NABU_COUNTRIES,
+        scope: Scope
+    ): Single<List<NabuCountryResponse>> = service.getCountriesList(
         path,
-        "eea"
+        scope.value
     ).wrapErrorMessage()
 
     companion object {

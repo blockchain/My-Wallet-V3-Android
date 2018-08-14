@@ -1,19 +1,21 @@
 package com.blockchain.kycui.countryselection
 
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.countryselection.adapter.CountryCodeAdapter
+import com.blockchain.kycui.countryselection.models.CountrySelectionState
+import com.blockchain.kycui.countryselection.util.CountryDisplayModel
+import com.blockchain.kycui.countryselection.util.toDisplayList
+import com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.android.ext.android.inject
-import piuk.blockchain.androidcore.utils.countryList
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
@@ -31,8 +33,8 @@ class KycCountrySelectionFragment :
 
     private val presenter: KycCountrySelectionPresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
-    private val countryList = Locale.getDefault().countryList()
     private val countryCodeAdapter = CountryCodeAdapter { presenter.onCountrySelected(it) }
+    private var countryList: List<CountryDisplayModel>? = null
     private var progressDialog: MaterialProgressDialog? = null
 
     override fun onCreateView(
@@ -47,7 +49,7 @@ class KycCountrySelectionFragment :
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            adapter = countryCodeAdapter.apply { items = countryList }
+            adapter = countryCodeAdapter
         }
 
         RxSearchView.queryTextChanges(searchView)
@@ -55,36 +57,53 @@ class KycCountrySelectionFragment :
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { query ->
-                countryCodeAdapter.items =
-                    countryList.filter {
-                        it.name.contains(query, ignoreCase = true) ||
-                            it.countryCode.contains(query, ignoreCase = true)
-                    }
+                countryList?.let { list ->
+                    countryCodeAdapter.items =
+                        list.filter {
+                            it.name.contains(query, ignoreCase = true) ||
+                                it.countryCode.contains(query, ignoreCase = true)
+                        }
+                }
             }
             .doOnNext { recyclerView.scrollToPosition(0) }
             .subscribe()
 
         progressListener.setHostTitle(R.string.kyc_country_selection_title)
         progressListener.incrementProgress(KycStep.CountrySelection)
+
+        onViewReady()
     }
 
     override fun continueFlow() {
         findNavController(this).navigate(R.id.kycProfileFragment)
     }
 
-    override fun invalidCountry() {
-        AlertDialog.Builder(requireContext(), R.style.AlertDialogStyle)
-            .setTitle(R.string.kyc_country_selection_invalid_country_title)
-            .setMessage(R.string.kyc_country_selection_invalid_country_message)
-            .setPositiveButton(android.R.string.ok) { _, _ -> requireActivity().finish() }
-            .show()
+    override fun invalidCountry(countryCode: String) {
+        val bundleArgs = KycInvalidCountryFragment.bundleArgs(countryCode)
+        findNavController(this).navigate(R.id.kycInvalidCountryFragment, bundleArgs)
     }
 
-    override fun showErrorToast(errorMessage: Int) {
+    override fun renderUiState(state: CountrySelectionState) {
+        when (state) {
+            CountrySelectionState.Loading -> showProgress()
+            is CountrySelectionState.Error -> showErrorToast(state.errorMessage)
+            is CountrySelectionState.Data -> renderCountriesList(state)
+        }
+    }
+
+    private fun renderCountriesList(state: CountrySelectionState.Data) {
+        hideProgress()
+        countryList = state.countriesList.toDisplayList(Locale.getDefault()).also {
+            countryCodeAdapter.items = it
+        }
+    }
+
+    private fun showErrorToast(errorMessage: Int) {
+        hideProgress()
         toast(errorMessage, ToastCustom.TYPE_ERROR)
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         progressDialog = MaterialProgressDialog(
             activity
         ).apply {
@@ -94,7 +113,7 @@ class KycCountrySelectionFragment :
         }
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         if (progressDialog != null && progressDialog!!.isShowing) {
             progressDialog?.dismiss()
         }

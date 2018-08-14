@@ -4,6 +4,7 @@ import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
 import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
+import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserId
 import com.blockchain.kyc.services.nabu.NabuService
 import com.blockchain.kyc.stores.NabuSessionTokenStore
@@ -203,40 +204,20 @@ class NabuDataManagerTest {
     }
 
     @Test
-    fun `isInEeaCountry should return true`() {
+    fun getCountriesList() {
         // Arrange
-        val countryCode = "UK"
         val countriesList = listOf(
-            NabuCountryResponse("GER", "Germany", listOf("EEA")),
-            NabuCountryResponse("UK", "United Kingdom", listOf("EEA"))
+            NabuCountryResponse("GER", "Germany", listOf("EEA"), listOf("KYC")),
+            NabuCountryResponse("UK", "United Kingdom", listOf("EEA"), listOf("KYC"))
         )
-        whenever(nabuService.getEeaCountries())
+        whenever(nabuService.getCountriesList(scope = Scope.Kyc))
             .thenReturn(Single.just(countriesList))
         // Act
-        val testObserver = subject.isInEeaCountry(countryCode).test()
+        val testObserver = subject.getCountriesList(Scope.Kyc).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
-        testObserver.assertValue(true)
-        verify(nabuService).getEeaCountries()
-    }
-
-    @Test
-    fun `isInEeaCountry should return false`() {
-        // Arrange
-        val countryCode = "US"
-        val countriesList = listOf(
-            NabuCountryResponse("GER", "Germany", listOf("EEA")),
-            NabuCountryResponse("UK", "United Kingdom", listOf("EEA"))
-        )
-        whenever(nabuService.getEeaCountries())
-            .thenReturn(Single.just(countriesList))
-        // Act
-        val testObserver = subject.isInEeaCountry(countryCode).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        testObserver.assertValue(false)
-        verify(nabuService).getEeaCountries()
+        testObserver.assertValue(countriesList)
+        verify(nabuService).getCountriesList(scope = Scope.Kyc)
     }
 }

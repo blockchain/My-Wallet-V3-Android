@@ -18,9 +18,17 @@
         <action
             android:id="@+id/action_kycCountrySelectionFragment_to_kycProfileFragment"
             app:destination="@id/kycProfileFragment" />
+        <action
+            android:id="@+id/action_kycCountrySelectionFragment_to_kycInvalidCountryFragment"
+            app:destination="@id/kycInvalidCountryFragment" />
     </fragment>
     <fragment
         android:id="@+id/kycProfileFragment"
         android:name="com.blockchain.kycui.profile.KycProfileFragment"
         android:label="KycProfileFragment" />
+    <fragment
+        android:id="@+id/kycInvalidCountryFragment"
+        android:name="com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment"
+        android:label="KycInvalidCountryFragment" >
+    </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import com.blockchain.kyc.models.nabu.NabuErrorCodes
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
 import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
+import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.services.nabu.NabuService
 import com.blockchain.kyc.stores.NabuSessionTokenStore
 import io.reactivex.Completable
@@ -102,12 +103,8 @@ class NabuDataManager(
         nabuTokenStore.invalidate()
     }
 
-    internal fun isInEeaCountry(countryCode: String): Single<Boolean> =
-        nabuService.getEeaCountries()
-            .map { it.containsCountry(countryCode) }
-
-    private fun List<NabuCountryResponse>.containsCountry(countryCode: String): Boolean =
-        this.any { it.code.equals(countryCode, ignoreCase = true) }
+    internal fun getCountriesList(scope: Scope): Single<List<NabuCountryResponse>> =
+        nabuService.getCountriesList(scope = scope)
 
     private fun unauthenticated(it: Throwable) =
         (it as? NabuApiException?)?.getErrorCode() == NabuErrorCodes.TokenExpired
@@ -139,13 +136,13 @@ class NabuDataManager(
         offlineToken: NabuOfflineTokenResponse,
         singleToResume: (NabuSessionTokenResponse) -> Single<T>
     ): Function<Throwable, out Single<T>> =
-        Function {
-            if (unauthenticated(it)) {
+        Function { throwable ->
+            if (unauthenticated(throwable)) {
                 clearAccessToken()
                 return@Function refreshToken(offlineToken)
                     .flatMap { singleToResume(it) }
             } else {
-                return@Function Single.error(it)
+                return@Function Single.error(throwable)
             }
         }
 }

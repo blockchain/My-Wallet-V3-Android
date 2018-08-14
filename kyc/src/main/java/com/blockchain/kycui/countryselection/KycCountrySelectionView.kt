@@ -1,17 +1,13 @@
 package com.blockchain.kycui.countryselection
 
-import android.support.annotation.StringRes
+import com.blockchain.kycui.countryselection.models.CountrySelectionState
 import piuk.blockchain.androidcoreui.ui.base.View
 
 interface KycCountrySelectionView : View {
 
-    fun showProgress()
-
-    fun hideProgress()
-
     fun continueFlow()
 
-    fun invalidCountry()
+    fun invalidCountry(countryCode: String)
 
-    fun showErrorToast(@StringRes errorMessage: Int)
+    fun renderUiState(state: CountrySelectionState)
 }

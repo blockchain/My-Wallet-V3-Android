@@ -26,4 +26,9 @@
     <string name="kyc_profile_dob_hint">Date of Birth</string>
     <string name="kyc_profile_next">Next</string>
     <string name="kyc_profile_error">Error creating user details, try again later</string>
+
+    <!-- Invalid Country -->
+    <string name="kyc_invalid_country_exit">Exit</string>
+    <string name="kyc_invalid_country_header">Coming soon to %1$s</string>
+    <string name="kyc_invalid_country_message">Every country has different rules on how to buy and sell cryptocurrencies. Keep your eyes peeled, and we\'ll let you know as soon as we launch in %1$s!</string>
 </resources>

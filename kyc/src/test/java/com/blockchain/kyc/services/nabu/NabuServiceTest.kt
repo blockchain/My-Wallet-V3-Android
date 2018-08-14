@@ -8,6 +8,7 @@ import com.blockchain.kyc.api.nabu.NABU_USERS
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.NabuBasicUser
+import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kyc.models.nabu.UserStateAdapter
 import com.blockchain.testutils.MockedRetrofitTest
@@ -240,7 +241,7 @@ class NabuServiceTest {
     }
 
     @Test
-    fun getEeaCountries() {
+    fun `get kyc countries`() {
         // Arrange
         server.enqueue(
             MockResponse()
@@ -248,8 +249,9 @@ class NabuServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetEeaCountriesList.json"))
         )
         // Act
-        val testObserver = subject.getEeaCountries(
-            path = NABU_COUNTRIES
+        val testObserver = subject.getCountriesList(
+            path = NABU_COUNTRIES,
+            scope = Scope.Kyc
         ).test()
         // Assert
         testObserver.awaitTerminalEvent()
@@ -260,7 +262,32 @@ class NabuServiceTest {
         countryList[0].code `should equal to` "AUT"
         // Check URL
         val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_COUNTRIES?region=eea"
+        request.path `should equal to` "/$NABU_COUNTRIES?scope=kyc"
+    }
+
+    @Test
+    fun `get all countries with no scope`() {
+        // Arrange
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetEeaCountriesList.json"))
+        )
+        // Act
+        val testObserver = subject.getCountriesList(
+            path = NABU_COUNTRIES,
+            scope = Scope.None
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check Response
+        val countryList = testObserver.values().first()
+        countryList[0].code `should equal to` "AUT"
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_COUNTRIES"
     }
 
     private fun RecordedRequest.requestToString(): String =

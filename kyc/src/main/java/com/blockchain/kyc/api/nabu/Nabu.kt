@@ -64,8 +64,8 @@ internal interface Nabu {
     ): Single<NabuUser>
 
     @GET
-    fun getHomebrewRegions(
+    fun getCountriesList(
         @Url url: String,
-        @Query("region") region: String
+        @Query("scope") scope: String?
     ): Single<List<NabuCountryResponse>>
 }
