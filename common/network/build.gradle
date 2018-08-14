@@ -21,6 +21,7 @@ targetCompatibility = Versions.javaCompatibilityVersion
 dependencies {
     implementation project(":balance")
     implementation Libraries.kotlin
+    implementation Libraries.rxKotlin
     implementation Libraries.koin
     implementation Libraries.okHttp
 

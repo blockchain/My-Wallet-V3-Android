@@ -5,6 +5,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import org.amshove.kluent.`it returns`
+import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
@@ -18,25 +19,35 @@ class MoshiJsonWebSocketDecoratorTest {
     private val moshi = Moshi.Builder().build()
 
     @Test
-    fun `open delegates to open`() {
+    fun `open delegates to inner open`() {
         val inner = mock<WebSocket<String, String>>()
-        inner.toJsonSocket<TypeIn, TypeOut>(moshi)
+        inner.toJsonSocket<TypeOut, TypeIn>(moshi)
             .open()
         verify(inner).open()
     }
 
     @Test
-    fun `close delegates to close`() {
+    fun `close delegates to inner close`() {
         val inner = mock<WebSocket<String, String>>()
-        inner.toJsonSocket<TypeIn, TypeOut>(moshi)
+        inner.toJsonSocket<TypeOut, TypeIn>(moshi)
             .close()
         verify(inner).close()
     }
 
     @Test
+    fun `connection events delegates to inner property`() {
+        val events = mock<Observable<ConnectionEvent>>()
+        val inner = mock<WebSocket<String, String>> {
+            on { connectionEvents } `it returns` events
+        }
+        inner.toJsonSocket<TypeOut, TypeIn>(moshi)
+            .connectionEvents `should be` events
+    }
+
+    @Test
     fun `outgoing message is formatted to json`() {
         val inner = mock<WebSocket<String, String>>()
-        inner.toJsonSocket<TypeIn, TypeOut>(moshi)
+        inner.toJsonSocket<TypeOut, TypeIn>(moshi)
             .send(TypeOut(fieldA = "Message", fieldB = 1234))
         verify(inner).send("{\"fieldA\":\"Message\",\"fieldB\":1234}")
     }
@@ -49,7 +60,7 @@ class MoshiJsonWebSocketDecoratorTest {
                 "{\"fieldC\":\"Message2\",\"fieldD\":5678}"
             )
         }
-        inner.toJsonSocket<TypeIn, TypeOut>(moshi)
+        inner.toJsonSocket<TypeOut, TypeIn>(moshi)
             .responses
             .test()
             .values() `should equal`

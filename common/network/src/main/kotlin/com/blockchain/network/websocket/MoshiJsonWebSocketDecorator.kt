@@ -4,17 +4,17 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 
-inline fun <reified INCOMING : Any, reified OUTGOING : Any> WebSocket<String, String>.toJsonSocket(
+inline fun <reified OUTGOING : Any, reified INCOMING : Any> WebSocket<String, String>.toJsonSocket(
     moshi: Moshi
-): WebSocket<INCOMING, OUTGOING> {
-    return MoshiJsonWebSocketDecorator(this, moshi.adapter(INCOMING::class.java), moshi.adapter(OUTGOING::class.java))
+): WebSocket<OUTGOING, INCOMING> {
+    return MoshiJsonWebSocketDecorator(this, moshi.adapter(OUTGOING::class.java), moshi.adapter(INCOMING::class.java))
 }
 
-class MoshiJsonWebSocketDecorator<INCOMING : Any, OUTGOING : Any>(
+class MoshiJsonWebSocketDecorator<OUTGOING : Any, INCOMING : Any>(
     private val inner: WebSocket<String, String>,
-    private val incomingAdapter: JsonAdapter<INCOMING>,
-    private val outgoingAdapter: JsonAdapter<OUTGOING>
-) : WebSocket<INCOMING, OUTGOING>, WebSocketOpenClose by inner {
+    private val outgoingAdapter: JsonAdapter<OUTGOING>,
+    private val incomingAdapter: JsonAdapter<INCOMING>
+) : WebSocket<OUTGOING, INCOMING>, WebSocketConnection by inner {
 
     override fun send(message: OUTGOING) {
         inner.send(outgoingAdapter.toJson(message))

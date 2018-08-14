@@ -9,8 +9,24 @@ import okhttp3.WebSocketListener
 
 class Options(
     val url: String,
-    val origin: String
+    val origin: String,
+    /**
+     * Used in close reason message text
+     */
+    val name: String = "Unnamed"
 )
+
+/**
+ * Creates a new disconnected socket instance from an [OkHttpClient] with the supplied [options].
+ *
+ * Unlike [OkHttpClient.newWebSocket], you must call [WebSocket.open] to actually connect.
+ *
+ * It is reusable, you can [WebSocket.close] and [WebSocket.open], you will get a new underlying [OkHttpWebSocket].
+ */
+fun OkHttpClient.newBlockchainWebSocket(
+    options: Options,
+    listener: WebSocket.Listener<String>? = null
+): WebSocket<String, String> = OkHttpWebSocket(this, options, listener)
 
 /**
  * Websocket status code as defined by [Section
@@ -18,10 +34,10 @@ class Options(
  */
 private const val STATUS_CODE_NORMAL_CLOSURE = 1000
 
-class OkHttpWebSocket(
+private class OkHttpWebSocket(
     private val client: OkHttpClient,
     private val options: Options,
-    private val listener: WebSocket.Listener<String> = WebSocket.NullListener
+    private val listener: WebSocket.Listener<String>?
 ) : WebSocket<String, String> {
 
     override fun open() {
@@ -31,11 +47,15 @@ class OkHttpWebSocket(
         )
     }
 
+    override val connectionEvents: Observable<ConnectionEvent>
+        get() = connectionEventsSubject
+
     override fun close() {
-        socket?.close(STATUS_CODE_NORMAL_CLOSURE, "Normal")
+        socket?.close(STATUS_CODE_NORMAL_CLOSURE, "${options.name} WebSocket deliberately stopped")
     }
 
     private val subject = PublishSubject.create<String>()
+    private val connectionEventsSubject = PublishSubject.create<ConnectionEvent>()
 
     override val responses: Observable<String>
         get() = subject
@@ -44,23 +64,32 @@ class OkHttpWebSocket(
         socket?.send(message)
     }
 
+    @Volatile
     private var socket: okhttp3.WebSocket? = null
 
     private inner class OkHttpWebSocketListener : WebSocketListener() {
 
         override fun onOpen(webSocket: okhttp3.WebSocket, response: Response) {
             super.onOpen(webSocket, response)
-            listener.onOpen()
+            connectionEventsSubject.onNext(ConnectionEvent.Connected)
+            listener?.onOpen()
         }
 
         override fun onClosed(webSocket: okhttp3.WebSocket, code: Int, reason: String) {
             super.onClosed(webSocket, code, reason)
-            listener.onClose()
+            connectionEventsSubject.onNext(ConnectionEvent.ClientDisconnect)
+            listener?.onClose()
         }
 
         override fun onMessage(webSocket: okhttp3.WebSocket, message: String) {
+            super.onMessage(webSocket, message)
             subject.onNext(message)
-            listener.onMessage(message)
+            listener?.onMessage(message)
+        }
+
+        override fun onFailure(webSocket: okhttp3.WebSocket, t: Throwable, response: Response?) {
+            super.onFailure(webSocket, t, response)
+            connectionEventsSubject.onNext(ConnectionEvent.Failure(t))
         }
     }
 }

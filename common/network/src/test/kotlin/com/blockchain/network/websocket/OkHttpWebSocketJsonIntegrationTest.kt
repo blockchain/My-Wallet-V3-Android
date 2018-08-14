@@ -33,11 +33,10 @@ class OkHttpWebSocketJsonIntegrationTest {
             .once()
 
         val waiter = MessageWaiter(1)
-        OkHttpWebSocket(
-            okHttpClient,
+        okHttpClient.newBlockchainWebSocket(
             getOptions("/service"),
             waiter
-        ).toJsonSocket<ServerMessage, ClientMessage>(moshi)
+        ).toJsonSocket<ClientMessage, ServerMessage>(moshi)
             .apply {
                 val test = responses.test()
                 open()

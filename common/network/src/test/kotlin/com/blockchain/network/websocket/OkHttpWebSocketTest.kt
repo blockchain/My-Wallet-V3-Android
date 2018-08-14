@@ -25,8 +25,7 @@ class OkHttpWebSocketTest {
             .once()
 
         val waiter = MessageWaiter(1)
-        OkHttpWebSocket(
-            okHttpClient,
+        okHttpClient.newBlockchainWebSocket(
             getOptions("/service"),
             waiter
         ).apply {
@@ -49,8 +48,7 @@ class OkHttpWebSocketTest {
             .once()
 
         val waiter = MessageWaiter(2)
-        OkHttpWebSocket(
-            okHttpClient,
+        okHttpClient.newBlockchainWebSocket(
             getOptions("/service2"),
             waiter
         ).apply {
