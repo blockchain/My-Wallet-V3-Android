@@ -4,7 +4,7 @@ import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.mapFromMetadata
-import com.blockchain.kyc.util.toSimpleDateString
+import com.blockchain.kyc.util.toISO8601DateString
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -105,11 +105,7 @@ class KycProfilePresenterTest {
         // Arrange
         whenever(view.firstName).thenReturn("Adam")
         whenever(view.lastName).thenReturn("Bennett")
-        val dateOfBirth = Calendar.getInstance().apply {
-            set(Calendar.YEAR, 2018)
-            set(Calendar.MONTH, 9)
-            set(Calendar.DAY_OF_MONTH, 14)
-        }
+        val dateOfBirth = date(2014, 8, 10)
         whenever(view.dateOfBirth).thenReturn(dateOfBirth)
         whenever(
             metadataManager.fetchMetadata(
@@ -129,11 +125,7 @@ class KycProfilePresenterTest {
         // Arrange
         val firstName = "Adam"
         val lastName = "Bennett"
-        val dateOfBirth = Calendar.getInstance().apply {
-            set(Calendar.YEAR, 2018)
-            set(Calendar.MONTH, 9)
-            set(Calendar.DAY_OF_MONTH, 14)
-        }
+        val dateOfBirth = date(2014, 8, 10)
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.firstName).thenReturn(firstName)
         whenever(view.lastName).thenReturn(lastName)
@@ -147,7 +139,7 @@ class KycProfilePresenterTest {
             nabuDataManager.createBasicUser(
                 firstName,
                 lastName,
-                dateOfBirth.toSimpleDateString(),
+                dateOfBirth.toISO8601DateString(),
                 offlineToken.mapFromMetadata()
             )
         ).thenReturn(Completable.complete())
@@ -164,11 +156,7 @@ class KycProfilePresenterTest {
         // Arrange
         val firstName = "Adam"
         val lastName = "Bennett"
-        val dateOfBirth = Calendar.getInstance().apply {
-            set(Calendar.YEAR, 2018)
-            set(Calendar.MONTH, 9)
-            set(Calendar.DAY_OF_MONTH, 14)
-        }
+        val dateOfBirth = date(2014, 8, 10)
         val offlineToken = NabuCredentialsMetadata("", "")
         val userId = "USER_ID"
         whenever(view.firstName).thenReturn(firstName)
@@ -188,7 +176,7 @@ class KycProfilePresenterTest {
             nabuDataManager.createBasicUser(
                 firstName,
                 lastName,
-                dateOfBirth.toSimpleDateString(),
+                dateOfBirth.toISO8601DateString(),
                 offlineToken.mapFromMetadata()
             )
         ).thenReturn(Completable.complete())
@@ -198,5 +186,15 @@ class KycProfilePresenterTest {
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
         verify(view).continueSignUp(any())
+    }
+
+    private fun date(
+        year: Int,
+        month: Int,
+        dayOfMonth: Int
+    ): Calendar = Calendar.getInstance().apply {
+        set(Calendar.YEAR, year)
+        set(Calendar.MONTH, month - 1)
+        set(Calendar.DAY_OF_MONTH, dayOfMonth)
     }
 }

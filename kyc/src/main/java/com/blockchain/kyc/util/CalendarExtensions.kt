@@ -1,11 +1,13 @@
 package com.blockchain.kyc.util
 
-import android.annotation.SuppressLint
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.TimeZone
+import java.util.Locale
 
-@SuppressLint("SimpleDateFormat")
-fun Calendar.toSimpleDateString(): String = SimpleDateFormat("yyyy-MM-dd")
-    .apply { timeZone = TimeZone.getTimeZone("UTC") }
-    .run { format(this@toSimpleDateString.time) }
+fun Calendar.toISO8601DateString(): String =
+    String.format(
+        Locale.US,
+        "%04d-%02d-%02d",
+        get(Calendar.YEAR),
+        get(Calendar.MONTH) + 1,
+        get(Calendar.DAY_OF_MONTH)
+    )
