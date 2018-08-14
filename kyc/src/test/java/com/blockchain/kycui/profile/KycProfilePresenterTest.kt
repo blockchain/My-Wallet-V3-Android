@@ -105,7 +105,12 @@ class KycProfilePresenterTest {
         // Arrange
         whenever(view.firstName).thenReturn("Adam")
         whenever(view.lastName).thenReturn("Bennett")
-        whenever(view.dateOfBirth).thenReturn(Calendar.getInstance())
+        val dateOfBirth = Calendar.getInstance().apply {
+            set(Calendar.YEAR, 2018)
+            set(Calendar.MONTH, 9)
+            set(Calendar.DAY_OF_MONTH, 14)
+        }
+        whenever(view.dateOfBirth).thenReturn(dateOfBirth)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -124,7 +129,11 @@ class KycProfilePresenterTest {
         // Arrange
         val firstName = "Adam"
         val lastName = "Bennett"
-        val dateOfBirth = Calendar.getInstance()
+        val dateOfBirth = Calendar.getInstance().apply {
+            set(Calendar.YEAR, 2018)
+            set(Calendar.MONTH, 9)
+            set(Calendar.DAY_OF_MONTH, 14)
+        }
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.firstName).thenReturn(firstName)
         whenever(view.lastName).thenReturn(lastName)
@@ -155,7 +164,11 @@ class KycProfilePresenterTest {
         // Arrange
         val firstName = "Adam"
         val lastName = "Bennett"
-        val dateOfBirth = Calendar.getInstance()
+        val dateOfBirth = Calendar.getInstance().apply {
+            set(Calendar.YEAR, 2018)
+            set(Calendar.MONTH, 9)
+            set(Calendar.DAY_OF_MONTH, 14)
+        }
         val offlineToken = NabuCredentialsMetadata("", "")
         val userId = "USER_ID"
         whenever(view.firstName).thenReturn(firstName)
