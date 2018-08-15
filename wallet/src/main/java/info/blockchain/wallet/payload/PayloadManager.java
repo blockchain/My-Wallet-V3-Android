@@ -85,24 +85,12 @@ public class PayloadManager {
             BalanceManagerBtc balanceManagerBtc,
             BalanceManagerBch balanceManagerBch
     ) {
-        init();
         this.walletApi = walletApi;
         // Bitcoin
         this.multiAddressFactory = multiAddressFactory;
         this.balanceManager = balanceManagerBtc;
         // Bitcoin Cash
         this.balanceManagerBch = balanceManagerBch;
-    }
-
-    private void init() {
-
-    }
-
-    public void wipe() {
-        walletBaseBody = null;
-        password = null;
-        metadataNodeFactory = null;
-        init();
     }
 
     public Wallet getPayload() {

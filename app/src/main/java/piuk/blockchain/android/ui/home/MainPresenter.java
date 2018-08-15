@@ -7,7 +7,7 @@ import info.blockchain.wallet.api.Environment;
 import info.blockchain.wallet.api.data.FeeOptions;
 import info.blockchain.wallet.exceptions.HDWalletException;
 import info.blockchain.wallet.exceptions.InvalidCredentialsException;
-import info.blockchain.wallet.payload.PayloadManager;
+import info.blockchain.wallet.payload.PayloadManagerWiper;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -56,7 +56,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     private PrefsUtil prefs;
     private AppUtil appUtil;
     private AccessState accessState;
-    private PayloadManager payloadManager;
+    private PayloadManagerWiper payloadManagerWiper;
     private PayloadDataManager payloadDataManager;
     private ContactsDataManager contactsDataManager;
     private Context applicationContext;
@@ -82,7 +82,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     MainPresenter(PrefsUtil prefs,
                   AppUtil appUtil,
                   AccessState accessState,
-                  PayloadManager payloadManager,
+                  PayloadManagerWiper payloadManagerWiper,
                   PayloadDataManager payloadDataManager,
                   ContactsDataManager contactsDataManager,
                   Context applicationContext,
@@ -107,7 +107,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         this.prefs = prefs;
         this.appUtil = appUtil;
         this.accessState = accessState;
-        this.payloadManager = payloadManager;
+        this.payloadManagerWiper = payloadManagerWiper;
         this.payloadDataManager = payloadDataManager;
         this.contactsDataManager = contactsDataManager;
         this.applicationContext = applicationContext;
@@ -348,7 +348,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     void unPair() {
         getView().clearAllDynamicShortcuts();
-        payloadManager.wipe();
+        payloadManagerWiper.wipe();
         accessState.logout(applicationContext);
         accessState.unpairWallet();
         appUtil.restartApp(LauncherActivity.class);
@@ -357,10 +357,6 @@ public class MainPresenter extends BasePresenter<MainView> {
         ethDataManager.clearEthAccountDetails();
         bchDataManager.clearBchAccountDetails();
         DashboardPresenter.onLogout();
-    }
-
-    PayloadManager getPayloadManager() {
-        return payloadManager;
     }
 
     // Usage commented out for now, until Contacts is back again
@@ -391,7 +387,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     private void logEvents() {
-        Logging.INSTANCE.logCustom(new SecondPasswordEvent(payloadManager.getPayload().isDoubleEncryption()));
+        Logging.INSTANCE.logCustom(new SecondPasswordEvent(payloadDataManager.isDoubleEncrypted()));
     }
 
     String getCurrentServerUrl() {

@@ -82,6 +82,7 @@ dependencies {
     testImplementation Libraries.mockito
     testImplementation Libraries.json
     testImplementation Libraries.kluent
+    testImplementation Libraries.koinTest
 }
 
 test {

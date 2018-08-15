@@ -16,16 +16,19 @@ val applicationModule = applicationContext {
 
     factory { StringUtils(get()) }
 
-    factory { EthDataManager(get(), get(), get(), get(), get(), get(), get()) }
-
-    factory { BchDataManager(get(), get(), get(), get(), get(), get(), get()) }
-
     factory { Locale.getDefault() }
 
-    factory { WalletAccountHelper(get(), get(), get(), get(), get(), get(), get()) }
+    context("Payload") {
 
-    factory { WalletAccountHelperAccountListingAdapter(get()) }
-        .bind(AccountListing::class)
+        factory { EthDataManager(get(), get(), get(), get(), get(), get(), get()) }
 
-    factory { params -> SecondPasswordHandlerDialog(params.getActivity(), get()) as SecondPasswordHandler }
+        factory { BchDataManager(get(), get(), get(), get(), get(), get(), get()) }
+
+        factory { WalletAccountHelper(get(), get(), get(), get(), get(), get(), get()) }
+
+        factory { WalletAccountHelperAccountListingAdapter(get()) }
+            .bind(AccountListing::class)
+
+        factory { params -> SecondPasswordHandlerDialog(params.getActivity(), get()) as SecondPasswordHandler }
+    }
 }

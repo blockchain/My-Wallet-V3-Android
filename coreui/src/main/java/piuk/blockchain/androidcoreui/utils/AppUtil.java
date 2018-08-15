@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Lazy;
+import info.blockchain.wallet.payload.PayloadManagerWiper;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 
@@ -23,13 +24,13 @@ public class AppUtil {
     private static final String REGEX_UUID = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
 
     @Inject PrefsUtil prefs;
-    @Inject Lazy<PayloadManager> payloadManager;
+    @Inject Lazy<PayloadManagerWiper> payloadManager;
     @Inject Lazy<AccessState> accessState;
     private Context context;
 
     @Inject
     public AppUtil(Context context,
-                   Lazy<PayloadManager> payloadManager,
+                   Lazy<PayloadManagerWiper> payloadManager,
                    Lazy<AccessState> accessState,
                    PrefsUtil prefs) {
         this.context = context;

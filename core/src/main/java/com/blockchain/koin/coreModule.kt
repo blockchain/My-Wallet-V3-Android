@@ -2,7 +2,6 @@ package com.blockchain.koin
 
 import info.blockchain.api.blockexplorer.BlockExplorer
 import info.blockchain.wallet.contacts.Contacts
-import info.blockchain.wallet.payload.PayloadManager
 import info.blockchain.wallet.util.PrivateKeyFactory
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.androidcore.data.auth.AuthService
@@ -65,11 +64,14 @@ val coreModule = applicationContext {
 
     bean { MetadataManager(get(), get(), get()) }
 
-    factory { PayloadService(get()) }
-
     factory { PrivateKeyFactory() }
 
-    factory { PayloadDataManager(get(), get(), get(), get(), get()) }
+    context("Payload") {
+
+        factory { PayloadService(get()) }
+
+        factory { PayloadDataManager(get(), get(), get(), get(), get()) }
+    }
 
     bean { BchDataStore() }
 

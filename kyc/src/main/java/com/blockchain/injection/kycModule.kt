@@ -21,20 +21,23 @@ val kycModule = applicationContext {
 
     bean { NabuService(get(), get("kotlin")) }
 
-    factory {
-        NabuDataManager(
-            get(),
-            get(),
-            getProperty("app-version"),
-            get("device-id"),
-            get(),
-            get()
-        )
-    }
-
     factory { OnfidoDataManager(get()) }
 
-    factory { KycCountrySelectionPresenter(get()) }
+    context("Payload") {
+
+        factory {
+            NabuDataManager(
+                get(),
+                get(),
+                getProperty("app-version"),
+                get("device-id"),
+                get(),
+                get()
+            )
+        }
+
+        factory { KycCountrySelectionPresenter(get()) }
+    }
 
     factory { KycProfilePresenter(get(), get()) }
 

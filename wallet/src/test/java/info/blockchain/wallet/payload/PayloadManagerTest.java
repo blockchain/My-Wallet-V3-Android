@@ -20,7 +20,6 @@ import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.params.BitcoinMainNetParams;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,11 +50,6 @@ public final class PayloadManagerTest extends WalletApiMockedResponseTest {
                 new BalanceManagerBtc(blockExplorer),
                 new BalanceManagerBch(blockExplorer)
         );
-    }
-
-    @After
-    public void tearDown() {
-        payloadManager.wipe();
     }
 
     @Test

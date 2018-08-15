@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import info.blockchain.wallet.api.WalletApi;
 import info.blockchain.wallet.payload.PayloadManager;
+import info.blockchain.wallet.payload.PayloadManagerWiper;
 import info.blockchain.wallet.util.PrivateKeyFactory;
 import piuk.blockchain.android.data.notifications.NotificationService;
 import piuk.blockchain.android.data.notifications.NotificationTokenManager;
@@ -63,6 +64,11 @@ public class ApplicationModule extends KoinDaggerModule {
     @Provides
     protected PayloadManager providePayloadManager() {
         return get(PayloadManager.class);
+    }
+
+    @Provides
+    protected PayloadManagerWiper providePayloadManagerWiper() {
+        return get(PayloadManagerWiper.class);
     }
 
     @Provides
