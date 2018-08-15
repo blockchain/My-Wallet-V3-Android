@@ -10,7 +10,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.ui.account.SecondPasswordHandler
+import com.blockchain.ui.password.SecondPasswordHandler
 import piuk.blockchain.android.ui.buysell.createorder.models.SellConfirmationDisplayModel
 import piuk.blockchain.android.ui.buysell.payment.card.PaymentState
 import piuk.blockchain.android.ui.buysell.payment.complete.CoinifyPaymentCompleteActivity
@@ -83,12 +83,12 @@ class CoinifySellConfirmationActivity :
     }
 
     override fun displaySecondPasswordDialog() {
-        SecondPasswordHandler(this).validate(object : SecondPasswordHandler.ResultListener {
+        secondPasswordHandler.validate(object : SecondPasswordHandler.ResultListener {
             override fun onNoSecondPassword() {
                 throw IllegalStateException("SecondPasswordHandler instantiated despite no second password set")
             }
 
-            override fun onSecondPasswordValidated(validatedSecondPassword: String?) {
+            override fun onSecondPasswordValidated(validatedSecondPassword: String) {
                 presenter.validatedSecondPassword = validatedSecondPassword
                 presenter.onConfirmClicked()
             }

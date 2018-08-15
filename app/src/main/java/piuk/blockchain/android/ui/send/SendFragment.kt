@@ -32,12 +32,17 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
+import com.blockchain.koin.injectActivity
+import com.blockchain.ui.chooser.AccountChooserActivity
+import com.blockchain.ui.chooser.AccountMode
+import com.blockchain.ui.password.SecondPasswordHandler
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.BasePermissionListener
 import com.karumi.dexter.listener.single.CompositePermissionListener
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
+import info.blockchain.balance.CryptoCurrency
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.alert_watch_only_spend.view.*
 import kotlinx.android.synthetic.main.fragment_send.*
@@ -51,17 +56,13 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.account.PaymentConfirmationDetails
-import piuk.blockchain.android.ui.account.SecondPasswordHandler
 import piuk.blockchain.android.ui.balance.BalanceFragment
-import com.blockchain.ui.chooser.AccountChooserActivity
-import com.blockchain.ui.chooser.AccountMode
 import piuk.blockchain.android.ui.confirm.ConfirmPaymentDialog
 import piuk.blockchain.android.ui.customviews.callbacks.OnTouchOutsideViewListener
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.zxing.CaptureActivity
 import piuk.blockchain.android.util.AppRate
 import piuk.blockchain.androidcore.data.access.AccessState
-import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
@@ -92,6 +93,8 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
     lateinit var sendPresenter: SendPresenter
     @Inject
     lateinit var appUtil: AppUtil
+
+    private val secondPasswordHandler: SecondPasswordHandler by injectActivity()
 
     private var backPressed: Long = 0
     private var progressDialog: MaterialProgressDialog? = null
@@ -859,7 +862,7 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
     }
 
     override fun showSecondPasswordDialog() {
-        SecondPasswordHandler(context).validate(object : SecondPasswordHandler.ResultListener {
+        secondPasswordHandler.validate(object : SecondPasswordHandler.ResultListener {
             override fun onNoSecondPassword() {
                 presenter.onNoSecondPassword()
             }

@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.databinding.ActivityUpgradeWalletBinding;
 import piuk.blockchain.android.injection.Injector;
-import piuk.blockchain.android.ui.account.SecondPasswordHandler;
+import com.blockchain.ui.password.SecondPasswordHandler;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
@@ -172,7 +172,7 @@ public class UpgradeWalletActivity extends BaseMvpActivity<UpgradeWalletView, Up
     }
 
     private void upgradeClicked() {
-        new SecondPasswordHandler(this).validate(new SecondPasswordHandler.ResultListener() {
+        getSecondPasswordHandler().validate(new SecondPasswordHandler.ResultListener() {
             @Override
             public void onNoSecondPassword() {
                 getPresenter().onUpgradeRequested(null);

@@ -13,7 +13,8 @@ import android.view.WindowManager
 import kotlinx.android.synthetic.main.dialog_transfer_funds.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.ui.account.SecondPasswordHandler
+import com.blockchain.koin.injectActivity
+import com.blockchain.ui.password.SecondPasswordHandler
 import piuk.blockchain.android.ui.balance.BalanceFragment
 import piuk.blockchain.androidcoreui.ui.base.BaseDialogFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
@@ -31,6 +32,8 @@ class ConfirmFundsTransferDialogFragment :
     @Inject
     lateinit var confirmFundsTransferPresenter: ConfirmFundsTransferPresenter
     override val locale: Locale = Locale.getDefault()
+
+    private val secondPasswordHandler: SecondPasswordHandler by injectActivity()
 
     private var progressDialog: MaterialProgressDialog? = null
 
@@ -91,7 +94,7 @@ class ConfirmFundsTransferDialogFragment :
             })
 
         button_transfer_all.setOnClickListener {
-            SecondPasswordHandler(activity).validate(object : SecondPasswordHandler.ResultListener {
+            secondPasswordHandler.validate(object : SecondPasswordHandler.ResultListener {
                 override fun onNoSecondPassword() {
                     presenter.sendPayment(null)
                 }

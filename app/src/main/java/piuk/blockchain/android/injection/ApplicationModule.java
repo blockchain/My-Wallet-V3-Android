@@ -62,7 +62,7 @@ public class ApplicationModule extends KoinDaggerModule {
 
     @Provides
     protected PayloadManager providePayloadManager() {
-        return PayloadManager.getInstance();
+        return get(PayloadManager.class);
     }
 
     @Provides

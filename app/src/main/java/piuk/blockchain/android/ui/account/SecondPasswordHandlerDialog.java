@@ -1,39 +1,34 @@
 package piuk.blockchain.android.ui.account;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
-
 import info.blockchain.wallet.payload.PayloadManager;
-
 import io.reactivex.Observable;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.rxjava.RxUtil;
+import com.blockchain.ui.password.SecondPasswordHandler;
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.androidcoreui.utils.ViewUtils;
 
-public class SecondPasswordHandler {
+public final class SecondPasswordHandlerDialog implements SecondPasswordHandler {
 
-    private Context context;
-    private PayloadManager payloadManager;
+    private final Context context;
+    private final PayloadManager payloadManager;
+
     private MaterialProgressDialog materialProgressDialog;
 
-    public SecondPasswordHandler(Context context) {
-        this.context = context;
-        payloadManager = PayloadManager.getInstance();
+    public SecondPasswordHandlerDialog(Activity activity, PayloadManager payloadManager) {
+        this.context = activity;
+        this.payloadManager = payloadManager;
     }
 
-    public interface ResultListener {
-
-        void onNoSecondPassword();
-
-        void onSecondPasswordValidated(String validatedSecondPassword);
-    }
-
-    public void validate(final ResultListener listener) {
+    @Override
+    public void validate(final SecondPasswordHandler.ResultListener listener) {
         if (!payloadManager.getPayload().isDoubleEncryption()) {
             listener.onNoSecondPassword();
         } else {
@@ -83,7 +78,7 @@ public class SecondPasswordHandler {
         return Observable.fromCallable(() -> payloadManager.validateSecondPassword(password));
     }
 
-    public void showProgressDialog(@StringRes int messageId) {
+    private void showProgressDialog(@StringRes int messageId) {
         dismissProgressDialog();
         materialProgressDialog = new MaterialProgressDialog(context);
         materialProgressDialog.setCancelable(false);
@@ -91,7 +86,7 @@ public class SecondPasswordHandler {
         materialProgressDialog.show();
     }
 
-    public void dismissProgressDialog() {
+    private void dismissProgressDialog() {
         if (materialProgressDialog != null && materialProgressDialog.isShowing()) {
             materialProgressDialog.dismiss();
             materialProgressDialog = null;

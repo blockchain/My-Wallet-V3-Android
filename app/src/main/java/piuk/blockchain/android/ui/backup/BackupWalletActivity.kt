@@ -7,12 +7,15 @@ import android.support.v4.app.Fragment
 import info.blockchain.wallet.payload.PayloadManager
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
+import org.koin.android.ext.android.inject
 import piuk.blockchain.android.ui.backup.completed.BackupWalletCompletedFragment
 import piuk.blockchain.android.ui.backup.start.BackupWalletStartingFragment
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
 class BackupWalletActivity : BaseAuthActivity() {
+
+    private val payloadManger: PayloadManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +53,8 @@ class BackupWalletActivity : BaseAuthActivity() {
     override fun onSupportNavigateUp() =
         consume { onBackPressed() }
 
-    private fun isBackedUp() = PayloadManager.getInstance().payload != null &&
-        PayloadManager.getInstance().payload.hdWallets != null &&
-        PayloadManager.getInstance().payload.hdWallets[0].isMnemonicVerified
+    private fun isBackedUp() =
+        payloadManger.payload?.hdWallets?.get(0)?.isMnemonicVerified ?: false
 
     companion object {
 

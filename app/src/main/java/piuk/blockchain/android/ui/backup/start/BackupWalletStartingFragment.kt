@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_backup_start.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.ui.account.SecondPasswordHandler
+import com.blockchain.koin.injectActivity
+import com.blockchain.ui.password.SecondPasswordHandler
 import piuk.blockchain.android.ui.backup.wordlist.BackupWalletWordListFragment
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -20,6 +21,8 @@ class BackupWalletStartingFragment :
 
     @Inject
     lateinit var backupWalletStartingPresenter: BackupWalletStartingPresenter
+
+    private val secondPasswordHandler: SecondPasswordHandler by injectActivity()
 
     init {
         Injector.getInstance().presenterComponent.inject(this)
@@ -36,7 +39,7 @@ class BackupWalletStartingFragment :
 
         button_start.setOnClickListener {
             if (presenter.isDoubleEncrypted()) {
-                SecondPasswordHandler(activity).validate(object :
+                secondPasswordHandler.validate(object :
                     SecondPasswordHandler.ResultListener {
                     override fun onNoSecondPassword() {
                         throw IllegalStateException("This point should never be reached")

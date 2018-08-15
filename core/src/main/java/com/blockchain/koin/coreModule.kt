@@ -65,8 +65,6 @@ val coreModule = applicationContext {
 
     bean { MetadataManager(get(), get(), get()) }
 
-    bean { PayloadManager.getInstance() }
-
     factory { PayloadService(get()) }
 
     factory { PrivateKeyFactory() }

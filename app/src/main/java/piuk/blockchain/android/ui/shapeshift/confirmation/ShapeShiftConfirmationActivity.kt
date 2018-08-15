@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_confirmation_shapeshift.*
 import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.ui.account.SecondPasswordHandler
+import com.blockchain.ui.password.SecondPasswordHandler
 import piuk.blockchain.android.ui.shapeshift.inprogress.TradeInProgressActivity
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
@@ -134,7 +134,7 @@ class ShapeShiftConfirmationActivity :
     }
 
     override fun showSecondPasswordDialog() {
-        SecondPasswordHandler(this).validate(this)
+        secondPasswordHandler.validate(this)
     }
 
     override fun showTimeExpiring() {
@@ -160,8 +160,8 @@ class ShapeShiftConfirmationActivity :
         throw IllegalStateException("No Second Password callback triggered, but this shouldn't be possible")
     }
 
-    override fun onSecondPasswordValidated(validatedSecondPassword: String?) {
-        presenter.onSecondPasswordVerified(validatedSecondPassword!!)
+    override fun onSecondPasswordValidated(validatedSecondPassword: String) {
+        presenter.onSecondPasswordVerified(validatedSecondPassword)
     }
 
     override fun showToast(message: Int, toastType: String) = toast(message, toastType)

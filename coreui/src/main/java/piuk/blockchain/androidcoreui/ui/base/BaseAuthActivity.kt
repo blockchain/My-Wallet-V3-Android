@@ -4,6 +4,8 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.view.WindowManager
+import com.blockchain.koin.injectActivity
+import com.blockchain.ui.password.SecondPasswordHandler
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.utils.PrefsUtil
@@ -15,6 +17,8 @@ import piuk.blockchain.androidcoreui.ApplicationLifeCycle
 abstract class BaseAuthActivity : ToolBarActivity() {
 
     protected val prefsUtil: PrefsUtil by inject()
+
+    protected val secondPasswordHandler: SecondPasswordHandler by injectActivity()
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {

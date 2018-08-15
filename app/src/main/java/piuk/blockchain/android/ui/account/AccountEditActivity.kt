@@ -36,6 +36,7 @@ import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
+import com.blockchain.ui.password.SecondPasswordHandler
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.AndroidUtils
@@ -82,7 +83,7 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
 
         binding.tvTransfer.setOnClickListener {
             if (presenter.transferFundsClickable()) {
-                SecondPasswordHandler(this).validate(object : SecondPasswordHandler.ResultListener {
+                secondPasswordHandler.validate(object : SecondPasswordHandler.ResultListener {
                     override fun onNoSecondPassword() {
                         presenter.onClickTransferFunds()
                     }
@@ -177,7 +178,7 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
             .setMessage(message)
             .setCancelable(false)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                SecondPasswordHandler(this).validate(object :
+                secondPasswordHandler.validate(object :
                     SecondPasswordHandler.ResultListener {
                     override fun onNoSecondPassword() {
                         startScanActivity()

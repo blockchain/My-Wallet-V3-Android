@@ -16,8 +16,6 @@ import dagger.Lazy;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.FrameworkInterface;
 import info.blockchain.wallet.api.Environment;
-import info.blockchain.wallet.api.WalletApi;
-import info.blockchain.wallet.api.WalletApiAccess;
 import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -54,9 +52,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
 
     public static final String RX_ERROR_TAG = "RxJava Error";
 
-    // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301
-    @Inject
-    protected WalletApi walletApi;
     @Inject
     @Named("api")
     protected Lazy<Retrofit> retrofitApi;
@@ -95,9 +90,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
         Injector.getInstance().init(this);
         // Inject into Application
         Injector.getInstance().getAppComponent().inject(this);
-
-        // TODO: Temporary to allow a few places static access still. Remove as part of AND-1301
-        WalletApiAccess.INSTANCE.setWalletApi(walletApi);
 
         // Pass objects to JAR
         BlockchainFramework.init(this);
