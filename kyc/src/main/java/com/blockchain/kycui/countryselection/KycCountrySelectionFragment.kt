@@ -13,7 +13,7 @@ import com.blockchain.kycui.countryselection.util.toDisplayList
 import com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
-import com.blockchain.kycui.search.ListQueryObservable
+import com.blockchain.kycui.search.filterCountries
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -60,13 +60,7 @@ class KycCountrySelectionFragment :
         val userInput = RxSearchView.queryTextChanges(searchView)
             .debounce(100, TimeUnit.MILLISECONDS)
 
-        compositeDisposable += ListQueryObservable(userInput, countryList)
-            .matchingItems<CountryDisplayModel> { query, list ->
-                list.filter {
-                    it.name.contains(query, ignoreCase = true) ||
-                        it.countryCode.contains(query, ignoreCase = true)
-                }
-            }
+        compositeDisposable += countryList.filterCountries(userInput)
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {

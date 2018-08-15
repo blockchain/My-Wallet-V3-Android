@@ -8,12 +8,12 @@ class ListQueryObservable<T>(
     private val listObservable: Observable<List<T>>
 ) {
 
-    fun <T> matchingItems(
+    fun matchingItems(
         filter: (CharSequence, List<T>) -> List<T>
     ): Observable<List<T>> =
         Observable.combineLatest(
-            queryObservable,
             listObservable,
-            BiFunction { input, list -> filter(input, list as List<T>) }
+            queryObservable,
+            BiFunction { list, input -> filter(input, list) }
         )
 }

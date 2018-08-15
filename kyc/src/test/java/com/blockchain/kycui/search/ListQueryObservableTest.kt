@@ -10,7 +10,7 @@ class ListQueryObservableTest {
     fun `query change should trigger onNext`() {
         val querySubject = PublishSubject.create<CharSequence>()
         val testObserver = ListQueryObservable(querySubject, Observable.just(emptyList<Any>()))
-            .matchingItems<Any> { query, _ -> listOf(query) }
+            .matchingItems { query, _ -> listOf(query) }
             .test()
 
         testObserver.assertNoValues()
@@ -24,7 +24,7 @@ class ListQueryObservableTest {
         val listObservable = PublishSubject.create<List<Any>>()
 
         val testObserver = ListQueryObservable(query, listObservable)
-            .matchingItems<Any> { _, list -> list }
+            .matchingItems { _, list -> list }
             .test()
 
         val list = listOf(Any())
