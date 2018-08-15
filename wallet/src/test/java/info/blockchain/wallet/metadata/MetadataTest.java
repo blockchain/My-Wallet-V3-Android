@@ -33,7 +33,7 @@ public final class MetadataTest {
     @Before
     public void setup() {
 
-        mockInterceptor = MockInterceptor.getInstance();
+        mockInterceptor = new MockInterceptor();
 
         //Set environment
         BlockchainFramework.init(new FrameworkInterface() {

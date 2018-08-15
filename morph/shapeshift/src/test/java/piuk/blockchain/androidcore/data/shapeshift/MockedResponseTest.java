@@ -12,7 +12,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public abstract class MockedResponseTest {
 
-    MockInterceptor mockInterceptor = MockInterceptor.getInstance();
+    MockInterceptor mockInterceptor = new MockInterceptor();
 
     final OkHttpClient okHttpClient = getOkHttpClient();
 

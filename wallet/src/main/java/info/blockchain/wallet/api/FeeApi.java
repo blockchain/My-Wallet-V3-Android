@@ -1,19 +1,14 @@
 package info.blockchain.wallet.api;
 
-import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.data.FeeOptions;
 import io.reactivex.Observable;
 
-public class FeeApi {
+public final class FeeApi {
 
-    private static FeeEndpoints feeEndpoints;
+    private final FeeEndpoints feeEndpoints;
 
-    private FeeEndpoints getBaseApiInstance() {
-        if (feeEndpoints == null) {
-            feeEndpoints = BlockchainFramework.getRetrofitApiInstance().
-                    create(FeeEndpoints.class);
-        }
-        return feeEndpoints;
+    public FeeApi(FeeEndpoints feeEndpoints) {
+        this.feeEndpoints = feeEndpoints;
     }
 
     /**
@@ -21,7 +16,7 @@ public class FeeApi {
      * option, both listed in Satoshis per byte.
      */
     public Observable<FeeOptions> getFeeOptions() {
-        return getBaseApiInstance().getFeeOptions();
+        return feeEndpoints.getFeeOptions();
     }
 
     /**
@@ -29,6 +24,6 @@ public class FeeApi {
      * option.
      */
     public Observable<FeeOptions> getEthFeeOptions() {
-        return getBaseApiInstance().getEthFeeOptions();
+        return feeEndpoints.getEthFeeOptions();
     }
 }

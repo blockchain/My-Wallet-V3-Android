@@ -3,6 +3,7 @@ package com.blockchain.koin.modules
 import info.blockchain.wallet.ApiCode
 import info.blockchain.wallet.BlockchainFramework
 import info.blockchain.wallet.api.FeeApi
+import info.blockchain.wallet.api.FeeEndpoints
 import info.blockchain.wallet.api.WalletApi
 import info.blockchain.wallet.api.WalletExplorerEndpoints
 import info.blockchain.wallet.ethereum.EthAccountApi
@@ -23,11 +24,13 @@ val serviceModule = applicationContext {
 
     bean { get<Retrofit>("api").create(PriceEndpoints::class.java) }
 
+    bean { get<Retrofit>("api").create(FeeEndpoints::class.java) }
+
     factory { WalletApi(get()) }
 
     factory { Payment() }
 
-    factory { FeeApi() }
+    factory { FeeApi(get()) }
 
     factory {
         object : ApiCode {

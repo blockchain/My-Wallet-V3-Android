@@ -12,18 +12,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-public enum MockInterceptor implements Interceptor {
-    INSTANCE;
+public class MockInterceptor implements Interceptor {
 
     private static Logger log = LoggerFactory.getLogger(MockInterceptor.class);
 
     private LinkedList<String> responseStringList;
     private LinkedList<Integer> responseCodeList;
     private boolean ioException = false;
-
-    public static MockInterceptor getInstance() {
-        return INSTANCE;
-    }
 
     @Deprecated
     public void setResponseStringList(LinkedList<String> responseStringList) {

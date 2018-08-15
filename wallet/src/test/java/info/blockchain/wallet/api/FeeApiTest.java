@@ -1,9 +1,11 @@
 package info.blockchain.wallet.api;
 
+import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.MockedResponseTest;
 import info.blockchain.wallet.api.data.FeeOptions;
-
+import io.reactivex.observers.TestObserver;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URI;
@@ -11,9 +13,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import io.reactivex.observers.TestObserver;
-
 public class FeeApiTest extends MockedResponseTest {
+
+    private FeeApi feeApi;
+
+    @Before
+    public void setup(){
+        feeApi = new FeeApi(BlockchainFramework.getRetrofitApiInstance().create(FeeEndpoints.class));
+    }
 
     @Test
     public void getFeeOptions() throws Exception {
@@ -23,7 +30,7 @@ public class FeeApiTest extends MockedResponseTest {
 
         mockInterceptor.setResponseString(feeOptions);
         mockInterceptor.setResponseCode(200);
-        final TestObserver<FeeOptions> testObserver = new FeeApi().getFeeOptions().test();
+        final TestObserver<FeeOptions> testObserver = feeApi.getFeeOptions().test();
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -43,7 +50,7 @@ public class FeeApiTest extends MockedResponseTest {
 
         mockInterceptor.setResponseString(feeOptions);
         mockInterceptor.setResponseCode(200);
-        final TestObserver<FeeOptions> testObserver = new FeeApi().getEthFeeOptions().test();
+        final TestObserver<FeeOptions> testObserver = feeApi.getEthFeeOptions().test();
 
         testObserver.assertComplete();
         testObserver.assertNoErrors();

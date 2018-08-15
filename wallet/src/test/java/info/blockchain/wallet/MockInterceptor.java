@@ -14,26 +14,13 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MockInterceptor implements Interceptor {
+public final class MockInterceptor implements Interceptor {
 
     private static Logger log = LoggerFactory.getLogger(MockInterceptor.class);
 
-    static MockInterceptor instance;
-
-    LinkedList<String> responseStringList;
-    LinkedList<Integer> responseCodeList;
-    boolean ioException = false;
-
-    private MockInterceptor() {
-    }
-
-    public static MockInterceptor getInstance() {
-
-        if(instance == null){
-            instance = new MockInterceptor();
-        }
-        return instance;
-    }
+    private LinkedList<String> responseStringList;
+    private LinkedList<Integer> responseCodeList;
+    private boolean ioException = false;
 
     @Deprecated
     public void setResponseStringList(LinkedList<String> responseStringList){

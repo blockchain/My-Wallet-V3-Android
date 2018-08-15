@@ -17,62 +17,63 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public abstract class MockedResponseTest {
 
-    public MockInterceptor mockInterceptor = MockInterceptor.getInstance();
-
-    private final OkHttpClient okHttpClient = getOkHttpClient();
+    protected MockInterceptor mockInterceptor;
 
     @Before
     public void initBlockchainFramework() {
-        BlockchainFramework.init(frameworkInterface);
+        mockInterceptor = new MockInterceptor();
+        BlockchainFramework.init(frameworkInterface(newOkHttpClient()));
     }
 
-    protected FrameworkInterface frameworkInterface = new FrameworkInterface() {
+    private FrameworkInterface frameworkInterface(final OkHttpClient okHttpClient) {
+        return new FrameworkInterface() {
 
-        @Override
-        public Retrofit getRetrofitApiInstance() {
-            return getRetrofit("https://api.staging.blockchain.info/", okHttpClient);
-        }
+            @Override
+            public Retrofit getRetrofitApiInstance() {
+                return getRetrofit("https://api.staging.blockchain.info/", okHttpClient);
+            }
 
-        @Override
-        public Retrofit getRetrofitExplorerInstance() {
-            return getRetrofit("https://explorer.staging.blockchain.info/", okHttpClient);
-        }
+            @Override
+            public Retrofit getRetrofitExplorerInstance() {
+                return getRetrofit("https://explorer.staging.blockchain.info/", okHttpClient);
+            }
 
-        @Override
-        public Environment getEnvironment() {
-            return Environment.STAGING;
-        }
+            @Override
+            public Environment getEnvironment() {
+                return Environment.STAGING;
+            }
 
-        @Override
-        public NetworkParameters getBitcoinParams() {
-            return BitcoinMainNetParams.get();
-        }
+            @Override
+            public NetworkParameters getBitcoinParams() {
+                return BitcoinMainNetParams.get();
+            }
 
-        @Override
-        public NetworkParameters getBitcoinCashParams() {
-            return BitcoinCashMainNetParams.get();
-        }
+            @Override
+            public NetworkParameters getBitcoinCashParams() {
+                return BitcoinCashMainNetParams.get();
+            }
 
-        @Override
-        public String getApiCode() {
-            return null;
-        }
+            @Override
+            public String getApiCode() {
+                return null;
+            }
 
-        @Override
-        public String getDevice() {
-            return "UnitTest";
-        }
+            @Override
+            public String getDevice() {
+                return "UnitTest";
+            }
 
-        @Override
-        public String getDeviceId() {
-            return "DeviceId";
-        }
+            @Override
+            public String getDeviceId() {
+                return "DeviceId";
+            }
 
-        @Override
-        public String getAppVersion() {
-            return null;
-        }
-    };
+            @Override
+            public String getAppVersion() {
+                return null;
+            }
+        };
+    }
 
     @Before
     public void setupRxCalls() {
@@ -104,7 +105,7 @@ public abstract class MockedResponseTest {
         BlockchainFramework.init(null);
     }
 
-    private OkHttpClient getOkHttpClient() {
+    private OkHttpClient newOkHttpClient() {
         return new OkHttpClient.Builder()
                 .addInterceptor(mockInterceptor)//Mock responses
                 .addInterceptor(new ApiInterceptor())//Extensive logging

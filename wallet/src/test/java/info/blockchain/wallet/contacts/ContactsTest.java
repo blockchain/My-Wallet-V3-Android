@@ -50,7 +50,7 @@ public final class ContactsTest {
     @Before
     public void setup() {
 
-        mockInterceptor = MockInterceptor.getInstance();
+        mockInterceptor = new MockInterceptor();
 
         //Set environment
         BlockchainFramework.init(new FrameworkInterface() {
