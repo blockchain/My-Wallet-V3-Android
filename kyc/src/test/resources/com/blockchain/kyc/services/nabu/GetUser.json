@@ -3,6 +3,7 @@
   "lastName": "nakamoto",
   "email": "satoshi@btc.com",
   "mobile": "+447123123123",
+  "dob": "1990-09-13",
   "mobileVerified": true,
   "address": {
     "city": "London",

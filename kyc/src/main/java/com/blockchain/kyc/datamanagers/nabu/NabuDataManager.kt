@@ -11,7 +11,7 @@ import com.blockchain.kyc.services.nabu.NabuService
 import com.blockchain.kyc.stores.NabuSessionTokenStore
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.functions.Function
+import io.reactivex.SingleSource
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
@@ -109,6 +109,7 @@ class NabuDataManager(
     private fun unauthenticated(it: Throwable) =
         (it as? NabuApiException?)?.getErrorCode() == NabuErrorCodes.TokenExpired
 
+    // TODO: Refactor this logic into a reusable, thoroughly tested class - see AND-1335
     private fun <T> authenticate(
         offlineToken: NabuOfflineTokenResponse,
         singleFunction: (NabuSessionTokenResponse) -> Single<T>
@@ -119,10 +120,24 @@ class NabuDataManager(
             nabuTokenStore.getAccessToken()
                 .map { (it as Optional.Some).element }
                 .singleOrError()
-        }.flatMap {
-            singleFunction(it)
-                .onErrorResumeNext(refreshTokenAndRetry(offlineToken, singleFunction))
+        }.flatMap { tokenResponse ->
+            singleFunction(tokenResponse)
+                .onErrorResumeNext { refreshOrReturnError(it, offlineToken, singleFunction) }
         }
+
+    private fun <T> refreshOrReturnError(
+        throwable: Throwable,
+        offlineToken: NabuOfflineTokenResponse,
+        singleFunction: (NabuSessionTokenResponse) -> Single<T>
+    ): SingleSource<out T> {
+        return if (unauthenticated(throwable)) {
+            refreshToken(offlineToken)
+                .doOnSubscribe { clearAccessToken() }
+                .flatMap { singleFunction(it) }
+        } else {
+            Single.error(throwable)
+        }
+    }
 
     private fun refreshToken(
         offlineToken: NabuOfflineTokenResponse
@@ -131,18 +146,4 @@ class NabuDataManager(
             .subscribeOn(Schedulers.io())
             .flatMapObservable(nabuTokenStore::store)
             .singleOrError()
-
-    private fun <T> refreshTokenAndRetry(
-        offlineToken: NabuOfflineTokenResponse,
-        singleToResume: (NabuSessionTokenResponse) -> Single<T>
-    ): Function<Throwable, out Single<T>> =
-        Function { throwable ->
-            if (unauthenticated(throwable)) {
-                clearAccessToken()
-                return@Function refreshToken(offlineToken)
-                    .flatMap { singleToResume(it) }
-            } else {
-                return@Function Single.error(throwable)
-            }
-        }
 }

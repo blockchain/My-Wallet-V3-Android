@@ -68,7 +68,6 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
             consume {
                 if (i == EditorInfo.IME_ACTION_NEXT) {
                     editTextLastName.clearFocus()
-                    ViewUtils.hideKeyboard(requireActivity())
                     inputLayoutDob.performClick()
                 }
             }
@@ -123,6 +122,8 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
             .doOnNext { updateProgress(it, kycStep) }
 
     private fun onDateOfBirthClicked() {
+        ViewUtils.hideKeyboard(requireActivity())
+
         val calendar = Calendar.getInstance().apply { add(Calendar.YEAR, -18) }
         DatePickerDialog(
             context,
