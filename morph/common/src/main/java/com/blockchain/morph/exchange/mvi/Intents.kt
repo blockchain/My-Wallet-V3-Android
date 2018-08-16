@@ -36,3 +36,7 @@ class FiatExchangeRateUpdateIntent(val exchangeRate: ExchangeRate.CryptoToFiat) 
 
 fun ExchangeRate.CryptoToCrypto.toIntent(): ExchangeIntent = CoinExchangeRateUpdateIntent(this)
 fun ExchangeRate.CryptoToFiat.toIntent(): ExchangeIntent = FiatExchangeRateUpdateIntent(this)
+
+class QuoteIntent(val quote: Quote) : ExchangeIntent()
+
+fun Quote.toIntent(): ExchangeIntent = QuoteIntent(this)

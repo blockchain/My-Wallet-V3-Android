@@ -21,9 +21,45 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is CoinExchangeRateUpdateIntent -> previousState.map(intent)
                 is FiatExchangeRateUpdateIntent -> previousState.map(intent)
                 is SwapIntent -> previousState.mapSwap()
+                is QuoteIntent -> previousState.mapQuote(intent)
             }
         }.map { it.vm }
 }
+
+private fun InnerState.mapQuote(intent: QuoteIntent) =
+    if (fromCurrencyMatch(intent) && toCurrencyMatch(intent)) {
+        copy(
+            vm = vm.copy(
+                from = Value(
+                    cryptoValue = intent.quote.from.cryptoValue,
+                    cryptoMode = mode(lastUserInputField, FieldUpdateIntent.Field.FROM_CRYPTO),
+                    fiatValue = intent.quote.from.fiatValue,
+                    fiatMode = mode(lastUserInputField, FieldUpdateIntent.Field.FROM_FIAT)
+                ),
+                to = Value(
+                    cryptoValue = intent.quote.to.cryptoValue,
+                    cryptoMode = mode(lastUserInputField, FieldUpdateIntent.Field.TO_CRYPTO),
+                    fiatValue = intent.quote.to.fiatValue,
+                    fiatMode = mode(lastUserInputField, FieldUpdateIntent.Field.TO_FIAT)
+                )
+            )
+        )
+    } else {
+        this
+    }
+
+private fun InnerState.fromCurrencyMatch(intent: QuoteIntent) =
+    currencyMatch(intent.quote.from, vm.from)
+
+private fun InnerState.toCurrencyMatch(intent: QuoteIntent) =
+    currencyMatch(intent.quote.to, vm.to)
+
+private fun currencyMatch(
+    quote: Quote.Value,
+    vmValue: Value
+) =
+    quote.fiatValue.currencyCode == vmValue.fiatValue.currencyCode &&
+        quote.cryptoValue.currency == vmValue.cryptoValue.currency
 
 private fun InnerState.mapSwap() =
     copy(
@@ -190,6 +226,17 @@ private fun mode(
         fieldEntered == field -> Value.Mode.UserEntered
         value != null -> Value.Mode.UpToDate
         else -> Value.Mode.OutOfDate
+    }
+}
+
+private fun mode(
+    fieldEntered: FieldUpdateIntent.Field,
+    field: FieldUpdateIntent.Field
+): Value.Mode {
+    return if (fieldEntered == field) {
+        Value.Mode.UserEntered
+    } else {
+        Value.Mode.UpToDate
     }
 }
 
