@@ -148,10 +148,8 @@ class NabuDataManagerTest {
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
         whenever(
             nabuService.createBasicUser(
-                userId = sessionToken.userId,
                 firstName = firstName,
                 lastName = lastName,
-                email = email,
                 dateOfBirth = dateOfBirth,
                 sessionToken = sessionToken.token
             )
@@ -167,10 +165,8 @@ class NabuDataManagerTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(nabuService).createBasicUser(
-            userId = sessionToken.userId,
             firstName = firstName,
             lastName = lastName,
-            email = email,
             dateOfBirth = dateOfBirth,
             sessionToken = sessionToken.token
         )
@@ -186,10 +182,7 @@ class NabuDataManagerTest {
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
         whenever(
-            nabuService.getUser(
-                userId = sessionToken.userId,
-                sessionToken = sessionToken.token
-            )
+            nabuService.getUser(sessionToken = sessionToken.token)
         ).thenReturn(Single.just(userObject))
         // Act
         val testObserver = subject.getUser(offlineToken).test()
@@ -197,10 +190,7 @@ class NabuDataManagerTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(userObject)
-        verify(nabuService).getUser(
-            userId = sessionToken.userId,
-            sessionToken = sessionToken.token
-        )
+        verify(nabuService).getUser(sessionToken = sessionToken.token)
     }
 
     @Test

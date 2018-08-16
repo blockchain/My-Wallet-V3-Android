@@ -14,11 +14,11 @@ import com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.search.filterCountries
-import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
+import com.jakewharton.rxbinding2.support.v7.widget.queryTextChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.ReplaySubject
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
@@ -38,7 +38,7 @@ class KycCountrySelectionFragment :
     private val presenter: KycCountrySelectionPresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val countryCodeAdapter = CountryCodeAdapter { presenter.onCountrySelected(it) }
-    private var countryList = PublishSubject.create<List<CountryDisplayModel>>()
+    private var countryList = ReplaySubject.create<List<CountryDisplayModel>>(1)
     private var progressDialog: MaterialProgressDialog? = null
     private val compositeDisposable = CompositeDisposable()
 
@@ -57,21 +57,30 @@ class KycCountrySelectionFragment :
             adapter = countryCodeAdapter
         }
 
-        val userInput = RxSearchView.queryTextChanges(searchView)
-            .debounce(100, TimeUnit.MILLISECONDS)
+        progressListener.setHostTitle(R.string.kyc_country_selection_title)
+        progressListener.incrementProgress(KycStep.CountrySelection)
 
-        compositeDisposable += countryList.filterCountries(userInput)
-            .subscribeOn(AndroidSchedulers.mainThread())
+        onViewReady()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        compositeDisposable += countryList
+            .filterCountries(
+                searchView.queryTextChanges().skipInitialValue()
+                    .debounce(100, TimeUnit.MILLISECONDS)
+            )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 countryCodeAdapter.items = it
                 recyclerView.scrollToPosition(0)
             }
+    }
 
-        progressListener.setHostTitle(R.string.kyc_country_selection_title)
-        progressListener.incrementProgress(KycStep.CountrySelection)
-
-        onViewReady()
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
     }
 
     override fun continueFlow() {
@@ -115,11 +124,6 @@ class KycCountrySelectionFragment :
         if (progressDialog != null && progressDialog!!.isShowing) {
             progressDialog?.dismiss()
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        compositeDisposable.clear()
     }
 
     override fun createPresenter(): KycCountrySelectionPresenter = presenter

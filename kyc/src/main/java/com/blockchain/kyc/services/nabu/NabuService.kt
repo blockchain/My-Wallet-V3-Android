@@ -4,7 +4,7 @@ import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
-import com.blockchain.kyc.api.nabu.NABU_USERS
+import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.NabuBasicUser
@@ -76,25 +76,22 @@ class NabuService(
     ).wrapErrorMessage()
 
     internal fun createBasicUser(
-        path: String = apiPath + NABU_USERS,
-        userId: String,
+        path: String = apiPath + NABU_USERS_CURRENT,
         firstName: String,
         lastName: String,
-        email: String,
         dateOfBirth: String,
         sessionToken: String
     ): Completable = service.createBasicUser(
-        "$path/$userId",
-        NabuBasicUser(userId, firstName, lastName, email, dateOfBirth),
+        path,
+        NabuBasicUser(firstName, lastName, dateOfBirth),
         sessionToken
     )
 
     internal fun getUser(
-        path: String = apiPath + NABU_USERS,
-        userId: String,
+        path: String = apiPath + NABU_USERS_CURRENT,
         sessionToken: String
     ): Single<NabuUser> = service.getUser(
-        "$path/$userId",
+        path,
         sessionToken
     )
 

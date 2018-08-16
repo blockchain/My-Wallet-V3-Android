@@ -73,26 +73,19 @@ class NabuDataManager(
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Completable =
         authenticate(offlineTokenResponse) { session ->
-            emailSingle.flatMapCompletable { email ->
-                nabuService.createBasicUser(
-                    userId = session.userId,
-                    firstName = firstName,
-                    lastName = lastName,
-                    email = email,
-                    dateOfBirth = dateOfBirth,
-                    sessionToken = session.token
-                )
-            }.toSingleDefault(Any())
+            nabuService.createBasicUser(
+                firstName = firstName,
+                lastName = lastName,
+                dateOfBirth = dateOfBirth,
+                sessionToken = session.token
+            ).toSingleDefault(Any())
         }.ignoreElement()
 
     internal fun getUser(
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Single<NabuUser> =
         authenticate(offlineTokenResponse) { session ->
-            nabuService.getUser(
-                userId = session.userId,
-                sessionToken = session.token
-            )
+            nabuService.getUser(sessionToken = session.token)
         }
 
     /**
