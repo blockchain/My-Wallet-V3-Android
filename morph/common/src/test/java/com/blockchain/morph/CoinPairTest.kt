@@ -100,6 +100,16 @@ class CoinPairTest {
     }
 
     @Test
+    fun `pairCode upper BTC - ETH`() {
+        CoinPair.BTC_TO_ETH.pairCodeUpper `should equal` "BTC-ETH"
+    }
+
+    @Test
+    fun `pairCode upper ETH - BCH`() {
+        CoinPair.ETH_TO_BCH.pairCodeUpper `should equal` "ETH-BCH"
+    }
+
+    @Test
     fun `sameInputOutput BTC - BTC`() {
         CoinPair.BTC_TO_BTC.sameInputOutput `should be` true
     }
@@ -185,5 +195,21 @@ class CoinPairTest {
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btc_btc_btc"
+    }
+
+    @Test
+    fun `inverse pair`() {
+        CoinPair.BCH_TO_ETH.inverse() `should be` CoinPair.ETH_TO_BCH
+    }
+
+    @Test
+    fun `inverse all pairs`() {
+        CoinPair.values()
+            .forEach {
+                it.inverse().apply {
+                    to `should be` it.from
+                    from `should be` it.to
+                }
+            }
     }
 }

@@ -14,7 +14,8 @@ import info.blockchain.balance.CryptoCurrency
 enum class CoinPair(
     val pairCode: String,
     val from: CryptoCurrency,
-    val to: CryptoCurrency
+    val to: CryptoCurrency,
+    val pairCodeUpper: String = pairCode.toUpperCase().replace("_", "-")
 ) {
 
     BTC_TO_BTC("btc_btc", CryptoCurrency.BTC, CryptoCurrency.BTC),
@@ -30,6 +31,8 @@ enum class CoinPair(
     BCH_TO_ETH("bch_eth", CryptoCurrency.BCH, CryptoCurrency.ETHER);
 
     val sameInputOutput = from == to
+
+    fun inverse() = to to from
 
     companion object {
 
