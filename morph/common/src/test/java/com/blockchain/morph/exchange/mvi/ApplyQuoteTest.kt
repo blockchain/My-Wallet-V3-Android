@@ -255,13 +255,6 @@ class ApplyQuoteTest {
         }
     }
 
-    fun Double.cad() = FiatValue("CAD", toBigDecimal())
-    fun Double.usd() = FiatValue("USD", toBigDecimal())
-
-    fun Double.bitcoin() = CryptoValue.bitcoinFromMajor(toBigDecimal())
-    fun Double.ether() = CryptoValue.etherFromMajor(toBigDecimal())
-    fun Double.bitcoinCash() = CryptoValue.bitcoinCashFromMajor(toBigDecimal())
-
     infix fun CryptoValue.`equivalent to`(fiatValue: FiatValue) =
         Quote.Value(this, fiatValue)
 }

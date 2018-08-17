@@ -12,6 +12,7 @@ fun ExchangeQuoteRequest.map(): QuoteRequest =
         when (this) {
             is ExchangeQuoteRequest.Selling -> mapSell(it)
             is ExchangeQuoteRequest.Buying -> mapBuy(it)
+            else -> throw Exception("Not supported by shapeshift")
         }
     }
 
