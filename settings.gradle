@@ -11,5 +11,6 @@ include ':app',
         ':kycdemoapp',
         ':morph:common',
         ':morph:shapeshift',
+        ':morph:homebrew',
         ':testutils',
         ':testutils-android'

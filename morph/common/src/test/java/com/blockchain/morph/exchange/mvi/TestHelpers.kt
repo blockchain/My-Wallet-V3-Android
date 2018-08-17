@@ -67,11 +67,3 @@ fun value(
         fiatMode = fiat.second
     )
 }
-
-fun Double.cad() = FiatValue("CAD", toBigDecimal())
-fun Double.usd() = FiatValue("USD", toBigDecimal())
-fun Double.gbp() = FiatValue("GBP", toBigDecimal())
-
-fun Double.bitcoin() = CryptoValue.bitcoinFromMajor(toBigDecimal())
-fun Double.ether() = CryptoValue.etherFromMajor(toBigDecimal())
-fun Double.bitcoinCash() = CryptoValue.bitcoinCashFromMajor(toBigDecimal())

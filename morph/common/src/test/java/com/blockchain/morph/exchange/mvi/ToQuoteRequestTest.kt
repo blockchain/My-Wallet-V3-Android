@@ -2,6 +2,10 @@ package com.blockchain.morph.exchange.mvi
 
 import com.blockchain.morph.CoinPair
 import com.blockchain.morph.quote.ExchangeQuoteRequest
+import com.blockchain.testutils.bitcoin
+import com.blockchain.testutils.bitcoinCash
+import com.blockchain.testutils.gbp
+import com.blockchain.testutils.usd
 import info.blockchain.balance.CryptoCurrency
 import io.reactivex.Observable
 import org.amshove.kluent.`should be instance of`

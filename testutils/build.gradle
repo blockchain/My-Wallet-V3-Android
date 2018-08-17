@@ -14,6 +14,8 @@ sourceCompatibility = Versions.javaCompatibilityVersion
 targetCompatibility = Versions.javaCompatibilityVersion
 
 dependencies {
+    implementation project(':balance')
+
     // RxJava
     implementation Libraries.rxJava
     implementation Libraries.rxKotlin

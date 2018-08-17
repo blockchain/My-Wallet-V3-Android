@@ -1,4 +1,4 @@
-package com.blockchain.morph.exchange.mvi
+package com.blockchain.morph.homebrew
 
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import info.blockchain.balance.format
