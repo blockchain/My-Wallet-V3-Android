@@ -20,29 +20,33 @@ internal fun ExchangeQuoteRequest.mapToSocketParameters() =
         is ExchangeQuoteRequest.Selling ->
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
-                volume = offering.format(),
+                volume = offering.format(Locale.US).removeComma(),
                 fiatCurrency = indicativeFiatSymbol,
                 fix = "base"
             )
         is ExchangeQuoteRequest.SellingFiatLinked ->
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
-                volume = offeringFiatValue.toStringWithoutSymbol(Locale.US),
+                volume = offeringFiatValue.toStringWithoutSymbol(Locale.US).removeComma(),
                 fiatCurrency = offeringFiatValue.currencyCode,
                 fix = "baseInFiat"
             )
         is ExchangeQuoteRequest.Buying ->
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
-                volume = wanted.format(),
+                volume = wanted.format(Locale.US).removeComma(),
                 fiatCurrency = indicativeFiatSymbol,
                 fix = "counter"
             )
         is ExchangeQuoteRequest.BuyingFiatLinked ->
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
-                volume = wantedFiatValue.toStringWithoutSymbol(Locale.US),
+                volume = wantedFiatValue.toStringWithoutSymbol(Locale.US).removeComma(),
                 fiatCurrency = wantedFiatValue.currencyCode,
                 fix = "counterInFiat"
             )
     }
+
+private fun String.removeComma(): String {
+    return replace(",", "")
+}

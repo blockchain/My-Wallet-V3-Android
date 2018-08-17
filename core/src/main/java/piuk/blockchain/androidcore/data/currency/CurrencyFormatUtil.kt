@@ -48,11 +48,11 @@ class CurrencyFormatUtil @Inject constructor() {
 
     @Deprecated("Use format", replaceWith = ReplaceWith("cryptoValue.format(displayMode)"))
     fun format(cryptoValue: CryptoValue, displayMode: FormatPrecision = FormatPrecision.Short): String =
-        cryptoValue.format(displayMode)
+        cryptoValue.format(precision = displayMode)
 
     @Deprecated("Use format", replaceWith = ReplaceWith("cryptoValue.formatWithUnit(displayMode)"))
     fun formatWithUnit(cryptoValue: CryptoValue, displayMode: FormatPrecision = FormatPrecision.Short) =
-        cryptoValue.formatWithUnit(displayMode)
+        cryptoValue.formatWithUnit(precision = displayMode)
 
     @Deprecated("Use formatWithUnit", replaceWith = ReplaceWith("formatWithUnit(CryptoValue.bitcoinFromMajor(btc))"))
     fun formatBtcWithUnit(btc: BigDecimal) = formatWithUnit(CryptoValue.bitcoinFromMajor(btc))

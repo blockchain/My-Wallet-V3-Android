@@ -1,9 +1,16 @@
 package info.blockchain.balance
 
 import org.amshove.kluent.`should equal`
+import org.junit.Before
 import org.junit.Test
+import java.util.Locale
 
 class CryptoCurrencyFormatterTest {
+
+    @Before
+    fun setLocale() {
+        Locale.setDefault(Locale.US)
+    }
 
     @Test
     fun `format BTC from Crypto Value`() {
@@ -31,7 +38,7 @@ class CryptoCurrencyFormatterTest {
 
     @Test
     fun `formatWithUnit 0 BTC`() {
-        CryptoValue.ZeroBtc.formatWithUnit(FormatPrecision.Short) `should equal` "0 BTC"
+        CryptoValue.ZeroBtc.formatWithUnit(precision = FormatPrecision.Short) `should equal` "0 BTC"
     }
 
     @Test
@@ -108,7 +115,7 @@ class CryptoCurrencyFormatterTest {
     @Test
     fun `formatWithUnit ETH with tiny fractions - full precision`() {
         val formatWithUnit =
-            { wei: Long -> CryptoValue.etherFromWei(wei).formatWithUnit(FormatPrecision.Full) }
+            { wei: Long -> CryptoValue.etherFromWei(wei).formatWithUnit(precision = FormatPrecision.Full) }
         formatWithUnit(1L) `should equal` "0.000000000000000001 ETH"
         formatWithUnit(10L) `should equal` "0.00000000000000001 ETH"
         formatWithUnit(100L) `should equal` "0.0000000000000001 ETH"
@@ -134,5 +141,23 @@ class CryptoCurrencyFormatterTest {
         CryptoValue.etherFromWei(10_000_000_000_000_000L).formatWithUnit() `should equal` "0.01 ETH"
         CryptoValue.etherFromWei(100_000_000_000_000_000L).formatWithUnit() `should equal` "0.1 ETH"
         CryptoValue.etherFromWei(1_200_000_000_000_000_000).formatWithUnit() `should equal` "1.2 ETH"
+    }
+
+    @Test
+    fun `format in another locale`() {
+        Locale.setDefault(Locale.FRANCE)
+        CryptoValue.ZeroEth.format() `should equal` "0"
+        CryptoValue.etherFromMajor(1).format() `should equal` "1,0"
+        CryptoValue.etherFromMajor(10_000).format() `should equal` "10\u00a0000,0"
+        CryptoValue.etherFromMajor(100_000_000).format() `should equal` "100\u00a0000\u00a0000,0"
+    }
+
+    @Test
+    fun `format in another locale, forced to another`() {
+        Locale.setDefault(Locale.FRANCE)
+        CryptoValue.ZeroEth.format(locale = Locale.US) `should equal` "0"
+        CryptoValue.etherFromMajor(1).format(locale = Locale.US) `should equal` "1.0"
+        CryptoValue.etherFromMajor(10_000).format(locale = Locale.US) `should equal` "10,000.0"
+        CryptoValue.etherFromMajor(100_000_000).format(locale = Locale.US) `should equal` "100,000,000.0"
     }
 }

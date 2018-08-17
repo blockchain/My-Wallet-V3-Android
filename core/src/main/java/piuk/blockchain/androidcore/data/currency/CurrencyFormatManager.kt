@@ -90,13 +90,13 @@ class CurrencyFormatManager @Inject constructor(
         getFormattedCoinValue(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
     fun getFormattedCoinValue(cryptoValue: CryptoValue) =
-        cryptoValue.format(FormatPrecision.Full)
+        cryptoValue.format(precision = FormatPrecision.Full)
 
     fun getFormattedSelectedCoinValueWithUnit(coinValue: BigInteger) =
         getFormattedCoinValueWithUnit(CryptoValue(currencyState.cryptoCurrency, coinValue))
 
     fun getFormattedCoinValueWithUnit(cryptoValue: CryptoValue) =
-        cryptoValue.formatWithUnit(FormatPrecision.Full)
+        cryptoValue.formatWithUnit(precision = FormatPrecision.Full)
 
     /**
      * @return Formatted String of crypto amount from fiat currency amount.

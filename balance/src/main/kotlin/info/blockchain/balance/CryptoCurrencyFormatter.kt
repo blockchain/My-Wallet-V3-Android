@@ -4,6 +4,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 
 enum class FormatPrecision {
     /**
@@ -16,20 +17,31 @@ enum class FormatPrecision {
     Full
 }
 
-fun CryptoValue.format(precision: FormatPrecision = FormatPrecision.Short): String =
-    CryptoCurrencyFormatter.format(this, precision)
+fun CryptoValue.format(
+    locale: Locale = Locale.getDefault(),
+    precision: FormatPrecision = FormatPrecision.Short
+): String =
+    getFormatter(locale).format(this, precision)
 
-fun CryptoValue.formatWithUnit(precision: FormatPrecision = FormatPrecision.Short) =
-    CryptoCurrencyFormatter.formatWithUnit(this, precision)
+fun CryptoValue.formatWithUnit(
+    locale: Locale = Locale.getDefault(),
+    precision: FormatPrecision = FormatPrecision.Short
+) =
+    getFormatter(locale).formatWithUnit(this, precision)
 
 private const val MaxEthShortDecimalLength = 8
 
-private object CryptoCurrencyFormatter {
-    private val btcFormat = createCryptoDecimalFormat(CryptoCurrency.BTC.dp)
-    private val bchFormat = createCryptoDecimalFormat(CryptoCurrency.BCH.dp)
-    private val ethFormat = createCryptoDecimalFormat(CryptoCurrency.ETHER.dp)
+private val formatterMap: MutableMap<Locale, CryptoCurrencyFormatter> = ConcurrentHashMap()
+
+private fun getFormatter(locale: Locale) =
+    formatterMap.getOrPut(locale) { CryptoCurrencyFormatter(locale) }
+
+class CryptoCurrencyFormatter(locale: Locale) {
+    private val btcFormat = createCryptoDecimalFormat(locale, CryptoCurrency.BTC.dp)
+    private val bchFormat = createCryptoDecimalFormat(locale, CryptoCurrency.BCH.dp)
+    private val ethFormat = createCryptoDecimalFormat(locale, CryptoCurrency.ETHER.dp)
     private val ethShortFormat =
-        createCryptoDecimalFormat(MaxEthShortDecimalLength)
+        createCryptoDecimalFormat(locale, MaxEthShortDecimalLength)
 
     fun format(
         cryptoValue: CryptoValue,
@@ -69,10 +81,10 @@ private fun Double.toPositiveDouble() = Math.max(this, 0.0)
 /**
  * Replace 0.0 with 0 to match web
  */
-private fun String.toWebZero() = if (this == "0.0" || this == "0.00") "0" else this
+private fun String.toWebZero() = if (this == "0.0" || this == "0,0" || this == "0.00") "0" else this
 
-private fun createCryptoDecimalFormat(maxDigits: Int) =
-    (NumberFormat.getInstance(Locale.getDefault()) as DecimalFormat).apply {
+private fun createCryptoDecimalFormat(locale: Locale, maxDigits: Int) =
+    (NumberFormat.getInstance(locale) as DecimalFormat).apply {
         minimumFractionDigits = 1
         maximumFractionDigits = maxDigits
     }

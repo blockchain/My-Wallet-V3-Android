@@ -1,26 +1,37 @@
 package com.blockchain.morph.homebrew
 
 import com.blockchain.morph.quote.ExchangeQuoteRequest
+import com.blockchain.testutils.after
+import com.blockchain.testutils.before
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
 import com.blockchain.testutils.usd
 import info.blockchain.balance.CryptoCurrency
 import io.reactivex.Observable
 import org.amshove.kluent.`should equal`
+import org.junit.Rule
 import org.junit.Test
+import java.util.Locale
 
 class QuoteWebSocketParamsTest {
+
+    @get:Rule
+    val locale = before {
+        Locale.setDefault(Locale.FRANCE)
+    } after {
+        Locale.setDefault(Locale.US)
+    }
 
     @Test
     fun `Selling crypto`() {
         ExchangeQuoteRequest.Selling(
-            offering = 2.0.bitcoin(),
+            offering = 2345.45679.bitcoin(),
             wanted = CryptoCurrency.ETHER,
             indicativeFiatSymbol = "USD"
         ).mapToSocketParameters() `should equal`
             QuoteWebSocketParams(
                 pair = "BTC-ETH",
-                volume = "2.0",
+                volume = "2345.45679",
                 fiatCurrency = "USD",
                 fix = "base"
             )
@@ -30,12 +41,12 @@ class QuoteWebSocketParamsTest {
     fun `Buying crypto`() {
         ExchangeQuoteRequest.Buying(
             offering = CryptoCurrency.BCH,
-            wanted = 1.0.bitcoin(),
+            wanted = 4567.5649.bitcoin(),
             indicativeFiatSymbol = "GBP"
         ).mapToSocketParameters() `should equal`
             QuoteWebSocketParams(
                 pair = "BCH-BTC",
-                volume = "1.0",
+                volume = "4567.5649",
                 fiatCurrency = "GBP",
                 fix = "counter"
             )
@@ -46,11 +57,11 @@ class QuoteWebSocketParamsTest {
         ExchangeQuoteRequest.SellingFiatLinked(
             offering = CryptoCurrency.BTC,
             wanted = CryptoCurrency.ETHER,
-            offeringFiatValue = 12.34.usd()
+            offeringFiatValue = 5612.34.usd()
         ).mapToSocketParameters() `should equal`
             QuoteWebSocketParams(
                 pair = "BTC-ETH",
-                volume = "12.34",
+                volume = "5612.34",
                 fiatCurrency = "USD",
                 fix = "baseInFiat"
             )
@@ -61,11 +72,11 @@ class QuoteWebSocketParamsTest {
         ExchangeQuoteRequest.BuyingFiatLinked(
             offering = CryptoCurrency.ETHER,
             wanted = CryptoCurrency.BCH,
-            wantedFiatValue = 45.67.usd()
+            wantedFiatValue = 2345.67.usd()
         ).mapToSocketParameters() `should equal`
             QuoteWebSocketParams(
                 pair = "ETH-BCH",
-                volume = "45.67",
+                volume = "2345.67",
                 fiatCurrency = "USD",
                 fix = "counterInFiat"
             )
