@@ -8,8 +8,8 @@ import java.util.Locale
 data class QuoteWebSocketParams(
     val pair: String,
     val volume: String,
-    val volumeCurrency: String,
-    val isBase: Boolean?
+    val fiatCurrency: String,
+    val fix: String
 )
 
 fun Observable<ExchangeQuoteRequest>.mapToSocketParameters(): Observable<QuoteWebSocketParams> =
@@ -21,28 +21,28 @@ internal fun ExchangeQuoteRequest.mapToSocketParameters() =
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
                 volume = offering.format(),
-                volumeCurrency = offering.currency.symbol,
-                isBase = null
+                fiatCurrency = indicativeFiatSymbol,
+                fix = "base"
             )
         is ExchangeQuoteRequest.SellingFiatLinked ->
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
                 volume = offeringFiatValue.toStringWithoutSymbol(Locale.US),
-                volumeCurrency = offeringFiatValue.currencyCode,
-                isBase = true
+                fiatCurrency = offeringFiatValue.currencyCode,
+                fix = "baseInFiat"
             )
         is ExchangeQuoteRequest.Buying ->
             QuoteWebSocketParams(
-                pair = pair.inverse().pairCodeUpper,
+                pair = pair.pairCodeUpper,
                 volume = wanted.format(),
-                volumeCurrency = wanted.currency.symbol,
-                isBase = null
+                fiatCurrency = indicativeFiatSymbol,
+                fix = "counter"
             )
         is ExchangeQuoteRequest.BuyingFiatLinked ->
             QuoteWebSocketParams(
                 pair = pair.pairCodeUpper,
                 volume = wantedFiatValue.toStringWithoutSymbol(Locale.US),
-                volumeCurrency = wantedFiatValue.currencyCode,
-                isBase = false
+                fiatCurrency = wantedFiatValue.currencyCode,
+                fix = "counterInFiat"
             )
     }

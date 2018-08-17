@@ -15,13 +15,14 @@ class QuoteWebSocketParamsTest {
     fun `Selling crypto`() {
         ExchangeQuoteRequest.Selling(
             offering = 2.0.bitcoin(),
-            wanted = CryptoCurrency.ETHER
+            wanted = CryptoCurrency.ETHER,
+            indicativeFiatSymbol = "USD"
         ).mapToSocketParameters() `should equal`
             QuoteWebSocketParams(
                 pair = "BTC-ETH",
                 volume = "2.0",
-                volumeCurrency = "BTC",
-                isBase = null
+                fiatCurrency = "USD",
+                fix = "base"
             )
     }
 
@@ -29,13 +30,14 @@ class QuoteWebSocketParamsTest {
     fun `Buying crypto`() {
         ExchangeQuoteRequest.Buying(
             offering = CryptoCurrency.BCH,
-            wanted = 1.0.bitcoin()
+            wanted = 1.0.bitcoin(),
+            indicativeFiatSymbol = "GBP"
         ).mapToSocketParameters() `should equal`
             QuoteWebSocketParams(
-                pair = "BTC-BCH",
+                pair = "BCH-BTC",
                 volume = "1.0",
-                volumeCurrency = "BTC",
-                isBase = null
+                fiatCurrency = "GBP",
+                fix = "counter"
             )
     }
 
@@ -49,8 +51,8 @@ class QuoteWebSocketParamsTest {
             QuoteWebSocketParams(
                 pair = "BTC-ETH",
                 volume = "12.34",
-                volumeCurrency = "USD",
-                isBase = true
+                fiatCurrency = "USD",
+                fix = "baseInFiat"
             )
     }
 
@@ -64,8 +66,8 @@ class QuoteWebSocketParamsTest {
             QuoteWebSocketParams(
                 pair = "ETH-BCH",
                 volume = "45.67",
-                volumeCurrency = "USD",
-                isBase = false
+                fiatCurrency = "USD",
+                fix = "counterInFiat"
             )
     }
 
@@ -74,18 +76,30 @@ class QuoteWebSocketParamsTest {
         Observable.just<ExchangeQuoteRequest>(
             ExchangeQuoteRequest.Selling(
                 offering = 2.0.bitcoin(),
-                wanted = CryptoCurrency.ETHER
+                wanted = CryptoCurrency.ETHER,
+                indicativeFiatSymbol = "GBP"
             ),
             ExchangeQuoteRequest.Buying(
                 wanted = 4.0.ether(),
-                offering = CryptoCurrency.BCH
+                offering = CryptoCurrency.BCH,
+                indicativeFiatSymbol = "YEN"
             )
         ).mapToSocketParameters()
             .test()
             .values() `should equal`
             listOf(
-                QuoteWebSocketParams("BTC-ETH", "2.0", "BTC", null),
-                QuoteWebSocketParams("ETH-BCH", "4.0", "ETH", null)
+                QuoteWebSocketParams(
+                    pair = "BTC-ETH",
+                    volume = "2.0",
+                    fiatCurrency = "GBP",
+                    fix = "base"
+                ),
+                QuoteWebSocketParams(
+                    pair = "BCH-ETH",
+                    volume = "4.0",
+                    fiatCurrency = "YEN",
+                    fix = "counter"
+                )
             )
     }
 }

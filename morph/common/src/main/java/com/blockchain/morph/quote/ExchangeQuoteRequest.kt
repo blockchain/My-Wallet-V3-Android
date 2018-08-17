@@ -10,12 +10,14 @@ sealed class ExchangeQuoteRequest(val pair: CoinPair) {
 
     class Selling(
         val offering: CryptoValue,
-        val wanted: CryptoCurrency
+        val wanted: CryptoCurrency,
+        val indicativeFiatSymbol: String = ""
     ) : ExchangeQuoteRequest(offering.currency to wanted)
 
     class Buying(
         val offering: CryptoCurrency,
-        val wanted: CryptoValue
+        val wanted: CryptoValue,
+        val indicativeFiatSymbol: String = ""
     ) : ExchangeQuoteRequest(offering to wanted.currency)
 
     class SellingFiatLinked(
