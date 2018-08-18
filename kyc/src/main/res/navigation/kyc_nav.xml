@@ -30,5 +30,13 @@
         android:id="@+id/kycInvalidCountryFragment"
         android:name="com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment"
         android:label="KycInvalidCountryFragment" >
+        <action
+            android:id="@+id/action_kycProfileFragment_to_kycHomeAddress"
+            app:destination="@id/kycHomeAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/kycHomeAddressFragment"
+        android:name="com.blockchain.kycui.address.KycHomeAddressFragment"
+        android:label="KycHomeAddress" >
     </fragment>
 </navigation>

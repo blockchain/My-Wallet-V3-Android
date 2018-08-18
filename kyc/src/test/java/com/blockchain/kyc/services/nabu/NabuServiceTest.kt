@@ -3,8 +3,10 @@ package com.blockchain.kyc.services.nabu
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
+import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
+import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.NabuBasicUser
@@ -228,6 +230,53 @@ class NabuServiceTest {
         // Check URL
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_USERS_CURRENT"
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
+    fun addAddress() {
+        // Arrange
+        val sessionToken = "SESSION_TOKEN"
+        val city = "CITY"
+        val line1 = "LINE1"
+        val line2 = "LINE2"
+        val state = null
+        val countryCode = "COUNTRY_CODE"
+        val postCode = "POST_CODE"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody("")
+        )
+        // Act
+        val testObserver = subject.addAddress(
+            path = NABU_PUT_ADDRESS,
+            sessionToken = sessionToken,
+            city = city,
+            line1 = line1,
+            line2 = line2,
+            state = state,
+            countryCode = countryCode,
+            postCode = postCode
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_PUT_ADDRESS"
+        // Check Body
+        val requestString = request.requestToString()
+        val adapter = moshi.adapter(AddAddressRequest::class.java)
+        val addressRequest = adapter.fromJson(requestString)!!
+        addressRequest.address.city `should equal` city
+        addressRequest.address.line1 `should equal` line1
+        addressRequest.address.line2 `should equal` line2
+        addressRequest.address.state `should equal` state
+        addressRequest.address.countryCode `should equal` countryCode
+        addressRequest.address.postCode `should equal` postCode
         // Check Header
         request.headers.get("authorization") `should equal` sessionToken
     }

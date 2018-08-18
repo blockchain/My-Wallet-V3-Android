@@ -194,6 +194,55 @@ class NabuDataManagerTest {
     }
 
     @Test
+    fun addAddress() {
+        // Arrange
+        val city = "CITY"
+        val line1 = "LINE1"
+        val line2 = "LINE2"
+        val state = null
+        val countryCode = "COUNTRY_CODE"
+        val postCode = "POST_CODE"
+        val offlineToken = NabuOfflineTokenResponse("", "")
+        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
+        whenever(nabuTokenStore.getAccessToken())
+            .thenReturn(Observable.just(Optional.Some(sessionToken)))
+        whenever(
+            nabuService.addAddress(
+                sessionToken = sessionToken.token,
+                city = city,
+                line1 = line1,
+                line2 = line2,
+                state = state,
+                countryCode = countryCode,
+                postCode = postCode
+            )
+        ).thenReturn(Completable.complete())
+        // Act
+        val testObserver = subject.addAddress(
+            offlineToken,
+            city,
+            line1,
+            line2,
+            state,
+            countryCode,
+            postCode
+        ).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        verify(nabuService).addAddress(
+            sessionToken = sessionToken.token,
+            city = city,
+            line1 = line1,
+            line2 = line2,
+            state = state,
+            countryCode = countryCode,
+            postCode = postCode
+        )
+    }
+
+    @Test
     fun getCountriesList() {
         // Arrange
         val countriesList = listOf(

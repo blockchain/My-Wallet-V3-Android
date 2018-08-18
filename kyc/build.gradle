@@ -52,6 +52,10 @@ kapt {
     useBuildCache = true
 }
 
+androidExtensions {
+    experimental = true
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -71,6 +75,7 @@ dependencies {
     implementation(Libraries.googlePlayServicesBase) {
         exclude group: 'com.android.support'
     }
+    implementation Libraries.googlePlaces
     // Navigation
     implementation Libraries.navigationControllerCore
     implementation Libraries.navigationControllerFragments

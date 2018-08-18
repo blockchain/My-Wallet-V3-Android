@@ -3,10 +3,12 @@ package com.blockchain.kyc.services.nabu
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
+import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
+import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
@@ -93,7 +95,7 @@ class NabuService(
     ): Single<NabuUser> = service.getUser(
         path,
         sessionToken
-    )
+    ).wrapErrorMessage()
 
     internal fun getCountriesList(
         path: String = apiPath + NABU_COUNTRIES,
@@ -101,6 +103,28 @@ class NabuService(
     ): Single<List<NabuCountryResponse>> = service.getCountriesList(
         path,
         scope.value
+    ).wrapErrorMessage()
+
+    internal fun addAddress(
+        path: String = apiPath + NABU_PUT_ADDRESS,
+        city: String,
+        line1: String,
+        line2: String?,
+        state: String?,
+        countryCode: String,
+        postCode: String,
+        sessionToken: String
+    ): Completable = service.addAddress(
+        path,
+        AddAddressRequest.fromAddressDetails(
+            city,
+            line1,
+            line2,
+            state,
+            countryCode,
+            postCode
+        ),
+        sessionToken
     ).wrapErrorMessage()
 
     companion object {

@@ -62,8 +62,6 @@ val coreModule = applicationContext {
 
     factory { MetadataUtils() }
 
-    bean { MetadataManager(get(), get(), get()) }
-
     factory { PrivateKeyFactory() }
 
     context("Payload") {
@@ -71,6 +69,8 @@ val coreModule = applicationContext {
         factory { PayloadService(get()) }
 
         factory { PayloadDataManager(get(), get(), get(), get(), get()) }
+
+        bean { MetadataManager(get(), get(), get()) }
     }
 
     bean { BchDataStore() }

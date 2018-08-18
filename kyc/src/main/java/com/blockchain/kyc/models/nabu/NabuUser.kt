@@ -20,9 +20,34 @@ data class Address(
     val line1: String?,
     val line2: String?,
     val state: String?,
-    val country: String?,
+    val countryCode: String?,
     val postCode: String?
 )
+
+data class AddAddressRequest(
+    val address: Address
+) {
+    companion object {
+
+        fun fromAddressDetails(
+            city: String,
+            line1: String,
+            line2: String?,
+            state: String?,
+            countryCode: String,
+            postCode: String
+        ): AddAddressRequest = AddAddressRequest(
+            Address(
+                city,
+                line1,
+                line2,
+                state,
+                countryCode,
+                postCode
+            )
+        )
+    }
+}
 
 sealed class KycState {
     object None : KycState()

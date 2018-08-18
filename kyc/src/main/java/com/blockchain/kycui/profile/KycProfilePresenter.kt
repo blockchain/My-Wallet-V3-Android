@@ -57,7 +57,8 @@ class KycProfilePresenter(
                     ProfileModel(
                         view.firstName,
                         view.lastName,
-                        view.dateOfBirth ?: throw IllegalStateException("DoB has not been set")
+                        view.dateOfBirth ?: throw IllegalStateException("DoB has not been set"),
+                        view.countryCode
                     ).run { view.continueSignUp(this) }
                 },
                 onError = { view.showErrorToast(R.string.kyc_profile_error) }

@@ -127,10 +127,12 @@ class KycProfilePresenterTest {
         val firstName = "Adam"
         val lastName = "Bennett"
         val dateOfBirth = date(Locale.US, 2014, 8, 10)
+        val countryCode = "UK"
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.firstName).thenReturn(firstName)
         whenever(view.lastName).thenReturn(lastName)
         whenever(view.dateOfBirth).thenReturn(dateOfBirth)
+        whenever(view.countryCode).thenReturn(countryCode)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -158,11 +160,13 @@ class KycProfilePresenterTest {
         val firstName = "Adam"
         val lastName = "Bennett"
         val dateOfBirth = date(Locale.US, 2014, 8, 10)
+        val countryCode = "UK"
         val offlineToken = NabuCredentialsMetadata("", "")
         val userId = "USER_ID"
         whenever(view.firstName).thenReturn(firstName)
         whenever(view.lastName).thenReturn(lastName)
         whenever(view.dateOfBirth).thenReturn(dateOfBirth)
+        whenever(view.countryCode).thenReturn(countryCode)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE

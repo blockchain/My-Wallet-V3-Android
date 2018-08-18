@@ -38,7 +38,7 @@ class KycCountrySelectionPresenter(
     internal fun onCountrySelected(countryCode: String) {
         countriesList.filter { it.isKycCountry(countryCode) }
             .subscribeBy(
-                onSuccess = { view.continueFlow() },
+                onSuccess = { view.continueFlow(countryCode) },
                 onComplete = { view.invalidCountry(countryCode) },
                 onError = {
                     throw IllegalStateException("Countries list should already be cached")

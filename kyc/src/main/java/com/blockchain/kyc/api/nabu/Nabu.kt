@@ -1,5 +1,7 @@
 package com.blockchain.kyc.api.nabu
 
+import com.blockchain.kyc.models.nabu.AddAddressRequest
+import com.blockchain.kyc.models.nabu.Address
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
@@ -68,4 +70,19 @@ internal interface Nabu {
         @Url url: String,
         @Query("scope") scope: String?
     ): Single<List<NabuCountryResponse>>
+
+    @GET
+    fun findAddress(
+        @Url url: String,
+        @Query("postCode") postCode: String,
+        @Query("countryCode") countryCode: String,
+        @Header("authorization") authorization: String
+    ): Single<List<Address>>
+
+    @PUT
+    fun addAddress(
+        @Url url: String,
+        @Body address: AddAddressRequest,
+        @Header("authorization") authorization: String
+    ): Completable
 }

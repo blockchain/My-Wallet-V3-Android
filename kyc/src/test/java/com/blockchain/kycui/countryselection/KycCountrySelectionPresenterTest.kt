@@ -83,6 +83,6 @@ class KycCountrySelectionPresenterTest {
         subject.onCountrySelected(countryCode)
         // Assert
         verify(nabuDataManager).getCountriesList(Scope.None)
-        verify(view).continueFlow()
+        verify(view).continueFlow(countryCode)
     }
 }

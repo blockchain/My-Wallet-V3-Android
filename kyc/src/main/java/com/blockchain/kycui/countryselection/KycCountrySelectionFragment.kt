@@ -13,6 +13,7 @@ import com.blockchain.kycui.countryselection.util.toDisplayList
 import com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
+import com.blockchain.kycui.profile.KycProfileFragment
 import com.blockchain.kycui.search.filterCountries
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -83,8 +84,9 @@ class KycCountrySelectionFragment :
         compositeDisposable.clear()
     }
 
-    override fun continueFlow() {
-        findNavController(this).navigate(R.id.kycProfileFragment)
+    override fun continueFlow(countryCode: String) {
+        val args = KycProfileFragment.bundleArgs(countryCode)
+        findNavController(this).navigate(R.id.kycProfileFragment, args)
     }
 
     override fun invalidCountry(countryCode: String) {
@@ -129,4 +131,8 @@ class KycCountrySelectionFragment :
     override fun createPresenter(): KycCountrySelectionPresenter = presenter
 
     override fun getMvpView(): KycCountrySelectionView = this
+
+    companion object {
+        const val EXTRA_COUNTRY_CODE = "com.blockchain.kycui.countryselection.EXTRA_COUNTRY_CODE"
+    }
 }

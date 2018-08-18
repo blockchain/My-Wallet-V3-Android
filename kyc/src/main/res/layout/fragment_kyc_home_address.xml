@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_address_title"
+            style="@style/KycFlowTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_country_selection_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_profile_message"
+            style="@style/KycFlowMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_address_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_address_title" />
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_view_kyc_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_profile_message"
+            app:queryHint="@string/kyc_address_search_hint" />
+
+        <!-- Address -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_kyc_address_first_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/kyc_address_address_first_line_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_view_kyc_address">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_kyc_address_first_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textPostalAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Apt Name or Number -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_kyc_address_apt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/kyc_address_address_apt_name_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_address_first_line">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_kyc_address_apt_name"
+                android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- City -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_kyc_address_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/kyc_address_address_city_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_address_apt_name">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_kyc_address_city"
+                android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- State/County -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_kyc_address_state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:hint="@string/kyc_address_address_state_hint"
+            app:layout_constraintEnd_toStartOf="@+id/input_layout_kyc_address_zip_code"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_address_city"
+            tools:ignore="RtlHardcoded">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_kyc_address_state"
+                android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Zip Code/Postcode -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_kyc_address_zip_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="8dp"
+            android:hint="@string/kyc_address_address_postcode_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/input_layout_kyc_address_state"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_address_city"
+            tools:ignore="RtlHardcoded">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_kyc_address_zip_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textPostalAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Country -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_kyc_address_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/kyc_address_address_country_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_address_zip_code">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edit_text_kyc_address_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:inputType="textPostalAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_kyc_address_next"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:enabled="false"
+            android:text="@string/kyc_profile_next"
+            android:theme="@style/ButtonLightBlueTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_address_country"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

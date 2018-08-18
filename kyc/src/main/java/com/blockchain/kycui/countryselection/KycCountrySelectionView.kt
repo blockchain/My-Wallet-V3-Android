@@ -5,7 +5,7 @@ import piuk.blockchain.androidcoreui.ui.base.View
 
 interface KycCountrySelectionView : View {
 
-    fun continueFlow()
+    fun continueFlow(countryCode: String)
 
     fun invalidCountry(countryCode: String)
 

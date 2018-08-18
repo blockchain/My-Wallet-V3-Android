@@ -31,4 +31,20 @@
     <string name="kyc_invalid_country_exit">Exit</string>
     <string name="kyc_invalid_country_header">Coming soon to %1$s</string>
     <string name="kyc_invalid_country_message">Every country has different rules on how to buy and sell cryptocurrencies. Keep your eyes peeled, and we\'ll let you know as soon as we launch in %1$s!</string>
+
+    <!-- Address -->
+    <string name="kyc_address_title">Home Address</string>
+    <string name="kyc_address_message">We may send a verification postcard for added security.</string>
+    <string name="kyc_address_search_hint">Search for your %1$s</string>
+    <string name="kyc_address_search_hint_postcode">postcode</string>
+    <string name="kyc_address_search_hint_zipcode">zip code</string>
+    <string name="kyc_address_address_first_line_hint">Address</string>
+    <string name="kyc_address_address_apt_name_hint">Apt, Floor, #</string>
+    <string name="kyc_address_address_postcode_hint">Postcode</string>
+    <string name="kyc_address_address_zip_code_hint">Zip Code</string>
+    <string name="kyc_address_address_city_hint">City</string>
+    <string name="kyc_address_address_state_hint">State</string>
+    <string name="kyc_address_address_county_hint">County</string>
+    <string name="kyc_address_address_country_hint">Country</string>
+    <string name="kyc_address_google_not_available">Google Play Services are not available on this device.</string>
 </resources>

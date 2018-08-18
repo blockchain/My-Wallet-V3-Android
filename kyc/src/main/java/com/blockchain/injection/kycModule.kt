@@ -7,6 +7,7 @@ import com.blockchain.kyc.models.nabu.UserStateAdapter
 import com.blockchain.kyc.services.nabu.NabuService
 import com.blockchain.kyc.services.onfido.OnfidoService
 import com.blockchain.kyc.stores.NabuSessionTokenStore
+import com.blockchain.kycui.address.KycHomeAddressPresenter
 import com.blockchain.kycui.countryselection.KycCountrySelectionPresenter
 import com.blockchain.kycui.profile.KycProfilePresenter
 import com.blockchain.network.modules.MoshiBuilderInterceptor
@@ -37,9 +38,11 @@ val kycModule = applicationContext {
         }
 
         factory { KycCountrySelectionPresenter(get()) }
-    }
 
-    factory { KycProfilePresenter(get(), get()) }
+        factory { KycProfilePresenter(get(), get()) }
+
+        factory { KycHomeAddressPresenter(get(), get()) }
+    }
 
     bean("kyc") {
         object : MoshiBuilderInterceptor {
