@@ -28,5 +28,5 @@ interface KycHomeAddressView : View {
 
     fun showProgressDialog()
 
-    fun continueFlow()
+    fun continueSignUp()
 }

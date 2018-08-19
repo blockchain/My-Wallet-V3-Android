@@ -118,7 +118,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
             )
     }
 
-    override fun continueFlow() {
+    override fun continueSignUp() {
         // TODO: Navigate to the phone number fragment
         toast("Continue flow")
     }

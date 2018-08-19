@@ -38,17 +38,19 @@ class KycHomeAddressPresenter(
             .cache()
     }
 
-    val countryCodeSingle: Single<SortedMap<String, String>> = fetchOfflineToken
-        .flatMap {
-            nabuDataManager.getCountriesList(Scope.None)
-                .subscribeOn(Schedulers.io())
-        }
-        .map { list ->
-            list.associateBy({ it.name }, { it.code })
-                .toSortedMap()
-        }
-        .observeOn(AndroidSchedulers.mainThread())
-        .cache()
+    val countryCodeSingle: Single<SortedMap<String, String>> by unsafeLazy {
+        fetchOfflineToken
+            .flatMap {
+                nabuDataManager.getCountriesList(Scope.None)
+                    .subscribeOn(Schedulers.io())
+            }
+            .map { list ->
+                list.associateBy({ it.name }, { it.code })
+                    .toSortedMap()
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .cache()
+    }
 
     override fun onViewReady() = Unit
 
@@ -74,7 +76,7 @@ class KycHomeAddressPresenter(
             .doOnSubscribe { view.showProgressDialog() }
             .doOnTerminate { view.dismissProgressDialog() }
             .subscribeBy(
-                onComplete = { view.continueFlow() },
+                onComplete = { view.continueSignUp() },
                 onError = { view.showErrorToast(R.string.kyc_address_error_saving) }
             )
     }

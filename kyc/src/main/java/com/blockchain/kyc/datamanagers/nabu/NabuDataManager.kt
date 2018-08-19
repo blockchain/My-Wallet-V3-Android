@@ -90,9 +90,9 @@ class NabuDataManager(
 
     internal fun addAddress(
         offlineTokenResponse: NabuOfflineTokenResponse,
-        city: String,
         line1: String,
         line2: String?,
+        city: String,
         state: String?,
         postCode: String,
         countryCode: String
