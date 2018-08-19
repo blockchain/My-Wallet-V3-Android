@@ -4,6 +4,7 @@ import android.support.annotation.StringRes
 import piuk.blockchain.android.ui.buysell.createorder.models.SellConfirmationDisplayModel
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import java.util.Locale
 
 interface AddAddressView : View {
 
@@ -20,6 +21,8 @@ interface AddAddressView : View {
     val city: String
 
     val postCode: String
+
+    val locale: Locale
 
     fun showToast(@StringRes message: Int, @ToastCustom.ToastType toastType: String)
 

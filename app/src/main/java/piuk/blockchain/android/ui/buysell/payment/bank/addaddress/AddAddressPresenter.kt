@@ -27,9 +27,9 @@ class AddAddressPresenter @Inject constructor(
     private val buyDataManager: BuyDataManager
 ) : BasePresenter<AddAddressView>() {
 
-    private val countryCodeMap by unsafeLazy {
+    val countryCodeMap by unsafeLazy {
         Locale.getISOCountries().associateBy(
-            { Locale("en", it).displayCountry },
+            { Locale(view.locale.displayLanguage, it).displayCountry },
             { it }
         ).toSortedMap()
     }

@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.inputmethod.EditorInfo
-import io.reactivex.Single
 import com.blockchain.ui.countryselection.CountryDialog
+import io.reactivex.Single
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.buysell.confirmation.sell.CoinifySellConfirmationActivity
@@ -19,7 +19,6 @@ import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import java.util.Locale
-import java.util.SortedMap
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_add_address.button_confirm as buttonConfirm
 import kotlinx.android.synthetic.main.activity_add_address.edit_text_city as editTextCity
@@ -33,6 +32,7 @@ class AddAddressActivity : BaseMvpActivity<AddAddressView, AddAddressPresenter>(
 
     @Inject
     lateinit var presenter: AddAddressPresenter
+    override val locale: Locale = Locale.getDefault()
     override val iban: String by unsafeLazy { intent.getStringExtra(EXTRA_IBAN) }
     override val bic: String by unsafeLazy { intent.getStringExtra(EXTRA_BIC) }
     override val displayModel by unsafeLazy {
@@ -47,12 +47,6 @@ class AddAddressActivity : BaseMvpActivity<AddAddressView, AddAddressPresenter>(
     override val postCode: String
         get() = editTextPostCode.getTextString()
     private var progressDialog: MaterialProgressDialog? = null
-    private val countryCodeMap: SortedMap<String, String> by unsafeLazy {
-        Locale.getISOCountries().associateBy(
-            { Locale("en", it).displayCountry },
-            { it }
-        ).toSortedMap()
-    }
 
     init {
         Injector.INSTANCE.presenterComponent.inject(this)
@@ -70,7 +64,7 @@ class AddAddressActivity : BaseMvpActivity<AddAddressView, AddAddressPresenter>(
 
             CountryDialog(
                 this,
-                Single.just(countryCodeMap),
+                Single.just(presenter.countryCodeMap),
                 object :
                     CountryDialog.CountryCodeSelectionListener {
                     override fun onCountrySelected(code: String, name: String) {
