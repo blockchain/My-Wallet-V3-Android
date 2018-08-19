@@ -210,9 +210,9 @@ class NabuDataManagerTest {
         whenever(
             nabuService.addAddress(
                 sessionToken = sessionToken.token,
-                city = city,
                 line1 = line1,
                 line2 = line2,
+                city = city,
                 state = state,
                 postCode = postCode,
                 countryCode = countryCode
@@ -221,9 +221,9 @@ class NabuDataManagerTest {
         // Act
         val testObserver = subject.addAddress(
             offlineToken,
-            city,
             line1,
             line2,
+            city,
             state,
             postCode,
             countryCode
@@ -233,9 +233,9 @@ class NabuDataManagerTest {
         testObserver.assertNoErrors()
         verify(nabuService).addAddress(
             sessionToken = sessionToken.token,
-            city = city,
             line1 = line1,
             line2 = line2,
+            city = city,
             state = state,
             postCode = postCode,
             countryCode = countryCode

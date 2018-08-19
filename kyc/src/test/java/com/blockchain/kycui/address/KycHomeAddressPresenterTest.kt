@@ -14,6 +14,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.amshove.kluent.`should equal to`
+import org.amshove.kluent.`should equal`
 import org.amshove.kluent.`should throw`
 import org.amshove.kluent.any
 import org.amshove.kluent.mock
@@ -179,9 +180,11 @@ class KycHomeAddressPresenterTest {
         testObserver.assertNoErrors()
         val sortedMap = testObserver.values().first()
         sortedMap.size `should equal to` 3
-        val keys = sortedMap.keys.toList()
-        keys[0] `should equal to` "France"
-        keys[1] `should equal to` "Germany"
-        keys[2] `should equal to` "United Kingdom"
+        val expectedMap = sortedMapOf(
+            "France" to "FR",
+            "Germany" to "DE",
+            "United Kingdom" to "UK"
+        )
+        sortedMap `should equal` expectedMap
     }
 }
