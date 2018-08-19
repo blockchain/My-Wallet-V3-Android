@@ -13,11 +13,13 @@ import com.blockchain.kycui.address.KycHomeAddressFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
+import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
@@ -29,6 +31,7 @@ import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
@@ -88,7 +91,13 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
 
         inputLayoutDob.setOnClickListener { onDateOfBirthClicked() }
         editTextDob.setOnClickListener { onDateOfBirthClicked() }
-        buttonNext.setOnClickListener { presenter.onContinueClicked() }
+        buttonNext
+            .clicks()
+            .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = { presenter.onContinueClicked() },
+                onError = { Timber.e(it) }
+            )
     }
 
     override fun continueSignUp(profileModel: ProfileModel) {

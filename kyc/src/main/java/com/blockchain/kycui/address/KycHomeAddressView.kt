@@ -1,24 +1,16 @@
 package com.blockchain.kycui.address
 
 import android.support.annotation.StringRes
+import com.blockchain.kycui.address.models.AddressModel
 import com.blockchain.kycui.profile.models.ProfileModel
+import io.reactivex.Observable
 import piuk.blockchain.androidcoreui.ui.base.View
 
 interface KycHomeAddressView : View {
 
     val profileModel: ProfileModel
 
-    val firstLine: String
-
-    val secondLine: String
-
-    val city: String
-
-    val state: String
-
-    val zipCode: String
-
-    var countryCode: String
+    val address: Observable<AddressModel>
 
     fun setButtonEnabled(enabled: Boolean)
 
@@ -29,4 +21,6 @@ interface KycHomeAddressView : View {
     fun showProgressDialog()
 
     fun continueSignUp()
+
+    fun finishPage()
 }

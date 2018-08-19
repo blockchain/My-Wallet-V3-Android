@@ -12,7 +12,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.extensions.nextAfterOrNull
+import com.blockchain.kycui.address.models.AddressDialog
+import com.blockchain.kycui.address.models.AddressIntent
+import com.blockchain.kycui.address.models.AddressModel
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
@@ -22,6 +26,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.location.places.AutocompleteFilter
 import com.google.android.gms.location.places.ui.PlaceAutocomplete
+import com.jakewharton.rx.replayingShare
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
@@ -29,6 +34,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -37,7 +43,6 @@ import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.ViewUtils
-import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
@@ -66,22 +71,11 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
     override val profileModel: ProfileModel by unsafeLazy {
         arguments!!.getParcelable(ARGUMENT_PROFILE_MODEL) as ProfileModel
     }
-    override val firstLine: String
-        get() = editTextAptName.getTextString()
-    override val secondLine: String
-        get() = editTextFirstLine.getTextString()
-    override val city: String
-        get() = editTextCity.getTextString()
-    override val state: String
-        get() = editTextState.getTextString()
-    override val zipCode: String
-        get() = editTextZipCode.getTextString()
-    private var _countryCode: String? = null
-    override var countryCode: String
-        get() = if (_countryCode == null) profileModel.countryCode else _countryCode!!
-        set(value) {
-            _countryCode = value
-        }
+    private val initialState = AddressModel("", null, "", null, "", "")
+    private val addressSubject = PublishSubject.create<AddressIntent>()
+    override val address: Observable<AddressModel> =
+        AddressDialog(addressSubject, initialState).viewModel
+            .replayingShare()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,28 +88,23 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         progressListener.setHostTitle(R.string.kyc_address_title)
         progressListener.incrementProgress(KycStep.AddressPage)
 
-        buttonNext.setOnClickListener { presenter.onContinueClicked() }
+        buttonNext
+            .clicks()
+            .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = { presenter.onContinueClicked() },
+                onError = { Timber.e(it) }
+            )
+
         editTextCountry.setOnClickListener { displayCountryDialog() }
         textInputLayoutCountry.setOnClickListener { displayCountryDialog() }
 
         setupImeOptions()
         localiseUi()
 
-        searchViewAddress.getEditText()
-            .apply { isFocusable = false }
-            .clicks()
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .subscribeBy(
-                onNext = {
-                    try {
-                        startPlacesActivityForResult()
-                    } catch (e: GooglePlayServicesRepairableException) {
-                        showRecoverableErrorDialog()
-                    } catch (e: GooglePlayServicesNotAvailableException) {
-                        showUnrecoverableErrorDialog()
-                    }
-                }
-            )
+        onViewReady()
+        // Initially emit country code
+        addressSubject.onNext(AddressIntent.Country(profileModel.countryCode))
     }
 
     override fun continueSignUp() {
@@ -130,7 +119,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
             object :
                 CountryDialog.CountryCodeSelectionListener {
                 override fun onCountrySelected(code: String, name: String) {
-                    countryCode = code
+                    addressSubject.onNext(AddressIntent.Country(code))
                     editTextCountry.setText(name)
                 }
             }).show()
@@ -191,26 +180,52 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
     override fun onResume() {
         super.onResume()
 
+        compositeDisposable += editTextFirstLine
+            .onDelayedChange(KycStep.AddressFirstLine)
+            .doOnNext { addressSubject.onNext(AddressIntent.FirstLine(it)) }
+            .subscribe()
         compositeDisposable += editTextAptName
-            .onDelayedChange(KycStep.AptNameOrNumber) { presenter.firstLineSet = it }
+            .onDelayedChange(KycStep.AptNameOrNumber)
+            .doOnNext { addressSubject.onNext(AddressIntent.SecondLine(it)) }
             .subscribe()
         compositeDisposable += editTextCity
-            .onDelayedChange(KycStep.City) { presenter.citySet = it }
-            .subscribe()
-        compositeDisposable += editTextFirstLine
-            .onDelayedChange(KycStep.AddressFirstLine) { /* No-op */ }
+            .onDelayedChange(KycStep.City)
+            .doOnNext { addressSubject.onNext(AddressIntent.City(it)) }
             .subscribe()
         compositeDisposable += editTextState
-            .onDelayedChange(KycStep.State) { /* No-op */ }
+            .onDelayedChange(KycStep.State)
+            .doOnNext { addressSubject.onNext(AddressIntent.State(it)) }
             .subscribe()
         compositeDisposable += editTextZipCode
-            .onDelayedChange(KycStep.ZipCode) { presenter.zipCodeSet = it }
+            .onDelayedChange(KycStep.ZipCode)
+            .doOnNext { addressSubject.onNext(AddressIntent.PostCode(it)) }
             .subscribe()
+
+        compositeDisposable +=
+            searchViewAddress.getEditText()
+                .apply { isFocusable = false }
+                .clicks()
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribeBy(
+                    onNext = {
+                        try {
+                            startPlacesActivityForResult()
+                        } catch (e: GooglePlayServicesRepairableException) {
+                            showRecoverableErrorDialog()
+                        } catch (e: GooglePlayServicesNotAvailableException) {
+                            showUnrecoverableErrorDialog()
+                        }
+                    }
+                )
     }
 
     override fun onPause() {
         super.onPause()
         compositeDisposable.clear()
+    }
+
+    override fun finishPage() {
+        findNavController(this).popBackStack()
     }
 
     override fun setButtonEnabled(enabled: Boolean) {
@@ -259,19 +274,14 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         )
     }
 
-    private fun TextView.onDelayedChange(
-        kycStep: KycStep,
-        presenterPropAssignment: (Boolean) -> Unit
-    ): Observable<Boolean> =
+    private fun TextView.onDelayedChange(kycStep: KycStep): Observable<String> =
         this.afterTextChangeEvents()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.editable()?.toString() ?: "" }
             .skip(1)
             .observeOn(AndroidSchedulers.mainThread())
-            .map { mapToCompleted(it) }
-            .doOnNext(presenterPropAssignment)
             .distinctUntilChanged()
-            .doOnNext { updateProgress(it, kycStep) }
+            .doOnNext { updateProgress(mapToCompleted(it), kycStep) }
 
     private fun mapToCompleted(text: String): Boolean = !text.isEmpty()
 

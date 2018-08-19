@@ -6,6 +6,7 @@ import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
@@ -15,16 +16,11 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 import java.util.SortedMap
-import kotlin.properties.Delegates
 
 class KycHomeAddressPresenter(
     private val metadataManager: MetadataManager,
     private val nabuDataManager: NabuDataManager
 ) : BasePresenter<KycHomeAddressView>() {
-
-    var firstLineSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
-    var citySet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
-    var zipCodeSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
 
     private val fetchOfflineToken by unsafeLazy {
         metadataManager.fetchMetadata(NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE)
@@ -52,37 +48,49 @@ class KycHomeAddressPresenter(
             .cache()
     }
 
-    override fun onViewReady() = Unit
+    override fun onViewReady() {
+        compositeDisposable += view.address
+            .subscribeBy(
+                onNext = {
+                    enableButtonIfComplete(it.firstLine, it.city, it.postCode)
+                },
+                onError = {
+                    Timber.e(it)
+                    // This is fatal - back out and allow the user to try again
+                    view.finishPage()
+                }
+            )
+    }
 
     internal fun onContinueClicked() {
-        check(!view.firstLine.isEmpty()) { "firstLine is empty" }
-        check(!view.city.isEmpty()) { "city is empty" }
-        check(!view.zipCode.isEmpty()) { "zipCode is empty" }
-
-        fetchOfflineToken
-            .flatMapCompletable {
-                nabuDataManager.addAddress(
-                    it,
-                    view.firstLine,
-                    view.secondLine,
-                    view.city,
-                    view.state,
-                    view.zipCode,
-                    view.countryCode
-                ).subscribeOn(Schedulers.io())
+        compositeDisposable += view.address
+            .firstOrError()
+            .flatMapCompletable { address ->
+                fetchOfflineToken
+                    .flatMapCompletable {
+                        nabuDataManager.addAddress(
+                            it,
+                            address.firstLine,
+                            address.secondLine,
+                            address.city,
+                            address.state,
+                            address.postCode,
+                            address.country
+                        ).subscribeOn(Schedulers.io())
+                    }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError(Timber::e)
             .doOnSubscribe { view.showProgressDialog() }
             .doOnTerminate { view.dismissProgressDialog() }
+            .doOnError(Timber::e)
             .subscribeBy(
                 onComplete = { view.continueSignUp() },
                 onError = { view.showErrorToast(R.string.kyc_address_error_saving) }
             )
     }
 
-    private fun enableButtonIfComplete() {
-        view.setButtonEnabled(firstLineSet && citySet && zipCodeSet)
+    private fun enableButtonIfComplete(firstLine: String, city: String, zipCode: String) {
+        view.setButtonEnabled(!firstLine.isEmpty() && !city.isEmpty() && !zipCode.isEmpty())
     }
 
     internal fun onProgressCancelled() {

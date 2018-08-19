@@ -212,11 +212,14 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     @SuppressWarnings("SameParameterValue")
     private void setShapeShiftVisibility(boolean showShapeshift) {
-        if (showShapeshift) {
-            getView().showShapeshift();
-        } else {
-            getView().hideShapeshift();
-        }
+        // TODO: 01/08/2018 We need to choose visiblity based on whether to send users to Legacy
+        // SS or Homebrew SS
+        getView().showShapeshift();
+//        if (showShapeshift) {
+//            getView().showShapeshift();
+//        } else {
+//            getView().hideShapeshift();
+//        }
     }
 
     // Could be used in the future

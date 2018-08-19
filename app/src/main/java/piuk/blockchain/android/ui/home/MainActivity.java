@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.blockchain.kycui.navhost.KycNavHostActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.BasePermissionListener;
@@ -170,7 +171,10 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
                 getPresenter().routeToBuySell();
             } else if (intent.getAction().equals(ACTION_SHAPESHIFT) && getActivity() != null) {
-                ShapeShiftActivity.start(MainActivity.this);
+                // TODO: 01/08/2018 We need to choose whether to send users to Legacy SS,
+                // Homebrew SS or KYC at this point AND-1248
+//                ShapeShiftActivity.start(MainActivity.this);
+                KycNavHostActivity.Companion.start(MainActivity.this);
             } else if (intent.getAction().equals(ACTION_BTC_BALANCE)) {
                 getPresenter().setCryptoCurrency(CryptoCurrency.BTC);
                 // This forces the balance page to reload
@@ -486,7 +490,11 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 startActivityForResult(new Intent(this, BackupWalletActivity.class), REQUEST_BACKUP);
                 break;
             case R.id.nav_exchange:
-                ShapeShiftActivity.start(this);
+                // TODO: 01/08/2018 We need to choose whether to send users to Legacy SS,
+                // Homebrew SS or KYC at this point AND-1248
+//                ShapeShiftActivity.start(MainActivity.this);
+                KycNavHostActivity.Companion.start(MainActivity.this);
+//                ShapeShiftActivity.start(this);
                 break;
             case R.id.nav_addresses:
                 startActivityForResult(new Intent(this, AccountActivity.class), ACCOUNT_EDIT);

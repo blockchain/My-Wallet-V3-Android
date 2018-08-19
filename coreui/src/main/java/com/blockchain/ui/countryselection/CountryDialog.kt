@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChanges
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import piuk.blockchain.androidcoreui.R
 import piuk.blockchain.androidcoreui.utils.extensions.gone
@@ -24,18 +26,21 @@ class CountryDialog(
     private val listener: CountryCodeSelectionListener
 ) : Dialog(context) {
 
+    private val compositeDisposable = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_select_country)
 
-        countryListSource
-            .subscribeBy(
-                onSuccess = { renderCountryMap(it) },
-                onError = {
-                    Timber.e(it)
-                    cancel()
-                }
-            )
+        compositeDisposable +=
+            countryListSource
+                .subscribeBy(
+                    onSuccess = { renderCountryMap(it) },
+                    onError = {
+                        Timber.e(it)
+                        cancel()
+                    }
+                )
     }
 
     private fun renderCountryMap(countryMap: SortedMap<String, String>) {
@@ -67,6 +72,11 @@ class CountryDialog(
                 .doOnNext { arrayAdapter.filter.filter(it) }
                 .subscribe()
         }
+    }
+
+    override fun cancel() {
+        super.cancel()
+        compositeDisposable.clear()
     }
 
     interface CountryCodeSelectionListener {

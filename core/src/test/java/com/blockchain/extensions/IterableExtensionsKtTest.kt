@@ -24,4 +24,9 @@ class IterableExtensionsKtTest {
     fun `should return null as predicate doesn't match`() {
         listOf(1, 2, 3, 4, 5).nextAfterOrNull { it == 10 } `should equal` null
     }
+
+    @Test
+    fun `should return next value regardless of duplicates`() {
+        listOf(1, 2, 1, 3).nextAfterOrNull { it == 1 } `should equal` 2
+    }
 }

@@ -49,9 +49,9 @@ class KycProfilePresenter(
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError(Timber::e)
             .doOnSubscribe { view.showProgressDialog() }
             .doOnTerminate { view.dismissProgressDialog() }
+            .doOnError(Timber::e)
             .subscribeBy(
                 onComplete = {
                     ProfileModel(
