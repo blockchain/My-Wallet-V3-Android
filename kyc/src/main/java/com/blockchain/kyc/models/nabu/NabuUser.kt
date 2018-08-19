@@ -1,6 +1,7 @@
 package com.blockchain.kyc.models.nabu
 
 import com.squareup.moshi.FromJson
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.ToJson
 
@@ -20,7 +21,7 @@ data class Address(
     val line1: String?,
     val line2: String?,
     val state: String?,
-    val countryCode: String?,
+    @field:Json(name = "country") val countryCode: String?,
     val postCode: String?
 )
 

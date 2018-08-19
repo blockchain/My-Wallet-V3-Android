@@ -23,4 +23,7 @@
 
     <string name="contacts_no_confirmed_contacts_found">No confirmed contacts found!</string>
 
+    <!-- Country Selection Dialog -->
+    <string name="search_country">Search Country</string>
+
 </resources>

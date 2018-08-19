@@ -16,6 +16,7 @@ import com.blockchain.extensions.nextAfterOrNull
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
+import com.blockchain.ui.countryselection.CountryDialog
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
@@ -75,9 +76,12 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         get() = editTextState.getTextString()
     override val zipCode: String
         get() = editTextZipCode.getTextString()
-    override val country: String
-    // TODO: This is obviously wrong, needs to return an ISO country code
-        get() = editTextCountry.getTextString()
+    private var _countryCode: String? = null
+    override var countryCode: String
+        get() = if (_countryCode == null) profileModel.countryCode else _countryCode!!
+        set(value) {
+            _countryCode = value
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,14 +95,8 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         progressListener.incrementProgress(KycStep.AddressPage)
 
         buttonNext.setOnClickListener { presenter.onContinueClicked() }
-        editTextCountry.setOnClickListener {
-            // TODO: Open country selection dialog
-            toast("Country selection dialog")
-        }
-        textInputLayoutCountry.setOnClickListener {
-            // TODO: Open country selection dialog
-            toast("Country selection dialog")
-        }
+        editTextCountry.setOnClickListener { displayCountryDialog() }
+        textInputLayoutCountry.setOnClickListener { displayCountryDialog() }
 
         setupImeOptions()
         localiseUi()
@@ -118,6 +116,24 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
                     }
                 }
             )
+    }
+
+    override fun continueFlow() {
+        // TODO: Navigate to the phone number fragment
+        toast("Continue flow")
+    }
+
+    private fun displayCountryDialog() {
+        CountryDialog(
+            requireContext(),
+            presenter.countryCodeSingle,
+            object :
+                CountryDialog.CountryCodeSelectionListener {
+                override fun onCountrySelected(code: String, name: String) {
+                    countryCode = code
+                    editTextCountry.setText(name)
+                }
+            }).show()
     }
 
     private fun startPlacesActivityForResult() {

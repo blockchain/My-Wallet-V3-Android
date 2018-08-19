@@ -68,6 +68,18 @@
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="LightBlueButtonTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- Disabled colour -->
+        <item name="colorButtonNormal">@color/primary_gray_dark</item>
+        <!-- Enabled colour -->
+        <item name="colorControlHighlight">@color/primary_navy_medium</item>
+        <!-- Fonts -->
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+    </style>
+
     <!-- Using a Theme to apply the button color as it doesn't work in Styles -->
     <style name="ButtonGreenTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/product_green_medium</item>
@@ -76,7 +88,7 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- {@deprecated Use LightBlueButtonStyle instead} -->
+    <!-- {@deprecated Use LightBlueButtonTheme instead} -->
     <style name="ButtonLightBlueTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/primary_blue_accent</item>
         <item name="colorControlHighlight">@color/primary_navy_medium</item>

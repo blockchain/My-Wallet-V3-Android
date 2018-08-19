@@ -214,8 +214,8 @@ class NabuDataManagerTest {
                 line1 = line1,
                 line2 = line2,
                 state = state,
-                countryCode = countryCode,
-                postCode = postCode
+                postCode = postCode,
+                countryCode = countryCode
             )
         ).thenReturn(Completable.complete())
         // Act
@@ -225,8 +225,8 @@ class NabuDataManagerTest {
             line1,
             line2,
             state,
-            countryCode,
-            postCode
+            postCode,
+            countryCode
         ).test()
         // Assert
         testObserver.assertComplete()
@@ -237,8 +237,8 @@ class NabuDataManagerTest {
             line1 = line1,
             line2 = line2,
             state = state,
-            countryCode = countryCode,
-            postCode = postCode
+            postCode = postCode,
+            countryCode = countryCode
         )
     }
 

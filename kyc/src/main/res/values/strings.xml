@@ -3,7 +3,7 @@
     <!-- Splash Screen -->
     <string name="kyc_splash_title">Exchange</string>
     <string name="kyc_splash_apply_now">Apply now</string>
-    <string name="kyc_splash_message">Complete your Blockchain profile and identity verification to start buying and selling cryptocurrencies. This will only take 4 minutes.</string>
+    <string name="kyc_splash_message">Complete your Blockchain profile and identity verification to start buying and selling cryptocurrencies. This will only take 5 minutes.</string>
     <string name="kyc_splash_terms_and_conditions">By tapping apply now, I agree to Blockchain’s</string>
     <string name="kyc_splash_terms_and_conditions_terms">Terms of Service</string>
     <string name="kyc_splash_terms_and_conditions_privacy">Privacy Policy</string>
@@ -47,4 +47,5 @@
     <string name="kyc_address_address_county_hint">County</string>
     <string name="kyc_address_address_country_hint">Country</string>
     <string name="kyc_address_google_not_available">Google Play Services are not available on this device.</string>
+    <string name="kyc_address_error_saving">Error saving address, please try again</string>
 </resources>

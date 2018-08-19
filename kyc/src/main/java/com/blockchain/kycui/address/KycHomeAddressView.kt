@@ -18,7 +18,7 @@ interface KycHomeAddressView : View {
 
     val zipCode: String
 
-    val country: String
+    var countryCode: String
 
     fun setButtonEnabled(enabled: Boolean)
 
@@ -27,4 +27,6 @@ interface KycHomeAddressView : View {
     fun dismissProgressDialog()
 
     fun showProgressDialog()
+
+    fun continueFlow()
 }

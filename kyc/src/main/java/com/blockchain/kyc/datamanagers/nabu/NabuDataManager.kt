@@ -94,16 +94,16 @@ class NabuDataManager(
         line1: String,
         line2: String?,
         state: String?,
-        countryCode: String,
-        postCode: String
+        postCode: String,
+        countryCode: String
     ): Completable = authenticate(offlineTokenResponse) {
         nabuService.addAddress(
             city = city,
             line1 = line1,
             line2 = line2,
             state = state,
-            countryCode = countryCode,
             postCode = postCode,
+            countryCode = countryCode,
             sessionToken = it.token
         ).toSingleDefault(Any())
     }.ignoreElement()
