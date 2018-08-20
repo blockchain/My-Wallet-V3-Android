@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>첫 단어</item>
+    <item>둘째 단어</item>
+    <item>셋째 단어</item>
+    <item>넷째 단어</item>
+    <item>다섯째 단어</item>
+    <item>여섯째 단어</item>
+    <item>일곱째 단어</item>
+    <item>여덟째 단어</item>
+    <item>아홉째 단어</item>
+    <item>열째 단어</item>
+    <item>열한째 단어</item>
+    <item>열두째 단어</item>
+  </string-array>
+  <string name="backup_wallet">백업 자금</string>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">업그레이드</string>
+  <string name="current_price_btc">1 BTC = %1$s</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">설정</string>
+  <string name="all_accounts">모든 지갑</string>
+  <string name="please_wait">기다리세요</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">보내기</string>
+  <string name="receive_bitcoin">요청</string>
+  <string name="overview">거래들</string>
+  <!-- (No Commment) -->
+  <string name="cancel">취소</string>
+  <!-- (No Commment) -->
+  <string name="yes">네</string>
+  <!-- (No Commment) -->
+  <string name="no">아니오</string>
+  <string name="polite_no">괜찮습니다</string>
+  <string name="done">완료됨</string>
+  <string name="YESTERDAY">어제</string>
+  <string name="SENT">보냄</string>
+  <string name="sending">보내는 중</string>
+  <!-- Transaction cell: -->
+  <string name="RECEIVED">받음</string>
+  <string name="receiving">받는 중</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">이체 됨</string>
+  <string name="paid">결제 됨</string>
+  <string name="payment_request">결제 요청</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">클립보드에 복사 됨</string>
+  <string name="options_id">지갑 아이디</string>
+  <string name="preferences_about_title">우리 정보</string>
+  <string name="ask_you_sure_unpair">귀하 장치 페어링 해제를 원하는 것이 확실합니까?</string>
+  <string name="select_currency">통화 선택</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">현지 통화</string>
+  <!-- (No Commment) -->
+  <string name="options_units">비트코인 유닛</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">서비스 조건</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">개인 정보 정책</string>
+  <string name="invalid_email">유효하지 않은 이메일 주소</string>
+  <string name="invalid_mobile">유효하지 않은 휴대폰 번호</string>
+  <string name="invalid_password">유효하지 않은 암호</string>
+  <string name="invalid_password_too_short">3 자 이상 입력하세요</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">유효하지 않은 지갑 아이디</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">암호가 틀립니다</string>
+  <string name="change_password_new_matches_current">현 암호는 새 암호로 쓸 수 없습니다.</string>
+  <string name="no_private_key">개인 열쇠를 만들 수 없습니다</string>
+  <string name="pin_4_strikes">암호 시도 실패 4 번 암호를 입력하세요</string>
+  <string name="pin_4_strikes_password_accepted">암호 승인 됨 새 비밀 번호를 정의하세요</string>
+  <string name="bip38_password_entry">개인 열쇠 암호를 입력하세요</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">비밀 번호 입력</string>
+  <string name="password_entry">암호를 입력하세요</string>
+  <string name="zero_pin">0000 는 유효하지 않은 비밀 번호입니다. 다시 해 보세요.</string>
+  <string name="invalid_pin">유효하지 않은 비밀 번호. 다시 해 보세요.</string>
+  <string name="pin_mismatch_error">비밀 번호가 틀립니다</string>
+  <string name="create_pin">비밀 번호 만들기</string>
+  <string name="confirm_pin">암호 확인</string>
+  <string name="create_pin_failed">비밀 번호 만들기 실패 장치 페어링을 다시 하세요</string>
+  <string name="change_pin_new_matches_current">현재 비밀 번호는 새 비밀 번호로 쓸 수 없음</string>
+  <string name="pairing_failed">페어링 실패 다시 해 보세요.</string>
+  <string name="account_locked_title">계정 잠김</string>
+  <string name="account_locked_message">귀하 계정을 사전 주의 조치로 일시 잠구었습니다. 이메일로 보낸 추가 정보를 보고 나중에 다시 해 보세요.</string>
+  <string name="check_connectivity_exit">블록체인 지갑 인터넷 연결이 안 되었습니다. 귀하 장치 연결을 확인한 후 다시 해보세요</string>
+  <string name="dialog_continue">계속</string>
+  <string name="double_encryption_password_error">이중 암호화 암호 오류 다시 해 보세요.</string>
+  <string name="command2">페어링 코드 스캔</string>
+  <string name="command3">내 카메라 액세스를 할 수 없습니다</string>
+  <string name="create_a_wallet">지갑 만들기</string>
+  <string name="log_in">로그인</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">자동 페어링</string>
+  <string name="pair_wallet_step_1">%1$s에서 PC 또는 Mac으로 블록체인 지갑에 로그인 하세요</string>
+  <string name="pair_wallet_step_2">옛 지갑을 쓰고 있으면 계정 설정 단추를 클릭한 후 장치 탭을 선택하세요 새 베타 지갑을 쓰고 있으면, 설정 / 지갑 정보로 가세요</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">흑백 네모인 QR 코드가 보이게 하려면 \'페어링 코드 보이기\'를 클릭하세요 코드를 카메라로 스캔 하세요</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">지갑 아이디</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">내 비트코인 지갑</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">자금 복구</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">귀하 지갑 아이디와 암호를 알고 있으면 항상 페어링 또는 로그인을 해야 합니다. 지갑을 복구하면 새 지갑 아이디가 만들어집니다. 계속하겠습니까?</string>
+  <string name="recover_funds_instructions">공백 포함 12 개 백업 단어를 입력해서 돈과 거래를 회복하세요</string>
+  <string name="recovery_passphrase">백업 구절</string>
+  <string name="invalid_recovery_phrase">유효하지 않은 백업 구절 다시 해보세요.</string>
+  <string name="creating_wallet">지갑 만드는 중</string>
+  <string name="restore_failed">지갑 복구 실패 다시 해보세요.</string>
+  <string name="restoring_wallet">지갑 복구 중.</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">암호</string>
+  <!-- (No Commment) -->
+  <string name="email">이메일</string>
+  <string name="agree_terms_of_service">새 지갑을 만들면 다음에 동의하는 것입니다</string>
+  <string name="blockchain_tos">블록체인 서비스 조건</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">지갑 만들기</string>
+  <string name="new_wallet">새 지갑</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">약함</string>
+  <string name="strength_medium">보통</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">강함</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">정상</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">계속</string>
+  <string name="SEND">보내기</string>
+  <string name="total">합계</string>
+  <string name="max_available">있는 마이너스 수수료 모두 쓰기:</string>
+  <string name="invalid_bitcoin_address">유효하지 않은 비트코인 주소</string>
+  <string name="invalid_amount">유효하지 않은 금액</string>
+  <string name="insufficient_funds">불 충분한 자금</string>
+  <string name="enter_double_encryption_pw">이중 암호화 암호를 입력하세요</string>
+  <!-- (No Commment) -->
+  <string name="support">지원</string>
+  <string name="rate_us">우리에 대한 평가</string>
+  <string name="licenses">라이선스</string>
+  <string name="email_chooser">이메일 보내기…</string>
+  <string name="about">Blockchain Wallet %1$s
+©%2$s Blockchain Luxembourg S.A.
+모든 권리 유보됨.</string>
+  <string name="merchant_download">무료 상인(Merchant) 앱</string>
+  <string name="password_or_wipe">귀하 암호로 들어가거나 이 지갑은 잊어버리세요</string>
+  <string name="use_password">암호 사용</string>
+  <string name="wipe_wallet">지갑 잊어버리기</string>
+  <string name="support_leaving_app_warning">이렇게 하면 앱에서 나가 브라우저로 돌아가게 됩니다. 계속합니까?</string>
+  <string name="weak_password">선택한 암호는 자금 보호에 쓰기에는 너무 약합니다. 다른 암호 선택을 강력히 추천합니다. 새 암호를 정의하겠습니까?</string>
+  <!-- (No Commment) -->
+  <string name="from">다음으로부터</string>
+  <!-- (No Commment) -->
+  <string name="to">다음에게</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">지불 확인</string>
+  <string name="fee">수수료</string>
+  <string name="exit_confirm">나가려면 뒤로 단추를 다시 누르세요</string>
+  <string name="label_address">귀하 주소 가져오기 성공 선택으로 이 주소에 친근한 디스플레이를 배정하세요</string>
+  <string name="label_address2">귀하 주소 만들기 성공 선택으로 이 주소에 친근한 디스플레이를 배정하세요</string>
+  <string name="bip38_error">유효하지 않은 개인 열쇠 암호</string>
+  <string name="privkey_error">인식되지 않는 개인 열쇠 형식</string>
+  <string name="hd_error">HD 지갑 오류</string>
+  <string name="scan_not_recognized">스캔은 디코딩 안 됩니다</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">가져온 주소들</string>
+  <string name="remote_save_ok">원격 저장 성공</string>
+  <string name="remote_save_ko">원격 저장 실패</string>
+  <string name="unpair_wallet">지갑 페어링 해제</string>
+  <string name="unpair">페어링 해제</string>
+  <string name="ok_cap">좋아요</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">비밀 번호 변경</string>
+  <string name="enter_current_pin">현재 비밀 번호를 입력하세요</string>
+  <string name="addresses_bitcoin">비트코인 주소</string>
+  <string name="create_new">새 것 만들기</string>
+  <string name="import_address">주소 가져오기</string>
+  <string name="wallets">지갑들</string>
+  <string name="save_name">이름 저장</string>
+  <string name="receive_address_to_clipboard">이 받는 주소를 클립보드에 복사하겠습니까? 그러면 다른 애플리케이션이 이 정보를 볼 수 있다는 것을 알려드립니다.</string>
+  <string name="receive_address_to_share">이 받는 주소를 보내는 주소로도 공유하겠습니까? 그러면 다른 애플리케이션이 이 정보를 볼 수 있다는 것을 알려드립니다.</string>
+  <string name="guid_to_clipboard">지갑 아이디를 클립보드에 복사하겠습니까? 그러면 다른 애플리케이션이 이 정보를 볼 수 있다는 것을 알려드립니다.</string>
+  <string name="ssl_pinning_invalid">SSL 증명 피닝(pinning) 실패 악성 활동일 가능성이 있습니다. 네트워크 연결과 장치를 점검한 후 계속하세요</string>
+  <string name="description">설명</string>
+  <!-- (No Commment) -->
+  <string name="name">이름</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">저장</string>
+  <string name="next">다음</string>
+  <string name="received_bitcoin">받은 비트코인</string>
+  <string name="received_ethereum">에테르 받음</string>
+  <string name="verification_failed">확인 실패</string>
+  <string name="send_payment">돈 보내기</string>
+  <string name="share">받는 주소 공유</string>
+  <string name="scan_qr">QR 코드 스캔</string>
+  <string name="confirm_password">암호 확인</string>
+  <string name="check_email_to_auth_login">이 로그인 시도를 승인 받으려면 이메일을 확인하세요</string>
+  <string name="transaction_fee">거래 수수료</string>
+  <string name="your_transactions">거래 없음</string>
+  <string name="transaction_occur_when_bitcoin">비트코인을 받거나 보낼 때 거래가 생깁니다.</string>
+  <string name="transaction_occur_when_eth">에테르를 받거나 보낼 때 거래가 생깁니다.</string>
+  <string name="transaction_occur_when_bitcoin_cash">트랜잭션은 비트코인 캐시를 주고 받을 때 발생합니다.</string>
+  <string name="click">클릭</string>
+  <string name="to_start_sending_and_receiving_btc">비트코인 보내기와 받기를 시작하려면</string>
+  <string name="address_book_label">(주소록)</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">보관 됨</string>
+  <string name="transaction_submitted">거래 완료</string>
+  <string name="transaction_failed">거래 실패</string>
+  <string name="UPGRADE_YOUR_WALLET">좋아요, 갑시다!</string>
+  <string name="upgrade_page_1">단순화 백업 및 복구</string>
+  <string name="upgrade_page_2">계층적 결정론적 주소를 통한 고급 개인 정보 보호</string>
+  <string name="upgrade_page_3">귀하 블록체인 지갑 안 비트코인을 정리를 방법 사용자 설정</string>
+  <!-- <string name="confirm_upgrade_info">这次升级仅需一小段时间，你的比特币和交易记录是安全的。升级的好处：\n\n✓ 全新的设计和用户体验\n✓ 强大的安全中心\n✓ 增强的隐私性\n✓ 简化的备份与恢复\n✓ 自定义的资金管理\n\nOne 此次新版本不支持高级交易类型（共享加密货币）</string> -->
+  <string name="confirm_upgrade_header">귀하 Blockchain 지갑에 다음 새 기능들을 추가했습니다:</string>
+  <string name="upgrading">업그레이드 중...</string>
+  <string name="upgrading_started_info">지갑 업그레이드 중입니다. 지갑 크기나 이력에 따라 시간이 좀 걸리니 기다려 주세요.</string>
+  <string name="upgrade_success_heading">지갑 업그레이드가 끝났습니다!</string>
+  <string name="upgrade_success_info">귀하는 이제 가장 안전하고 개인적인 블록체인 Wallet을 운영하게 되었습니다. 이제 지갑을 계속해도 됩니다</string>
+  <string name="CLOSE">닫기</string>
+  <string name="total_funds">모두</string>
+  <string name="unexpected_error">예상하지 못한 오류, 나중에 다시 해 보세요.</string>
+  <string name="upgrade_fail_heading">지갑 업그레이드 실패!</string>
+  <string name="upgrade_fail_info">지갑 업그레이드 중 오류가 있었습니다. 나중에 다시 해 보세요.</string>
+  <string name="not_sane_error">귀하 블록체인 지갑 설치는 불완전합니다. 지갑 페어링을 다시 하거나 새 지갑을 만드세요.</string>
+  <string name="watchonly_address_receive_warning">보기만 하는 주소로 비트코인을 곧 받게 됩니다. 개인 열쇠를 알아야 이 자금을 쓸 수 있습니다. 계속합니까?</string>
+  <string name="camera_unavailable">다른 애플리케이션이 카메라를 사용하고 있습니다. 다른 애플리케이션을 닫고 다시 해 보세요.</string>
+  <string name="validating_password">암호 확인 중…</string>
+  <string name="validating_pin">비밀 번호 확인 중…</string>
+  <string name="creating_pin">비밀 번호 만드는 중…</string>
+  <string name="decrypting_wallet">지갑 해독 중…</string>
+  <string name="password_unchanged">암호 안 바뀜</string>
+  <string name="password_changed">암호 바뀜</string>
+  <string name="password_changed_explanation">암호가 바뀌었으니 지갑 페어링을 다시 하세요</string>
+  <string name="verify_email2">확인된 사용자 이메일 주소는 의심스러운 또는 비정상 활동이 탐지 되어 로그인 코드를 보낼 때, 지갑 로그인 아이디를 다시 알려줄 때, 비트코인 입금 알림을 보낼 때 사용됩니다.</string>
+  <string name="disable_root_warning">루팅 된 장치 경보 해제</string>
+  <string name="show_balance">잔액 보여주기</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">새 주소 만들기</string>
+  <string name="auth_failed">허가 실패 다시 해 보세요.</string>
+  <string name="send_failed">보내기 실패. 다시 해 보세요.</string>
+  <string name="wallet_updated">지갑 업데이트 받음</string>
+  <string name="device_rooted">귀하 장치가 루팅 된 것 같습니다. 루팅 된 장치에 자금을 가지고 있는 것은 위험하며 안정성 문제도 일어날 수 있습니다. 비트코인 지갑을 계속 이 장치에서 쓰려면 귀하 블록체인 계정에서 이중 암호화를 쓰도록 하십시오.</string>
+  <string name="address_already_in_wallet">귀하 지갑은 이미 이 주소를 가지고 있습니다.</string>
+  <string name="cannot_create_address">이 번에는 새 주소를 만들 수 없었습니다. 다시 해 보세요.</string>
+  <string name="saving_address">주소 저장 중…</string>
+  <string name="cannot_launch_app">이 장치에서는 블록체인 지갑을 쓸 수 없습니다.</string>
+  <!-- (No Commment) -->
+  <string name="label">라벨</string>
+  <!-- (No Commment) -->
+  <string name="edit">편집</string>
+  <string name="label_cant_be_empty">라벨은 공란일 수 없습니다</string>
+  <string name="label_name_match">이미 사용된 이름</string>
+  <!-- (No Commment) -->
+  <string name="warning">경고</string>
+  <string name="ssl_no_connection">SSL 증명서 확인을 위한 호스트 연결을 할 수 없었습니다. 네트워크 연결과 장치를 점검한 후 계속하세요</string>
+  <string name="retry">다시 해 보기</string>
+  <string name="exit">나가기</string>
+  <string name="screen_overlay_warning">화면 오버레이 탐지 됨!</string>
+  <string name="screen_overlay_note">화면 오버레이를 쓰는 앱은 보이지 않는 대상에 탭을 하도록 귀하를 속여 남이 귀하 자금을 훔쳐가게 할 수 있습니다. 이 경고는 \'화면 흐리게 하기 앱\'이 원인일 수도 있습니다. 아무 위협도 없는 것이 확실하면 계속해도 좋습니다. </string>
+  <string name="archived_description">이 항목은 보관되었으며 모바일 앱에서는 접근할 수 없습니다. 이 항목에서 자금은 못 보내지만 모든 자금은 안전합니다. 다시 쓰려면 이 항목 보관을 해제하세요.</string>
+  <string name="not_archived_description">이 항목은 보관되지 않았습니다. 이것을 더 쓰지 않으려면 보관하세요. 귀하 자금은 안전하며 언제든지 보관 해제할 수 있습니다.</string>
+  <string name="transfer_success_archive_prompt_title">스윕 (sweep) 된 주소를 보관하겠습니까?</string>
+  <plurals name="transfer_success_archive_prompt_plurals">
+    <item quantity="other">내 비트코인 지갑으로 주소 %d 개 이동 성공. 이 주소들을 지금 보관하겠습니까?</item>
+  </plurals>
+  <string name="default_account_description">이 항목은 귀하 디폴트 이므로 보관할 수 없습니다.</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">공개 키 연장</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">주소</string>
+  <string name="copy_xpub">xpub 복사</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">귀하 xPub을 남과 공유하면 그가 귀하 거래 이력을 추적할 수 있습니다. xPub을 아는 사람은 귀하가 지갑에 접근하는 것을 방해할 수 있으므로 xPub는 오직 믿을 수 있는 사람만 공유 대상으로 하세요</string>
+  <string name="assign_display_name">친근한 디스플레이 이름 배정 </string>
+  <string name="copy_address">주소 복사</string>
+  <!-- (No Commment) -->
+  <string name="archive">보관하기</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">보관 해제</string>
+  <string name="archive_are_you_sure">이 항목 보관을 원하는 것이 확실합니까?</string>
+  <string name="unarchive_are_you_sure">이 항목 보관 해제를 원하는 것이 확실합니까?</string>
+  <string name="send_to_same_address_warning">같은 주소로는 보낼 수 없습니다.</string>
+  <string name="make_default">디폴트로 하기</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">개인 열쇠가 필요함</string>
+  <string name="invalid_private_key">유효하지 않은 개인 열쇠</string>
+  <string name="watch_only_import_warning">귀하는 해당 개인 열쇠 없이 지갑에 주소 (또는 공개 열쇠 스크립트)가 저장되어 있는 보기만 할 수 있는 (watch only) 주소를 가져오게 됩니다. 즉 다른 곳에 개인 열쇠가 저장되어 있어야 자금을 쓸 수 있습니다. 저장된 개인 열쇠가 없으면 다른 사람에게 보기만 할 수 있는 (watch only) 주소로 비트코인을 보내라고 하지 마십시오. 이 옵션은 고급 사용자만 쓰는 것이 좋습니다. 계속합니까? </string>
+  <string name="scan_private_key">개인 열쇠 스캔</string>
+  <string name="private_key_successfully_imported">개인 열쇠 가져오기 성공</string>
+  <string name="private_key_not_matching_address">설명: 스캔된 개인 열쇠가 귀하 보기만 하는 주소와 다름니다. 이 주소에서 자금을 쓰려면 올바른 개인 열쇠를 스캔 하세요.</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">보기만 함</string>
+  <string name="extended_public_key_description">귀하가 상인이면 귀하 xPub을 보여준 후 블록체인 상인 앱을 써서 자금을 안전하고 개인적으로 받으십시오. xPub은 본인만 가지고 있으세요.         귀하 xPub을 아는 사람은 귀하의 자금과 거래를 모두 볼 수 있습니다. </string>
+  <string name="watch_only_description">이것은 보기만 하는 주소입니다. 다음에서 귀하 돈 쓰기</string>
+  <!-- (No Commment) -->
+  <string name="success">성공</string>
+  <!-- (No Commment) -->
+  <string name="default_label">디폴트</string>
+  <string name="try_again">다시 해 보세요</string>
+  <!-- FUNDS TRANSFER -->
+  <string name="transfer">이체</string>
+  <string name="transfer_funds">자금 이체</string>
+  <string name="transfer_recommend">가져온 주소에 비트코인이 좀 있는 것 같습니다. 가져온 주소가 귀하 백업 구절로 백업 되지 않았습니다. 이 자금을 확보하기 위해 이 잔액들을 이체해서 귀하 백업에 포함 시키는 것을 추천합니다.</string>
+  <string name="spendable_addresses">지출할 수 있는 주소들</string>
+  <string name="transfer_confirmed">이체 확인됨</string>
+  <string name="transfer_confirm">이체 확인</string>
+  <string name="transfer_all">모두 이체</string>
+  <string name="transfer_amount">이체 금액</string>
+  <string name="transfer_archive_message">이체 후 가져온 주소 보관</string>
+  <string name="transfer_archive">보관 확인됨</string>
+  <string name="dont_ask_again">나에게 다시 묻지 마세요</string>
+  <string name="insufficient_fee">거래 수수료가 너무 작습니다.</string>
+  <string name="customize">사용자 설정</string>
+  <string name="amount">금액</string>
+  <string name="recommended_fee">거래 수수료는 비트코인 채굴 네트워크가 얼마나 빨리 귀하 거래를 확인해 줄것인지에 대해 영향을 미치며 현 네트워크 조건에 따라 달라집니다. 이 거래에 대한 이번 수수료는 아래를 추천합니다.</string>
+  <!-- (No Commment) -->
+  <string name="not_now">지금은 싫어요</string>
+  <string name="high_fee_not_necessary_info">아주 높은 수수료 %1$s를 제시했습니다. 
+
+수수료를 %2$s로 내려도 다음 ~10분 이내(1 블록)에 거래 확인을 받을 수 있습니다.</string>
+  <string name="low_fee_suggestion">아주 낮은 수수료 %1$s를 제시했습니다. 
+
+거래가 막히거나 확인이 안될 수 있습니다. 다음 1 시간 (6 블록)이내에 거래 승인이 될 확률을 높이려면 거래 수수료를 적어도 %2$s 이상으로 하기를 권합니다.</string>
+  <string name="raise_fee">수수료 올리기</string>
+  <string name="lower_fee">수수료 내리기</string>
+  <string name="keep_high_fee">높은 수수료 유지하기</string>
+  <string name="keep_low_fee">낮은 수수료 유지하기</string>
+  <string name="no_confirmed_funds">지출할 확인된 자금이 없습니다.</string>
+  <string name="estimate_confirm_block_count">추정 확인 시간: ~%1$d 분 (%2$d 블록)</string>
+  <string name="fee_too_low_no_confirm">수수료가 너무 작아 확인 안 될 수 있습니다.</string>
+  <string name="transaction_surge">비트코인 채굴 네트워크가 지금 부하가 높은 상태니 보통 때보다 높은 수수료를 권합니다.</string>
+  <string name="unsupported_encryption_version">지갑 버전 %1$s은 지원되지 않습니다 not supported.</string>
+  <!-- (No Commment) -->
+  <string name="logout">로그아웃</string>
+  <string name="to_field_helper">비트코인 주소를 입력하거나 선택하세요</string>
+  <string name="to_field_helper_no_dropdown">비트코인 주소 입력</string>
+  <!-- (No Commment) -->
+  <string name="update">업데이트</string>
+  <string name="mobile">모바일</string>
+  <string name="profile">프로필</string>
+  <string name="app">앱</string>
+  <!-- (No Commment) -->
+  <string name="verify">확인</string>
+  <string name="resend">다시 보내기</string>
+  <string name="verified">확인됨</string>
+  <string name="unverified">확인 안됨</string>
+  <!-- (No Commment) -->
+  <string name="allow">허용</string>
+  <!-- (No Commment) -->
+  <string name="block">차단</string>
+  <!-- (No Commment) -->
+  <string name="security">보안</string>
+  <!-- (No Commment) -->
+  <string name="enable">사용</string>
+  <!-- (No Commment) -->
+  <string name="disable">해제</string>
+  <!-- (No Commment) -->
+  <string name="sms">문자</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">구글 인증 도구</string>
+  <string name="yubikey">유비키 (Yubikey)</string>
+  <string name="disable_2fa_first">먼저 보안 설정에서 문자 2 단계 인증 사용을 해제하세요</string>
+  <string name="disable_online_only">웹 브라우저에서 귀하 지갑에 로그인해서 2FA 사용을 해제하세요.</string>
+  <string name="settings_field_cant_be_empty">필드가 없으면 안 됩니다</string>
+  <string name="settings_error_updating">설정 업데이트 오류, 다시 해 보세요</string>
+  <string name="request_camera_permission">카메라 접근 필요</string>
+  <string name="request_location_permission">위치 접근 필요</string>
+  <string name="request_write_storage_permission">외부 저장 쓰기 필요</string>
+  <string name="not_specified">제시되지 않음</string>
+  <string name="update_failed">업데이트 실패</string>
+  <string name="verify_mobile">모바일 확인</string>
+  <string name="select_country">국가 선택</string>
+  <string name="verify_sms_summary">확인 코드를 귀하 휴대폰으로 문자 송신 했습니다. 귀하 휴대폰 번호 확인을 위해 코드를 입력하세요.</string>
+  <string name="verify_sms_failed">코드가 유효하지 않으니 다시 해보세요</string>
+  <string name="mobile_description">휴대 장치는 허가되지 않은 액세스로부터 지갑을 확보하며 지갑 보안 성을 높이는 2 단계 인증에 쓸 수 있습니다.</string>
+  <string name="enable_fingerprint">지문 잠금 풀기</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2 단계 확인</string>
+  <string name="tor_requests">Tor 요청 차단</string>
+  <string name="tor_summary">Tor 익명화 네트워크의 일부로 알려진 IP 주소 차단 Tor 네트워크는 블록체인 사용자 지갑에 접근하려는 해커들이 자주 쓰고 있습니다.</string>
+  <string name="enable_screenshots">스크린샷 사용 설정</string>
+  <string name="enable_screenshots_summary">앱 안 어떤 화면은 예민한 데이타를 디스플레이 할 수 있습니다. 다른 앱이 이 스크린샷에 접근할 수 있습니다.</string>
+  <string name="password_hint_summary">귀하 블록체인 지갑은 우리 서버에 귀하 암호를 절대 보내지 않습니다. 즉, 저희는 귀하 암호를 알 수 없고 잊어버렸을 때 재 설정도 못 합니다. 암호를 잊었을 때 확인된 이메일 주소로 보낼 기억 가능한 암호를 만드세요.</string>
+  <!-- (No Commment) -->
+  <string name="change_password">암호 변경</string>
+  <string name="change_password_summary">귀하의 암호는 저희 서버와 공유되지 않으므로 귀하가 암호를 잊더라도 우리가 암호 재 설정을 도와 줄 수 없습니다. 사이드 메뉴에서 귀하 돈 백업을 꼭 해서 암호를 잊더라도 지갑 접근을 회복할 수 있도록 하세요.</string>
+  <string name="verify_email_notice">귀하 이메일 주소로 확인 링크를 보냈습니다. 링크를 클릭해서 귀하 이메일 주소를 확인하세요.</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">이메일 통보</string>
+  <string name="email_notifications_summary">비트코인을 받으면 알림 받기</string>
+  <string name="current_password">현 암호</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">새 암호</string>
+  <string name="sms_verified">휴대 장치 번호 확인됨</string>
+  <!-- (No Commment) -->
+  <string name="preferences">사용자 선택</string>
+  <string name="two_fa_summary">2-단계 인증이 되게 해서 지갑 보안 성을 높이세요.</string>
+  <string name="two_fa_description">2-단계 인증이 되게 해서 지갑 보안 성을 높이세요. 휴대폰 번호를 지갑 보안에 쓰는 것을 선택할 수 있습니다. 웹 브라우저를 통해 지갑 접근 시 이 코드가 요청됩니다. 
+
+대신 다른 인증 방법을 쓰려면, %1$s에서 웹 지갑에 로그인 하세요</string>
+  <string name="rate_title">블록체인 지갑 평가</string>
+  <string name="rate_message">블록체인 지갑을 즐기고 있습니까? 시간을 내셔서 Google Play에 의견을 남기시어 다른 사람들도 알게 해 주세요.</string>
+  <string name="rate_yes">네, 블록체인 지갑 평가를 하겠습니다.</string>
+  <string name="rate_no">아니오, 괜찮습니다.</string>
+  <string name="rate_later">나중에 다시 얘기해 주세요</string>
+  <string name="why_has_my_address_changed">내 주소가 왜 바뀌었나요?</string>
+  <!-- (No Commment) -->
+  <string name="information">정보</string>
+  <string name="learn_more">더 배우기</string>
+  <string name="pairing_code_log_in">웹 지갑 로그인</string>
+  <string name="pairing_code_instruction_1">귀하 컴퓨터 %1$s 로 가기</string>
+  <string name="pairing_code_instruction_2">모듈로 로그인 선택</string>
+  <string name="pairing_code_instruction_3">귀하 컴퓨터 카메라로 아래 QR 코드를 스캔</string>
+  <string name="pairing_code_show_qr">QR 코드 보기</string>
+  <string name="pairing_code_hide_qr">QR 코드 감추기</string>
+  <string name="pairing_code_warning_1">준비될 때까지 이 코드 감추기</string>
+  <string name="pairing_code_warning_2">이 코드를 안전하게 보관
+남과 공유하지 마세요.</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">비트코인 지불 요청</string>
+  <string name="email_request_subject_eth">에테르 결제 요청</string>
+  <string name="email_request_body">%1$s BTC을 비트코인 주소 %2$s로 보내십시오.</string>
+  <string name="email_request_body_eth">에테르 주소 %1$s로 ETH를 보내 주세요.</string>
+  <string name="email_request_body_fallback">첨부</string>
+  <string name="share_instructions">탭 해서 이 주소 복사 이메일 또는 문자로 보낸 사람과 공유</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">경고</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">선택한 비밀 번호는 아주 흔해서 당신 폰에 접근한 사람이 3 번이면 알아낼 수 있습니다. 그래도 이 비밀 번호를 쓰겠습니까?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">다시 해 보세요</string>
+  <string name="common_pin_dialog_continue">계속</string>
+  <!-- PASSWORD REENTRY ACTIVITY -->
+  <string name="logged_out_enter_password">귀하는 로그아웃 되었거나 지갑 암호 해독에 오류가 있었습니다. 로그인 하려면 아래 암호를 입력하세요.</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">이 지갑을 잊어버리고 다시 시작하고 싶으면 \'지갑 잊기\'를 누르세요</string>
+  <string name="forget_wallet">지갑 잊어버리기</string>
+  <string name="forget_wallet_warning">이렇게 하면 장치 상 모든 지갑 데이터가 지워집니다. 지갑 정보를 다른 곳에 저장해 놓았는지 확인하세요. 아니면 이 지갑 속 비트코인에 접근할 수 없어집니다!</string>
+  <string name="api_fail">서버 연결 안됨 나중에 다시 시도 해주세요.</string>
+  <!-- FEE WARNING -->
+  <string name="large_tx_warning">너무 큰 비트코인 거래가 있습니다. 귀하 지갑은 이제까지 받아 온 수많은 작은 지불들을 합쳐야 합니다. 이에 대해 확인을 빨리 받으려면 비교적 높은 수수료를 내야 합니다. </string>
+  <string name="go_back">뒤로 가기</string>
+  <string name="accept_higher_fee">높은 수수료 승인</string>
+  <string name="large_tx_high_fee_warning">\"이 거래는 작은 거스름 돈 반환으로 인한 아주 작은 금액 (dust amount) 소비를 위해 높은 수수료가 필요합니다.\"</string>
+  <string name="password_reveal_warning">조심하세요! 이 텍스트를 보이게 하면 귀하 암호가 클립보드에 복사되어 귀하 장치 모든 앱에서 이 텍스트를 읽을 수 있게 됩니다. 또한 귀하 뒤에 서 있는 사람들을 의식하세요.</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">거래</string>
+  <string name="transaction_detail_description_hint">이건 뭐에요?</string>
+  <string name="transaction_detail_date">날짜</string>
+  <string name="transaction_detail_status">상태</string>
+  <string name="transaction_detail_confirmed">확인 됨</string>
+  <string name="transaction_detail_pending">보류 중 (%1$s/%2$s 확인)</string>
+  <string name="transaction_detail_fee">\"거래 수수료: %1$s\"</string>
+  <string name="transaction_detail_value_at_time_received">받았을 때 값:\u0020</string>
+  <string name="transaction_detail_value_at_time_transferred">이체 때 값:\u0020</string>
+  <string name="transaction_detail_value_at_time_sent">보낼 때 값:\u0020</string>
+  <string name="transaction_detail_value">값:\u0020</string>
+  <string name="transaction_details_unknown">알 수 없는</string>
+  <string name="transaction_detail_coinbase">입력 없음 (새로 생성된 코인)</string>
+  <string name="transaction_detail_double_spend">두 배 지출은 위험할 수 있음</string>
+  <string name="transaction_detail_verify">Blockchain.com 에서 확인하기</string>
+  <string name="transaction_detail_verify_etherscan">Etherscan.io에서 확인</string>
+  <string name="transaction_detail_share_chooser">거래 상세 내용 공유</string>
+  <string name="transaction_detail_contact_note">설명</string>
+  <!-- SECURITY CENTRE -->
+  <string name="security_centre_email_title">귀하 이메일 확인</string>
+  <string name="security_centre_email_check">이메일 확인</string>
+  <string name="security_centre_email_message">%1$s에게 이메일을 보냈습니다. 지갑 설정을 끝내기 위해 Blockchain에서 온 메일을 찾아 확인 링크를 클릭</string>
+  <string name="security_centre_add_email_title">이메일 주소</string>
+  <string name="security_centre_add_email_message">경고를 받고, 의심스러운 행동을 예방하고, 잊어버린 지갑 아이디를 회복하기 위해 이메일 주소를 추가하고 확인하세요</string>
+  <string name="security_centre_add_email_positive_button">추가</string>
+  <string name="security_centre_backup_title">귀하 돈 백업</string>
+  <string name="security_centre_backup_message">귀하 보안을 위해 우리는 암호를 보관하지 않습니다. 지갑을 백업 해서 암호를 잃어버려도 돈이 안전하게 하세요. </string>
+  <string name="security_centre_backup_positive_button">백업</string>
+  <string name="security_centre_two_fa_message">귀하 지갑 불법 접근 방지 지갑 보안을 더 좋게 하기 위해 2 단계 인증 사용 설정</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">백업 구절</string>
+  <string name="backup_explanation">보안 목적 때문에 Blockchain은 어떤 암호도 보관하지 않습니다. 귀하가 암호를 잊었을 때 다음 12 단어 백업 구절이 귀하로 하여금 돈에 접근할 수 있게 해줍니다. 종이 쪽지에 따로 적어서 안전한 곳에 보관하세요. </string>
+  <string name="backup_button_start">백업 시작</string>
+  <string name="backup_write_down_words">반드시 여기 보이는 대로 순서도 같게 단어들을 적어야 합니다.</string>
+  <string name="backup_header_complete">백업 완료</string>
+  <string name="backup_complete_message">암호를 잊더라도 백업 구절을 써서 돈을 회복할 수 있습니다. 백업 구절을 아는 사람은 누구든지 돈을 빼갈 수 있으므로 백업 구절은 꼭 안전한 오프라인 장소에 보관하세요.</string>
+  <string name="backup_again">다시 백업하세요</string>
+  <string name="backup_confirmed">백업 확인 됨</string>
+  <string name="backup_last">최종 백업: %1$s</string>
+  <string name="backup_verify_heading">백업 구절 다음 단어들을 입력해서 백업 과정을 마치세요</string>
+  <string name="backup_next_word">다음 단어</string>
+  <string name="backup_previous_word">이전 단어</string>
+  <string name="backup_word">단어</string>
+  <string name="backup_word_mismatch">단어 틀림</string>
+  <string name="backup_done">끝남</string>
+  <string name="backup_lost_mnemonic">12 단어 백업 구절을 잊었나요?</string>
+  <!-- FINGERPRINT -->
+  <string name="fingerprint_prompt">더 빠르고 쉬운 지갑 접근을 위해 지문을 쓰세요.
+
+ 계속하려면 지문을 확인하세요 </string>
+  <string name="fingerprint_description">계속하려면 지문을 확인하세요</string>
+  <string name="fingerprint_hint">센서를 터치하세요</string>
+  <string name="fingerprint_login_title">지문 로그인</string>
+  <string name="fingerprint_not_recognized">지문 인식 안됨 다시 해 보세요</string>
+  <string name="fingerprint_success">지문 인식됨</string>
+  <string name="fingerprint_use_pin">비밀번호를 쓰세요</string>
+  <string name="fingerprint_disable_message">지문 로그인 사용 해제가 확실합니까?</string>
+  <string name="fingerprint_no_fingerprints_added">이 장치에는 아직 지문 등록이 안되어 있습니다. 지금 지문을 등록하겠습니까?</string>
+  <string name="fingerprint_key_invalidated_description">이 장치에 저장된 지문이 변경되었거나 키가드 사용이 해제되었습니다</string>
+  <string name="fingerprint_key_invalidated_brief">키가 무효화 되었으므로 비밀번호 코드가 필요함</string>
+  <string name="fingerprint_fatal_error_register_description">지난 30 분 동안 실패한 시도가 너무 많음 나중에 설정을 다시 해 주세요 </string>
+  <string name="fingerprint_fatal_error_authenticate_description">실패한 시도가 너무 많음 대신 비밀 번호로 로그인 하세요</string>
+  <string name="fingerprint_fatal_error_brief">예상 못한 오류</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">주소 복사</string>
+  <string name="shortcut_receive_copy_long">받는 주소를 다른 앱으로 복사</string>
+  <string name="shortcut_receive_qr_short">받기 QR 보이기</string>
+  <string name="shortcut_receive_qr_long">받는 주소 QR 코드 보기</string>
+  <string name="shortcut_receive_qr_error">미안합니다, QR 코드 생성에 오류가 있었습니다</string>
+  <string name="shortcut_settings_summary">런처 앱 아이콘을 길게 눌러 수령 주소가 보이고 비트코인 더 빨리 받기</string>
+  <!-- CONTACTS -->
+  <string name="contacts_title">연락처</string>
+  <string name="contacts_loading_failed">연락처 로딩 실패, 다시 해 보세요</string>
+  <string name="contacts_pairing_method_title">연락처 추가</string>
+  <string name="contacts_choose_pairing_method">믿을 수 있는 연락처 추가에 쓰려고 하는 페어링 방법을 선택하세요.</string>
+  <string name="contacts_send_link">링크 보내기</string>
+  <string name="contacts_use_nfc">NFC 사용</string>
+  <string name="contacts_no_contacts_found">연락처 없음</string>
+  <string name="contacts_delete_contact_success">연락처 삭제됨</string>
+  <string name="contacts_delete_contact_failed">연락처 삭제 실패, 다시 해 보세요</string>
+  <string name="contacts_not_found_error">연락처 없음</string>
+  <string name="contacts_add_contact_failed">연락처 추가 실패, 다시 해 보세요</string>
+  <string name="contacts_add_contact_success">연락처 추가 성공</string>
+  <string name="contacts_rename_invalid_name">유효하지 않은 이름</string>
+  <string name="contacts_rename_failed">이름 변경 실패, 다시 해 보세요</string>
+  <string name="contacts_rename_success">연락처 이름 변경 성공</string>
+  <string name="contacts_error_getting_messages">메시지 획득 오류</string>
+  <string name="contacts_error_sending_payment_request">귀하 지불 요청 보내기에 오류가 있었습니다, 다시 해 보세요</string>
+  <string name="contacts_success_sending_payment_request">지불 요청 보냄</string>
+  <string name="contacts_add_contact_title">연락처 추가</string>
+  <string name="contacts_name_cannot_be_empty">유효하지 않은 이름</string>
+  <string name="contacts_name_field_hint">이름</string>
+  <string name="contacts_add_button">추가</string>
+  <string name="contacts_share_invitation">초대 공유</string>
+  <string name="contacts_add_are_you_sure">%1$s를 믿을 수 있는 연락처로 추가하는 게 확실합니까?</string>
+  <string name="shortcut_settings_enable">런쳐 바로 가기</string>
+  <string name="contacts_invite_someone">누군가 초대하기</string>
+  <string name="contacts_being_invited">초대 받아들이기</string>
+  <string name="contacts_who_are_you_inviting_header">누구를 연결에 초대하고 있습니까?</string>
+  <string name="contacts_how_are_you_known_header">%1$s가 귀하를 어떤 이름으로 알고 있나요?</string>
+  <string name="contacts_scan_instructions">%1$s는 이 QR 코드를 자기 Blockchain 지갑 모바일 앱으로 스캔 해야 합니다.</string>
+  <string name="contacts_sharing_method_header">이 초대를 어떻게 공유하려고 합니까?</string>
+  <string name="contacts_field_error_empty">있어야 함</string>
+  <string name="contacts_share_qr">QR 코드 경유 (직접)</string>
+  <string name="contacts_share_link">링크 사용 중</string>
+  <string name="contacts_scan_qr">QR 코드 스캔</string>
+  <string name="contacts_sent_link">누가 링크를 보냈습니다.</string>
+  <string name="contacts_accept_invite_title">초대 받아들이기</string>
+  <string name="contacts_sent_link_explanation">누가 링크를 보내면, 링크에 탭 해서 받아들이세요.</string>
+  <string name="contacts_detail_title">나는 다음을 하기 원합니다:</string>
+  <string name="contacts_detail_transactions">%1$s와 거래:</string>
+  <string name="contacts_detail_transactions_empty">거래 없음</string>
+  <string name="contacts_rename">연락처 이름 변경</string>
+  <string name="contacts_delete">연락처 삭제</string>
+  <string name="contacts_send_bitcoin">%1$s 비트코인을 보내라고 요청</string>
+  <string name="contacts_request_bitcoin">%1$s에게 비트코인 요청</string>
+  <string name="contacts_invalid_qr">유효하지 않은 QR 코드</string>
+  <string name="contacts_request_sent">연락 요청 보냄</string>
+  <string name="contacts_request_just_added">방금 추가됨</string>
+  <string name="contacts_request_trusted">믿을 수 있는</string>
+  <string name="contacts_delete_message">이 연락처 삭제가 확실합니까? 연락처 삭제로 비트코인을 잃는 건 아닙니다.</string>
+  <string name="contacts_payment_request_title">지불 요청</string>
+  <string name="contacts_payment_request_send_note">귀하는 왜 %1$s 비트코인을 보내려고 합니까? 이것은 옵션이며 %1$s와 공유될 것입니다.</string>
+  <string name="contacts_payment_request_receive_note">왜 귀하는 %1$s가 귀하에게 비트코인 보내기를 원합니까? 이것은 옵션이며 %1$s와 공유될 것입니다.</string>
+  <string name="contacts_payment_request_send_hint">타파스(스페인식 음식) 런치</string>
+  <string name="contacts_payment_request_receive_hint">금요일 음료를 위해</string>
+  <string name="contacts_payment_request_note_hint">설명</string>
+  <string name="contacts_payment_request_send_amount">%1$s에게 얼마를 보내려고 하나요?</string>
+  <string name="contacts_payment_request_receive_amount">%1$s가 귀하에게 얼마를 보내기 원하나요? 
+
+이건 단지 제시입니다: 실제 금액은 다를 수 있습니다.</string>
+  <string name="contacts_payment_request_amount_hint">금액</string>
+  <string name="contacts_payment_success_waiting_title">%1$s가 받아들이기 대기 중</string>
+  <string name="contacts_payment_success_request_sent_title">요청 보냄</string>
+  <string name="contacts_payment_success_waiting_message">귀하 연락처에 귀하가 비트코인 보내기 원한다고 알렸습니다. 그들이 받아들이면 우리가 알려 줄 테니 거래를 완료하세요.</string>
+  <string name="contact_send_request_button">요청 보내기</string>
+  <string name="contacts_transaction_not_found_error">거래 없음</string>
+  <string name="contacts_address_sent_success">주소 보내기 성공</string>
+  <string name="contacts_address_sent_failed">주소 보내기 실패</string>
+  <string name="contacts_send_address_message">이렇게 하면 귀하 연락처에 주소가 보내집니다. 계속할까요?</string>
+  <string name="contacts_waiting_for_address_message">귀하가 비트코인 보내기를 원하니 그쪽 주소가 필요하다고 귀하 연락처에 알렸습니다. 그들이 주소를 보내면 알려줄게요!</string>
+  <string name="contacts_waiting_for_payment_message">귀하가 비트코인 받기를 원하며 귀하 주소를 보냈다고 귀하 연락처에 알렸습니다. 그들이 비트코인을 보내면 우리가 알려줄게요!</string>
+  <string name="contacts_digesting_messages_failed">메시지 확인 실패, 다시 해 보세요</string>
+  <string name="contacts_broadcasting_payment">귀하가 비트코인을 보냈다고 귀하 연락처에 방금 알렸습니다. 기다려 주세요.</string>
+  <string name="contacts_payment_sent_success">송금 완료! 귀하가 거래를 완료했다고 귀하 연락처에 알렸습니다.</string>
+  <string name="contacts_payment_sent_failed_message">귀하가 대금을 보냈다고 귀하 연락처에 알리는 데 오류가 있었습니다. 귀하 쪽 연결을 확인하고 다시 해 보세요.</string>
+  <string name="contacts_too_much_sent">요청 받은 것보다 더 많은 비트코인을 보낸 것 같습니다. 원하면 귀하 연락처에게 일부 되돌려 달라고 할 수 있습니다. 우리는 지불이 완료된 것으로 표시하지 않았습니다.</string>
+  <string name="contacts_too_little_sent">요청 받은 것보다 적은 비트코인을 보낸 것 같습니다. 귀하 연락처는 귀하가 보낸 비트코인을 그래도 받겠지만 우리는 지불이 완료된 것으로 표시하지 않았습니다.</string>
+  <string name="contacts_second_password_prompt">이 서비스를 쓰려면 귀하의 두 번째 암호를 입력해야 합니다. 연락처 기능 사용을 위한 입력은 한번만 하면 됩니다.</string>
+  <string name="contacts_no_confirmed_contacts_found">확인된 연락처 없음!</string>
+  <string name="contacts_pending_transaction_delete_success">보류 거래 삭제 성공</string>
+  <string name="contacts_pending_transaction_delete_failure">보류 거래 삭제 실패</string>
+  <string name="contacts_pending_transaction_decline_success">보류 거래 거절 성공</string>
+  <string name="contacts_pending_transaction_decline_failure">보류 거래 거절 실패</string>
+  <string name="contacts_pending_transaction_cancel_success">보류 거래 취소 성공</string>
+  <string name="contacts_pending_transaction_cancel_failure">보류 거래 취소 실패</string>
+  <string name="contacts_receiving_cancelled">취소됨</string>
+  <string name="contacts_send_complete">%2$s에게 %1$s를 보냄</string>
+  <string name="contacts_receive_complete">%2$s로부터 %1$s를 받음</string>
+  <string name="contacts_received">%1$s로부터 받음</string>
+  <string name="contacts_sent">%1$s에게 보냄</string>
+  <string name="confirm">확인</string>
+  <string name="pending">보류</string>
+  <!-- (No Commment) -->
+  <string name="transactions">거래들</string>
+  <string name="contacts_balance_dialog_payment_requested">지불 요청</string>
+  <string name="contacts_balance_dialog_choose_account_message">어디로 돈을 받을지 선택하세요.</string>
+  <string name="contacts_balance_dialog_accept">승인</string>
+  <!-- SWIPE TO RECEIVE -->
+  <string name="swipe_receive_hint">스와이프 해서 받기</string>
+  <string name="swipe_receive_preference_summary">PIN 화면을 왼쪽으로 스와이프 해서 수령 주소가 보이고 비트코인 더 빨리 받기</string>
+  <string name="swipe_receive_address_info">다섯 개 주소가 연속적으로 로딩 된 후 새 주소를 보여주기 위해 로그인이 필요합니다.</string>
+  <string name="swipe_receive_no_addresses">지금은 주소를 더 로딩 할 수 없음 더 로딩 하려면 앱에 로그인 하세요</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_fingerprint_title">지문 로그인</string>
+  <string name="onboarding_fingerprint_summary">인증과 지갑 접근에 비밀번호 대신 지문 로그인을 쓰세요</string>
+  <string name="onboarding_fingerprint_enable">지문 사용 설정</string>
+  <string name="onboarding_complete_later">나중에 할게요</string>
+  <string name="onboarding_check_inbox_title">받은 편지함 확인</string>
+  <string name="onboarding_check_inbox_summary">지갑 설정을 끝내기 위해 Blockchain에서 온 메일을 찾아 확인 링크를 클릭</string>
+  <string name="onboarding_verify_email">이메일 확인</string>
+  <string name="onboarding_receive_bitcoin">돈 요청</string>
+  <string name="onboarding_current_price">현 가격:</string>
+  <string name="onboarding_qr_codes">QR 코드</string>
+  <string name="onboarding_scan_address">스캔 주소</string>
+  <string name="onboarding_buy_content">우리는 전 세계 환전 파트너들과 일하고 있으므로 귀하는 직접 지갑에서 비트코인을 살 수 있습니다.</string>
+  <string name="onboarding_receive_content">돈을 받기 위해 친구에게 귀하 지갑 주소 보내기 주소는 임의 문자와 숫자 조합으로 매 거래마다 바뀝니다.</string>
+  <string name="onboarding_qr_codes_content">주소를 QR code로 표시할 수도 있습니다. 친구 QR code를 스캔 해서 친구 지갑 주소를 빨리 캡쳐 하세요.</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">비트코인 사기</string>
+  <string name="onboarding_buy_and_sell_bitcoin">비트코인 구매 및 판매</string>
+  <string name="onboarding_get_bitcoin">비트코인 받기</string>
+  <string name="onboarding_get_eth">에테르 받기</string>
+  <string name="onboarding_complete_title">오늘은 여기까지!</string>
+  <string name="onboarding_complete_content">새 기능이나 추천 사항이 있으면 업데이트 해 드리겠습니다.</string>
+  <string name="onboarding_start_over">다시 시작하기</string>
+  <string name="onboarding_skip_all">모두 건너뛰기</string>
+  <string name="trade_complete">거래 완료</string>
+  <string name="trade_complete_details">귀하 비트코인 사기 거래가 완료되었습니다!</string>
+  <string name="view_details">상세 내용 보기</string>
+  <string name="onboarding_available_now">지금 있음</string>
+  <string name="onboarding_buy_details">귀하 모바일 지갑에서 직접 비트코인 사기 간단하고, 매끄럽고, 안전합니다.</string>
+  <string name="onboarding_buy_performance_warning">귀하 장치에서는 사기가 좀 느릴 수 있습니다. 기다려주셔서 감사합니다.</string>
+  <string name="buy_second_password_prompt">이 서비스를 쓰려면 귀하의 두 번째 암호를 입력해야 합니다. 구매 기능 사용을 위해 한 번만 입력하면 됩니다.</string>
+  <!-- 2FA Pairing -->
+  <string name="two_factor_dialog_title">2FA 코드 입력</string>
+  <string name="two_factor_dialog_message_authenticator">계속하려면 귀하 인증 도구에 있는 유효한 2FA 코드를 입력하세요.</string>
+  <string name="two_factor_dialog_message_sms">방금 2FA 코드가 들어 있는 문자를 귀하에게 보냈습니다. 계속하려면 여기다 그걸 입력하세요.</string>
+  <string name="two_factor_dialog_hint">2FA 코드</string>
+  <string name="two_factor_null_error">2FA 코드는 있어야 합니다</string>
+  <string name="two_factor_incorrect_error">2FA 코드 틀림</string>
+  <!-- CONFIRM PAYMENT -->
+  <string name="confirm_payment_change_fee">변경 수수료</string>
+  <string name="confirm_payment_fee_sync_error">수수료 옵션 획득 오류</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">보통</string>
+  <string name="fee_options_priority">우선</string>
+  <string name="fee_options_custom">맞춤</string>
+  <string name="fee_options_regular_time">1+ 시간</string>
+  <string name="fee_options_priority_time">~0–60 분</string>
+  <string name="fee_options_custom_warning">고급 사용자만</string>
+  <string name="fee_options_sat_byte_formatted">%1$s sat/b</string>
+  <string name="fee_options_fee_too_low">낮은 수수료는 좋지 않음</string>
+  <string name="fee_options_fee_too_high">너무 높은 수수료</string>
+  <string name="fee_options_advanced_warning">이 기능은 고급 사용자만 쓰세요. 맞춤 수수료를 선택하면 초과 지불이 될 수 있고 귀하 거래가 확인되지 않을 수도 있습니다.</string>
+  <string name="fee_options_sat_byte_hint">sat/b</string>
+  <string name="fee_options_sat_byte_inline_hint">보통: %1$s, 우선: %2$s</string>
+  <string name="what_s_this">이게 뭐에요?</string>
+  <string name="dismiss">무시하기</string>
+  <!-- ETHEREUM BALANCE -->
+  <string name="eth_default_account_label">내 에테르 지갑</string>
+  <string name="eth_now_supporting">이제 에테르 지원함</string>
+  <string name="eth_second_password_prompt">이 서비스를 쓰려면 귀하의 두 번째 암호를 입력해야 합니다. 에테르 지갑 설정을 위해 한 번만 입력하면 됩니다.</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_to_field_helper">에테르 주소 입력 또는 선택</string>
+  <string name="eth_to_field_helper_no_dropdown">에테르 주소 입력</string>
+  <string name="eth_invalid_address">유효하지 않은 에테르 주소</string>
+  <string name="eth_support_contract_not_allowed">계약 주소 지원 안됨</string>
+  <string name="eth_support_only_eth">지금은 ETH만 지원합니다 - 이 주소로 토큰은 받을 수 없습니다</string>
+  <string name="eth_unconfirmed_wait">이전 거래 확인이 될 때까지 기다리세요</string>
+  <string name="eth_transaction_complete">거래 완료! 귀하 거래와 잔액은 몇 분 후 업데이트 됩니다.
+</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">대시보드</string>
+  <string name="dashboard_time_span_day">일</string>
+  <string name="dashboard_time_span_week">주</string>
+  <string name="dashboard_time_span_month">달</string>
+  <string name="dashboard_time_span_year">년</string>
+  <string name="dashboard_time_span_all_time">역대 (All Time)</string>
+  <string name="dashboard_bitcoin_price">비트코인 가격</string>
+  <string name="dashboard_ether_price">에테르 가결</string>
+  <string name="dashboard_charts_error">차트 데이타 로딩 오류</string>
+  <string name="dashboard_charts_price_error">가격 데이타 가져오기 오류</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">시작하기</string>
+  <!-- ETHEREUM ONBOARDING -->
+  <string name="metadata_load_failure">전체 지갑 기능 로딩 오류 일시적 서비스 사용 불능 </string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">교환</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">비트코인 캐시</string>
+  <string name="shapeshift_confirmation_terms">약관에 동의합니다</string>
+  <string name="shapeshift_transaction_fee">거래 수수료</string>
+  <string name="shapeshift_exchange_rate">환율</string>
+  <string name="shapeshift_complete_title">완성하기</string>
+  <string name="shapeshift_failed_title">실패함</string>
+  <string name="shapeshift_refunded_title">환불 됨</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">주문 아이디</string>
+  <string name="shapeshift_in_progress_summary">교환 진행 중</string>
+  <string name="bch_imported_addresses">가져온 비트코인 캐시 주소들</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">사기</string>
+  <string name="buy_sell_sell">판매</string>
+  <string name="buy_sell_overview_denied_button">다시 해 보세요</string>
+  <string name="buy_sell_state_processing">처리 중</string>
+  <string name="buy_sell_state_completed">완료됨</string>
+  <string name="buy_sell_state_cancelled">취소됨</string>
+  <string name="buy_sell_state_rejected">거부됨</string>
+  <string name="buy_sell_state_expired">만료됨</string>
+  <string name="buy_sell_detail_transaction_fee">거래 수수료</string>
+  <string name="buy_sell_detail_exchange_rate">환율</string>
+  <string name="buy_sell_detail_amount">금액</string>
+  <string name="buy_sell_detail_payment_fee">결제 수수료</string>
+  <string name="buy_sell_detail_total">비용 합계</string>
+  <string name="buy_sell_review_status_in_rejected">거부됨</string>
+  <string name="buy_sell_review_status_in_failed">실패함</string>
+  <string name="buy_sell_review_status_in_expired">만료됨</string>
+  <string name="buy_sell_review_status_in_completed">완료됨</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">결제 방법</string>
+  <string name="buy_sell_confirmation_transaction_fee">거래 수수료</string>
+  <string name="buy_sell_confirmation_amount">금액</string>
+  <string name="buy_sell_confirmation_payment_fee">결제 수수료</string>
+  <string name="buy_sell_confirmation_total_cost">비용 합계</string>
+  <string name="buy_sell_confirmation_bank">이체</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">이메일 인증</string>
+  <string name="submit">제출하기</string>
+  <string name="buy_sell_add_account_subtitle">은행 계좌 추가</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">계좌 선택</string>
+  <string name="buy_sell_account_selection_delete_message">은행 계좌 삭제가 확실합니까?</string>
+  <string name="buy_sell_add_address_city_hint">도시</string>
+  <string name="buy_sell_add_address_post_code_hint">우편 번호</string>
+  <string name="buy_sell_add_address_post_country_hint">국가</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">반복 주문</string>
+  <string name="buy_sell_recurring_order_frequency_title">빈도</string>
+  <string name="buy_sell_recurring_order_duration_title">기간</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">취소 시까지</string>
+</resources>
