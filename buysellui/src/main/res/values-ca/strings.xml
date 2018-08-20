@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>primera paraula</item>
+    <item>segona paraula</item>
+    <item>tercera paraula</item>
+    <item>quarta paraula</item>
+    <item>cinquena paraula</item>
+    <item>paraula de sisè</item>
+    <item>setena paraula</item>
+    <item>paraula vuitena</item>
+    <item>paraula novena</item>
+    <item>paraula desè</item>
+    <item>paraula onzè</item>
+    <item>paraula XII</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Actualització</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Configuració</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Enviar</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Cancel·la</string>
+  <!-- (No Commment) -->
+  <string name="yes">Sí</string>
+  <!-- (No Commment) -->
+  <string name="no">No</string>
+  <string name="done">Fet</string>
+  <string name="YESTERDAY">Ahir</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Transferits</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Copia al porta-retalls</string>
+  <string name="options_id">ID de cartera</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Moneda local</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Unitat Bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Condicions del servei</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Política de privacitat</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">ID de cartera no és vàlid</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Les contrasenyes no coincideixen</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Introduïu el PIN</string>
+  <string name="dialog_continue">Actualitza\'l ara</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Vinculació automàtica</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Click on</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">ID de cartera</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">La cartera de Bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Recuperar el fons</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Sempre cal ajuntar o connectar si teniu accés a la seva cartera ID i contrasenya. Recuperant el seu fons crearà un nou identificador de cartera. Voleu continuar?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Contrasenya</string>
+  <!-- (No Commment) -->
+  <string name="email">Correu electrònic</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Crear la cartera</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Feble</string>
+  <string name="strength_medium">Regular</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Fort</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Actualitza\'l ara</string>
+  <!-- (No Commment) -->
+  <string name="support">Suport</string>
+  <!-- (No Commment) -->
+  <string name="from">des de</string>
+  <!-- (No Commment) -->
+  <string name="to">A</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Confirmar el pagament</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Adreces importats</string>
+  <string name="ok_cap">Correcte</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Canvi PIN</string>
+  <!-- (No Commment) -->
+  <string name="name">Nom</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Desa</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arxivats</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Crear nova adreça</string>
+  <!-- (No Commment) -->
+  <string name="label">Etiqueta</string>
+  <!-- (No Commment) -->
+  <string name="edit">Editar</string>
+  <!-- (No Commment) -->
+  <string name="warning">Avís</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Estesa de clau pública</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adreça</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Compartir el seu xPub autoritza altres a seguir la història de transacció. Com les persones autoritzades pot ser capaços d\'interrompre accedeixin a la seva cartera, el seu xPub només compartir amb gent que confia.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arxiu</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Unarchive</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Clau privada necessària</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Només veure</string>
+  <!-- (No Commment) -->
+  <string name="success">Èxit</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Per defecte</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Ara no</string>
+  <!-- (No Commment) -->
+  <string name="logout">Logout</string>
+  <!-- (No Commment) -->
+  <string name="update">Actualització</string>
+  <!-- (No Commment) -->
+  <string name="verify">Verificar</string>
+  <!-- (No Commment) -->
+  <string name="allow">Permeten</string>
+  <!-- (No Commment) -->
+  <string name="block">Bloc</string>
+  <!-- (No Commment) -->
+  <string name="security">Seguretat</string>
+  <!-- (No Commment) -->
+  <string name="enable">Permetre</string>
+  <!-- (No Commment) -->
+  <string name="disable">Impossibilitar</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Authenticator</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">Verificació en 2 passos</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Canvia la contrasenya</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Notificacions per correu electrònic</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Contrasenya nova</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Preferències</string>
+  <!-- (No Commment) -->
+  <string name="information">Informació</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Sol·licitud de pagament Bitcoin</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Avís</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">El PIN que heu seleccionat és molt comú i es pot fàcilment endevinar per algú amb accés al seu telèfon dins de 3 intents. Voleu utilitzar aquest PIN anyways?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Torneu</string>
+  <string name="common_pin_dialog_continue">Actualitza\'l ara</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">If you would like to forget this wallet and start over, press \'Forget Wallet\'.</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transacció</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Frase reserva</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Copiar l\'adreça</string>
+  <string name="contacts_name_field_hint">Nom</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Regular</string>
+  <string name="buy_sell_overview_denied_button">Torneu</string>
+</resources>
