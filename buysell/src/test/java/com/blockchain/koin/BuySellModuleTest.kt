@@ -1,6 +1,6 @@
 package com.blockchain.koin
 
-import com.blockchain.network.modules.MoshiBuilderInterceptor
+import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.apiModule
 import com.squareup.moshi.Moshi
 import org.amshove.kluent.`should not be`
@@ -21,15 +21,17 @@ import piuk.blockchain.androidbuysell.models.coinify.TransferState
 class BuySellModuleTest : AutoCloseKoinTest() {
 
     @Test
-    fun `the buySell module registeres all of the buy sell adapters`() {
+    fun `the buySell module registers all of the buy sell adapters`() {
         StandAloneContext.startKoin(
             listOf(
                 buySellModule,
                 apiModule,
                 applicationContext {
                     bean {
-                        listOf<MoshiBuilderInterceptor>(
-                            get("buySell")
+                        MoshiBuilderInterceptorList(
+                            listOf(
+                                get("buySell")
+                            )
                         )
                     }
                 }

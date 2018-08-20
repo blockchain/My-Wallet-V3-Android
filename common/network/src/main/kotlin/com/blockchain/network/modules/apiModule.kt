@@ -78,7 +78,7 @@ val apiModule = applicationContext {
     bean {
         Moshi.Builder()
             .also {
-                get<List<MoshiBuilderInterceptor>>()
+                get<MoshiBuilderInterceptorList>()
                     .forEach { interceptor -> interceptor.intercept(it) }
             }
             .build()

@@ -3,7 +3,7 @@ package com.blockchain.morph.homebrew
 import com.blockchain.koin.modules.homeBrewModule
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.quote.ExchangeQuoteRequest
-import com.blockchain.network.modules.MoshiBuilderInterceptor
+import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.apiModule
 import com.blockchain.network.websocket.WebSocket
 import com.blockchain.testutils.bitcoin
@@ -34,8 +34,10 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
                 homeBrewModule,
                 applicationContext {
                     bean {
-                        listOf<MoshiBuilderInterceptor>(
-                            get("homeBrew")
+                        MoshiBuilderInterceptorList(
+                            listOf(
+                                get("homeBrew")
+                            )
                         )
                     }
                 },
