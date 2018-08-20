@@ -2,14 +2,15 @@ package piuk.blockchain.android.ui.contacts.list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
@@ -23,7 +24,6 @@ import javax.inject.Inject;
 
 import piuk.blockchain.android.R;
 import piuk.blockchain.androidcore.data.access.AccessState;
-import piuk.blockchain.android.databinding.ActivityContactsBinding;
 import piuk.blockchain.android.injection.Injector;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.base.UiState;
@@ -51,9 +51,13 @@ public class ContactsListActivity extends BaseMvpActivity<ContactsListView, Cont
 
     @Inject
     ContactsListPresenter contactsListPresenter;
-    private ActivityContactsBinding binding;
     private ContactsListAdapter contactsListAdapter;
     private MaterialProgressDialog progressDialog;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View fab;
+    private View layoutFailure;
+    private View layoutNoContacts;
 
     {
         Injector.getInstance().getPresenterComponent().inject(this);
@@ -62,24 +66,30 @@ public class ContactsListActivity extends BaseMvpActivity<ContactsListView, Cont
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
+        setContentView(R.layout.activity_contacts);
 
-        setupToolbar(binding.toolbarLayout.toolbarGeneral, R.string.contacts_title);
+        setupToolbar(findViewById(R.id.toolbar_general), R.string.contacts_title);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Buttons
-        binding.fab.setOnClickListener(view -> showRecipientNameDialog());
-        binding.buttonRetry.setOnClickListener(view -> getPresenter().onViewReady());
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> showRecipientNameDialog());
+        findViewById(R.id.buttonRetry).setOnClickListener(view -> getPresenter().onViewReady());
         // Swipe to refresh layout
-        binding.swipeRefreshLayout.setColorSchemeResources(R.color.primary_blue_accent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> getPresenter().onViewReady());
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary_blue_accent);
+        swipeRefreshLayout.setOnRefreshListener(() -> getPresenter().onViewReady());
         // Contacts list
         contactsListAdapter = new ContactsListAdapter(new ArrayList<>(), new StringUtils(this));
         contactsListAdapter.setContactsClickListener(this);
-        binding.recyclerviewContacts.setAdapter(contactsListAdapter);
-        binding.recyclerviewContacts.setLayoutManager(new LinearLayoutManager(this));
+        final RecyclerView recyclerView = findViewById(R.id.recyclerviewContacts);
+        recyclerView.setAdapter(contactsListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        binding.buttonInviteContact.setOnClickListener(view -> showRecipientNameDialog());
+        findViewById(R.id.buttonInviteContact).setOnClickListener(view -> showRecipientNameDialog());
+
+        layoutFailure = findViewById(R.id.layoutFailure);
+        layoutNoContacts = findViewById(R.id.layoutNoContacts);
     }
 
     @Override
@@ -164,31 +174,31 @@ public class ContactsListActivity extends BaseMvpActivity<ContactsListView, Cont
     public void setUiState(@UiState.UiStateDef int uiState) {
         switch (uiState) {
             case LOADING:
-                binding.swipeRefreshLayout.setRefreshing(true);
-                binding.layoutFailure.setVisibility(View.GONE);
-                binding.layoutNoContacts.setVisibility(View.GONE);
-                binding.fab.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(true);
+                layoutFailure.setVisibility(View.GONE);
+                layoutNoContacts.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
                 break;
             case CONTENT:
-                binding.swipeRefreshLayout.setRefreshing(false);
-                binding.swipeRefreshLayout.setVisibility(View.VISIBLE);
-                binding.layoutFailure.setVisibility(View.GONE);
-                binding.layoutNoContacts.setVisibility(View.GONE);
-                binding.fab.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                layoutFailure.setVisibility(View.GONE);
+                layoutNoContacts.setVisibility(View.GONE);
+                fab.setVisibility(View.VISIBLE);
                 break;
             case FAILURE:
-                binding.swipeRefreshLayout.setRefreshing(false);
-                binding.swipeRefreshLayout.setVisibility(View.GONE);
-                binding.layoutFailure.setVisibility(View.VISIBLE);
-                binding.layoutNoContacts.setVisibility(View.GONE);
-                binding.fab.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setVisibility(View.GONE);
+                layoutFailure.setVisibility(View.VISIBLE);
+                layoutNoContacts.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
                 break;
             case EMPTY:
-                binding.swipeRefreshLayout.setRefreshing(false);
-                binding.swipeRefreshLayout.setVisibility(View.GONE);
-                binding.layoutFailure.setVisibility(View.GONE);
-                binding.layoutNoContacts.setVisibility(View.VISIBLE);
-                binding.fab.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setVisibility(View.GONE);
+                layoutFailure.setVisibility(View.GONE);
+                layoutNoContacts.setVisibility(View.VISIBLE);
+                fab.setVisibility(View.GONE);
                 break;
         }
     }
@@ -294,14 +304,18 @@ public class ContactsListActivity extends BaseMvpActivity<ContactsListView, Cont
 
     @Override
     public void onMoreClick(String id) {
-        CharSequence actions[] = new CharSequence[] {getString(R.string.contacts_resend_invite), getString(R.string.contacts_delete)};
+        CharSequence actions[] = new CharSequence[]{getString(R.string.contacts_resend_invite), getString(R.string.contacts_delete)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setItems(actions, (dialog, which) -> {
             // the user clicked on colors[which]
             switch (which) {
-                case 0: getPresenter().resendInvite(id); break;
-                case 1: showDeleteUserConfirmationDialog(id); break;
+                case 0:
+                    getPresenter().resendInvite(id);
+                    break;
+                case 1:
+                    showDeleteUserConfirmationDialog(id);
+                    break;
             }
         });
         builder.show();
@@ -309,7 +323,7 @@ public class ContactsListActivity extends BaseMvpActivity<ContactsListView, Cont
 
     public void showDeleteUserConfirmationDialog(String id) {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(getString(R.string.contacts_delete)+"?")
+                .setTitle(getString(R.string.contacts_delete) + "?")
                 .setMessage(R.string.contacts_delete_message)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> getPresenter().onDeleteContactConfirmed(id))
                 .setNegativeButton(android.R.string.cancel, null)

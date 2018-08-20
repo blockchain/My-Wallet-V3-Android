@@ -2,7 +2,6 @@ package piuk.blockchain.android.ui.contacts.detail;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import piuk.blockchain.android.R;
-import piuk.blockchain.android.databinding.ActivityContactDetailBinding;
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity;
 import piuk.blockchain.android.ui.home.MainActivity;
 import piuk.blockchain.android.ui.send.SendFragment;
@@ -27,16 +25,13 @@ import static piuk.blockchain.android.ui.home.MainActivity.EXTRA_URI;
 public class ContactDetailActivity extends BaseAuthActivity implements
         ContactDetailFragment.OnFragmentInteractionListener {
 
-    private ActivityContactDetailBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_detail);
+        setContentView(R.layout.activity_contact_detail);
 
-        binding.toolbar.toolbarGeneral.setTitle("");
-        setSupportActionBar(binding.toolbar.toolbarGeneral);
+        setupToolbar(findViewById(R.id.toolbar_general), "");
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (getIntent() != null && getIntent().hasExtra(KEY_BUNDLE_CONTACT_ID)) {
@@ -57,7 +52,7 @@ public class ContactDetailActivity extends BaseAuthActivity implements
     }
 
     public Toolbar getToolbar() {
-        return binding.toolbar.toolbarGeneral;
+        return findViewById(R.id.toolbar_general);
     }
 
     public static void start(Context context, @NonNull Bundle extras) {
