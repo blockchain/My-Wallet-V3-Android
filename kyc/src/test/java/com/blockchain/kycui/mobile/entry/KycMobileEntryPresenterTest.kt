@@ -5,6 +5,7 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import com.blockchain.kycui.mobile.entry.models.PhoneNumber
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
@@ -84,6 +85,7 @@ class KycMobileEntryPresenterTest {
     fun `onViewReady, should sanitise input and progress page`() {
         // Arrange
         val phoneNumber = "+1 (234) 567-890"
+        val phoneNumberSanitized = "+1234567890"
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
@@ -99,16 +101,20 @@ class KycMobileEntryPresenterTest {
         subject.onViewReady()
         publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
         // Assert
-        verify(nabuDataManager).addMobileNumber(offlineToken.mapFromMetadata(), "+1234567890")
+        verify(nabuDataManager).addMobileNumber(
+            offlineToken.mapFromMetadata(),
+            phoneNumberSanitized
+        )
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
-        verify(view).continueSignUp()
+        verify(view).continueSignUp(PhoneDisplayModel(phoneNumber, phoneNumberSanitized))
     }
 
     @Test
     fun `onViewReady, should throw exception and resubscribe for next event`() {
         // Arrange
         val phoneNumber = "+1 (234) 567-890"
+        val phoneNumberSanitized = "+1234567890"
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
@@ -129,7 +135,7 @@ class KycMobileEntryPresenterTest {
         verify(view, times(2)).showProgressDialog()
         verify(view, times(2)).dismissProgressDialog()
         verify(view).showErrorToast(any())
-        verify(view).continueSignUp()
+        verify(view).continueSignUp(PhoneDisplayModel(phoneNumber, phoneNumberSanitized))
     }
 
     @Test

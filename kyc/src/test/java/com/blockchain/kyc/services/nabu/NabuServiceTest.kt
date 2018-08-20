@@ -7,10 +7,12 @@ import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
 import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
+import com.blockchain.kyc.api.nabu.NABU_VERIFICAITIONS
 import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
+import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserState
@@ -311,6 +313,42 @@ class NabuServiceTest {
         val adapter = moshi.adapter(AddMobileNumberRequest::class.java)
         val addMobileNumberRequest = adapter.fromJson(requestString)!!
         addMobileNumberRequest.phoneNumber `should equal to` mobileNumber
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
+    fun verifyMobileNumber() {
+        // Arrange
+        val sessionToken = "SESSION_TOKEN"
+        val mobileNumber = "MOBILE_NUMBER"
+        val verificationCode = "VERIFICATION_CODE"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody("")
+        )
+        // Act
+        val testObserver = subject.verifyMobileNumber(
+            path = NABU_VERIFICAITIONS,
+            sessionToken = sessionToken,
+            mobileNumber = mobileNumber,
+            verificationCode = verificationCode
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_VERIFICAITIONS"
+        // Check Body
+        val requestString = request.requestToString()
+        val adapter = moshi.adapter(MobileVerificationRequest::class.java)
+        val mobileVerificationRequest = adapter.fromJson(requestString)!!
+        mobileVerificationRequest.phoneNumber `should equal to` mobileNumber
+        mobileVerificationRequest.verificationCode `should equal to` verificationCode
+        mobileVerificationRequest.type `should equal to` "MOBILE"
         // Check Header
         request.headers.get("authorization") `should equal` sessionToken
     }

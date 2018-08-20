@@ -7,10 +7,12 @@ import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
 import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
+import com.blockchain.kyc.api.nabu.NABU_VERIFICAITIONS
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
+import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
@@ -136,6 +138,17 @@ class NabuService(
     ): Completable = service.addMobileNumber(
         path,
         AddMobileNumberRequest(mobileNumber),
+        sessionToken
+    ).wrapErrorMessage()
+
+    internal fun verifyMobileNumber(
+        path: String = apiPath + NABU_VERIFICAITIONS,
+        mobileNumber: String,
+        verificationCode: String,
+        sessionToken: String
+    ): Completable = service.verifyMobileNumber(
+        path,
+        MobileVerificationRequest(mobileNumber, verificationCode),
         sessionToken
     ).wrapErrorMessage()
 

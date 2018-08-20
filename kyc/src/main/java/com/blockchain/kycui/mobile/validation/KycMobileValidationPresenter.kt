@@ -1,28 +1,24 @@
-package com.blockchain.kycui.mobile.entry
+package com.blockchain.kycui.mobile.validation
 
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.NabuErrorCodes
 import com.blockchain.kyc.models.nabu.mapFromMetadata
-import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.utils.extensions.toMoshiKotlinObject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 
-class KycMobileEntryPresenter(
+class KycMobileValidationPresenter(
     private val metadataManager: MetadataManager,
-    private val nabuDataManager: NabuDataManager,
-    private val settingsDataManager: SettingsDataManager
-) : BasePresenter<KycMobileEntryView>() {
+    private val nabuDataManager: NabuDataManager
+) : BasePresenter<KycMobileValidationView>() {
 
     private val fetchOfflineToken by unsafeLazy {
         metadataManager.fetchMetadata(NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE)
@@ -37,58 +33,38 @@ class KycMobileEntryPresenter(
     }
 
     override fun onViewReady() {
-        preFillPhoneNumber()
-        subscribeToClickEvents()
-    }
-
-    private fun subscribeToClickEvents() {
         compositeDisposable +=
-            view.phoneNumberObservable
-                .map { it.first }
-                .flatMapCompletable { number ->
+            view.verificationObservable
+                .flatMapCompletable { (verificationModel, _) ->
                     fetchOfflineToken.flatMapCompletable { tokenResponse ->
-                        nabuDataManager.addMobileNumber(tokenResponse, number.sanitized)
-                            .subscribeOn(Schedulers.io())
+                        nabuDataManager.verifyMobileNumber(
+                            tokenResponse,
+                            verificationModel.sanitizedPhoneNumber,
+                            verificationModel.verificationCode
+                        ).subscribeOn(Schedulers.io())
                     }.observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe { view.showProgressDialog() }
                         .doOnTerminate { view.dismissProgressDialog() }
                         .doOnError {
                             if (it is NabuApiException &&
-                                it.getErrorCode() == NabuErrorCodes.AlreadyRegistered
+                                it.getErrorCode() == NabuErrorCodes.VerificationCodeIncorrect
                             ) {
-                                view.displayErrorDialog(R.string.kyc_phone_number_error_conflict)
+                                view.displayErrorDialog(R.string.kyc_phone_number_validation_error_incorrect)
                             } else {
-                                view.showErrorToast(R.string.kyc_phone_number_error_saving_number)
+                                view.showErrorToast(R.string.kyc_phone_number_validation_error)
                             }
                         }
-                        .doOnComplete { view.continueSignUp(PhoneDisplayModel(number.raw, number.sanitized)) }
+                        .doOnComplete { view.continueSignUp() }
                 }
                 .retry()
                 .doOnError(Timber::e)
                 .subscribe()
     }
 
-    private fun preFillPhoneNumber() {
-        compositeDisposable +=
-            settingsDataManager.getSettings()
-                .map { it.smsNumber ?: "" }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                    onNext = {
-                        if (!it.isEmpty() && it.first() == '+') {
-                            view.preFillPhoneNumber(it)
-                        }
-                    },
-                    // Ignore error
-                    onError = { Timber.e(it) }
-                )
-    }
-
     internal fun onProgressCancelled() {
-        // Cancel outbound
+        // Clear outbound requests
         compositeDisposable.clear()
-        // Resubscribe to everything
-        subscribeToClickEvents()
+        // Resubscribe
+        onViewReady()
     }
 }

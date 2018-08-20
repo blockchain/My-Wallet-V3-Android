@@ -11,6 +11,11 @@ class PhoneNumberTest {
     }
 
     @Test
+    fun `should return raw string`() {
+        PhoneNumber("+44 (123) 456-789").raw `should equal to` "+44 (123) 456-789"
+    }
+
+    @Test
     fun `short phone number should return invalid`() {
         PhoneNumber("+123456").isValid `should equal to` false
     }

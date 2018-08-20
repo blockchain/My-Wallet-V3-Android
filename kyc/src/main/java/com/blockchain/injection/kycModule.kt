@@ -10,6 +10,7 @@ import com.blockchain.kyc.stores.NabuSessionTokenStore
 import com.blockchain.kycui.address.KycHomeAddressPresenter
 import com.blockchain.kycui.countryselection.KycCountrySelectionPresenter
 import com.blockchain.kycui.mobile.entry.KycMobileEntryPresenter
+import com.blockchain.kycui.mobile.validation.KycMobileValidationPresenter
 import com.blockchain.kycui.profile.KycProfilePresenter
 import com.blockchain.network.modules.MoshiBuilderInterceptor
 import com.squareup.moshi.Moshi
@@ -50,6 +51,10 @@ val kycModule = applicationContext {
                 get(),
                 get()
             )
+        }
+
+        factory {
+            KycMobileValidationPresenter(get(), get())
         }
     }
 

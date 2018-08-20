@@ -45,5 +45,13 @@
     <fragment
         android:id="@+id/kycPhoneNumberFragment"
         android:name="com.blockchain.kycui.mobile.entry.KycMobileEntryFragment"
-        android:label="KycPhoneNumberFragment" />
+        android:label="KycPhoneNumberFragment" >
+        <action
+            android:id="@+id/action_kycPhoneNumberFragment_to_kycMobileValidationFragment"
+            app:destination="@id/kycMobileValidationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/kycMobileValidationFragment"
+        android:name="com.blockchain.kycui.mobile.validation.KycMobileValidationFragment"
+        android:label="KycMobileValidationFragment" />
 </navigation>

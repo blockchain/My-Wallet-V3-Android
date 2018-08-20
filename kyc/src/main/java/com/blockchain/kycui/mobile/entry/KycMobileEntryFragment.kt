@@ -9,7 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import com.blockchain.kycui.mobile.entry.models.PhoneNumber
+import com.blockchain.kycui.mobile.validation.KycMobileValidationFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.jakewharton.rxbinding2.view.clicks
@@ -108,9 +111,6 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
                     }
                     phoneNumberSubject.onNext(PhoneNumber(editTextPhoneNumber.getTextString()))
                 }
-                .doOnNext {
-                    buttonNext.isEnabled = PhoneNumber(editTextPhoneNumber.getTextString()).isValid
-                }
                 .subscribe()
 
         compositeDisposable +=
@@ -137,8 +137,9 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
         toast(message, ToastCustom.TYPE_ERROR)
     }
 
-    override fun continueSignUp() {
-        toast("onContinue SignUp")
+    override fun continueSignUp(displayModel: PhoneDisplayModel) {
+        val bundle = KycMobileValidationFragment.bundleArgs(displayModel)
+        findNavController(this).navigate(R.id.kycMobileValidationFragment, bundle)
     }
 
     override fun showProgressDialog() {
@@ -172,7 +173,10 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
             .observeOn(AndroidSchedulers.mainThread())
             .map { mapToCompleted(it) }
             .distinctUntilChanged()
-            .doOnNext { updateProgress(it, kycStep) }
+            .doOnNext {
+                updateProgress(it, kycStep)
+                buttonNext.isEnabled = it
+            }
 
     private fun mapToCompleted(text: String): Boolean = PhoneNumber(text).isValid
 

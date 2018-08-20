@@ -118,6 +118,18 @@ class NabuDataManager(
         ).toSingleDefault(Any())
     }.ignoreElement()
 
+    internal fun verifyMobileNumber(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        mobileNumber: String,
+        verificationCode: String
+    ): Completable = authenticate(offlineTokenResponse) {
+        nabuService.verifyMobileNumber(
+            mobileNumber = mobileNumber,
+            verificationCode = verificationCode,
+            sessionToken = it.token
+        ).toSingleDefault(Any())
+    }.ignoreElement()
+
     /**
      * Invalidates the [NabuSessionTokenStore] so that on logging out or switching accounts, no data
      * is persisted accidentally.

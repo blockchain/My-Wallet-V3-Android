@@ -12,6 +12,11 @@ enum class NabuErrorCodes(val code: Int) {
     AlreadyRegistered(409),
 
     /**
+     * Verification code is incorrect.
+     */
+    VerificationCodeIncorrect(400),
+
+    /**
      * Error type not yet specified.
      */
     Unknown(-1);

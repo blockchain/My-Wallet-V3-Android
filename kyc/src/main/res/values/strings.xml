@@ -56,4 +56,10 @@
     <string name="kyc_phone_number_hint_unfocused">+1 2345 678 910</string>
     <string name="kyc_phone_number_error_saving_number">Error saving mobile number, please try again</string>
     <string name="kyc_phone_number_error_conflict">Mobile phone number already registered, please use another.</string>
+
+    <!-- Phone Number Validation -->
+    <string name="kyc_phone_number_validation_title">Enter the code sent to</string>
+    <string name="kyc_phone_number_validation_hint">Confirmation Code</string>
+    <string name="kyc_phone_number_validation_error">Error validating phone number. Please check your code</string>
+    <string name="kyc_phone_number_validation_error_incorrect">Verification code incorrect. Please double check the code we sent you and try again.</string>
 </resources>
