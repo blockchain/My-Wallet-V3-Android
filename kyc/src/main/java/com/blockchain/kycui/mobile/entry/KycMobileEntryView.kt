@@ -1,16 +1,15 @@
 package com.blockchain.kycui.mobile.entry
 
 import android.support.annotation.StringRes
+import com.blockchain.kycui.mobile.entry.models.PhoneNumber
 import io.reactivex.Observable
 import piuk.blockchain.androidcoreui.ui.base.View
 
 interface KycMobileEntryView : View {
 
-    val phoneNumber: Observable<String>
+    val phoneNumberObservable: Observable<Pair<PhoneNumber, Unit>>
 
     fun preFillPhoneNumber(phoneNumber: String)
-
-    fun setButtonEnabled(enabled: Boolean)
 
     fun showErrorToast(@StringRes message: Int)
 
@@ -20,5 +19,5 @@ interface KycMobileEntryView : View {
 
     fun continueSignUp()
 
-    fun finishPage()
+    fun displayErrorDialog(@StringRes errorMessage: Int)
 }

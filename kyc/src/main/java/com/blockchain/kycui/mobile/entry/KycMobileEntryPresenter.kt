@@ -2,6 +2,8 @@ package com.blockchain.kycui.mobile.entry
 
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.kyc.models.nabu.NabuApiException
+import com.blockchain.kyc.models.nabu.NabuErrorCodes
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -34,6 +36,39 @@ class KycMobileEntryPresenter(
     }
 
     override fun onViewReady() {
+        preFillPhoneNumber()
+        subscribeToClickEvents()
+    }
+
+    private fun subscribeToClickEvents() {
+        compositeDisposable +=
+            view.phoneNumberObservable
+                .retry()
+                .map { it.first.sanitized }
+                .flatMapCompletable { number: String ->
+                    fetchOfflineToken.flatMapCompletable { tokenResponse ->
+                        nabuDataManager.addMobileNumber(tokenResponse, number)
+                            .subscribeOn(Schedulers.io())
+                    }.observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe { view.showProgressDialog() }
+                        .doOnTerminate { view.dismissProgressDialog() }
+                        .doOnError {
+                            if (it is NabuApiException &&
+                                it.getErrorCode() == NabuErrorCodes.AlreadyRegistered
+                            ) {
+                                view.displayErrorDialog(R.string.kyc_phone_number_error_conflict)
+                            } else {
+                                view.showErrorToast(R.string.kyc_phone_number_error_saving_number)
+                            }
+                        }
+                        .doOnComplete { view.continueSignUp() }
+                }
+                .doOnError(Timber::e)
+                .retry()
+                .subscribe()
+    }
+
+    private fun preFillPhoneNumber() {
         compositeDisposable +=
             settingsDataManager.getSettings()
                 .map { it.smsNumber ?: "" }
@@ -45,52 +80,15 @@ class KycMobileEntryPresenter(
                             view.preFillPhoneNumber(it)
                         }
                     },
-                    onError = {
-                        // Ignore error
-                        Timber.e(it)
-                    }
-                )
-
-        compositeDisposable +=
-            view.phoneNumber
-                .doOnError(Timber::e)
-                .subscribeBy(
-                    onNext = { enableButtonIfComplete(it.sanitizePhoneNumber()) },
-                    onError = { view.finishPage() }
-                )
-    }
-
-    internal fun onContinueClicked() {
-        compositeDisposable +=
-            view.phoneNumber
-                .firstOrError()
-                .map { it.sanitizePhoneNumber() }
-                .flatMapCompletable { number: String ->
-                    fetchOfflineToken.flatMapCompletable {
-                        nabuDataManager.addMobileNumber(it, number)
-                            .subscribeOn(Schedulers.io())
-                    }
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { view.showProgressDialog() }
-                .doOnTerminate { view.dismissProgressDialog() }
-                .doOnError(Timber::e)
-                .subscribeBy(
-                    onComplete = { view.continueSignUp() },
-                    onError = {
-                        view.showErrorToast(R.string.kyc_phone_number_error_saving_number)
-                    }
+                    // Ignore error
+                    onError = { Timber.e(it) }
                 )
     }
 
     internal fun onProgressCancelled() {
+        // Cancel outbound
         compositeDisposable.clear()
+        // Resubscribe to everything
+        subscribeToClickEvents()
     }
-
-    private fun enableButtonIfComplete(phoneNumber: String) {
-        // 5 is the minimum phone number length + area code + "+" symbol
-        view.setButtonEnabled(phoneNumber.length >= 9)
-    }
-
-    private fun String.sanitizePhoneNumber(): String = "+${this.replace("[^\\d.]".toRegex(), "")}"
 }

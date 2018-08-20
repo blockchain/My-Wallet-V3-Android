@@ -55,4 +55,5 @@
     <string name="kyc_phone_number_hint_focused">Your Mobile Number</string>
     <string name="kyc_phone_number_hint_unfocused">+1 2345 678 910</string>
     <string name="kyc_phone_number_error_saving_number">Error saving mobile number, please try again</string>
+    <string name="kyc_phone_number_error_conflict">Mobile phone number already registered, please use another.</string>
 </resources>

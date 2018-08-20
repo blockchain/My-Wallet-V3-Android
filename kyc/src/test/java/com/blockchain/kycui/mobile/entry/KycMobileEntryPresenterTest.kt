@@ -3,16 +3,22 @@ package com.blockchain.kycui.mobile.entry
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.kycui.mobile.entry.models.PhoneNumber
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.api.data.Settings
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Rule
@@ -20,6 +26,7 @@ import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
+import retrofit2.Response
 
 class KycMobileEntryPresenterTest {
 
@@ -51,11 +58,11 @@ class KycMobileEntryPresenterTest {
         // Arrange
         val settings = Settings()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-        whenever(view.phoneNumber).thenReturn(Observable.empty())
+        whenever(view.phoneNumberObservable).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
         // Assert
-        verify(view).phoneNumber
+        verify(view).phoneNumberObservable
         verifyNoMoreInteractions(view)
     }
 
@@ -66,7 +73,7 @@ class KycMobileEntryPresenterTest {
         val phoneNumber = "+1234567890"
         whenever(settings.smsNumber).thenReturn(phoneNumber)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-        whenever(view.phoneNumber).thenReturn(Observable.empty())
+        whenever(view.phoneNumberObservable).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
         // Assert
@@ -74,58 +81,13 @@ class KycMobileEntryPresenterTest {
     }
 
     @Test
-    fun `onViewReady phone number entered, too short to enable button`() {
-        // Arrange
-        val settings: Settings = mock()
-        val phoneNumber = "+1234"
-        whenever(settings.smsNumber).thenReturn(phoneNumber)
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumber).thenReturn(Observable.just(phoneNumber))
-        // Act
-        subject.onViewReady()
-        // Assert
-        verify(view).setButtonEnabled(false)
-    }
-
-    @Test
-    fun `onViewReady phone number entered, should enable button`() {
-        // Arrange
-        val phoneNumber = "+1234567890"
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumber).thenReturn(Observable.just(phoneNumber))
-        // Act
-        subject.onViewReady()
-        // Assert
-        verify(view).setButtonEnabled(true)
-    }
-
-    @Test
-    fun `onViewReady phone number observable exception, should finish page`() {
-        // Arrange
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumber).thenReturn(Observable.error { Throwable() })
-        // Act
-        subject.onViewReady()
-        // Assert
-        verify(view).finishPage()
-    }
-
-    @Test
-    fun `onContinueClicked throws exception, should trigger toast`() {
-        // Arrange
-        whenever(view.phoneNumber).thenReturn(Observable.error { Throwable() })
-        // Act
-        subject.onContinueClicked()
-        // Assert
-        verify(view).showErrorToast(any())
-    }
-
-    @Test
-    fun `onContinueClicked, should sanitise input and progress page`() {
+    fun `onViewReady, should sanitise input and progress page`() {
         // Arrange
         val phoneNumber = "+1 (234) 567-890"
         val offlineToken = NabuCredentialsMetadata("", "")
-        whenever(view.phoneNumber).thenReturn(Observable.just(phoneNumber))
+        val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -134,11 +96,96 @@ class KycMobileEntryPresenterTest {
         whenever(nabuDataManager.addMobileNumber(eq(offlineToken.mapFromMetadata()), any()))
             .thenReturn(Completable.complete())
         // Act
-        subject.onContinueClicked()
+        subject.onViewReady()
+        publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
         // Assert
         verify(nabuDataManager).addMobileNumber(offlineToken.mapFromMetadata(), "+1234567890")
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
         verify(view).continueSignUp()
+    }
+
+    @Test
+    fun `onViewReady, should throw exception and resubscribe for next event`() {
+        // Arrange
+        val phoneNumber = "+1 (234) 567-890"
+        val offlineToken = NabuCredentialsMetadata("", "")
+        val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        whenever(nabuDataManager.addMobileNumber(eq(offlineToken.mapFromMetadata()), any()))
+            .thenReturn(Completable.error { Throwable() })
+            .thenReturn(Completable.complete())
+        // Act
+        subject.onViewReady()
+        publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
+        publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
+        // Assert
+        verify(view, times(2)).showProgressDialog()
+        verify(view, times(2)).dismissProgressDialog()
+        verify(view).showErrorToast(any())
+        verify(view).continueSignUp()
+    }
+
+    @Test
+    fun `onViewReady, should throw AlreadyRegistered exception and display dialog`() {
+        // Arrange
+        val phoneNumber = "+1 (234) 567-890"
+        val offlineToken = NabuCredentialsMetadata("", "")
+        val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        val responseBody =
+            ResponseBody.create(
+                MediaType.parse("application/json"),
+                "{}"
+            )
+        whenever(nabuDataManager.addMobileNumber(eq(offlineToken.mapFromMetadata()), any()))
+            .thenReturn(Completable.error {
+                NabuApiException.fromResponseBody(
+                    Response.error<Unit>(409, responseBody)
+                )
+            })
+        // Act
+        subject.onViewReady()
+        publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
+        // Assert
+        verify(view).showProgressDialog()
+        verify(view).dismissProgressDialog()
+        verify(view).displayErrorDialog(any())
+    }
+
+    @Test
+    fun `onViewReady, should throw exception and display toast`() {
+        // Arrange
+        val phoneNumber = "+1 (234) 567-890"
+        val offlineToken = NabuCredentialsMetadata("", "")
+        val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        whenever(nabuDataManager.addMobileNumber(eq(offlineToken.mapFromMetadata()), any()))
+            .thenReturn(Completable.error { Throwable() })
+        // Act
+        subject.onViewReady()
+        publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
+        // Assert
+        verify(view).showProgressDialog()
+        verify(view).dismissProgressDialog()
+        verify(view).showErrorToast(any())
     }
 }

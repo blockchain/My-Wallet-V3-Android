@@ -7,9 +7,9 @@ enum class NabuErrorCodes(val code: Int) {
     TokenExpired(401),
 
     /**
-     * The user's email address is already registered on Nabu.
+     * Conflict. The user's data you're trying to save already exists.
      */
-    EmailAlreadyRegistered(409),
+    AlreadyRegistered(409),
 
     /**
      * Error type not yet specified.
