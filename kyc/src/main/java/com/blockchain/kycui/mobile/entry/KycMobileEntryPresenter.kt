@@ -88,8 +88,8 @@ class KycMobileEntryPresenter(
     }
 
     private fun enableButtonIfComplete(phoneNumber: String) {
-        // 5 is the minimum phone number length + "+" symbol
-        view.setButtonEnabled(phoneNumber.length > 6)
+        // 5 is the minimum phone number length + area code + "+" symbol
+        view.setButtonEnabled(phoneNumber.length > 9)
     }
 
     private fun String.sanitizePhoneNumber(): String = "+${this.replace("[^\\d.]".toRegex(), "")}"
