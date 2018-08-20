@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>перше слово</item>
+    <item>друге слово</item>
+    <item>третє слово</item>
+    <item>четверте слово</item>
+    <item>п\'яте слово</item>
+    <item>шосте слово</item>
+    <item>сьоме слово</item>
+    <item>восьме слово</item>
+    <item>дев\'яте слово</item>
+    <item>десяте слово</item>
+    <item>одинадцяте слово</item>
+    <item>дванадцяте слово</item>
+  </string-array>
+  <string name="backup_wallet">Відновити кошти</string>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Оновити</string>
+  <string name="current_price_btc">1 BTC = %1$s</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Налаштування</string>
+  <string name="all_accounts">Усі гаманці</string>
+  <string name="please_wait">Будь ласка, зачекайте</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Відправити</string>
+  <string name="receive_bitcoin">Запит</string>
+  <string name="overview">Транзакції</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Відміна</string>
+  <!-- (No Commment) -->
+  <string name="yes">Так</string>
+  <!-- (No Commment) -->
+  <string name="no">Ні</string>
+  <string name="polite_no">Ні, дякую.</string>
+  <string name="done">Виконано</string>
+  <string name="YESTERDAY">Вчора</string>
+  <string name="SENT">Відправлено</string>
+  <string name="sending">Надсилання</string>
+  <!-- Transaction cell: -->
+  <string name="RECEIVED">отримано</string>
+  <string name="receiving">Отримання</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Переведено</string>
+  <string name="paid">Оплачено</string>
+  <string name="payment_request">Запит платежу</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Скопійовано в буфер обміну</string>
+  <string name="options_id">ID гаманця</string>
+  <string name="preferences_about_title">Про нас</string>
+  <string name="ask_you_sure_unpair">Впевнені, що хочете розпарувати свій пристрій?</string>
+  <string name="select_currency">Виберіть країну</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Місцева валюта</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin Unit</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Умови надання послуг</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Політика конфіденційності</string>
+  <string name="invalid_email">Невірна ел. адреса</string>
+  <string name="invalid_mobile">Невірний номер моб. телефону</string>
+  <string name="invalid_password">Невірний пароль</string>
+  <string name="invalid_password_too_short">Будь ласка, введіть більше ніж 3 знаки</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Невірний ID гаманця</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Паролі не співпадають</string>
+  <string name="change_password_new_matches_current">Не можна використовувати поточний пароль в якості нового пароля.</string>
+  <string name="no_private_key">Неможливо створити особистий ключ.</string>
+  <string name="pin_4_strikes">4 невдалі спроби введення PIN-коду. Будь ласка, введіть пароль.</string>
+  <string name="pin_4_strikes_password_accepted">Пароль прийнято. Будь ласка, введіть новий PIN.</string>
+  <string name="bip38_password_entry">Будь ласка, введіть пароль до особистого ключа.</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Введіть PIN</string>
+  <string name="password_entry">Будь ласка, введіть пароль.</string>
+  <string name="zero_pin">0000 є невірним PIN-кодом. Будь ласка, спробуйте ще раз.</string>
+  <string name="invalid_pin">Невірний PIN-код. Будь ласка, спробуйте ще раз.</string>
+  <string name="pin_mismatch_error">PIN-коди не співпадають</string>
+  <string name="create_pin">Створити PIN</string>
+  <string name="confirm_pin">Підтвердити PIN</string>
+  <string name="create_pin_failed">Збій створення PIN-коду. Будь ласка, утворіть пару із пристроєм ще раз.</string>
+  <string name="change_pin_new_matches_current">Цей ПІН код не можна використовувати як новий ПІН код</string>
+  <string name="pairing_failed">Збій утворення пари. Будь ласка, спробуйте ще раз.</string>
+  <string name="account_locked_title">Акаунт заблоковано</string>
+  <string name="account_locked_message">Ваш акаунт заблоковано тимчасово, в якості запобіжного заходу. Щоб дізнатись більше інформації, будь ласка, перевірте свою електронну пошту, і спробуйте ще раз.</string>
+  <string name="check_connectivity_exit">Гаманець Blockchain не може встановити інтернет-з\'єднання. Будь ласка, перевірте інтернет-з\'єднання свого пристрою і спробуйте ще раз.</string>
+  <string name="dialog_continue">Продовжити</string>
+  <string name="double_encryption_password_error">Помилка подвійного розшифрування паролю. Будь ласка, спробуйте ще раз.</string>
+  <string name="command2">Сканувати код пари</string>
+  <string name="command3">Я не можу отримати доступ до камері</string>
+  <string name="create_a_wallet">Створити гаманець</string>
+  <string name="log_in">Вхід</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Автоматичне парування</string>
+  <string name="pair_wallet_step_1">Увійдіть у свій гаманець Blockchain з ПК чи Mac на %1$s.</string>
+  <string name="pair_wallet_step_2">Якщо ви користуєтесь старим гаманцем, натисніть кнопку Параметри облікового запису і виберіть вкладку Пристрої. Якщо ви користуєтесь новою бета-версією нашого гаманця, перейдіть у Налаштування / Інформація про гаманець.</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Натисніть кнопку Показати спарений код, щоб відкрити QR-код, чорно-білий квадратний штрих-код. Відскануйте код камерою вашого пристрою.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">ID гаманця</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Мій гаманець Bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Відновити кошти</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Вам завжди треба буде утворювати пару чи входити, якщо потребуватимете доступ до ID вашого гаманця чи пароля. Відновлення ваших коштів створить новий ID гаманця. Бажаєте продовжити?</string>
+  <string name="recover_funds_instructions">Введіть 12 слів для відновлення доступу через пробіл, щоб відновити ваші кошти та транзакції</string>
+  <string name="recovery_passphrase">Фраза для відновлення доступу</string>
+  <string name="invalid_recovery_phrase">Неправильна фраза для відновлення доступу. Будь ласка, спробуйте ще раз</string>
+  <string name="creating_wallet">Створення гаманця</string>
+  <string name="restore_failed">Збій відновлення гаманця Будь ласка, спробуйте ще раз</string>
+  <string name="restoring_wallet">Відновлення гаманця.</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Пароль</string>
+  <!-- (No Commment) -->
+  <string name="email">Ел. адреса</string>
+  <string name="agree_terms_of_service">Створюючи новий гаманець ви згідні з</string>
+  <string name="blockchain_tos">Умовами надання послуг Blockchain</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Створити гаманець</string>
+  <string name="new_wallet">Новий гаманець</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Слабкий</string>
+  <string name="strength_medium">Регулярні</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Сильний</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Звичайно</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Продовжити</string>
+  <string name="SEND">ВІДПРАВИТИ</string>
+  <string name="total">Всього</string>
+  <string name="max_available">Використати усі кошти за мінусом комісії:</string>
+  <string name="invalid_bitcoin_address">Невірна Bitcoin-адреса</string>
+  <string name="invalid_amount">Невірна сума</string>
+  <string name="insufficient_funds">Недостатньо коштів</string>
+  <string name="enter_double_encryption_pw">Будь ласка, введіть пароль подвійного шифрування</string>
+  <!-- (No Commment) -->
+  <string name="support">Служба підтримки</string>
+  <string name="rate_us">Оцінити нас</string>
+  <string name="licenses">Ліцензії</string>
+  <string name="email_chooser">Відправити ел. лист…</string>
+  <string name="about">Blockchain гаманець %1$s
+©%2$s Blockchain Luxembourg S.A.
+Всі права захищено.</string>
+  <string name="merchant_download">Безкоштовна програма Підприємця</string>
+  <string name="password_or_wipe">Увійти під своїм паролем або забути цей гаманець</string>
+  <string name="use_password">Використати пароль</string>
+  <string name="wipe_wallet">Забути гаманець</string>
+  <string name="support_leaving_app_warning">Це призведе до залишення програми і перенесе вас у браузер. Продовжити?</string>
+  <string name="weak_password">Цей пароль надто простий, щоб захистити ваші кошти. Настійливо рекомендуємо вибрати інший. Бажаєте створити новий пароль?</string>
+  <!-- (No Commment) -->
+  <string name="from">від</string>
+  <!-- (No Commment) -->
+  <string name="to">Для</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Підтвердити платіж</string>
+  <string name="fee">Комісія</string>
+  <string name="exit_confirm">Натисніть кнопку назад, щоб вийти</string>
+  <string name="label_address">Вашу адресу успішно імпортовано. За бажанням назвіть відображення цієї адреси.</string>
+  <string name="label_address2">Вашу адресу успішно створено. За бажанням назвіть відображення цієї адреси.</string>
+  <string name="bip38_error">Невірний пароль особистого ключа</string>
+  <string name="privkey_error">Нерозпізнаний формат особистого ключа</string>
+  <string name="hd_error">Помилка HD гаманця</string>
+  <string name="scan_not_recognized">Неможливо декодувати скан</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Імпортовані адреси</string>
+  <string name="remote_save_ok">Віддалене збереження OK</string>
+  <string name="remote_save_ko">Збій віддаленого збереження</string>
+  <string name="unpair_wallet">Скасувати утворення пари гаманця</string>
+  <string name="unpair">СКАСУВАТИ ПАРУВАННЯ</string>
+  <string name="ok_cap">ОК</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Змінити PIN</string>
+  <string name="enter_current_pin">Будь ласка, введіть дійсний PIN-код.</string>
+  <string name="addresses_bitcoin">Bitcoin адреси</string>
+  <string name="create_new">Створити нову</string>
+  <string name="import_address">Імпортування адрес</string>
+  <string name="wallets">Гаманці</string>
+  <string name="save_name">Зберегти назву</string>
+  <string name="receive_address_to_clipboard">Копіювати цю адресу отримувача в буфер обміну? Якщо так, тоді майте на увазі: інші програми зможуть бачити цю інформацію.</string>
+  <string name="receive_address_to_share">Поділитись цією адресою для відправки? Якщо так, тоді майте на увазі: інші програми зможуть бачити цю інформацію.</string>
+  <string name="guid_to_clipboard">Скопіювати ID вашого гаманця в буфер обміну? Якщо так, тоді майте на увазі: інші програми зможуть бачити цю інформацію.</string>
+  <string name="ssl_pinning_invalid">Закріпити сертифікат SSL не вдалося. Це може свідчити про небезпечну активність. Перш ніж продовжити, будь ласка, перевірте підключення до мережі та пристрій.</string>
+  <string name="description">Опис</string>
+  <!-- (No Commment) -->
+  <string name="name">Назва</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Зберегти</string>
+  <string name="next">Далі</string>
+  <string name="received_bitcoin">Отримані bitcoin</string>
+  <string name="received_ethereum">Отриманий Ether</string>
+  <string name="verification_failed">Збій підтвердження</string>
+  <string name="send_payment">Відправити платіж</string>
+  <string name="share">Поділитись адресою отримувача</string>
+  <string name="scan_qr">Сканувати QR-код</string>
+  <string name="confirm_password">Підтвердити пароль</string>
+  <string name="check_email_to_auth_login">Будь ласка, перевірте свою електронну пошту, щоб підтвердити цю спробу входу в систему.</string>
+  <string name="transaction_fee">Комісія за транзакцію</string>
+  <string name="your_transactions">Транзакції відсутні</string>
+  <string name="transaction_occur_when_bitcoin">Коли ви отримуєте чи відправляєте bitcoin, це відображається у транзакціях.</string>
+  <string name="transaction_occur_when_eth">Операції відбуваються, коли ви отримуєте та надсилаєте ether.</string>
+  <string name="click">Натисніть,</string>
+  <string name="to_start_sending_and_receiving_btc">щоб почати отримувати та відправляти bitcoin.</string>
+  <string name="address_book_label">(адресна книга)</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Архівовано</string>
+  <string name="transaction_submitted">Транзакцію завершено</string>
+  <string name="transaction_failed">Збій транзакції</string>
+  <string name="UPGRADE_YOUR_WALLET">Добре, вперед!</string>
+  <string name="upgrade_page_1">Спрощене резервне копіювання та відновлення.</string>
+  <string name="upgrade_page_2">Покращена конфіденційність через ієрархічну детермінованість адрес.</string>
+  <string name="upgrade_page_3">Персоналізуйте спосіб групування своїх bitcoin у своєму гаманці Blockchain.</string>
+  <!-- <string name="confirm_upgrade_info">这次升级仅需一小段时间，你的比特币和交易记录是安全的。升级的好处：\n\n✓ 全新的设计和用户体验\n✓ 强大的安全中心\n✓ 增强的隐私性\n✓ 简化的备份与恢复\n✓ 自定义的资金管理\n\nOne 此次新版本不支持高级交易类型（共享加密货币）</string> -->
+  <string name="confirm_upgrade_header"> Привіт, ми додали ось ці нові функції до вашого гаманця Blockchain:</string>
+  <string name="upgrading">Оновлення...</string>
+  <string name="upgrading_started_info">Ваш гаманець оновлюється, будь ласка, трохи зачекайте, це може зайняти деякий час, в залежності від розміру та віку вашого гаманця.</string>
+  <string name="upgrade_success_heading">Ваш гаманець оновлено!</string>
+  <string name="upgrade_success_info">Тепер у вас найзахищеніший і найбезпечніший гаманець Blockchain. Зараз ви вже можете продовжити користуватись своїм гаманцем.</string>
+  <string name="CLOSE">ЗАКРИТИ</string>
+  <string name="total_funds">Все</string>
+  <string name="unexpected_error">Неочікувана помилка, спробуйте пізніше.</string>
+  <string name="upgrade_fail_heading">Збій оновлення гаманця!</string>
+  <string name="upgrade_fail_info">Під час оновлення виникла помилка. Будь ласка, спробуйте пізніше.</string>
+  <string name="not_sane_error">Інсталяцію вашого гаманця Blockchain перервано. Будь ласка, від\'єднайте та приєднайте свій гаманець і спробуйте ще раз або створіть новий гаманець.</string>
+  <string name="watchonly_address_receive_warning">Ви збираєтесь отримати біткойн на адресу, яка дійсна тільки для перегляду. Ви можете витрачати ці кошти лише за умови, що у вас є доступ до особистого ключа. Продовжити?</string>
+  <string name="camera_unavailable">Камера використовується іншою програмою. Будь ласка, закрийте програму і спробуйте ще раз.</string>
+  <string name="validating_password">Підтвердження пароля…</string>
+  <string name="validating_pin">Підтвердження PIN…</string>
+  <string name="creating_pin">Створення PIN…</string>
+  <string name="decrypting_wallet">Дешифрування гаманця…</string>
+  <string name="password_unchanged">Пароль не змінено</string>
+  <string name="password_changed">Пароль змінено</string>
+  <string name="password_changed_explanation">Ваш пароль було змінено, будь ласка, зробіть повторне парування вашого гаманця</string>
+  <string name="verify_email2">Ваша підтверджена адреса електронної пошти використовується нами для відправки вам кодів для входу, або для інформування вас, якщо ми виявимо підозрілу чи нехарактерну активність по вашому рахунку, для нагадування вам ідентифікатора входу в гаманець або сповіщення про рух коштів по вашому рахунку.</string>
+  <string name="disable_root_warning">Вимкніть попередження рутованого пристрою</string>
+  <string name="show_balance">Показати баланс</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Створити нову адресу</string>
+  <string name="auth_failed">Збій авторизації. Будь ласка, спробуйте ще раз.</string>
+  <string name="send_failed">Збій відправки. Будь ласка, спробуйте ще раз.</string>
+  <string name="wallet_updated">Отримано оновлення гаманця</string>
+  <string name="device_rooted">Здається ваш пристрій рутовано. Майте на увазі: збереження коштів на рутованих пристроях є небезпечним, можуть виникнути проблеми із стабільністю. Якщо ви продовжите використовувати Bitcoin-гаманець на цьому пристрої, рекомендуємо вам користуватись подвійним шифруванням свого облікового запису Blockchain.</string>
+  <string name="address_already_in_wallet">У вашому гаманцю ця адреса вже присутня.</string>
+  <string name="cannot_create_address">Зараз неможливо створити нову адресу. Будь ласка, спробуйте ще раз.</string>
+  <string name="saving_address">Збереження адреси…</string>
+  <string name="cannot_launch_app">Гаманець Blockchain не може працювати на цьому пристрої.</string>
+  <!-- (No Commment) -->
+  <string name="label">Мітка</string>
+  <!-- (No Commment) -->
+  <string name="edit">Редагувати</string>
+  <string name="label_cant_be_empty">Мітка не може залишатись порожньою.</string>
+  <string name="label_name_match">Ім\'я вже використовується</string>
+  <!-- (No Commment) -->
+  <string name="warning">Попередження</string>
+  <string name="ssl_no_connection">Ми не можемо з\'єднатися із хостом, щоб перевірити цей сертифікат SSL. Перш ніж продовжити, будь ласка, перевірте підключення до мережі та пристрій.</string>
+  <string name="retry">Повтор</string>
+  <string name="exit">Вихід</string>
+  <string name="screen_overlay_warning">Виявлено екранну накладку!</string>
+  <string name="screen_overlay_note">Програми, що використовують екранні накладки, можуть вас обманути, щоб ви натискали невидимі об\'єкти, і потенційно викрасти ваші кошти. Зверніть увагу, це попередження може також спровокуватись програмами-затемнювачами екранів. Якщо ви впевнені у відсутності загрози, можете продовжити далі. </string>
+  <string name="archived_description">Це архівний елемент, недопустимий для використання мобільною програмою. Ви не можете відправити кошти з цього елемента, будь-які кошти залишатимуться в безпеці. Просто розпакуйте цей елемент, щоб знову ним користуватись.</string>
+  <string name="not_archived_description">Цей елемент незаархівовано. Додайте цей елемент в архів, якщо ви більше НЕ хочете його використовувати. Ваші кошти будуть в безпеці, і ви можете розпакувати його у будь-який час.</string>
+  <string name="transfer_success_archive_prompt_title">Архів стер адреси?</string>
+  <plurals name="transfer_success_archive_prompt_plurals">
+    <item quantity="one">1 адресу успішно перенесено у Мій Bitcoin-гаманець. Бажаєте архівувати цю адресу зараз?</item>
+    <item quantity="few"></item>
+    <item quantity="many"></item>
+    <item quantity="other">%d адреси успішно перенесено у Мій Bitcoin-гаманець. Бажаєте архівувати ці адреси зараз?</item>
+  </plurals>
+  <string name="default_account_description">Цей елемент встановлено за замовчуванням і не може поміщатись в архів.</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Розширений публічний ключ</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Адреса</string>
+  <string name="copy_xpub">Копіювати xpub</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Спільне використання xPub дозволяє іншим відстежувати історію транзакцій. Лише авторизовані особи зможуть призупинити вам доступ до вашого гаманця, тому довіряйте цей Розширений відкритий ключ (xPub) тим, кому ви особливо довіряєте.</string>
+  <string name="assign_display_name">Дайте зрозумілу назву дисплея.</string>
+  <string name="copy_address">Копіювати адресу</string>
+  <!-- (No Commment) -->
+  <string name="archive">Архів</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Не архівовано</string>
+  <string name="archive_are_you_sure">Впевнені, що хочете додати в архів цей об\'єкт?</string>
+  <string name="unarchive_are_you_sure">Впевнені, що хочете розпакувати цей об\'єкт?</string>
+  <string name="send_to_same_address_warning">Неможливо відправити на одну і ту ж адресу.</string>
+  <string name="make_default">Встановити за замовчуванням</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Необхідно Особистий ключ</string>
+  <string name="invalid_private_key">Невірний особистий ключ</string>
+  <string name="watch_only_import_warning">Ви збираєтесь імпортувати адресу лише для перегляду, адресу (чи скрипт ключа), збережені в гаманці без відповідного особистого ключа. Це означає, що кошти можуть витрачатись, ЛИШЕ якщо у вас є особистий ключ, який зберігається десь в іншому місці. Якщо ви не маєте збереженого особистого ключа, НЕ просіть відправляти вам bitcoin на адресу, яка тільки для перегляду.
+
+Ці опції лише для досвідчених користувачів. Продовжити? </string>
+  <string name="scan_private_key">Сканувати особистий ключ</string>
+  <string name="private_key_successfully_imported">Особистий ключ успішно імпортовано.</string>
+  <string name="private_key_not_matching_address">УВАГА: Відсканований особистий ключ не збігається з вашою адресою, яка дійсна тільки для перегляду. Щоб витрачати кошти з цієї адреси, будь ласка, відскануйте правильний особистий ключ.</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Лише для перегляду</string>
+  <string name="extended_public_key_description">Якщо ви підприємець, покажіть свій xPub і користуйтесь програмою Blockchain Merchant, щоб отримувати безпечно кошти.
+
+Нікому не довіряйте свій xPub.         Той, хто має доступ до xPub, зможе бачити кошти та усі ваші транзакції. </string>
+  <string name="watch_only_description">Ця адреса дійсна тільки для перегляну. Щоб витрачати кошти з</string>
+  <!-- (No Commment) -->
+  <string name="success">Успіх</string>
+  <!-- (No Commment) -->
+  <string name="default_label">За замовчуванням</string>
+  <string name="try_again">Спробуйте ще раз</string>
+  <!-- FUNDS TRANSFER -->
+  <string name="transfer">Переказ</string>
+  <string name="transfer_funds">Переказ коштів</string>
+  <string name="transfer_recommend">Схоже, у вас є біткойни в імпортованих адресах. Імпортовані адреси не захищені вашою фразою для відновлення доступу. Щоб захистити ці кошти, ми радимо перевести їх, щоб включити до вашої резервної копії.</string>
+  <string name="spendable_addresses">адреси для витрат</string>
+  <string name="transfer_confirmed">Переказ підтверджено</string>
+  <string name="transfer_confirm">Підтвердити транзакцію</string>
+  <string name="transfer_all">Переказати все</string>
+  <string name="transfer_amount">Сума переказу</string>
+  <string name="transfer_archive_message">Архівувати імпортовані адреси після переказу</string>
+  <string name="transfer_archive">Архівування підтверджено</string>
+  <string name="dont_ask_again">Не запитувати мене знову</string>
+  <string name="insufficient_fee">Комісія за транзакцію надто низька.</string>
+  <string name="customize">персоналізувати</string>
+  <string name="amount">Сума</string>
+  <string name="recommended_fee">Комісія за транзакцію впливає на швидкість підтвердження вашої транзакції мережею Bitcoin, і залежать від поточного стану мережі. Зараз рекомендуємо встановити нижчу комісію для цієї транзакції.</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Не зараз</string>
+  <string name="high_fee_not_necessary_info">Ви встановили незвично високу плату за транзакцію %1$s.
+
+Навіть якщо ви знизите комісію до %2$s, підтвердження вашої транзакції займе ~10 хвилин (1 блок).</string>
+  <string name="low_fee_suggestion">Ви встановили незвично низьку комісію за транзакцію %1$s.
+
+Ваша транзакція може зависнути і, можливо, ніколи не підтвердиться. Для підвищення шансів вашої транзакції на успішне підтвердження протягом ~ 1 год. (6 блоків), настійливо рекомендуємо встановити комісію не менш ніж %2$s.</string>
+  <string name="raise_fee">Збільшити комісію</string>
+  <string name="lower_fee">Нижча комісія</string>
+  <string name="keep_high_fee">Зберегти високу комісію</string>
+  <string name="keep_low_fee">Зберегти низьку комісію</string>
+  <string name="no_confirmed_funds">Підтверджені кошти для витрат відсутні.</string>
+  <string name="estimate_confirm_block_count">Розрахунковий час підтвердження: ~%1$d хвилин (%2$d блоків)</string>
+  <string name="fee_too_low_no_confirm">Розмір вашої комісії такий низький, що ваша транзакція може ніколи не підтвердитись.</string>
+  <string name="transaction_surge">Через високу активність мережа Bitcoin сильно перевантажена, ніж зазвичай, тому рекомендована плату за транзакцію незвично висока.</string>
+  <string name="unsupported_encryption_version">Версія гаманця %1$s не підтримується.</string>
+  <!-- (No Commment) -->
+  <string name="logout">Вихід</string>
+  <string name="to_field_helper">Введіть bitcoin адресу або виберіть</string>
+  <string name="to_field_helper_no_dropdown">Введіть bitcoin адресу</string>
+  <!-- (No Commment) -->
+  <string name="update">Оновити</string>
+  <string name="mobile">Мобільний</string>
+  <string name="profile">Профіль</string>
+  <string name="app">Програма</string>
+  <!-- (No Commment) -->
+  <string name="verify">Підтвердити</string>
+  <string name="resend">Відправити повторно</string>
+  <string name="verified">підтверджено</string>
+  <string name="unverified">непідтверджений</string>
+  <!-- (No Commment) -->
+  <string name="allow">Дозволити</string>
+  <!-- (No Commment) -->
+  <string name="block">Блокувати</string>
+  <!-- (No Commment) -->
+  <string name="security">Безпека</string>
+  <!-- (No Commment) -->
+  <string name="enable">Активувати</string>
+  <!-- (No Commment) -->
+  <string name="disable">Вимкнути</string>
+  <!-- (No Commment) -->
+  <string name="sms">СМС</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Автентифікатор Google</string>
+  <string name="yubikey">Ключ</string>
+  <string name="disable_2fa_first">Будь ласка, спочатку вимкніть двофакторну автентифікацію через СМС у налаштуваннях безпеки.</string>
+  <string name="disable_online_only">Будь ласка, увійдіть до свого гаманця у браузері, щоб вимкнути двофакторну автентифікацію.</string>
+  <string name="settings_field_cant_be_empty">Поле мусить бути заповненим.</string>
+  <string name="settings_error_updating">Збій оновлення налаштувань, спробуйте ще раз.</string>
+  <string name="request_camera_permission">Треба доступ до камери.</string>
+  <string name="request_location_permission">Треба доступ до місця розташування.</string>
+  <string name="request_write_storage_permission">Необхідно написати зовнішній накопичувач.</string>
+  <string name="not_specified">не визначено</string>
+  <string name="update_failed">Збій оновлення.</string>
+  <string name="verify_mobile">Перевірка мобільного</string>
+  <string name="select_country">Вибрати країну</string>
+  <string name="verify_sms_summary">На номер вашого мобільного телефону ми відправили СМС повідомлення з контрольним кодом. Введіть код, щоб підтвердити номер мобільного телефону.</string>
+  <string name="verify_sms_failed">Невірний код, будь ласка, спробуйте ще раз.</string>
+  <string name="mobile_description">Ваш мобільний телефон може використовуватись для активації двофакторної автентифікації, допомагаючи цим самим захистити ваш гаманець від несанкціонованого доступу.</string>
+  <string name="enable_fingerprint">Розблокування відбитком пальця</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-крокове підтвердження</string>
+  <string name="tor_requests">Блокувати запити з мережі Tor</string>
+  <string name="tor_summary">Блокувати IP-адреси, які є, як відомо, частиною анонімної мережі Tor. Мережа Tor часто використовується хакерами для отримання доступу до гаманців користувачів Blockchain.</string>
+  <string name="enable_screenshots">Активувати скріншоти</string>
+  <string name="enable_screenshots_summary">Деякі зображення в програмі можуть відображати конфіденційні дані. Інші програми матимуть можливість отримати доступ до цих скріншотів.</string>
+  <string name="password_hint_summary">Ваш гаманець Blockchain ніколи не повідомляє пароль нашим серверам. Це означає, що ми не знаємо ваш пароль, і ми не зможемо відновити його, якщо ви його забудете. Створіть підказку для нагадування пароля, яку ми зможемо відправити на вашу підтверджену адресу електронної пошти в разі, якщо ви забули свій пароль.</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Змінити пароль</string>
+  <string name="change_password_summary">Ваш пароль ніколи не передається на наші сервери, а це означає, що ми не можемо допомогти вам відновити ваш пароль, навіть якщо ви його забудете чи втратите. Переконайтеся, що ви зробити резервну копію ваших коштів через бокове меню, що допоможе вам відновити доступ до свого гаманця, якщо ви втратите пароль.</string>
+  <string name="verify_email_notice">Ми надіслали вам листа з посиланням для підтвердження на вашу електронну адресу. Натисніть на посилання, щоб підтвердити свою електронну адресу.</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Сповіщення ел. поштою</string>
+  <string name="email_notifications_summary">Отримайте сповіщення, коли вам надійдуть bitcoin.</string>
+  <string name="current_password">Дійсний пароль</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Новий пароль</string>
+  <string name="sms_verified">Номер мобільного підтверджено</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Налаштування</string>
+  <string name="two_fa_summary">2-крокове підтвердження захищає ваш гаманець від неавторизованого доступу.</string>
+  <string name="two_fa_description">2-крокове підтвердження захищає ваш гаманець від неавторизованого доступу. Щоб захистити свій гаманець, можете обрати свій номер моб. телефону. Цей код буде запитано під час спроби доступу до вашого гаманця через веб-браузер.
+
+Щоб використати інші способи автентифікації, будь ласка, увійдіть до нашого веб-гаманця на %1$s</string>
+  <string name="rate_title">Оцінити гаманець Blockchain</string>
+  <string name="rate_message">Подобається користуватись гаманцем Blockchain? Будь ласка, знайдіть хвилинку і залишіть відгук про наш гаманець в Google Play, нехай інші також про нього дізнаються.</string>
+  <string name="rate_yes">Так, оцінити гаманець Blockchain</string>
+  <string name="rate_no">Ні, дякую.</string>
+  <string name="rate_later">Нагадати пізніше</string>
+  <string name="why_has_my_address_changed">Чому моя адреса змінилась?</string>
+  <!-- (No Commment) -->
+  <string name="information">Інформація</string>
+  <string name="learn_more">Дізнатись більше</string>
+  <string name="pairing_code_log_in">Увійдіть до веб-гаманця</string>
+  <string name="pairing_code_instruction_1">Перейдіть до %1$s на вашому комп\'ютері.</string>
+  <string name="pairing_code_instruction_2">Оберіть \"Увійти через мобільний пристрій\"</string>
+  <string name="pairing_code_instruction_3">Відскануйте QR-код нижче за допомогою камери на вашому комп\'ютері.</string>
+  <string name="pairing_code_show_qr">Показати QR-код</string>
+  <string name="pairing_code_hide_qr">Сховати QR-код</string>
+  <string name="pairing_code_warning_1">Тримайте цей код прихованим, доки не будете готові.</string>
+  <string name="pairing_code_warning_2">Тримайте цей код у безпеці!
+Нікому не передавайте його.</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Запит Bitcoin-платежу</string>
+  <string name="email_request_subject_eth">Запит на отримання Ether платежу</string>
+  <string name="email_request_body">Будь ласка, відправте%1$s BTC на Bitcoin-адресу %2$s.</string>
+  <string name="email_request_body_eth">Будь ласка, відправте ETH на Ether адресу %1$s.</string>
+  <string name="email_request_body_fallback">прикріплено</string>
+  <string name="share_instructions">Торкніться, щоб скопіювати цю адресу. Поділіться адресою з відправником через ел. повідомлення чи СМС.</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Попередження</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">Обраний вами PIN-код надзвичайно поширений, його може легко вгадати і ввести за 3 спроби у ваш телефон будь-хто. Хочете використовувати цей PIN-код в будь-якому випадку?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Спробувати ще раз</string>
+  <string name="common_pin_dialog_continue">Продовжити</string>
+  <!-- PASSWORD REENTRY ACTIVITY -->
+  <string name="logged_out_enter_password">Ви вийшли або стався збій дешифрування вашого гаманця. Знизу введіть свій пароль, щоб увійти.</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Якщо хочете забути цей гаманець і почати все спочатку, натисніть \'Забути гаманець\'.</string>
+  <string name="forget_wallet">Забути гаманець</string>
+  <string name="forget_wallet_warning">Це знищить усі дані гаманця на цьому пристрої. Будь ласка, підтвердіть, що інформацію про ваш гаманець збережено в іншому місці, в іншому випадку усі bitcoin цього гаманця стануть недоступними!!</string>
+  <string name="api_fail">Неможливо з\'єднатися із сервером. Будь ласка, спробуйте пізніше.</string>
+  <!-- FEE WARNING -->
+  <string name="large_tx_warning">Завищений розмір bitcoin-транзакції. Вашому гаманцю необхідно консолідувати багато менших платежів, які ви колись отримували. Для швидкого підтвердження, це вимагає відносно високої комісії.</string>
+  <string name="go_back">Повернутись</string>
+  <string name="accept_higher_fee">Прийняти вищу комісію</string>
+  <string name="large_tx_high_fee_warning">\"Ця транзакція вимагає більш високу комісію через невелику кількість змін, яку буде повернуто.\"</string>
+  <string name="password_reveal_warning">Будьте уважні! Розкриття цього тексту дозволяє скопіювати ваш пароль в буфер обміну, який потім зможуть зчитати всі програми на вашому пристрої. Будьте впевнені, що поруч з вами нікого немає!</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Транзакція</string>
+  <string name="transaction_detail_description_hint">Що це?</string>
+  <string name="transaction_detail_date">Дата</string>
+  <string name="transaction_detail_status">Статус</string>
+  <string name="transaction_detail_confirmed">Підтверджено</string>
+  <string name="transaction_detail_pending">В очікуванні (%1$s/%2$s підтверджень)</string>
+  <string name="transaction_detail_fee">\"Комісія за транзакцію: %1$s\"</string>
+  <string name="transaction_detail_value_at_time_received">Значення при отриманні:\u0020</string>
+  <string name="transaction_detail_value_at_time_transferred">Значення при переказі:\u0020</string>
+  <string name="transaction_detail_value_at_time_sent">Значення при відправлені:\u0020</string>
+  <string name="transaction_detail_value">Значення:\u0020</string>
+  <string name="transaction_details_unknown">Невідомо</string>
+  <string name="transaction_detail_coinbase">Введення відсутні (ново-згенеровані монети)</string>
+  <string name="transaction_detail_double_spend">Може загрожувати небезпека подвійних витрат.</string>
+  <string name="transaction_detail_verify">Підтвердити на Blockchain.com</string>
+  <string name="transaction_detail_verify_etherscan">Верифікуйте на Etherscan.io</string>
+  <string name="transaction_detail_share_chooser">Поділитись подробицями транзакцій</string>
+  <string name="transaction_detail_contact_note">Примітка</string>
+  <!-- SECURITY CENTRE -->
+  <string name="security_centre_email_title">Перевірте свою електронну пошту</string>
+  <string name="security_centre_email_check">Перевірити електронну пошту</string>
+  <string name="security_centre_email_message">Ми відправили електронний лист для %1$s. Знайдіть лист від Blockchain і натисніть на посилання у ньому для підтвердження, щоб завершити налаштування гаманця.</string>
+  <string name="security_centre_add_email_title">Ел. адреса</string>
+  <string name="security_centre_add_email_message">Додайте і верифікуйте свою електронну адресу, щоб отримувати попередження і запобігти підозрілій активності, і щоб можна було відновити ваш ID гаманця, якщо ви його забудете.</string>
+  <string name="security_centre_add_email_positive_button">Додати</string>
+  <string name="security_centre_backup_title">Створити резервну копію своїх коштів</string>
+  <string name="security_centre_backup_message">Для вашої безпеки, ми не зберігаємо паролі у файлі. Зробіть резервну копію свого гаманця, щоб зберегти свої кошти, якщо втратите свій пароль. </string>
+  <string name="security_centre_backup_positive_button">Резервування</string>
+  <string name="security_centre_two_fa_message">Попереджає несанкційований доступ до вашого гаманця. Увімкніть двофакторну автентифікацію, щоб підвищити безпеку гаманця.</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Фраза для відновлення доступу</string>
+  <string name="backup_explanation">Blockchain не зберігає паролі в базі задля вашої безпеки. Ця фраза для відновлення доступу з 12-ти слів надасть вам доступ до ваших коштів, якщо ви втратите пароль. Запишіть її на аркуші паперу і заховайте у безпечне місце. </string>
+  <string name="backup_button_start">Розпочати резервне копіювання</string>
+  <string name="backup_write_down_words">Зверніть увагу: ви повинні вписувати слова точно так, і в тому ж порядку, як вони з\'являтимуться на екрані.</string>
+  <string name="backup_header_complete">Резервне копіювання успішне</string>
+  <string name="backup_complete_message">Ви можете використати свою фразу для відновлення доступу, щоб відновити кошти у випадку втрати паролю. Кожен, хто має доступ до вашої Фрази для відновлення доступу, може отримати доступ до ваших коштів, тому не забувайте зберігати її в автономному режимі.</string>
+  <string name="backup_again">Зробити резервну копію знову</string>
+  <string name="backup_confirmed">Резервне копіювання підтверджено</string>
+  <string name="backup_last">Останнє резервне копіювання: %1$s</string>
+  <string name="backup_verify_heading">Введіть слова з вашої фрази для відновлення доступу, щоб завершити процес відновлення.</string>
+  <string name="backup_next_word">НАСТУПНЕ СЛОВО</string>
+  <string name="backup_previous_word">ПОПЕРЕДНЄ СЛОВО</string>
+  <string name="backup_word">Слово</string>
+  <string name="backup_of">з</string>
+  <string name="backup_word_mismatch">Слова не співпадають</string>
+  <string name="backup_done">ВИКОНАНО</string>
+  <string name="backup_lost_mnemonic">Втратили вашу фразу для відновлення доступу з 12-ти слів?</string>
+  <!-- FINGERPRINT -->
+  <string name="fingerprint_prompt">Використовуйте свій відбиток пальця, щоб легко і швидко мати доступ до свого гаманця.
+
+Щоб продовжити, підтвердіть відбиток пальця.</string>
+  <string name="fingerprint_description">Щоб продовжити, підтвердіть відбиток пальця.</string>
+  <string name="fingerprint_hint">Сенсор відбитку пальця</string>
+  <string name="fingerprint_login_title">Логін відбитку пальця</string>
+  <string name="fingerprint_not_recognized">Відбиток пальця не розпізнано. Спробувати ще раз</string>
+  <string name="fingerprint_success">Відбиток пальця розпізнано.</string>
+  <string name="fingerprint_use_pin">Використати ПІН</string>
+  <string name="fingerprint_disable_message">Ви впевнені, що хочете вимкнути можливість входу за допомогою відбитка пальця?</string>
+  <string name="fingerprint_no_fingerprints_added">На цьому пристрої ще не зареєстровані відбитки пальця. Бажаєте зареєструвати відбиток пальця зараз?</string>
+  <string name="fingerprint_key_invalidated_description">Усі відбитки пальців, що зберігаються на цьому пристрої, були змінені, або блокування клавіатури відключено</string>
+  <string name="fingerprint_key_invalidated_brief">Ключі невірні, треба ввести ПІН код.</string>
+  <string name="fingerprint_fatal_error_register_description">За останні 30 хвилин було надто багато невдалих спроб входу. Будь ласка, спробуйте увійти пізніше.</string>
+  <string name="fingerprint_fatal_error_authenticate_description">Було надто багато невдалих спроб входу. Будь ласка, натомість увійдіть, використавши свій ПІН код.</string>
+  <string name="fingerprint_fatal_error_brief">Невідома помилка</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Копіювати адресу</string>
+  <string name="shortcut_receive_copy_long">Скопіювати адресу отримувача в іншу програму</string>
+  <string name="shortcut_receive_qr_short">Показати QR код отримання</string>
+  <string name="shortcut_receive_qr_long">Дивитись QR код, щоб отримати адресу</string>
+  <string name="shortcut_receive_qr_error">Вибачте, під час генерування QR коду стався збій</string>
+  <string name="shortcut_settings_summary">Вкажіть адресу для отримання, коли на панелі запуску довгим натисканням натискаєте на іконку програми, щоб пришвидшити отримання BTC.</string>
+  <!-- CONTACTS -->
+  <string name="contacts_title">Контакти</string>
+  <string name="contacts_loading_failed">Завантаження контактів невдале, будь ласка, спробуйте ще раз.</string>
+  <string name="contacts_pairing_method_title">Додати контакт</string>
+  <string name="contacts_choose_pairing_method">Щоб додати довірений контакт, виберіть метод створення пари, який хочете використати:</string>
+  <string name="contacts_send_link">Відправити посилання</string>
+  <string name="contacts_use_nfc">Використати NFC</string>
+  <string name="contacts_no_contacts_found">Контакти не знайдено</string>
+  <string name="contacts_delete_contact_success">Контакт видалено</string>
+  <string name="contacts_delete_contact_failed">Збій видалення контакту, спробуйте ще раз.</string>
+  <string name="contacts_not_found_error">Контакт не знайдено</string>
+  <string name="contacts_add_contact_failed">Збій додавання контакту, будь ласка, спробуйте ще раз.</string>
+  <string name="contacts_add_contact_success">Контакт успішно додано</string>
+  <string name="contacts_rename_invalid_name">Неправильна назва</string>
+  <string name="contacts_rename_failed">Збій перейменування контакту, будь ласка, спробуйте ще раз.</string>
+  <string name="contacts_rename_success">Контакт успішно перейменовано</string>
+  <string name="contacts_error_getting_messages">Збій отримання повідомлень</string>
+  <string name="contacts_error_sending_payment_request">Стався збій відправки запиту на платіж, будь ласка, спробуйте ще раз.</string>
+  <string name="contacts_success_sending_payment_request">Запит на платіж відправлено</string>
+  <string name="contacts_add_contact_title">Додати контакт</string>
+  <string name="contacts_name_cannot_be_empty">Неправильна назва</string>
+  <string name="contacts_name_field_hint">Назва</string>
+  <string name="contacts_add_button">Додати</string>
+  <string name="contacts_share_invitation">Поділитись запрошенням</string>
+  <string name="contacts_add_are_you_sure">Впевнені, що хочете додати %1$s у довірені контакти?</string>
+  <string name="shortcut_settings_enable">Ярлики панелі запуску</string>
+  <string name="contacts_invite_someone">Запросіть когось</string>
+  <string name="contacts_being_invited">Прийняти запрошення</string>
+  <string name="contacts_who_are_you_inviting_header">Кого ви запрошуєте приєднатись?</string>
+  <string name="contacts_how_are_you_known_header">Яку назву %1$s знаєте ви?</string>
+  <string name="contacts_scan_instructions">%1$s мусить сканувати цей QR код, використовуючи програму Гаманець Blockchain для мобільного.</string>
+  <string name="contacts_sharing_method_header">Як би ви хотіли поділитись цим запрошенням?</string>
+  <string name="contacts_field_error_empty">Не може залишатись пустим</string>
+  <string name="contacts_share_qr">Через QR код (особисто)</string>
+  <string name="contacts_share_link">Через посилання</string>
+  <string name="contacts_scan_qr">Сканувати QR код</string>
+  <string name="contacts_sent_link">Хтось відправив мені посилання</string>
+  <string name="contacts_accept_invite_title">Прийняти запрошення</string>
+  <string name="contacts_sent_link_explanation">Якщо хтось відправив вам посилання, щоб прийняти запит, просто натисніть на посилання.</string>
+  <string name="contacts_detail_title">Я хочу:</string>
+  <string name="contacts_detail_transactions">Транзакції з %1$s:</string>
+  <string name="contacts_detail_transactions_empty">Транзакції не знайдено</string>
+  <string name="contacts_rename">Перейменувати контакт</string>
+  <string name="contacts_delete">Видалити контакт</string>
+  <string name="contacts_send_bitcoin">Попросіть відправити %1$s bitcoin</string>
+  <string name="contacts_request_bitcoin">Запит на bitcoin від %1$s</string>
+  <string name="contacts_invalid_qr">Неправильний QR код</string>
+  <string name="contacts_request_sent">Запит адресата відправлено</string>
+  <string name="contacts_request_just_added">Щойно додано</string>
+  <string name="contacts_request_trusted">Довірені</string>
+  <string name="contacts_delete_message">Впевнені, що хочете видалити цей контакт? Видаливши цей контакт, ви не втратите жодний bitcoin.</string>
+  <string name="contacts_payment_request_title">Запит платежу</string>
+  <string name="contacts_payment_request_send_note">Чому б ви хотіли відправити %1$s bitcoin? Це не є обов\'язковим і буде використовуватися спільно з %1$s.</string>
+  <string name="contacts_payment_request_receive_note">Чому б ви хотіли %1$s відправити bitcoin? Це не є обов\'язковим і буде використовуватися спільно з %1$s.</string>
+  <string name="contacts_payment_request_send_hint">Запуск тапа</string>
+  <string name="contacts_payment_request_receive_hint">Для п\'ятничних напоїв</string>
+  <string name="contacts_payment_request_note_hint">Примітка</string>
+  <string name="contacts_payment_request_send_amount">Скільки ви хочете відправити для %1$s?</string>
+  <string name="contacts_payment_request_receive_amount">Скільки ви бажаєте %1$s , щоб вам відправили? 
+
+Це лише пропозиція: фактична сума може відрізнятися.</string>
+  <string name="contacts_payment_request_amount_hint">Сума</string>
+  <string name="contacts_payment_success_waiting_title">Очікує на %1$s, щоб прийняти</string>
+  <string name="contacts_payment_success_request_sent_title">Запит відправлено</string>
+  <string name="contacts_payment_success_waiting_message">Ваш адресат отримав сповіщення про те, що ви бажаєте відправити йому Bitcoin. Якщо він прийме, ми вас сповістимо і ви зможете завершити транзакцію.</string>
+  <string name="contact_send_request_button">Відправити запит</string>
+  <string name="contacts_transaction_not_found_error">Транзакції не знайдено</string>
+  <string name="contacts_address_sent_success">Адресу успішно відправлено</string>
+  <string name="contacts_address_sent_failed">Збій відправки адреси</string>
+  <string name="contacts_send_address_message">Це відправить адресу до вашого контакту. Продовжити?</string>
+  <string name="contacts_waiting_for_address_message">Ваш адресат поінформовано, що ви хочете відправити йому bitcoin і що вам треба для цього адресу. Як тільки вам відправлять адресу, ми вас сповістимо!</string>
+  <string name="contacts_waiting_for_payment_message">Ваш адресат поінформовано, що ви хочете отримати від нього bitcoin і йому відправлено адресу для переказу. Як тільки вам відправлять bitcoin, ми вас сповістимо!</string>
+  <string name="contacts_digesting_messages_failed">Збій перевірки повідомлень, будь ласка, спробуйте ще раз.</string>
+  <string name="contacts_broadcasting_payment">Інформуємо вас, що ваш контакт відправив вам bitcoin, будь ласка, трохи зачекайте.</string>
+  <string name="contacts_payment_sent_success">Платіж відправлено! Ми сповістили вашого адресата, що ви завершили транзакцію.</string>
+  <string name="contacts_payment_sent_failed_message">Під час сповіщення вашого адресата стався збій. Будь ласка, перевірте свою мережу і спробуйте ще раз.</string>
+  <string name="contacts_too_much_sent">Схоже, ви відправили більше bitcoin, ніж було запитано. Ви можете відправити запит на повернення від вашого контакту, якщо ви хочете. Ми не позначили платіж як завершений.</string>
+  <string name="contacts_too_little_sent">Схоже, ви відправили менше bitcoin, ніж було запитано. Ваш контакт буде, як і раніше, отримувати bitcoin, які ви відправили, але ми не позначили платіж як завершений.</string>
+  <string name="contacts_second_password_prompt">Щоб скористатись цією послугою, вам треба ввести свій другий пароль. Вам треба ввести його лише один раз, щоб використовувати усі функціональні можливості Контактів.</string>
+  <string name="contacts_no_confirmed_contacts_found">Жоден підтверджений контакт не знайдено!</string>
+  <string name="contacts_pending_transaction_delete_success">Транзакцію в очікуванні успішно видалено</string>
+  <string name="contacts_pending_transaction_delete_failure">Збій видалення транзакції в очікуванні</string>
+  <string name="contacts_pending_transaction_decline_success">Відхилення транзакції в очікуванні успішне</string>
+  <string name="contacts_pending_transaction_decline_failure">Збій відхилення транзакції в очікуванні</string>
+  <string name="contacts_pending_transaction_cancel_success">Скасування транзакції в очікуванні успішне</string>
+  <string name="contacts_pending_transaction_cancel_failure">Збій скасування транзакції в очікуванні</string>
+  <string name="contacts_send_complete">Відправлено %1$s для %2$s</string>
+  <string name="contacts_receive_complete">Отримано %1$s від %2$s</string>
+  <string name="contacts_received">Отримано від %1$s</string>
+  <string name="contacts_sent">Відправлено для %1$s</string>
+  <string name="confirm">Підтвердити</string>
+  <string name="pending">Очікує</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Транзакції</string>
+  <string name="contacts_balance_dialog_payment_requested">Запит платежу</string>
+  <string name="contacts_balance_dialog_choose_account_message">Виберіть, куди саме ви хочете отримати свої гроші</string>
+  <!-- SWIPE TO RECEIVE -->
+  <string name="swipe_receive_hint">Пролистайте, щоб отримати</string>
+  <string name="swipe_receive_preference_summary">Вкажіть адресу для отримання, коли проведете пальцем вліво на екрані PIN-коду, щоб пришвидшити отримання коштів.</string>
+  <string name="swipe_receive_address_info">Послідовно буде завантажено п\'ять адрес, після входу в систему потрібно буде показати нові адреси.</string>
+  <string name="swipe_receive_no_addresses">Неможливо завантажити більше адрес прямо зараз. Щоб завантажити більше, увійдіть в програму.</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_fingerprint_title">Вхід за відбитком пальця</string>
+  <string name="onboarding_fingerprint_summary">Використовуйте свій відбиток пальця для входу замість PIN-коду для аутентифікації і доступу до свого гаманця.</string>
+  <string name="onboarding_fingerprint_enable">Увімкнути відбиток пальця</string>
+  <string name="onboarding_complete_later">Я зроблю це пізніше</string>
+  <string name="onboarding_check_inbox_title">Перевірте папку вхідних повідомлень</string>
+  <string name="onboarding_check_inbox_summary">Знайдіть лист від Blockchain і натисніть на посилання у ньому для підтвердження, щоб завершити налаштування гаманця.</string>
+  <string name="onboarding_verify_email">Верифікувати електронну пошту</string>
+  <string name="onboarding_receive_bitcoin">Запитати кошти</string>
+  <string name="onboarding_current_price">Актуальний курс:</string>
+  <string name="onboarding_qr_codes">QR коди</string>
+  <string name="onboarding_scan_address">Сканувати адресу</string>
+  <string name="onboarding_buy_content">Ми працюємо з партнерами-обмінниками у всьому світі, так що ви можете купити bitcoin прямо зі свого гаманця.</string>
+  <string name="onboarding_receive_content">Щоб запитати кошти, відправте адресу свого гаманця другові. Адреса - це набір випадкових букв і цифр, які змінюються для кожної транзакції.</string>
+  <string name="onboarding_qr_codes_content">Адреса може відображатись також у вигляді QR коду. Скануйте QR коди своїх друзів, щоб швидко внести адреси їхніх гаманців.</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Купити Bitcoin</string>
+  <string name="onboarding_get_bitcoin">Отримати Bitcoin</string>
+  <string name="onboarding_get_eth">Отримати Ether</string>
+  <string name="onboarding_complete_title">Ось і зараз!</string>
+  <string name="onboarding_complete_content">Ми будемо тримати вас тут в курсі усіх останніх подій та нових функцій.</string>
+  <string name="onboarding_start_over">Почати з початку</string>
+  <string name="onboarding_skip_all">Прпопустити все</string>
+  <string name="trade_complete">Торгівлю завершено</string>
+  <string name="trade_complete_details">Процес купівлі біткойнів завершено!</string>
+  <string name="view_details">Переглянути деталі</string>
+  <string name="onboarding_available_now">Доступно зараз</string>
+  <string name="onboarding_buy_details">Купуйте біткойни через ваш мобільний гаманець. Це просто та безпечно.</string>
+  <string name="onboarding_buy_performance_warning">Процес купівлі може бути сповільнено на вашому пристрої. Заздалегідь дякуємо за ваше терпіння.</string>
+  <string name="buy_second_password_prompt">Щоб скористатись цією послугою, вам треба ввести свій другий пароль. Щоб користуватися функцією купівлі, вам треба ввести це лише один раз.</string>
+  <!-- 2FA Pairing -->
+  <string name="two_factor_dialog_title">Введіть код двофакторної автентифікації</string>
+  <string name="two_factor_dialog_message_authenticator">Будь ласка, введіть код двофакторної автентифікації зі свого додатку-автентифікатора, щоб продовжити.</string>
+  <string name="two_factor_dialog_message_sms">Ми надіслали вам SMS з кодом двофакторної автентифікації. Будь ласка, введіть його тут.</string>
+  <string name="two_factor_dialog_hint">Код двофакторної автентифікації</string>
+  <string name="two_factor_null_error">Поле для введення коду двофакторної автентифікації не може бути пустим</string>
+  <string name="two_factor_incorrect_error">Неправильний код двофакторної автентифікації</string>
+  <!-- CONFIRM PAYMENT -->
+  <string name="confirm_payment_change_fee">Комісія</string>
+  <string name="confirm_payment_fee_sync_error">Помилка отримання варіантів комісій</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Регулярні</string>
+  <string name="fee_options_priority">Пріоритетна</string>
+  <string name="fee_options_custom">Користувацька</string>
+  <string name="fee_options_regular_time">1+ год</string>
+  <string name="fee_options_priority_time">~0–60 хв</string>
+  <string name="fee_options_custom_warning">Лише для досвідчених користувачів</string>
+  <string name="fee_options_sat_byte_formatted">%1$s sat/b</string>
+  <string name="fee_options_fee_too_low">Низьку комісію не рекомендовано</string>
+  <string name="fee_options_fee_too_high">Невиправдано висока комісія</string>
+  <string name="fee_options_advanced_warning">Цю функцію рекомендовано тільки для досвідчених користувачів. Обираючи користувацьку комісію, ви ризикуєте переплатити або не підтвердити вашу транзакцію.</string>
+  <string name="fee_options_sat_byte_hint">sat/b</string>
+  <string name="fee_options_sat_byte_inline_hint">Звичайна: %1$s, Пріоритетна: %2$s</string>
+  <string name="what_s_this">Що це?</string>
+  <string name="dismiss">Пропустити</string>
+  <!-- ETHEREUM BALANCE -->
+  <string name="eth_default_account_label">Мій Еther гаманець</string>
+  <string name="eth_now_supporting">Вже підтримує Ether</string>
+  <string name="eth_second_password_prompt">Щоб скористатись цією послугою, вам треба ввести свій другий пароль. Щоб налаштувати свій Ether гаманець, вам треба ввести це лише один раз.</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_to_field_helper">Введіть ether адресу або виберіть</string>
+  <string name="eth_to_field_helper_no_dropdown">Ввести ether адресу</string>
+  <string name="eth_invalid_address">Неправильна Ether адреса</string>
+  <string name="eth_support_contract_not_allowed">Контрактові адреси не підтримуються.</string>
+  <string name="eth_support_only_eth">На даний момент ми підтримуємо лише ETH - ви не можете отримувати tokens на цю адресу</string>
+  <string name="eth_unconfirmed_wait">Будь ласка, зачекайте, поки не підтвердиться ваша попередня транзакція</string>
+  <string name="eth_transaction_complete">Транзакцію завершено! Список ваших транзакцій та баланс скоро оновляться, це займе декілька хвилин.
+</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Панель управління</string>
+  <string name="dashboard_time_span_day">День</string>
+  <string name="dashboard_time_span_week">Тиждень</string>
+  <string name="dashboard_time_span_month">Місяць</string>
+  <string name="dashboard_time_span_year">Рік</string>
+  <string name="dashboard_time_span_all_time">Весь час</string>
+  <string name="dashboard_bitcoin_price">Ціна Bitcoin</string>
+  <string name="dashboard_ether_price">Ціна Ether</string>
+  <string name="dashboard_charts_error">Помилка завантаження даних діаграми</string>
+  <string name="dashboard_charts_price_error">Помилка отримання даних про ціну</string>
+  <!-- ETHEREUM ONBOARDING -->
+  <string name="metadata_load_failure">Помилка завантаження гаманця з повною функціональністю. Послуга може бути тимчасово недоступною.</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_transaction_fee">Комісія за транзакцію</string>
+  <string name="buy_sell_overview_denied_button">Спробувати ще раз</string>
+  <string name="buy_sell_detail_transaction_fee">Комісія за транзакцію</string>
+  <string name="buy_sell_detail_amount">Сума</string>
+  <string name="buy_sell_confirmation_transaction_fee">Комісія за транзакцію</string>
+  <string name="buy_sell_confirmation_amount">Сума</string>
+  <string name="buy_sell_confirmation_bank">Переказ</string>
+</resources>
