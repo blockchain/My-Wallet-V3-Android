@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>प्रथम शब्द</item>
+    <item>दूसरा शब्द</item>
+    <item>तीसरा शब्द</item>
+    <item>चौथा शब्द</item>
+    <item>पांचवें शब्द</item>
+    <item>छठे शब्द</item>
+    <item>सातवें शब्द</item>
+    <item>आठवें शब्द</item>
+    <item>नौवें शब्द</item>
+    <item>दसवें शब्द</item>
+    <item>ग्यारहवें शब्द</item>
+    <item>बारहवें शब्द</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">नवीनीकरण</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">सेटिंग्स</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">भेजें</string>
+  <string name="receive_bitcoin">अनुरोध करें</string>
+  <string name="overview">लेन-देन</string>
+  <!-- (No Commment) -->
+  <string name="cancel">रद्द करें</string>
+  <!-- (No Commment) -->
+  <string name="yes">हाँ</string>
+  <!-- (No Commment) -->
+  <string name="no">नहीं</string>
+  <string name="done">किया</string>
+  <string name="YESTERDAY">कल</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">तबादला</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">क्लिपबोर्ड पर प्रतिलिपि बनाई गई</string>
+  <string name="options_id">बटुआ ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">स्थानीय मुद्रा</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin इकाई</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">सेवा की शर्तें</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">गोपनीयता नीति</string>
+  <string name="invalid_email">अमान्य ईमेल पता</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">अमान्य बटुआ ID</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">पासवर्ड मेल नहीं खाते हैं</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">PIN दर्ज करें</string>
+  <string name="dialog_continue">जारी रखें</string>
+  <string name="log_in">लॉग इन</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">स्वत: बाँधना</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">दिखाएँ बाँधना एक QR कोड, एक वर्ग काले &amp; सफेद बारकोड प्रकट करने के लिए कोड क्लिक करें। अपने कैमरे के साथ कोड स्कैन करें।</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">बटुआ ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">मेरी Bitcoin बटुआ</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">धन की वसूली</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">तुम हमेशा जोड़ी होना चाहिए या यदि आपके पास पहुँच आपके बटुए ID और पासवर्ड के लिए लॉगिन। आपका धन पुनर्प्राप्त करना एक नया id के बटुए बनाएगा आप जारी रखना चाहेंगे?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">पासवर्ड</string>
+  <!-- (No Commment) -->
+  <string name="email">ईमेल</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">बटुआ बनाएँ</string>
+  <string name="new_wallet">नया वॉलेट</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">कमजोर</string>
+  <string name="strength_medium">नियमित रूप से</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">सशक्त</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">सामान्य</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">जारी रखें</string>
+  <string name="total">कुल</string>
+  <string name="invalid_bitcoin_address">अमान्य बिटकॉइन पता</string>
+  <string name="invalid_amount">अमान्य राशि</string>
+  <string name="insufficient_funds">अपर्याप्त धनराशि</string>
+  <!-- (No Commment) -->
+  <string name="support">समर्थन</string>
+  <!-- (No Commment) -->
+  <string name="from">से</string>
+  <!-- (No Commment) -->
+  <string name="to">करने के लिए</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">भुगतान की पुष्टि करें</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">आयातित पतों</string>
+  <string name="ok_cap">ठीक है</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">PIN परिवर्तित करे</string>
+  <string name="description">वर्णन</string>
+  <!-- (No Commment) -->
+  <string name="name">नाम</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">सहेजें</string>
+  <string name="next">अगला</string>
+  <string name="scan_qr">क्यूआर कोड स्कैन करें</string>
+  <string name="confirm_password">पासवर्ड की पुष्टि करें</string>
+  <string name="transaction_occur_when_bitcoin">जब आप बिटकॉइन प्राप्त करते और भेजते हैं तो लेनदेन होते हैं।</string>
+  <string name="transaction_occur_when_eth">जब आप ईथर प्राप्त करते और भेजते हैं तो लेनदेन होते हैं।</string>
+  <string name="transaction_occur_when_bitcoin_cash">जब आप बिटकॉइन कैश प्राप्त करते और भेजते हैं तो लेनदेन होते हैं।</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">आर्काइव्ड</string>
+  <string name="total_funds">सभी</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">नया पता बनाएँ</string>
+  <!-- (No Commment) -->
+  <string name="label">लेबल</string>
+  <!-- (No Commment) -->
+  <string name="edit">संपादित करें</string>
+  <!-- (No Commment) -->
+  <string name="warning">चेतावनी</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">सार्वजनिक कुंजी विस्तारित</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">पते</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">अपने xPub साझा दूसरों अपने ट्रांजे़क्शन इतिहास ट्रैक करने के लिए अधिकृत। अधिकृत व्यक्तियों आप अपने बटुए तक पहुंचने से बाधित करने में सक्षम हो सकता है के रूप में, केवल अपने xPub पर भरोसा है आप लोगों के साथ साझा।</string>
+  <!-- (No Commment) -->
+  <string name="archive">पुरालेख</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Unarchive</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">निजी कुंजी आवश्यक</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">केवल घड़ी</string>
+  <!-- (No Commment) -->
+  <string name="success">सफलता</string>
+  <!-- (No Commment) -->
+  <string name="default_label">डिफ़ॉल्ट</string>
+  <string name="try_again">दोबारा प्रयास करें</string>
+  <string name="amount">राशि</string>
+  <!-- (No Commment) -->
+  <string name="not_now">अभी नहीं</string>
+  <!-- (No Commment) -->
+  <string name="logout">लॉग आउट</string>
+  <!-- (No Commment) -->
+  <string name="update">अद्यतन</string>
+  <!-- (No Commment) -->
+  <string name="verify">सत्यापित करें</string>
+  <string name="resend">फिर से भेजें</string>
+  <!-- (No Commment) -->
+  <string name="allow">अनुमति दें</string>
+  <!-- (No Commment) -->
+  <string name="block">ब्लॉक</string>
+  <!-- (No Commment) -->
+  <string name="security">सुरक्षा</string>
+  <!-- (No Commment) -->
+  <string name="enable">सक्षम करें</string>
+  <!-- (No Commment) -->
+  <string name="disable">अक्षम करें</string>
+  <!-- (No Commment) -->
+  <string name="sms">एसएमएस</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google प्रमाणक</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-चरणीय सत् यापन</string>
+  <!-- (No Commment) -->
+  <string name="change_password">पासवर्ड परिवर्तित करें</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">ईमेल सूचनाएँ</string>
+  <string name="email_notifications_summary">आपको बिटकॉइन प्राप्त होने पर सूचित किए जाएं।</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">नया पासवर्ड</string>
+  <!-- (No Commment) -->
+  <string name="preferences">वरीयताएँ</string>
+  <!-- (No Commment) -->
+  <string name="information">जानकारी</string>
+  <string name="learn_more">अधिक जानें</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin भुगतान अनुरोध</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">चेतावनी</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">आपके द्वारा चयनित पिन बेहद आम है और आसानी से 3 की कोशिश के भीतर अपने फ़ोन करने के लिए उपयोग के साथ किसी के द्वारा अनुमान लगाया जा सकता। तुम वैसे भी इस पिन का उपयोग करना चाहते हैं?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">फिर कोशिश करो</string>
+  <string name="common_pin_dialog_continue">जारी रखें</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">यदि आप इस बटुआ भूल जाओ और अधिक शुरू करने के लिए चाहते हैं, \'बटुआ भूल\' दबाएँ।</string>
+  <string name="go_back">पीछे जाएं</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">लेन-देन</string>
+  <string name="transaction_detail_date">तारीख</string>
+  <string name="transaction_detail_status">स्थिति</string>
+  <string name="transaction_details_unknown">अज्ञात</string>
+  <string name="security_centre_add_email_title">ईमेल पता</string>
+  <string name="security_centre_add_email_positive_button">जोड़ें</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">बैकअप वाक्यांश</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">पते की प्रतिलिपि बनाएँ</string>
+  <string name="contacts_name_field_hint">नाम</string>
+  <string name="contacts_add_button">जोड़ें</string>
+  <string name="contacts_payment_request_amount_hint">राशि</string>
+  <string name="contacts_receiving_cancelled">रद्द कर दिया गया</string>
+  <string name="pending">लंबित</string>
+  <!-- (No Commment) -->
+  <string name="transactions">लेन-देन</string>
+  <string name="contacts_balance_dialog_accept">स्वीकार करें</string>
+  <string name="onboarding_complete_later">मैं यह बाद में करूँगा</string>
+  <string name="onboarding_receive_bitcoin">पैसों का अनुरोध करें</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">बिटकॉइन खरीदें</string>
+  <string name="onboarding_buy_and_sell_bitcoin">बिटकॉइन खरादें और बेचें</string>
+  <string name="view_details">विवरण देखें</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">नियमित रूप से</string>
+  <string name="fee_options_priority">प्राथमिकता</string>
+  <string name="ether">ईथर</string>
+  <string name="bitcoin">बिटकॉइन</string>
+  <string name="eth_invalid_address">अमान्य ईथर पता</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">डैशबोर्ड</string>
+  <string name="dashboard_time_span_day">दिन</string>
+  <string name="dashboard_time_span_week">सप्ताह</string>
+  <string name="dashboard_time_span_month">महीना</string>
+  <string name="dashboard_time_span_year">वर्ष</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">शुरू करें</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">एक्सचेंज</string>
+  <string name="shapeshift_btc">बिटकॉइन</string>
+  <string name="shapeshift_eth">ईथर</string>
+  <string name="shapeshift_bch">बिटकॉइन कैश</string>
+  <string name="shapeshift_confirmation_terms">नियमों और शर्तों से सहमत हूँ</string>
+  <string name="shapeshift_exchange_rate">एक्सचेंज दर</string>
+  <string name="shapeshift_complete_title">पूर्ण</string>
+  <string name="shapeshift_failed_title">विफल</string>
+  <string name="shapeshift_refunded_title">रीफंड किया गया</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">ऑर्डर आईडी</string>
+  <string name="shapeshift_in_progress_summary">एक्सचेंज प्रगति में है</string>
+  <string name="bch_imported_addresses">इम्पोर्ट किए गए बिटकॉइन कैश पते</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">खरीदें</string>
+  <string name="buy_sell_sell">बेचें</string>
+  <string name="buy_sell_overview_denied_button">फिर कोशिश करो</string>
+  <string name="buy_sell_state_processing">प्रोसेस हो रहा है</string>
+  <string name="buy_sell_state_completed">पूरा किया गया</string>
+  <string name="buy_sell_state_cancelled">रद्द कर दिया गया</string>
+  <string name="buy_sell_state_rejected">अस्वीकृत</string>
+  <string name="buy_sell_state_expired">मियाद समाप्त</string>
+  <string name="buy_sell_detail_exchange_rate">एक्सचेंज दर</string>
+  <string name="buy_sell_detail_amount">राशि</string>
+  <string name="buy_sell_detail_payment_fee">भुगतान शुल्क</string>
+  <string name="buy_sell_detail_total">कुल लागत</string>
+  <string name="buy_sell_review_status_in_rejected">अस्वीकृत</string>
+  <string name="buy_sell_review_status_in_failed">विफल</string>
+  <string name="buy_sell_review_status_in_expired">मियाद समाप्त</string>
+  <string name="buy_sell_review_status_in_completed">पूरा किया गया</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">भुगतान पद्धति</string>
+  <string name="buy_sell_confirmation_amount">राशि</string>
+  <string name="buy_sell_confirmation_payment_fee">भुगतान शुल्क</string>
+  <string name="buy_sell_confirmation_total_cost">कुल लागत</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">अपने ईमेल पते की पुष्टि करें</string>
+  <string name="submit">जमा करें</string>
+  <string name="buy_sell_add_account_subtitle">बैंक खाता जोड़ें</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">खाता चुनें</string>
+  <string name="buy_sell_account_selection_delete_message">क्या आप वाकई इस बैंक खाते को हटाना चाहते हैं?</string>
+  <string name="buy_sell_add_address_city_hint">शहर</string>
+  <string name="buy_sell_add_address_post_code_hint">पोस्टल कोड</string>
+  <string name="buy_sell_add_address_post_country_hint">देश</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">पुनरावर्ती ऑर्डर</string>
+  <string name="buy_sell_recurring_order_frequency_title">आवृति</string>
+  <string name="buy_sell_recurring_order_duration_title">अवधि</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">जब तक कि आप रद्द न करें</string>
+</resources>
