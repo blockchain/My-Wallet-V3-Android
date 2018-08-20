@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>המילה הראשונה</item>
+    <item>המילה השנייה</item>
+    <item>המילה השלישית</item>
+    <item>. מילה רביעית</item>
+    <item>מילה חמישית</item>
+    <item>המילה השישית</item>
+    <item>המילה השביעי</item>
+    <item>המילה השמיני</item>
+    <item>המילה התשיעית</item>
+    <item>המילה העשירי</item>
+    <item>המילה האחת עשרה</item>
+    <item>המילה השתים עשרה</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">שדרוג</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">הגדרות</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">שלח</string>
+  <string name="overview">תנועות</string>
+  <!-- (No Commment) -->
+  <string name="cancel">ביטול</string>
+  <!-- (No Commment) -->
+  <string name="yes">כן</string>
+  <!-- (No Commment) -->
+  <string name="no">לא</string>
+  <string name="done">עשיתי</string>
+  <string name="YESTERDAY">אתמול</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">הועבר</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">יועתק אל הלוח</string>
+  <string name="options_id">מזהה את הארנק</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">מטבע מקומי</string>
+  <!-- (No Commment) -->
+  <string name="options_units">יחידת ביטקוין</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">תנאי השירות</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">מדיניות פרטיות</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">מזהה את הארנק לא חוקי</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">הסיסמאות לא תואמות</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">הזן את מספר הזיהוי האישי שלך</string>
+  <string name="dialog_continue">המשך</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">זיווג אוטומטי</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">לחץ על הצג קוד השיוך לחשוף קוד QR, ברקוד &amp; מרובע שחור לבן. לסרוק את הקוד עם המצלמה שלך.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">מזהה את הארנק</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">הארנק שלי ביטקוין</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">לשחזר קרנות</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">עליך תמיד זוג או להיכנס למערכת, אם יש לך גישה אל הארנק המזהה והסיסמה שלך. שחזור כספים שלך יהיה ליצור מזהה את הארנק החדש האם ברצונך להמשיך?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">סיסמה</string>
+  <!-- (No Commment) -->
+  <string name="email">דוא</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">ליצור את הארנק</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">חלש</string>
+  <string name="strength_medium">רגיל</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">סטרונג</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">רגיל</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">המשך</string>
+  <!-- (No Commment) -->
+  <string name="support">תמיכה</string>
+  <!-- (No Commment) -->
+  <string name="from">מ</string>
+  <!-- (No Commment) -->
+  <string name="to">כדי</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">לאשר תשלום</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">כתובות מיובאות</string>
+  <string name="ok_cap">אוקיי</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">שינוי PIN</string>
+  <!-- (No Commment) -->
+  <string name="name">שם</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">שמור</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">בארכיון</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">ליצור כתובת חדשה</string>
+  <!-- (No Commment) -->
+  <string name="label">תווית</string>
+  <!-- (No Commment) -->
+  <string name="edit">עריכה</string>
+  <!-- (No Commment) -->
+  <string name="warning">אזהרה</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">מורחב מפתח ציבורי</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">כתובת</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">שיתוף xPub שלך מסמיך אחרים כדי לעקוב אחר ההיסטוריה התנועה שלך. כפי ה\"גורמים עשוי להיות מסוגל לשבש את מלגשת אל הארנק שלך, לשתף רק xPub שלך עם אנשים שאתה בוטח.</string>
+  <!-- (No Commment) -->
+  <string name="archive">ארכיון</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Unarchive</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">מפתח פרטי הדרושים</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Watch בלבד</string>
+  <!-- (No Commment) -->
+  <string name="success">הצלחה</string>
+  <!-- (No Commment) -->
+  <string name="default_label">ברירת מחדל</string>
+  <!-- (No Commment) -->
+  <string name="not_now">לא עכשיו</string>
+  <!-- (No Commment) -->
+  <string name="logout">יציאה מהמערכת</string>
+  <!-- (No Commment) -->
+  <string name="update">עדכון</string>
+  <!-- (No Commment) -->
+  <string name="verify">ודא</string>
+  <!-- (No Commment) -->
+  <string name="allow">לאפשר</string>
+  <!-- (No Commment) -->
+  <string name="block">בלוק</string>
+  <!-- (No Commment) -->
+  <string name="security">אבטחה</string>
+  <!-- (No Commment) -->
+  <string name="enable">לאפשר</string>
+  <!-- (No Commment) -->
+  <string name="disable">בטל</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Authenticator</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">אימות דו-שלבי</string>
+  <!-- (No Commment) -->
+  <string name="change_password">שינוי סיסמה</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">הודעות דוא</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">סיסמה חדשה</string>
+  <!-- (No Commment) -->
+  <string name="preferences">העדפות</string>
+  <!-- (No Commment) -->
+  <string name="information">מידע</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">בקשתכם לתשלום ביטקוין</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">אזהרה</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">ה-PIN שבחרת נפוץ מאוד, אולי יהיה לנחש בקלות על ידי מישהו עם גישה לטלפון שלך בתוך 3 מנסה. האם ברצונך להשתמש הסיכה הזו בכל מקרה?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">נסה שוב</string>
+  <string name="common_pin_dialog_continue">המשך</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">אם תרצה לשכוח את הארנק הזה ולהתחיל מחדש, הקש \"שכח את הארנק\".</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">עסקת</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">הביטוי גיבוי</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">העתק כתובת</string>
+  <string name="contacts_name_field_hint">שם</string>
+  <!-- (No Commment) -->
+  <string name="transactions">תנועות</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">רגיל</string>
+  <string name="buy_sell_overview_denied_button">נסה שוב</string>
+</resources>
