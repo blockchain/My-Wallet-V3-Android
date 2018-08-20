@@ -55,7 +55,7 @@ class KycMobileEntryPresenter(
             view.phoneNumber
                 .doOnError(Timber::e)
                 .subscribeBy(
-                    onNext = { enableButtonIfComplete(it) },
+                    onNext = { enableButtonIfComplete(it.sanitizePhoneNumber()) },
                     onError = { view.finishPage() }
                 )
     }
@@ -89,7 +89,7 @@ class KycMobileEntryPresenter(
 
     private fun enableButtonIfComplete(phoneNumber: String) {
         // 5 is the minimum phone number length + area code + "+" symbol
-        view.setButtonEnabled(phoneNumber.length > 9)
+        view.setButtonEnabled(phoneNumber.length >= 9)
     }
 
     private fun String.sanitizePhoneNumber(): String = "+${this.replace("[^\\d.]".toRegex(), "")}"

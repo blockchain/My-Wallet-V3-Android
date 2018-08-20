@@ -168,7 +168,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
             .doOnNext { updateProgress(it, kycStep) }
 
     // 5 is the minimum phone number length + area code + "+" symbol
-    private fun mapToCompleted(text: String): Boolean = text.length > 9
+    private fun mapToCompleted(text: String): Boolean = text.length >= 9
 
     private fun updateProgress(stepCompleted: Boolean, kycStep: KycStep) {
         if (stepCompleted) {
