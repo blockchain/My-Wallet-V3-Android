@@ -76,6 +76,8 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation Libraries.googlePlaces
+    // Utils
+    implementation Libraries.libPhoneNumber
     // Navigation
     implementation Libraries.navigationControllerCore
     implementation Libraries.navigationControllerFragments

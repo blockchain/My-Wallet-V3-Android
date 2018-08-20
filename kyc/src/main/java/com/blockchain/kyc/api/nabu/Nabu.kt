@@ -1,6 +1,7 @@
 package com.blockchain.kyc.api.nabu
 
 import com.blockchain.kyc.models.nabu.AddAddressRequest
+import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.Address
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
@@ -83,6 +84,13 @@ internal interface Nabu {
     fun addAddress(
         @Url url: String,
         @Body address: AddAddressRequest,
+        @Header("authorization") authorization: String
+    ): Completable
+
+    @PUT
+    fun addMobileNumber(
+        @Url url: String,
+        @Body mobileNumber: AddMobileNumberRequest,
         @Header("authorization") authorization: String
     ): Completable
 }

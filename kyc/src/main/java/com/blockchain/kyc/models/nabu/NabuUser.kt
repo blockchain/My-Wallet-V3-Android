@@ -50,6 +50,8 @@ data class AddAddressRequest(
     }
 }
 
+data class AddMobileNumberRequest(@field:Json(name = "mobile") val phoneNumber: String)
+
 sealed class KycState {
     object None : KycState()
     object Pending : KycState()

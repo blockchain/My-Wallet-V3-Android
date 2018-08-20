@@ -48,4 +48,11 @@
     <string name="kyc_address_address_country_hint">Country</string>
     <string name="kyc_address_google_not_available">Google Play Services are not available on this device.</string>
     <string name="kyc_address_error_saving">Error saving address, please try again</string>
+
+    <!-- Phone Number -->
+    <string name="kyc_phone_number_title">Verify Your Device</string>
+    <string name="kyc_phone_number_message">Confirm your device to secure your wallet.</string>
+    <string name="kyc_phone_number_hint_focused">Your Mobile Number</string>
+    <string name="kyc_phone_number_hint_unfocused">+1 2345 678 910</string>
+    <string name="kyc_phone_number_error_saving_number">Error saving mobile number, please try again</string>
 </resources>

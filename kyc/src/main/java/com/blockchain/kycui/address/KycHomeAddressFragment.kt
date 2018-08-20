@@ -108,8 +108,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
     }
 
     override fun continueSignUp() {
-        // TODO: Navigate to the phone number fragment
-        toast("Continue flow")
+        findNavController(this).navigate(R.id.kycPhoneNumberFragment)
     }
 
     private fun displayCountryDialog() {

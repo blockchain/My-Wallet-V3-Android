@@ -243,6 +243,35 @@ class NabuDataManagerTest {
     }
 
     @Test
+    fun addMobileNumber() {
+        // Arrange
+        val mobileNumber = "MOBILE_NUMBER"
+        val offlineToken = NabuOfflineTokenResponse("", "")
+        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
+        whenever(nabuTokenStore.getAccessToken())
+            .thenReturn(Observable.just(Optional.Some(sessionToken)))
+        whenever(
+            nabuService.addMobileNumber(
+                mobileNumber = mobileNumber,
+                sessionToken = sessionToken.token
+            )
+        ).thenReturn(Completable.complete())
+        // Act
+        val testObserver = subject.addMobileNumber(
+            offlineToken,
+            mobileNumber
+        ).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        verify(nabuService).addMobileNumber(
+            mobileNumber = mobileNumber,
+            sessionToken = sessionToken.token
+        )
+    }
+
+    @Test
     fun getCountriesList() {
         // Arrange
         val countriesList = listOf(

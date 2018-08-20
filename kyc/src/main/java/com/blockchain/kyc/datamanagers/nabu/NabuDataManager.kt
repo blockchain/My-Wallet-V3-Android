@@ -108,6 +108,16 @@ class NabuDataManager(
         ).toSingleDefault(Any())
     }.ignoreElement()
 
+    internal fun addMobileNumber(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        mobileNumber: String
+    ): Completable = authenticate(offlineTokenResponse) {
+        nabuService.addMobileNumber(
+            mobileNumber = mobileNumber,
+            sessionToken = it.token
+        ).toSingleDefault(Any())
+    }.ignoreElement()
+
     /**
      * Invalidates the [NabuSessionTokenStore] so that on logging out or switching accounts, no data
      * is persisted accidentally.

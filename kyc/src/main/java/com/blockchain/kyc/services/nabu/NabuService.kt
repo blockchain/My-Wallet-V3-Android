@@ -4,11 +4,13 @@ import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
+import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.AddAddressRequest
+import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
@@ -124,6 +126,16 @@ class NabuService(
             countryCode,
             postCode
         ),
+        sessionToken
+    ).wrapErrorMessage()
+
+    internal fun addMobileNumber(
+        path: String = apiPath + NABU_PUT_MOBILE,
+        mobileNumber: String,
+        sessionToken: String
+    ): Completable = service.addMobileNumber(
+        path,
+        AddMobileNumberRequest(mobileNumber),
         sessionToken
     ).wrapErrorMessage()
 

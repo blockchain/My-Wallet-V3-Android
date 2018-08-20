@@ -25,18 +25,25 @@
     <fragment
         android:id="@+id/kycProfileFragment"
         android:name="com.blockchain.kycui.profile.KycProfileFragment"
-        android:label="KycProfileFragment" />
+        android:label="KycProfileFragment" >
+        <action
+            android:id="@+id/action_kycProfileFragment_to_kycHomeAddressFragment"
+            app:destination="@id/kycHomeAddressFragment" />
+    </fragment>
     <fragment
         android:id="@+id/kycInvalidCountryFragment"
         android:name="com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment"
-        android:label="KycInvalidCountryFragment" >
-        <action
-            android:id="@+id/action_kycProfileFragment_to_kycHomeAddress"
-            app:destination="@id/kycHomeAddressFragment" />
-    </fragment>
+        android:label="KycInvalidCountryFragment" />
     <fragment
         android:id="@+id/kycHomeAddressFragment"
         android:name="com.blockchain.kycui.address.KycHomeAddressFragment"
         android:label="KycHomeAddress" >
+        <action
+            android:id="@+id/action_kycHomeAddressFragment_to_kycPhoneNumberFragment"
+            app:destination="@id/kycPhoneNumberFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/kycPhoneNumberFragment"
+        android:name="com.blockchain.kycui.mobile.entry.KycMobileEntryFragment"
+        android:label="KycPhoneNumberFragment" />
 </navigation>

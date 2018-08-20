@@ -10,6 +10,7 @@ import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.kycui.profile.models.ProfileModel
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
@@ -35,34 +36,35 @@ class KycProfilePresenter(
         check(!view.lastName.isEmpty()) { "lastName is empty" }
         check(view.dateOfBirth != null) { "dateOfBirth is null" }
 
-        metadataManager.fetchMetadata(USER_CREDENTIALS_METADATA_NODE)
-            .subscribeOn(Schedulers.io())
-            .flatMapCompletable { optionalToken ->
-                if (optionalToken.isPresent) {
-                    createBasicUser(
-                        optionalToken.get()
-                            .toMoshiKotlinObject<NabuCredentialsMetadata>()
-                            .mapFromMetadata()
-                    )
-                } else {
-                    createUserAndStoreInMetadata()
+        compositeDisposable +=
+            metadataManager.fetchMetadata(USER_CREDENTIALS_METADATA_NODE)
+                .subscribeOn(Schedulers.io())
+                .flatMapCompletable { optionalToken ->
+                    if (optionalToken.isPresent) {
+                        createBasicUser(
+                            optionalToken.get()
+                                .toMoshiKotlinObject<NabuCredentialsMetadata>()
+                                .mapFromMetadata()
+                        )
+                    } else {
+                        createUserAndStoreInMetadata()
+                    }
                 }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { view.showProgressDialog() }
-            .doOnTerminate { view.dismissProgressDialog() }
-            .doOnError(Timber::e)
-            .subscribeBy(
-                onComplete = {
-                    ProfileModel(
-                        view.firstName,
-                        view.lastName,
-                        view.dateOfBirth ?: throw IllegalStateException("DoB has not been set"),
-                        view.countryCode
-                    ).run { view.continueSignUp(this) }
-                },
-                onError = { view.showErrorToast(R.string.kyc_profile_error) }
-            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { view.showProgressDialog() }
+                .doOnTerminate { view.dismissProgressDialog() }
+                .doOnError(Timber::e)
+                .subscribeBy(
+                    onComplete = {
+                        ProfileModel(
+                            view.firstName,
+                            view.lastName,
+                            view.dateOfBirth ?: throw IllegalStateException("DoB has not been set"),
+                            view.countryCode
+                        ).run { view.continueSignUp(this) }
+                    },
+                    onError = { view.showErrorToast(R.string.kyc_profile_error) }
+                )
     }
 
     private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.createUserId()

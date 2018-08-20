@@ -4,9 +4,11 @@ import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
+import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
 import com.blockchain.kyc.models.nabu.AddAddressRequest
+import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.NabuBasicUser
@@ -277,6 +279,38 @@ class NabuServiceTest {
         addressRequest.address.state `should equal` state
         addressRequest.address.countryCode `should equal` countryCode
         addressRequest.address.postCode `should equal` postCode
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
+    fun addMobileNumber() {
+        // Arrange
+        val sessionToken = "SESSION_TOKEN"
+        val mobileNumber = "MOBILE_NUMBER"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody("")
+        )
+        // Act
+        val testObserver = subject.addMobileNumber(
+            path = NABU_PUT_MOBILE,
+            sessionToken = sessionToken,
+            mobileNumber = mobileNumber
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_PUT_MOBILE"
+        // Check Body
+        val requestString = request.requestToString()
+        val adapter = moshi.adapter(AddMobileNumberRequest::class.java)
+        val addMobileNumberRequest = adapter.fromJson(requestString)!!
+        addMobileNumberRequest.phoneNumber `should equal to` mobileNumber
         // Check Header
         request.headers.get("authorization") `should equal` sessionToken
     }

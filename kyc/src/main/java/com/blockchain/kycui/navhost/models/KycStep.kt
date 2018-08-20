@@ -14,8 +14,9 @@ enum class KycStep(val relativeValue: Int) {
     State(5),
     ZipCode(5),
     MobileNumberPage(10),
-    MobileNumber(10),
-    MobileVerified(10),
+    MobileNumberEntered(10),
+    MobileVerifiedPage(10),
+    VerificationCodeEntered(10),
     OnfidoSplashPage(10),
     CompletePage(30)
 }

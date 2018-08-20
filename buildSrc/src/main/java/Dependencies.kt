@@ -51,6 +51,7 @@ object Versions {
     const val spongycastle = "1.53.0.0"
     const val jjwt = "0.9.0"
     const val lambdaWorks = "1.0.0"
+    const val libPhoneNumber = "8.9.10"
     // Keep at 1.3 to match Android
     const val commonsCodec = "1.3"
     const val commonsLang = "3.4"
@@ -174,6 +175,7 @@ object Libraries {
     const val findbugs = "com.google.code.findbugs:jsr305:${Versions.findbugs}"
     const val guava = "com.google.guava:guava:${Versions.guava}"
     const val dexter = "com.karumi:dexter:${Versions.dexter}"
+    const val libPhoneNumber = "io.michaelrocks:libphonenumber-android:${Versions.libPhoneNumber}"
 
     // Custom Views
     const val charts = "com.github.PhilJay:MPAndroidChart:v${Versions.charts}"
