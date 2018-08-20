@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>πρώτη λέξη</item>
+    <item>δεύτερη λέξη</item>
+    <item>Τρίτη λέξη</item>
+    <item>τέταρτη λέξη</item>
+    <item>Πέμπτη λέξη</item>
+    <item>έκτη λέξη</item>
+    <item>έβδομη λέξη</item>
+    <item>όγδοη λέξη</item>
+    <item>ένατη λέξη</item>
+    <item>δέκατη λέξη</item>
+    <item>λέξης ενδέκατο</item>
+    <item>δωδέκατη λέξη</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Αναβάθμιση</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Ρυθμίσεις</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Αποστολή</string>
+  <string name="receive_bitcoin">Αίτημα</string>
+  <string name="overview">Συναλλαγές</string>
+  <!-- (No Commment) -->
+  <string name="cancel">\"Άκυρο\"</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ναι</string>
+  <!-- (No Commment) -->
+  <string name="no">Όχι</string>
+  <string name="done">Γίνει</string>
+  <string name="YESTERDAY">Χθες</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Μεταφέρονται</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Αντιγραφή στο Πρόχειρο</string>
+  <string name="options_id">Πορτοφόλι ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Τοπικό νόμισμα</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin μονάδα</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Όροι παροχής υπηρεσιών</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Πολιτική προστασίας προσωπικών δεδομένων</string>
+  <string name="invalid_email">Μη έγκυρη διεύθυνση email</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Μη έγκυρο αναγνωριστικό πορτοφόλι</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Κωδικοί πρόσβασης δεν ταιριάζουν</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Εισαγάγετε το PIN</string>
+  <string name="dialog_continue">Συνεχίστε</string>
+  <string name="log_in">Σύνδεση</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Αυτόματη αντιστοίχιση</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Κάντε κλικ στην επιλογή Εμφάνιση αντιστοίχιση κώδικα για να αποκαλύψει ένα κώδικα QR, ένα λευκό τετράγωνο μαύρο &amp; barcode. Σαρώστε τον κωδικό με τη φωτογραφική μηχανή σας.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Πορτοφόλι ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Το πορτοφόλι μου Bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Ανάκτηση κεφαλαίων</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Πάντα πρέπει να ζεύγος ή συνδεθείτε αν έχετε πρόσβαση στο πορτοφόλι ID και τον κωδικό σας. Ανάκτησης των κεφαλαίων σας θα δημιουργήσει ένα νέο αναγνωριστικό πορτοφόλι. Θέλετε να συνεχίσετε;</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Κωδικός πρόσβασης</string>
+  <!-- (No Commment) -->
+  <string name="email">Ηλεκτρονικό ταχυδρομείο</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Δημιουργία πορτοφόλι</string>
+  <string name="new_wallet">Νέο Πορτοφόλι</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Αδύναμη</string>
+  <string name="strength_medium">Τακτική</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Ισχυρή</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Κανονική</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Συνεχίστε</string>
+  <string name="total">Σύνολο</string>
+  <string name="invalid_bitcoin_address">Μη έγκυρη διεύθυνση Bitcoin</string>
+  <string name="invalid_amount">Μη έγκυρο ποσό</string>
+  <string name="insufficient_funds">Ανεπαρκή κεφάλαια</string>
+  <!-- (No Commment) -->
+  <string name="support">Υποστήριξη</string>
+  <!-- (No Commment) -->
+  <string name="from">από</string>
+  <!-- (No Commment) -->
+  <string name="to">Να</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Επιβεβαιώσετε την πληρωμή</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Εισηγμένες διευθύνσεις</string>
+  <string name="ok_cap">Ok</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Αλλαγή PIN</string>
+  <string name="description">Περιγραφή</string>
+  <!-- (No Commment) -->
+  <string name="name">Όνομα</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Αποθήκευση</string>
+  <string name="next">Επόμενο</string>
+  <string name="scan_qr">Σάρωση Κωδικού QR</string>
+  <string name="confirm_password">Επιβεβαίωση Κωδικού Πρόσβασης</string>
+  <string name="transaction_occur_when_bitcoin">Οι συναλλαγές εμφανίζονται όταν λαμβάνετε και στέλνετε bitcoin.</string>
+  <string name="transaction_occur_when_eth">Οι συναλλαγές εμφανίζονται όταν λαμβάνετε και στέλνετε ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Οι συναλλαγές εμφανίζονται όταν λαμβάνετε και στέλνετε bitcoin cash.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Αρχειοθετούνται</string>
+  <string name="total_funds">Όλα</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Δημιουργία νέας διεύθυνσης</string>
+  <!-- (No Commment) -->
+  <string name="label">Ετικέτα</string>
+  <!-- (No Commment) -->
+  <string name="edit">Επεξεργασία</string>
+  <!-- (No Commment) -->
+  <string name="warning">Προειδοποίηση</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Επεκταθεί δημόσιο κλειδί</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Διεύθυνση</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Κοινή χρήση xPub σας εξουσιοδοτεί άλλους για να παρακολουθείτε το ιστορικό συναλλαγών σου. Καθώς και εξουσιοδοτημένα πρόσωπα μπορεί να είναι σε θέση να διαταράξει σας από την πρόσβαση στο πορτοφόλι σας, μοιράζονται μόνο σας xPub με ανθρώπους που εμπιστεύεστε.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Αρχείο</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Αφαιρέσετε</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Ιδιωτικού κλειδιού απαιτείται</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Παρακολουθήσετε μόνο</string>
+  <!-- (No Commment) -->
+  <string name="success">Επιτυχία</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Προεπιλογή</string>
+  <string name="try_again">Προσπάθεια ξανά</string>
+  <string name="amount">Ποσό</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Όχι τώρα</string>
+  <!-- (No Commment) -->
+  <string name="logout">Αποσύνδεση</string>
+  <!-- (No Commment) -->
+  <string name="update">Ενημέρωση</string>
+  <!-- (No Commment) -->
+  <string name="verify">Επαλήθευση</string>
+  <string name="resend">Αποστολή ξανά</string>
+  <!-- (No Commment) -->
+  <string name="allow">Επιτρέπουν</string>
+  <!-- (No Commment) -->
+  <string name="block">Μπλοκ</string>
+  <!-- (No Commment) -->
+  <string name="security">Ασφάλεια</string>
+  <!-- (No Commment) -->
+  <string name="enable">Ενεργοποίηση</string>
+  <!-- (No Commment) -->
+  <string name="disable">Απενεργοποίηση</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Ο Επαληθευτής Google</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">Επαλήθευση 2 βημάτων</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Αλλαγή κωδικού πρόσβασης</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Ανακοινώσεις ηλεκτρονικού ταχυδρομείου</string>
+  <string name="email_notifications_summary">Λάβετε ειδοποίηση όταν λαμβάνετε bitcoin.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Νέο κωδικό πρόσβασης</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Προτιμήσεις</string>
+  <!-- (No Commment) -->
+  <string name="information">Πληροφορίες</string>
+  <string name="learn_more">Μάθετε Περισσότερα</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin αίτηση πληρωμής</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Προειδοποίηση</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">Η καρφίτσα που έχετε επιλέξει είναι πολύ συχνή και μπορεί να μαντέψει εύκολα κάποιος με πρόσβαση στο τηλέφωνό σας εντός 3 προσπαθεί. Θα θέλατε να χρησιμοποιήσετε αυτό το PIN ούτως ή άλλως;</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Δοκίμασε ξανά</string>
+  <string name="common_pin_dialog_continue">Συνεχίστε</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Αν θα θέλατε να ξεχάσετε το πορτοφόλι και να ξεκινήσετε από την αρχή, πατήστε «Ξεχάσετε το πορτοφόλι».</string>
+  <string name="go_back">Μετάβαση πίσω</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Συναλλαγή</string>
+  <string name="transaction_detail_date">Ημερομηνία</string>
+  <string name="transaction_detail_status">Κατάσταση</string>
+  <string name="transaction_details_unknown">Άγνωστο</string>
+  <string name="security_centre_add_email_title">Διεύθυνση Email</string>
+  <string name="security_centre_add_email_positive_button">Προσθήκη</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Εφεδρική φράση</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Αντιγραφή διεύθυνσης</string>
+  <string name="contacts_name_field_hint">Όνομα</string>
+  <string name="contacts_add_button">Προσθήκη</string>
+  <string name="contacts_payment_request_amount_hint">Ποσό</string>
+  <string name="contacts_receiving_cancelled">Ακυρώθηκε</string>
+  <string name="pending">Εκκρεμεί</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Συναλλαγές</string>
+  <string name="contacts_balance_dialog_accept">Αποδοχή</string>
+  <string name="onboarding_complete_later">Θα το κάνω αργότερα</string>
+  <string name="onboarding_receive_bitcoin">Αίτημα Κεφαλαίων</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Αγορά Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Αγορά &amp; Πώληση Bitcoin</string>
+  <string name="view_details">Προβολή λεπτομερειών</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Τακτική</string>
+  <string name="fee_options_priority">Προτεραιότητα</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Μη έγκυρη διεύθυνση Ether</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Πίνακας Ελέγχου</string>
+  <string name="dashboard_time_span_day">Ημέρα</string>
+  <string name="dashboard_time_span_week">Εβδομάδα</string>
+  <string name="dashboard_time_span_month">Μήνας</string>
+  <string name="dashboard_time_span_year">Έτος</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Ξεκινήστε</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Ανταλλαγή</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">όροι και προϋποθέσεις</string>
+  <string name="shapeshift_exchange_rate">Ισοτιμία Ανταλλαγής</string>
+  <string name="shapeshift_complete_title">Ολοκλήρωση</string>
+  <string name="shapeshift_failed_title">Απέτυχε</string>
+  <string name="shapeshift_refunded_title">Επιστράφηκε</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Αναγνωριστικό Εντολής</string>
+  <string name="shapeshift_in_progress_summary">Ανταλλαγή σε Εξέλιξη</string>
+  <string name="bch_imported_addresses">Εισηγμένες Διευθύνσεις Bitcoin Cash</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Αγορά</string>
+  <string name="buy_sell_sell">Πώληση</string>
+  <string name="buy_sell_overview_denied_button">Δοκίμασε ξανά</string>
+  <string name="buy_sell_state_processing">Επεξεργασία</string>
+  <string name="buy_sell_state_completed">Ολοκληρώθηκε</string>
+  <string name="buy_sell_state_cancelled">Ακυρώθηκε</string>
+  <string name="buy_sell_state_rejected">Απορρίφθηκε</string>
+  <string name="buy_sell_state_expired">Έληξε</string>
+  <string name="buy_sell_detail_exchange_rate">Ισοτιμία Ανταλλαγής</string>
+  <string name="buy_sell_detail_amount">Ποσό</string>
+  <string name="buy_sell_detail_payment_fee">Αμοιβή Πληρωμής</string>
+  <string name="buy_sell_detail_total">Συνολικό Κόστος</string>
+  <string name="buy_sell_review_status_in_rejected">Απορρίφθηκε</string>
+  <string name="buy_sell_review_status_in_failed">Απέτυχε</string>
+  <string name="buy_sell_review_status_in_expired">Έληξε</string>
+  <string name="buy_sell_review_status_in_completed">Ολοκληρώθηκε</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Τρόπος Πληρωμής</string>
+  <string name="buy_sell_confirmation_amount">Ποσό</string>
+  <string name="buy_sell_confirmation_payment_fee">Αμοιβή Πληρωμής</string>
+  <string name="buy_sell_confirmation_total_cost">Συνολικό Κόστος</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Επαλήθευση του Email σας</string>
+  <string name="submit">Υποβολή</string>
+  <string name="buy_sell_add_account_subtitle">Προσθήκη Τραπεζικού Λογαριασμού</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Επιλέξτε Λογαριασμό</string>
+  <string name="buy_sell_account_selection_delete_message">Σίγουρα θέλετε να διαγράψετε αυτόν τον τραπεζικό λογαριασμό;</string>
+  <string name="buy_sell_add_address_city_hint">Πόλη</string>
+  <string name="buy_sell_add_address_post_code_hint">Ταχυδρομικός Κώδικας</string>
+  <string name="buy_sell_add_address_post_country_hint">Χώρα</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Επαναλαμβανόμενη Εντολή</string>
+  <string name="buy_sell_recurring_order_frequency_title">Συχνότητα</string>
+  <string name="buy_sell_recurring_order_duration_title">Διάρκεια</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Μέχρι να ακυρώσετε</string>
+</resources>
