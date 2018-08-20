@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>eerste woord</item>
+    <item>tweede woord</item>
+    <item>derde woord</item>
+    <item>vierde woord</item>
+    <item>vijfde woord</item>
+    <item>zesde woord</item>
+    <item>zevende woord</item>
+    <item>achtste woord</item>
+    <item>negende woord</item>
+    <item>tiende woord</item>
+    <item>elfde woord</item>
+    <item>twaalde word</item>
+  </string-array>
+  <string name="backup_wallet">Back-up maken van de tegoeden</string>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Upgraden</string>
+  <string name="current_price_btc">1 BTC = %1$s</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Instellingen</string>
+  <string name="all_accounts">Alle Portemonnees</string>
+  <string name="please_wait">Even geduld a.u.b.</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Verzenden</string>
+  <string name="receive_bitcoin">Verzoek</string>
+  <string name="overview">Transacties</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Annuleren</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ja</string>
+  <!-- (No Commment) -->
+  <string name="no">Geen</string>
+  <string name="polite_no">Nee, bedankt</string>
+  <string name="done">Klaar</string>
+  <string name="YESTERDAY">Gisteren</string>
+  <string name="SENT">Verzonden</string>
+  <string name="sending">Aan het verzenden</string>
+  <!-- Transaction cell: -->
+  <string name="RECEIVED">Ontvangen</string>
+  <string name="receiving">Aan het ontvangen</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Overgemaakt</string>
+  <string name="paid">Betaald</string>
+  <string name="payment_request">Betaalverzoek</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Gekopieerd naar het klembord</string>
+  <string name="options_id">Portemonnee-ID</string>
+  <string name="preferences_about_title">Over ons</string>
+  <string name="ask_you_sure_unpair">Weet u zeker dat u uw apparaat wilt ontkoppelen?</string>
+  <string name="select_currency">Kies een valuta</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Plaatselijke valuta</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin-eenheid</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Servicevoorwaarden</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Privacybeleid</string>
+  <string name="invalid_email">Ongeldig e-mailadres</string>
+  <string name="invalid_mobile">Ongeldig mobiel telefoonnummer</string>
+  <string name="invalid_password">Ongeldig wachtwoord</string>
+  <string name="invalid_password_too_short">Voer meer dan 3 karakters in</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Ongeldige Portemonnee-ID</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Wachtwoorden komen niet overeen</string>
+  <string name="change_password_new_matches_current">U kunt uw huidige wachtwoord niet gebruiken als u nieuwe wachtwoord</string>
+  <string name="no_private_key">Kan geen privésleutel produceren.</string>
+  <string name="pin_4_strikes">4 mislukte pinpogingen. Voer een wachtwoord in.</string>
+  <string name="pin_4_strikes_password_accepted">Wachtwoord geaccepteerd. Definieer nieuwe pincode.</string>
+  <string name="bip38_password_entry">Voer privésleutelwachtwoord in</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Pincode invoeren</string>
+  <string name="password_entry">Voer een wachtwoord in</string>
+  <string name="zero_pin">0000 is een ongeldige pincode. Probeer het opnieuw.</string>
+  <string name="invalid_pin">Ongeldige pincode. Probeer het opnieuw.</string>
+  <string name="pin_mismatch_error">Pincodes komen niet overeen</string>
+  <string name="create_pin">Pincode aanmaken</string>
+  <string name="confirm_pin">Pincode bevestigen</string>
+  <string name="create_pin_failed">Aanmaken van een pincode is mislukt. Koppel het apparaat opnieuw.</string>
+  <string name="change_pin_new_matches_current">U kunt uw huidige PIN niet gebruiken als nieuwe PIN</string>
+  <string name="pairing_failed">Koppelen mislukt. Probeer het opnieuw.</string>
+  <string name="account_locked_title">Account geblokkeerd</string>
+  <string name="account_locked_message">Uw account werd tijdelijk geblokkeerd uit voorzorg.  Controleer uw e-mail voor meer informatie en probeer later opnieuw.</string>
+  <string name="check_connectivity_exit">Blockchain Portemonnee kan geen verbinding met het internet verkrijgen. Controleer de verbinding op uw apparaat en probeer het opnieuw.</string>
+  <string name="dialog_continue">Doorgaan</string>
+  <string name="double_encryption_password_error">Dubbele wachtwoordcoderingsfout. Probeer het opnieuw.</string>
+  <string name="command2">Koppelcode scannen</string>
+  <string name="command3">Ik heb geen toegang tot mijn camera</string>
+  <string name="create_a_wallet">Maak een portemonnee</string>
+  <string name="log_in">Log in</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatische koppeling</string>
+  <string name="pair_wallet_step_1">Log in op uw Blockchain Portemonnee via uw pc of Mac op %1$s.</string>
+  <string name="pair_wallet_step_2">Als u de oude portemonnee gebruikt, klikt u op de accountinstellingen-knop en kiest u het tabblad Apparaten. Als u onze nieuwe beta-portemonnee gebruikt, gaat u naar Instellingen/Portemonnee-informatie.</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Klik op Koppelcode tonen om een QR-code, een vierkante zwart-witte barcode, te onthullen. Scan de code met uw camera.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Portemonnee-ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Mijn Bitcoin Portemonnee</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Tegoeden herstellen</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">U moet altijd koppelen of inloggen als u toegang heeft tot uw Portemonnee-ID en -wachtwoord. Door uw tegoeden te herstellen zal er een nieuwe Portemonnee-ID worden aangemaakt. Wilt u doorgaan?</string>
+  <string name="recover_funds_instructions">Voer uw 12 back-upwoorden in, gescheiden door een spatie, om uw geld en transacties te herstellen</string>
+  <string name="recovery_passphrase">Back-upregel</string>
+  <string name="invalid_recovery_phrase">Ongeldige back-upregel. Probeer het opnieuw</string>
+  <string name="creating_wallet">Portemonnee aan het maken</string>
+  <string name="restore_failed">Het herstellen van uw portemonnee is mislukt. Probeer het opnieuw</string>
+  <string name="restoring_wallet">Portemonnee aan het herstellen.</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Wachtwoord</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mailadres</string>
+  <string name="agree_terms_of_service">Door het aanmaken van een nieuwe portemonnee, gaat u akkoord met de</string>
+  <string name="blockchain_tos">Servicevoorwaarden van Blockchain</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Portemonnee aanmaken</string>
+  <string name="new_wallet">Nieuwe Portemonnee</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Zwak</string>
+  <string name="strength_medium">Regulier</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Sterk</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normaal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Doorgaan</string>
+  <string name="SEND">VERZENDEN</string>
+  <string name="total">Totaal</string>
+  <string name="max_available">Gebruik het totale beschikbare saldo minus de kosten:</string>
+  <string name="invalid_bitcoin_address">Ongeldig Bitcoin-adres</string>
+  <string name="invalid_amount">Ongeldig bedrag</string>
+  <string name="insufficient_funds">Onvoldoende saldo</string>
+  <string name="enter_double_encryption_pw">Voer dubbel coderingswachtwoord in</string>
+  <!-- (No Commment) -->
+  <string name="support">Ondersteuning</string>
+  <string name="rate_us">Beoordeel ons</string>
+  <string name="licenses">Licenties</string>
+  <string name="email_chooser">Verzend e-mail…</string>
+  <string name="about">Blockchain-portemonnee %1$s
+©%2$s Blockchain Luxemburg S.A.
+Alle rechten voorbehouden.</string>
+  <string name="merchant_download">Gratis handelaren-app</string>
+  <string name="password_or_wipe">Ga van start met behulp van uw wachtwoord of vergeet deze portemonnee</string>
+  <string name="use_password">Wachtwoord gebruiken</string>
+  <string name="wipe_wallet">Portemonnee vergeten</string>
+  <string name="support_leaving_app_warning">Dit zal de app afsluiten en u naar uw browser brengen. Doorgaan?</string>
+  <string name="weak_password">Het gekozen wachtwoord is te zwak om uw geld veilig te stellen. Wij raden u aan om een ander te kiezen. Wilt u een nieuw wachtwoord definiëren?</string>
+  <!-- (No Commment) -->
+  <string name="from">van</string>
+  <!-- (No Commment) -->
+  <string name="to">Naar</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Betaling bevestigen</string>
+  <string name="fee">Tarief</string>
+  <string name="exit_confirm">Druk op de terug-knop om af te sluiten</string>
+  <string name="label_address">Uw adres is met succes geïmporteerd. Optioneel kunt u een vriendelijke schermnaam toewijzen aan dit adres.</string>
+  <string name="label_address2">Uw adres is met succes aangemaakt. Optioneel kunt u een vriendelijke schermnaam toewijzen aan dit adres.</string>
+  <string name="bip38_error">Ongeldig privésleutelwachtwoord</string>
+  <string name="privkey_error">Niet-herkend privésleutelformaat</string>
+  <string name="hd_error">HD-portemonneefout</string>
+  <string name="scan_not_recognized">Scan kan niet worden gedecodeerd</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Geïmporteerde adressen</string>
+  <string name="remote_save_ok">Opslaan op afstand OK</string>
+  <string name="remote_save_ko">Opslaan op afstand is mislukt</string>
+  <string name="unpair_wallet">Portemonnee ontkoppelen</string>
+  <string name="unpair">ONTKOPPELEN</string>
+  <string name="ok_cap">OK</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Pincode wijzigen</string>
+  <string name="enter_current_pin">Voer de huidige pincode in.</string>
+  <string name="addresses_bitcoin">Bitcoin-adressen</string>
+  <string name="create_new">Een nieuwe aanmaken</string>
+  <string name="import_address">Adres importeren</string>
+  <string name="wallets">Portemonnees</string>
+  <string name="save_name">Naam opslaan</string>
+  <string name="receive_address_to_clipboard">Dit ontvangtadres naar het klembord kopiëren? Zo ja, weet dan dat andere applicaties deze informatie kunnen bekijken.</string>
+  <string name="receive_address_to_share">Dit ontvangstadres delen voor het verzenden? Zo ja, weet dan dat andere applicaties deze informatie kunnen bekijken.</string>
+  <string name="guid_to_clipboard">Uw Portemonnee-ID naar het klembord kopiëren? Zo ja, weet dan dat andere applicaties deze informatie kunnen bekijken.</string>
+  <string name="ssl_pinning_invalid">SSL-certificaatpinning is mislukt. Dit kan op schadelijke activiteiten duiden. Controleer uw netwerkverbinding en het apparaat voordat u verder gaat.</string>
+  <string name="description">Beschrijving</string>
+  <!-- (No Commment) -->
+  <string name="name">Naam</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Opslaan</string>
+  <string name="next">Verder</string>
+  <string name="received_bitcoin">Bitcoins ontvangen</string>
+  <string name="received_ethereum">Ontvangen Ether</string>
+  <string name="verification_failed">Verificatie mislukt</string>
+  <string name="send_payment">Betaling verzenden</string>
+  <string name="share">Ontvangstadres delen</string>
+  <string name="scan_qr">QR-code scannen</string>
+  <string name="confirm_password">Wachtwoord bevestigen</string>
+  <string name="check_email_to_auth_login">Check uw e-mail om deze inlogpoging goed te keuren.</string>
+  <string name="transaction_fee">Transactietarief</string>
+  <string name="your_transactions">Geen transacties</string>
+  <string name="transaction_occur_when_bitcoin">Transacties vinden plaats wanneer u Bitcoins ontvangt en verzendt.</string>
+  <string name="transaction_occur_when_eth">Transacties vinden plaats wanneer u ether ontvangt en verzendt.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transacties vinden plaats wanneer u bitcoins en Bitcoin Cash ontvangt en verzendt.</string>
+  <string name="click">Klik op</string>
+  <string name="to_start_sending_and_receiving_btc">om te beginnen met het verzenden en ontvangen van Bitcoins.</string>
+  <string name="address_book_label">(adresboek)</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Gearchiveerd</string>
+  <string name="transaction_submitted">Transactie voltooid</string>
+  <string name="transaction_failed">Transactie mislukt</string>
+  <string name="UPGRADE_YOUR_WALLET">OK, we gaan beginnen!</string>
+  <string name="upgrade_page_1">Vereenvoudigde back-up en herstel.</string>
+  <string name="upgrade_page_2">Verbeterde privacy door middel van hiërarchische deterministische adressen.</string>
+  <string name="upgrade_page_3">Maak de manier waarop u uw Bitcoins organiseert in uw Blockchain Portemonnee op maat.</string>
+  <!-- <string name="confirm_upgrade_info">这次升级仅需一小段时间，你的比特币和交易记录是安全的。升级的好处：\n\n✓ 全新的设计和用户体验\n✓ 强大的安全中心\n✓ 增强的隐私性\n✓ 简化的备份与恢复\n✓ 自定义的资金管理\n\nOne 此次新版本不支持高级交易类型（共享加密货币）</string> -->
+  <string name="confirm_upgrade_header">Hoi, we hebben deze nieuwe functies aan je Blockchain portemonnee toegevoegd:</string>
+  <string name="upgrading">Aan het opgraden...</string>
+  <string name="upgrading_started_info">Uw portemonnee is aan het upgraden. Even geduld a.u.b. dit kan enige tijd duren, afhankelijk van de grootte en de leeftijd van uw portemonnee.</string>
+  <string name="upgrade_success_heading">Uw portemonnee is geüpgraded!</string>
+  <string name="upgrade_success_info">U heeft nu de veiligste Blockchain portemonnee met de beste privacywaarborg U kunt nu doorgaan naar uw portemonnee.</string>
+  <string name="CLOSE">SLUITEN</string>
+  <string name="total_funds">Alle</string>
+  <string name="unexpected_error">Onverwachte fout, probeer het later opnieuw.</string>
+  <string name="upgrade_fail_heading">De upgrade van de portemonnee is mislukt!</string>
+  <string name="upgrade_fail_info">Er is een fout opgetreden bij het upgraden van uw portemonnee. Probeer het later opnieuw.</string>
+  <string name="not_sane_error">De installatie van uw Blockchain Portemonnee is onvolledig. Koppel uw portemonnee opnieuw of maak een nieuwe aan.</string>
+  <string name="watchonly_address_receive_warning">U zult zo meteen bitcoin ontvangen op een alleen-bekijken-adres. U kunt dit saldo alleen besteden als u toegang heeft tot de privésleutel. Doorgaan?</string>
+  <string name="camera_unavailable">De camera is momenteel geopend door een andere applicatie. Sluit de andere applicatie en probeer het opnieuw.</string>
+  <string name="validating_password">Wachtwoord aan het valideren…</string>
+  <string name="validating_pin">Pincode aan het valideren…</string>
+  <string name="creating_pin">Pincode aan het aanmaken…</string>
+  <string name="decrypting_wallet">Portemonnee aan het decoderen…</string>
+  <string name="password_unchanged">Wachtwoord niet gewijzigd</string>
+  <string name="password_changed">Wachtwoord gewijzigd</string>
+  <string name="password_changed_explanation">Uw wachtwoord werd gewijzigd, koppel uw portemonnee opnieuw</string>
+  <string name="verify_email2">Uw geverifieerde e-mailadres wordt gebruikt om inlogcodes naar te verzenden wanneer een verdachte of ongebruikelijke activiteit wordt ontdekt, om u te herinneren aan de inlog-ID van uw portemonnee en om u aankondigingen van Bitcoin-betalingen te sturen als u tegoeden ontvangt.</string>
+  <string name="disable_root_warning">Geroot waarschuwingssysteem uitschakelen</string>
+  <string name="show_balance">Saldo tonen</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Nieuw adres aanmaken</string>
+  <string name="auth_failed">Autorisatie mislukt. Probeer het opnieuw.</string>
+  <string name="send_failed">Verzenden mislukt Probeer het opnieuw.</string>
+  <string name="wallet_updated">Update van de portemonnee ontvangen</string>
+  <string name="device_rooted">Uw apparaat lijkt te zijn geroot. Weet dat het bewaren van tegoeden op een geroot apparaat onveilig is en bovendien stabiliteitsproblemen kan veroorzaken. Als u doorgaat met het gebruik van onze Bitcoin portemonnee op dit apparaat, raden wij u aan een dubbele codering te gebruiken bij uw Blockchain-account.</string>
+  <string name="address_already_in_wallet">Uw portemonnee bevat dit adres al.</string>
+  <string name="cannot_create_address">Er kan op dit moment geen nieuw adres worden aangemaakt. Probeer het opnieuw.</string>
+  <string name="saving_address">Adres aan het opslaan…</string>
+  <string name="cannot_launch_app">Blockchain Portemonnee kan niet worden uitgevoerd op dit apparaat.</string>
+  <!-- (No Commment) -->
+  <string name="label">Label</string>
+  <!-- (No Commment) -->
+  <string name="edit">Bewerken</string>
+  <string name="label_cant_be_empty">Label kan niet worden leeg gelaten.</string>
+  <string name="label_name_match">Naam reeds in gebruik</string>
+  <!-- (No Commment) -->
+  <string name="warning">Waarschuwing</string>
+  <string name="ssl_no_connection">We kunnen geen verbinding maken met de host om het SSL-certificaat te controleren. Controleer uw netwerkverbinding en het apparaat voordat u verder gaat.</string>
+  <string name="retry">Opnieuw proberen</string>
+  <string name="exit">Stoppen</string>
+  <string name="screen_overlay_warning">Schermoverlay gedetecteerd!</string>
+  <string name="screen_overlay_note">Apps die schermoverlays gebruiken hebben de mogelijkheid om u te verleiden om op onzichtbare objecten te tikken en mogelijk tegoeden te stelen. Deze waarschuwing wordt ook veroorzaakt door schermdim-apps. Als u zeker weet dat er geen bedreigingen zijn, kunt u verdergaan. </string>
+  <string name="archived_description">Dit item is gearchiveerd en is niet toegankelijk in de mobiele app-ervaring. Hoewel u geen tegoeden kunt verzenden vanaf dit item, zullen alle tegoeden veilig zijn. De-archiveer dit item gewoon om het weer te kunnen gebruiken.</string>
+  <string name="not_archived_description">Dit item wordt niet gearchiveerd. Archiveer dit item als u het NIET meer wilt gebruiken. Uw tegoeden zullen veilig blijven en u kunt het op elk moment de-archiveren.</string>
+  <string name="transfer_success_archive_prompt_title">Opgeruimde adressen archiveren?</string>
+  <plurals name="transfer_success_archive_prompt_plurals">
+    <item quantity="one">Er is 1 adres met succes overgebracht naar Mijn Bitcoin Portemonnee. Wilt u dit adres nu archiveren?</item>
+    <item quantity="other">Er zijn %d adressen met succes overgebracht naar Mijn Bitcoin Portemonnee. Wilt u nu deze adressen archiveren?</item>
+  </plurals>
+  <string name="default_account_description">Dit item staat als standaard ingesteld en kan niet worden gearchiveerd.</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Uitgebreide openbare sleutel</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adres</string>
+  <string name="copy_xpub">xpub kopiëren</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Het delen van uw xPub machtigt anderen om uw transactiegeschiedenis te volgen. Omdat bevoegde personen problemen kunnen veroorzaken als zij toegang tot uw portemonnee hebben, kunt u uw xPub het beste alleen delen met mensen die u vertrouwt.</string>
+  <string name="assign_display_name">Een vriendelijke schermnaam toewijzen.</string>
+  <string name="copy_address">Adres kopiëren</string>
+  <!-- (No Commment) -->
+  <string name="archive">Archiveren</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">De-archiveren</string>
+  <string name="archive_are_you_sure">Weet u zeker dat u dit item wilt archiveren?</string>
+  <string name="unarchive_are_you_sure">Weet u zeker dat u dit item wilt de-archiveren?</string>
+  <string name="send_to_same_address_warning">Kan niet naar hetzelfde adres verzenden.</string>
+  <string name="make_default">Instellen als standaard</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Privésleutel nodig</string>
+  <string name="invalid_private_key">Ongeldige privésleutel</string>
+  <string name="watch_only_import_warning">U staat op het punt om een alleen-lezen-adres te importeren, een adres (of openbare sleutelscript) dat is opgeslagen in de portemonnee zonder de bijbehorende privésleutel. Dit betekent dat de tegoeden ALLEEN kunnen worden uitgegeven als u de privésleutel elders heeft bewaard. Als u de privésleutel niet heeft opgeslagen, vraag dan NIEMAND om u Bitcoins te verzenden naar het alleen-lezen-adres.
+
+Deze opties worden alleen aanbevolen aan gevorderde gebruikers. Doorgaan? </string>
+  <string name="scan_private_key">Privésleutel scannen</string>
+  <string name="private_key_successfully_imported">Privésleutel met succes geïmporteerd.</string>
+  <string name="private_key_not_matching_address">OPMERKING: De gescande privésleutel komt niet overeen met het alleen-bekijken-adres. Om uw saldo vanaf dit adres te kunnen besteden, dient u de juiste privésleutel te scannen.</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Alleen-lezen</string>
+  <string name="extended_public_key_description">Als u een handelaar bent, laat dan uw xPub zien en gebruik de Blockchain handelaren-app om tegoeden veilig en privé te ontvangen.
+
+Vertel uw xPub aan niemand.         Iemand met toegang tot uw xPub kan al uw tegoeden en transacties zien. </string>
+  <string name="watch_only_description">Dit is een alleen-bekijken-adres. Om uw saldo te besteden van</string>
+  <!-- (No Commment) -->
+  <string name="success">Succes</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Standaard</string>
+  <string name="try_again">Probeer het opnieuw</string>
+  <!-- FUNDS TRANSFER -->
+  <string name="transfer">Overboeken</string>
+  <string name="transfer_funds">Tegoeden overmaken</string>
+  <string name="transfer_recommend">Zo te zien hebt u enkele bitcoins beschikbaar in de geïmporteerde adressen. Geïmporteerde adressen worden niet ondersteund door uw back-upzin. Om dit saldo te beveiligen, adviseren we u aan om dit in uw back-up op te nemen.</string>
+  <string name="spendable_addresses">Besteedbare adressen</string>
+  <string name="transfer_confirmed">Overboeking bevestigd</string>
+  <string name="transfer_confirm">Bevestig overboeking</string>
+  <string name="transfer_all">Alles overboeken</string>
+  <string name="transfer_amount">Overboekingsbedrag</string>
+  <string name="transfer_archive_message">Archiveer geïmporteerde adressen na overboeking</string>
+  <string name="transfer_archive">Archief bevestigd</string>
+  <string name="dont_ask_again">Mij niet meer vragen.</string>
+  <string name="insufficient_fee">Transactiekosten zijn te laag.</string>
+  <string name="customize">Op maat maken</string>
+  <string name="amount">Bedrag</string>
+  <string name="recommended_fee">Transactiekosten bepalen hoe snel de bitcoin mining network uw transacties zal bevestigen en deze kosten zijn afhankelijk van de huidige netwerkomstandigheden. Wij raden op dit moment het onderstaande tarief aan voor deze transactie.</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Niet nu</string>
+  <string name="high_fee_not_necessary_info">U heeft ongewoon hoge transactiekosten van %1$s opgegeven.
+
+Zelfs als u het tarief verlaagt naar %2$s, kunt u verwachten dat de transactie zal worden bevestigd in de komende ~10 minuten (één blok).</string>
+  <string name="low_fee_suggestion">U heeft uitzonderlijk lage transactiekosten van %1$s opgegeven.
+
+Uw transactie kan vast komen te zitten en misschien nooit worden bevestigd. Om de kans te verhogen dat uw transactie binnen ongeveer een uur (zes blokken) wordt bevestigd, raden wij een tarief aan van niet minder dan %2$s.</string>
+  <string name="raise_fee">Tarief verhogen</string>
+  <string name="lower_fee">Tarief verlagen</string>
+  <string name="keep_high_fee">Behoud hoog tarief</string>
+  <string name="keep_low_fee">Behoud laag tarief</string>
+  <string name="no_confirmed_funds">Geen bevestigde tegoeden om te besteden.</string>
+  <string name="estimate_confirm_block_count">Geschatte bevestigingstijd: ~%1$d minuten (%2$d blokken)</string>
+  <string name="fee_too_low_no_confirm">Uw tarief is zo laag dat uw transactie wellicht nooit bevestigd wordt.</string>
+  <string name="transaction_surge">De Bitcoin Mining Network heeft momenteel een hoog activiteitenvolume, waardoor de aanbevolen tarieven hoger zijn dan normaal.</string>
+  <string name="unsupported_encryption_version">Portemonnee-versie %1$s niet ondersteund.</string>
+  <!-- (No Commment) -->
+  <string name="logout">Uitloggen</string>
+  <string name="to_field_helper">Voer Bitcoin-adres in of selecteer</string>
+  <string name="to_field_helper_no_dropdown">Voer Bitcoin-adres in</string>
+  <!-- (No Commment) -->
+  <string name="update">Updaten</string>
+  <string name="mobile">Mobiel</string>
+  <string name="profile">Profiel</string>
+  <string name="app">App</string>
+  <!-- (No Commment) -->
+  <string name="verify">Verifiëren</string>
+  <string name="resend">Opnieuw verzenden</string>
+  <string name="verified">Geverifieerd</string>
+  <string name="unverified">Niet geverifieerd</string>
+  <!-- (No Commment) -->
+  <string name="allow">Toestaan</string>
+  <!-- (No Commment) -->
+  <string name="block">Blokkeren</string>
+  <!-- (No Commment) -->
+  <string name="security">Veiligheid</string>
+  <!-- (No Commment) -->
+  <string name="enable">Inschakelen</string>
+  <!-- (No Commment) -->
+  <string name="disable">Uitschakelen</string>
+  <!-- (No Commment) -->
+  <string name="sms">Sms</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google-verificateur</string>
+  <string name="yubikey">Yubikey</string>
+  <string name="disable_2fa_first">Schakel eerst 2-staps verificatie in de beveiligingsinstellingen uit via SMS.</string>
+  <string name="disable_online_only">Log in op uw Portemonnee in de webbrowser om 2FA uit te schakelen.</string>
+  <string name="settings_field_cant_be_empty">Veld mag niet leeg zijn.</string>
+  <string name="settings_error_updating">Fout tijdens bijwerken gegevens, probeer opnieuw</string>
+  <string name="request_camera_permission">Toegang tot de camera is vereist.</string>
+  <string name="request_location_permission">Toegang tot de locatie is vereist.</string>
+  <string name="request_write_storage_permission">Schrijven op externe opslag is vereist.</string>
+  <string name="not_specified">niet gespecificeerd</string>
+  <string name="update_failed">Kon niet updaten.</string>
+  <string name="verify_mobile">Mobiel telefoonnummer verifiëren</string>
+  <string name="select_country">Land selecteren</string>
+  <string name="verify_sms_summary">We hebben een sms-bericht met een verificatiecode naar uw mobiele telefoon gestuurd. Voer de code in om uw mobiele telefoonnummer te verifiëren.</string>
+  <string name="verify_sms_failed">Code ongeldig, probeer opnieuw</string>
+  <string name="mobile_description">Uw mobiele telefoon kan worden gebruikt om de tweeledige verificatiemethode in te stellen die uw portemonnee beschermt tegen ongeoorloofde toegang.</string>
+  <string name="enable_fingerprint">Vingerafdruk Deblokkering</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-ledige verificatie</string>
+  <string name="tor_requests">Tor-verzoeken blokkeren</string>
+  <string name="tor_summary">Blokkeer IP-adressen die bekend staan als onderdeel van het anomieme Tor-netwerk. Het Tor-netwerk wordt vaak gebruikt door hackers die toegang proberen te krijgen tot de portemonnees van Blockchain.</string>
+  <string name="enable_screenshots">Screenshots inschakelen</string>
+  <string name="enable_screenshots_summary">Sommige schermen in de pplictie kunnen gevoelige gegevens weergeven. Andere applicaties zullen toegang hebben tot deze screenshots.</string>
+  <string name="password_hint_summary">Uw Blockchain-portemonnee communiceert uw wachtwoord nooit naar onze servers. Dit betekent dat we geen idee hebben wat uw wachtwoord is en we het niet kunnen resetten als u het bent vergeten. Maak een wachtwoordhint aan die makkelijk te onthouden is en die we naar uw geverifieerde e-mailadres kunnen sturen als u uw wachtwoord bent vergeten.</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Wachtwoord wijzigen</string>
+  <string name="change_password_summary">Uw wachtwoord wordt nooit gedeeld met onze servers, wat betekent dat we u niet kunnen helpen bij het herstellen van uw wachtwoord indien u deze bent vergeten. Zorg ervoor dat u een back-up maakt van uw saldo via het zijmenu. Hierdoor kan de toegang tot uw portemonnee worden hersteld indien u uw wachtwoord hebt verloren.</string>
+  <string name="verify_email_notice">We hebben een verificatielink naar uw e-mailadres gestuurd. Klik op de link om uw e-mailadres te verifiëren.</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">E-mailmeldingen</string>
+  <string name="email_notifications_summary">Krijg een melding wanneer u Bitcoins ontvangt.</string>
+  <string name="current_password">Huidig wachtwoord</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Nieuw wachtwoord</string>
+  <string name="sms_verified">Mobiel telefoonnummer geverifieerd</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Voorkeuren</string>
+  <string name="two_fa_summary">Bescherm uw portemonnee tegen onbevoegd gebruik door de tweeledige verificatie in te schakelen.</string>
+  <string name="two_fa_description">Bescherm uw portemonnee tegen onbevoegd gebruik door de tweeledige verificatie in te schakelen. U kunt ervoor kiezen om uw mobiele telefoonnummer te gebruiken om uw portemonnee te beveiligen. Deze code wordt aangevraagd wanneer u toegang probeert te krijgen tot uw portemonnee via de webbrowser.
+
+Om andere verificatiemethoden te gebruiken, kunt u zich inloggen op onze webportemonnee op %1$s</string>
+  <string name="rate_title">Blockchain Portemonnee beoordelen</string>
+  <string name="rate_message">Geniet u van de Blockchain Portemonnee? Neem even de tijd om een recensie te schrijven op Google Play en vertel het anderen.</string>
+  <string name="rate_yes">Ja, beoordeel Blockchain Portemonnee</string>
+  <string name="rate_no">Nee, bedankt</string>
+  <string name="rate_later">Herinner me later</string>
+  <string name="why_has_my_address_changed">Waarom is mijn adres gewijzigd?</string>
+  <!-- (No Commment) -->
+  <string name="information">Informatie</string>
+  <string name="learn_more">Kom meer te weten</string>
+  <string name="pairing_code_log_in">Log in op de webportemonnee</string>
+  <string name="pairing_code_instruction_1">Ga naar %1$s op uw computer.</string>
+  <string name="pairing_code_instruction_2">Selecteer \'Log in op mobiel\'</string>
+  <string name="pairing_code_instruction_3">Met de camera van uw computer scant u de onderstaande QR-code.</string>
+  <string name="pairing_code_show_qr">Toon QR-code</string>
+  <string name="pairing_code_hide_qr">Verberg QR-code</string>
+  <string name="pairing_code_warning_1">Verberg deze code totdat u klaar bent.</string>
+  <string name="pairing_code_warning_2">Bewaar deze code goed!
+Niet delen met anderen.</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin-betalingsverzoek</string>
+  <string name="email_request_subject_eth">Ether-betaalverzoek</string>
+  <string name="email_request_body">Verzend %1$s BTC naar Bitcoin-adres %2$s.</string>
+  <string name="email_request_body_eth">Stuur ETH naar het Ether-adres %1$s.</string>
+  <string name="email_request_body_fallback">bijgevoegd</string>
+  <string name="share_instructions">Tik om dit adres te kopiëren. Deel het met de afzender via e-mail of tekstbericht.</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Waarschuwing</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">De door u geselecteerde pincode komt zeer vaak voor en kan gemakkelijk binnen 3 pogingen worden geraden door iemand met toegang tot uw telefoon. Wilt u deze pincode toch gebruiken?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Probeer opnieuw</string>
+  <string name="common_pin_dialog_continue">Doorgaan</string>
+  <!-- PASSWORD REENTRY ACTIVITY -->
+  <string name="logged_out_enter_password">U bent uitgelogd of er is een fout opgetreden bij het decoderen van uw portemonnee. Voer hieronder uw wachtwoord in om in te loggen.</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Als u deze portemonnee wilt vergeten en opnieuw wilt beginnen, drukt u op \'Portemonnee vergeten\'.</string>
+  <string name="forget_wallet">Portemonnee vergeten</string>
+  <string name="forget_wallet_warning">Hiermee worden alle portemonneegegevens op dit apparaat gewist. Bevestig dat u uw portemonnee-informatie elders heeft bewaard omdat anders alle Bitcoins in deze portemonnee ontoegankelijk zullen worden!!</string>
+  <string name="api_fail">Kan geen verbinding maken met de server. Probeer het later opnieuw.</string>
+  <!-- FEE WARNING -->
+  <string name="large_tx_warning">Dit is een extra grote bitcoin-transactie. Uw portemonnee moet vele kleinere betalingen die u in het verleden heeft ontvangen combineren. Dit vereist een relatief hoog tarief om snel te worden bevestigd.</string>
+  <string name="go_back">Ga terug</string>
+  <string name="accept_higher_fee">Hoger tarief accepteren</string>
+  <string name="large_tx_high_fee_warning">\"Deze transactie vereist een hoger tarief voor dustconsumptie ten gevolg van de kleine hoeveelheid wisselgeld die kan worden teruggegeven.\"</string>
+  <string name="password_reveal_warning">Wees voorzichtig! Door deze tekst te onthullen kunt u uw wachtwoord kopiëren naar het klembord, dat vervolgens kan worden gelezen door alle applicaties op uw apparaat. Wees ook bewust dat er mensen achter je kunnen staan!</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transactie</string>
+  <string name="transaction_detail_description_hint">Waar is dit voor?</string>
+  <string name="transaction_detail_date">Datum</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_detail_confirmed">Bevestigd</string>
+  <string name="transaction_detail_pending">In afwachting van (%1$s/%2$s bevestigingen)</string>
+  <string name="transaction_detail_fee">\"Transactiekosten: %1$s\"</string>
+  <string name="transaction_detail_value_at_time_received">Waarde bij ontvangst:\u0020</string>
+  <string name="transaction_detail_value_at_time_transferred">Waarde bij overboeking:\u0020</string>
+  <string name="transaction_detail_value_at_time_sent">Waarde bij verzending:\u0020</string>
+  <string name="transaction_detail_value">Waarde:\u0020</string>
+  <string name="transaction_details_unknown">Onbekend</string>
+  <string name="transaction_detail_coinbase">Geen inputs (nieuw gegenereerde munten)</string>
+  <string name="transaction_detail_double_spend">Kan risico lopen voor dubbele uitgave.</string>
+  <string name="transaction_detail_verify">Bij Blockchain.com verifiëren</string>
+  <string name="transaction_detail_verify_etherscan">Verifieer op Etherscan.io</string>
+  <string name="transaction_detail_share_chooser">Transactiegegevens delen</string>
+  <string name="transaction_detail_contact_note">Let op</string>
+  <!-- SECURITY CENTRE -->
+  <string name="security_centre_email_title">Controleer uw e-mail</string>
+  <string name="security_centre_email_check">Controleer e-mail</string>
+  <string name="security_centre_email_message">We hebben een e-mail gestuurd naar %1$s. Zoek een e-mail van Blockchain en klik op de verificatielink om het instellen van uw portemonnee te voltooien.</string>
+  <string name="security_centre_add_email_title">E-mailadres</string>
+  <string name="security_centre_add_email_message">Voeg je e-mailadres toe en controleer het om waarschuwingen te ontvangen, verdachte activiteiten te voorkomen, en je Portemonnee-ID te herstellen wanneer je dit vergeten bent.</string>
+  <string name="security_centre_add_email_positive_button">Toevoegen</string>
+  <string name="security_centre_backup_title">Maak een back-up van uw tegoeden</string>
+  <string name="security_centre_backup_message">Voor uw veiligheid bewaren we geen wachtwoorden in ons bestand. Maak een back-up van uw portemonnee om ervoor te zorgen dat uw geld veilig is als u uw wachtwoord kwijt bent. </string>
+  <string name="security_centre_backup_positive_button">Back-up</string>
+  <string name="security_centre_two_fa_message">Voorkom onbevoegde toegang tot uw portemonnee. Schakel de tweeledige verificatiemethode in om de beveiliging van uw portemonnee te vergroten.</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Backupregel</string>
+  <string name="backup_explanation">Voor uw veiligheid bewaart Blockchain geen wachtwoorden in haar bestand. De volgende back-upregel bestaande uit 12 woorden biedt toegang tot uw saldo indien u uw wachtwoord hebt verloren. Zorg ervoor dat u dit op een stuk papier schrijft en ergens veilig bewaart. </string>
+  <string name="backup_button_start">Start de back-up</string>
+  <string name="backup_write_down_words">Het is belangrijk om ervoor te zorgen dat u uw woorden precies opschrijft zoals ze hier verschijnen en in deze volgorde.</string>
+  <string name="backup_header_complete">Back-up voltooid</string>
+  <string name="backup_complete_message">U kunt uw herstelregel gebruiken voor het herstellen van uw saldo indien u uw wachtwoord kwijt bent. Iedereen die toegang heeft tot uw herstelregel, heeft toegang tot uw geld, dus zorg ervoor dat u deze ergens veilig offline bewaard.</string>
+  <string name="backup_again">Maak opnieuw een back-up</string>
+  <string name="backup_confirmed">Back-up bevestigd</string>
+  <string name="backup_last">Laatste back-up: %1$s</string>
+  <string name="backup_verify_heading">Voer de volgende woorden in van uw back-upregel om het back-upproces te kunnen voltooien.</string>
+  <string name="backup_next_word">VOLGENDE WOORD</string>
+  <string name="backup_previous_word">VORIGE WOORD</string>
+  <string name="backup_word">Woord</string>
+  <string name="backup_of">van</string>
+  <string name="backup_word_mismatch">Verkeerde combinatie van woorden</string>
+  <string name="backup_done">KLAAR</string>
+  <string name="backup_lost_mnemonic">Bent u de back-upregel bestaande uit 12 woorden vergeten?</string>
+  <!-- FINGERPRINT -->
+  <string name="fingerprint_prompt">Gebruik uw vingerafdruk voor snellere en eenvoudigere toegang tot uw portemonnee.
+
+Bevestig vingerafdruk om verder te gaan</string>
+  <string name="fingerprint_description">Bevestig vingerafdruk om verder te gaan</string>
+  <string name="fingerprint_hint">Aanraaksensor</string>
+  <string name="fingerprint_login_title">Aanmelden met vingerafdruk</string>
+  <string name="fingerprint_not_recognized">Vingerafdruk niet herkend. Probeer het opnieuw</string>
+  <string name="fingerprint_success">Vingerafdruk herkend</string>
+  <string name="fingerprint_use_pin">Gebruik PIN</string>
+  <string name="fingerprint_disable_message">Bent u zeker dat u aanmelding met vingerafdruk wilt uitschakelen?</string>
+  <string name="fingerprint_no_fingerprints_added">Er werden nog geen vingerafdrukken geregistreerd op dit apparaat. Wilt u nu een vingerafdruk registreren?</string>
+  <string name="fingerprint_key_invalidated_description">Ofwel werden de op dit apparaat bewaarde vingerafdrukken gewijzigd, of de toetsenblokkering is uitgeschakeld</string>
+  <string name="fingerprint_key_invalidated_brief">Toetsen ongeldig, PIN-code vereist</string>
+  <string name="fingerprint_fatal_error_register_description">Er waren te veel mislukte pogingen tijdens de afgelopen 30 minuten. Probeer setup later opnieuw.</string>
+  <string name="fingerprint_fatal_error_authenticate_description">Er waren te veel mislukte pogingen. Meld u aan met behulp van uw PIN.</string>
+  <string name="fingerprint_fatal_error_brief">Onverwachte fout</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Adres kopiëren</string>
+  <string name="shortcut_receive_copy_long">Kopieer ontvangadres naar een andere app</string>
+  <string name="shortcut_receive_qr_short">Toon Ontvangen QR</string>
+  <string name="shortcut_receive_qr_long">Toon QR-code voor ontvangstadres</string>
+  <string name="shortcut_receive_qr_error">Sorry, er trad een fout op bij het genereren van de QR-code</string>
+  <string name="shortcut_settings_summary">Onthul een ontvangstadres als u lang op het app-icoontje in de launcher drukt, waardoor de Bitcoins nog sneller worden ontvangen.</string>
+  <!-- CONTACTS -->
+  <string name="contacts_title">Contactpersonen</string>
+  <string name="contacts_loading_failed">Laden van contactpersonen is mislukt, probeer het opnieuw</string>
+  <string name="contacts_pairing_method_title">Contactpersoon toevoegen</string>
+  <string name="contacts_choose_pairing_method">Kies de koppelmethode die u wilt gebruiken om een vertrouwd contact toe te voegen:</string>
+  <string name="contacts_send_link">Link verzenden</string>
+  <string name="contacts_use_nfc">Gebruik NFC</string>
+  <string name="contacts_no_contacts_found">Geen contactpersonen gevonden</string>
+  <string name="contacts_delete_contact_success">Contactpersoon verwijderd</string>
+  <string name="contacts_delete_contact_failed">Het verwijderen van de contactpersoon is mislukt, probeer het opnieuw</string>
+  <string name="contacts_not_found_error">Contact niet gevonden</string>
+  <string name="contacts_add_contact_failed">Het toevoegen van de contactpersoon is mislukt, probeer het opnieuw</string>
+  <string name="contacts_add_contact_success">Contactpersoon is met succes toegevoegd</string>
+  <string name="contacts_rename_invalid_name">Naam ongeldig</string>
+  <string name="contacts_rename_failed">Het herbenoemen van het contactpersoon is mislukt, probeer het opnieuw</string>
+  <string name="contacts_rename_success">Contactpersoon met succes hernoemd</string>
+  <string name="contacts_error_getting_messages">Fout bij het ontvangen van berichten</string>
+  <string name="contacts_error_sending_payment_request">Er is een fout opgetreden bij het verzenden van uw betalingsverzoek. Probeer het opnieuw</string>
+  <string name="contacts_success_sending_payment_request">Betalingsverzoek verzonden</string>
+  <string name="contacts_add_contact_title">Contactpersoon toevoegen</string>
+  <string name="contacts_name_cannot_be_empty">Ongeldige naam</string>
+  <string name="contacts_name_field_hint">Naam</string>
+  <string name="contacts_add_button">Toevoegen</string>
+  <string name="contacts_share_invitation">Uitnodiging delen</string>
+  <string name="contacts_add_are_you_sure">Weet u zeker dat u %1$s wilt toevoegen als vertrouwd contact?</string>
+  <string name="shortcut_settings_enable">Snelkoppelingen Startservice</string>
+  <string name="contacts_invite_someone">Iemand uitnodigen</string>
+  <string name="contacts_being_invited">Uitnodiging accepteren</string>
+  <string name="contacts_who_are_you_inviting_header">Wie nodigt u uit om mee te verbinden?</string>
+  <string name="contacts_how_are_you_known_header">Onder welke naam kent %1$s u?</string>
+  <string name="contacts_scan_instructions">%1$s moet deze QR-code scannen met zijn/haar mobiele app van Blockchain Portemonnee.</string>
+  <string name="contacts_sharing_method_header">Hoe zou u deze uitnodiging willen delen?</string>
+  <string name="contacts_field_error_empty">Kan niet leeg zijn</string>
+  <string name="contacts_share_qr">Via QR-code (in persoon)</string>
+  <string name="contacts_share_link">Via een link</string>
+  <string name="contacts_scan_qr">Scan een QR-code</string>
+  <string name="contacts_sent_link">Iemand heeft me een link gestuurd</string>
+  <string name="contacts_accept_invite_title">Uitnodiging accepteren</string>
+  <string name="contacts_sent_link_explanation">Als iemand u een link heeft verzonden, klikt u gewoon op de link om te accepteren.</string>
+  <string name="contacts_detail_title">Ik wil:</string>
+  <string name="contacts_detail_transactions">Transacties met %1$s:</string>
+  <string name="contacts_detail_transactions_empty">Geen transacties gevonden</string>
+  <string name="contacts_rename">Geef contactpersoon een andere naam</string>
+  <string name="contacts_delete">Contactpersoon verwijderen</string>
+  <string name="contacts_send_bitcoin">Vraag om %1$s Bitcoins te verzenden</string>
+  <string name="contacts_request_bitcoin">Vraag Bitcoins aan %1$s</string>
+  <string name="contacts_invalid_qr">Ongeldige QR-code</string>
+  <string name="contacts_request_sent">Contactverzoek verzonden</string>
+  <string name="contacts_request_just_added">Zojuist toegevoegd</string>
+  <string name="contacts_request_trusted">Vertrouwd</string>
+  <string name="contacts_delete_message">Weet u zeker dat u deze contactpersoon wilt verwijderen? U zult geen Bitcoins verliezen door deze contactpersoon te verwijderen.</string>
+  <string name="contacts_payment_request_title">Betalingsverzoek</string>
+  <string name="contacts_payment_request_send_note">Waarom zou je %1$s bitcoin willen verzenden? Dit is optioneel en zal worden gedeeld met %1$s.</string>
+  <string name="contacts_payment_request_receive_note">Waarom zou je willen dat %1$s je bitcoin zou zenden? Dit is optioneel en zal worden gedeeld met %1$s.</string>
+  <string name="contacts_payment_request_send_hint">Tapaslunch</string>
+  <string name="contacts_payment_request_receive_hint">Voor de drankjes van vrijdag</string>
+  <string name="contacts_payment_request_note_hint">Let op</string>
+  <string name="contacts_payment_request_send_amount">Hoeveel wilt u verzenden naar %1$s?</string>
+  <string name="contacts_payment_request_receive_amount">Hoeveel wilt u dat %1$s naar u stuurt? 
+
+Dit is slechts een suggestie: het werkelijke bedrag kan verschillen.</string>
+  <string name="contacts_payment_request_amount_hint">Bedrag</string>
+  <string name="contacts_payment_success_waiting_title">Aan het wachten totdat %1$s accepteert</string>
+  <string name="contacts_payment_success_request_sent_title">Verzoek is verzonden</string>
+  <string name="contacts_payment_success_waiting_message">Uw contactpersoon is medegedeeld dat u hem/haar Bitcoins wilt verzenden. Wanneer hij/zij accepteert, zullen wij u hiervan op de hoogte stellen en kunt u de transactie voltooien.</string>
+  <string name="contact_send_request_button">Verzoek verzenden</string>
+  <string name="contacts_transaction_not_found_error">Transactie niet gevonden</string>
+  <string name="contacts_address_sent_success">Adres is met succes verzonden</string>
+  <string name="contacts_address_sent_failed">Adres verzenden is mislukt</string>
+  <string name="contacts_send_address_message">Hiermee zend je een adres naar je contactpersoon. Wil je doorgaan?</string>
+  <string name="contacts_waiting_for_address_message">Uw contactpersoon is medegedeeld dat u hem/haar Bitcoins wilt verzenden en dat u een adres van hem/haar nodig heeft. Wij zullen u op de hoogte stellen wanneer hij/zij een adres heeft verstuurd!</string>
+  <string name="contacts_waiting_for_payment_message">Uw contactpersoon is medegedeeld dat u Bitcoins van hem/haar wenst te ontvangen en er is een adres naar hem/haar verzonden. Wij zullen u op de hoogte stellen wanneer hij/zij u Bitcoins heeft gestuurd!</string>
+  <string name="contacts_digesting_messages_failed">Het controleren van berichten is mislukt, probeer het opnieuw</string>
+  <string name="contacts_broadcasting_payment">We informeren juist uw contactpersoon dat u ze een aantal Bitcoins hebt gestuurd, even geduld alstublieft.</string>
+  <string name="contacts_payment_sent_success">Betaling verzonden! We hebben uw contactpersoon een bericht gestuurd om deze te laten weten dat u de transactie hebt voltooid.</string>
+  <string name="contacts_payment_sent_failed_message">Er is een fout opgetreden bij het op de hoogte brengen van uw contactpersoon dat u deze een betaling heeft verzonden. Controleer uw verbinding en probeer het opnieuw.</string>
+  <string name="contacts_too_much_sent">Het lijkt erop dat je meer bitcoin verzond dan was aangevraagd. Je kunt, als je wilt, wat terugvragen van je contactpersoon. We hebben de betaling niet als voltooid gemarkeerd.</string>
+  <string name="contacts_too_little_sent">Het lijkt erop dat je minder bitcoin verzond dan was aangevraagd. Je contactpersoon zal de bitcoin ontvangen die je verzond, maar we hebben de betaling niet als voltooid gemarkeerd.</string>
+  <string name="contacts_second_password_prompt">Om deze dienst te kunnen gebruiken, vereisen we dat je jouw tweede wachtwoord invoert. Je hoeft dit maar één keer in te voeren om de functionaliteit van Contactpersonen te gebruiken.</string>
+  <string name="contacts_no_confirmed_contacts_found">Geen bevestigde contactpersonen gevonden!</string>
+  <string name="contacts_pending_transaction_delete_success">Transactie in behandeling met succes verwijderd</string>
+  <string name="contacts_pending_transaction_delete_failure">Verwijderen van transactie in behandeling mislukt</string>
+  <string name="contacts_pending_transaction_decline_success">Transactie in behandeling met succes afgewezen</string>
+  <string name="contacts_pending_transaction_decline_failure">Afwijzen van transactie in behandeling mislukt</string>
+  <string name="contacts_pending_transaction_cancel_success">Transactie in behandeling met succes geannuleerd</string>
+  <string name="contacts_pending_transaction_cancel_failure">Annuleren van transactie in behandeling mislukt</string>
+  <string name="contacts_receiving_cancelled">Geannuleerd</string>
+  <string name="contacts_send_complete">%1$s naar %2$s verzonden</string>
+  <string name="contacts_receive_complete">%1$s van %2$s ontvangen</string>
+  <string name="contacts_received">Ontvangen van %1$s </string>
+  <string name="contacts_sent">Verzonden naar %1$s</string>
+  <string name="confirm">Bevestigen</string>
+  <string name="pending">In behandeling</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transacties</string>
+  <string name="contacts_balance_dialog_payment_requested">Betalingsverzoek</string>
+  <string name="contacts_balance_dialog_choose_account_message">Kies waar u uw tegoeden wenst te ontvangen.</string>
+  <string name="contacts_balance_dialog_accept">Accepteren</string>
+  <!-- SWIPE TO RECEIVE -->
+  <string name="swipe_receive_hint">Veeg om te ontvangen</string>
+  <string name="swipe_receive_preference_summary">Onthul een ontvangstadres wanneer u op het PIN-scherm naar links veegt, waardoor u nog sneller tegoeden krijgt.</string>
+  <string name="swipe_receive_address_info">Er zullen achtereenvolgens vijf adressen worden geladen, waarna het nodig is om u aan te melden om nieuwe adressen te tonen.</string>
+  <string name="swipe_receive_no_addresses">Er kunnen op dit moment geen adressen meer geladen worden. Meld u aan bij de app om meer adressen te laden.</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_fingerprint_title">Inloggen met vingerafdruk</string>
+  <string name="onboarding_fingerprint_summary">Gebruik inloggen met vingerafdruk, in plaats van je pincode, ter authenticatie van je portemonnee en om deze te openen.</string>
+  <string name="onboarding_fingerprint_enable">Vingerafdruk inschakelen</string>
+  <string name="onboarding_complete_later">Ik doe dit later</string>
+  <string name="onboarding_check_inbox_title">Controleer je Inbox</string>
+  <string name="onboarding_check_inbox_summary">Zoek een e-mail van Blockchain en klik op de verificatielink om het instellen van je portemonnee te voltooien.</string>
+  <string name="onboarding_verify_email">E-mail verifiëren</string>
+  <string name="onboarding_receive_bitcoin">Geld aanvragen</string>
+  <string name="onboarding_current_price">Huidige koers:</string>
+  <string name="onboarding_qr_codes">QR-codes</string>
+  <string name="onboarding_scan_address">Adres scannen</string>
+  <string name="onboarding_buy_content">Wij werken met uitwisselingspartners uit de hele wereld, zodat je bitcoin direct uit je portemonnee kunt kopen.</string>
+  <string name="onboarding_receive_content">Stuur uw portemonneeadres naar een vriend om geld te vragen. Een adres is een reeks willekeurige letters en getallen die voor elke transactie worden gewijzigd.</string>
+  <string name="onboarding_qr_codes_content">Een adres kan ook als een QR-code worden getoond. Scan de QR-code van een vriend om het adres van hun portemonnee snel vast te leggen.</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Bitcoins kopen</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Bitcoins kopen en verkopen</string>
+  <string name="onboarding_get_bitcoin">Bitcoins krijgen</string>
+  <string name="onboarding_get_eth">Neem Ether</string>
+  <string name="onboarding_complete_title">Dit is voorlopig alles!</string>
+  <string name="onboarding_complete_content">We zullen je op de hoogte houden met aanbevelingen en nieuwe functies.</string>
+  <string name="onboarding_start_over">Begin over</string>
+  <string name="onboarding_skip_all">Alles overslaan</string>
+  <string name="trade_complete">Transactie voltooid</string>
+  <string name="trade_complete_details">De transactie voor het kopen van bitcoin is voltooid!</string>
+  <string name="view_details">Bekijk details</string>
+  <string name="onboarding_available_now">Nu beschikbaar</string>
+  <string name="onboarding_buy_details">Koop rechtstreeks bitcoin via uw mobiele portemonnee. Het is eenvoudig, naadloos en veilig.</string>
+  <string name="onboarding_buy_performance_warning">De transactie verloopt mogelijk wat traag op uw apparaat. Alvast bedankt voor uw geduld.</string>
+  <string name="buy_second_password_prompt">Om deze dienst te kunnen gebruiken, vereisen we dat u uw tweede wachtwoord invoert. U hoeft deze slechts één keer in te voeren om de Koop-functionaliteit te gebruiken.</string>
+  <!-- 2FA Pairing -->
+  <string name="two_factor_dialog_title">Voer de 2FA-code in</string>
+  <string name="two_factor_dialog_message_authenticator">Voer een geldige 2FA-code in van uw authenticator-app om door te gaan.</string>
+  <string name="two_factor_dialog_message_sms">We hebben u net een sms gestuurd met een 2FA-code. Voer deze hier in om door te gaan.</string>
+  <string name="two_factor_dialog_hint">2FA-code</string>
+  <string name="two_factor_null_error">2FA-code kan niet leeg zijn</string>
+  <string name="two_factor_incorrect_error">2FA-code onjuist</string>
+  <!-- CONFIRM PAYMENT -->
+  <string name="confirm_payment_change_fee">Verander bedrag</string>
+  <string name="confirm_payment_fee_sync_error">Foutmelding voor het ontvangen van prijsopties</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Regulier</string>
+  <string name="fee_options_priority">Prioriteit</string>
+  <string name="fee_options_custom">Aangepast</string>
+  <string name="fee_options_regular_time">1+ uur</string>
+  <string name="fee_options_priority_time">~0–60 min</string>
+  <string name="fee_options_custom_warning">Alleen geavanceerde gebruikers</string>
+  <string name="fee_options_sat_byte_formatted">%1$s sat/b</string>
+  <string name="fee_options_fee_too_low">Laag bedrag wordt niet aanbevolen</string>
+  <string name="fee_options_fee_too_high">Onnodig hoog bedrag</string>
+  <string name="fee_options_advanced_warning">Deze functie wordt alleen aanbevolen voor geavanceerde gebruikers. Indien u voor een aangepast bedrag kiest, loopt u het risico dat u teveel betaald of dat uw transactie niet wordt bevestigd.</string>
+  <string name="fee_options_sat_byte_hint">sat/b</string>
+  <string name="fee_options_sat_byte_inline_hint">Normaal: %1$s, Prioritiet: %2$s</string>
+  <string name="what_s_this">Wat is dit?</string>
+  <string name="dismiss">Afwijzen</string>
+  <!-- ETHEREUM BALANCE -->
+  <string name="eth_default_account_label">Mijn Ether-portemonnee</string>
+  <string name="eth_now_supporting">Ether wordt nu ondersteund</string>
+  <string name="eth_second_password_prompt">Om deze dienst te kunnen gebruiken, vereisen we dat u uw tweede wachtwoord invoert. U hoeft deze keer slechts één keer in te voeren om uw Ether-portemonnee in te stellen.</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_to_field_helper">Voer Ether-adres in of selecteer</string>
+  <string name="eth_to_field_helper_no_dropdown">Voer Ether-adres in</string>
+  <string name="eth_invalid_address">Ongeldig Ether-adres</string>
+  <string name="eth_support_contract_not_allowed">Contractadressen worden niet ondersteund.</string>
+  <string name="eth_support_only_eth">Op dit moment ondersteunen we alleen ETH - u kunt geen tokens ontvangen op dit adres</string>
+  <string name="eth_unconfirmed_wait">Wacht tot uw vorige transactie is bevestigd</string>
+  <string name="eth_transaction_complete">Transactie voltooid! Uw transacties en balans worden binnenkort geüpdatet, dit kan enkele minuten duren.
+</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Dashboard</string>
+  <string name="dashboard_time_span_day">Dag</string>
+  <string name="dashboard_time_span_week">Week</string>
+  <string name="dashboard_time_span_month">Maand</string>
+  <string name="dashboard_time_span_year">Jaar</string>
+  <string name="dashboard_time_span_all_time">Altijd</string>
+  <string name="dashboard_bitcoin_price">Bitcoin-prijs</string>
+  <string name="dashboard_ether_price">Ether-prijs</string>
+  <string name="dashboard_charts_error">Fout bij het laden van grafiekgegevens</string>
+  <string name="dashboard_charts_price_error">Fout bij het ophalen van prijsgegevens</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Aan de slag</string>
+  <!-- ETHEREUM ONBOARDING -->
+  <string name="metadata_load_failure">Fout bij het laden van de volledige portemonnee-functionaliteit. Service kan tijdelijk onbeschikbaar zijn.</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Uitwisselen</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">algemene voorwaarden</string>
+  <string name="shapeshift_transaction_fee">Transactietarief</string>
+  <string name="shapeshift_exchange_rate">Wisselkoers</string>
+  <string name="shapeshift_complete_title">Klaar</string>
+  <string name="shapeshift_failed_title">Mislukt</string>
+  <string name="shapeshift_refunded_title">Terugbetaald</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Order-ID</string>
+  <string name="shapeshift_in_progress_summary">Uitwisseling in behandeling.</string>
+  <string name="bch_imported_addresses">Geïmporteerde Bitcoin Cash-adressen</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kopen</string>
+  <string name="buy_sell_sell">Verkopen</string>
+  <string name="buy_sell_overview_denied_button">Probeer opnieuw</string>
+  <string name="buy_sell_state_processing">Wordt verwerkt</string>
+  <string name="buy_sell_state_completed">Voltooid</string>
+  <string name="buy_sell_state_cancelled">Geannuleerd</string>
+  <string name="buy_sell_state_rejected">Afgewezen</string>
+  <string name="buy_sell_state_expired">Verlopen</string>
+  <string name="buy_sell_detail_transaction_fee">Transactietarief</string>
+  <string name="buy_sell_detail_exchange_rate">Wisselkoers</string>
+  <string name="buy_sell_detail_amount">Bedrag</string>
+  <string name="buy_sell_detail_payment_fee">Betalingskosten</string>
+  <string name="buy_sell_detail_total">Totale kosten</string>
+  <string name="buy_sell_review_status_in_rejected">Afgewezen</string>
+  <string name="buy_sell_review_status_in_failed">Mislukt</string>
+  <string name="buy_sell_review_status_in_expired">Verlopen</string>
+  <string name="buy_sell_review_status_in_completed">Voltooid</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betaalmethode</string>
+  <string name="buy_sell_confirmation_transaction_fee">Transactietarief</string>
+  <string name="buy_sell_confirmation_amount">Bedrag</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalingskosten</string>
+  <string name="buy_sell_confirmation_total_cost">Totale kosten</string>
+  <string name="buy_sell_confirmation_bank">Overboeken</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifieer uw e-mailadres</string>
+  <string name="submit">Insturen</string>
+  <string name="buy_sell_add_account_subtitle">Bankrekening toevoegen</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Account selecteren</string>
+  <string name="buy_sell_account_selection_delete_message">Weet u zeker dat u deze bankrekening wilt verwijderen?</string>
+  <string name="buy_sell_add_address_city_hint">Woonplaats</string>
+  <string name="buy_sell_add_address_post_code_hint">Postcode</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Terugkerende order</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frequentie</string>
+  <string name="buy_sell_recurring_order_duration_title">Duur</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Totdat u annuleert</string>
+</resources>
