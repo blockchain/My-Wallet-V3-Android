@@ -31,10 +31,8 @@ android {
 }
 
 dependencies {
-    api project(':morph:ui')
-    api project(':morph:common')
     api project(':coreui')
-    implementation project(':core')
+    api project(':morph:common')
     implementation project(':balance')
 
     implementation Libraries.kotlin
