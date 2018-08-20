@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="receive_bitcoin">Forespørsel</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Avbryt</string>
+  <string name="invalid_email">Ugyldig e-postadresse</string>
+  <string name="dialog_continue">Fortsett</string>
+  <string name="log_in">Logg inn</string>
+  <string name="new_wallet">Ny lommebok</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Fortsett</string>
+  <string name="total">Totalt</string>
+  <string name="invalid_bitcoin_address">Ugyldig Bitcoin-adresse</string>
+  <string name="invalid_amount">Ugyldig beløp</string>
+  <string name="insufficient_funds">Utilstrekkelige midler</string>
+  <string name="description">Beskrivelse</string>
+  <string name="next">Neste</string>
+  <string name="scan_qr">Skann QR-kode</string>
+  <string name="confirm_password">Bekreft passord</string>
+  <string name="transaction_occur_when_bitcoin">Transaksjoner finner sted når du mottar og sender bitcoin.</string>
+  <string name="transaction_occur_when_eth">Transaksjoner finner sted når du mottar og sender ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transaksjoner finner sted når du mottar og sender bitcoin cash.</string>
+  <string name="total_funds">Alle</string>
+  <string name="try_again">Prøv på nytt</string>
+  <string name="amount">Beløp</string>
+  <!-- (No Commment) -->
+  <string name="verify">Verifiser</string>
+  <string name="resend">Send på nytt</string>
+  <string name="yubikey">Yubikey</string>
+  <string name="email_notifications_summary">Bli varslet når du mottar bitcoin.</string>
+  <string name="learn_more">Lær mer</string>
+  <string name="common_pin_dialog_continue">Fortsett</string>
+  <string name="go_back">Gå tilbake</string>
+  <string name="transaction_detail_date">Dato</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_details_unknown">Ukjent</string>
+  <string name="security_centre_add_email_title">E-postadresse</string>
+  <string name="security_centre_add_email_positive_button">Legg til</string>
+  <string name="contacts_add_button">Legg til</string>
+  <string name="contacts_payment_request_amount_hint">Beløp</string>
+  <string name="contacts_receiving_cancelled">Kansellert</string>
+  <string name="pending">Venter</string>
+  <string name="contacts_balance_dialog_accept">Godta</string>
+  <string name="onboarding_complete_later">Jeg gjør dette senere</string>
+  <string name="onboarding_receive_bitcoin">Forespørre penger</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Kjøp Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Kjøp og selg Bitcoin</string>
+  <string name="view_details">Vis detaljer</string>
+  <string name="fee_options_priority">Prioritet</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Ugyldig Ether-adresse</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Instrumentbord</string>
+  <string name="dashboard_time_span_day">Dag</string>
+  <string name="dashboard_time_span_week">Uke</string>
+  <string name="dashboard_time_span_month">Måned</string>
+  <string name="dashboard_time_span_year">År</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Kom i gang</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Veksling</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">vilkår og betingelser</string>
+  <string name="shapeshift_exchange_rate">Vekslingskurs</string>
+  <string name="shapeshift_complete_title">Fullført</string>
+  <string name="shapeshift_failed_title">Mislyktes</string>
+  <string name="shapeshift_refunded_title">Refundert</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Ordre-ID</string>
+  <string name="shapeshift_in_progress_summary">Veksling pågår</string>
+  <string name="bch_imported_addresses">Importerte Bitcoin Cash-adresser</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kjøp</string>
+  <string name="buy_sell_sell">Selg</string>
+  <string name="buy_sell_state_processing">Behandles</string>
+  <string name="buy_sell_state_completed">Fullført</string>
+  <string name="buy_sell_state_cancelled">Kansellert</string>
+  <string name="buy_sell_state_rejected">Avslått</string>
+  <string name="buy_sell_state_expired">Utløpt</string>
+  <string name="buy_sell_detail_exchange_rate">Vekslingskurs</string>
+  <string name="buy_sell_detail_amount">Beløp</string>
+  <string name="buy_sell_detail_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_detail_total">Total kostnad</string>
+  <string name="buy_sell_review_status_in_rejected">Avslått</string>
+  <string name="buy_sell_review_status_in_failed">Mislyktes</string>
+  <string name="buy_sell_review_status_in_expired">Utløpt</string>
+  <string name="buy_sell_review_status_in_completed">Fullført</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betalingsmåte</string>
+  <string name="buy_sell_confirmation_amount">Beløp</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_confirmation_total_cost">Total kostnad</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Bekreft e-postadressen din</string>
+  <string name="submit">Send</string>
+  <string name="buy_sell_add_account_subtitle">Legg til bankkonto</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Velg konto</string>
+  <string name="buy_sell_account_selection_delete_message">Er du sikker på at du vil slette denne bankkontoen?</string>
+  <string name="buy_sell_add_address_city_hint">By</string>
+  <string name="buy_sell_add_address_post_code_hint">Postnummer</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Løpende ordre</string>
+  <string name="buy_sell_recurring_order_frequency_title">Hyppighet</string>
+  <string name="buy_sell_recurring_order_duration_title">Varighet</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Inntil du avbryter</string>
+</resources>

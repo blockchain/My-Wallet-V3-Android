@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>الكلمة الأولى</item>
+    <item>الكلمة الثانية</item>
+    <item>الكلمة الثالثة</item>
+    <item>الكلمة الرابعة</item>
+    <item>كلمة الخامس</item>
+    <item>الكلمة السادسة</item>
+    <item>الكلمة السابعة</item>
+    <item>الكلمة الثامنة</item>
+    <item>الكلمة التاسعة</item>
+    <item>الكلمة العاشرة</item>
+    <item>الكلمة الحادية عشرة</item>
+    <item>الكلمة الثانية عشرة</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">ترقية</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">إعدادات</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">إرسال</string>
+  <string name="overview">المعاملات</string>
+  <!-- (No Commment) -->
+  <string name="cancel">إلغاء الأمر</string>
+  <!-- (No Commment) -->
+  <string name="yes">نعم</string>
+  <!-- (No Commment) -->
+  <string name="no">لا</string>
+  <string name="done">عمله</string>
+  <string name="YESTERDAY">أمس</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">نقل</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">نسخ إلى الحافظة</string>
+  <string name="options_id">معرف المحفظة</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">العملة المحلية</string>
+  <!-- (No Commment) -->
+  <string name="options_units">وحدة بيتكوين</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">شروط الخدمة</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">سياسة الخصوصية</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">معرف غير صالح المحفظة</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">لا تتطابق كلمات المرور</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">أدخل رقم التعريف الشخصي</string>
+  <string name="dialog_continue">مواصلة</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">الأقران التلقائي</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">انقر فوق \"إظهار رمز المزاوجة\" للكشف عن رمز ريال قطري، رمز شريطي &amp; سوداء اللون أبيض. فحص التعليمات البرمجية مع الكاميرا الخاصة بك.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">معرف المحفظة</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">محفظتي بيتكوين</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">استرداد الأموال</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">عليك دائماً الزوج أو تسجيل الدخول إذا كان لديك حق الوصول إلى \"معرف المحفظة\" وكلمة المرور الخاصة بك. استرداد الأموال الخاصة بك سيتم إنشاء معرف جديد المحفظة. هل ترغب في الاستمرار؟</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">كلمة المرور</string>
+  <!-- (No Commment) -->
+  <string name="email">البريد الإلكتروني</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">إنشاء المحفظة</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">ضعيفة</string>
+  <string name="strength_medium">العادية</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">قوية</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">عادي</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">مواصلة</string>
+  <!-- (No Commment) -->
+  <string name="support">الدعم</string>
+  <!-- (No Commment) -->
+  <string name="from">من</string>
+  <!-- (No Commment) -->
+  <string name="to">إلى</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">تأكيد الدفع</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">عناوين المستوردة</string>
+  <string name="ok_cap">موافق</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">تغيير رقم التعريف الشخصي</string>
+  <!-- (No Commment) -->
+  <string name="name">الاسم</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">حفظ</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">أرشفة</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">إنشاء عنوان جديد</string>
+  <!-- (No Commment) -->
+  <string name="label">التسمية</string>
+  <!-- (No Commment) -->
+  <string name="edit">تحرير</string>
+  <!-- (No Commment) -->
+  <string name="warning">تحذير</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">توسيع المفتاح العمومي</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">عنوان</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">مشاركة الخاص بك إكسبوب يأذن للآخرين بتعقب محفوظات المعاملة الخاصة بك. كما قد يتمكن الأشخاص المرخص لهم من تعطيل يمكنك من الوصول إلى محفظتك، فقط مشاركة الخاص بك إكسبوب مع شخص تثق به.</string>
+  <!-- (No Commment) -->
+  <string name="archive">أرشيف</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">إلغاء الأرشفة</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">المفتاح الخاص اللازمة</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">مشاهدة فقط</string>
+  <!-- (No Commment) -->
+  <string name="success">نجاح</string>
+  <!-- (No Commment) -->
+  <string name="default_label">افتراضي</string>
+  <!-- (No Commment) -->
+  <string name="not_now">ليس الآن</string>
+  <!-- (No Commment) -->
+  <string name="logout">تسجيل الخروج</string>
+  <!-- (No Commment) -->
+  <string name="update">التحديث</string>
+  <!-- (No Commment) -->
+  <string name="verify">تحقق</string>
+  <!-- (No Commment) -->
+  <string name="allow">تسمح</string>
+  <!-- (No Commment) -->
+  <string name="block">كتلة</string>
+  <!-- (No Commment) -->
+  <string name="security">الأمن</string>
+  <!-- (No Commment) -->
+  <string name="enable">تمكين</string>
+  <!-- (No Commment) -->
+  <string name="disable">قم بتعطيل</string>
+  <!-- (No Commment) -->
+  <string name="sms">الرسائل القصيرة</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">جوجل المصادق</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-خطوة التحقق</string>
+  <!-- (No Commment) -->
+  <string name="change_password">تغيير كلمة المرور</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">إعلامات البريد الإلكتروني</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">كلمة المرور الجديدة</string>
+  <!-- (No Commment) -->
+  <string name="preferences">تفضيلات</string>
+  <!-- (No Commment) -->
+  <string name="information">معلومات</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">طلب الدفع بيتكوين</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">تحذير</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">رقم التعريف الشخصي الذي حددته شائعة جداً وقد يمكن تخمينها بسهولة من شخص ما مع الوصول إلى الهاتف الخاص بك داخل 3 يحاول. هل تريد استخدام هذا الرقم على أي حال؟</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">حاول مرة أخرى</string>
+  <string name="common_pin_dialog_continue">مواصلة</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">إذا كنت تريد أن تنسى هذه المحفظة والبدء من جديد، اضغط على \'\"نسيان المحفظة\"\'.</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">الحركة</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">العبارة النسخ الاحتياطي</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">نسخ عنوان</string>
+  <string name="contacts_name_field_hint">الاسم</string>
+  <!-- (No Commment) -->
+  <string name="transactions">المعاملات</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">العادية</string>
+  <string name="buy_sell_overview_denied_button">حاول مرة أخرى</string>
+</resources>

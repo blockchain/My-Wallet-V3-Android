@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>første ord</item>
+    <item>andet ord</item>
+    <item>tredje ord</item>
+    <item>fjerde ord</item>
+    <item>femte ord</item>
+    <item>sjette ord</item>
+    <item>syvende ord</item>
+    <item>ottende ord</item>
+    <item>niende ord</item>
+    <item>tiende ord</item>
+    <item>ellevte ord</item>
+    <item>tolvte ord</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Opgradering</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Indstillinger</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Send</string>
+  <string name="receive_bitcoin">Forespørgsel</string>
+  <string name="overview">Transaktioner</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Annuller</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ja</string>
+  <!-- (No Commment) -->
+  <string name="no">Nej</string>
+  <string name="done">Gjort</string>
+  <string name="YESTERDAY">I går</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Overført</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Kopieres til Udklipsholder</string>
+  <string name="options_id">Tegnebog-ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Lokal valuta</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin enhed</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Terms of Service</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Privacy Policy</string>
+  <string name="invalid_email">Ugyldig e-mailadresse</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Ugyldigt tegnebog-ID</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Adgangskoderne er ikke ens</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Indtast PIN-kode</string>
+  <string name="dialog_continue">Fortsat</string>
+  <string name="log_in">Log ind</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatisk parring</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Klik på Vis parring kode for at afsløre en QR kode, en firkantet sort &amp; hvid stregkode. Scan koden med din kamera.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Tegnebog-ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Min Bitcoin tegnebog</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Inddrive midler</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Du bør altid pair eller login hvis du har adgang til din Wallet-ID og adgangskode. Inddrive dine penge vil oprette en ny tegnebog ID. Ønsker du at fortsætte?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Adgangskode</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mail</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Oprette tegnebog</string>
+  <string name="new_wallet">Ny tegnebog</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Svage</string>
+  <string name="strength_medium">Regelmæssig</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Stærke</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Fortsat</string>
+  <string name="total">I alt</string>
+  <string name="invalid_bitcoin_address">Ugyldig bitcoin-adresse</string>
+  <string name="invalid_amount">Ugyldigt beløb</string>
+  <string name="insufficient_funds">Utilstrækkelige midler</string>
+  <!-- (No Commment) -->
+  <string name="support">Support</string>
+  <!-- (No Commment) -->
+  <string name="from">fra</string>
+  <!-- (No Commment) -->
+  <string name="to">Til</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Bekræfte betaling</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Importerede adresser</string>
+  <string name="ok_cap">Ok</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Skift PIN-kode</string>
+  <string name="description">Beskrivelse</string>
+  <!-- (No Commment) -->
+  <string name="name">Navn</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Gem</string>
+  <string name="next">Næste</string>
+  <string name="scan_qr">Scan QR-kode</string>
+  <string name="confirm_password">Bekræft adgangskode</string>
+  <string name="transaction_occur_when_bitcoin">Transaktioner opstår, når du modtager og sender bitcoin.</string>
+  <string name="transaction_occur_when_eth">Transaktionerne foregår, når du modtager og sender.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transaktioner opstår, når du modtager og sender bitcoin cash.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arkiveret</string>
+  <string name="total_funds">Alt</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Opret ny adresse</string>
+  <!-- (No Commment) -->
+  <string name="label">Etiket</string>
+  <!-- (No Commment) -->
+  <string name="edit">Rediger</string>
+  <!-- (No Commment) -->
+  <string name="warning">Advarsel</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Udvidet offentlige nøgle</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adresse</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Deling af din xPub bemyndiger andre til at spore din transaktionsoversigt. Som autoriserede personer kan muligvis forstyrre dig fra at få adgang til tegnebogen, kun dele din xPub med mennesker du har tillid til.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arkiv</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Udpakke</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Behov for privat nøgle</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Watch kun</string>
+  <!-- (No Commment) -->
+  <string name="success">Succes</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Standard</string>
+  <string name="try_again">Prøv igen</string>
+  <string name="amount">Beløb</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Ikke nu</string>
+  <!-- (No Commment) -->
+  <string name="logout">Logout</string>
+  <!-- (No Commment) -->
+  <string name="update">Opdatering</string>
+  <!-- (No Commment) -->
+  <string name="verify">Kontroller</string>
+  <string name="resend">Send igen</string>
+  <!-- (No Commment) -->
+  <string name="allow">Tillad</string>
+  <!-- (No Commment) -->
+  <string name="block">Blok</string>
+  <!-- (No Commment) -->
+  <string name="security">Sikkerhed</string>
+  <!-- (No Commment) -->
+  <string name="enable">Aktiverer</string>
+  <!-- (No Commment) -->
+  <string name="disable">Deaktiver</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Autentificering</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-trins verifikation</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Skift adgangskode</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">E-mail-meddelelser</string>
+  <string name="email_notifications_summary">Modtag notifikationer, når du modtager bitcoin.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Ny adgangskode</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Præferencer</string>
+  <!-- (No Commment) -->
+  <string name="information">Oplysninger</string>
+  <string name="learn_more">Find ud af mere</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin betalingsanmodning</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Advarsel</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">Den pinkode, du har valgt er meget almindelige og let kan gættes af en person med adgang til din telefon inden for 3 forsøg. Vil du gerne bruge denne PIN alligevel?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Prøv igen</string>
+  <string name="common_pin_dialog_continue">Fortsat</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Hvis du ønsker at glemme denne tegnebog og starte forfra, skal du trykke på \'Glemme tegnebog\'.</string>
+  <string name="go_back">Gå tilbage</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transaktion</string>
+  <string name="transaction_detail_date">Dato</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_details_unknown">Ukendt</string>
+  <string name="security_centre_add_email_title">E-mailadresse</string>
+  <string name="security_centre_add_email_positive_button">Tilføj</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Backup sætning</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Kopiere adressen</string>
+  <string name="contacts_name_field_hint">Navn</string>
+  <string name="contacts_add_button">Tilføj</string>
+  <string name="contacts_payment_request_amount_hint">Beløb</string>
+  <string name="contacts_receiving_cancelled">Annulleret</string>
+  <string name="pending">Verserende</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transaktioner</string>
+  <string name="contacts_balance_dialog_accept">Acceptér</string>
+  <string name="onboarding_complete_later">Jeg gør det senere</string>
+  <string name="onboarding_receive_bitcoin">Anmod om midler</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Køb bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Køb og sælg bitcoin</string>
+  <string name="view_details">Se oplysningerne</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Regelmæssig</string>
+  <string name="fee_options_priority">Prioritet</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Ugyldig ether-adresse</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Instrumentbræt</string>
+  <string name="dashboard_time_span_day">Dag</string>
+  <string name="dashboard_time_span_week">Uge</string>
+  <string name="dashboard_time_span_month">Måned</string>
+  <string name="dashboard_time_span_year">År</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Kom i gang</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Veksl</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">vilkår og betingelser</string>
+  <string name="shapeshift_exchange_rate">Vekselkurs</string>
+  <string name="shapeshift_complete_title">Komplet</string>
+  <string name="shapeshift_failed_title">Mislykket</string>
+  <string name="shapeshift_refunded_title">Refunderet</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Ordre-ID</string>
+  <string name="shapeshift_in_progress_summary">Veksling i arbejde</string>
+  <string name="bch_imported_addresses">Importeret Bitcoin Cash-adresse</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Køb</string>
+  <string name="buy_sell_sell">Sælg</string>
+  <string name="buy_sell_overview_denied_button">Prøv igen</string>
+  <string name="buy_sell_state_processing">Bearbejder</string>
+  <string name="buy_sell_state_completed">Fuldført</string>
+  <string name="buy_sell_state_cancelled">Annulleret</string>
+  <string name="buy_sell_state_rejected">Afvist</string>
+  <string name="buy_sell_state_expired">Udløbet</string>
+  <string name="buy_sell_detail_exchange_rate">Vekselkurs</string>
+  <string name="buy_sell_detail_amount">Beløb</string>
+  <string name="buy_sell_detail_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_detail_total">Pris i alt</string>
+  <string name="buy_sell_review_status_in_rejected">Afvist</string>
+  <string name="buy_sell_review_status_in_failed">Mislykket</string>
+  <string name="buy_sell_review_status_in_expired">Udløbet</string>
+  <string name="buy_sell_review_status_in_completed">Fuldført</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betalingsmetode</string>
+  <string name="buy_sell_confirmation_amount">Beløb</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalingsgebyr</string>
+  <string name="buy_sell_confirmation_total_cost">Pris i alt</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Bekræft din e-mail</string>
+  <string name="submit">Send</string>
+  <string name="buy_sell_add_account_subtitle">Tilføj bankkonto</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Vælg konto</string>
+  <string name="buy_sell_account_selection_delete_message">Er du sikker på, at du ønsker at slette denne bankkonto?</string>
+  <string name="buy_sell_add_address_city_hint">By</string>
+  <string name="buy_sell_add_address_post_code_hint">Postnummer</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Tilbagevendende ordre</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frekvens</string>
+  <string name="buy_sell_recurring_order_duration_title">Varighed</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Indtil du annullerer den</string>
+</resources>

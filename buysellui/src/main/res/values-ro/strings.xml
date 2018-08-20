@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>primul cuvânt</item>
+    <item>al doilea cuvânt</item>
+    <item>treia cuvântul</item>
+    <item>a patra cuvântul</item>
+    <item>al cincilea cuvînt</item>
+    <item>a şasea cuvântul</item>
+    <item>a şaptea cuvântul</item>
+    <item>opta cuvântul</item>
+    <item>al nouălea cuvântul</item>
+    <item>Zecea cuvântul</item>
+    <item>a unsprezecea cuvântul</item>
+    <item>a douăsprezecea cuvântul</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Upgrade-ul</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Setări</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Trimite</string>
+  <string name="receive_bitcoin">Cerere</string>
+  <string name="overview">Tranzacţii</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Revocare</string>
+  <!-- (No Commment) -->
+  <string name="yes">da</string>
+  <!-- (No Commment) -->
+  <string name="no">nu</string>
+  <string name="done">Făcut</string>
+  <string name="YESTERDAY">Ieri</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Transferat</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Copiat în clipboard</string>
+  <string name="options_id">Portofel ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Moneda locală</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin unitate</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Conditii de utilizare</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Politica de confidenţialitate</string>
+  <string name="invalid_email">Adresă de e-mail nevalidă</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">ID incorect portofel</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Parolele nu se potrivesc</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Introduceţi codul PIN</string>
+  <string name="dialog_continue">Continua</string>
+  <string name="log_in">Conectare</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Asocierea automată</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Faceţi clic pe Arată asocierea de cod pentru a descoperi un cod QR, un pătrat negru &amp; alb de coduri de bare. Scanaţi codul cu aparatul de fotografiat.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Portofel ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Portofelul meu Bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Recupera fondurile</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Tu ar trebui să întotdeauna pereche sau login dacă aveţi acces la portofel ID-ul şi parola. Recuperarea fondurilor dumneavoastră va crea un nou portofel ID. Doriţi să continuaţi?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Parola</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mail</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Crea portofel</string>
+  <string name="new_wallet">Portofel nou</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Slab</string>
+  <string name="strength_medium">Regulate</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Strong</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Continua</string>
+  <string name="total">Total</string>
+  <string name="invalid_bitcoin_address">Adresă Bitcoin nevalidă</string>
+  <string name="invalid_amount">Sumă incorectă</string>
+  <string name="insufficient_funds">Fonduri insuficiente</string>
+  <!-- (No Commment) -->
+  <string name="support">Suport</string>
+  <!-- (No Commment) -->
+  <string name="from">la</string>
+  <!-- (No Commment) -->
+  <string name="to">Pentru a</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Confirma plata</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Adrese importate</string>
+  <string name="ok_cap">ok</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Schimbare PIN</string>
+  <string name="description">Descriere</string>
+  <!-- (No Commment) -->
+  <string name="name">nume</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Salvaţi</string>
+  <string name="next">Următorul</string>
+  <string name="scan_qr">Scanare cod QR</string>
+  <string name="confirm_password">Confirmare parolă</string>
+  <string name="transaction_occur_when_bitcoin">Tranzacțiile se realizează atunci când primiți și trimiteți bitcoin.</string>
+  <string name="transaction_occur_when_eth">Tranzacțiile se realizează atunci când primiți și trimiteți ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Tranzacțiile se realizează atunci când primiți și trimiteți bitcoin cash.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arhivate</string>
+  <string name="total_funds">Toate</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Creare adresă</string>
+  <!-- (No Commment) -->
+  <string name="label">Eticheta</string>
+  <!-- (No Commment) -->
+  <string name="edit">Editare</string>
+  <!-- (No Commment) -->
+  <string name="warning">Avertisment</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Cheia publică a extins</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adresa</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Partajare dumneavoastră xPub autorizează altora pentru a urmări Istoricul tranzactiei. Ca persoane autorizate ar putea să perturbe-vă la accesarea portofel, numai cota ta xPub cu oameni tu trust.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arhiva</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Unarchive</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Cheie privată necesare</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Uita-te doar</string>
+  <!-- (No Commment) -->
+  <string name="success">Succesul</string>
+  <!-- (No Commment) -->
+  <string name="default_label">În mod implicit</string>
+  <string name="try_again">Încercați din nou</string>
+  <string name="amount">Suma</string>
+  <!-- (No Commment) -->
+  <string name="not_now">nu acum</string>
+  <!-- (No Commment) -->
+  <string name="logout">Deconectare</string>
+  <!-- (No Commment) -->
+  <string name="update">Actualizare</string>
+  <!-- (No Commment) -->
+  <string name="verify">Verifica</string>
+  <string name="resend">Re-trimiteți</string>
+  <!-- (No Commment) -->
+  <string name="allow">Permite</string>
+  <!-- (No Commment) -->
+  <string name="block">Bloc</string>
+  <!-- (No Commment) -->
+  <string name="security">Securitate</string>
+  <!-- (No Commment) -->
+  <string name="enable">Permite</string>
+  <!-- (No Commment) -->
+  <string name="disable">Nu fi de acord</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS-URI</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Authenticator</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">Verificare în 2 paşi</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Schimba parola</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Notificări prin e-mail</string>
+  <string name="email_notifications_summary">Fiți notificați atunci când primiți monede bitcoin.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Noua parola</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Preferinţe</string>
+  <!-- (No Commment) -->
+  <string name="information">Informaţii</string>
+  <string name="learn_more">Aflați mai multe</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Cererea de plată Bitcoin</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Avertisment</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">PIN-ul le-aţi selectat este extrem de comună şi poate fi uşor de ghicit de cineva cu acces la telefon în 3 incearca. Doriţi să utilizaţi acest PIN oricum?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">încearcă din nou</string>
+  <string name="common_pin_dialog_continue">Continua</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Dacă doriţi să uite acest portofel şi începe peste, apăsaţi \"Uita portofelul\".</string>
+  <string name="go_back">Mergi înapoi</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Tranzactie</string>
+  <string name="transaction_detail_date">Data</string>
+  <string name="transaction_detail_status">Statut</string>
+  <string name="transaction_details_unknown">Necunoscut</string>
+  <string name="security_centre_add_email_title">Adresa de e-mail</string>
+  <string name="security_centre_add_email_positive_button">Adăugare</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Fraza de rezervă</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Copiaţi adresa</string>
+  <string name="contacts_name_field_hint">nume</string>
+  <string name="contacts_add_button">Adăugare</string>
+  <string name="contacts_payment_request_amount_hint">Suma</string>
+  <string name="contacts_receiving_cancelled">Anulat</string>
+  <string name="pending">În așteptare</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Tranzacţii</string>
+  <string name="contacts_balance_dialog_accept">Acceptare</string>
+  <string name="onboarding_complete_later">Voi face acest lucru mai târziu</string>
+  <string name="onboarding_receive_bitcoin">Cerere de fonduri</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Cumpărați Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Cumpărați și vindeți Bitcoin</string>
+  <string name="view_details">Vedeți detaliile</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Regulate</string>
+  <string name="fee_options_priority">Prioritate</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Adresă Ether nevalidă</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Tabloul de bord</string>
+  <string name="dashboard_time_span_day">Zi</string>
+  <string name="dashboard_time_span_week">Săptămână</string>
+  <string name="dashboard_time_span_month">Lună</string>
+  <string name="dashboard_time_span_year">An</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Începeți</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Schimb</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">termeni și condiții</string>
+  <string name="shapeshift_exchange_rate">Rata de schimb</string>
+  <string name="shapeshift_complete_title">Finalizat</string>
+  <string name="shapeshift_failed_title">Eșuat</string>
+  <string name="shapeshift_refunded_title">Rambursată</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">ID-ul comenzii</string>
+  <string name="shapeshift_in_progress_summary">Schimb în curs</string>
+  <string name="bch_imported_addresses">Adrese Bitcoin Cash importate</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Cumpărare</string>
+  <string name="buy_sell_sell">Vânzare</string>
+  <string name="buy_sell_overview_denied_button">încearcă din nou</string>
+  <string name="buy_sell_state_processing">În curs de procesare</string>
+  <string name="buy_sell_state_completed">Finalizat</string>
+  <string name="buy_sell_state_cancelled">Anulat</string>
+  <string name="buy_sell_state_rejected">Respins(ă)</string>
+  <string name="buy_sell_state_expired">Expirat</string>
+  <string name="buy_sell_detail_exchange_rate">Rata de schimb</string>
+  <string name="buy_sell_detail_amount">Suma</string>
+  <string name="buy_sell_detail_payment_fee">Taxă de plată</string>
+  <string name="buy_sell_detail_total">Cost total</string>
+  <string name="buy_sell_review_status_in_rejected">Respins(ă)</string>
+  <string name="buy_sell_review_status_in_failed">Eșuat</string>
+  <string name="buy_sell_review_status_in_expired">Expirat</string>
+  <string name="buy_sell_review_status_in_completed">Finalizat</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metodă de plată</string>
+  <string name="buy_sell_confirmation_amount">Suma</string>
+  <string name="buy_sell_confirmation_payment_fee">Taxă de plată</string>
+  <string name="buy_sell_confirmation_total_cost">Cost total</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Confirmați email-ul</string>
+  <string name="submit">Trimitere</string>
+  <string name="buy_sell_add_account_subtitle">Adăugați contul bancar</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Selectați contul</string>
+  <string name="buy_sell_account_selection_delete_message">Sigur doriți să ștergeți acest cont bancar?</string>
+  <string name="buy_sell_add_address_city_hint">Oraș</string>
+  <string name="buy_sell_add_address_post_code_hint">Cod poștal</string>
+  <string name="buy_sell_add_address_post_country_hint">Țara</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Comandă periodică</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frecvență</string>
+  <string name="buy_sell_recurring_order_duration_title">Durata</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Până anulați</string>
+</resources>

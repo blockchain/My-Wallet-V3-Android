@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>Ensimmäinen sana</item>
+    <item>toinen sana</item>
+    <item>kolmas sana</item>
+    <item>Neljäs sana</item>
+    <item>Viides sana</item>
+    <item>Kuudes sana</item>
+    <item>Seitsemäs sana</item>
+    <item>Kahdeksas sana</item>
+    <item>Yhdeksäs sana</item>
+    <item>Kymmenes sana</item>
+    <item>yhdestoista sana</item>
+    <item>kahdestoista sana</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Päivitys</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Asetukset</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Lähetä</string>
+  <string name="overview">Tapahtumat</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Peruuta</string>
+  <!-- (No Commment) -->
+  <string name="yes">Kyllä</string>
+  <!-- (No Commment) -->
+  <string name="no">Ei</string>
+  <string name="done">Tehnyt</string>
+  <string name="YESTERDAY">Eilen</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Siirretty</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Kopioida leikepöydälle</string>
+  <string name="options_id">Lompakko tunnus</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Paikallisessa valuutassa</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin yksikkö</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Käyttöehdot</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Yksityisyyden suoja</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Lompakko-tunnus ei kelpaa</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Salasanat eivät täsmää</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Anna PIN-koodi</string>
+  <string name="dialog_continue">Jatka</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automaattinen pariliitoksen</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Valitsemalla Näytä pariliitoksen koodi paljastaa QR Code, mustat neliskulmaiset &amp; valkoinen viivakoodi. Skannaa koodi kameran kanssa.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Lompakko tunnus</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Bitcoin lompakko</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Takaisin varat</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Kannattaa aina pari tai Kirjaudu sisään jos sinulla on pääsy sinun lompakko ID ja tunnussana. Takaisin rahat luo uuden lompakon. Haluatko jatkaa?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Salasana</string>
+  <!-- (No Commment) -->
+  <string name="email">Sähköposti</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Luo lompakko</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Heikko</string>
+  <string name="strength_medium">Säännöllisesti</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Vahva</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normaali</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Jatka</string>
+  <!-- (No Commment) -->
+  <string name="support">Tuki</string>
+  <!-- (No Commment) -->
+  <string name="from">Alkaen</string>
+  <!-- (No Commment) -->
+  <string name="to">Jotta</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Vahvista maksu</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Tuodut osoitteet</string>
+  <string name="ok_cap">Okei</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Vaihda PIN-tunnus</string>
+  <!-- (No Commment) -->
+  <string name="name">Nimi</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Tallenna</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arkistoitu</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Luo uusi osoite</string>
+  <!-- (No Commment) -->
+  <string name="label">Etiketti</string>
+  <!-- (No Commment) -->
+  <string name="edit">Muokkaa</string>
+  <!-- (No Commment) -->
+  <string name="warning">Varoitus</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Laajennettu julkisen avaimen</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Osoite</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Jakaminen sinun xPub antaa toiset jotta jäljittää maksuhistoriastasi. Kuten oikeutetut henkilöt häiritä sinua käyttämästä lompakon, jakaa vain sinun xPub luottamillesi ihmisille.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arkisto</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Älä arkistoi</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Yksityinen avain kaivata</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Katsella vain</string>
+  <!-- (No Commment) -->
+  <string name="success">Menestys</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Oletus</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Ei nyt</string>
+  <!-- (No Commment) -->
+  <string name="logout">Kirjaudu ulos</string>
+  <!-- (No Commment) -->
+  <string name="update">Päivitys</string>
+  <!-- (No Commment) -->
+  <string name="verify">Tarkista</string>
+  <!-- (No Commment) -->
+  <string name="allow">Salli</string>
+  <!-- (No Commment) -->
+  <string name="block">Lohko</string>
+  <!-- (No Commment) -->
+  <string name="security">Turvallisuus</string>
+  <!-- (No Commment) -->
+  <string name="enable">Ota käyttöön</string>
+  <!-- (No Commment) -->
+  <string name="disable">Poista käytöstä</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Authenticator</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-vaiheinen vahvistus</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Vaihda salasana</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Sähköposti-ilmoitukset</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Uusi salasana</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Asetukset</string>
+  <!-- (No Commment) -->
+  <string name="information">Tiedot</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin ennakkomaksun pyyntö</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Varoitus</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">Olet valinnut PIN on erittäin yleistä ja joku pääsee käyttämään puhelintasi vajaan 3 yrittää helposti arvattavissa. Haluatko silti käyttää tämän PIN?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Yritä uudestaan</string>
+  <string name="common_pin_dialog_continue">Jatka</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Jos haluat unohtaa tämä lompakko ja aloittaa alusta, paina unohtaa lompakon.</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Tapahtuman</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Varmuuskopio lause</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Kopioi osoite</string>
+  <string name="contacts_name_field_hint">Nimi</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Tapahtumat</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Säännöllisesti</string>
+  <string name="buy_sell_overview_denied_button">Yritä uudestaan</string>
+</resources>

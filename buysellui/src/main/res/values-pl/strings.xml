@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>pierwsze słowo</item>
+    <item>drugie słowo</item>
+    <item>trzecie słowo</item>
+    <item>czwarte słowo</item>
+    <item>piąte słowo</item>
+    <item>szóste słowo</item>
+    <item>siódme słowo</item>
+    <item>ósme słowo</item>
+    <item>dziewiąte słowo</item>
+    <item>dziesiąte słowo</item>
+    <item>jedenaste słowo</item>
+    <item>dwunaste słowo</item>
+  </string-array>
+  <string name="backup_wallet">Stwórz kopię zapasową środków</string>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Ulepsz</string>
+  <string name="current_price_btc">1 BTC = %1$s</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Ustawienia</string>
+  <string name="all_accounts">Wszystkie portfele</string>
+  <string name="please_wait">Proszę czekać</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Wyślij</string>
+  <string name="receive_bitcoin">Żądanie</string>
+  <string name="overview">Transakcje</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Anuluj</string>
+  <!-- (No Commment) -->
+  <string name="yes">Tak</string>
+  <!-- (No Commment) -->
+  <string name="no">Nie</string>
+  <string name="polite_no">Nie, dziękuję</string>
+  <string name="done">Gotowe</string>
+  <string name="YESTERDAY">Wczoraj</string>
+  <string name="SENT">Wysłano</string>
+  <string name="sending">Wysyłanie</string>
+  <!-- Transaction cell: -->
+  <string name="RECEIVED">Otrzymano</string>
+  <string name="receiving">Otrzymywanie</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Przesłano</string>
+  <string name="paid">Zapłacono</string>
+  <string name="payment_request">Żądanie zapłaty</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Skopiowano do schowka</string>
+  <string name="options_id">Identyfikator portfela</string>
+  <string name="preferences_about_title">O nas</string>
+  <string name="ask_you_sure_unpair">Czy na pewno chcesz odparować swoje urządzenie?</string>
+  <string name="select_currency">Wybierz walutę</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Lokalna waluta</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Jednostka bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Warunki korzystania</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Polityka prywatności</string>
+  <string name="invalid_email">Nieprawidłowy adres e-mail</string>
+  <string name="invalid_mobile">Nieprawidłowy numer telefonu komórkowego</string>
+  <string name="invalid_password">Nieprawidłowe hasło</string>
+  <string name="invalid_password_too_short">Wprowadź więcej niż 3 znaki</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Nieprawidłowy identyfikator portfela</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Hasła nie pasują do siebie</string>
+  <string name="change_password_new_matches_current">Nie możesz użyć bieżącego hasła jako nowego hasła</string>
+  <string name="no_private_key">Nie można stworzyć klucza prywatnego.</string>
+  <string name="pin_4_strikes">4 nieudane próby wpisania PINu. Proszę podać hasło.</string>
+  <string name="pin_4_strikes_password_accepted">Hasło zaakceptowane. Proszę podać nowy PIN.</string>
+  <string name="bip38_password_entry">Proszę wpisać hasło do klucza prywatnego</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Podaj PIN</string>
+  <string name="password_entry">Proszę wpisać hasło</string>
+  <string name="zero_pin">0000 nie jest prawidłowym kodem PIN Proszę spróbować ponownie.</string>
+  <string name="invalid_pin">Nieprawidłowy PIN. Proszę spróbować ponownie.</string>
+  <string name="pin_mismatch_error">Kody PIN nie pasują do siebie</string>
+  <string name="create_pin">Stwórz PIN</string>
+  <string name="confirm_pin">Potwierdź PIN</string>
+  <string name="create_pin_failed">Tworzenie PINu nieudane. Proszę ponownie sparować urządzenie.</string>
+  <string name="change_pin_new_matches_current">Nie możesz użyć aktualnego kodu PIN jako nowego kodu PIN</string>
+  <string name="pairing_failed">Parowanie nieudane. Proszę spróbować ponownie.</string>
+  <string name="account_locked_title">Konto zablokowane</string>
+  <string name="account_locked_message">Twoje konto zostało tymczasowo zablokowane w ramach środków ostrożności. Przeczytaj wiadomość e-mail, aby uzyskać więcej informacji i spróbuj ponownie później.</string>
+  <string name="check_connectivity_exit">Portfel Blockchain nie może połączyć się z Internetem. Proszę sprawdzić połączenie na swoim urządzeniu i spróbować ponownie.</string>
+  <string name="dialog_continue">Kontynuuj</string>
+  <string name="double_encryption_password_error">Błąd podwójnego szyfrowania hasła. Proszę spróbować ponownie.</string>
+  <string name="command2">Skanuj kod parowania</string>
+  <string name="command3">Nie mam dostępu do mojego aparatu</string>
+  <string name="create_a_wallet">Utwórz portfel</string>
+  <string name="log_in">Zaloguj się</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatyczne parowanie</string>
+  <string name="pair_wallet_step_1">Zaloguj się do swojego Portfela Blockchain na swoim komputerze lub Macu pod adresem %1$s</string>
+  <string name="pair_wallet_step_2">Jeśli korzystasz ze starego portfela, kliknij przycisk Ustawienia Konta i wybierz zakładkę Urządzenia. Jeśli korzystasz z nowej wersji beta Portfela, przejdź do Ustawień / Informacji o Portfelu.</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Kliknij \"Pokaż kod parowania\", by zobaczyć kwadratowy, czarno-biały kod QR. Zeskanuj kod swoim aparatem.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Identyfikator portfela</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Mój portfel bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Odzyskaj środki</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Zawsze należy sparować lub się zalogować, jeśli masz dostęp do swojego identyfikatora portfela i hasła. Odzyskiwanie środków spowoduje stworzenie nowego identyfikatora portfela. Czy chcesz kontynuować?</string>
+  <string name="recover_funds_instructions">Wpisz 12 słów ze spacjami zwrotu zapasowego, by odzyskać swoje środki i transakcje.</string>
+  <string name="recovery_passphrase">Zwrot zapasowy</string>
+  <string name="invalid_recovery_phrase">Nieprawidłowy zwrot zapasowy. Spróbuj ponownie.</string>
+  <string name="creating_wallet">Tworzenie portfela</string>
+  <string name="restore_failed">Przywracanie portfela nie powiodło się. Spróbuj ponownie</string>
+  <string name="restoring_wallet">Przywracanie portfela.</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Hasło</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mail</string>
+  <string name="agree_terms_of_service">Tworząc nowy portfel, zgadzasz się na</string>
+  <string name="blockchain_tos">Warunki korzystania z usług Blockchain</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Stwórz Portfel</string>
+  <string name="new_wallet">Nowy portfel</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Słabe</string>
+  <string name="strength_medium">Standardowe</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Silne</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normalny</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Kontynuuj</string>
+  <string name="SEND">WYŚLIJ</string>
+  <string name="total">W sumie</string>
+  <string name="max_available">Użyj sumy minus opłata:</string>
+  <string name="invalid_bitcoin_address">Nieprawidłowy adres bitcoin</string>
+  <string name="invalid_amount">Nieprawidłowa kwota</string>
+  <string name="insufficient_funds">Niewystarczające środki</string>
+  <string name="enter_double_encryption_pw">Proszę wpisać hasło podwójnego szyfrowania</string>
+  <!-- (No Commment) -->
+  <string name="support">Wsparcie</string>
+  <string name="rate_us">Oceń nas</string>
+  <string name="licenses">Licencje</string>
+  <string name="email_chooser">Wyślij e-mail…</string>
+  <string name="about">Portfel Blockchain %1$s
+©%2$s Blockchain Luxembourg S.A.
+Wszelkie prawa zastrzeżone.</string>
+  <string name="merchant_download">Darmowa aplikacja Merchant</string>
+  <string name="password_or_wipe">Wejdź korzystając z hasła lub zapomnij ten portfel</string>
+  <string name="use_password">Użyj hasła</string>
+  <string name="wipe_wallet">Zapomnij portfel</string>
+  <string name="support_leaving_app_warning">Spowoduje to wyjście z aplikacji i otworzenie przeglądarki. Kontynuować?</string>
+  <string name="weak_password">Wybrane hasło jest za słabe, by zabezpieczać Twoje środki. Bardzo zalecamy wybranie innego. Czy chciałbyś podać nowe hasło?</string>
+  <!-- (No Commment) -->
+  <string name="from">od</string>
+  <!-- (No Commment) -->
+  <string name="to">Do</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Potwierdź płatność</string>
+  <string name="fee">Oplata</string>
+  <string name="exit_confirm">Wciśnij przycisk \"Wstecz\" ponownie, aby wyjść</string>
+  <string name="label_address">Udało się poprawnie zaimportować Twój adres. Opcjonalnie możesz przypisać temu adresowi przyjazną nazwę do wyświetlania.</string>
+  <string name="label_address2">Twój adres został poprawnie stworzony. Opcjonalnie możesz przypisać temu adresowi przyjazną nazwę do wyświetlania.</string>
+  <string name="bip38_error">Nieprawidłowe hasło do klucza prywatnego</string>
+  <string name="privkey_error">Nierozpoznany format klucza prywatnego</string>
+  <string name="hd_error">Błąd portfela HD</string>
+  <string name="scan_not_recognized">Nie można odkodować zeskanowanego kodu</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Adresy zaimportowane</string>
+  <string name="remote_save_ok">Zdalne zapisywanie udane</string>
+  <string name="remote_save_ko">Zdalne zapisywanie nieudane</string>
+  <string name="unpair_wallet">Odparuj Portfel</string>
+  <string name="unpair">ODPARUJ</string>
+  <string name="ok_cap">OK</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Zmień PIN</string>
+  <string name="enter_current_pin">Proszę podać aktualny PIN</string>
+  <string name="addresses_bitcoin">Adresy Bitcoin</string>
+  <string name="create_new">Stwórz nowy</string>
+  <string name="import_address">Importuj adres</string>
+  <string name="wallets">Portfele</string>
+  <string name="save_name">Nazwa zapisu</string>
+  <string name="receive_address_to_clipboard">Skopiować ten adres do odbierania do schowka? Jeśli tak, pamiętaj, że inne aplikacje mogą mieć dostęp do tej informacji.</string>
+  <string name="receive_address_to_share">Udostępnić ten adres do odbierania dla wysyłania? Jeśli tak, pamiętaj, że inne aplikacje mogą mieć dostęp do tej informacji.</string>
+  <string name="guid_to_clipboard">Skopiować Twój identyfikator portfela do schowka? Jeśli tak, pamiętaj, że inne aplikacje mogą mieć dostęp do tej informacji.</string>
+  <string name="ssl_pinning_invalid">Przypinanie certyfikatu SSL nieudane. Może to oznaczać działanie złośliwe. Proszę potwierdzić, że Twoje połączenie sieciowe i urządzenie działają poprawnie, zanim będziesz kontynuować</string>
+  <string name="description">Opis</string>
+  <!-- (No Commment) -->
+  <string name="name">Nazwa</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Zapisz</string>
+  <string name="next">Dalej</string>
+  <string name="received_bitcoin">Otrzymane bitcoiny</string>
+  <string name="received_ethereum">Otrzymane Ether</string>
+  <string name="verification_failed">Weryfikacja nieudana</string>
+  <string name="send_payment">Wyślij płatność</string>
+  <string name="share">Udostępnij adres do odbierania</string>
+  <string name="scan_qr">Skanuj kod QR</string>
+  <string name="confirm_password">Potwierdź hasło</string>
+  <string name="check_email_to_auth_login">Sprawdź swój e-mail, by zatwierdzić tę próbę logowania.</string>
+  <string name="transaction_fee">Opłata transakcyjna</string>
+  <string name="your_transactions">Brak transakcji</string>
+  <string name="transaction_occur_when_bitcoin">Transakcje mają miejsce, gdy wysyłasz lub otrzymujesz bitcoiny.</string>
+  <string name="transaction_occur_when_eth">Transakcje mają miejsce, gdy wysyłasz i otrzymujesz ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transakcje mają miejsce, gdy otrzymujesz lub wysyłasz BCH.</string>
+  <string name="click">Kliknij</string>
+  <string name="to_start_sending_and_receiving_btc">aby rozpocząć wysyłanie i otrzymywanie bitcoinów.</string>
+  <string name="address_book_label">(książka adresowa)</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Zarchiwizowano</string>
+  <string name="transaction_submitted">Transakcja zakończona</string>
+  <string name="transaction_failed">Transakcja nieudana</string>
+  <string name="UPGRADE_YOUR_WALLET">OK, zacznijmy!</string>
+  <string name="upgrade_page_1">Uproszczony proces tworzenia kopii zapasowej i odzyskiwania</string>
+  <string name="upgrade_page_2">Zwiększona prywatność za pomocą hierarchicznych deterministycznych adresów.</string>
+  <string name="upgrade_page_3">Spersonalizuj sposób organizacji bitcoinów swoim Portfelu Blockchain</string>
+  <!-- <string name="confirm_upgrade_info">这次升级仅需一小段时间，你的比特币和交易记录是安全的。升级的好处：\n\n✓ 全新的设计和用户体验\n✓ 强大的安全中心\n✓ 增强的隐私性\n✓ 简化的备份与恢复\n✓ 自定义的资金管理\n\nOne 此次新版本不支持高级交易类型（共享加密货币）</string> -->
+  <string name="confirm_upgrade_header">Dodaliśmy te nowe funkcje do Twojego portfela Blockchain:</string>
+  <string name="upgrading">Ulepszanie...</string>
+  <string name="upgrading_started_info">Twój portfel jest właśnie ulepszany, prosimy o cierpliwość, gdyż może to chwilę potrwać, w zależności od rozmiaru i wieku Twojego portfela.</string>
+  <string name="upgrade_success_heading">Twój portfel został ulepszony!</string>
+  <string name="upgrade_success_info">W tej chwili korzystasz z najbezpieczniejszego Portfela Blockchain o największej prywatności. Możesz teraz przejść do swojego portfela.</string>
+  <string name="CLOSE">ZAMKNIJ</string>
+  <string name="total_funds">Wszystkie</string>
+  <string name="unexpected_error">Niespodziewany błąd, spróbuj ponownie później.</string>
+  <string name="upgrade_fail_heading">Ulepszanie portfela nieudane!</string>
+  <string name="upgrade_fail_info">W trakcie ulepszania Twojego portfela wystąpił błąd. Spróbuj ponownie później.</string>
+  <string name="not_sane_error">Instalacja Twojego Portfela Blockchain nie została zakończona. Proszę sparować swój portfel raz jeszcze lub stworzyć nowy.</string>
+  <string name="watchonly_address_receive_warning">Masz zamiar otrzymać bitcoiny na adres tylko do odczytu. Możesz wydać te środki jedynie, jeśli masz dostęp do prywatnego klucza. Kontynuować?</string>
+  <string name="camera_unavailable">Aparat jest w tej chwili używany przez inną aplikację. Zamknij tę aplikację i spróbuj ponownie.</string>
+  <string name="validating_password">Zatwierdzanie hasła…</string>
+  <string name="validating_pin">Zatwierdzanie PINu…</string>
+  <string name="creating_pin">Tworzenie PINu…</string>
+  <string name="decrypting_wallet">Odszyfrowywanie Portfela…</string>
+  <string name="password_unchanged">Hasło nie zostało zmienione</string>
+  <string name="password_changed">Hasło zostało zmienione</string>
+  <string name="password_changed_explanation">Twoje hasło zostało zmienione, sparuj ponownie swój portfel</string>
+  <string name="verify_email2">Twój potwierdzony adres e-mail używany jest do przesyłania kodów do logowania, gdy wykryta zostanie podejrzana lub niecodzienna aktywność; do przypominania Ci Twoich danych do logowania się do portfela, a także wysyłania powiadomień, gdy otrzymasz płatność w bitcoinach.</string>
+  <string name="disable_root_warning">Wyłącz ostrzeżenie o zrootowanym urządzeniu</string>
+  <string name="show_balance">Pokaż saldo</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Stwórz nowy adres</string>
+  <string name="auth_failed">Autoryzacja nieudana. Proszę spróbować ponownie.</string>
+  <string name="send_failed">Wysyłanie nieudane. Proszę spróbować ponownie.</string>
+  <string name="wallet_updated">Aktualizacja portfela otrzymana</string>
+  <string name="device_rooted">Twoje urządzenie wygląda na zrootowane. Proszę pamiętać, że przechowywanie środków na zrootowanym urządzeniu nie jest bezpieczne, a ponadto może sprawiać problemy ze stabilnością. Jeśli kontynuujesz korzystanie z naszego portfela bitcoin na tym urządzeniu, zalecamy korzystanie z podwójnego szyfrowania na Twoim koncie Blockchain.</string>
+  <string name="address_already_in_wallet">Twój portfel już zawiera ten adres.</string>
+  <string name="cannot_create_address">W tej chwili nie można stworzyć nowego adresu. Proszę spróbować ponownie.</string>
+  <string name="saving_address">Zapisywanie adresu…</string>
+  <string name="cannot_launch_app">Portfel Blockchain nie może zostać uruchomiony na tym urządzeniu.</string>
+  <!-- (No Commment) -->
+  <string name="label">Etykieta</string>
+  <!-- (No Commment) -->
+  <string name="edit">Edytuj</string>
+  <string name="label_cant_be_empty">Etykieta nie może być pusta.</string>
+  <string name="label_name_match">Nazwa jest już używana.</string>
+  <!-- (No Commment) -->
+  <string name="warning">Uwaga</string>
+  <string name="ssl_no_connection">Nie udało nam się połączyć z hostem w celu potwierdzenia certyfikatu SSL. Proszę potwierdzić, że Twoje połączenie sieciowe i urządzenie działają poprawnie, zanim będziesz kontynuować</string>
+  <string name="retry">Spróbuj ponownie</string>
+  <string name="exit">Wyjdź</string>
+  <string name="screen_overlay_warning">Wykryto nakładkę ekranu!</string>
+  <string name="screen_overlay_note">Aplikacje korzystające z nakładek ekranu mogą wymusić na Tobie kliknięcie niewidocznych obiektów i potencjalnie ukraść Twoje środki. Pamiętaj, że to ostrzeżenie pojawi się również w przypadku aplikacji przyciemniających ekran. Jeśli masz pewność, że nie ma żadnego zagrożenia, możesz kontynuować. </string>
+  <string name="archived_description">Ten adres jest zarchiwizowany i niedostępny w aplikacji mobilnej. Pomimo, że nie możesz wysyłać środków z tego adresu, środki na nim będą bezpieczne. Wystarczy \"wyjąć\" ten adres z archiwum, by móc znowu z niego korzystać.</string>
+  <string name="not_archived_description">Ten adres nie jest zarchiwizowany. Archiwizuj ten adres, jeśli NIE chcesz więcej z niego korzystać. Twoje środki pozostaną bezpieczne, a Ty możesz \"wyjąć\" go z archiwum w dowolnej chwili.</string>
+  <string name="transfer_success_archive_prompt_title">Archiwizować przeniesione adresy?</string>
+  <plurals name="transfer_success_archive_prompt_plurals">
+    <item quantity="one">1 adres udało się przenieść do mojego portfela bitcoin. Czy chcesz teraz zarchiwizować ten adres?</item>
+    <item quantity="few"></item>
+    <item quantity="many"></item>
+    <item quantity="other">%d adresy/adresów udało się przenieść do mojego portfela bitcoin. Czy chcesz teraz zarchiwizować te adresy?</item>
+  </plurals>
+  <string name="default_account_description">Ten adres został ustawiony jako domyślny i nie można go zarchiwizować.</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Rozszerzony Klucz publiczny</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adres</string>
+  <string name="copy_xpub">Kopiuj xpub</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Udostępnianie swojego xPub autoryzuje innych do śledzenia Twojej historii transakcji. Ponieważ osoby autoryzowane mogą zablokować Twój dostęp do portfela, udostępniaj swój xPub ludziom, którym ufasz.</string>
+  <string name="assign_display_name">Przypisz przyjazną nazwę wyświetlania.</string>
+  <string name="copy_address">Kopiuj adres</string>
+  <!-- (No Commment) -->
+  <string name="archive">Archiwizuj</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Nie archiwizuj</string>
+  <string name="archive_are_you_sure">Czy na pewno chcesz to zarchiwizować?</string>
+  <string name="unarchive_are_you_sure">Czy na pewno chcesz przestać to archiwizować?</string>
+  <string name="send_to_same_address_warning">Nie można wysłać pod ten sam adres.</string>
+  <string name="make_default">Ustaw jako domyślne</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Potrzebny klucz prywatny</string>
+  <string name="invalid_private_key">Nieprawidłowy klucz prywatny</string>
+  <string name="watch_only_import_warning">Zamierzasz importować adres tylko do odczytu, adres (lub skrypt klucza publicznego) przechowywany w portfelu bez odpowiadającego mu klucza prywatnego. Oznacza to, że środki z tego adresu możesz wydawać tylko, jeśli masz klucz prywatny przechowywany gdzie indziej. Jeśli nie masz takiego klucza, NIE podawaj adresu tylko do odczytu jako adresu do otrzymywania bitcoinów. 
+
+Te opcje są zalecane tylko dla zaawansowanych użytkowników. Kontynuować? </string>
+  <string name="scan_private_key">Skanuj klucz prywatny</string>
+  <string name="private_key_successfully_imported">Udało się zaimportować klucz prywatny.</string>
+  <string name="private_key_not_matching_address">UWAGA: zeskanowany prywatny klucz nie odpowiada Twojemu adresowi tylko do odczytu. Aby móc wydać środki z tego adresu, zeskanuj prawidłowy prywatny klucz.</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Tylko do odczytu</string>
+  <string name="extended_public_key_description">Jeśli jesteś kupcem, pokaż swój xPub i skorzystaj z aplikacji Blockchain Merchant, by bezpiecznie i prywatnie otrzymywać środki.
+
+Nie udostępniaj swojego klucza xPub.         Osoby z dostępem do Twojego klucza xPub będą miały wgląd w Twoje środki i transakcje. </string>
+  <string name="watch_only_description">To jest adres tylko do odczytu. Aby móc wydać swoje środki z</string>
+  <!-- (No Commment) -->
+  <string name="success">Udało się</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Domyślne</string>
+  <string name="try_again">Spróbuj ponownie</string>
+  <!-- FUNDS TRANSFER -->
+  <string name="transfer">Prześlij</string>
+  <string name="transfer_funds">Prześlij środki</string>
+  <string name="transfer_recommend">Wygląda na to, że masz nieco bitcoinów na zaimportowanych adresach. Importowane adresy nie są wspierane przez Twój zwrot zapasowy. Aby zabezpieczyć te środki, zalecamy przelanie tych sald, by zostały uwzględnione w kopii bezpieczeństwa.</string>
+  <string name="spendable_addresses">adresy rozporządzalne</string>
+  <string name="transfer_confirmed">Potwierdzono przelew</string>
+  <string name="transfer_confirm">Potwierdź przelew</string>
+  <string name="transfer_all">Przelej wszystko</string>
+  <string name="transfer_amount">Kwota przelewu</string>
+  <string name="transfer_archive_message">Zarchiwizuj zaimportowane adresy po dokonaniu przelewu</string>
+  <string name="transfer_archive">Potwierdzono archiwizację</string>
+  <string name="dont_ask_again">Nie pytaj mnie ponownie.</string>
+  <string name="insufficient_fee">Opłata transakcyjna jest zbyt niska.</string>
+  <string name="customize">personalizuj</string>
+  <string name="amount">Kwota</string>
+  <string name="recommended_fee">Opłaty transakcyjne mają wpływ na to, jak szybko Sieć Kopalni Bitcoin potwierdzi Twoje transakcje i zależą od obecnych warunków sieci.  W obecnym czasie zalecamy poniższą opłatę do tej transakcji.</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Nie teraz</string>
+  <string name="high_fee_not_necessary_info">Ustaliłeś stosunkowo wysoką opłatę transakcyjną w kwocie %1$s.
+
+Nawet jeśli obniżysz ją do %2$s, możesz spodziewać się potwierdzenia transakcji w przeciągu około 10 minut (1 bloku).</string>
+  <string name="low_fee_suggestion">Ustaliłeś wyjątkowo niską opłatę transakcyjną w kwocie %1$s.
+
+Twoja transakcja może utknąć i nie doczekać się potwierdzenia.  By zwiększyć prawdopodobieństwo potwierdzenia Twojej transakcji w ciągu 1 godziny (6 bloków) bardzo zalecamy ustalenie opłaty nie niższej niż %2$s.</string>
+  <string name="raise_fee">Podnieś opłatę</string>
+  <string name="lower_fee">Obniż opłatę</string>
+  <string name="keep_high_fee">Utrzymaj wysoką opłatę</string>
+  <string name="keep_low_fee">Utrzymaj niską opłatę</string>
+  <string name="no_confirmed_funds">Brak potwierdzonych środków do wydania.</string>
+  <string name="estimate_confirm_block_count">Szacowany czas potwierdzenia: ok. %1$d minut (%2$d bloków)</string>
+  <string name="fee_too_low_no_confirm">Twoja opłata jest tak niska, że transakcja może nie zostać potwierdzona.</string>
+  <string name="transaction_surge">Sieć Kopalni Bitcoin odnotowuje w tej chwili wysoką aktywność, co powoduje, że zalecane opłaty transakcyjne są wyższe niż zwykle.</string>
+  <string name="unsupported_encryption_version">Wersja portfela %1$s nie jest wspierana.</string>
+  <!-- (No Commment) -->
+  <string name="logout">Wyloguj</string>
+  <string name="to_field_helper">Podaj lub wybierz adres bitcoin</string>
+  <string name="to_field_helper_no_dropdown">Podaj adres bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="update">Aktualizuj</string>
+  <string name="mobile">Mobilne</string>
+  <string name="profile">Profil</string>
+  <string name="app">Aplikacja</string>
+  <!-- (No Commment) -->
+  <string name="verify">Zweryfikuj</string>
+  <string name="resend">Wyślij ponownie</string>
+  <string name="verified">zweryfikowano</string>
+  <string name="unverified">nie zweryfikowano</string>
+  <!-- (No Commment) -->
+  <string name="allow">Zezwól</string>
+  <!-- (No Commment) -->
+  <string name="block">Blokuj</string>
+  <!-- (No Commment) -->
+  <string name="security">Bezpieczeństwo</string>
+  <!-- (No Commment) -->
+  <string name="enable">Włącz</string>
+  <!-- (No Commment) -->
+  <string name="disable">Wyłącz</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Authenticator</string>
+  <string name="yubikey">Yubikey</string>
+  <string name="disable_2fa_first">Najpierw wyłącz uwierzytelnianie dwustopniowe za pomocą SMS-a w ustawieniach bezpieczeństwa.</string>
+  <string name="disable_online_only">Zaloguj się do swojego portfela w przeglądarce, by wyłączyć uwierzytelnianie dwustopniowe.</string>
+  <string name="settings_field_cant_be_empty">Pole nie może być puste.</string>
+  <string name="settings_error_updating">Błąd aktualizacji ustawień, spróbuj ponownie</string>
+  <string name="request_camera_permission">Dostęp do aparatu jest wymagany.</string>
+  <string name="request_location_permission">Dostęp do lokalizacji jest wymagany.</string>
+  <string name="request_write_storage_permission">Wymagane jest zewnętrzne urządzenie zapisu.</string>
+  <string name="not_specified">nie określono</string>
+  <string name="update_failed">Nie udało się zaktualizować</string>
+  <string name="verify_mobile">Zweryfikuj komórkę</string>
+  <string name="select_country">Wybierz kraj</string>
+  <string name="verify_sms_summary">Wysłaliśmy na Twój telefon komórkowy wiadomość SMS z kodem weryfikacyjnym. Wpisz ten kod, by zweryfikować swój numer telefonu komórkowego.</string>
+  <string name="verify_sms_failed">Błędny kod, spróbuj ponownie</string>
+  <string name="mobile_description">Twój telefon komórkowy może zostać użyty do włączenia Uwierzytelniania Dwustopniowego, co pomoże w zabezpieczeniu Twojego portfela przed nieautoryzowanym dostępem.</string>
+  <string name="enable_fingerprint">Odblokowanie odciskiem palca</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">Uwierzytelnianie Dwustopniowe</string>
+  <string name="tor_requests">Zablokuj żądania Tor</string>
+  <string name="tor_summary">Blokuj adresy IP, które są częścią anonimowej sieci Tor. Sieć Tor jest często wykorzystywana przez hakerów, którzy usiłują włamać się do portfeli Blockchain.</string>
+  <string name="enable_screenshots">Włącz zrzuty ekranu</string>
+  <string name="enable_screenshots_summary">Czasami aplikacja wyświetla wrażliwe dane. Inne aplikacje będą mogły uzyskać dostęp do zrzutów ekranu z tymi danymi.</string>
+  <string name="password_hint_summary">Aplikacja Blockchain Wallet nigdy nie przesyła Twojego hasła na nasze serwery. Oznacza to, że nie mamy pojęcia, jakie jest Twoje hasło i nie mamy możliwości jego skasowania, jeśli go zapomnisz. Stwórz łatwą do zapamiętania wskazówkę dotyczącą hasła, którą wyślemy na Twój potwierdzony adres e-mail w razie, gdy zapomnisz hasło.</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Zmień hasło</string>
+  <string name="change_password_summary">Twoje hasło nie jest przechowywane na naszych serwerach, co oznacza, że nie będziemy mogli Ci pomóc w jego zresetowaniu, gdy go zapomnisz. Upewnij się, że zrobiłeś kopię bezpieczeństwa swoich środków w bocznym menu, co może przywrócić dostęp do portfela w razie utraty hasła.</string>
+  <string name="verify_email_notice">Wysłaliśmy link weryfikacyjny na Twój adres e-mail. Kliknij link, by zweryfikować swój adres e-mail.</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Powiadomienia e-mail</string>
+  <string name="email_notifications_summary">Otrzymuj powiadomienie, gdy otrzymasz bitcoiny.</string>
+  <string name="current_password">Obecne hasło</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Nowe hasło</string>
+  <string name="sms_verified">Numer telefonu komórkowego zweryfikowany</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Preferencje</string>
+  <string name="two_fa_summary">Chroń swój portfel przed nieautoryzowanym dostępem poprzez włączenie Uwierzytelniania Dwustopniowego.</string>
+  <string name="two_fa_description">Chroń swój portfel przed nieautoryzowanym dostępem poprzez włączenie Uwierzytelniania Dwustopniowego. Możesz korzystać z numeru telefonu komórkowego, by chronić swój portfel. Zostaniesz poproszony o ten kod, gdy będziesz próbował otrzymać dostęp do portfela przez przeglądarkę internetową.
+\Aby skorzystać z innej metody uwierzytelniania, zaloguj się naszego portfela sieciowego tutaj %1$s</string>
+  <string name="rate_title">Oceń Portfel Blockchain</string>
+  <string name="rate_message">Podoba Ci się Portfel Blockchain? Poświęć chwilę na wystawienie nam recenzji w Google Play i daj znać innym.</string>
+  <string name="rate_yes">Tak, oceń Portfel Blockchain</string>
+  <string name="rate_no">Nie, dzięki</string>
+  <string name="rate_later">Przypomnij mi później</string>
+  <string name="why_has_my_address_changed">Dlaczego mój adres uległ zmianie?</string>
+  <!-- (No Commment) -->
+  <string name="information">Informacje</string>
+  <string name="learn_more">Dowiedz się więcej</string>
+  <string name="pairing_code_log_in">Zaloguj się do Portfela internetowego</string>
+  <string name="pairing_code_instruction_1">Przejdź do %1$s na swoim komputerze.</string>
+  <string name="pairing_code_instruction_2">Wybierz Zaloguj się przy użyciu urządzenia mobilnego.</string>
+  <string name="pairing_code_instruction_3">Przy użyciu aparatu komputera zeskanuj poniższy kod QR.</string>
+  <string name="pairing_code_show_qr">Pokaż kod QR</string>
+  <string name="pairing_code_hide_qr">Ukryj kod QR</string>
+  <string name="pairing_code_warning_1">Trzymaj ten kod ukryty, aż będziesz gotowy.</string>
+  <string name="pairing_code_warning_2">Przechowuj ten kod w bezpiecznym miejscu!
+Nie udostępniaj go innym.</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Żądanie płatności bitcoin</string>
+  <string name="email_request_subject_eth">Żądanie płatności w Ether</string>
+  <string name="email_request_body">Proszę wysłać %1$s BTC na adres bitcoin %2$s</string>
+  <string name="email_request_body_eth">Wyślij ETH pod adres Ether %1$s.</string>
+  <string name="email_request_body_fallback">załączono</string>
+  <string name="share_instructions">Dotknij, aby skopiować ten adres. Udostępnij go nadawcy poprzez e-mail lub SMS.</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Uwaga</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">Wybrany przez Ciebie PIN jest bardzo powszechny i osoba z dostępem do Twojego telefonu może z łatwością odgadnąć go w 3 próbach. Czy chcesz użyć tego PINu mimo to?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Spróbuj ponownie</string>
+  <string name="common_pin_dialog_continue">Kontynuuj</string>
+  <!-- PASSWORD REENTRY ACTIVITY -->
+  <string name="logged_out_enter_password">Wylogowałeś się, lub wystąpił błąd w rozszyfrowywaniu Twojego portfela. Poniżej wpisz swoje hasło, by rozpocząć.</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Jeśli chcesz zapomnieć ten portfel i zacząć od nowa, wciśnij \"Zapomnij Portfel\".</string>
+  <string name="forget_wallet">Zapomnij portfel</string>
+  <string name="forget_wallet_warning">W ten sposób wyczyścisz wszystkie dane portfela na tym urządzeniu. Potwierdź, że zapisałeś dane portfela w innym miejscu. W przeciwnym wypadku utracisz dostęp do wszystkich bitcoinów w tym portfelu!!</string>
+  <string name="api_fail">Nie udało się połączyć z serwerem. Spróbuj ponownie później.</string>
+  <!-- FEE WARNING -->
+  <string name="large_tx_warning">Ta transakcja bitcoin jest za duża. Twój portfel musi skonsolidować wiele mniejszych płatności, otrzymanych przez Ciebie w przeszłości. Wymaga to stosunkowo wysokiej opłaty w celu szybkiego potwierdzenia.</string>
+  <string name="go_back">Wróć</string>
+  <string name="accept_higher_fee">Zaakceptuj wyższą opłatę</string>
+  <string name="large_tx_high_fee_warning">\"Ta transakcja wymaga wyższej opłaty dla konsumpcji \"kurzu\" z powodu małej kwoty reszty.\"</string>
+  <string name="password_reveal_warning">Bądź ostrożny! Ujawnienie tego tekstu umożliwi skopiowanie Twojego hasła do schowka, co z kolei zezwoli wszystkim aplikacjom na Twoim urządzeniu na jego odczytanie.  Uważaj również na wszystkie osoby za Twoimi plecami!</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transakcja</string>
+  <string name="transaction_detail_description_hint">Do czego mi to potrzebne?</string>
+  <string name="transaction_detail_date">Data</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_detail_confirmed">Potwierdzono</string>
+  <string name="transaction_detail_pending">W oczekiwaniu (Potwierdzenia: %1$s/%2$s)</string>
+  <string name="transaction_detail_fee">\"Opłata transakcyjna: %1$s\"</string>
+  <string name="transaction_detail_value_at_time_received">Wartość po otrzymaniu:\u0020</string>
+  <string name="transaction_detail_value_at_time_transferred">Wartość po przelaniu:\u0020</string>
+  <string name="transaction_detail_value_at_time_sent">Wartość po wysłaniu:\u0020</string>
+  <string name="transaction_detail_value">Wartość:\u0020</string>
+  <string name="transaction_details_unknown">Nieznany</string>
+  <string name="transaction_detail_coinbase">Brak wkładów (nowo wygenerowane monety)</string>
+  <string name="transaction_detail_double_spend">Zachodzi ryzyko podwójnego naliczenia.</string>
+  <string name="transaction_detail_verify">Zweryfikuj na Blockchain.com</string>
+  <string name="transaction_detail_verify_etherscan">Zweryfikuj na Etherscan.io</string>
+  <string name="transaction_detail_share_chooser">Udostępnij szczegóły dot. transakcji</string>
+  <string name="transaction_detail_contact_note">Uwaga</string>
+  <!-- SECURITY CENTRE -->
+  <string name="security_centre_email_title">Sprawdź skrzynkę odbiorczą</string>
+  <string name="security_centre_email_check">Sprawdź e-mail</string>
+  <string name="security_centre_email_message">Wysłaliśmy e-mail do %1$s. Aby dokończyć konfigurowanie swojego portfela, odszukaj wiadomość e-mail od Blockchain i kliknij link weryfikacyjny.</string>
+  <string name="security_centre_add_email_title">Adres e-mail</string>
+  <string name="security_centre_add_email_message">Dodaj i zweryfikuj swój adres e-mail, aby otrzymywać alerty, zapobiegać podejrzanym działaniom oraz odzyskać swój Wallet ID, jeśli go zapomnisz.</string>
+  <string name="security_centre_add_email_positive_button">Dodaj</string>
+  <string name="security_centre_backup_title">Wykonaj kopię zapasową swoich środków</string>
+  <string name="security_centre_backup_message">Aby zapewnić Ci bezpieczeństwo, nie przechowujemy żadnych haseł. Zrób kopię zapasową swojego portfela, aby zapewnić swoim środkom bezpieczeństwo w razie utraty hasła. </string>
+  <string name="security_centre_backup_positive_button">Kopia zapasowa</string>
+  <string name="security_centre_two_fa_message">Zapobiegaj nieautoryzowanemu dostępowi do swojego portfela. Aby poprawić bezpieczeństwo portfela, włącz dwustopniową weryfikację.</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Zwrot zapasowy</string>
+  <string name="backup_explanation">Dla Twojego bezpieczeństwa serwis Blockchain nie przechowuje żadnych haseł. Poniższy zwrot zapasowy składający się z 12 słów zapewni Ci dostęp do środków w razie utraty hasła. Pamiętaj, aby zapisać go na kartce i przechowywać w bezpiecznym miejscu. </string>
+  <string name="backup_button_start">Wykonaj kopię zapasową</string>
+  <string name="backup_write_down_words">To ważne, aby zapisać sobie te słowa dokładnie tak jak się tutaj pojawiają i w tej samej kolejności.</string>
+  <string name="backup_header_complete">Utworzono kopię zapasową</string>
+  <string name="backup_complete_message">Możesz użyć zwrotu zapasowego do przywrócenia środków, gdy zgubisz hasło. Każdy z dostępem do Twojego zwrotu zapasowego może mieć dostęp do Twoich środków, dlatego pamiętaj, aby przechowywać go offline w bezpiecznym miejscu.</string>
+  <string name="backup_again">Powtórz kopię zapasową</string>
+  <string name="backup_confirmed">Kopia zapasowa potwierdzona</string>
+  <string name="backup_last">Ostatnia kopia zapasowa: %1$s</string>
+  <string name="backup_verify_heading">Wpisz poniższe słowa ze swojego zwrotu zapasowego, by dokończyć proces tworzenia kopii zapasowej.</string>
+  <string name="backup_next_word">NASTĘPNE SŁOWO</string>
+  <string name="backup_previous_word">POPRZEDNIE SŁOWO</string>
+  <string name="backup_word">Słowo</string>
+  <string name="backup_of">z</string>
+  <string name="backup_word_mismatch">Słowa się nie zgadzają</string>
+  <string name="backup_done">GOTOWE</string>
+  <string name="backup_lost_mnemonic">Zgubiłeś swój zwrot zapasowy składający się z 12 słów?</string>
+  <!-- FINGERPRINT -->
+  <string name="fingerprint_prompt">Używaj odcisku palca, aby uzyskiwać dostęp do portfela szybciej i łatwiej.
+
+Potwierdź odcisk palca, aby kontynuować</string>
+  <string name="fingerprint_description">Potwierdź odcisk palca, aby kontynuować</string>
+  <string name="fingerprint_hint">Czujnik dotyku</string>
+  <string name="fingerprint_login_title">Logowanie z odciskiem palca</string>
+  <string name="fingerprint_not_recognized">Nie rozpoznano odcisku palca Spróbuj ponownie</string>
+  <string name="fingerprint_success">Rozpoznano odcisk palca</string>
+  <string name="fingerprint_use_pin">Użyj kodu PIN</string>
+  <string name="fingerprint_disable_message">Czy na pewno chcesz wyłączyć logowanie z odciskiem palca?</string>
+  <string name="fingerprint_no_fingerprints_added">Z tym urządzeniem nie powiązano jeszcze odcisków palca. Czy chcesz teraz zarejestrować odcisk palca?</string>
+  <string name="fingerprint_key_invalidated_description">Albo odciski palca przechowywane na tym urządzeniu uległy zmianie, albo wyłączono blokadę klawiatury</string>
+  <string name="fingerprint_key_invalidated_brief">Unieważniono klucze, kod PIN wymagany</string>
+  <string name="fingerprint_fatal_error_register_description">W ciągu ostatnich 30 minut podjęto zbyt dużo nieudanych prób. Spróbuj dokonać konfiguracji później.</string>
+  <string name="fingerprint_fatal_error_authenticate_description">Podjęto zbyt dużo nieudanych prób. Zamiast tego zaloguj się, używając kodu PIN.</string>
+  <string name="fingerprint_fatal_error_brief">Nieoczekiwany błąd</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Kopiuj adres</string>
+  <string name="shortcut_receive_copy_long">Kopiuj adres odbioru do innej aplikacji</string>
+  <string name="shortcut_receive_qr_short">Pokaż QR Odbioru</string>
+  <string name="shortcut_receive_qr_long">Wyświetl kod QR dla adresu odbioru</string>
+  <string name="shortcut_receive_qr_error">Przepraszamy, podczas generowania kodu QR wystąpił błąd</string>
+  <string name="shortcut_settings_summary">Udostępnij adres odbierania przytrzymując ikonę aplikacji, dzięki czemu będziesz mógł otrzymywać bitcoiny jeszcze szybciej.</string>
+  <!-- CONTACTS -->
+  <string name="contacts_title">Kontakty</string>
+  <string name="contacts_loading_failed">Wczytywanie kontaktów nie powiodło się. Spróbuj ponownie.</string>
+  <string name="contacts_pairing_method_title">Dodaj kontakt</string>
+  <string name="contacts_choose_pairing_method">Wybierz metodę parowania, której chcesz użyć w celu dodania zaufanego kontaktu:</string>
+  <string name="contacts_send_link">Wyślij link</string>
+  <string name="contacts_use_nfc">Użyj NFC</string>
+  <string name="contacts_no_contacts_found">Nie znaleziono kontaktów</string>
+  <string name="contacts_delete_contact_success">Usunięto kontakt</string>
+  <string name="contacts_delete_contact_failed">Usuwanie kontaktu nie powiodło się. Spróbuj ponownie.</string>
+  <string name="contacts_not_found_error">Nie znaleziono kontaktu</string>
+  <string name="contacts_add_contact_failed">Dodawanie kontaktu nie powiodło się. Spróbuj ponownie</string>
+  <string name="contacts_add_contact_success">Pomyślnie dodano kontakt</string>
+  <string name="contacts_rename_invalid_name">Nieprawidłowa nazwa</string>
+  <string name="contacts_rename_failed">Zmiana nazwy kontaktu nie powiodła się. Spróbuj ponownie</string>
+  <string name="contacts_rename_success">Pomyślnie zmieniono nazwę kontaktu</string>
+  <string name="contacts_error_getting_messages">Błąd odbierania wiadomości</string>
+  <string name="contacts_error_sending_payment_request">Wystąpił błąd podczas wysyłania prośby o płatność. Spróbuj ponownie</string>
+  <string name="contacts_success_sending_payment_request">Wysłano prośbę o płatność</string>
+  <string name="contacts_add_contact_title">Dodaj kontakt</string>
+  <string name="contacts_name_cannot_be_empty">Nieprawidłowa nazwa</string>
+  <string name="contacts_name_field_hint">Nazwa</string>
+  <string name="contacts_add_button">Dodaj</string>
+  <string name="contacts_share_invitation">Udostępnij zaproszenie</string>
+  <string name="contacts_add_are_you_sure">Czy na pewno chcesz dodać %1$s jako zaufany kontakt?</string>
+  <string name="shortcut_settings_enable">Skróty do programu uruchamiającego</string>
+  <string name="contacts_invite_someone">Zaproś kogoś</string>
+  <string name="contacts_being_invited">Zaakceptuj zaproszenie</string>
+  <string name="contacts_who_are_you_inviting_header">Kogo zapraszasz do połączenia się?</string>
+  <string name="contacts_how_are_you_known_header">Pod jaką nazwą zna Cię %1$s?</string>
+  <string name="contacts_scan_instructions">%1$s powinien przeskanować ten kod QR za pomocą aplikacji mobilnej Blockchain Wallet.</string>
+  <string name="contacts_sharing_method_header">W jaki sposób chcesz udostępnić to zaproszenie?</string>
+  <string name="contacts_field_error_empty">Nie może być puste</string>
+  <string name="contacts_share_qr">Za pomocą kodu QR (osobiście)</string>
+  <string name="contacts_share_link">Z użyciem linku</string>
+  <string name="contacts_scan_qr">Przeskanuj kod QR</string>
+  <string name="contacts_sent_link">Ktoś wysłał mi link</string>
+  <string name="contacts_accept_invite_title">Zaakceptuj zaproszenie</string>
+  <string name="contacts_sent_link_explanation">Jeśli ktoś wysłał Ci link, w celu akceptacji wystarczy go wybrać.</string>
+  <string name="contacts_detail_title">Chcę:</string>
+  <string name="contacts_detail_transactions">Transakcje z %1$s:</string>
+  <string name="contacts_detail_transactions_empty">Nie znaleziono transakcji</string>
+  <string name="contacts_rename">Zmień nazwę kontaktu</string>
+  <string name="contacts_delete">Usuń kontakt</string>
+  <string name="contacts_send_bitcoin">Poproś o wysłanie %1$s w walucie bitcoin</string>
+  <string name="contacts_request_bitcoin">Poproś %1$s o bitcoiny</string>
+  <string name="contacts_invalid_qr">Nieprawidłowy kod QR</string>
+  <string name="contacts_request_sent">Wysłano prośbę do kontaktu</string>
+  <string name="contacts_request_just_added">Dodano przed chwilą</string>
+  <string name="contacts_request_trusted">Zaufany</string>
+  <string name="contacts_delete_message">Czy na pewno chcesz usunąć ten kontakt? Usuwając ten kontakt, nie utracisz żadnych bitcoinów.</string>
+  <string name="contacts_payment_request_title">Prośba o płatność</string>
+  <string name="contacts_payment_request_send_note">Czemu chcesz wysłać %1$s bitcoiny? To jest opcjonalne i zostanie udostępnione %1$s.</string>
+  <string name="contacts_payment_request_receive_note">Czemu chcesz, by %1$s wysłał Ci bitcoiny? To jest opcjonalne i zostanie udostępnione %1$s.</string>
+  <string name="contacts_payment_request_send_hint">Pyszny lunch</string>
+  <string name="contacts_payment_request_receive_hint">Na drinki w piątek</string>
+  <string name="contacts_payment_request_note_hint">Uwaga</string>
+  <string name="contacts_payment_request_send_amount">Jaką kwotę chcesz wysłać do %1$s?</string>
+  <string name="contacts_payment_request_receive_amount">Jaką kwotę ma Ci wysłać %1$s? 
+
+To tylko sugestia: faktyczna kwota może być inna.</string>
+  <string name="contacts_payment_request_amount_hint">Kwota</string>
+  <string name="contacts_payment_success_waiting_title">Oczekiwanie na akceptację przez %1$s</string>
+  <string name="contacts_payment_success_request_sent_title">Wysłano prośbę</string>
+  <string name="contacts_payment_success_waiting_message">Twój kontakt został powiadomiony o tym, że chcesz mu wysłać Bitcoiny. Gdy wyrazi na to zgodę, powiadomimy Cię o tym. Wówczas będziesz mógł sfinalizować transakcję.</string>
+  <string name="contact_send_request_button">Wyślij prośbę</string>
+  <string name="contacts_transaction_not_found_error">Nie znaleziono transakcji</string>
+  <string name="contacts_address_sent_success">Pomyślnie wysłano adres</string>
+  <string name="contacts_address_sent_failed">Wysyłanie adresu nie powiodło się</string>
+  <string name="contacts_send_address_message">To prześle adres do Twojego kontaktu. Kontynuować?</string>
+  <string name="contacts_waiting_for_address_message">Twój kontakt został poinformowany o tym, że chcesz wysłać mu bitcoiny i że potrzebujesz w tym celu jego adresu. Powiadomimy Cię o wysłaniu przez Twój kontakt adresu!</string>
+  <string name="contacts_waiting_for_payment_message">Twój kontakt został poinformowany o tym, że chcesz otrzymać od niego bitcoiny i że wysłano mu w tym celu adres. Powiadomimy Cię o wysłaniu przez Twój kontakt bitcoinów!</string>
+  <string name="contacts_digesting_messages_failed">Sprawdzanie wiadomości nie powiodło się. Spróbuj ponownie</string>
+  <string name="contacts_broadcasting_payment">Właśnie poinformowaliśmy Twój kontakt o wysłaniu mu przez Ciebie bitcoinów. Proszę czekać.</string>
+  <string name="contacts_payment_sent_success">Wysłano płatność! Powiadomiliśmy Twój kontakt o sfinalizowaniu przez Ciebie transakcji.</string>
+  <string name="contacts_payment_sent_failed_message">Wystąpił błąd podczas powiadamiania Twojego kontaktu o wysłaniu mu przez Ciebie płatności.  Sprawdź połączenie sieciowe i spróbuj ponownie.</string>
+  <string name="contacts_too_much_sent">Wygląda na to, że wysłałeś więcej bitcoinów niż żądano. Jeżeli chcesz, możesz poprosić swój kontakt o zwrot ich części. Nie oznaczyliśmy płatności jako ukończonej.</string>
+  <string name="contacts_too_little_sent">Wygląda na to, że wysłałeś mniej bitcoinów niż żądano. Twój kontakt nadal otrzyma wysłane bitcoiny, lecz nie oznaczyliśmy płatności jako ukończonej.</string>
+  <string name="contacts_second_password_prompt">Aby skorzystać z tej usługi, musisz wpisać drugie hasło. Będziesz musiał to zrobić tylko raz, by korzystać z funkcji Kontaktów.</string>
+  <string name="contacts_no_confirmed_contacts_found">Nie znaleziono żadnych potwierdzonych kontaktów!</string>
+  <string name="contacts_pending_transaction_delete_success">Pomyślnie usunięto transakcję w toku</string>
+  <string name="contacts_pending_transaction_delete_failure">Usuwanie transakcji w toku nie powiodło się</string>
+  <string name="contacts_pending_transaction_decline_success">Pomyślnie odrzucono transakcję w toku</string>
+  <string name="contacts_pending_transaction_decline_failure">Odrzucanie transakcji w toku nie powiodło się</string>
+  <string name="contacts_pending_transaction_cancel_success">Pomyślnie anulowano transakcję w toku</string>
+  <string name="contacts_pending_transaction_cancel_failure">Anulowanie transakcji w toku nie powiodło się</string>
+  <string name="contacts_receiving_cancelled">Anulowano</string>
+  <string name="contacts_send_complete">Wysłano %1$s do %2$s</string>
+  <string name="contacts_receive_complete">Otrzymano %1$s od %2$s</string>
+  <string name="contacts_received">Otrzymano od %1$s</string>
+  <string name="contacts_sent">Wysłano do %1$s</string>
+  <string name="confirm">Potwierdź</string>
+  <string name="pending">Oczekiwanie</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transakcje</string>
+  <string name="contacts_balance_dialog_payment_requested">Prośba o płatność</string>
+  <string name="contacts_balance_dialog_choose_account_message">Wybierz, gdzie chcesz otrzymać swoje środki.</string>
+  <string name="contacts_balance_dialog_accept">Zaakceptuj</string>
+  <!-- SWIPE TO RECEIVE -->
+  <string name="swipe_receive_hint">Przesuń, aby otrzymać</string>
+  <string name="swipe_receive_preference_summary">Udostępnij adres odbierania przesuwając w lewo na ekranie PIN, dzięki czemu będziesz mógł otrzymywać bitcoiny jeszcze szybciej.</string>
+  <string name="swipe_receive_address_info">Pięć adresów zostanie kolejno załadowanych, po czym wymagane będzie zalogowanie, aby wyświetlić nowe adresy.</string>
+  <string name="swipe_receive_no_addresses">W tej chwili nie można załadować więcej adresów. Zaloguj się do aplikacji, aby załadować więcej.</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_fingerprint_title">Logowanie odciskiem palca</string>
+  <string name="onboarding_fingerprint_summary">Użyj odcisku palca zamiast PINu do weryfikacji podczas logowania, by uzyskać dostęp do swojego portfela.</string>
+  <string name="onboarding_fingerprint_enable">Włącz logowanie odciskiem palca</string>
+  <string name="onboarding_complete_later">Zrobię to później</string>
+  <string name="onboarding_check_inbox_title">Sprawdź skrzynkę odbiorczą</string>
+  <string name="onboarding_check_inbox_summary">Znajdź wiadomość e-mail od Blockchain i kliknij link weryfikacyjny, by dokończyć konfigurowanie swojego portfela.</string>
+  <string name="onboarding_verify_email">Zweryfikuj adres e-mail</string>
+  <string name="onboarding_receive_bitcoin">Zażądaj środków</string>
+  <string name="onboarding_current_price">Obecna cena:</string>
+  <string name="onboarding_qr_codes">Kody QR</string>
+  <string name="onboarding_scan_address">Zeskanuj adres</string>
+  <string name="onboarding_buy_content">Współpracujemy z partnerami ds. wymiany z całego świata, abyś mógł kupować bitcoiny bezpośrednio ze swojego portfela.</string>
+  <string name="onboarding_receive_content">Wyślij adres swojego portfela znajomemu, aby zażądać środków. Adres to ciąg losowo wybranych liter i cyfr, które zmieniają się przy każdej transakcji.</string>
+  <string name="onboarding_qr_codes_content">Adres może być również ukazany jako kod QR. Zeskanuj kod QR znajomego, by szybko zdobyć adres jego portfela.</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Kup bitcoiny</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Kupuj i sprzedawaj bitcoiny</string>
+  <string name="onboarding_get_bitcoin">Zdobądź bitcoiny</string>
+  <string name="onboarding_get_eth">Zdobądź Ether</string>
+  <string name="onboarding_complete_title">To na razie tyle!</string>
+  <string name="onboarding_complete_content">Tutaj będziemy Cię informować na bieżąco o rekomendacjach i nowych funkcjach.</string>
+  <string name="onboarding_start_over">Zacznij od początku</string>
+  <string name="onboarding_skip_all">Pomiń wszystko</string>
+  <string name="trade_complete">Ukończono transakcję</string>
+  <string name="trade_complete_details">Twoja transakcja kupna bitcoinów została ukończona!</string>
+  <string name="view_details">Zobacz szczegóły</string>
+  <string name="onboarding_available_now">Dostępne teraz</string>
+  <string name="onboarding_buy_details">Kupuj bitcoiny bezpośrednio ze swojego mobilnego portfela. To proste, bez zakłóceń i bezpieczne.</string>
+  <string name="onboarding_buy_performance_warning">Kupowanie może być nieco wolniejsze na Twoim urządzeniu. Z góry dziękujemy za cierpliwość.</string>
+  <string name="buy_second_password_prompt">Aby skorzystać z tej usługi, musisz wpisać drugie hasło. Z reguły wystarczy wpisać je tylko raz, aby móc kupować bitcoiny.</string>
+  <!-- 2FA Pairing -->
+  <string name="two_factor_dialog_title">Wpisz kod uwierzytelniania dwustopniowego</string>
+  <string name="two_factor_dialog_message_authenticator">Aby kontynuować, wpisz prawidłowy kod uwierzytelniania dwustopniowego z aplikacji uwierzytelniającej.</string>
+  <string name="two_factor_dialog_message_sms">Wysłaliśmy Ci SMS-a zawierającego kod uwierzytelniania dwustopniowego. Aby kontynuować, wpisz go tutaj.</string>
+  <string name="two_factor_dialog_hint">Kod uwierzytelniania dwustopniowego</string>
+  <string name="two_factor_null_error">Kod uwierzytelniania dwustopniowego nie może być pusty.</string>
+  <string name="two_factor_incorrect_error">Nieprawidłowy kod uwierzytelniania dwustopniowego.</string>
+  <!-- CONFIRM PAYMENT -->
+  <string name="confirm_payment_change_fee">Zmień opłatę</string>
+  <string name="confirm_payment_fee_sync_error">Błąd podczas pozyskiwania opcji opłaty</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Standardowe</string>
+  <string name="fee_options_priority">Priorytetowa</string>
+  <string name="fee_options_custom">Indywidualna</string>
+  <string name="fee_options_regular_time">1+ godz.</string>
+  <string name="fee_options_priority_time">~0–60 min</string>
+  <string name="fee_options_custom_warning">Jedynie zaawansowani użytkownicy</string>
+  <string name="fee_options_sat_byte_formatted">%1$s sat/b</string>
+  <string name="fee_options_fee_too_low">Niska opłata nie jest zalecana.</string>
+  <string name="fee_options_fee_too_high">Nadmiernie wysoka opłata</string>
+  <string name="fee_options_advanced_warning">Ta funkcja polecana jest jedynie zaawansowanym użytkownikom. Wybierając indywidualną opłatę, ryzykujesz, że przepłacisz lub transakcja nie zostanie nigdy potwierdzona.</string>
+  <string name="fee_options_sat_byte_hint">sat/b</string>
+  <string name="fee_options_sat_byte_inline_hint">Zwykła: %1$s, Priorytetowa: %2$s</string>
+  <string name="what_s_this">Co to jest?</string>
+  <string name="dismiss">Odrzuć</string>
+  <!-- ETHEREUM BALANCE -->
+  <string name="eth_default_account_label">Mój portfel Ether</string>
+  <string name="eth_now_supporting">Teraz wspieramy Ether</string>
+  <string name="eth_second_password_prompt">Aby skorzystać z tej usługi, musisz wpisać drugie hasło. Z reguły wystarczy wpisać je tylko raz, aby ustawić swój portfel Ether</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_to_field_helper">Podaj lub wybierz adres Ether</string>
+  <string name="eth_to_field_helper_no_dropdown">Podaj adres Ether</string>
+  <string name="eth_invalid_address">Nieprawidłowy adres Ether</string>
+  <string name="eth_support_contract_not_allowed">Adresy kontraktowe nie są obsługiwane.</string>
+  <string name="eth_support_only_eth">W tej chwili obsługujemy tylko ETH – nie możesz otrzymywać na ten adres żetonów.</string>
+  <string name="eth_unconfirmed_wait">Zaczekaj na potwierdzenie poprzedniej transakcji</string>
+  <string name="eth_transaction_complete">Transakcja zakończona! Twoje transakcje i saldo zostaną zaktualizowae wkrótce. Może to potrwać kilka minut.
+</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Panel</string>
+  <string name="dashboard_time_span_day">Dzień</string>
+  <string name="dashboard_time_span_week">Tydzień</string>
+  <string name="dashboard_time_span_month">Miesiąc</string>
+  <string name="dashboard_time_span_year">Rok</string>
+  <string name="dashboard_time_span_all_time">Cały czas</string>
+  <string name="dashboard_bitcoin_price">Cena bitcoina</string>
+  <string name="dashboard_ether_price">Cena ether</string>
+  <string name="dashboard_charts_error">Błąd w ładowaniu danych wykresu</string>
+  <string name="dashboard_charts_price_error">Błąd w pobieraniu danych cen</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Rozpocznij</string>
+  <!-- ETHEREUM ONBOARDING -->
+  <string name="metadata_load_failure">Błąd w ładowaniu pełnej funkcjonalności portfela. Usługa może być tymczasowo niedostępna.</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Wymiana</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">BCH</string>
+  <string name="shapeshift_confirmation_terms">zasady i warunki</string>
+  <string name="shapeshift_transaction_fee">Opłata transakcyjna</string>
+  <string name="shapeshift_exchange_rate">Kurs wymiany</string>
+  <string name="shapeshift_complete_title">Zakończono</string>
+  <string name="shapeshift_failed_title">Niepowodzenie</string>
+  <string name="shapeshift_refunded_title">Zwrócono środki</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Identyfikator zlecenia</string>
+  <string name="shapeshift_in_progress_summary">Wymiana w toku</string>
+  <string name="bch_imported_addresses">Zaimportowane adresy BCH</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kup</string>
+  <string name="buy_sell_sell">Sprzedaj</string>
+  <string name="buy_sell_overview_denied_button">Spróbuj ponownie</string>
+  <string name="buy_sell_state_processing">Przetwarzanie</string>
+  <string name="buy_sell_state_completed">Ukończono</string>
+  <string name="buy_sell_state_cancelled">Anulowano</string>
+  <string name="buy_sell_state_rejected">Odrzucono</string>
+  <string name="buy_sell_state_expired">Wygasły</string>
+  <string name="buy_sell_detail_transaction_fee">Opłata transakcyjna</string>
+  <string name="buy_sell_detail_exchange_rate">Kurs wymiany</string>
+  <string name="buy_sell_detail_amount">Kwota</string>
+  <string name="buy_sell_detail_payment_fee">Opłata za płatność</string>
+  <string name="buy_sell_detail_total">Łączny koszt</string>
+  <string name="buy_sell_review_status_in_rejected">Odrzucono</string>
+  <string name="buy_sell_review_status_in_failed">Niepowodzenie</string>
+  <string name="buy_sell_review_status_in_expired">Wygasły</string>
+  <string name="buy_sell_review_status_in_completed">Ukończono</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metoda płatności</string>
+  <string name="buy_sell_confirmation_transaction_fee">Opłata transakcyjna</string>
+  <string name="buy_sell_confirmation_amount">Kwota</string>
+  <string name="buy_sell_confirmation_payment_fee">Opłata za płatność</string>
+  <string name="buy_sell_confirmation_total_cost">Łączny koszt</string>
+  <string name="buy_sell_confirmation_bank">Prześlij</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Zweryfikuj swój adres e-mail</string>
+  <string name="submit">Wyślij</string>
+  <string name="buy_sell_add_account_subtitle">Dodaj konto bankowe</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Wybierz konto</string>
+  <string name="buy_sell_account_selection_delete_message">Czy na pewno chcesz usunąć to konto bankowe?</string>
+  <string name="buy_sell_add_address_city_hint">Miasto</string>
+  <string name="buy_sell_add_address_post_code_hint">Kod pocztowy</string>
+  <string name="buy_sell_add_address_post_country_hint">Kraj</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Zlecenie stałe</string>
+  <string name="buy_sell_recurring_order_frequency_title">Częstotliwość</string>
+  <string name="buy_sell_recurring_order_duration_title">Czas trwania</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Do czasu anulowania</string>
+</resources>

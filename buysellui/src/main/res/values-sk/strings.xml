@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>prvé slovo</item>
+    <item>druhé slovo</item>
+    <item>tretie slovo</item>
+    <item>štvrté slovo</item>
+    <item>Piate slovo</item>
+    <item>Šiesty slovo</item>
+    <item>siedmy slovo</item>
+    <item>ôsmy slovo</item>
+    <item>deviaty slovo</item>
+    <item>desiatej slovo</item>
+    <item>jedenásty slovo</item>
+    <item>dvanásty slovo</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Inovácia</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Nastavenia</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Odoslať</string>
+  <string name="overview">Transakcie</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Zrušiť</string>
+  <!-- (No Commment) -->
+  <string name="yes">áno</string>
+  <!-- (No Commment) -->
+  <string name="no">nie</string>
+  <string name="done">Hotovo</string>
+  <string name="YESTERDAY">Včera</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Prevedené</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Skopírovať do schránky</string>
+  <string name="options_id">Peňaženka ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Miestnej meny</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin jednotky</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Podmienky služby</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Ochrana osobných údajov</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Neplatná identifikácia peňaženka</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Heslá sa nezhodujú.</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Zadajte kód PIN</string>
+  <string name="dialog_continue">Pokračovať</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatické párovanie</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Kliknite na položku Zobraziť párovanie kód odhaliť QR kód, čiernymi štvorcovými &amp; bielych čiarových kódov. Naskenujte kód s fotoaparátom.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Peňaženka ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Môj Bitcoin peňaženku</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Vrátenie finančných prostriedkov</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Vždy by ste mali pár alebo prihlásiť, ak máte prístup k vašej peňaženke ID a heslo. Obnovuje svoje finančné prostriedky budú vytvárať novú peňaženku ID. Chcete pokračovať?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Heslo</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mailom</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Vytvoriť peňaženka</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Slabá</string>
+  <string name="strength_medium">Pravidelné</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Silné</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normálne</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Pokračovať</string>
+  <!-- (No Commment) -->
+  <string name="support">Podpora</string>
+  <!-- (No Commment) -->
+  <string name="from">od</string>
+  <!-- (No Commment) -->
+  <string name="to">Na</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Potvrdenie platby</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Importovaných adries</string>
+  <string name="ok_cap">ok</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Zmena kódu PIN</string>
+  <!-- (No Commment) -->
+  <string name="name">meno</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Uložiť</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Archivované</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Vytvoriť novú adresu</string>
+  <!-- (No Commment) -->
+  <string name="label">Štítok</string>
+  <!-- (No Commment) -->
+  <string name="edit">Upraviť</string>
+  <!-- (No Commment) -->
+  <string name="warning">Upozornenie</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Rozšíriť verejný kľúč</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adresa</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Zdieľanie vašich xPub povolí ostatným používateľom sledovať históriu transakcií. Ako oprávnené osoby môže byť schopný narušiť vám prístup k vašej peňaženke, zdieľať iba vaše xPub s ľuďmi, ktorým dôverujete.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Archív</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Odarchivovat</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Súkromný kľúč potrebný</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Len pozerať</string>
+  <!-- (No Commment) -->
+  <string name="success">Úspech</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Predvolené</string>
+  <!-- (No Commment) -->
+  <string name="not_now">teraz nie</string>
+  <!-- (No Commment) -->
+  <string name="logout">Odhlásiť</string>
+  <!-- (No Commment) -->
+  <string name="update">Aktualizácia</string>
+  <!-- (No Commment) -->
+  <string name="verify">Overenie</string>
+  <!-- (No Commment) -->
+  <string name="allow">Povoliť</string>
+  <!-- (No Commment) -->
+  <string name="block">Blok</string>
+  <!-- (No Commment) -->
+  <string name="security">Bezpečnosť</string>
+  <!-- (No Commment) -->
+  <string name="enable">Zapnúť</string>
+  <!-- (No Commment) -->
+  <string name="disable">Vypnúť</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Aplikácia Google Authenticator</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-krok overenia</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Zmena hesla</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Upozornenia e-mailom</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Nové heslo</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Predvoľby</string>
+  <!-- (No Commment) -->
+  <string name="information">Informácie</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin žiadosť o platbu</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Upozornenie</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">PIN ste vybrali je veľmi časté a môže byť ľahko uhádnuté niekoho s prístupom k telefónu do 3 skúša. Chceli by ste použiť tento kód PIN?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">skús znova</string>
+  <string name="common_pin_dialog_continue">Pokračovať</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Ak by ste chceli zabudnúť na tejto peňaženku a začať znovu, stlačte zabudol peňaženku.</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transakcie</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Zálohovanie frázy</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Kopírovať adresu</string>
+  <string name="contacts_name_field_hint">meno</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transakcie</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Pravidelné</string>
+  <string name="buy_sell_overview_denied_button">skús znova</string>
+</resources>

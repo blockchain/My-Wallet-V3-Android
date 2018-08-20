@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>kata pertama</item>
+    <item>kata kedua</item>
+    <item>kata ketiga</item>
+    <item>kata keempat</item>
+    <item>kata kelima</item>
+    <item>kata keenam</item>
+    <item>kata ketujuh</item>
+    <item>kata kedelapan</item>
+    <item>kata kesembilan</item>
+    <item>kata kesepuluh</item>
+    <item>kata kesebelas</item>
+    <item>kata keduabelas</item>
+  </string-array>
+  <string name="backup_wallet">Dana cadangan</string>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Pembaruan</string>
+  <string name="current_price_btc">1 BTC = %1$s</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Pengaturan</string>
+  <string name="all_accounts">Semua Dompet</string>
+  <string name="please_wait">Harap tunggu</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Kirim</string>
+  <string name="receive_bitcoin">Permintaan</string>
+  <string name="overview">Transaksi</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Batal</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ya</string>
+  <!-- (No Commment) -->
+  <string name="no">Tidak</string>
+  <string name="polite_no">Tidak, terima kasih</string>
+  <string name="done">Selesai</string>
+  <string name="YESTERDAY">Kemarin</string>
+  <string name="SENT">Telah Dikirim</string>
+  <string name="sending">Mengirim</string>
+  <!-- Transaction cell: -->
+  <string name="RECEIVED">Telah Menerima</string>
+  <string name="receiving">Menerima</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Ditransfer</string>
+  <string name="paid">Dibayar</string>
+  <string name="payment_request">Permintaan Pembayaran</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Disalin ke papan klip</string>
+  <string name="options_id">ID Dompet</string>
+  <string name="preferences_about_title">Tentang Kami</string>
+  <string name="ask_you_sure_unpair">Apakah Anda yakin ingin melepas perangkat Anda?</string>
+  <string name="select_currency">Pilih Mata Uang</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Mata Uang Lokal</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Satuan Bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Ketentuan Layanan</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Kebijakan Privasi</string>
+  <string name="invalid_email">Alamat surel tidak valid</string>
+  <string name="invalid_mobile">Nomor ponsel tidak valid</string>
+  <string name="invalid_password">Kata sandi tidak valid</string>
+  <string name="invalid_password_too_short">Silakan masukkan lebih dari 3 karakter</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">ID Dompet Tidak Valid</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Kata sandi tidak cocok</string>
+  <string name="change_password_new_matches_current">Anda tidak dapat menggunakan kata sandi saat ini sebagai kata sandi baru Anda</string>
+  <string name="no_private_key">Tidak dapat membuat kunci pribadi.</string>
+  <string name="pin_4_strikes">4 kali gagal memasukkan PIN. Mohon sediakan kata sandi.</string>
+  <string name="pin_4_strikes_password_accepted">Kata sandi diterima. Mohon tentukan PIN baru.</string>
+  <string name="bip38_password_entry">Mohon isikan sandi kunci pribadi</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Masukkan PIN</string>
+  <string name="password_entry">Harap masukkan kata sandi</string>
+  <string name="zero_pin">0000 adalah PIN yang tidak valid. Silakan coba lagi.</string>
+  <string name="invalid_pin">PIN tidak valid. Silakan coba lagi.</string>
+  <string name="pin_mismatch_error">PIN tidak cocok</string>
+  <string name="create_pin">Buat PIN</string>
+  <string name="confirm_pin">Konfirmasi PIN</string>
+  <string name="create_pin_failed">Pembuatan PIN gagal. Mohon pasangkan kembali perangkat</string>
+  <string name="change_pin_new_matches_current">Anda tidak dapat menggunakan PIN Anda saat ini sebagai PIN baru Anda</string>
+  <string name="pairing_failed">Pemasangan gagal. Silakan coba lagi.</string>
+  <string name="account_locked_title">Akun terkunci</string>
+  <string name="account_locked_message">Akun Anda telah dikunci sementara sebagai pencegahan. Silahkan cek surel Anda untuk informasi lebih lanjut dan coba lagi nanti.</string>
+  <string name="check_connectivity_exit">Dompet Rangkaian Blok tidak dapat memperoleh koneksi internet. Mohon periksa konektivitas perangkat Anda lalu coba lagi.</string>
+  <string name="dialog_continue">Lanjutkan</string>
+  <string name="double_encryption_password_error">Kata sandi enkripsi ganda gagal. Silakan coba lagi.</string>
+  <string name="command2">Pindai kode pemasangan</string>
+  <string name="command3">Saya tidak dapat mengakses kamera saya</string>
+  <string name="create_a_wallet">Buat sebuah dompet</string>
+  <string name="log_in">Log in</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Pemasangan Otomatis</string>
+  <string name="pair_wallet_step_1">Masuk ke Dompet Blockchain Anda melalui komputer atau Mac Anda di %1$s.</string>
+  <string name="pair_wallet_step_2">Jika Anda menggunakan dompet yang lama, klik tombol Pengaturan Akun dan pilih tab Perangkat. Jika Anda menggunakan dompet beta yang baru dari kami, pergilah ke Pengaturan / Informasi Dompet.</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Klik Tampilkan Kode Pemasangan untuk memunculkan Kode QR, sebuah kode palang persegi berwarna hitam putih. Pindai kode dengan kamera Anda.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">ID Dompet</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Dompet Bitcoin Saya</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Pulihkan Dana</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Anda harus selalu memasangkan atau masuk bila Anda memiliki akses ke ID Dompet dan kata sandi Anda. Memulihkan dana Anda akan membuat ID Dompet yang baru. Anda ingin melanjutkan?</string>
+  <string name="recover_funds_instructions">Masukkan 12 kata cadangan Anda dengan spasi untuk memperoleh kembali dana &amp; transaksi Anda</string>
+  <string name="recovery_passphrase">Frasa cadangan</string>
+  <string name="invalid_recovery_phrase">Frasa cadangan tidak sah. Harap coba lagi</string>
+  <string name="creating_wallet">Membuat dompet</string>
+  <string name="restore_failed">Memulihkan dompet gagal. Harap coba lagi</string>
+  <string name="restoring_wallet">Memulihkan dompet.</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Kata sandi</string>
+  <!-- (No Commment) -->
+  <string name="email">Surel</string>
+  <string name="agree_terms_of_service">Dengan membuat sebuah dompet baru Anda menyetujui</string>
+  <string name="blockchain_tos">Ketentuan Layanan Blockchain</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Buat Dompet</string>
+  <string name="new_wallet">Dompet Baru</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Lemah</string>
+  <string name="strength_medium">Reguler</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Kuat</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Lanjutkan</string>
+  <string name="SEND">KIRIM</string>
+  <string name="total">Total</string>
+  <string name="max_available">Gunakan total yang tersedia dikurangi biaya:</string>
+  <string name="invalid_bitcoin_address">Alamat Bitcoin tidak valid</string>
+  <string name="invalid_amount">Jumlah tidak valid</string>
+  <string name="insufficient_funds">Dana tidak mencukupi</string>
+  <string name="enter_double_encryption_pw">Harap masukkan kata sandi enkripsi ganda</string>
+  <!-- (No Commment) -->
+  <string name="support">Dukungan</string>
+  <string name="rate_us">Beri kami nilai</string>
+  <string name="licenses">Surat izin</string>
+  <string name="email_chooser">Kirim surel…</string>
+  <string name="about">Dompet Blockchain %1$s
+©%2$s Blockchain Luxembourg S.A.
+Semua hak dilindungi.</string>
+  <string name="merchant_download">Aplikasi Gratis untuk Pedagang</string>
+  <string name="password_or_wipe">Isikan menggunakan kata sandi Anda atau lupakan dompet ini</string>
+  <string name="use_password">Gunakan kata sandi</string>
+  <string name="wipe_wallet">Lupa dompet</string>
+  <string name="support_leaving_app_warning">Ini akan meninggalkan aplikasi dan membawa Anda ke peramban Anda. Lanjutkan?</string>
+  <string name="weak_password">Kata sandi yang dipilih terlalu lemah untuk mengamankan dana Anda. Kami sangat menyarankan Anda pilih yang lainnya. Anda ingin menentukan kata sandi baru?</string>
+  <!-- (No Commment) -->
+  <string name="from">dari</string>
+  <!-- (No Commment) -->
+  <string name="to">Untuk</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Konfirmasi Pembayaran</string>
+  <string name="fee">Biaya</string>
+  <string name="exit_confirm">Tekan lagi tombol kembali untuk keluar</string>
+  <string name="label_address">Alamat Anda berhasil diimpor. Beri nama tampilan yang ramah untuk alamat ini secara opsional.</string>
+  <string name="label_address2">Alamat Anda telah dibuat dengan sukses. Beri nama tampilan yang ramah untuk alamat ini secara opsional.</string>
+  <string name="bip38_error">Kata sandi kunci pribadi tidak valid</string>
+  <string name="privkey_error">Format kunci pribadi tidak dikenali</string>
+  <string name="hd_error">Dompet HD eror</string>
+  <string name="scan_not_recognized">Pemindai tidak dapat didekodekan</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Alamat yang Diimpor</string>
+  <string name="remote_save_ok">Penyimpanan jarak jauh OK</string>
+  <string name="remote_save_ko">Penyimpanan jarak jauh gagal</string>
+  <string name="unpair_wallet">Lepaskan Dompet</string>
+  <string name="unpair">LEPASKAN</string>
+  <string name="ok_cap">OK</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Ubah PIN</string>
+  <string name="enter_current_pin">Harap masukkan PIN terbaru.</string>
+  <string name="addresses_bitcoin">Alamat Bitcoin </string>
+  <string name="create_new">Buat Baru</string>
+  <string name="import_address">Impor Alamat</string>
+  <string name="wallets">Dompet</string>
+  <string name="save_name">Simpan nama</string>
+  <string name="receive_address_to_clipboard">Salin alamat penerima ini ke papan klip? Jika ya, harap ketahui bahwa aplikasi lain mungkin juga dapat melihat informasi ini.</string>
+  <string name="receive_address_to_share">Bagikan alamat penerima ini untuk pengiriman? Jika ya, harap ketahui bahwa aplikasi lain mungkin juga dapat melihat informasi ini.</string>
+  <string name="guid_to_clipboard">Salin ID Dompet Anda ke papan klip? Jika ya, harap ketahui bahwa aplikasi lain mungkin juga dapat melihat informasi ini.</string>
+  <string name="ssl_pinning_invalid">Penyematan sertifikat SSL gagal. Hal ini mungkin mengindikasikan aktivitas mencurigakan. Mohon verifikasi sambungan internet dan perangkat Anda sebelum melanjutkan.</string>
+  <string name="description">Deskripsi</string>
+  <!-- (No Commment) -->
+  <string name="name">Nama</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Simpan</string>
+  <string name="next">Berikutnya</string>
+  <string name="received_bitcoin">Bitcoin yang diterima</string>
+  <string name="received_ethereum">Menerima Ether</string>
+  <string name="verification_failed">Verifikasi Gagal</string>
+  <string name="send_payment">Kirim Pembayaran</string>
+  <string name="share">Bagikan Alamat Penerima</string>
+  <string name="scan_qr">Pindai Kode QR</string>
+  <string name="confirm_password">Konfirmasi Sandi</string>
+  <string name="check_email_to_auth_login">Mohon periksa surel Anda untuk menyetujui upaya masuk ini.</string>
+  <string name="transaction_fee">Biaya Transaksi</string>
+  <string name="your_transactions">Tidak Ada Transaksi</string>
+  <string name="transaction_occur_when_bitcoin">Transaksi terjadi ketika Anda menerima dan mengirim bitcoin.</string>
+  <string name="transaction_occur_when_eth">Transaksi terjadi ketiak Anda menerima dan mengirim ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transaksi terjadi saat Anda menerima dan mengirimkan bitcoin cash.</string>
+  <string name="click">Klik</string>
+  <string name="to_start_sending_and_receiving_btc">untuk mulai mengirim dan menerima bitcoin.</string>
+  <string name="address_book_label">(buku alamat)</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Diarsipkan</string>
+  <string name="transaction_submitted">Transaksi selesai</string>
+  <string name="transaction_failed">Transaksi gagal</string>
+  <string name="UPGRADE_YOUR_WALLET">OK, ayo!</string>
+  <string name="upgrade_page_1">Pncadangan dan pemulihan disederhanakan.</string>
+  <string name="upgrade_page_2">Privasi yang ditingkatkan melalui alamat deterministik hirarkis.</string>
+  <string name="upgrade_page_3">Sesuaikan cara Anda mengatur Bitcoin Anda dalam dompet Blockchain Anda.</string>
+  <!-- <string name="confirm_upgrade_info">这次升级仅需一小段时间，你的比特币和交易记录是安全的。升级的好处：\n\n✓ 全新的设计和用户体验\n✓ 强大的安全中心\n✓ 增强的隐私性\n✓ 简化的备份与恢复\n✓ 自定义的资金管理\n\nOne 此次新版本不支持高级交易类型（共享加密货币）</string> -->
+  <string name="confirm_upgrade_header">Hei, kami telah menambahkan fitur baru untuk dompet Blockchain Anda:</string>
+  <string name="upgrading">Memutakhirkan...</string>
+  <string name="upgrading_started_info">Dompet Anda sedang dimutakhirkan, harap bersabar, hal ini akan memakan waktu cukup lama tergantung dari ukuran dan umur dari dompet Anda.</string>
+  <string name="upgrade_success_heading">Dompet Anda sudah ditingkatkan versinya!</string>
+  <string name="upgrade_success_info">Sekarang Anda sedang menggunakan Dompet Blockchain yang paling aman dan pribadi. Anda dapat melanjutkan ke dompet Anda sekarang.</string>
+  <string name="CLOSE">TUTUP</string>
+  <string name="total_funds">Semua</string>
+  <string name="unexpected_error">Kesalahan yang tidak diharapkan, mohon coba lagi nanti.</string>
+  <string name="upgrade_fail_heading">Peningkatan versi dompet gagal!</string>
+  <string name="upgrade_fail_info">Terjadi eror saat meningkatkan versi dompet Anda. Mohon coba lagi nanti.</string>
+  <string name="not_sane_error">Pemasangan Dompet Blockchain Anda belum selesai. Mohon pasangkan kembali dompet Anda atau buat dompet yang baru.</string>
+  <string name="watchonly_address_receive_warning">Anda akan menerima bitcoin pada alamat untuk dilihat saja. Anda hanya dapat menghabiskan dana ini jika Anda memiliki akses pada kunci pribadi. Lanjutkan?</string>
+  <string name="camera_unavailable">Kamera saat ini sedang digunakan oleh aplikasi lain. Mohon tutup aplikasi lain tersebut lalu coba lagi.</string>
+  <string name="validating_password">Memvalidasi Kata Sandi…</string>
+  <string name="validating_pin">Memvalidasi PIN…</string>
+  <string name="creating_pin">Membuat PIN…</string>
+  <string name="decrypting_wallet">Mendekripsi Dompet…</string>
+  <string name="password_unchanged">Kata sandi tidak diubah</string>
+  <string name="password_changed">Kata sandi diubah</string>
+  <string name="password_changed_explanation">Kata sandi Anda telah diubah, silakan memasangkan kembali dompet Anda</string>
+  <string name="verify_email2">Alamat surel Anda yang telah diverifikasi digunakan untuk mengirimkan kode login ketika ada aktivitas mencurigakan atau tidak biasa terdeteksi, untuk mengingatkan Anda tentang Identitas login dompet Anda, dan untuk mengirim peringatan pembayaran bitcoin bila Anda menerima dana.</string>
+  <string name="disable_root_warning">Menonaktifkan peringatan perangkat yang di root</string>
+  <string name="show_balance">Tampilkan Saldo</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Buat alamat baru</string>
+  <string name="auth_failed">Otorisasi gagal. Silakan coba lagi.</string>
+  <string name="send_failed">Pengiriman gagal. Silakan coba lagi.</string>
+  <string name="wallet_updated">Pembaharuan dompet diterima</string>
+  <string name="device_rooted">Perangkat Anda tampaknya telah di root. Perhatikan bahwa menyimpan dana di perangkat yang di-root tidak aman dan, selain itu, bisa menyebabkan masalah ketidakstabilan. Jika Anda terus menggunakan dompet Bitcoin kami pada perangkat ini, kami menyarankan agar Anda menggunakan enkripsi ganda pada akun Blockchain Anda.</string>
+  <string name="address_already_in_wallet">Dompet Anda sudah memiliki alamat ini.</string>
+  <string name="cannot_create_address">Alamat baru tidak bisa dibuat saat ini. Silakan coba lagi.</string>
+  <string name="saving_address">Menyimpan alamat…</string>
+  <string name="cannot_launch_app">Dompet Blockchain tidak dapat dijalankan pada perangkat ini.</string>
+  <!-- (No Commment) -->
+  <string name="label">Label</string>
+  <!-- (No Commment) -->
+  <string name="edit">Edit</string>
+  <string name="label_cant_be_empty">Label tidak boleh kosong.</string>
+  <string name="label_name_match">Nama sudah digunakan</string>
+  <!-- (No Commment) -->
+  <string name="warning">Peringatan</string>
+  <string name="ssl_no_connection">Kami tidak dapat terhubung ke host untuk memverifikasi sertifikat SSL. Mohon verifikasi sambungan internet dan perangkat Anda sebelum melanjutkan.</string>
+  <string name="retry">Coba Kembali</string>
+  <string name="exit">Keluar</string>
+  <string name="screen_overlay_warning">Pelapisan (overlay) layar terdeteksi!</string>
+  <string name="screen_overlay_note">Aplikasi yang menggunakan pelapis (overlay) layar memiliki kemampuan untuk menipu Anda agar menekan objek yang tidak terlihat dan berpotensi mencuri dana. Perhatikan bahwa peringatan ini juga dapat dipicu oleh aplikasi peredup layar. Jika Anda yakin bahwa tidak ada ancaman, Anda dapat melanjutkan. </string>
+  <string name="archived_description">Item ini telah diarsipkan, dan tidak dapat diakses pada penggunaan aplikasi ponsel. Meskipun Anda tidak dapat mengirim dana dari barang ini, keseluruhan dana akan tetap aman. Cukup buka kembali barang ini untuk mulai menggunakannya kembali.</string>
+  <string name="not_archived_description">Barang ini tidak diarsipkan. Arsipkan barang ini jika Anda TIDAK ingin menggunakannya lagi. Dana Anda akan tetap aman, dan Anda dapat mengarsipkannya setiap saat.</string>
+  <string name="transfer_success_archive_prompt_title">Arsip mengosongkan alamat?</string>
+  <plurals name="transfer_success_archive_prompt_plurals">
+    <item quantity="other">%d alamat berhasil ditransfer ke Dompet Bitcoin saya. Apakah Anda ingin mengarsipkan alamat ini sekarang?</item>
+  </plurals>
+  <string name="default_account_description">Barang ini diatur sebagai bawaan Anda dan tidak dapat diarsipkan.</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Perpanjangan Kunci Publik</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Alamat</string>
+  <string name="copy_xpub">Salin xpub</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Berbagi xPub Anda akan memberikan kewenangan terhadap orang lain untuk melacak riwayat transaksi Anda. Karena orang yang mendapatkan otorisasi dapat mengganggu Anda mengakses dompet Anda, hanya bagi xPub Anda dengan orang-orang yang Anda percaya.</string>
+  <string name="assign_display_name">Pilih nama tampilan yang ramah.</string>
+  <string name="copy_address">Salin alamat</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arsip</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Tidak Diarsipkan</string>
+  <string name="archive_are_you_sure">Apakah Anda yakin Anda ingin mengarsipkan barang ini?</string>
+  <string name="unarchive_are_you_sure">Apakah Anda yakin Anda ingin mengeluarkan arsip barang ini?</string>
+  <string name="send_to_same_address_warning">Tidak dapat mengirim ke alamat yang sama.</string>
+  <string name="make_default">Jadikan default</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Kunci Pribadi Diperlukan</string>
+  <string name="invalid_private_key">Kunci pribadi tidak valid</string>
+  <string name="watch_only_import_warning">Anda akan mengimpor alamat yang hanya dapat dilihat, sebuah alamat (atau skrip kunci publik) yang disimpan di dalam dompet tanpa kunci pribadi yang sesuai. Hal ini berarti bahwa dana HANYA dapat digunakan jika Anda memiliki kunci pribadi yang disimpan di tempat lain. Jika Anda tidak memiliki kunci privat yang disimpan, JANGAN meminta siapa pun untuk mengirimkan bitcoin kepada Anda ke alamat yang hanya dapat dilihat.
+
+Pilihan ini hanya disarankan untuk pengguna tingkat lanjut. Lanjutkan? </string>
+  <string name="scan_private_key">Pindai kunci pribadi</string>
+  <string name="private_key_successfully_imported">Kunci pribadi berhasil diimpor.</string>
+  <string name="private_key_not_matching_address">CATATAN: kunci pribadi yang dipindai tidak sesuai dengan alamat Anda untuk dilihat saja. Untuk menggunakan dana Anda dari alamat ini, harap pindai kunci pribadi yang benar.</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Hanya Dilihat</string>
+  <string name="extended_public_key_description">Jika Anda seorang pedagang, tunjukkan xPub Anda dan gunakan aplikasi Pedagang Blockchain untuk menerima dana dengan aman dan pribadi.
+
+Jaga xPub Anda tetap pribadi.         Seseorang yang memiliki akses ke xPub Anda akan dapat melihat semua dana dan transaksi Anda. </string>
+  <string name="watch_only_description">Ini adalah alamat untuk dilihat saja. Untuk menggunakan dana Anda dari</string>
+  <!-- (No Commment) -->
+  <string name="success">Berhasil</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Default</string>
+  <string name="try_again">Coba Lagi</string>
+  <!-- FUNDS TRANSFER -->
+  <string name="transfer">Transfer</string>
+  <string name="transfer_funds">Transfer Dana</string>
+  <string name="transfer_recommend">Kelihatannya Anda memiliki sejumlah bitcoin pada alamat yang diimpor. Alamat yang diimpor tidak dicadangkan oleh Frasa Cadangan Anda. Untuk mengamankan dana ini, kami merekomendasikan untuk mentransfer saldo ini untuk menyertakan di cadangan Anda.</string>
+  <string name="spendable_addresses">Alamat-alamat yang dapat digunakan untuk belanja</string>
+  <string name="transfer_confirmed">Transfer Dikonfirmasi</string>
+  <string name="transfer_confirm">Konfirmasi Transfer</string>
+  <string name="transfer_all">Transfer semua</string>
+  <string name="transfer_amount">Jumlah Transfer</string>
+  <string name="transfer_archive_message">Arsip mengimpor alamat setelah transfer</string>
+  <string name="transfer_archive">Arsip Dikonfirmasi</string>
+  <string name="dont_ask_again">Jangan tanyai saya lagi.</string>
+  <string name="insufficient_fee">Biaya transaksi terlalu kecil.</string>
+  <string name="customize">sesuaikan</string>
+  <string name="amount">Jumlah</string>
+  <string name="recommended_fee">Biaya transaksi mempengaruhi seberapa cepat jaringan penggali Bitcoin akan mengonfirmasi transaksi Anda, dan tergantung pada kondisi jaringan saat ini. Kami menyarankan biaya di bawah ini untuk transaksi saat ini.</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Tidak sekarang</string>
+  <string name="high_fee_not_necessary_info">Anda menetapkan biaya transaksi yang luar biasa tinggi sebesar %1$s.
+
+Bahkan jika Anda menurunkan biaya tersebut menjadi %2$s, Anda dapat mengharapkan transaksi tersebut dapat dikonfirmasikan dalam waktu ~ 10 menit (1 blok).</string>
+  <string name="low_fee_suggestion">Anda menetapkan biaya transaksi yang sangat kecil sebesar %1$s.
+
+Transaksi Anda mungkin akan terjebak dan mungkin tidak pernah dapat dikonfirmasi. Untuk meningkatkan kemungkinan agar transaksi Anda dapat dikonfirmasi dalam waktu sekitar satu jam (6 blok) kami menyarankan biaya tidak kurang dari %2$s.</string>
+  <string name="raise_fee">Menaikkan biaya</string>
+  <string name="lower_fee">Turunkan biaya</string>
+  <string name="keep_high_fee">Biarkan biaya tinggi</string>
+  <string name="keep_low_fee">Biarkan biaya rendah</string>
+  <string name="no_confirmed_funds">Tidak ada dana yang telah dikonfirmasi untuk digunakan.</string>
+  <string name="estimate_confirm_block_count">Perkiraan waktu konfirmasi: ~%1$d menit (%2$d blok)</string>
+  <string name="fee_too_low_no_confirm">Biaya Anda begitu kecil sehingga transaksi Anda mungkin tidak akan pernah dikonfirmasi.</string>
+  <string name="transaction_surge">Jaringan penggalian Bitcoin saat ini mengalami volume aktivitas yang tinggi, mengakibatkan biaya yang direkomendasikan yang lebih tinggi daripada biasanya.</string>
+  <string name="unsupported_encryption_version">Versi dompet %1$s tidak didukung.</string>
+  <!-- (No Commment) -->
+  <string name="logout">Keluar</string>
+  <string name="to_field_helper">Masukkan alamat bitcoin dan pilih</string>
+  <string name="to_field_helper_no_dropdown">Masukkan alamat bitcoin</string>
+  <!-- (No Commment) -->
+  <string name="update">Pembaruan</string>
+  <string name="mobile">Ponsel</string>
+  <string name="profile">Profil</string>
+  <string name="app">Aplikasi</string>
+  <!-- (No Commment) -->
+  <string name="verify">Verifikasi</string>
+  <string name="resend">Kirim kembali</string>
+  <string name="verified">diverifikasi</string>
+  <string name="unverified">belum diverifikasi</string>
+  <!-- (No Commment) -->
+  <string name="allow">Izinkan</string>
+  <!-- (No Commment) -->
+  <string name="block">Blok</string>
+  <!-- (No Commment) -->
+  <string name="security">Keamanan</string>
+  <!-- (No Commment) -->
+  <string name="enable">Aktifkan</string>
+  <!-- (No Commment) -->
+  <string name="disable">Nonaktifkan</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Otentikator Google</string>
+  <string name="yubikey">Yubikey</string>
+  <string name="disable_2fa_first">Mohon nonaktifkan 2-step Verification melalui SMS dalam pengaturan keamanan pertama kali.</string>
+  <string name="disable_online_only">Harap masuk ke dompet Anda di peramban web untuk menonaktifkan 2FA.</string>
+  <string name="settings_field_cant_be_empty">Bidang tidak dapat kosong.</string>
+  <string name="settings_error_updating">Kesalahan memperbarui pengaturan, silakan coba lagi</string>
+  <string name="request_camera_permission">Akses ke kamera diperlukan.</string>
+  <string name="request_location_permission">Akses lokasi diperlukan.</string>
+  <string name="request_write_storage_permission">Penulisan penyimpanan eksternal diperlukan.</string>
+  <string name="not_specified">tidak ditentukan</string>
+  <string name="update_failed">Gagal memperbarui</string>
+  <string name="verify_mobile">Verifikasi Ponsel</string>
+  <string name="select_country">Pilih Negara</string>
+  <string name="verify_sms_summary">Kami telah mengirim pesan SMS dengan kode verifikasi ke ponsel Anda. Masukkan kode untuk memverifikasi nomor ponsel Anda.</string>
+  <string name="verify_sms_failed">Kode yang tidak valid, silakan coba lagi</string>
+  <string name="mobile_description">Ponsel Anda dapat digunakan untuk mengaktifkan otentikasi dua faktor, membantu untuk mengamankan dompet Anda dari akses yang tidak sah.</string>
+  <string name="enable_fingerprint">Sidik Jari Dibuka</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">Verifikasi 2 langkah</string>
+  <string name="tor_requests">Blok Permintaan Tor</string>
+  <string name="tor_summary">Blokir alamat IP yang diketahui sebagai bagian dari jaringan anonim Tor. Jaringan Tor sering digunakan oleh peretas yang mencoba mengakses dompet pengguna Blockchain.</string>
+  <string name="enable_screenshots">Aktifkan Screenshot</string>
+  <string name="enable_screenshots_summary">Beberapa layar dalam aplikasi dapat menampilkan data sensitif. Aplikasi lain akan dapat mengakses tangkapan layar ini.</string>
+  <string name="password_hint_summary">Blockchain Wallet Anda tidak pernah memberitahukan kata sandi Anda ke server kami. Hal ini berarti kami tidak tahu apa kata sandi Anda dan kami tidak bisa mengatur ulang jika Anda lupa. Buatlah petunjuk kata sandi yang mudah diingat yang dapat kami kirimkan ke alamat email yang telah diverifikasi seandainya Anda lupa kata sandi Anda.</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Ubah Kata Sandi.</string>
+  <string name="change_password_summary">Kata sandi Anda tidak pernah dibagikan dengan server kami, yang berarti kami tidak bisa mengatur ulang kata sandi Anda jika Anda melupakannya. Pastikan Anda mencadangkan dana Anda dari menu saming yang dapat memulihkan akses ke dompet Anda jika kata sandi hilang.</string>
+  <string name="verify_email_notice">Kami telah mengirim tautan verifikasi ke alamat email Anda. Klik tautan tersebut untuk memverifikasi alamat email Anda.</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Pemberitahuan Surel</string>
+  <string name="email_notifications_summary">Dapatkan pemberitahuan ketika Anda menerima bitcoin.</string>
+  <string name="current_password">Kata Sandi Terkini</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Kata Sandi Baru</string>
+  <string name="sms_verified">Nomor ponsel terverifikasi</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Preferensi</string>
+  <string name="two_fa_summary">Lindungi dompet Anda dari akses yang tidak diizinkan dengan mengaktifkan Verifikasi 2 Langkah.</string>
+  <string name="two_fa_description">Lindungi dompet Anda dari akses yang tidak diizinkan dengan mengaktifkan Verifikasi 2 Langkah. Anda dapat memilih untuk menggunakan nomor ponsel Anda untuk mengamankan dompet Anda. Kode ini akan diminta ketika Anda mencoba mengakses dompet Anda lewat peramban web.
+
+Untuk menggunakan metode, harap masuk ke dompet web kami di %1$s</string>
+  <string name="rate_title">Beri Nilai Dompet Blockchain</string>
+  <string name="rate_message">Menikmati Dompet Blockchain? Harap luangkan waktu untuk meninggalkan ulasan di Google Play dan biarkan orang lain tahu tentang hal itu.</string>
+  <string name="rate_yes">Ya, beri nilai Dompet Blockchain</string>
+  <string name="rate_no">Tidak, terima kasih</string>
+  <string name="rate_later">Ingatkan saya nanti</string>
+  <string name="why_has_my_address_changed">Mengapa alamat saya berubah?</string>
+  <!-- (No Commment) -->
+  <string name="information">Informasi</string>
+  <string name="learn_more">Pelajari Lebih Lanjut</string>
+  <string name="pairing_code_log_in">Masuk ke Dompet Web</string>
+  <string name="pairing_code_instruction_1">Kunjungi %1$s di kmoputer Anda.</string>
+  <string name="pairing_code_instruction_2">Pilih Masuk lewat mobil</string>
+  <string name="pairing_code_instruction_3">Menggunakan kamera komputer Anda, pindai kode QR di bawah.</string>
+  <string name="pairing_code_show_qr">Tunjukkan kode QR</string>
+  <string name="pairing_code_hide_qr">Sembunyikan kode QR</string>
+  <string name="pairing_code_warning_1">Simpan kode ini yang tersembunyi sampai Anda siap.</string>
+  <string name="pairing_code_warning_2">Amankan kode ini!
+Jangan berbagi dengan orang lain.</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Permintaan pembayaran Bitcoin</string>
+  <string name="email_request_subject_eth">Permintaan pembayaran Ether </string>
+  <string name="email_request_body">Mohon kirim%1$s BTC ke alamat Bitcoin %2$s.</string>
+  <string name="email_request_body_eth">Harap kirim ETH ke alamat Ether %1$s.</string>
+  <string name="email_request_body_fallback">terlampir</string>
+  <string name="share_instructions">Ketuk untuk menyalin alamat ini. Bagikan ini dengan pengirim melalui email atau teks.</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Peringatan</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">PIN yang Anda pilih sangat umum dan dapat mudah ditebak oleh seseorang dengan akses ke ponsel Anda dalam 3 kali mencoba. Anda tetap ingin menggunakan PIN ini?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Coba lagi</string>
+  <string name="common_pin_dialog_continue">Lanjutkan</string>
+  <!-- PASSWORD REENTRY ACTIVITY -->
+  <string name="logged_out_enter_password">Anda telah keluar atau ada kesalahan mendekripsi dompet Anda. Masukkan kata sandi Anda di bawah ini untuk masuk.</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Jika Anda ingin melupakan dompet ini dan mulai dari awal, tekan \'Lupakan Dompet\'.</string>
+  <string name="forget_wallet">Lupa dompet</string>
+  <string name="forget_wallet_warning">Ini akan menghapus semua data dompet pada perangkat ini. Konfirmasikan bahwa Anda telah memiliki informasi dompet yang disimpan di tempat lain jika tidak setiap bitcoin dalam dompet ini tidak akan dapat diakses!!</string>
+  <string name="api_fail">Tidak dapat terhubung ke server. Harap coba lagi nanti.</string>
+  <!-- FEE WARNING -->
+  <string name="large_tx_warning">Ini merupakan transaksi bitcoin yang terlalu besar. Dompet Anda perlu mengonsolidasi pembayaran yang lebih kecil yang Anda terima di masa lalu. Ini membutuhkan biaya yang relatif tinggi agar dapat dikonfirmasi dengan cepat.</string>
+  <string name="go_back">Kembali</string>
+  <string name="accept_higher_fee">Terima biaya yang lebih tinggi</string>
+  <string name="large_tx_high_fee_warning">\"Transaksi ini membutuhkan biaya yang lebih tinggi untuk recehan karena jumlah kecil dari kembalian untuk dikembalikan.\"</string>
+  <string name="password_reveal_warning">Hati-hati! Mengungkapkan teks ini memungkinkan kata sandi Anda disalin ke clipboard, yang kemudian dapat dibaca oleh semua aplikasi pada perangkat Anda. Juga hati-hati dengan orang yang berdiri di belakang Anda!</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transaksi</string>
+  <string name="transaction_detail_description_hint">Untuk apa ini?</string>
+  <string name="transaction_detail_date">Tanggal</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_detail_confirmed">Dikonfirmasi</string>
+  <string name="transaction_detail_pending">Tertunda (%1$s/%2$s Konfirmasi)</string>
+  <string name="transaction_detail_fee">\"Biaya transaksi: %1$s\"</string>
+  <string name="transaction_detail_value_at_time_received">Nilai saat diterima:\u0020</string>
+  <string name="transaction_detail_value_at_time_transferred">Nilai saat ditransfer:\u0020</string>
+  <string name="transaction_detail_value_at_time_sent">Nilai saat dikirim:\u0020</string>
+  <string name="transaction_detail_value">Nilai:\u0020</string>
+  <string name="transaction_details_unknown">Tidak Dikenal</string>
+  <string name="transaction_detail_coinbase">Tidak ada Input (Koin Baru Dihasilkan)</string>
+  <string name="transaction_detail_double_spend">Mungkin berisiko untuk pembelanjaan ganda.</string>
+  <string name="transaction_detail_verify">Verifikasi Blockchain.com</string>
+  <string name="transaction_detail_verify_etherscan">Verifikasi di Etherscan.io</string>
+  <string name="transaction_detail_share_chooser">Bagikan perincian transaksi</string>
+  <string name="transaction_detail_contact_note">Catatan</string>
+  <!-- SECURITY CENTRE -->
+  <string name="security_centre_email_title">Periksa email Anda</string>
+  <string name="security_centre_email_check">Periksa email</string>
+  <string name="security_centre_email_message">Kami mengirimkan email ke %1$s. Carilah email dari Blockchain dan klik tautan verifikasi untuk menyelesaikan pengaturan dompet Anda.</string>
+  <string name="security_centre_add_email_title">Alamat Surel</string>
+  <string name="security_centre_add_email_message">Tambahkan dan verifikasi alamat surel Anda untuk menerima pemberitahuan, mencegah aktivitas yang mencurigakan, dan memulihkan ID Dompet jika lupa.</string>
+  <string name="security_centre_add_email_positive_button">Tambahkan</string>
+  <string name="security_centre_backup_title">Cadangkan dana Anda</string>
+  <string name="security_centre_backup_message">Untuk keamanan Anda, kami tidak menyimpan kata sandi pada berkas. Cadangkan dompet Anda untuk memastikan dana Anda aman apabila Anda kehilangan kata sandi Anda. </string>
+  <string name="security_centre_backup_positive_button">Cadangan</string>
+  <string name="security_centre_two_fa_message">Mencegah akses tidak sah ke dompet Anda. Aktifkan Verifikasi 2 Langkah untuk meningkatkan keamanan dompet.</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Frasa Cadangan</string>
+  <string name="backup_explanation">Untuk keamanan Anda, Blockchain tidak menyimpan kata sandi pada berkas. 12 kata Frasa Cadangan berikut akan memberi Anda akses ke dana Anda jika Anda kehilangan kata sandi Anda. Pastikan untuk menulis di selembar kertas dan menyimpannya di suatu tempat yang aman dan nyaman. </string>
+  <string name="backup_button_start">Mulai mencadangkan</string>
+  <string name="backup_write_down_words">Penting untuk memastikan bahwa Anda menuliskan kata-kata Anda persis sebagaimana kata-kata tersebut muncul di sini dan dalam urutan ini.</string>
+  <string name="backup_header_complete">Cadangan Lengkap</string>
+  <string name="backup_complete_message">Anda dapat menggunakan Frasa Cadangan Anda untuk mendapatkan kembali dana Anda jika Anda kehilangan kata sandi Anda. Siapa pun dengan akses ke Frase Cadangan Anda dapat mengakses dana Anda jadi ingat untuk menyimpannya offline di tempat yang aman dan nyaman.</string>
+  <string name="backup_again">Cadangkan lagi</string>
+  <string name="backup_confirmed">Pencadangan Dikonfirmasikan</string>
+  <string name="backup_last">Cadangan terakhir: %1$s</string>
+  <string name="backup_verify_heading">Masukkan kata-kata berikut dari Frasa Cadangan Anda untuk menyelesaikan proses pencadangan.</string>
+  <string name="backup_next_word">KATA BERIKUTNYA</string>
+  <string name="backup_previous_word">KATA SEBELUMNYA</string>
+  <string name="backup_word">Kata</string>
+  <string name="backup_of">dari</string>
+  <string name="backup_word_mismatch">Kata Tidak Sesuai</string>
+  <string name="backup_done">SELESAI</string>
+  <string name="backup_lost_mnemonic">Kehilangan 12 kata frasa cadangan Anda?</string>
+  <!-- FINGERPRINT -->
+  <string name="fingerprint_prompt">Gunakan sidik jari Anda untuk akses yang lebih cepat, lebih mudah untuk dompet Anda.
+
+Konfirmasi sidik jari untuk melanjutkan</string>
+  <string name="fingerprint_description">Konfirmasi sidik jari untuk melanjutkan</string>
+  <string name="fingerprint_hint">Sentuh sensor</string>
+  <string name="fingerprint_login_title">Sidik jari masuk</string>
+  <string name="fingerprint_not_recognized">Sidik jari tidak diakui. Coba lagi</string>
+  <string name="fingerprint_success">Sidik jari diakui.</string>
+  <string name="fingerprint_use_pin">Gunakan PIN</string>
+  <string name="fingerprint_disable_message">Apakah Anda yakin ingin menonaktifkan masuk dengan sidik jari?</string>
+  <string name="fingerprint_no_fingerprints_added">Tidak ada sidik jari yang terdaftar untuk perangkat ini. Apakah Anda ingin mendaftarkan sidik jari sekarang?</string>
+  <string name="fingerprint_key_invalidated_description">Entah sidik jari yang tersimpan di perangkat ini telah berubah atau pengaman tombol telah dinonaktifkan</string>
+  <string name="fingerprint_key_invalidated_brief">Kunci tidak valid, kode PIN diperlukan</string>
+  <string name="fingerprint_fatal_error_register_description">Ada terlalu banyak upaya gagal dalam 30 menit terakhir. Silakan mencoba pengaturan lagi nanti.</string>
+  <string name="fingerprint_fatal_error_authenticate_description">Ada terlalu banyak upaya gagal. Silakan masuk menggunakan PIN Anda sebagai gantinya.</string>
+  <string name="fingerprint_fatal_error_brief">Kesalahan tak terduga</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Salin Alamat</string>
+  <string name="shortcut_receive_copy_long">Salin terima alamat ke aplikasi lain</string>
+  <string name="shortcut_receive_qr_short">Tampilkan Terima QR</string>
+  <string name="shortcut_receive_qr_long">Lihat QR code untuk menerima alamat</string>
+  <string name="shortcut_receive_qr_error">Maaf, ada kesalahan menghasilkan kode QR</string>
+  <string name="shortcut_settings_summary">Memperlihatkan alamat penerimaan ketika Anda menekan lama pada ikon aplikasi pada peluncur, memungkinkan menerima bitcoin lebih cepat.</string>
+  <!-- CONTACTS -->
+  <string name="contacts_title">Kontak</string>
+  <string name="contacts_loading_failed">Memuat kontak gagal, harap coba lagi</string>
+  <string name="contacts_pairing_method_title">Tambah Kontak</string>
+  <string name="contacts_choose_pairing_method">Pilih metode pasangan yang ingin Anda gunakan untuk menambahkan kontak terpercaya:</string>
+  <string name="contacts_send_link">Kirim tautan</string>
+  <string name="contacts_use_nfc">Gunakan NFC</string>
+  <string name="contacts_no_contacts_found">Tidak ada kontak ditemukan</string>
+  <string name="contacts_delete_contact_success">Kontak dihapus</string>
+  <string name="contacts_delete_contact_failed">Menghapus kontak gagal, harap coba lagi</string>
+  <string name="contacts_not_found_error">Kontak tidak ditemukan</string>
+  <string name="contacts_add_contact_failed">Menambahkan kontak gagal, harap coba lagi</string>
+  <string name="contacts_add_contact_success">Kontak berhasil ditambahkan</string>
+  <string name="contacts_rename_invalid_name">Nama tidak sah</string>
+  <string name="contacts_rename_failed">Mengubah nama kontak gagal, harap coba lagi</string>
+  <string name="contacts_rename_success">Nama kontak berhasil diubah</string>
+  <string name="contacts_error_getting_messages">Kesalahan mendapatkan pesan</string>
+  <string name="contacts_error_sending_payment_request">Ada kesalahan saat mengirim permintaan pembayaran Anda, harap coba lagi</string>
+  <string name="contacts_success_sending_payment_request">Permintaan pembayaran dikirim</string>
+  <string name="contacts_add_contact_title">Tambah kontak</string>
+  <string name="contacts_name_cannot_be_empty">Nama tidak sah</string>
+  <string name="contacts_name_field_hint">Nama</string>
+  <string name="contacts_add_button">Tambahkan</string>
+  <string name="contacts_share_invitation">Bagikan undangan</string>
+  <string name="contacts_add_are_you_sure">Apakah Anda yakin Anda ingin menambahkan %1$s sebagai kontak terpercaya?</string>
+  <string name="shortcut_settings_enable">Jalan Pintas Peluncur</string>
+  <string name="contacts_invite_someone">Undang seseorang</string>
+  <string name="contacts_being_invited">Terima undangan</string>
+  <string name="contacts_who_are_you_inviting_header">Siapa yang Anda undang untuk berhubungan?</string>
+  <string name="contacts_how_are_you_known_header">Dengan nama apa %1$s mengenal Anda?</string>
+  <string name="contacts_scan_instructions">%1$s harus memindai kode QR ini dengan aplikasi seluler Blockchain Wallet mereka.</string>
+  <string name="contacts_sharing_method_header">Bagaimana Anda ingin berbagi undangan ini?</string>
+  <string name="contacts_field_error_empty">Tidak boleh kosong</string>
+  <string name="contacts_share_qr">Melalui kode QR (secara pribadi)</string>
+  <string name="contacts_share_link">Menggunakan tautan</string>
+  <string name="contacts_scan_qr">Pindai kode QR</string>
+  <string name="contacts_sent_link">Seseorang mengirimi saya tautan</string>
+  <string name="contacts_accept_invite_title">Terima Undangan</string>
+  <string name="contacts_sent_link_explanation">Jika seseorang mengirimkan tautan, cukup tekan pada tautan untuk menerima.</string>
+  <string name="contacts_detail_title">Saya ingin:</string>
+  <string name="contacts_detail_transactions">Transaksi dengan %1$s:</string>
+  <string name="contacts_detail_transactions_empty">Tidak ada transaksi yang ditemukan</string>
+  <string name="contacts_rename">Ubah nama kontak</string>
+  <string name="contacts_delete">Hapus kontak</string>
+  <string name="contacts_send_bitcoin">Meminta untuk mengirim %1$s bitcoin</string>
+  <string name="contacts_request_bitcoin">Permintaan bitcoin dari %1$s</string>
+  <string name="contacts_invalid_qr">Kode QR tidak sah</string>
+  <string name="contacts_request_sent">Permintaan kontak dikirim</string>
+  <string name="contacts_request_just_added">Baru saja ditambahkan</string>
+  <string name="contacts_request_trusted">Terpercaya</string>
+  <string name="contacts_delete_message">Apakah Anda yakin ingin menghapus kontak ini? Anda tidak akan kehilangan bitcoin apa pun dengan menghapus kontak ini.</string>
+  <string name="contacts_payment_request_title">Permintaan pembayaran</string>
+  <string name="contacts_payment_request_send_note">Mengapa Anda ingin mengirim bitcoin %1$s? Ini adalah opsional dan akan dibagikan dengan %1$s.</string>
+  <string name="contacts_payment_request_receive_note">Mengapa Anda ingin %1$s untuk mengirim Anda bitcoin? Ini adalah opsional dan akan dibagikan dengan %1$s.</string>
+  <string name="contacts_payment_request_send_hint">Makan siang tapas</string>
+  <string name="contacts_payment_request_receive_hint">Untuk minuman Jumat</string>
+  <string name="contacts_payment_request_note_hint">Catatan</string>
+  <string name="contacts_payment_request_send_amount">Berapa banyak yang ingin Anda kirim ke %1$s?</string>
+  <string name="contacts_payment_request_receive_amount">Berapa banyak yang Anda ingin %1$s kirimkan kepada Anda? 
+
+Ini hanya sebuah saran: jumlah yang sebenarnya mungkin berbeda.</string>
+  <string name="contacts_payment_request_amount_hint">Jumlah</string>
+  <string name="contacts_payment_success_waiting_title">Menunggu %1$s untuk menerima</string>
+  <string name="contacts_payment_success_request_sent_title">Permintaan telah dikirim</string>
+  <string name="contacts_payment_success_waiting_message">Kontak Anda telah diberitahu bahwa Anda ingin mengirimi mereka Bitcoin. Ketika mereka menerima, kami akan memberitahu Anda dan Anda dapat menyelesaikan transaksi.</string>
+  <string name="contact_send_request_button">Kirim permintaan</string>
+  <string name="contacts_transaction_not_found_error">Transaksi tidak ditemukan</string>
+  <string name="contacts_address_sent_success">Alamat berhasil dikirim</string>
+  <string name="contacts_address_sent_failed">Mengirim alamat gagal</string>
+  <string name="contacts_send_address_message">Ini akan mengirim alamat ke kontak Anda. Memproses?</string>
+  <string name="contacts_waiting_for_address_message">Kontak Anda telah diberitahu bahwa Anda ingin mengirim mereka bitcoin dan bahwa Anda memerlukan alamat dari mereka. Kami akan memberitahu Anda ketika mereka telah mengirim alamat!</string>
+  <string name="contacts_waiting_for_payment_message">Kontak Anda telah diberitahu bahwa Anda ingin menerima bitcoin dari mereka dan telah mengirim alamat. Kami akan memberitahu Anda ketika mereka telah mengirimi Anda Bitcoin!</string>
+  <string name="contacts_digesting_messages_failed">Memeriksa pesan gagal, harap coba lagi</string>
+  <string name="contacts_broadcasting_payment">Kami hanya menginformasikan kontak Anda bahwa Anda sudah mengirim mereka beberapa bitcoin, harap tunggu.</string>
+  <string name="contacts_payment_sent_success">Pembayaran dikirim! Kami telah memberitahu kontak Anda agar mereka tahu bahwa Anda telah menyelesaikan transaksi.</string>
+  <string name="contacts_payment_sent_failed_message">Ada kesalahan memberitahukan kontak Anda bahwa Anda telah mengirim mereka pembayaran. Harap periksa koneksi Anda dan coba lagi.</string>
+  <string name="contacts_too_much_sent">Sepertinya Anda mengirim lebih banyak bitcoin dari yang diminta. Anda dapat meminta beberapa kembali dari kontak Anda jika Anda inginkan. Kami belum menandai pembayaran sebagai lengkap.</string>
+  <string name="contacts_too_little_sent">Sepertinya Anda mengirim bitcoin kurang dari yang diminta. Kontak Anda akan tetap menerima bitcoin yang Anda dikirim, tapi kami belum menandai pembayaran sebagai lengkap.</string>
+  <string name="contacts_second_password_prompt">Untuk menggunakan layanan ini, kami meminta Anda untuk memasukkan kata sandi kedua Anda. Anda hanya perlu memasukkan ini sekali menggunakan fungsi Kontak.</string>
+  <string name="contacts_no_confirmed_contacts_found">Tidak ada kontak dikonfirmasi ditemukan!</string>
+  <string name="contacts_pending_transaction_delete_success">Transaksi yang tertunda berhasil dihapus</string>
+  <string name="contacts_pending_transaction_delete_failure">Penghapusan transaksi yang tertunda gagal</string>
+  <string name="contacts_pending_transaction_decline_success">Transaksi yang tertunda berhasil ditolak</string>
+  <string name="contacts_pending_transaction_decline_failure">Penolakan transaksi yang tertunda gagal</string>
+  <string name="contacts_pending_transaction_cancel_success">Transaksi yang tertunda berhasil dibatalkan</string>
+  <string name="contacts_pending_transaction_cancel_failure">Pembatalan transaksi yang tertunda gagal</string>
+  <string name="contacts_receiving_cancelled">Dibatalkan</string>
+  <string name="contacts_send_complete">Kirim %1$s ke %2$s</string>
+  <string name="contacts_receive_complete">Diterima %1$s dari %2$s</string>
+  <string name="contacts_received">Diterima dari %1$s</string>
+  <string name="contacts_sent">Dikirim ke %1$s</string>
+  <string name="confirm">Konfirmasi</string>
+  <string name="pending">Tertunda</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transaksi</string>
+  <string name="contacts_balance_dialog_payment_requested">Permintaan pembayaran</string>
+  <string name="contacts_balance_dialog_choose_account_message">Pilih di mana Anda ingin menerima dana Anda.</string>
+  <string name="contacts_balance_dialog_accept">Terima</string>
+  <!-- SWIPE TO RECEIVE -->
+  <string name="swipe_receive_hint">Geser untuk menerima</string>
+  <string name="swipe_receive_preference_summary">Memperlihatkan alamat penerima ketika Anda mengusap ke kiri pada layar PIN, memungkinkan menerima dana lebih cepat.</string>
+  <string name="swipe_receive_address_info">Lima alamat akan dimuat secara berturut-turut, setelah itu login diperlukan untuk menampilkan alamat baru.</string>
+  <string name="swipe_receive_no_addresses">Tidak ada lagi alamat yang dapat dimuat sekarang. Masuk ke aplikasi untuk memuat lebih banyak.</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_fingerprint_title">Login sidik jari</string>
+  <string name="onboarding_fingerprint_summary">Ggunakan login sidik jari bukan PIN Anda untuk mengotentikasi dan mengakses dompet Anda.</string>
+  <string name="onboarding_fingerprint_enable">Aktifkan sidik jari</string>
+  <string name="onboarding_complete_later">Saya akan melakukannya nanti</string>
+  <string name="onboarding_check_inbox_title">Periksa Kotak Masuk Anda</string>
+  <string name="onboarding_check_inbox_summary">Carilah email dari Blockchain dan klik tautan verifikasi untuk menyelesaikan pengaturan dompet Anda.</string>
+  <string name="onboarding_verify_email">Verifikasi email</string>
+  <string name="onboarding_receive_bitcoin">Meminta Dana</string>
+  <string name="onboarding_current_price">Harga Saat ini:</string>
+  <string name="onboarding_qr_codes">Kode QR</string>
+  <string name="onboarding_scan_address">Pindai Alamat</string>
+  <string name="onboarding_buy_content">Kami bekerja dengan mitra pertukaran di seluruh dunia, sehingga Anda dapat membeli bitcoin langsung dari dompet Anda.</string>
+  <string name="onboarding_receive_content">Mengirim alamat dompet Anda ke teman untuk meminta dana. Alamat adalah deretan dari huruf dan angka acak yang berubah untuk setiap transaksi.</string>
+  <string name="onboarding_qr_codes_content">Alamat juga dapat ditampilkan sebagai kode QR. Pindai kode QR teman untuk menangkap secara cepat alamat dompet mereka.</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Beli Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Jual beli bitcoin</string>
+  <string name="onboarding_get_bitcoin">Dapatkan Bitcoin</string>
+  <string name="onboarding_get_eth">Dapatkan Ether</string>
+  <string name="onboarding_complete_title">Itu saja untuk saat ini!</string>
+  <string name="onboarding_complete_content">Kami akan membuat Anda tetap tidak tertinggal di sini dengan rekomendasi dan fitur baru.</string>
+  <string name="onboarding_start_over">Mulai Dari Awal</string>
+  <string name="onboarding_skip_all">Lewati Semua</string>
+  <string name="trade_complete">Perdagangan Selesai</string>
+  <string name="trade_complete_details">Perdagangan Beli Bitcoin Anda telah diselesaikan!</string>
+  <string name="view_details">Lihat perincian</string>
+  <string name="onboarding_available_now">Tersedia sekarang</string>
+  <string name="onboarding_buy_details">Beli bitcoin secara langsung dari dompet mobil Anda. Mudah, lancar dan aman.</string>
+  <string name="onboarding_buy_performance_warning">Pengalaman beli mungkin sedikit lamban di perangkat Anda. Terima kasih sebelumnya untuk kesabaran Anda.</string>
+  <string name="buy_second_password_prompt">Untuk menggunakan layanan ini, kami meminta Anda untuk memasukkan kata sandi kedua Anda. Anda hanya perlu memasukkan ini sekali untuk menggunakan fungsionalitas Beli.</string>
+  <!-- 2FA Pairing -->
+  <string name="two_factor_dialog_title">Masukkan kode 2FA</string>
+  <string name="two_factor_dialog_message_authenticator">Harap masukkan kode 2FA yang sah dari aplikasi authenticator Anda untuk melanjutkan.</string>
+  <string name="two_factor_dialog_message_sms">Kami baru saja mengirimkan SMS berisi kode 2FA. Harap masukkan di sini untuk melanjutkan.</string>
+  <string name="two_factor_dialog_hint">Kode 2FA</string>
+  <string name="two_factor_null_error">Kode 2FA tidak boleh kosong</string>
+  <string name="two_factor_incorrect_error">Kode 2FA salah</string>
+  <!-- CONFIRM PAYMENT -->
+  <string name="confirm_payment_change_fee">Ubah biaya</string>
+  <string name="confirm_payment_fee_sync_error">Kesalaha mendapatkan opsi gratis</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Reguler</string>
+  <string name="fee_options_priority">Prioritas</string>
+  <string name="fee_options_custom">Penyesuaian</string>
+  <string name="fee_options_regular_time">1+ jam</string>
+  <string name="fee_options_priority_time">~0–60 menit</string>
+  <string name="fee_options_custom_warning">Pengguna lanjutan saja</string>
+  <string name="fee_options_sat_byte_formatted">%1$s sat/b</string>
+  <string name="fee_options_fee_too_low">Biaya rendah tidak direkomendasikan</string>
+  <string name="fee_options_fee_too_high">Biaya tinggi yang tidak perlu</string>
+  <string name="fee_options_advanced_warning">Fitur ini direkomendasikan untuk pengguna lanjutan saja. Dengan memilih biaya penyesuaian, Anda berisiko membayar lebih atau transaksi Anda tidak akan dikonfirmasikan.</string>
+  <string name="fee_options_sat_byte_hint">sat/b</string>
+  <string name="fee_options_sat_byte_inline_hint">Reguler: %1$s, Prioritas: %2$s</string>
+  <string name="what_s_this">Apa ini?</string>
+  <string name="dismiss">Buang</string>
+  <!-- ETHEREUM BALANCE -->
+  <string name="eth_default_account_label">Dompet Ether Saya</string>
+  <string name="eth_now_supporting">Sekarang mendukung Ether</string>
+  <string name="eth_second_password_prompt">Untuk menggunakan layanan ini, kami meminta Anda untuk memasukkan kata sandi kedua Anda. Anda hanya perlu memasukkan ini sekali untuk mengatur dompet Ether Anda.</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_to_field_helper">Masukkan alamat ether atau pilih</string>
+  <string name="eth_to_field_helper_no_dropdown">Masukkan alamat ether</string>
+  <string name="eth_invalid_address">Alamat Ether salah</string>
+  <string name="eth_support_contract_not_allowed">Alamat kontrak tidak didukung.</string>
+  <string name="eth_support_only_eth">Saat ini kami hanya mendukung ETH - Anda tidak dapat menerima token pada alamat ini</string>
+  <string name="eth_unconfirmed_wait">Harap tunggu sampai transaksi Anda sebelumnya dikonfirmasi</string>
+  <string name="eth_transaction_complete">Transaksi selesai! Transaksi dan saldo Anda akan segera diperbaharui, ini bisa butuh beberapa menit.
+</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Dasbor</string>
+  <string name="dashboard_time_span_day">Hari</string>
+  <string name="dashboard_time_span_week">Minggu</string>
+  <string name="dashboard_time_span_month">Bulan</string>
+  <string name="dashboard_time_span_year">Tahun</string>
+  <string name="dashboard_time_span_all_time">Sepanjang Waktu</string>
+  <string name="dashboard_bitcoin_price">Harga bitcoin</string>
+  <string name="dashboard_ether_price">Harga ether</string>
+  <string name="dashboard_charts_error">Kesalahan dalam memuat data grafik</string>
+  <string name="dashboard_charts_price_error">Kesalahan dalam mengambil data harga</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Mulai</string>
+  <!-- ETHEREUM ONBOARDING -->
+  <string name="metadata_load_failure">Kesalahan dalam memuat fungsionalitas dompet selengkapnya. Layanan mungkin tidak tersedia untuk sementara waktu.</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Tukarkan</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">syarat dan ketentuan ShapeShift</string>
+  <string name="shapeshift_transaction_fee">Biaya Transaksi</string>
+  <string name="shapeshift_exchange_rate">Nilai Tukar</string>
+  <string name="shapeshift_complete_title">Selesai</string>
+  <string name="shapeshift_failed_title">Gagal</string>
+  <string name="shapeshift_refunded_title">Dana dikembalikan</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">ID Order</string>
+  <string name="shapeshift_in_progress_summary">Pertukaran dalam Proses</string>
+  <string name="bch_imported_addresses">Alamat Bitcoin Cash Impor</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Beli</string>
+  <string name="buy_sell_sell">Jual</string>
+  <string name="buy_sell_overview_denied_button">Coba lagi</string>
+  <string name="buy_sell_state_processing">Memproses</string>
+  <string name="buy_sell_state_completed">Selesai</string>
+  <string name="buy_sell_state_cancelled">Dibatalkan</string>
+  <string name="buy_sell_state_rejected">Ditolak</string>
+  <string name="buy_sell_state_expired">Kedaluwarsa</string>
+  <string name="buy_sell_detail_transaction_fee">Biaya Transaksi</string>
+  <string name="buy_sell_detail_exchange_rate">Nilai Tukar</string>
+  <string name="buy_sell_detail_amount">Jumlah</string>
+  <string name="buy_sell_detail_payment_fee">Biaya Pembayaran</string>
+  <string name="buy_sell_detail_total">Total Biaya</string>
+  <string name="buy_sell_review_status_in_rejected">Ditolak</string>
+  <string name="buy_sell_review_status_in_failed">Gagal</string>
+  <string name="buy_sell_review_status_in_expired">Kedaluwarsa</string>
+  <string name="buy_sell_review_status_in_completed">Selesai</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metode Pembayaran</string>
+  <string name="buy_sell_confirmation_transaction_fee">Biaya Transaksi</string>
+  <string name="buy_sell_confirmation_amount">Jumlah</string>
+  <string name="buy_sell_confirmation_payment_fee">Biaya Pembayaran</string>
+  <string name="buy_sell_confirmation_total_cost">Total Biaya</string>
+  <string name="buy_sell_confirmation_bank">Transfer</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifikasikan Surel</string>
+  <string name="submit">Kirim</string>
+  <string name="buy_sell_add_account_subtitle">Tambah Rekening Bank</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Pilih Rekening</string>
+  <string name="buy_sell_account_selection_delete_message">Anda yakin ingin menghapus rekening bank ini?</string>
+  <string name="buy_sell_add_address_city_hint">Kota</string>
+  <string name="buy_sell_add_address_post_code_hint">Kode Pos</string>
+  <string name="buy_sell_add_address_post_country_hint">Negara</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Order Berulang</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frekuensi</string>
+  <string name="buy_sell_recurring_order_duration_title">Durasi</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Sampai Anda membatalkannya</string>
+</resources>

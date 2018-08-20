@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>perkataan pertama</item>
+    <item>perkataan yang kedua</item>
+    <item>perkataan ketiga</item>
+    <item>perkataan keempat</item>
+    <item>perkataan kelima</item>
+    <item>perkataan keenam</item>
+    <item>perkataan yang ketujuh</item>
+    <item>perkataan yang kelapan</item>
+    <item>perkataan yang kesembilan</item>
+    <item>perkataan yang kesepuluh</item>
+    <item>perkataan yang kesebelas</item>
+    <item>perkataan kedua belas</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Naik taraf</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Seting</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Hantar</string>
+  <string name="overview">Urus niaga</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Batal</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ya</string>
+  <!-- (No Commment) -->
+  <string name="no">tidak</string>
+  <string name="done">Dilakukan</string>
+  <string name="YESTERDAY">Semalam</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Dipindahkan</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Salin ke papan Keratan</string>
+  <string name="options_id">Wallet ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Mata Wang tempatan</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin Unit</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Syarat-syarat Perkhidmatan</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Dasar privasi</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Tidak sah Wallet ID</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Kata laluan tidak padan</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Masukkan PIN</string>
+  <string name="dialog_continue">Terus</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Berpasangan automatik</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Klik Papar kod berpasangan untuk mendedahkan Kod QR, Kod Bar square hitam &amp; putih. Imbas kod dengan kamera anda.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Wallet ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Wallet Bitcoin saya</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Mendapatkan semula dana</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Anda sentiasa perlu berpasangan atau login jika anda mempunyai akses kepada Wallet ID dan kata laluan anda. Memungut dana anda akan mencipta ID yang baru Wallet. Adakah anda ingin meneruskan?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Kata laluan</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mel</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Mencipta Wallet</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Lemah</string>
+  <string name="strength_medium">Tetap</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Kuat</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Terus</string>
+  <!-- (No Commment) -->
+  <string name="support">Sokongan</string>
+  <!-- (No Commment) -->
+  <string name="from">dari</string>
+  <!-- (No Commment) -->
+  <string name="to">Untuk</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Mengesahkan bayaran</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Alamat yang diimport</string>
+  <string name="ok_cap">ok</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Tukar PIN</string>
+  <!-- (No Commment) -->
+  <string name="name">Nama</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Simpan</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arkib</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Buat alamat baru</string>
+  <!-- (No Commment) -->
+  <string name="label">Label</string>
+  <!-- (No Commment) -->
+  <string name="edit">Edit</string>
+  <!-- (No Commment) -->
+  <string name="warning">Amaran</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Dilanjutkan kekunci awam</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Alamat</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Perkongsian xPub anda membenarkan orang lain untuk mengesan sejarah transaksi anda. Kerana orang-orang yang diberi kuasa boleh mengganggu anda daripada mengakses dompet anda, hanya berkongsi xPub anda dengan orang-orang yang anda percayai.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arkib</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Unarchive</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Kunci peribadi diperlukan</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Lihat sahaja</string>
+  <!-- (No Commment) -->
+  <string name="success">Kejayaan</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Lalai</string>
+  <!-- (No Commment) -->
+  <string name="not_now">bukan sekarang</string>
+  <!-- (No Commment) -->
+  <string name="logout">Log keluar</string>
+  <!-- (No Commment) -->
+  <string name="update">Kemas kini</string>
+  <!-- (No Commment) -->
+  <string name="verify">Mengesahkan</string>
+  <!-- (No Commment) -->
+  <string name="allow">Membenarkan</string>
+  <!-- (No Commment) -->
+  <string name="block">Blok</string>
+  <!-- (No Commment) -->
+  <string name="security">Keselamatan</string>
+  <!-- (No Commment) -->
+  <string name="enable">Membolehkan</string>
+  <!-- (No Commment) -->
+  <string name="disable">Mematikan</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google pengesah</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-langkah pengesahan</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Tukar kata laluan</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">Pemberitahuan e-mel</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Kata laluan baru</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Keutamaan</string>
+  <!-- (No Commment) -->
+  <string name="information">Maklumat</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Permintaan bayaran Bitcoin</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Amaran</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">PIN yang anda pilih adalah sangat biasa dan boleh mudah meneka dengan seseorang yang mempunyai akses kepada telefon anda dalam tempoh 3 kali. Adakah anda ingin untuk menggunakan PIN ini pula?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">cuba lagi</string>
+  <string name="common_pin_dialog_continue">Terus</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Jika anda ingin lupa wallet ini dan mula semula, tekan \'Lupa Wallet\'.</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Urus niaga</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Frasa sandaran</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Salin Alamat</string>
+  <string name="contacts_name_field_hint">Nama</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Urus niaga</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Tetap</string>
+  <string name="buy_sell_overview_denied_button">cuba lagi</string>
+</resources>

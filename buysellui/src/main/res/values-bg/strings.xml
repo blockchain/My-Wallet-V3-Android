@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="receive_bitcoin">Заявка</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Отказ</string>
+  <string name="invalid_email">Невалиден имейл адрес</string>
+  <string name="dialog_continue">Продължи</string>
+  <string name="log_in">Вход</string>
+  <string name="new_wallet">Нов портфейл</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Продължи</string>
+  <string name="total">Общо</string>
+  <string name="invalid_bitcoin_address">Невалиден Bitcoin адрес</string>
+  <string name="invalid_amount">Невалидно количество</string>
+  <string name="insufficient_funds">Недостатъчни средства</string>
+  <string name="description">Описание</string>
+  <string name="next">Следващо</string>
+  <string name="scan_qr">Сканирай QR код</string>
+  <string name="confirm_password">Потвърдете паролата</string>
+  <string name="transaction_occur_when_bitcoin">Трансакциите се случват, когато изпращате и получавате bitcoin.</string>
+  <string name="transaction_occur_when_eth">Трансакциите се случват, когато изпращате и получавате ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Трансакциите се случват, когато изпращате и получавате bitcoin cash.</string>
+  <string name="total_funds">Всички</string>
+  <string name="try_again">Опитайте отново</string>
+  <string name="amount">Количество</string>
+  <!-- (No Commment) -->
+  <string name="verify">Потвърди</string>
+  <string name="resend">Изпрати отново</string>
+  <string name="yubikey">Yubikey</string>
+  <string name="email_notifications_summary">Получавайте известия, когато постъпват bitcoin средства.</string>
+  <string name="learn_more">Научете повече</string>
+  <string name="common_pin_dialog_continue">Продължи</string>
+  <string name="go_back">Обратно</string>
+  <string name="transaction_detail_date">Дата</string>
+  <string name="transaction_detail_status">Статус</string>
+  <string name="transaction_details_unknown">Неизвестно</string>
+  <string name="security_centre_add_email_title">Имейл адрес</string>
+  <string name="security_centre_add_email_positive_button">Добави</string>
+  <string name="contacts_add_button">Добави</string>
+  <string name="contacts_payment_request_amount_hint">Количество</string>
+  <string name="contacts_receiving_cancelled">Анулирана</string>
+  <string name="pending">Изчакващ</string>
+  <string name="contacts_balance_dialog_accept">Приеми</string>
+  <string name="onboarding_complete_later">Ще направя това по-късно</string>
+  <string name="onboarding_receive_bitcoin">Поискайте средства</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Купете Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Купувайте и продавайте Bitcoin</string>
+  <string name="view_details">Вижте детайлите</string>
+  <string name="fee_options_priority">Приоритет</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Невалиден Ether адрес</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Контролно табло</string>
+  <string name="dashboard_time_span_day">Ден</string>
+  <string name="dashboard_time_span_week">Седмица</string>
+  <string name="dashboard_time_span_month">Месец</string>
+  <string name="dashboard_time_span_year">Година</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Започнете</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Обмени</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">на ShapeShift</string>
+  <string name="shapeshift_exchange_rate">Обменен курс</string>
+  <string name="shapeshift_complete_title">Завършени</string>
+  <string name="shapeshift_failed_title">Неуспешна</string>
+  <string name="shapeshift_refunded_title">С възстановени суми</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">ИД на поръчката</string>
+  <string name="shapeshift_in_progress_summary">Извършва се обмен</string>
+  <string name="bch_imported_addresses">Импортирани Bitcoin Cash адреси</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Купи</string>
+  <string name="buy_sell_sell">Продай</string>
+  <string name="buy_sell_state_processing">В процес на обработка</string>
+  <string name="buy_sell_state_completed">Завършен</string>
+  <string name="buy_sell_state_cancelled">Анулирана</string>
+  <string name="buy_sell_state_rejected">Отхвърлена</string>
+  <string name="buy_sell_state_expired">Изтекъл срок</string>
+  <string name="buy_sell_detail_exchange_rate">Обменен курс</string>
+  <string name="buy_sell_detail_amount">Количество</string>
+  <string name="buy_sell_detail_payment_fee">Такса превод</string>
+  <string name="buy_sell_detail_total">Обща стойност</string>
+  <string name="buy_sell_review_status_in_rejected">Отхвърлена</string>
+  <string name="buy_sell_review_status_in_failed">Неуспешна</string>
+  <string name="buy_sell_review_status_in_expired">Изтекъл срок</string>
+  <string name="buy_sell_review_status_in_completed">Завършен</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Метод на плащане</string>
+  <string name="buy_sell_confirmation_amount">Количество</string>
+  <string name="buy_sell_confirmation_payment_fee">Такса превод</string>
+  <string name="buy_sell_confirmation_total_cost">Обща стойност</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Потвърдете имейл адреса си</string>
+  <string name="submit">Изпращане</string>
+  <string name="buy_sell_add_account_subtitle">Добавете банкова сметка</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Изберете сметка</string>
+  <string name="buy_sell_account_selection_delete_message">Сигурни ли сте, че желаете да изтриете тази банкова сметка?</string>
+  <string name="buy_sell_add_address_city_hint">Град</string>
+  <string name="buy_sell_add_address_post_code_hint">Пощенски код</string>
+  <string name="buy_sell_add_address_post_country_hint">Държава</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Повтаряща се поръчка</string>
+  <string name="buy_sell_recurring_order_frequency_title">Честота</string>
+  <string name="buy_sell_recurring_order_duration_title">Продължителност</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Докато я отмените</string>
+</resources>

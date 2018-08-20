@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>Prva beseda</item>
+    <item>drugo besedo</item>
+    <item>tretja beseda</item>
+    <item>četrti besedo</item>
+    <item>Peti besedo</item>
+    <item>šesti besedo</item>
+    <item>sedmi besedo</item>
+    <item>osmi besedo</item>
+    <item>deveti besedo</item>
+    <item>deseto besedo</item>
+    <item>Enajsta besedo</item>
+    <item>dvanajsta besedo</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Nadgradnja</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Nastavitve</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Pošlji</string>
+  <string name="receive_bitcoin">Zahtevaj</string>
+  <string name="overview">Transakcije</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Prekliči</string>
+  <!-- (No Commment) -->
+  <string name="yes">da</string>
+  <!-- (No Commment) -->
+  <string name="no">ne</string>
+  <string name="done">Opravljeno</string>
+  <string name="YESTERDAY">Včeraj</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Prenese</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Kopirati v odložišče</string>
+  <string name="options_id">ID denarnice</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Lokalni valuti</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin enota</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Pogoji storitve</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Pravilnik o zasebnosti</string>
+  <string name="invalid_email">Neveljaven e-poštni naslov</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Neveljaven ID denarnice</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Gesli se ne ujemata</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Vnesite PIN</string>
+  <string name="dialog_continue">Še</string>
+  <string name="log_in">Vpis</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Samodejno seznanjanje</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Kliknite Pokaži seznanjanje kodo da razkrije QR kode, črnimi kvadratnimi &amp; belo črtno kodo. Preglejte kodo s fotoaparatom.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">ID denarnice</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Moj Bitcoin denarnico</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Povračilo sredstev</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Morate vedno seznaniti ali prepričevalnost, če imate dostop do vaše denarnice ID in geslo. Izterjavo vaših sredstev bo ustvaril nove denarnice ID. Ali želite nadaljevati?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Geslo</string>
+  <!-- (No Commment) -->
+  <string name="email">E-pošta</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Ustvarite denarnice</string>
+  <string name="new_wallet">Nova denarnica</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Šibka</string>
+  <string name="strength_medium">Redno</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Močna</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normalno</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Še</string>
+  <string name="total">Skupaj</string>
+  <string name="invalid_bitcoin_address">Neveljaven Bitcoin naslov</string>
+  <string name="invalid_amount">Neveljavna vsota</string>
+  <string name="insufficient_funds">Nezadostna sredstva</string>
+  <!-- (No Commment) -->
+  <string name="support">Podpora</string>
+  <!-- (No Commment) -->
+  <string name="from">iz</string>
+  <!-- (No Commment) -->
+  <string name="to">Za</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Potrdi plačilo</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Uvožene naslove</string>
+  <string name="ok_cap">v redu</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Sprememba PIN</string>
+  <string name="description">Opis</string>
+  <!-- (No Commment) -->
+  <string name="name">ime</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Shrani</string>
+  <string name="next">Naprej</string>
+  <string name="scan_qr">Optično branje QR kode</string>
+  <string name="confirm_password">Potrdi geslo</string>
+  <string name="transaction_occur_when_bitcoin">Transakcije se zgodijo, ko prejmete in pošljete bitcoin.</string>
+  <string name="transaction_occur_when_eth">Transakcije se zgodijo, ko prejmete in pošljete ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transakcije se zgodijo, ko prejmete in pošljete bitcoin cash.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arhivirani</string>
+  <string name="total_funds">Vsi</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Ustvarite nov naslov</string>
+  <!-- (No Commment) -->
+  <string name="label">Oznaka</string>
+  <!-- (No Commment) -->
+  <string name="edit">Urejanje</string>
+  <!-- (No Commment) -->
+  <string name="warning">Opozorilo</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Razširiti javnega ključa</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Naslov</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Delitev vaše xPub dovoljuje drugim za sledenje zgodovine transakcij. Kot pooblaščene osebe lahko motijo vas dostop do vaše denarnice, samo delite svoje xPub z ljudmi, ki jim zaupate.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arhiv</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Vzemi iz arhiva</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Zasebni ključ je potreben</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Gledam samo</string>
+  <!-- (No Commment) -->
+  <string name="success">Uspeh</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Privzeto</string>
+  <string name="try_again">Poskusi ponovno</string>
+  <string name="amount">Vsota</string>
+  <!-- (No Commment) -->
+  <string name="not_now">ne zdaj</string>
+  <!-- (No Commment) -->
+  <string name="logout">Logout</string>
+  <!-- (No Commment) -->
+  <string name="update">Posodobitev</string>
+  <!-- (No Commment) -->
+  <string name="verify">Preverite, ali</string>
+  <string name="resend">Ponovno pošlji</string>
+  <!-- (No Commment) -->
+  <string name="allow">Omogočajo</string>
+  <!-- (No Commment) -->
+  <string name="block">Blok</string>
+  <!-- (No Commment) -->
+  <string name="security">Varnost</string>
+  <!-- (No Commment) -->
+  <string name="enable">Omogoči</string>
+  <!-- (No Commment) -->
+  <string name="disable">Onemogoči</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Programa Google Authenticator</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">Preverjanje v 2 korakih</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Spremeni geslo</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">E-obvestila</string>
+  <string name="email_notifications_summary">Prejmite obvestilo, ko prejmete bitcoin.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Novo geslo</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Nastavitve</string>
+  <!-- (No Commment) -->
+  <string name="information">Informacije</string>
+  <string name="learn_more">Več o tem</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Zahtevek za plačilo Bitcoin</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Opozorilo</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">PIN, ki ste izbrali zelo pogosti in lahko enostavno uganiti nekdo dostop do telefona v 3 poskusih. Ali želite vseeno uporabiti ta PIN?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">poskusi znova</string>
+  <string name="common_pin_dialog_continue">Še</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Če bi radi pozabili to denarnico in začeti znova, pritisnite \"Pozabil denarnico\".</string>
+  <string name="go_back">Pojdi nazaj</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transakcije</string>
+  <string name="transaction_detail_date">Datum</string>
+  <string name="transaction_detail_status">Stanje</string>
+  <string name="transaction_details_unknown">Neznano</string>
+  <string name="security_centre_add_email_title">E-poštni naslov</string>
+  <string name="security_centre_add_email_positive_button">Dodaj</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Varnostno stavek</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Kopirajte naslov</string>
+  <string name="contacts_name_field_hint">ime</string>
+  <string name="contacts_add_button">Dodaj</string>
+  <string name="contacts_payment_request_amount_hint">Vsota</string>
+  <string name="contacts_receiving_cancelled">Preklicano</string>
+  <string name="pending">V teku</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transakcije</string>
+  <string name="contacts_balance_dialog_accept">Sprejmi</string>
+  <string name="onboarding_complete_later">To bom storil kasneje</string>
+  <string name="onboarding_receive_bitcoin">Zahtevaj sredstva</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Kupi Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Nakup in prodaja Bitcoina</string>
+  <string name="view_details">Prikaži podrobnosti</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Redno</string>
+  <string name="fee_options_priority">Prednost</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Neveljaven Ether naslov</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Nadzorna plošča</string>
+  <string name="dashboard_time_span_day">Dan</string>
+  <string name="dashboard_time_span_week">Teden</string>
+  <string name="dashboard_time_span_month">Mesec</string>
+  <string name="dashboard_time_span_year">Leto</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Začnite</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Borza</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">pogoji uporabe</string>
+  <string name="shapeshift_exchange_rate">Menjalni tečaj</string>
+  <string name="shapeshift_complete_title">Končano</string>
+  <string name="shapeshift_failed_title">Ni uspelo</string>
+  <string name="shapeshift_refunded_title">Vračilo denarja</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">ID naročila</string>
+  <string name="shapeshift_in_progress_summary">Izmenjava v teku</string>
+  <string name="bch_imported_addresses">Uvoženi Bitcoin Cash naslovi</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Nakup</string>
+  <string name="buy_sell_sell">Prodaja</string>
+  <string name="buy_sell_overview_denied_button">poskusi znova</string>
+  <string name="buy_sell_state_processing">Obdelovanje</string>
+  <string name="buy_sell_state_completed">Končano</string>
+  <string name="buy_sell_state_cancelled">Preklicano</string>
+  <string name="buy_sell_state_rejected">Zavrnjeno</string>
+  <string name="buy_sell_state_expired">Poteklo</string>
+  <string name="buy_sell_detail_exchange_rate">Menjalni tečaj</string>
+  <string name="buy_sell_detail_amount">Vsota</string>
+  <string name="buy_sell_detail_payment_fee">Provizija za plačilo</string>
+  <string name="buy_sell_detail_total">Skupna cena</string>
+  <string name="buy_sell_review_status_in_rejected">Zavrnjeno</string>
+  <string name="buy_sell_review_status_in_failed">Ni uspelo</string>
+  <string name="buy_sell_review_status_in_expired">Poteklo</string>
+  <string name="buy_sell_review_status_in_completed">Končano</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Metoda plačila</string>
+  <string name="buy_sell_confirmation_amount">Vsota</string>
+  <string name="buy_sell_confirmation_payment_fee">Provizija za plačilo</string>
+  <string name="buy_sell_confirmation_total_cost">Skupna cena</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Potrdite svoj e-poštni naslov</string>
+  <string name="submit">Pošlji</string>
+  <string name="buy_sell_add_account_subtitle">Dodaj bančni račun</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Izberi račun</string>
+  <string name="buy_sell_account_selection_delete_message">Ali ste prepričani, da želite izbrisati ta bančni račun?</string>
+  <string name="buy_sell_add_address_city_hint">Mesto</string>
+  <string name="buy_sell_add_address_post_code_hint">Poštna številka</string>
+  <string name="buy_sell_add_address_post_country_hint">Država</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Ponavljajoče naročilo</string>
+  <string name="buy_sell_recurring_order_frequency_title">Pogostost</string>
+  <string name="buy_sell_recurring_order_duration_title">Trajanje</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Do preklica</string>
+</resources>

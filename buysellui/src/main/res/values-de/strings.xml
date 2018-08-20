@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>erstes Wort</item>
+    <item>zweites Wort</item>
+    <item>drittes Wort</item>
+    <item>viertes Wort</item>
+    <item>fünftes Wort</item>
+    <item>sechstes Wort</item>
+    <item>siebtes Wort</item>
+    <item>achtes Wort</item>
+    <item>neuntes Wort</item>
+    <item>zehntes Wort</item>
+    <item>elftes Wort</item>
+    <item>zwölftes Wort</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Upgrade</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Einstellungen</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Senden</string>
+  <string name="receive_bitcoin">Anfordern</string>
+  <string name="overview">Transaktionen</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Abbrechen</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ja</string>
+  <!-- (No Commment) -->
+  <string name="no">Nein</string>
+  <string name="done">Fertig</string>
+  <string name="YESTERDAY">Gestern</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Überwiesen</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">In Zwischenablage kopiert</string>
+  <string name="options_id">Wallet-ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Landeswährung</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin-Einheit</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Nutzungsbedingungen</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Datenschiutzbestimmungen</string>
+  <string name="invalid_email">Ungültige E-Mail-Adresse</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Ungültige Wallet-ID</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Passwörter stimmen nicht überein</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">PIN eingeben</string>
+  <string name="dialog_continue">Weiter</string>
+  <string name="log_in">Anmelden</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatische Kombination</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Zur Angabe eines QR-Codes, einem quadratischen schwarzweißen Strichcode, klicken Sie auf \'Kombinationscode anzeigen\'. Scannen Sie den Code mit Ihrer Kamera.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Wallet-ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Meine Bitcoin-Wallet</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Guthaben wiederherstellen</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Sollten Sie auf Wallet-ID und Passwort zugreifen können, sollten Sie immer die Gerätekombination oder Anmeldung wählen. Durch die Wiederherstellung Ihrer Guthaben wird eine neue Wallet-ID erzeugt. Möchten Sie fortfahren?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Passwort</string>
+  <!-- (No Commment) -->
+  <string name="email">E-Mail</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Wallet erstellen</string>
+  <string name="new_wallet">Neue Wallet</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Schwach</string>
+  <string name="strength_medium">Regulär</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Stark</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Weiter</string>
+  <string name="total">Insgesamt</string>
+  <string name="invalid_bitcoin_address">Ungültige Bitcoin-Adresse</string>
+  <string name="invalid_amount">Ungültiges Konto</string>
+  <string name="insufficient_funds">Unzureichendes Guthaben</string>
+  <!-- (No Commment) -->
+  <string name="support">Support</string>
+  <!-- (No Commment) -->
+  <string name="from">von</string>
+  <!-- (No Commment) -->
+  <string name="to">An</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Zahlung bestätigen</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Importierte Adressen</string>
+  <string name="ok_cap">OK</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">PIN ändern</string>
+  <string name="description">Beschreibung</string>
+  <!-- (No Commment) -->
+  <string name="name">Name</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Speichern</string>
+  <string name="next">Weiter</string>
+  <string name="scan_qr">QR-Code scannen</string>
+  <string name="confirm_password">Passwort bestätigen</string>
+  <string name="transaction_occur_when_bitcoin">Transaktionen erfolgen durch den Empfang und Versand von Bitcoins.</string>
+  <string name="transaction_occur_when_eth">Transaktionen erfolgen durch den Empfang und Versand von Ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transaktionen erfolgen durch den Empfang und Versand von Bitcoin Cash.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Archiviert</string>
+  <string name="total_funds">Alle</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Neue Adresse erstellen</string>
+  <string name="cannot_launch_app">Blockchain Wallet funktioniert nicht auf diesem Gerät.</string>
+  <!-- (No Commment) -->
+  <string name="label">Beschreibung</string>
+  <!-- (No Commment) -->
+  <string name="edit">Bearbeiten</string>
+  <!-- (No Commment) -->
+  <string name="warning">Warnhinweis</string>
+  <string name="exit">Beenden</string>
+  <string name="screen_overlay_warning">Bildschirmüberlagerung wurde festgestellt!</string>
+  <string name="screen_overlay_note">Bildschirmüberlagerungen nutzende Apps können Sie dazu bringen, unsichtbare Objekte zu berühren und sich möglicherweise Guthaben stehlen. Beachten Sie bitte, dass diese Warnung auch im Falle von Apps mit Bildschirmdimmer ausgelöst wird. Wenn Sie sicher sind, keiner Gefahr ausgesetzt zu sein, fahren Sie bitte fort. </string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Erweiterter allgemeiner Schlüssel</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adresse</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Durch das Teilen Ihres xPub berechtigen Sie andere dazu, Ihre Transaktionsverläufe nachzuverfolgen. Da es berechtigten Personen möglich ist, Ihren Zugriff auf Ihre Wallet zu stören, sollten Sie Ihren xPub nur mit Leuten Ihres Vertrauens teilen.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Archiv</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Nicht archiviert</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Privater Schlüssel erforderlich</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Watch-Only</string>
+  <!-- (No Commment) -->
+  <string name="success">Das hat geklappt</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Standard</string>
+  <string name="try_again">Erneut versuchen</string>
+  <string name="amount">Betrag</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Nicht jetzt</string>
+  <!-- (No Commment) -->
+  <string name="logout">Abmelden</string>
+  <!-- (No Commment) -->
+  <string name="update">Aktualisieren</string>
+  <!-- (No Commment) -->
+  <string name="verify">Verifizieren</string>
+  <string name="resend">Erneut senden</string>
+  <!-- (No Commment) -->
+  <string name="allow">Erlauben</string>
+  <!-- (No Commment) -->
+  <string name="block">Sperren</string>
+  <!-- (No Commment) -->
+  <string name="security">Sicherheit</string>
+  <!-- (No Commment) -->
+  <string name="enable">Aktivieren</string>
+  <!-- (No Commment) -->
+  <string name="disable">Deaktivieren</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google-Authenticator</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-Schritt-Verifizierung</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Passwort ändern</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">E-Mail-Benachrichtigungen</string>
+  <string name="email_notifications_summary">Erhalten Sie beim Empfang von Bitcoin eine Benachrichtigung.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Neues Passwort</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Voreinstellungen</string>
+  <!-- (No Commment) -->
+  <string name="information">Information</string>
+  <string name="learn_more">Mehr dazu</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin-Zahlungsaufforderung</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Warnhinweis</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">Die von Ihnen gewählte PIN ist sehr geläufig. Eine Person, die Zugriff auf Ihr Telefon hat, kann diese durch 3-maliges Versuchen eventuell leicht erraten. Möchten Sie diese PIN dennoch verwenden?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Erneut versuchen</string>
+  <string name="common_pin_dialog_continue">Weiter</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Wenn Sie diese Wallet vergessen und nochmal von vorne beginnen möchten, drücken Sie \'Wallet vergessen\'.</string>
+  <string name="go_back">Zurückgehen</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transaktion</string>
+  <string name="transaction_detail_date">Datum</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_details_unknown">Unbekannt</string>
+  <string name="security_centre_add_email_title">E-Mail-Adresse</string>
+  <string name="security_centre_add_email_positive_button">Hinzufügen</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Wiederherstellungspasswort</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Adresse kopieren</string>
+  <string name="contacts_name_field_hint">Name</string>
+  <string name="contacts_add_button">Hinzufügen</string>
+  <string name="contacts_payment_request_amount_hint">Betrag</string>
+  <string name="contacts_receiving_cancelled">Abgebrochen</string>
+  <string name="pending">Ausstehend</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transaktionen</string>
+  <string name="contacts_balance_dialog_accept">Akzeptieren</string>
+  <string name="onboarding_complete_later">Das erledige ich später</string>
+  <string name="onboarding_receive_bitcoin">Guthaben anfordern</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Bitcoin kaufen</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Bitcoin kaufen und verkaufen</string>
+  <string name="view_details">Details anzeigen</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Regulär</string>
+  <string name="fee_options_priority">Priorität</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Ungültige Ether-Adresse</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Dashboard</string>
+  <string name="dashboard_time_span_day">Tag</string>
+  <string name="dashboard_time_span_week">Woche</string>
+  <string name="dashboard_time_span_month">Monat</string>
+  <string name="dashboard_time_span_year">Jahr</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Los geht\'s</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Umtausch</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">Geschäftsbedingungen</string>
+  <string name="shapeshift_exchange_rate">Umtauschkurs</string>
+  <string name="shapeshift_complete_title">Abgeschlossen</string>
+  <string name="shapeshift_failed_title">Fehlgeschlagen</string>
+  <string name="shapeshift_refunded_title">Rückerstattet</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Auftragskennung</string>
+  <string name="shapeshift_in_progress_summary">Umtausch wird vorgenommen</string>
+  <string name="bch_imported_addresses">Importierte Bitcoin-Cash-Adressen</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Kaufen</string>
+  <string name="buy_sell_sell">Verkaufen</string>
+  <string name="buy_sell_overview_denied_button">Erneut versuchen</string>
+  <string name="buy_sell_state_processing">Wird bearbeitet</string>
+  <string name="buy_sell_state_completed">Fertig</string>
+  <string name="buy_sell_state_cancelled">Abgebrochen</string>
+  <string name="buy_sell_state_rejected">Abgelehnt</string>
+  <string name="buy_sell_state_expired">Abgelaufen</string>
+  <string name="buy_sell_detail_exchange_rate">Umtauschkurs</string>
+  <string name="buy_sell_detail_amount">Betrag</string>
+  <string name="buy_sell_detail_payment_fee">Zahlungsgebühr</string>
+  <string name="buy_sell_detail_total">Gesamtkosten</string>
+  <string name="buy_sell_review_status_in_rejected">Abgelehnt</string>
+  <string name="buy_sell_review_status_in_failed">Fehlgeschlagen</string>
+  <string name="buy_sell_review_status_in_expired">Abgelaufen</string>
+  <string name="buy_sell_review_status_in_completed">Fertig</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Zahlungsmethode</string>
+  <string name="buy_sell_confirmation_amount">Betrag</string>
+  <string name="buy_sell_confirmation_payment_fee">Zahlungsgebühr</string>
+  <string name="buy_sell_confirmation_total_cost">Gesamtkosten</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Verifizieren Sie Ihre E-Mail-Adresse</string>
+  <string name="submit">Einreichen</string>
+  <string name="buy_sell_add_account_subtitle">Bankkonto hinzufügen</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Konto auswählen</string>
+  <string name="buy_sell_account_selection_delete_message">Wollen Sie dieses Bankkonto tatsächlich löschen?</string>
+  <string name="buy_sell_add_address_city_hint">Ort</string>
+  <string name="buy_sell_add_address_post_code_hint">Postleitzahl</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Wiederkehrender Auftrag</string>
+  <string name="buy_sell_recurring_order_frequency_title">Häufigkeit</string>
+  <string name="buy_sell_recurring_order_duration_title">Dauer</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Bis zur Kündigung</string>
+</resources>

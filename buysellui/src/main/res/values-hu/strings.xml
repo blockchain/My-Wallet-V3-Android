@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>első szó</item>
+    <item>második szó</item>
+    <item>harmadik szó</item>
+    <item>negyedik word</item>
+    <item>ötödik szó</item>
+    <item>hatodik szó</item>
+    <item>hetedik szó</item>
+    <item>nyolcadik szó</item>
+    <item>kilencedik szó</item>
+    <item>tizedik szó</item>
+    <item>tizenegyedik szó</item>
+    <item>tizenkettedik szó</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Frissítés</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Beállítások</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Küldés</string>
+  <string name="receive_bitcoin">Kérelmezés</string>
+  <string name="overview">Tranzakciók</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Mégse</string>
+  <!-- (No Commment) -->
+  <string name="yes">igen</string>
+  <!-- (No Commment) -->
+  <string name="no">nem</string>
+  <string name="done">Kész</string>
+  <string name="YESTERDAY">Tegnap</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Át</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Fénymásoló-hoz csipeszes írótábla</string>
+  <string name="options_id">Pénztárca ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Helyi pénznemben</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin egység</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Szolgáltatási feltételek</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Adatvédelmi politika</string>
+  <string name="invalid_email">Érvénytelen e-mail-cím</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Érvénytelen pénztárca-azonosító</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Jelszavak nem egyeznek</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">PIN-kód</string>
+  <string name="dialog_continue">Továbbra is</string>
+  <string name="log_in">Bejelentkezés</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatikus párosítás</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Kattintson a Térkép párosítás kód-hoz feltár egy QR-kód, egy fehér négyzet fekete &amp; vonalkód. Olvassa be a kódot a kamera.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Pénztárca ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Bitcoin tárcámat</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Alapokat visszaszerez</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Mindig párba, vagy ha van hozzáférése a pénztárca azonosítás és jelszó logika. Beszedik a pénzt hoz létre egy új pénztárcát. Szeretne továbbra is?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Jelszó</string>
+  <!-- (No Commment) -->
+  <string name="email">E-mailben</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Hozzon létre a pénztárca</string>
+  <string name="new_wallet">Új tárca</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Gyenge</string>
+  <string name="strength_medium">Rendszeres</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Erős</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normál</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Továbbra is</string>
+  <string name="total">Összesen</string>
+  <string name="invalid_bitcoin_address">Érvénytelen Bitcoin-cím</string>
+  <string name="invalid_amount">Érvénytelen összeg</string>
+  <string name="insufficient_funds">Kevés pénzösszeg</string>
+  <!-- (No Commment) -->
+  <string name="support">Támogatás</string>
+  <!-- (No Commment) -->
+  <string name="from">a</string>
+  <!-- (No Commment) -->
+  <string name="to">A</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Erősítse fizetés</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Importált címek</string>
+  <string name="ok_cap">oké</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">PIN-kód módosítása</string>
+  <string name="description">Leírás</string>
+  <!-- (No Commment) -->
+  <string name="name">név</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Mentés</string>
+  <string name="next">Következő</string>
+  <string name="scan_qr">QR-kód beolvasása</string>
+  <string name="confirm_password">Jelszó megerősítése</string>
+  <string name="transaction_occur_when_bitcoin">Tranzakcióra akkor kerül sor, ha Ön bitcoint fogad vagy küld.</string>
+  <string name="transaction_occur_when_eth">Tranzakcióra akkor kerül sor, ha ethert fogad vagy küld.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Tranzakcióra akkor kerül sor, ha Ön Bitcoin Cash-t fogad vagy küld.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Archivált</string>
+  <string name="total_funds">Összes</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Hozzon létre új címet</string>
+  <!-- (No Commment) -->
+  <string name="label">Címke</string>
+  <!-- (No Commment) -->
+  <string name="edit">Szerkesztése</string>
+  <!-- (No Commment) -->
+  <string name="warning">Figyelmeztetés</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Kiterjesztett nyilvános kulcs</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Cím</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">A xPub megosztása felhatalmazza mások a tranzakciók előzményeinek nyomon követésére. Jogosult személyek esetleg képes megzavarni, hozzáférjenek a pénztárca, csak megosztja a xPub meg, akikben megbízol.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Archívum</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Archiválás</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Személyes kulcs szükséges</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Csak néz</string>
+  <!-- (No Commment) -->
+  <string name="success">Siker</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Alapértelmezett</string>
+  <string name="try_again">Próbálja újra</string>
+  <string name="amount">Összeg</string>
+  <!-- (No Commment) -->
+  <string name="not_now">ne most</string>
+  <!-- (No Commment) -->
+  <string name="logout">Kijelentkezés</string>
+  <!-- (No Commment) -->
+  <string name="update">Frissítés</string>
+  <!-- (No Commment) -->
+  <string name="verify">Ellenőrizze</string>
+  <string name="resend">Újraküldés</string>
+  <!-- (No Commment) -->
+  <string name="allow">Lehetővé teszi</string>
+  <!-- (No Commment) -->
+  <string name="block">Blokk</string>
+  <!-- (No Commment) -->
+  <string name="security">Biztonsági</string>
+  <!-- (No Commment) -->
+  <string name="enable">Engedélyezi a</string>
+  <!-- (No Commment) -->
+  <string name="disable">Letiltása</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS-BEN</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">A Google hitelesítő</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2. lépés ellenőrzés</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Jelszó módosítása</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">E-mail értesítések</string>
+  <string name="email_notifications_summary">Értesüljön róla, ha bitcoinja érkezik.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Új jelszó</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Beállítások</string>
+  <!-- (No Commment) -->
+  <string name="information">Információk</string>
+  <string name="learn_more">Bővebben</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin kifizetési kérelem</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Figyelmeztetés</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">A PIN-kódot választotta rendkívül gyakori, és valaki a hozzáférést a telefon belül 3 próbálkozás könnyen kitalálható. Szeretne használni a PIN-kód egyébként?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">próbáld újra</string>
+  <string name="common_pin_dialog_continue">Továbbra is</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Ha azt szeretné, hogy felejtsd el a tárca, és kezdjük újra, nyomja meg a \"Felejtsd el Wallet\".</string>
+  <string name="go_back">Visszalépés</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Tranzakció</string>
+  <string name="transaction_detail_date">Dátum</string>
+  <string name="transaction_detail_status">Státusz</string>
+  <string name="transaction_details_unknown">Ismeretlen</string>
+  <string name="security_centre_add_email_title">E-mail-cím</string>
+  <string name="security_centre_add_email_positive_button">Hozzáadás</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Hát mondat</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Cím másolása</string>
+  <string name="contacts_name_field_hint">név</string>
+  <string name="contacts_add_button">Hozzáadás</string>
+  <string name="contacts_payment_request_amount_hint">Összeg</string>
+  <string name="contacts_receiving_cancelled">Törölve</string>
+  <string name="pending">Függőben</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Tranzakciók</string>
+  <string name="contacts_balance_dialog_accept">Elfogad</string>
+  <string name="onboarding_complete_later">Később végzem el</string>
+  <string name="onboarding_receive_bitcoin">Pénzösszegek kérelmezése</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Bitcoin vásárlása</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Bitcoin vásárlása és eladása</string>
+  <string name="view_details">Részletek megtekintése</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Rendszeres</string>
+  <string name="fee_options_priority">Elsőbbségi</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Érvénytelen Ether-cím</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Irányítópult</string>
+  <string name="dashboard_time_span_day">Nap</string>
+  <string name="dashboard_time_span_week">Hét</string>
+  <string name="dashboard_time_span_month">Hónap</string>
+  <string name="dashboard_time_span_year">Év</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Kezdés</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Átváltás</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">Felhasználási feltételeit</string>
+  <string name="shapeshift_exchange_rate">Átváltási árfolyam</string>
+  <string name="shapeshift_complete_title">Teljesít</string>
+  <string name="shapeshift_failed_title">Sikertelen</string>
+  <string name="shapeshift_refunded_title">Visszatérítve</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Megbízásazonosító</string>
+  <string name="shapeshift_in_progress_summary">Átváltás folyamatban</string>
+  <string name="bch_imported_addresses">Importált Bitcoin Cash-címek</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Vétel</string>
+  <string name="buy_sell_sell">Eladás</string>
+  <string name="buy_sell_overview_denied_button">próbáld újra</string>
+  <string name="buy_sell_state_processing">Feldolgozás alatt</string>
+  <string name="buy_sell_state_completed">Teljesítve</string>
+  <string name="buy_sell_state_cancelled">Törölve</string>
+  <string name="buy_sell_state_rejected">Elutasítva</string>
+  <string name="buy_sell_state_expired">Lejárt</string>
+  <string name="buy_sell_detail_exchange_rate">Átváltási árfolyam</string>
+  <string name="buy_sell_detail_amount">Összeg</string>
+  <string name="buy_sell_detail_payment_fee">Kifizetési díj</string>
+  <string name="buy_sell_detail_total">Teljes költség</string>
+  <string name="buy_sell_review_status_in_rejected">Elutasítva</string>
+  <string name="buy_sell_review_status_in_failed">Sikertelen</string>
+  <string name="buy_sell_review_status_in_expired">Lejárt</string>
+  <string name="buy_sell_review_status_in_completed">Teljesítve</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Fizetési mód</string>
+  <string name="buy_sell_confirmation_amount">Összeg</string>
+  <string name="buy_sell_confirmation_payment_fee">Kifizetési díj</string>
+  <string name="buy_sell_confirmation_total_cost">Teljes költség</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Hitelesítse e-mail-címét</string>
+  <string name="submit">Küldés</string>
+  <string name="buy_sell_add_account_subtitle">Bankszámla hozzáadása</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Számla kiválasztása</string>
+  <string name="buy_sell_account_selection_delete_message">Biztosan szeretné törölni ezt a bankszámlát?</string>
+  <string name="buy_sell_add_address_city_hint">Város</string>
+  <string name="buy_sell_add_address_post_code_hint">Irányítószám</string>
+  <string name="buy_sell_add_address_post_country_hint">Ország</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Ismétlődő megbízás</string>
+  <string name="buy_sell_recurring_order_frequency_title">Gyakoriság</string>
+  <string name="buy_sell_recurring_order_duration_title">Időtartam</string>
+  <string name="buy_sell_recurring_order_duration_you_cancelled">Amíg Ön visszavonja</string>
+</resources>
