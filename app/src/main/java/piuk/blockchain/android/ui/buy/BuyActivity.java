@@ -82,7 +82,7 @@ public class BuyActivity extends BaseMvpActivity<BuyView, BuyPresenter>
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_buy);
 
-        setupToolbar(binding.toolbarContainer.toolbarGeneral, "");
+        setupToolbar(findViewById(R.id.toolbar_general), "");
 
         if (AndroidUtils.is21orHigher()) {
             CookieManager.getInstance().setAcceptThirdPartyCookies(binding.webview, true);

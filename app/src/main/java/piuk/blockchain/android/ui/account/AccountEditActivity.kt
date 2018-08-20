@@ -15,6 +15,7 @@ import android.support.annotation.StringRes
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatEditText
+import android.support.v7.widget.Toolbar
 import android.text.InputFilter
 import android.text.InputType
 import android.view.View
@@ -79,7 +80,7 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
         presenter.accountModel = AccountEditModel(this)
         binding.viewModel = accountEditPresenter
 
-        setupToolbar(binding.toolbarContainer.toolbarGeneral, R.string.edit)
+        setupToolbar(findViewById<Toolbar>(R.id.toolbar_general), R.string.edit)
 
         binding.tvTransfer.setOnClickListener {
             if (presenter.transferFundsClickable()) {
