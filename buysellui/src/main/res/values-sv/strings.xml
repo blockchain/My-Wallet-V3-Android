@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="mnemonic_word_requests">
+    <item>första ordet</item>
+    <item>andra ordet</item>
+    <item>tredje ordet</item>
+    <item>fjärde ordet</item>
+    <item>femte uttrycka</item>
+    <item>sjätte ordet</item>
+    <item>sjunde ordet</item>
+    <item>åttonde ordet</item>
+    <item>nionde word</item>
+    <item>tionde word</item>
+    <item>elfte word</item>
+    <item>tolfte word</item>
+  </string-array>
+  <!-- (No Commment) -->
+  <string name="upgrade_wallet">Uppgradera</string>
+  <!-- (No Commment) -->
+  <string name="action_settings">Inställningar</string>
+  <!-- (No Commment) -->
+  <string name="send_bitcoin">Skicka</string>
+  <string name="receive_bitcoin">Begär</string>
+  <string name="overview">Transaktioner</string>
+  <!-- (No Commment) -->
+  <string name="cancel">Avbryt</string>
+  <!-- (No Commment) -->
+  <string name="yes">Ja</string>
+  <!-- (No Commment) -->
+  <string name="no">Nej</string>
+  <string name="done">Gjort</string>
+  <string name="YESTERDAY">Igår</string>
+  <!-- (No Commment) -->
+  <string name="MOVED">Överfört</string>
+  <!-- (No Commment) -->
+  <string name="copied_to_clipboard">Kopieras till Urklipp</string>
+  <string name="options_id">Plånbok-ID</string>
+  <!-- (No Commment) -->
+  <string name="options_currency">Lokal valuta</string>
+  <!-- (No Commment) -->
+  <string name="options_units">Bitcoin enhet</string>
+  <!-- (No Commment) -->
+  <string name="options_tos">Villkor för tjänsten</string>
+  <!-- (No Commment) -->
+  <string name="options_privacy">Privacy Policy</string>
+  <string name="invalid_email">Ogiltig e-postadress</string>
+  <!-- (No Commment) -->
+  <string name="invalid_guid">Plånbok-ID är ogiltigt</string>
+  <!-- (No Commment) -->
+  <string name="password_mismatch_error">Lösenorden matchar inte</string>
+  <!-- (No Commment) -->
+  <string name="pin_entry">Ange PIN-kod</string>
+  <string name="dialog_continue">Fortsätta</string>
+  <string name="log_in">Logga in</string>
+  <!-- (No Commment) -->
+  <string name="pair_your_wallet">Automatisk parning</string>
+  <!-- Class = "UILabel"; text = "Click 'Show Pairing Code' to reveal a QR Code (a square black & white barcode). Scan the code with your camera."; ObjectID = "369"; -->
+  <string name="pair_wallet_step_3">Klicka på Visa ihopkoppling kod för att avslöja en QR-kod, en fyrkantig svart &amp; vit streckkod. Scanna koden med kameran.</string>
+  <!-- (No Commment) -->
+  <string name="wallet_id">Plånbok-ID</string>
+  <!-- First account name: -->
+  <string name="default_wallet_name">Min Bitcoin plånbok</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds">Återkräva medel</string>
+  <!-- (No Commment) -->
+  <string name="recover_funds_warning_message">Du bör alltid par eller logga in om du har tillgång till din plånbok-ID och lösenord. Återfå dina pengar kommer att skapa en ny plånbok-ID. Vill du fortsätta?</string>
+  <!-- Class = "UITextField"; placeholder = "Password"; ObjectID = "zd5-DZ-hsS"; -->
+  <string name="password">Lösenord</string>
+  <!-- (No Commment) -->
+  <string name="email">E-post</string>
+  <!-- (No Commment) -->
+  <string name="create_wallet">Skapa plånbok</string>
+  <string name="new_wallet">Ny plånbok</string>
+  <!-- (No Commment) -->
+  <string name="strength_weak">Svag</string>
+  <string name="strength_medium">Regelbundna</string>
+  <!-- (No Commment) -->
+  <string name="strength_strong">Strong</string>
+  <!-- (No Commment) -->
+  <string name="strength_normal">Normal</string>
+  <!-- (No Commment) -->
+  <string name="CONTINUE">Fortsätta</string>
+  <string name="total">Summa</string>
+  <string name="invalid_bitcoin_address">Ogiltig Bitcoin-adress</string>
+  <string name="invalid_amount">Ogiltigt belopp</string>
+  <string name="insufficient_funds">Otillräckligt med pengar</string>
+  <!-- (No Commment) -->
+  <string name="support">Stöd</string>
+  <!-- (No Commment) -->
+  <string name="from">från</string>
+  <!-- (No Commment) -->
+  <string name="to">Till</string>
+  <!-- (No Commment) -->
+  <string name="confirm_details">Bekräfta betalning</string>
+  <!-- (No Commment) -->
+  <string name="imported_addresses">Importerade adresser</string>
+  <string name="ok_cap">Okej</string>
+  <!-- (No Commment) -->
+  <string name="change_pin_code">Ändra PIN-kod</string>
+  <string name="description">Beskrivning</string>
+  <!-- (No Commment) -->
+  <string name="name">Namn</string>
+  <!-- Class = "UIButton"; normalTitle = "Save"; ObjectID = "63"; -->
+  <string name="save">Spara</string>
+  <string name="next">Nästa</string>
+  <string name="scan_qr">Skanna QR-kod</string>
+  <string name="confirm_password">Bekräfta lösenord</string>
+  <string name="transaction_occur_when_bitcoin">Transaktioner händer när du skickar och tar emot bitcoin.</string>
+  <string name="transaction_occur_when_eth">Transaktioner händer när du skickar och tar emot ether.</string>
+  <string name="transaction_occur_when_bitcoin_cash">Transaktioner händer när du skickar och tar emot bitcoin cash.</string>
+  <!-- (No Commment) -->
+  <string name="archived_label">Arkiverade</string>
+  <string name="total_funds">Alla</string>
+  <!-- (No Commment) -->
+  <string name="create_new_address">Skapa ny adress</string>
+  <!-- (No Commment) -->
+  <string name="label">Etikett</string>
+  <!-- (No Commment) -->
+  <string name="edit">Redigera</string>
+  <!-- (No Commment) -->
+  <string name="warning">Varning</string>
+  <!-- (No Commment) -->
+  <string name="extended_public_key">Extended offentliga nyckel</string>
+  <!-- Class = "UILabel"; text = "Address"; ObjectID = "64"; -->
+  <string name="address">Adress</string>
+  <!-- (No Commment) -->
+  <string name="xpub_sharing_warning">Dela din xPub tillåter andra att spåra din transaktionshistorik. Som personer kan kunna störa dig åtkomst till din plånbok, bara dela din xPub med människor du litar på.</string>
+  <!-- (No Commment) -->
+  <string name="archive">Arkiv</string>
+  <!-- (No Commment) -->
+  <string name="unarchive">Hämta från Arkiv</string>
+  <!-- (No Commment) -->
+  <string name="privx_required">Privat nyckel behövs</string>
+  <!-- (No Commment) -->
+  <string name="watch_only">Titta bara</string>
+  <!-- (No Commment) -->
+  <string name="success">Framgång</string>
+  <!-- (No Commment) -->
+  <string name="default_label">Standard</string>
+  <string name="try_again">Försök igen</string>
+  <string name="amount">Belopp</string>
+  <!-- (No Commment) -->
+  <string name="not_now">Inte nu</string>
+  <!-- (No Commment) -->
+  <string name="logout">Logga ut</string>
+  <!-- (No Commment) -->
+  <string name="update">Uppdatering</string>
+  <!-- (No Commment) -->
+  <string name="verify">Kontrollera</string>
+  <string name="resend">Skicka igen</string>
+  <!-- (No Commment) -->
+  <string name="allow">Tillåta</string>
+  <!-- (No Commment) -->
+  <string name="block">Block</string>
+  <!-- (No Commment) -->
+  <string name="security">Säkerhet</string>
+  <!-- (No Commment) -->
+  <string name="enable">Aktiverar</string>
+  <!-- (No Commment) -->
+  <string name="disable">Inaktivera</string>
+  <!-- (No Commment) -->
+  <string name="sms">SMS</string>
+  <!-- (No Commment) -->
+  <string name="google_authenticator">Google Authenticator</string>
+  <string name="yubikey">Yubikey</string>
+  <!-- (No Commment) -->
+  <string name="two_fa">2-stegs verifikation</string>
+  <!-- (No Commment) -->
+  <string name="change_password">Ändra lösenord</string>
+  <!-- (No Commment) -->
+  <string name="email_notifications">E-postmeddelanden</string>
+  <string name="email_notifications_summary">Bli informerad när du mottar bitcoin.</string>
+  <!-- Class = "UITextField"; placeholder = "New Password"; ObjectID = "VKs-B5-luJ"; -->
+  <string name="new_password">Nytt lösenord</string>
+  <!-- (No Commment) -->
+  <string name="preferences">Preferenser</string>
+  <!-- (No Commment) -->
+  <string name="information">Information</string>
+  <string name="learn_more">Läs mer</string>
+  <!-- (No Commment) -->
+  <string name="email_request_subject">Bitcoin betalningsbegäran</string>
+  <!-- COMMON PIN CODES -->
+  <string name="common_pin_dialog_title">Varning</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_message">PIN-koden du har valt är mycket vanligt och lätt kan gissas av någon med tillgång till telefonen inom 3 försök. Vill du använda detta stift ändå?</string>
+  <!-- (No Commment) -->
+  <string name="common_pin_dialog_try_again">Försök igen</string>
+  <string name="common_pin_dialog_continue">Fortsätta</string>
+  <!-- Class = "UILabel"; text = "If you would like to forget this wallet and start over, press 'Forget Wallet'."; ObjectID = "C0R-wB-wF1"; -->
+  <string name="logged_out_forget_wallet">Om du skulle vilja glömma denna plånbok och börja om, tryck på \"Glöm plånbok\".</string>
+  <string name="go_back">Gå tillbaka</string>
+  <!-- (No Commment) -->
+  <string name="transaction_detail_title">Transaktion</string>
+  <string name="transaction_detail_date">Datum</string>
+  <string name="transaction_detail_status">Status</string>
+  <string name="transaction_details_unknown">Okänd</string>
+  <string name="security_centre_add_email_title">E-postadress</string>
+  <string name="security_centre_add_email_positive_button">Lägg till</string>
+  <!-- (No Commment) -->
+  <string name="backup_header">Backup fras</string>
+  <!-- (No Commment) -->
+  <string name="shortcut_receive_copy_short">Kopiera adressen</string>
+  <string name="contacts_name_field_hint">Namn</string>
+  <string name="contacts_add_button">Lägg till</string>
+  <string name="contacts_payment_request_amount_hint">Belopp</string>
+  <string name="contacts_receiving_cancelled">Avbruten</string>
+  <string name="pending">Väntar</string>
+  <!-- (No Commment) -->
+  <string name="transactions">Transaktioner</string>
+  <string name="contacts_balance_dialog_accept">Godkänn</string>
+  <string name="onboarding_complete_later">Jag gör det här senare</string>
+  <string name="onboarding_receive_bitcoin">Begär pengar</string>
+  <!-- BUY BITCOIN -->
+  <string name="onboarding_buy_bitcoin">Köp Bitcoin</string>
+  <string name="onboarding_buy_and_sell_bitcoin">Köp och sälj Bitcoin</string>
+  <string name="view_details">Visa detaljer</string>
+  <!-- (No Commment) -->
+  <string name="fee_options_regular">Regelbundna</string>
+  <string name="fee_options_priority">Prioriterad</string>
+  <string name="ether">Ether</string>
+  <string name="bitcoin">Bitcoin</string>
+  <string name="eth_invalid_address">Ogiltig Ethereum-adress</string>
+  <!-- DASHBOARD -->
+  <string name="dashboard_title">Instrumentpanel</string>
+  <string name="dashboard_time_span_day">Dag</string>
+  <string name="dashboard_time_span_week">Vecka</string>
+  <string name="dashboard_time_span_month">Månad</string>
+  <string name="dashboard_time_span_year">År</string>
+  <!-- ONBOARDING -->
+  <string name="onboarding_cta">Kom igång</string>
+  <!-- SHAPESHIFT HISTORY -->
+  <string name="shapeshift_exchange">Växla</string>
+  <string name="shapeshift_btc">Bitcoin</string>
+  <string name="shapeshift_eth">Ether</string>
+  <string name="shapeshift_bch">Bitcoin Cash</string>
+  <string name="shapeshift_confirmation_terms">villkor</string>
+  <string name="shapeshift_exchange_rate">Växlingskurs</string>
+  <string name="shapeshift_complete_title">Slutfört</string>
+  <string name="shapeshift_failed_title">Misslyckades</string>
+  <string name="shapeshift_refunded_title">Återbetalat</string>
+  <!-- SHAPESHIFT ORDER DETAIL -->
+  <string name="shapeshift_order_id_title">Beställnings-id</string>
+  <string name="shapeshift_in_progress_summary">Transaktion pågår</string>
+  <string name="bch_imported_addresses">Importerade Bitcoin Cash-adresser</string>
+  <!-- Overview Page -->
+  <string name="buy_sell_buy">Köp</string>
+  <string name="buy_sell_sell">Sälj</string>
+  <string name="buy_sell_overview_denied_button">Försök igen</string>
+  <string name="buy_sell_state_processing">Bearbetas</string>
+  <string name="buy_sell_state_completed">Slutförd</string>
+  <string name="buy_sell_state_cancelled">Avbruten</string>
+  <string name="buy_sell_state_rejected">Avvisad</string>
+  <string name="buy_sell_state_expired">Löpte ut</string>
+  <string name="buy_sell_detail_exchange_rate">Växlingskurs</string>
+  <string name="buy_sell_detail_amount">Belopp</string>
+  <string name="buy_sell_detail_payment_fee">Betalningsavgift</string>
+  <string name="buy_sell_detail_total">Total kostnad</string>
+  <string name="buy_sell_review_status_in_rejected">Avvisad</string>
+  <string name="buy_sell_review_status_in_failed">Misslyckades</string>
+  <string name="buy_sell_review_status_in_expired">Löpte ut</string>
+  <string name="buy_sell_review_status_in_completed">Slutförd</string>
+  <!-- iSignThis Payments -->
+  <string name="buy_sell_isignthis_payment_method">Betalningsmetod</string>
+  <string name="buy_sell_confirmation_amount">Belopp</string>
+  <string name="buy_sell_confirmation_payment_fee">Betalningsavgift</string>
+  <string name="buy_sell_confirmation_total_cost">Total kostnad</string>
+  <!-- Unverified Email -->
+  <string name="buy_sell_unverified_email_title">Bekräfta din e-post</string>
+  <string name="submit">Skicka</string>
+  <string name="buy_sell_add_account_subtitle">Lägg till ett bankkonto</string>
+  <!-- Bank Account Selection -->
+  <string name="buy_sell_account_selection_title">Välj konto</string>
+  <string name="buy_sell_account_selection_delete_message">Är du säker på att du vill ta bort det här bankkontot?</string>
+  <string name="buy_sell_add_address_city_hint">Stad</string>
+  <string name="buy_sell_add_address_post_code_hint">Postnummer</string>
+  <string name="buy_sell_add_address_post_country_hint">Land</string>
+  <!-- Recurring Trade -->
+  <string name="buy_sell_recurring_order_title">Upprepande beställning</string>
+  <string name="buy_sell_recurring_order_frequency_title">Frekvens</string>
+  <string name="buy_sell_recurring_order_duration_title">Varaktighet</string>
+</resources>
