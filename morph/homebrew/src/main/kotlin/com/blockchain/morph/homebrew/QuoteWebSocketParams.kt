@@ -9,7 +9,8 @@ data class QuoteWebSocketParams(
     val pair: String,
     val volume: String,
     val fiatCurrency: String,
-    val fix: String
+    val fix: String,
+    val type: String = "conversionSpecification"
 )
 
 fun Observable<ExchangeQuoteRequest>.mapToSocketParameters(): Observable<QuoteWebSocketParams> =

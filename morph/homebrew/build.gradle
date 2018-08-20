@@ -16,8 +16,11 @@ targetCompatibility = Versions.javaCompatibilityVersion
 
 dependencies {
     implementation project(':balance')
+    implementation project(':common:network')
     implementation project(':morph:common')
+    implementation Libraries.moshi
     implementation Libraries.kotlin
+    implementation Libraries.koin
 
     // Rx
     implementation Libraries.rxKotlin
@@ -27,6 +30,7 @@ dependencies {
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.kluent
+    testImplementation Libraries.koinTest
 }
 
 test {

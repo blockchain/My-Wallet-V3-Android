@@ -7,6 +7,7 @@ import com.blockchain.koin.modules.appProperties
 import com.blockchain.koin.modules.applicationModule
 import com.blockchain.koin.modules.environmentModule
 import com.blockchain.koin.modules.features
+import com.blockchain.koin.modules.homeBrewModule
 import com.blockchain.koin.modules.keys
 import com.blockchain.koin.modules.moshiModule
 import com.blockchain.koin.modules.serviceModule
@@ -38,7 +39,8 @@ object KoinStarter {
                 shapeShiftModule,
                 buySellModule,
                 moshiModule,
-                kycModule
+                kycModule,
+                homeBrewModule
             ),
             extraProperties = features + appProperties + keys,
             logger = TimberLogger()

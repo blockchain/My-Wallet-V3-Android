@@ -153,6 +153,7 @@ dependencies {
     implementation project(':buysellui')
     implementation project(':kyc')
     implementation project(':morph:shapeshift')
+    implementation project(':morph:homebrew')
 
     implementation Libraries.multidex
     kapt Libraries.dataBindingKapt

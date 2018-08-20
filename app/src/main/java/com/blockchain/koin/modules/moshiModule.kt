@@ -8,7 +8,8 @@ val moshiModule = applicationContext {
     bean {
         listOf<MoshiBuilderInterceptor>(
             get("buySell"),
-            get("kyc")
+            get("kyc"),
+            get("homeBrew")
         )
     }
 }
