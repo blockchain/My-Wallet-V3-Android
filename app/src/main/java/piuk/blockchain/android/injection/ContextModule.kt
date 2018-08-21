@@ -10,6 +10,7 @@ import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionLis
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
 import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataStore
 import piuk.blockchain.androidcore.data.rxjava.RxBus
+import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsState
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import javax.inject.Singleton
@@ -24,6 +25,11 @@ class ContextModule(private val appContext: Context) : KoinDaggerModule() {
     @Provides
     fun provideRxBus(): RxBus {
         return get(RxBus::class)
+    }
+
+    @Provides
+    fun provideShapeShiftDataStore(): ShapeShiftDataStore {
+        return get(ShapeShiftDataStore::class)
     }
 
     @Provides

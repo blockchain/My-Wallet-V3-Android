@@ -7,6 +7,7 @@ import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_shapeshift_detail.*
 import kotlinx.android.synthetic.main.toolbar_general.*
+import org.koin.android.ext.android.inject
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
@@ -15,16 +16,13 @@ import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import java.util.Locale
-import javax.inject.Inject
 
 class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShiftDetailPresenter>(),
     ShapeShiftDetailView {
 
     override val locale: Locale = Locale.getDefault()
 
-    @Suppress("MemberVisibilityCanPrivate", "unused")
-    @Inject
-    lateinit var shapeShiftDetailPresenter: ShapeShiftDetailPresenter
+    private val shapeShiftDetailPresenter: ShapeShiftDetailPresenter by inject()
 
     override val depositAddress: String by lazy { intent.getStringExtra(EXTRA_DEPOSIT_ADDRESS) }
 

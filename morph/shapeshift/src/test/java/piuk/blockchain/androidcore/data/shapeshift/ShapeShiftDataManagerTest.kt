@@ -357,8 +357,6 @@ class ShapeShiftDataManagerTest : RxTest() {
         // Assert
         testObserver.assertNotComplete()
         testObserver.assertError(Throwable::class.java)
-        verify(shapeShiftDataStore).tradeData
-        verifyNoMoreInteractions(shapeShiftDataStore)
         tradeData.trades.size `should equal to` 1
         tradeData.trades `should contain` trade
         tradeData.trades `should not contain` updatedTrade

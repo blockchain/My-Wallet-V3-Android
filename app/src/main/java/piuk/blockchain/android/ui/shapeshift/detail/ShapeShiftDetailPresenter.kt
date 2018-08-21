@@ -2,16 +2,16 @@ package piuk.blockchain.android.ui.shapeshift.detail
 
 import com.blockchain.morph.CoinPair
 import com.blockchain.morph.to
+import com.blockchain.morph.trade.MorphTrade
+import com.blockchain.morph.trade.MorphTradeDataManager
+import com.blockchain.morph.trade.MorphTradeStatus
 import info.blockchain.balance.CryptoCurrency
-import info.blockchain.wallet.shapeshift.data.Trade
-import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
-import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ShapeShiftDetailPresenter @Inject constructor(
-    private val shapeShiftDataManager: ShapeShiftDataManager,
+    private val dataManager: MorphTradeDataManager,
     private val stringUtils: StringUtils
 ) : BasePresenter<ShapeShiftDetailView>() {
 
@@ -38,7 +38,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
 
     override fun onViewReady() {
         // Find trade first in list
-        shapeShiftDataManager.findTrade(view.depositAddress)
+        dataManager.findTrade(view.depositAddress)
             .applySchedulers()
             .addToCompositeDisposable(this)
             .doOnSubscribe { view.showProgressDialog(R.string.please_wait) }
@@ -54,7 +54,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
             // Get trade info from ShapeShift only if necessary
             .flatMapObservable {
                 if (requiresMoreInfoForUi(it)) {
-                    shapeShiftDataManager.getTradeStatus(view.depositAddress)
+                    dataManager.getTradeStatus(view.depositAddress)
                         .doOnNext { handleTradeResponse(it) }
                 } else {
                     Observable.just(it)
@@ -64,7 +64,7 @@ class ShapeShiftDetailPresenter @Inject constructor(
             // Start polling for results anyway
             .flatMap {
                 Observable.interval(10, TimeUnit.SECONDS, Schedulers.io())
-                    .flatMap { shapeShiftDataManager.getTradeStatus(view.depositAddress) }
+                    .flatMap { dataManager.getTradeStatus(view.depositAddress) }
                     .applySchedulers()
                     .addToCompositeDisposable(this)
                     .doOnNext { handleTradeResponse(it) }
@@ -83,10 +83,10 @@ class ShapeShiftDetailPresenter @Inject constructor(
             )
     }
 
-    private fun handleTradeResponse(tradeStatusResponse: TradeStatusResponse) {
+    private fun handleTradeResponse(tradeStatusResponse: MorphTradeStatus) {
         with(tradeStatusResponse) {
-            val fromCoin: CryptoCurrency = CryptoCurrency.fromSymbol(incomingType ?: "btc")!!
-            val toCoin: CryptoCurrency = CryptoCurrency.fromSymbol(outgoingType ?: "eth")!!
+            val fromCoin: CryptoCurrency = incomingType
+            val toCoin: CryptoCurrency = outgoingType
             val fromAmount: BigDecimal? = incomingCoin
             val toAmount: BigDecimal? = outgoingCoin
             val pair = fromCoin to toCoin
@@ -103,21 +103,14 @@ class ShapeShiftDetailPresenter @Inject constructor(
         handleState(tradeStatusResponse.status)
     }
 
-    private fun requiresMoreInfoForUi(trade: Trade): Boolean =
+    private fun requiresMoreInfoForUi(trade: MorphTrade): Boolean =
     // Web isn't currently storing the deposit amount for some reason
-        trade.quote.depositAmount == null ||
-            trade.quote.pair.isNullOrEmpty() ||
-            trade.quote.pair == "_"
+        trade.requiresMoreInfoForUi()
 
-    private fun updateUiAmounts(trade: Trade) {
+    private fun updateUiAmounts(trade: MorphTrade) {
         with(trade) {
             updateOrderId(quote.orderId)
-            // Web don't store everything, but we do. Check here and make an assumption
-            if (quote.pair.isNullOrEmpty() || quote.pair == "_") {
-                quote.pair = "btc_eth"
-            }
-            val pair = CoinPair.fromPairCode(quote.pair)
-
+            val pair = quote.pair
             updateDeposit(pair.from, quote.depositAmount ?: BigDecimal.ZERO)
             updateReceive(pair.to, quote.withdrawalAmount ?: BigDecimal.ZERO)
             updateExchangeRate(quote.quotedRate ?: BigDecimal.ZERO, pair)
@@ -169,15 +162,9 @@ class ShapeShiftDetailPresenter @Inject constructor(
     }
     // endregion
 
-    private fun updateMetadata(address: String, hashOut: String?, status: Trade.STATUS) {
-        shapeShiftDataManager.findTrade(address)
-            .map {
-                it.apply {
-                    this.status = status
-                    this.hashOut = hashOut
-                }
-            }
-            .flatMapCompletable { shapeShiftDataManager.updateTrade(it) }
+    private fun updateMetadata(address: String, hashOut: String?, status: MorphTrade.Status) {
+        dataManager.findTrade(address)
+            .flatMapCompletable { dataManager.updateTrade(it.quote.orderId, status, hashOut) }
             .addToCompositeDisposable(this)
             .subscribe(
                 { Timber.d("Update metadata entry complete") },
@@ -186,20 +173,19 @@ class ShapeShiftDetailPresenter @Inject constructor(
     }
 
     // region UI State
-    private fun handleTrade(trade: Trade) {
-        val pair = CoinPair.fromPairCode(trade.quote.pair)
-        if (pair.sameInputOutput) {
+    private fun handleTrade(trade: MorphTrade) {
+        if (trade.quote.pair.sameInputOutput) {
             onRefunded()
         } else {
             handleState(trade.status)
         }
     }
 
-    private fun handleState(status: Trade.STATUS) = when (status) {
-        Trade.STATUS.NO_DEPOSITS -> onNoDeposit()
-        Trade.STATUS.RECEIVED -> onReceived()
-        Trade.STATUS.COMPLETE -> onComplete()
-        Trade.STATUS.FAILED, Trade.STATUS.RESOLVED -> onFailed()
+    private fun handleState(status: MorphTrade.Status) = when (status) {
+        MorphTrade.Status.NO_DEPOSITS -> onNoDeposit()
+        MorphTrade.Status.RECEIVED -> onReceived()
+        MorphTrade.Status.COMPLETE -> onComplete()
+        MorphTrade.Status.FAILED, MorphTrade.Status.RESOLVED -> onFailed()
     }
 
     private fun onNoDeposit() {
@@ -258,9 +244,9 @@ class ShapeShiftDetailPresenter @Inject constructor(
     }
     // endregion
 
-    private fun isInFinalState(status: Trade.STATUS) = when (status) {
-        Trade.STATUS.NO_DEPOSITS, Trade.STATUS.RECEIVED -> false
-        Trade.STATUS.COMPLETE, Trade.STATUS.FAILED, Trade.STATUS.RESOLVED -> true
+    private fun isInFinalState(status: MorphTrade.Status) = when (status) {
+        MorphTrade.Status.NO_DEPOSITS, MorphTrade.Status.RECEIVED -> false
+        MorphTrade.Status.COMPLETE, MorphTrade.Status.FAILED, MorphTrade.Status.RESOLVED -> true
     }
 
     private fun BigDecimal.toLocalisedString(): String = decimalFormat.format(this)
