@@ -61,7 +61,7 @@ val morphMethodModule = applicationContext {
     }
 }
 
-private fun fixedSelector(morphMethodType: MorphMethodType) =
+private fun fixedSelector(morphMethodType: MorphMethodType): MorphMethodTypeSelector =
     object : MorphMethodTypeSelector {
         override fun getMorphMethod() = Single.just(morphMethodType)
     }
