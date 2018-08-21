@@ -6,7 +6,7 @@ import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import java.math.BigDecimal
 
-class TradeStatusResponseAdapter(private val tradeStatusResponse: TradeStatusResponse) :
+internal class TradeStatusResponseAdapter(private val tradeStatusResponse: TradeStatusResponse) :
     MorphTradeStatus {
 
     override val incomingType: CryptoCurrency

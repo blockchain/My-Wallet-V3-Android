@@ -6,7 +6,7 @@ import com.blockchain.morph.trade.MorphTradeOrder
 import info.blockchain.wallet.shapeshift.data.Trade
 import java.math.BigDecimal
 
-class TradeAdapter(private val trade: Trade) : MorphTrade {
+internal class TradeAdapter(private val trade: Trade) : MorphTrade {
 
     override val hashOut: String?
         get() = trade.hashOut

@@ -7,7 +7,9 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
-class ShapeShiftDataManagerAdapter(private val shapeShiftDataManager: ShapeShiftDataManager) : MorphTradeDataManager {
+internal class ShapeShiftDataManagerAdapter(
+    private val shapeShiftDataManager: ShapeShiftDataManager
+) : MorphTradeDataManager {
 
     override fun findTrade(depositAddress: String): Single<MorphTrade> {
         return shapeShiftDataManager
