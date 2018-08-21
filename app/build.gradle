@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.novoda.build-properties'
 apply from: '../quality/jacocoApp.gradle'
@@ -138,10 +137,6 @@ android {
 
 kapt {
     useBuildCache = true
-}
-
-allOpen {
-    annotation("piuk.blockchain.androidcore.utils.annotations.Mockable")
 }
 
 androidExtensions {

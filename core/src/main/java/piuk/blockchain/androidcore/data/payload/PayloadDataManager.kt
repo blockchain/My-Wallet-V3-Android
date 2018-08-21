@@ -22,7 +22,6 @@ import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver
 import java.io.UnsupportedEncodingException
@@ -31,7 +30,6 @@ import java.util.ArrayList
 import java.util.LinkedHashMap
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class PayloadDataManager @Inject constructor(
     private val payloadService: PayloadService,

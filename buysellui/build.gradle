@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-allopen'
-apply plugin: 'kotlin-kapt'
 apply from: '../quality/jacocoLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
 
@@ -16,15 +14,6 @@ android {
         versionName Versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-    }
-
-    buildTypes {
-        release {
-
-        }
-        debug {
-
-        }
     }
 
     compileOptions {
@@ -43,14 +32,6 @@ android {
     }
 }
 
-kapt {
-    useBuildCache = true
-}
-
-allOpen {
-    annotation("piuk.blockchain.androidcore.utils.annotations.Mockable")
-}
-
 androidExtensions {
     experimental = true
 }
@@ -58,8 +39,6 @@ androidExtensions {
 dependencies {
     implementation project(':coreui')
     api project(':buysell')
-    // Dagger
-    kapt Libraries.daggerKapt
 
     // Unit Test dependencies
     testImplementation Libraries.junit

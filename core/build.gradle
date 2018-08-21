@@ -1,7 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-allopen'
-apply plugin: 'kotlin-kapt'
 apply from: '../quality/jacocoLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
 
@@ -14,15 +12,6 @@ android {
         versionCode Versions.versionCode
         versionName Versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-
-        }
-        debug {
-
-        }
     }
 
     compileOptions {
@@ -41,14 +30,6 @@ android {
     }
 }
 
-kapt {
-    useBuildCache = true
-}
-
-allOpen {
-    annotation("piuk.blockchain.androidcore.utils.annotations.Mockable")
-}
-
 dependencies {
     api project(':wallet')
     api project(':balance')
@@ -62,7 +43,6 @@ dependencies {
     api Libraries.okHttpInterceptor
     // Dagger
     api Libraries.dagger
-    kapt Libraries.daggerKapt
     api Libraries.koin
     // RxJava
     api Libraries.rxJava

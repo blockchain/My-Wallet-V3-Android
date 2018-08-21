@@ -11,7 +11,6 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.MetadataUtils
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject
 
@@ -29,7 +28,6 @@ import javax.inject.Inject
  * keys with just a user's credentials and not derive them again.
  *
  */
-@Mockable
 @PresenterScope
 class MetadataManager @Inject constructor(
     private val payloadDataManager: PayloadDataManager,

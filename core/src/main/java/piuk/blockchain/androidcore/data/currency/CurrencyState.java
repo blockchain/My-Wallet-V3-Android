@@ -5,13 +5,11 @@ import java.util.Locale;
 
 import info.blockchain.balance.CryptoCurrency;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
-import piuk.blockchain.androidcore.utils.annotations.Mockable;
 
 /**
  * Singleton class to store user's preferred crypto currency state.
  * (ie is Wallet currently showing FIAT, ETH, BTC ot BCH)
  */
-@Mockable
 public class CurrencyState {
 
     private static CurrencyState INSTANCE;

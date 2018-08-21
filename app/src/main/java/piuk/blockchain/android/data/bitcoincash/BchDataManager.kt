@@ -21,13 +21,11 @@ import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.injection.PresenterScope
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.math.BigInteger
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class BchDataManager @Inject constructor(
     private val payloadDataManager: PayloadDataManager,

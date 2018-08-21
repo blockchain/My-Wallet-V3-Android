@@ -12,7 +12,6 @@ import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.toFiat
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.PrefsUtil
-import piuk.blockchain.androidcore.utils.annotations.Mockable
 import piuk.blockchain.androidcore.utils.helperfunctions.InvalidatableLazy
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -23,7 +22,6 @@ import java.util.Currency
 import java.util.Locale
 import javax.inject.Inject
 
-@Mockable
 @PresenterScope
 class CurrencyFormatManager @Inject constructor(
     private val currencyState: CurrencyState,
