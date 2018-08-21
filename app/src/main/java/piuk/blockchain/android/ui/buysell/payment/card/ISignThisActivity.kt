@@ -91,7 +91,7 @@ class ISignThisActivity : BaseAuthActivity() {
         private const val EXTRA_COST =
             "piuk.blockchain.android.ui.buysell.payment.card.EXTRA_COST"
 
-        private const val TRADE_COMPLETE_PARTIAL_URL = "https://www.coinify.com/trade/"
+        private const val TRADE_COMPLETE_PARTIAL_URL = "https://app.coinify.com/"
 
         fun start(
             activity: Activity,
