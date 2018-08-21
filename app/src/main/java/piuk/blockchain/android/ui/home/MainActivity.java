@@ -38,7 +38,8 @@ import android.widget.FrameLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.blockchain.kycui.navhost.KycNavHostActivity;
+import com.blockchain.koin.modules.MorphActivityLauncher;
+import com.blockchain.koin.modules.MorphMethodModuleKt;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.BasePermissionListener;
@@ -72,7 +73,6 @@ import piuk.blockchain.android.ui.pairingcode.PairingCodeActivity;
 import piuk.blockchain.android.ui.receive.ReceiveFragment;
 import piuk.blockchain.android.ui.send.SendFragment;
 import piuk.blockchain.android.ui.settings.SettingsActivity;
-import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
 import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
@@ -140,6 +140,8 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     MainPresenter mainPresenter;
     @Inject
     AppUtil appUtil;
+    @Inject
+    MorphActivityLauncher morphActivityLauncher;
     @Thunk
     ActivityMainBinding binding;
     private MaterialProgressDialog materialProgressDialog;
@@ -171,10 +173,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
                 getPresenter().routeToBuySell();
             } else if (intent.getAction().equals(ACTION_SHAPESHIFT) && getActivity() != null) {
-                // TODO: 01/08/2018 We need to choose whether to send users to Legacy SS,
-                // Homebrew SS or KYC at this point AND-1248
-//                ShapeShiftActivity.start(MainActivity.this);
-                KycNavHostActivity.Companion.start(MainActivity.this);
+                MorphMethodModuleKt.launchAsync(morphActivityLauncher, MainActivity.this);
             } else if (intent.getAction().equals(ACTION_BTC_BALANCE)) {
                 getPresenter().setCryptoCurrency(CryptoCurrency.BTC);
                 // This forces the balance page to reload
@@ -490,11 +489,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 startActivityForResult(new Intent(this, BackupWalletActivity.class), REQUEST_BACKUP);
                 break;
             case R.id.nav_exchange:
-                // TODO: 01/08/2018 We need to choose whether to send users to Legacy SS,
-                // Homebrew SS or KYC at this point AND-1248
-//                ShapeShiftActivity.start(MainActivity.this);
-                KycNavHostActivity.Companion.start(MainActivity.this);
-//                ShapeShiftActivity.start(this);
+                MorphMethodModuleKt.launchAsync(morphActivityLauncher, MainActivity.this);
                 break;
             case R.id.nav_addresses:
                 startActivityForResult(new Intent(this, AccountActivity.class), ACCOUNT_EDIT);
