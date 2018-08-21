@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
+import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.jakewharton.rxbinding2.view.clicks
@@ -17,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
@@ -43,10 +43,21 @@ class KycMobileValidationFragment :
     private val displayModel by unsafeLazy {
         arguments!!.getParcelable(ARGUMENT_PHONE_DISPLAY_MODEL) as PhoneDisplayModel
     }
-    private val verificationSubject = PublishSubject.create<PhoneVerificationModel>()
-    override val verificationObservable: Observable<Pair<PhoneVerificationModel, Unit>> by unsafeLazy {
+    private val verificationCodeObservable by unsafeLazy {
+        editTextVerificationCode.afterTextChangeEvents()
+            .skipInitialValue()
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                PhoneVerificationModel(
+                    displayModel.sanitizedString,
+                    it.editable().toString()
+                )
+            }
+    }
+    override val uiStateObservable: Observable<Pair<PhoneVerificationModel, Unit>> by unsafeLazy {
         Observables.combineLatest(
-            verificationSubject.cache(),
+            verificationCodeObservable.cache(),
             buttonNext
                 .clicks()
                 .debounce(500, TimeUnit.MILLISECONDS)
@@ -71,21 +82,6 @@ class KycMobileValidationFragment :
 
     override fun onResume() {
         super.onResume()
-
-        compositeDisposable +=
-            editTextVerificationCode.afterTextChangeEvents()
-                .skipInitialValue()
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-                    verificationSubject.onNext(
-                        PhoneVerificationModel(
-                            displayModel.sanitizedString,
-                            it.editable().toString()
-                        )
-                    )
-                }
-                .subscribe()
 
         compositeDisposable +=
             editTextVerificationCode
@@ -142,7 +138,7 @@ class KycMobileValidationFragment :
                 buttonNext.isEnabled = it
             }
 
-    private fun mapToCompleted(text: String): Boolean = text.length >= 5
+    private fun mapToCompleted(text: String): Boolean = VerificationCode(text).isValid
 
     private fun updateProgress(stepCompleted: Boolean, kycStep: KycStep) {
         if (stepCompleted) {

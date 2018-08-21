@@ -43,7 +43,7 @@ class KycMobileEntryPresenter(
 
     private fun subscribeToClickEvents() {
         compositeDisposable +=
-            view.phoneNumberObservable
+            view.uiStateObservable
                 .map { it.first }
                 .flatMapCompletable { number ->
                     fetchOfflineToken.flatMapCompletable { tokenResponse ->

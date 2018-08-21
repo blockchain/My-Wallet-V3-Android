@@ -34,7 +34,7 @@ class KycMobileValidationPresenter(
 
     override fun onViewReady() {
         compositeDisposable +=
-            view.verificationObservable
+            view.uiStateObservable
                 .flatMapCompletable { (verificationModel, _) ->
                     fetchOfflineToken.flatMapCompletable { tokenResponse ->
                         nabuDataManager.verifyMobileNumber(

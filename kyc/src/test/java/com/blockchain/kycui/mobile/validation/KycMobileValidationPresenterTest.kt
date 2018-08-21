@@ -54,7 +54,7 @@ class KycMobileValidationPresenterTest {
         val verificationCode = "VERIFICATION_CODE"
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
-        whenever(view.verificationObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -93,7 +93,7 @@ class KycMobileValidationPresenterTest {
         val verificationCode = "VERIFICATION_CODE"
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
-        whenever(view.verificationObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -126,7 +126,7 @@ class KycMobileValidationPresenterTest {
         val verificationCode = "VERIFICATION_CODE"
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
-        whenever(view.verificationObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -169,7 +169,7 @@ class KycMobileValidationPresenterTest {
         val verificationCode = "VERIFICATION_CODE"
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
-        whenever(view.verificationObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE

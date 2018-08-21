@@ -7,7 +7,7 @@ import piuk.blockchain.androidcoreui.ui.base.View
 
 interface KycMobileValidationView : View {
 
-    val verificationObservable: Observable<Pair<PhoneVerificationModel, Unit>>
+    val uiStateObservable: Observable<Pair<PhoneVerificationModel, Unit>>
 
     fun showProgressDialog()
 

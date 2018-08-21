@@ -59,11 +59,11 @@ class KycMobileEntryPresenterTest {
         // Arrange
         val settings = Settings()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-        whenever(view.phoneNumberObservable).thenReturn(Observable.empty())
+        whenever(view.uiStateObservable).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
         // Assert
-        verify(view).phoneNumberObservable
+        verify(view).uiStateObservable
         verifyNoMoreInteractions(view)
     }
 
@@ -74,7 +74,7 @@ class KycMobileEntryPresenterTest {
         val phoneNumber = "+1234567890"
         whenever(settings.smsNumber).thenReturn(phoneNumber)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-        whenever(view.phoneNumberObservable).thenReturn(Observable.empty())
+        whenever(view.uiStateObservable).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
         // Assert
@@ -89,7 +89,7 @@ class KycMobileEntryPresenterTest {
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -118,7 +118,7 @@ class KycMobileEntryPresenterTest {
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -145,7 +145,7 @@ class KycMobileEntryPresenterTest {
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -178,7 +178,7 @@ class KycMobileEntryPresenterTest {
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
-        whenever(view.phoneNumberObservable).thenReturn(publishSubject)
+        whenever(view.uiStateObservable).thenReturn(publishSubject)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE

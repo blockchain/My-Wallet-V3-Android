@@ -8,7 +8,7 @@ import piuk.blockchain.androidcoreui.ui.base.View
 
 interface KycMobileEntryView : View {
 
-    val phoneNumberObservable: Observable<Pair<PhoneNumber, Unit>>
+    val uiStateObservable: Observable<Pair<PhoneNumber, Unit>>
 
     fun preFillPhoneNumber(phoneNumber: String)
 
