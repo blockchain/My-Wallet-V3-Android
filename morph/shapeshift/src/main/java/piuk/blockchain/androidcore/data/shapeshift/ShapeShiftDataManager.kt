@@ -33,6 +33,9 @@ class ShapeShiftDataManager @Inject constructor(
 
     private val rxPinning = RxPinning(rxBus)
 
+    private val tradeData
+        get() = shapeShiftDataStore.tradeData ?: throw IllegalStateException("ShapeShiftTrades not initialized")
+
     /**
      * Must be called to initialize the ShapeShift trade metadata information.
      *
@@ -64,14 +67,12 @@ class ShapeShiftDataManager @Inject constructor(
      * @return An [Observable] containing an [Optional]
      */
     fun getState(): Observable<Optional<State>> {
-        shapeShiftDataStore.tradeData?.run {
+        tradeData.run {
             return when (usState) {
                 null -> Observable.just(Optional.None)
                 else -> Observable.just(Optional.Some(usState))
             }
         }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
     }
 
     /**
@@ -82,12 +83,8 @@ class ShapeShiftDataManager @Inject constructor(
      * @return A [Completable] object
      */
     fun setState(state: State?): Completable {
-        shapeShiftDataStore.tradeData?.run {
-            usState = state
-            return save()
-        }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
+        tradeData.usState = state
+        return save()
     }
 
     /**
@@ -98,9 +95,7 @@ class ShapeShiftDataManager @Inject constructor(
      * @return An [Observable] wrapping a list of [Trade] objects
      */
     fun getTradesList(): Observable<List<Trade>> {
-        shapeShiftDataStore.tradeData?.run { return Observable.just(trades) }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
+        tradeData.run { return Observable.just(trades) }
     }
 
     /**
@@ -112,7 +107,7 @@ class ShapeShiftDataManager @Inject constructor(
      * @return A [Single] wrapping a [Trade]
      */
     fun findTrade(depositAddress: String): Single<Trade> {
-        shapeShiftDataStore.tradeData?.run {
+        tradeData.run {
             val foundTrade = trades.firstOrNull { it.quote.deposit == depositAddress }
             return if (foundTrade == null) {
                 Single.error(Throwable("Trade not found"))
@@ -120,8 +115,6 @@ class ShapeShiftDataManager @Inject constructor(
                 Single.just(foundTrade)
             }
         }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
     }
 
     /**
@@ -133,14 +126,12 @@ class ShapeShiftDataManager @Inject constructor(
      * @return A [Completable] object
      */
     fun addTradeToList(trade: Trade): Completable {
-        shapeShiftDataStore.tradeData?.run {
+        tradeData.run {
             trades.add(trade)
             return save()
                 // Reset state on failure
                 .doOnError { trades.remove(trade) }
         }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
     }
 
     /**
@@ -151,12 +142,10 @@ class ShapeShiftDataManager @Inject constructor(
      * @return A [Completable] object
      */
     fun clearAllTrades(): Completable {
-        shapeShiftDataStore.tradeData?.run {
+        tradeData.run {
             trades?.clear()
             return save()
         }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
     }
 
     /**
@@ -168,9 +157,9 @@ class ShapeShiftDataManager @Inject constructor(
      * @return A [Completable] object
      */
     fun updateTrade(trade: Trade): Completable {
-        shapeShiftDataStore.tradeData?.run {
-            val foundTrade = trades.find { it.quote.orderId == trade.quote.orderId }
-            return if (foundTrade == null) {
+        return tradeData.run {
+            val foundTrade = findTradeByOrderId(trade.quote.orderId)
+            if (foundTrade == null) {
                 Completable.error(Throwable("Trade not found"))
             } else {
                 trades.remove(foundTrade)
@@ -183,8 +172,12 @@ class ShapeShiftDataManager @Inject constructor(
                     }
             }
         }
+    }
 
-        throw IllegalStateException("ShapeShiftTrades not initialized")
+    fun findTradeByOrderId(orderId: String?): Trade? {
+        return tradeData.run {
+            trades.find { it.quote.orderId == orderId }
+        }
     }
 
     /**
@@ -299,7 +292,7 @@ class ShapeShiftDataManager @Inject constructor(
             }
 
     fun save(): Completable {
-        shapeShiftDataStore.tradeData?.run {
+        tradeData.run {
             return rxPinning.call {
                 metadataManager.saveToMetadata(
                     shapeShiftDataStore.tradeData!!.toJson(),
@@ -307,8 +300,6 @@ class ShapeShiftDataManager @Inject constructor(
                 )
             }.applySchedulers()
         }
-
-        throw IllegalStateException("ShapeShiftTrades not initialized")
     }
 
     data class TradeStatusPair(
