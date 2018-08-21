@@ -140,6 +140,7 @@ class CoinPairTest {
                 CoinPair.fromPairCode(formedPairCode) `should be` it
                 CoinPair.fromPairCode(formedPairCode.toUpperCase()) `should be` it
                 CoinPair.fromPairCode(it.pairCode) `should be` it
+                CoinPair.fromPairCodeOrNull(it.pairCode) `should be` it
             }
     }
 
@@ -195,6 +196,16 @@ class CoinPairTest {
         } `should throw the Exception`
             IllegalStateException::class `with message`
             "Attempt to get invalid pair btc_btc_btc"
+    }
+
+    @Test
+    fun `from invalid pair code or null, single _`() {
+        CoinPair.fromPairCodeOrNull("_") `should equal` null
+    }
+
+    @Test
+    fun `from invalid pair code or null, three parts`() {
+        CoinPair.fromPairCodeOrNull("btc_btc_btc") `should equal` null
     }
 
     @Test

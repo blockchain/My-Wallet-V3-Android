@@ -37,6 +37,10 @@ enum class CoinPair(
     companion object {
 
         fun fromPairCode(pairCode: String): CoinPair {
+            return fromPairCodeOrNull(pairCode) ?: throw IllegalStateException("Attempt to get invalid pair $pairCode")
+        }
+
+        fun fromPairCodeOrNull(pairCode: String): CoinPair? {
             pairCode.split('_').let {
                 if (it.size == 2) {
                     val from = CryptoCurrency.fromSymbol(it.first())
@@ -45,7 +49,7 @@ enum class CoinPair(
                         return from to to
                     }
                 }
-                throw IllegalStateException("Attempt to get invalid pair $pairCode")
+                return null
             }
         }
     }
