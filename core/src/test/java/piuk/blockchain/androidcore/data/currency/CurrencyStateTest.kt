@@ -1,6 +1,8 @@
 package piuk.blockchain.androidcore.data.currency
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.balance.CryptoCurrency
 import org.amshove.kluent.`should be`
@@ -87,5 +89,31 @@ class CurrencyStateTest {
         subject.isDisplayingCryptoCurrency = true
         // Assert
         subject.isDisplayingCryptoCurrency `should be` true
+    }
+
+    @Test
+    fun `get caches the value`() {
+        // Arrange
+        whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
+            .thenReturn(CryptoCurrency.ETHER.name)
+        // Act
+        subject.cryptoCurrency `should be` CryptoCurrency.ETHER
+        subject.cryptoCurrency `should be` CryptoCurrency.ETHER
+        // Assert
+        verify(mockPrefs).getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name)
+        verifyNoMoreInteractions(mockPrefs)
+    }
+
+    @Test
+    fun `sets the value and the local cache`() {
+        // Arrange
+        whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
+            .thenReturn(CryptoCurrency.BTC.name)
+        // Act
+        subject.cryptoCurrency = CryptoCurrency.BCH
+        subject.cryptoCurrency `should be` CryptoCurrency.BCH
+        // Assert
+        verify(mockPrefs).setValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BCH.name)
+        verifyNoMoreInteractions(mockPrefs)
     }
 }
