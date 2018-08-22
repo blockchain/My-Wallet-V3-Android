@@ -80,10 +80,10 @@ class TradesAdapter(
 
     fun updateTrade(trade: Trade, tradeResponse: TradeStatusResponse) {
         val matchingTrade = items.filterIsInstance(Trade::class.java)
-            .find { it.quote.deposit == tradeResponse.address }
-        matchingTrade?.quote?.withdrawalAmount = trade.quote.withdrawalAmount
+            .find { it.quote?.deposit == tradeResponse.address }
+        matchingTrade?.quote?.withdrawalAmount = trade.quote?.withdrawalAmount
             ?: tradeResponse.incomingCoin ?: BigDecimal.ZERO
-        matchingTrade?.quote?.pair = tradeResponse.pair ?: trade.quote.pair
+        matchingTrade?.quote?.pair = tradeResponse.pair ?: trade.quote?.pair
 
         notifyDataSetChanged()
     }

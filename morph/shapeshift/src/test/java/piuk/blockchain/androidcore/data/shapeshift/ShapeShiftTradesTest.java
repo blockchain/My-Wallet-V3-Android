@@ -1,5 +1,6 @@
-package info.blockchain.wallet.shapeshift;
+package piuk.blockchain.androidcore.data.shapeshift;
 
+import info.blockchain.wallet.shapeshift.ShapeShiftTrades;
 import info.blockchain.wallet.shapeshift.data.Quote;
 import info.blockchain.wallet.shapeshift.data.Trade;
 import info.blockchain.wallet.shapeshift.data.Trade.STATUS;

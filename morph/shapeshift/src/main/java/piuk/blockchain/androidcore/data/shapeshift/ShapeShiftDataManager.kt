@@ -108,7 +108,7 @@ class ShapeShiftDataManager @Inject constructor(
      */
     fun findTrade(depositAddress: String): Single<Trade> {
         tradeData.run {
-            val foundTrade = trades.firstOrNull { it.quote.deposit == depositAddress }
+            val foundTrade = trades.firstOrNull { it.quote?.deposit == depositAddress }
             return if (foundTrade == null) {
                 Single.error(Throwable("Trade not found"))
             } else {
@@ -158,7 +158,7 @@ class ShapeShiftDataManager @Inject constructor(
      */
     fun updateTrade(trade: Trade): Completable {
         return tradeData.run {
-            val foundTrade = findTradeByOrderId(trade.quote.orderId)
+            val foundTrade = findTradeByOrderId(trade.quote?.orderId)
             if (foundTrade == null) {
                 Completable.error(Throwable("Trade not found"))
             } else {
@@ -176,7 +176,7 @@ class ShapeShiftDataManager @Inject constructor(
 
     fun findTradeByOrderId(orderId: String?): Trade? {
         return tradeData.run {
-            trades.find { it.quote.orderId == orderId }
+            trades.find { it.quote?.orderId == orderId }
         }
     }
 
@@ -188,8 +188,11 @@ class ShapeShiftDataManager @Inject constructor(
      * @param depositAddress The [Trade] deposit address
      * @return An [Observable] wrapping a [TradeStatusResponse] object.
      */
-    fun getTradeStatus(depositAddress: String): Observable<TradeStatusResponse> =
-        rxPinning.call<TradeStatusResponse> {
+    fun getTradeStatus(depositAddress: String?): Observable<TradeStatusResponse> {
+        if (depositAddress.isNullOrBlank()) {
+            return Observable.error(Throwable("null or blank address"))
+        }
+        return rxPinning.call<TradeStatusResponse> {
             shapeShiftApi.getTradeStatus(depositAddress)
                 .flatMap {
                     if (it.error != null && it.status == null) {
@@ -199,6 +202,7 @@ class ShapeShiftDataManager @Inject constructor(
                     }
                 }
         }.applySchedulers()
+    }
 
     /**
      * Gets the [TradeStatusResponse] for a given [Trade] deposit address and returns it along with the original trade.
@@ -210,7 +214,7 @@ class ShapeShiftDataManager @Inject constructor(
      */
     fun getTradeStatusPair(tradeMetadata: Trade): Observable<TradeStatusPair> =
         rxPinning.call<TradeStatusPair> {
-            shapeShiftApi.getTradeStatus(tradeMetadata.quote.deposit)
+            shapeShiftApi.getTradeStatus(tradeMetadata.quote?.deposit)
                 .map {
                     TradeStatusPair(
                         tradeMetadata,

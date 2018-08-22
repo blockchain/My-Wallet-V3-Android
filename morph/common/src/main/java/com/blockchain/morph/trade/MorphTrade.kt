@@ -9,6 +9,7 @@ interface MorphTrade {
     val quote: MorphTradeOrder
 
     enum class Status(private val text: String) {
+        UNKNOWN("unknown"),
         NO_DEPOSITS("no_deposits"),
         RECEIVED("received"),
         COMPLETE("complete"),
@@ -20,5 +21,5 @@ interface MorphTrade {
         }
     }
 
-    fun requiresMoreInfoForUi(): Boolean
+    fun enoughInfoForDisplay(): Boolean
 }

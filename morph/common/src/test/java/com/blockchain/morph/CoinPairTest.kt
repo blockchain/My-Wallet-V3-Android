@@ -209,6 +209,11 @@ class CoinPairTest {
     }
 
     @Test
+    fun `from invalid pair code or null, null`() {
+        CoinPair.fromPairCodeOrNull(null) `should equal` null
+    }
+
+    @Test
     fun `inverse pair`() {
         CoinPair.BCH_TO_ETH.inverse() `should be` CoinPair.ETH_TO_BCH
     }

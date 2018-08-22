@@ -116,7 +116,7 @@ class ShapeShiftPresenter @Inject constructor(
             }
 
     private fun createPollObservable(trade: Trade): Observable<TradeStatusResponse> =
-        shapeShiftDataManager.getTradeStatus(trade.quote.deposit)
+        shapeShiftDataManager.getTradeStatus(trade.quote?.deposit)
             .addToCompositeDisposable(this)
             .repeatWhen { it.delay(10, TimeUnit.SECONDS) }
             .takeUntil { isInFinalState(it.status) }

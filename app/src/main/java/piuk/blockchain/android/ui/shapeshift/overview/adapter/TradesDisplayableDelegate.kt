@@ -60,7 +60,7 @@ class TradesDisplayableDelegate<in T>(
 
         viewHolder.result.text = getDisplaySpannable(
             trade.acquiredCoinType,
-            trade.quote.withdrawalAmount ?: BigDecimal.ZERO
+            trade.quote?.withdrawalAmount ?: BigDecimal.ZERO
         )
 
         viewHolder.status.setText(determineStatus(viewHolder, trade))
@@ -70,7 +70,7 @@ class TradesDisplayableDelegate<in T>(
             listClickListener.onValueClicked(showCrypto)
         }
 
-        viewHolder.layout.setOnClickListener { listClickListener.onTradeClicked(trade.quote.deposit) }
+        viewHolder.layout.setOnClickListener { listClickListener.onTradeClicked(trade.quote?.deposit ?: "") }
     }
 
     fun onViewFormatUpdated(isBtc: Boolean) {
@@ -86,7 +86,7 @@ class TradesDisplayableDelegate<in T>(
         ContextCompat.getColor(viewHolder.context, color)
 
     private fun determineStatus(viewHolder: TradeViewHolder, trade: Trade): Int {
-        val pair = trade.quote.pair
+        val pair = trade.quote?.pair
         if (pair.equals("eth_eth", true) ||
             pair.equals("btc_btc", true) ||
             pair.equals("bch_bch", true)

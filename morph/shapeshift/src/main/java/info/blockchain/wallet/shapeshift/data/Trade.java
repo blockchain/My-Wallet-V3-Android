@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -47,6 +49,7 @@ public class Trade {
     @JsonProperty("quote")
     private Quote quote;
 
+    @Nullable
     public STATUS getStatus() {
         return STATUS.fromString(status);
     }
@@ -63,6 +66,7 @@ public class Trade {
         this.hashIn = hashIn;
     }
 
+    @Nullable
     public String getHashOut() {
         return hashOut;
     }
@@ -79,6 +83,7 @@ public class Trade {
         this.timestamp = timestamp;
     }
 
+    @Nullable
     public Quote getQuote() {
         return quote;
     }

@@ -34,7 +34,7 @@ enum class CryptoCurrency(
 
     companion object {
 
-        fun fromSymbol(symbol: String): CryptoCurrency? =
+        fun fromSymbol(symbol: String?): CryptoCurrency? =
             CryptoCurrency.values().firstOrNull { it.symbol.equals(symbol, ignoreCase = true) }
     }
 }

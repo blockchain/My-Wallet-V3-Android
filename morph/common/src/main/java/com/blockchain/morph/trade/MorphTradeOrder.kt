@@ -1,6 +1,7 @@
 package com.blockchain.morph.trade
 
 import com.blockchain.morph.CoinPair
+import info.blockchain.balance.CryptoValue
 import java.math.BigDecimal
 
 interface MorphTradeOrder {
@@ -9,8 +10,8 @@ interface MorphTradeOrder {
 
     val orderId: String
 
-    val depositAmount: BigDecimal?
-    val withdrawalAmount: BigDecimal?
-    val quotedRate: BigDecimal?
-    val minerFee: BigDecimal?
+    val depositAmount: CryptoValue
+    val withdrawalAmount: CryptoValue
+    val quotedRate: BigDecimal
+    val minerFee: CryptoValue
 }

@@ -1,18 +1,18 @@
 package com.blockchain.morph.trade
 
-import info.blockchain.balance.CryptoCurrency
-import java.math.BigDecimal
+import com.blockchain.morph.CoinPair
+import com.blockchain.morph.to
+import info.blockchain.balance.CryptoValue
 
 interface MorphTradeStatus {
 
-    val incomingType: CryptoCurrency
-    val outgoingType: CryptoCurrency
-
-    val incomingCoin: BigDecimal?
-    val outgoingCoin: BigDecimal?
+    val incomingValue: CryptoValue
+    val outgoingValue: CryptoValue
 
     val address: String
     val transaction: String
 
     val status: MorphTrade.Status
+
+    val pair: CoinPair get() = incomingValue.currency to outgoingValue.currency
 }

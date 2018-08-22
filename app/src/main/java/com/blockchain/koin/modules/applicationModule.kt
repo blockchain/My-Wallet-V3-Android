@@ -1,5 +1,6 @@
 package com.blockchain.koin.modules
 
+import android.content.Context
 import com.blockchain.koin.getActivity
 import com.blockchain.ui.chooser.AccountListing
 import com.blockchain.ui.password.SecondPasswordHandler
@@ -15,6 +16,8 @@ import java.util.Locale
 val applicationModule = applicationContext {
 
     factory { StringUtils(get()) }
+
+    factory { get<Context>().resources }
 
     factory { Locale.getDefault() }
 

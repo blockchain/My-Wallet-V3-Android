@@ -6,6 +6,9 @@ import com.blockchain.morph.trade.MorphTradeStatus
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import piuk.blockchain.androidcore.data.shapeshift.dataadapters.TradeAdapter
+import piuk.blockchain.androidcore.data.shapeshift.dataadapters.TradeStatusResponseAdapter
+import piuk.blockchain.androidcore.data.shapeshift.dataadapters.map
 
 internal class ShapeShiftDataManagerAdapter(
     private val shapeShiftDataManager: ShapeShiftDataManager
@@ -23,6 +26,9 @@ internal class ShapeShiftDataManagerAdapter(
     }
 
     override fun updateTrade(orderId: String, newStatus: MorphTrade.Status, newHashOut: String?): Completable {
+        if (newStatus == MorphTrade.Status.UNKNOWN) {
+            return Completable.error(Throwable("Unknown Status"))
+        }
         val foundTrade = shapeShiftDataManager.findTradeByOrderId(orderId)
         return if (foundTrade == null) {
             Completable.error(Throwable("Trade not found"))

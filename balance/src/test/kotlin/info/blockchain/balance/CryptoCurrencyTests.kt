@@ -36,6 +36,11 @@ class CryptoCurrencyTests {
     }
 
     @Test
+    fun `null should return null`() {
+        CryptoCurrency.fromSymbol(null) `should be` null
+    }
+
+    @Test
     fun `empty should return null`() {
         CryptoCurrency.fromSymbol("") `should be` null
     }
