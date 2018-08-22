@@ -74,14 +74,14 @@
 
             <TextView
                 android:id="@+id/textview_deposit_title"
-                style="@style/ShapeShiftConfirmationTitle"
+                style="@style/TradeConfirmationTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider1"
                 tools:text="Bitcoin to deposit" />
 
             <TextView
                 android:id="@+id/textview_deposit_amount"
-                style="@style/ShapeShiftConfirmationAmount"
+                style="@style/TradeConfirmationAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textview_deposit_title"
@@ -102,14 +102,14 @@
 
             <TextView
                 android:id="@+id/textview_receive_title"
-                style="@style/ShapeShiftConfirmationTitle"
+                style="@style/TradeConfirmationTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2"
                 tools:text="Ether to be Received" />
 
             <TextView
                 android:id="@+id/textview_receive_amount"
-                style="@style/ShapeShiftConfirmationAmount"
+                style="@style/TradeConfirmationAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textview_receive_title"
@@ -130,14 +130,14 @@
 
             <TextView
                 android:id="@+id/textview_rate_title"
-                style="@style/ShapeShiftConfirmationTitle"
+                style="@style/TradeConfirmationTitle"
                 android:text="@string/morph_exchange_rate"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
             <TextView
                 android:id="@+id/textview_rate_value"
-                style="@style/ShapeShiftConfirmationAmount"
+                style="@style/TradeConfirmationAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textview_rate_title"
@@ -158,14 +158,14 @@
 
             <TextView
                 android:id="@+id/textview_transaction_fee_title"
-                style="@style/ShapeShiftConfirmationTitle"
+                style="@style/TradeConfirmationTitle"
                 android:text="@string/morph_transaction_fee"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
             <TextView
                 android:id="@+id/textview_transaction_fee_amount"
-                style="@style/ShapeShiftConfirmationAmount"
+                style="@style/TradeConfirmationAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textview_transaction_fee_title"
@@ -186,14 +186,14 @@
 
             <TextView
                 android:id="@+id/textview_order_id_title"
-                style="@style/ShapeShiftConfirmationTitle"
+                style="@style/TradeConfirmationTitle"
                 android:text="@string/morph_order_id_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
             <TextView
                 android:id="@+id/textview_order_id_amount"
-                style="@style/ShapeShiftConfirmationAmount"
+                style="@style/TradeConfirmationAmount"
                 android:layout_width="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

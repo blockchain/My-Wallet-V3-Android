@@ -28,7 +28,7 @@ class TradeDetailActivity : BaseMvpActivity<TradeDetailView, TradeDetailPresente
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shapeshift_detail)
+        setContentView(R.layout.activity_trade_detail)
         setupToolbar(R.id.toolbar_general, R.string.morph_in_progress_title)
 
         onViewReady()

@@ -41,7 +41,7 @@ class TradeDetailPresenter(
                 updateUiAmounts(it)
                 handleTrade(it)
             }
-            // Get trade info from ShapeShift only if necessary
+            // Get trade info from data manager only if necessary
             .flatMapObservable {
                 if (enoughInfoForDisplay(it)) {
                     Observable.just(it)
