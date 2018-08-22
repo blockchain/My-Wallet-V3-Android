@@ -1,11 +1,11 @@
-package piuk.blockchain.android.ui.shapeshift.detail
+package com.blockchain.morph.ui.detail
 
 import android.support.annotation.StringRes
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import java.util.Locale
 
-interface ShapeShiftDetailView : View {
+interface TradeDetailView : View {
 
     val depositAddress: String
 

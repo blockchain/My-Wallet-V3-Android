@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.shapeshift.detail
+package com.blockchain.morph.ui.detail
 
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes

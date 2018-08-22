@@ -1,1 +1,11 @@
-<manifest package="com.blockchain.morph.ui" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.blockchain.morph.ui" >
+
+    <application>
+        <activity
+            android:name="com.blockchain.morph.ui.detail.TradeDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+    </application>
+
+</manifest>

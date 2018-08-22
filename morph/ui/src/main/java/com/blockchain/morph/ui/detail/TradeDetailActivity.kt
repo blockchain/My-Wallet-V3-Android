@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.shapeshift.detail
+package com.blockchain.morph.ui.detail
 
 import android.content.Context
 import android.content.Intent
@@ -15,12 +15,12 @@ import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import java.util.Locale
 
-class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShiftDetailPresenter>(),
-    ShapeShiftDetailView {
+class TradeDetailActivity : BaseMvpActivity<TradeDetailView, TradeDetailPresenter>(),
+    TradeDetailView {
 
     override val locale: Locale = Locale.getDefault()
 
-    private val shapeShiftDetailPresenter: ShapeShiftDetailPresenter by inject()
+    private val tradeDetailPresenter: TradeDetailPresenter by inject()
 
     override val depositAddress: String by lazy { intent.getStringExtra(EXTRA_DEPOSIT_ADDRESS) }
 
@@ -107,7 +107,7 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
 
     override fun finishPage() = finish()
 
-    override fun createPresenter() = shapeShiftDetailPresenter
+    override fun createPresenter() = tradeDetailPresenter
 
     override fun getView() = this
 
@@ -116,7 +116,7 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
         private const val EXTRA_DEPOSIT_ADDRESS = "piuk.blockchain.android.EXTRA_DEPOSIT_ADDRESS"
 
         fun start(context: Context, depositAddress: String) {
-            val intent = Intent(context, ShapeShiftDetailActivity::class.java).apply {
+            val intent = Intent(context, TradeDetailActivity::class.java).apply {
                 putExtra(EXTRA_DEPOSIT_ADDRESS, depositAddress)
             }
             context.startActivity(intent)

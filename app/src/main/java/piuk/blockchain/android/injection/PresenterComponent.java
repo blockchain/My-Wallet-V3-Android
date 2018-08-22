@@ -53,7 +53,7 @@ import piuk.blockchain.android.ui.recover.RecoverFundsActivity;
 import piuk.blockchain.android.ui.send.SendFragment;
 import piuk.blockchain.android.ui.settings.SettingsFragment;
 import piuk.blockchain.android.ui.shapeshift.confirmation.ShapeShiftConfirmationActivity;
-import piuk.blockchain.android.ui.shapeshift.detail.ShapeShiftDetailActivity;
+import com.blockchain.morph.ui.detail.TradeDetailActivity;
 import piuk.blockchain.android.ui.shapeshift.inprogress.TradeInProgressActivity;
 import piuk.blockchain.android.ui.shapeshift.newexchange.NewExchangeActivity;
 import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
@@ -151,7 +151,7 @@ public interface PresenterComponent {
 
     void inject(@NotNull TradeInProgressActivity tradeInProgressActivity);
 
-    void inject(@NotNull ShapeShiftDetailActivity shapeShiftDetailActivity);
+    void inject(@NotNull TradeDetailActivity tradeDetailActivity);
 
     void inject(@NotNull ShapeShiftStateSelectionActivity shapeShiftStateSelectionActivity);
 

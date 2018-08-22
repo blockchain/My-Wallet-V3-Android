@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.shapeshift.detail
+package com.blockchain.morph.ui.detail
 
 import android.content.res.Resources
 import com.blockchain.morph.CoinPair
@@ -21,10 +21,10 @@ import java.text.DecimalFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class ShapeShiftDetailPresenter(
+class TradeDetailPresenter(
     private val dataManager: MorphTradeDataManager,
     private val resources: Resources
-) : BasePresenter<ShapeShiftDetailView>() {
+) : BasePresenter<TradeDetailView>() {
 
     override fun onViewReady() {
         // Find trade first in list
