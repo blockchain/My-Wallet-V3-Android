@@ -89,5 +89,5 @@ val coreModule = applicationContext {
 
     factory { CurrencyFormatUtil() }
 
-    bean { CurrencyState.getInstance() }
+    bean { CurrencyState(get()) }
 }

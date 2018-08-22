@@ -61,6 +61,7 @@ import piuk.blockchain.android.util.EditTextFormatUtil
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType
 import info.blockchain.balance.CryptoCurrency
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.extensions.emptySubscribe
@@ -92,6 +93,8 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
 
     override val isContactsEnabled: Boolean = BuildConfig.CONTACTS_ENABLED
     override val locale: Locale = Locale.getDefault()
+
+    private val currencyState: CurrencyState by inject()
 
     @Suppress("MemberVisibilityCanBePrivate")
     @Inject
@@ -223,7 +226,7 @@ class ReceiveFragment : BaseFragment<ReceiveView, ReceivePresenter>(), ReceiveVi
         textview_receiving_address.setOnClickListener { showClipboardWarning() }
 
         val toListener: (View) -> Unit = {
-            val currency = CurrencyState.getInstance().cryptoCurrency
+            val currency = currencyState.cryptoCurrency
             AccountChooserActivity.startForResult(
                 this,
                 if (currency == CryptoCurrency.BTC) {

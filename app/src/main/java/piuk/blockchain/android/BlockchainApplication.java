@@ -29,7 +29,6 @@ import piuk.blockchain.android.util.exceptions.LoggingExceptionHandler;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
 import piuk.blockchain.androidcore.data.connectivity.ConnectionEvent;
-import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
@@ -99,7 +98,6 @@ public class BlockchainApplication extends Application implements FrameworkInter
         RxJavaPlugins.setErrorHandler(throwable -> Timber.tag(RX_ERROR_TAG).e(throwable));
 
         AccessState.getInstance().initAccessState(this, prefsUtil, rxBus, LogoutActivity.class);
-        CurrencyState.getInstance().init(prefsUtil);
 
         // Apply PRNG fixes on app start if needed
         prngHelper.applyPRNGFixes();

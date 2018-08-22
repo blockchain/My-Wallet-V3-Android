@@ -3,35 +3,24 @@ package piuk.blockchain.androidcore.data.currency
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.balance.CryptoCurrency
-import org.junit.Assert
-import org.junit.Before
+import org.amshove.kluent.`should be`
 import org.junit.Test
-import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.utils.PrefsUtil
 
-class CurrencyStateTest : RxTest() {
+class CurrencyStateTest {
 
-    private lateinit var subject: CurrencyState
     private val mockPrefs: PrefsUtil = mock()
-
-    @Before
-    fun setUp() {
-        subject = CurrencyState.getInstance()
-    }
+    private val subject: CurrencyState = CurrencyState(mockPrefs)
 
     @Test
     fun getSelectedCryptoCurrencyDefault() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.BTC.name)
-        subject.init(mockPrefs)
         // Act
 
         // Assert
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.BTC
-        )
+        subject.cryptoCurrency `should be` CryptoCurrency.BTC
     }
 
     @Test
@@ -39,14 +28,10 @@ class CurrencyStateTest : RxTest() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.ETHER.name)
-        subject.init(mockPrefs)
         // Act
 
         // Assert
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.ETHER
-        )
+        subject.cryptoCurrency `should be` CryptoCurrency.ETHER
     }
 
     @Test
@@ -54,14 +39,10 @@ class CurrencyStateTest : RxTest() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.ETHER.name)
-        subject.init(mockPrefs)
         // Act
         subject.cryptoCurrency = CryptoCurrency.BTC
         // Assert
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.BTC
-        )
+        subject.cryptoCurrency `should be` CryptoCurrency.BTC
     }
 
     @Test
@@ -69,14 +50,10 @@ class CurrencyStateTest : RxTest() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.ETHER.name)
-        subject.init(mockPrefs)
         // Act
         subject.cryptoCurrency = CryptoCurrency.ETHER
         // Assert
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.ETHER
-        )
+        subject.cryptoCurrency `should be` CryptoCurrency.ETHER
     }
 
     @Test
@@ -84,11 +61,10 @@ class CurrencyStateTest : RxTest() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.ETHER.name)
-        subject.init(mockPrefs)
         // Act
 
         // Assert
-        Assert.assertTrue(subject.isDisplayingCryptoCurrency)
+        subject.isDisplayingCryptoCurrency `should be` true
     }
 
     @Test
@@ -96,11 +72,10 @@ class CurrencyStateTest : RxTest() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.ETHER.name)
-        subject.init(mockPrefs)
         // Act
         subject.isDisplayingCryptoCurrency = false
         // Assert
-        Assert.assertFalse(subject.isDisplayingCryptoCurrency)
+        subject.isDisplayingCryptoCurrency `should be` false
     }
 
     @Test
@@ -108,34 +83,9 @@ class CurrencyStateTest : RxTest() {
         // Arrange
         whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
             .thenReturn(CryptoCurrency.ETHER.name)
-        subject.init(mockPrefs)
         // Act
         subject.isDisplayingCryptoCurrency = true
         // Assert
-        Assert.assertTrue(subject.isDisplayingCryptoCurrency)
-    }
-
-    @Test
-    fun toggleCryptoCurrency() {
-        // Arrange
-        whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
-            .thenReturn(CryptoCurrency.BTC.name)
-        subject.init(mockPrefs)
-        // Act
-        // Assert
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.BTC
-        )
-        subject.toggleCryptoCurrency()
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.ETHER
-        )
-        subject.toggleCryptoCurrency()
-        Assert.assertEquals(
-            subject.cryptoCurrency,
-            CryptoCurrency.BTC
-        )
+        subject.isDisplayingCryptoCurrency `should be` true
     }
 }

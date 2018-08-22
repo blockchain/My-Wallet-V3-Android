@@ -52,6 +52,7 @@ import kotlinx.android.synthetic.main.include_from_row.view.*
 import kotlinx.android.synthetic.main.include_to_row_editable.*
 import kotlinx.android.synthetic.main.include_to_row_editable.view.*
 import kotlinx.android.synthetic.main.view_expanding_currency_header.*
+import org.koin.android.ext.android.inject
 import piuk.blockchain.android.R
 import piuk.blockchain.android.data.connectivity.ConnectivityStatus
 import piuk.blockchain.android.injection.Injector
@@ -95,6 +96,8 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
     lateinit var appUtil: AppUtil
 
     private val secondPasswordHandler: SecondPasswordHandler by injectActivity()
+
+    private val currencyState: CurrencyState by inject()
 
     private var backPressed: Long = 0
     private var progressDialog: MaterialProgressDialog? = null
@@ -337,10 +340,10 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
             .emptySubscribe()
 
         toContainer.toArrow.setOnClickListener {
-            val currency = CurrencyState.getInstance().cryptoCurrency
+            val currency = currencyState.cryptoCurrency
             AccountChooserActivity.startForResult(
                 this,
-                if (CurrencyState.getInstance().cryptoCurrency == CryptoCurrency.BTC) {
+                if (currencyState.cryptoCurrency == CryptoCurrency.BTC) {
                     AccountMode.Bitcoin
                 } else {
                     AccountMode.BitcoinCash
@@ -474,10 +477,10 @@ class SendFragment : BaseFragment<SendView, SendPresenter>(), SendView,
     }
 
     private fun startFromFragment() {
-        val currency = CurrencyState.getInstance().cryptoCurrency
+        val currency = currencyState.cryptoCurrency
         AccountChooserActivity.startForResult(
             this,
-            if (CurrencyState.getInstance().cryptoCurrency == CryptoCurrency.BTC) {
+            if (currencyState.cryptoCurrency == CryptoCurrency.BTC) {
                 AccountMode.Bitcoin
             } else {
                 AccountMode.BitcoinCashSend

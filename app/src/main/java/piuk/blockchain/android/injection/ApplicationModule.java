@@ -48,7 +48,7 @@ public class ApplicationModule extends KoinDaggerModule {
 
     @Provides
     CurrencyState provideCurrencyState() {
-        return CurrencyState.getInstance();
+        return get(CurrencyState.class);
     }
 
     @Provides
