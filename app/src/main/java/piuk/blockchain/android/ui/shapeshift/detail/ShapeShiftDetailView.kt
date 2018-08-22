@@ -1,7 +1,6 @@
 package piuk.blockchain.android.ui.shapeshift.detail
 
 import android.support.annotation.StringRes
-import piuk.blockchain.android.ui.shapeshift.models.TradeDetailUiState
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import java.util.Locale

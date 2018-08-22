@@ -2,7 +2,6 @@ package piuk.blockchain.android.ui.shapeshift.models
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import kotlinx.android.parcel.Parcelize
@@ -43,14 +42,6 @@ data class ShapeShiftData(
     var gasPrice: BigInteger,
     var feePerKb: BigInteger
 ) : Parcelable
-
-data class TradeDetailUiState(
-    @StringRes val title: Int,
-    @StringRes val heading: Int,
-    val message: String,
-    @DrawableRes val icon: Int,
-    @ColorRes val receiveColor: Int
-)
 
 data class TradeProgressUiState(
     @StringRes val title: Int,
