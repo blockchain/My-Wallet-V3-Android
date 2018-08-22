@@ -174,7 +174,7 @@ class TradeDetailPresenter(
             R.string.morph_sending_title,
             R.string.morph_sending_title,
             resources.getString(R.string.morph_step_number, "1"),
-            R.drawable.shapeshift_progress_airplane,
+            R.drawable.trade_progress_airplane,
             R.color.black
         )
         view.updateUi(state)
@@ -185,7 +185,7 @@ class TradeDetailPresenter(
             R.string.morph_in_progress_title,
             R.string.morph_in_progress_summary,
             resources.getString(R.string.morph_step_number, "2"),
-            R.drawable.shapeshift_progress_exchange,
+            R.drawable.shapeshift_trade_progress_exchange,
             R.color.black
         )
         view.updateUi(state)
@@ -196,7 +196,7 @@ class TradeDetailPresenter(
             R.string.morph_complete_title,
             R.string.morph_complete_title,
             resources.getString(R.string.morph_step_number, "3"),
-            R.drawable.shapeshift_progress_complete,
+            R.drawable.trade_progress_complete,
             R.color.black
         )
         view.updateUi(state)
@@ -207,7 +207,7 @@ class TradeDetailPresenter(
             R.string.morph_failed_title,
             R.string.morph_failed_summary,
             resources.getString(R.string.morph_failed_explanation),
-            R.drawable.shapeshift_progress_failed,
+            R.drawable.trade_progress_failed,
             R.color.product_gray_hint
         )
         view.updateUi(state)
@@ -218,7 +218,7 @@ class TradeDetailPresenter(
             R.string.morph_refunded_title,
             R.string.morph_refunded_summary,
             resources.getString(R.string.morph_refunded_explanation),
-            R.drawable.shapeshift_progress_failed,
+            R.drawable.trade_progress_failed,
             R.color.product_gray_hint
         )
         view.updateUi(state)

@@ -285,7 +285,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
-                        app:srcCompat="@drawable/shapeshift_progress_failed" />
+                        app:srcCompat="@drawable/trade_progress_failed" />
 
                     <TextView
                         android:id="@+id/text_view_refunded_message"

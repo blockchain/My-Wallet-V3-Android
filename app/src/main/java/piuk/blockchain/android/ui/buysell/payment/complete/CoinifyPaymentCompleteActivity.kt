@@ -94,7 +94,7 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         imageViewTick.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.shapeshift_progress_failed
+                R.drawable.trade_progress_failed
             )
         )
     }
@@ -105,7 +105,7 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         imageViewTick.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.shapeshift_progress_failed
+                R.drawable.trade_progress_failed
             )
         )
     }
@@ -116,7 +116,7 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         imageViewTick.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.shapeshift_progress_failed
+                R.drawable.trade_progress_failed
             )
         )
     }
@@ -127,7 +127,7 @@ class CoinifyPaymentCompleteActivity : BaseAuthActivity() {
         imageViewTick.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                R.drawable.shapeshift_drawable_in_progress
+                R.drawable.shapeshift_trade_progress_exchange
             )
         )
     }

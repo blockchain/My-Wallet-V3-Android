@@ -27,7 +27,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/shapeshift_progress_exchange"
+                app:srcCompat="@drawable/shapeshift_trade_progress_exchange"
                 tools:ignore="HardcodedText" />
 
             <TextView

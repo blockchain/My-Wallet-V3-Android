@@ -72,7 +72,7 @@ class TradeInProgressPresenter @Inject constructor(
         val state = TradeProgressUiState(
             R.string.morph_sending_title,
             R.string.morph_in_progress_explanation,
-            R.drawable.shapeshift_progress_airplane,
+            R.drawable.trade_progress_airplane,
             true,
             1
         )
@@ -83,7 +83,7 @@ class TradeInProgressPresenter @Inject constructor(
         val state = TradeProgressUiState(
             R.string.morph_in_progress_title,
             R.string.morph_in_progress_explanation,
-            R.drawable.shapeshift_progress_exchange,
+            R.drawable.shapeshift_trade_progress_exchange,
             true,
             2
         )
@@ -94,7 +94,7 @@ class TradeInProgressPresenter @Inject constructor(
         val state = TradeProgressUiState(
             R.string.morph_complete_title,
             R.string.morph_in_progress_explanation,
-            R.drawable.shapeshift_progress_complete,
+            R.drawable.trade_progress_complete,
             true,
             3
         )
@@ -105,7 +105,7 @@ class TradeInProgressPresenter @Inject constructor(
         val state = TradeProgressUiState(
             R.string.morph_failed_title,
             R.string.morph_failed_explanation,
-            R.drawable.shapeshift_progress_failed,
+            R.drawable.trade_progress_failed,
             false,
             0
         )

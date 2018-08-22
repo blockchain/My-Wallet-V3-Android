@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:minHeight="100dp"
-                android:src="@drawable/shapeshift_progress_complete"
+                android:src="@drawable/trade_progress_complete"
                 app:layout_constraintTop_toBottomOf="@id/text_view_success_title" />
 
             <TextView
