@@ -5,11 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_shapeshift_detail.*
-import kotlinx.android.synthetic.main.toolbar_general.*
+import android.widget.ImageView
+import android.widget.TextView
+import com.blockchain.morph.ui.R
 import org.koin.android.ext.android.inject
-import piuk.blockchain.android.R
-import piuk.blockchain.android.injection.Injector
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
@@ -27,50 +26,57 @@ class ShapeShiftDetailActivity : BaseMvpActivity<ShapeShiftDetailView, ShapeShif
 
     private var progressDialog: MaterialProgressDialog? = null
 
-    init {
-        Injector.getInstance().presenterComponent.inject(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shapeshift_detail)
-        setupToolbar(toolbar_general, R.string.shapeshift_in_progress_title)
+        setupToolbar(R.id.toolbar_general, R.string.shapeshift_in_progress_title)
 
         onViewReady()
     }
+
+    private val orderIdAmount: TextView get() = findViewById(R.id.textview_order_id_amount)
+    private val transactionFeeAmount: TextView get() = findViewById(R.id.textview_transaction_fee_amount)
+    private val exchangeRate: TextView get() = findViewById(R.id.textview_rate_value)
+    private val receiveAmount: TextView get() = findViewById(R.id.textview_receive_amount)
+    private val receiveTitle: TextView get() = findViewById(R.id.textview_receive_title)
+    private val depositAmount: TextView get() = findViewById(R.id.textview_deposit_amount)
+    private val depositTitle: TextView get() = findViewById(R.id.textview_deposit_title)
+    private val progressImage: ImageView get() = findViewById(R.id.imageview_progress)
+    private val currentStep: TextView get() = findViewById(R.id.textview_current_step)
+    private val currentStage: TextView get() = findViewById(R.id.textview_current_stage)
 
     override fun onSupportNavigateUp() =
         consume { onBackPressed() }
 
     override fun updateUi(uiState: TradeDetailUiState) {
-        setupToolbar(toolbar_general, uiState.title)
-        textview_current_stage.setText(uiState.heading)
-        textview_current_word_step.text = uiState.message
-        imageview_progress.setImageDrawable(ContextCompat.getDrawable(this, uiState.icon))
-        textview_receive_amount.setTextColor(ContextCompat.getColor(this, uiState.receiveColor))
+        setupToolbar(R.id.toolbar_general, uiState.title)
+        currentStage.setText(uiState.heading)
+        currentStep.text = uiState.message
+        progressImage.setImageDrawable(ContextCompat.getDrawable(this, uiState.icon))
+        receiveAmount.setTextColor(ContextCompat.getColor(this, uiState.receiveColor))
     }
 
     override fun updateDeposit(label: String, amount: String) {
-        textview_deposit_title.text = label
-        textview_deposit_amount.text = amount
+        depositTitle.text = label
+        depositAmount.text = amount
     }
 
     override fun updateReceive(label: String, amount: String) {
-        textview_receive_title.text = label
-        textview_receive_amount.text = amount
+        receiveTitle.text = label
+        receiveAmount.text = amount
     }
 
     override fun updateExchangeRate(exchangeRate: String) {
-        textview_rate_value.text = exchangeRate
+        this.exchangeRate.text = exchangeRate
     }
 
     override fun updateTransactionFee(displayString: String) {
-        textview_transaction_fee_amount.text = displayString
+        transactionFeeAmount.text = displayString
     }
 
     override fun updateOrderId(displayString: String) {
-        textview_order_id_amount.text = displayString
-        textview_order_id_amount.setOnClickListener {
+        orderIdAmount.text = displayString
+        orderIdAmount.setOnClickListener {
             val clipboard =
                 getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText("Send address", displayString)

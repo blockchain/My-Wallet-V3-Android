@@ -1,5 +1,6 @@
 package piuk.blockchain.androidcoreui.ui.base
 
+import android.support.annotation.IdRes
 import android.support.annotation.StringRes
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
@@ -16,6 +17,10 @@ abstract class ToolBarActivity : AppCompatActivity() {
      */
     fun setupToolbar(toolbar: Toolbar, @StringRes title: Int) {
         setupToolbar(toolbar, getString(title))
+    }
+
+    fun setupToolbar(@IdRes toolbar: Int, @StringRes title: Int) {
+        setupToolbar(findViewById<Toolbar>(toolbar), getString(title))
     }
 
     /**

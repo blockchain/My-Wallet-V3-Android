@@ -45,7 +45,7 @@
                 tools:text="Exchange in Progress" />
 
             <TextView
-                android:id="@+id/textview_current_word_step"
+                android:id="@+id/textview_current_step"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -68,7 +68,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_current_word_step" />
+                app:layout_constraintTop_toBottomOf="@+id/textview_current_step" />
 
             <!-- DEPOSIT AMOUNT -->
 

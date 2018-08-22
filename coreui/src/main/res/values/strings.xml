@@ -26,4 +26,7 @@
     <!-- Country Selection Dialog -->
     <string name="search_country">Search Country</string>
 
+    <string name="please_wait">Please wait</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+
 </resources>

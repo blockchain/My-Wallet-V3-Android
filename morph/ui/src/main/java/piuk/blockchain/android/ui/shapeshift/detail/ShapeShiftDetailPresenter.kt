@@ -5,11 +5,11 @@ import com.blockchain.morph.CoinPair
 import com.blockchain.morph.trade.MorphTrade
 import com.blockchain.morph.trade.MorphTradeDataManager
 import com.blockchain.morph.trade.MorphTradeStatus
+import com.blockchain.morph.ui.R
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.formatWithUnit
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import piuk.blockchain.android.R
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
