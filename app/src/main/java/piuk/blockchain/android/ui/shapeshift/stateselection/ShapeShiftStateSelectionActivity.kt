@@ -35,14 +35,14 @@ class ShapeShiftStateSelectionActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shapeshift_state_selection)
-        setupToolbar(toolbar_general, R.string.shapeshift_exchange)
+        setupToolbar(toolbar_general, R.string.morph_exchange)
 
         stateSelectError.invisible()
 
         btnConfirm.setOnClickListener { finishActivityWithResult(Activity.RESULT_CANCELED) }
 
         val states = americanStatesMap.keys.toTypedArray().sortedArray().toMutableList()
-        states.add(getString(R.string.shapeshift_select_state))
+        states.add(getString(R.string.morph_select_state))
 
         val adapter = object :
             ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, states) {

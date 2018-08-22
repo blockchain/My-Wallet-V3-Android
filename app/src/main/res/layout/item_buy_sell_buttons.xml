@@ -44,7 +44,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
-        android:text="@string/shapeshift_order_history"
+        android:text="@string/morph_order_history"
         android:textAllCaps="true"
         android:textColor="@color/product_gray_headers"
         app:layout_constraintEnd_toEndOf="parent"

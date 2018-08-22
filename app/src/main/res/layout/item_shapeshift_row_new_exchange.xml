@@ -29,7 +29,7 @@
             android:layout_toRightOf="@+id/iv_exchange"
             android:fontFamily="@font/montserrat"
             android:padding="16dp"
-            android:text="@string/shapeshift_new_exchange"
+            android:text="@string/morph_new_exchange"
             android:textSize="16sp" />
 
         <ImageView

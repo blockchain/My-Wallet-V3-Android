@@ -25,7 +25,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/shapeshift_in_progress_explanation"
+                android:text="@string/morph_in_progress_explanation"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -69,7 +69,7 @@ class ShapeShiftStateSelectionPresenterTest {
         // Assert
         verify(walletOptionsDataManager).isStateWhitelisted(stateCode)
         verifyNoMoreInteractions(walletOptionsDataManager)
-        verify(view).onError(R.string.shapeshift_unavailable_in_state)
+        verify(view).onError(R.string.morph_unavailable_in_state)
         verifyNoMoreInteractions(view)
         verifyZeroInteractions(shapeShiftDataManager)
     }

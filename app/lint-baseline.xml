@@ -2161,7 +2161,7 @@
 
     <issue
         id="RelativeOverlap"
-        message="`@id/header_2` can overlap `@id/header_1` if @string/shapeshift_order_history, @string/shapeshift_incoming grow due to localized text expansion"
+        message="`@id/header_2` can overlap `@id/header_1` if @string/morph_order_history, @string/morph_incoming grow due to localized text expansion"
         errorLine1="        &lt;TextView"
         errorLine2="        ^">
         <location
@@ -2172,7 +2172,7 @@
 
     <issue
         id="RelativeOverlap"
-        message="`@id/header_name` can overlap `@id/imageview_more` if @string/shapeshift_new_exchange grows due to localized text expansion"
+        message="`@id/header_name` can overlap `@id/imageview_more` if @string/morph_new_exchange grows due to localized text expansion"
         errorLine1="        &lt;TextView"
         errorLine2="        ^">
         <location

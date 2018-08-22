@@ -70,8 +70,8 @@ class TradeInProgressPresenter @Inject constructor(
 
     private fun onNoDeposit() {
         val state = TradeProgressUiState(
-            R.string.shapeshift_sending_title,
-            R.string.shapeshift_in_progress_explanation,
+            R.string.morph_sending_title,
+            R.string.morph_in_progress_explanation,
             R.drawable.shapeshift_progress_airplane,
             true,
             1
@@ -81,8 +81,8 @@ class TradeInProgressPresenter @Inject constructor(
 
     private fun onReceived() {
         val state = TradeProgressUiState(
-            R.string.shapeshift_in_progress_title,
-            R.string.shapeshift_in_progress_explanation,
+            R.string.morph_in_progress_title,
+            R.string.morph_in_progress_explanation,
             R.drawable.shapeshift_progress_exchange,
             true,
             2
@@ -92,8 +92,8 @@ class TradeInProgressPresenter @Inject constructor(
 
     private fun onComplete() {
         val state = TradeProgressUiState(
-            R.string.shapeshift_complete_title,
-            R.string.shapeshift_in_progress_explanation,
+            R.string.morph_complete_title,
+            R.string.morph_in_progress_explanation,
             R.drawable.shapeshift_progress_complete,
             true,
             3
@@ -103,8 +103,8 @@ class TradeInProgressPresenter @Inject constructor(
 
     private fun onFailed() {
         val state = TradeProgressUiState(
-            R.string.shapeshift_failed_title,
-            R.string.shapeshift_failed_explanation,
+            R.string.morph_failed_title,
+            R.string.morph_failed_explanation,
             R.drawable.shapeshift_progress_failed,
             false,
             0

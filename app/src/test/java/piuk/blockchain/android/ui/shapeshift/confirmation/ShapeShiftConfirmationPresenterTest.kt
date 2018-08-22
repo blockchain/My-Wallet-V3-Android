@@ -161,25 +161,25 @@ class ShapeShiftConfirmationPresenterTest {
         whenever(view.shapeShiftData).thenReturn(fromBtc)
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_deposit_title,
+                R.string.morph_deposit_title,
                 fromBtc.fromCurrency.unit
             )
         ).thenReturn("${fromBtc.fromCurrency.unit} to deposit")
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_receive_title,
+                R.string.morph_receive_title,
                 fromBtc.toCurrency.unit
             )
         ).thenReturn("${fromBtc.toCurrency.unit} to receive")
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_total_title,
+                R.string.morph_total_title,
                 fromBtc.fromCurrency.unit
             )
         ).thenReturn("Total ${fromBtc.fromCurrency.unit} spent")
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_exchange_rate_formatted,
+                R.string.morph_exchange_rate_formatted,
                 fromBtc.fromCurrency.symbol,
                 subject.decimalFormat.format(
                     fromBtc.exchangeRate.setScale(
@@ -223,25 +223,25 @@ class ShapeShiftConfirmationPresenterTest {
         whenever(view.shapeShiftData).thenReturn(fromEth)
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_deposit_title,
+                R.string.morph_deposit_title,
                 fromEth.fromCurrency.unit
             )
         ).thenReturn("${fromEth.fromCurrency.unit} to deposit")
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_receive_title,
+                R.string.morph_receive_title,
                 fromEth.toCurrency.unit
             )
         ).thenReturn("${fromEth.toCurrency.unit} to receive")
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_total_title,
+                R.string.morph_total_title,
                 fromEth.fromCurrency.unit
             )
         ).thenReturn("Total ${fromEth.fromCurrency.unit} spent")
         whenever(
             stringUtils.getFormattedString(
-                R.string.shapeshift_exchange_rate_formatted,
+                R.string.morph_exchange_rate_formatted,
                 fromEth.fromCurrency.symbol,
                 subject.decimalFormat.format(
                     fromEth.exchangeRate.setScale(

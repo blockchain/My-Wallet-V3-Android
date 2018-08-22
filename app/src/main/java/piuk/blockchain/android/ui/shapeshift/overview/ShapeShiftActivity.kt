@@ -38,7 +38,7 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shapeshift)
-        setupToolbar(toolbar_general, R.string.shapeshift_exchange)
+        setupToolbar(toolbar_general, R.string.morph_exchange)
 
         shapeshift_retry_button.setOnClickListener { presenter.onRetryPressed() }
 

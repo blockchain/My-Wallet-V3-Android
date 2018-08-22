@@ -99,7 +99,7 @@ class TradesDisplayableDelegate<in T>(
                     R.color.product_red_medium
                 )
             )
-            return R.string.shapeshift_refunded_title
+            return R.string.morph_refunded_title
         }
 
         return when (trade.status) {
@@ -111,7 +111,7 @@ class TradesDisplayableDelegate<in T>(
                         R.color.product_green_medium
                     )
                 )
-                R.string.shapeshift_complete_title
+                R.string.morph_complete_title
             }
             Trade.STATUS.FAILED, Trade.STATUS.RESOLVED -> {
                 viewHolder.result.setBackgroundResource(R.drawable.rounded_view_failed)
@@ -121,7 +121,7 @@ class TradesDisplayableDelegate<in T>(
                         R.color.product_red_medium
                     )
                 )
-                R.string.shapeshift_failed_title
+                R.string.morph_failed_title
             }
             Trade.STATUS.NO_DEPOSITS, Trade.STATUS.RECEIVED -> {
                 viewHolder.result.setBackgroundResource(R.drawable.rounded_view_inprogress)
@@ -131,7 +131,7 @@ class TradesDisplayableDelegate<in T>(
                         R.color.product_gray_transferred
                     )
                 )
-                R.string.shapeshift_in_progress_title
+                R.string.morph_in_progress_title
             }
             else -> throw IllegalStateException("Unknown status ${trade.status}")
         }

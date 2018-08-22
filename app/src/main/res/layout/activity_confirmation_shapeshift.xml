@@ -75,7 +75,7 @@
             <TextView
                 android:id="@+id/textview_transaction_fee_title"
                 style="@style/ShapeShiftConfirmationTitle"
-                android:text="@string/shapeshift_transaction_fee"
+                android:text="@string/morph_transaction_fee"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
@@ -131,7 +131,7 @@
             <TextView
                 android:id="@+id/textview_rate_title"
                 style="@style/ShapeShiftConfirmationTitle"
-                android:text="@string/shapeshift_exchange_rate"
+                android:text="@string/morph_exchange_rate"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
@@ -159,7 +159,7 @@
             <TextView
                 android:id="@+id/textview_network_fee_title"
                 style="@style/ShapeShiftConfirmationTitle"
-                android:text="@string/shapeshift_network_fee"
+                android:text="@string/morph_network_fee"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider5" />
 

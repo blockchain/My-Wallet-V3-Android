@@ -106,7 +106,7 @@ class NewExchangePresenter @Inject constructor(
         shapeShiftObservable
             .doOnNext { marketInfo = it }
             .flatMap { feesObservable }
-            .doOnSubscribe { view.showProgressDialog(R.string.shapeshift_getting_information) }
+            .doOnSubscribe { view.showProgressDialog(R.string.morph_getting_information) }
             .doOnTerminate { view.dismissProgressDialog() }
             .addToCompositeDisposable(this)
             .doOnError { Timber.e(it) }
@@ -120,7 +120,7 @@ class NewExchangePresenter @Inject constructor(
                 },
                 onError = {
                     view.showToast(
-                        R.string.shapeshift_getting_information_failed,
+                        R.string.morph_getting_information_failed,
                         ToastCustom.TYPE_ERROR
                     )
                     view.finishPage()
@@ -161,7 +161,7 @@ class NewExchangePresenter @Inject constructor(
         // It's possible that the fee observable can return zero but not kill the chain with an
         // error, hence checking here
         if (shapeShiftData?.networkFee?.compareTo(BigDecimal.ZERO) == 0) {
-            view.showToast(R.string.shapeshift_getting_fees_failed, ToastCustom.TYPE_ERROR)
+            view.showToast(R.string.morph_getting_fees_failed, ToastCustom.TYPE_ERROR)
             return
         }
 
@@ -193,7 +193,7 @@ class NewExchangePresenter @Inject constructor(
                 if (getMinimum() > it) {
                     view.showAmountError(
                         stringUtils.getFormattedString(
-                            R.string.shapeshift_amount_to_low,
+                            R.string.morph_amount_to_low,
                             getMinimum(),
                             fromCurrency.symbol.toUpperCase()
                         )
@@ -219,7 +219,7 @@ class NewExchangePresenter @Inject constructor(
                     if (getMinimum() > it) {
                         view.showAmountError(
                             stringUtils.getFormattedString(
-                                R.string.shapeshift_amount_to_low,
+                                R.string.morph_amount_to_low,
                                 getMinimum(),
                                 fromCurrency.symbol.toUpperCase()
                             )
@@ -379,7 +379,7 @@ class NewExchangePresenter @Inject constructor(
         Timber.e(throwable)
         view.clearEditTexts()
         view.setButtonEnabled(false)
-        view.showToast(R.string.shapeshift_getting_information_failed, ToastCustom.TYPE_ERROR)
+        view.showToast(R.string.morph_getting_information_failed, ToastCustom.TYPE_ERROR)
     }
 
     private fun getExchangeRates(
@@ -419,13 +419,13 @@ class NewExchangePresenter @Inject constructor(
             payloadDataManager.defaultAccount.label
         }
     } else {
-        stringUtils.getString(R.string.shapeshift_btc)
+        stringUtils.getString(R.string.morph_btc)
     }
 
     private fun getEthLabel() = if (btcAccounts.size > 1) {
         stringUtils.getString(R.string.eth_default_account_label)
     } else {
-        stringUtils.getString(R.string.shapeshift_eth)
+        stringUtils.getString(R.string.morph_eth)
     }
 
     private fun getBchLabel() = if (bchAccounts.size > 1) {
@@ -435,7 +435,7 @@ class NewExchangePresenter @Inject constructor(
             bchDataManager.getDefaultGenericMetadataAccount()!!.label
         }
     } else {
-        stringUtils.getString(R.string.shapeshift_bch)
+        stringUtils.getString(R.string.morph_bch)
     }
 
     private fun getCurrencyLabel(currency: CryptoCurrency) = when (currency) {
@@ -746,7 +746,7 @@ class NewExchangePresenter @Inject constructor(
         })
         .doOnError {
             view.showToast(
-                R.string.shapeshift_deriving_address_failed,
+                R.string.morph_deriving_address_failed,
                 ToastCustom.TYPE_ERROR
             )
         }

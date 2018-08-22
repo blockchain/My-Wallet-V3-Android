@@ -26,29 +26,29 @@ class TradeInProgressPresenterTest : RxTest() {
     private val view: TradeInProgressView = mock()
     private val depositAddress = "DEPOSIT_ADDRESS"
     private val noDepositState = TradeProgressUiState(
-        R.string.shapeshift_sending_title,
-        R.string.shapeshift_in_progress_explanation,
+        R.string.morph_sending_title,
+        R.string.morph_in_progress_explanation,
         R.drawable.shapeshift_progress_airplane,
         true,
         1
     )
     private val receivedState = TradeProgressUiState(
-        R.string.shapeshift_in_progress_title,
-        R.string.shapeshift_in_progress_explanation,
+        R.string.morph_in_progress_title,
+        R.string.morph_in_progress_explanation,
         R.drawable.shapeshift_progress_exchange,
         true,
         2
     )
     private val completeState = TradeProgressUiState(
-        R.string.shapeshift_complete_title,
-        R.string.shapeshift_in_progress_explanation,
+        R.string.morph_complete_title,
+        R.string.morph_in_progress_explanation,
         R.drawable.shapeshift_progress_complete,
         true,
         3
     )
     private val failedState = TradeProgressUiState(
-        R.string.shapeshift_failed_title,
-        R.string.shapeshift_failed_explanation,
+        R.string.morph_failed_title,
+        R.string.morph_failed_explanation,
         R.drawable.shapeshift_progress_failed,
         false,
         0

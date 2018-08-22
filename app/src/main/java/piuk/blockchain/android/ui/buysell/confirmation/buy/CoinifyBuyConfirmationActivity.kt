@@ -136,7 +136,7 @@ class CoinifyBuyConfirmationActivity :
     }
 
     override fun updateCounter(timeRemaining: String) {
-        textViewTimeRemaining.text = getString(R.string.shapeshift_time_remaining, timeRemaining)
+        textViewTimeRemaining.text = getString(R.string.morph_time_remaining, timeRemaining)
     }
 
     override fun showTimeExpiring() {

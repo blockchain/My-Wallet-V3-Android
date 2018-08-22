@@ -352,7 +352,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
     // region View Updates
     private fun updateDeposit(fromCurrency: CryptoCurrency, depositAmount: BigDecimal) {
         val label =
-            stringUtils.getFormattedString(R.string.shapeshift_deposit_title, fromCurrency.unit)
+            stringUtils.getFormattedString(R.string.morph_deposit_title, fromCurrency.unit)
         val amount = "${depositAmount.toLocalisedString()} ${fromCurrency.symbol}"
 
         view.updateDeposit(label, amount)
@@ -360,7 +360,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
 
     private fun updateReceive(toCurrency: CryptoCurrency, receiveAmount: BigDecimal) {
         val label =
-            stringUtils.getFormattedString(R.string.shapeshift_receive_title, toCurrency.unit)
+            stringUtils.getFormattedString(R.string.morph_receive_title, toCurrency.unit)
         val amount = "${receiveAmount.toLocalisedString()} ${toCurrency.symbol}"
 
         view.updateReceive(label, amount)
@@ -371,7 +371,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
         depositAmount: BigDecimal,
         transactionFee: BigInteger
     ) {
-        val label = stringUtils.getFormattedString(R.string.shapeshift_total_title, toCurrency.unit)
+        val label = stringUtils.getFormattedString(R.string.morph_total_title, toCurrency.unit)
         val fee = getFeeForCurrency(toCurrency, transactionFee)
         val totalSent = depositAmount.plus(fee)
         val amount = "${totalSent.toLocalisedString()} ${toCurrency.symbol}"
@@ -387,7 +387,7 @@ class ShapeShiftConfirmationPresenter @Inject constructor(
         val formattedExchangeRate = exchangeRate.setScale(8, RoundingMode.HALF_DOWN)
             .toLocalisedString()
         val formattedString = stringUtils.getFormattedString(
-            R.string.shapeshift_exchange_rate_formatted,
+            R.string.morph_exchange_rate_formatted,
             fromCurrency.symbol,
             formattedExchangeRate,
             toCurrency.symbol

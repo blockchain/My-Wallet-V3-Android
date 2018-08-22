@@ -89,7 +89,7 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_exchange)
-        setupToolbar(toolbar_general, R.string.shapeshift_exchange)
+        setupToolbar(toolbar_general, R.string.morph_exchange)
 
         button_continue.setOnClickListener { presenter.onContinuePressed() }
         textview_use_max.setOnClickListener { presenter.onMaxPressed() }
@@ -292,8 +292,8 @@ class NewExchangeActivity : BaseMvpActivity<NewExchangeView, NewExchangePresente
 
     override fun showNoFunds(canBuy: Boolean) {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
-            .setTitle(R.string.shapeshift_no_funds_title)
-            .setMessage(R.string.shapeshift_no_funds_message)
+            .setTitle(R.string.morph_no_funds_title)
+            .setMessage(R.string.morph_no_funds_message)
             .setCancelable(true)
             .setNeutralButton(R.string.onboarding_get_bitcoin_cash) { _, _ ->
                 LocalBroadcastManager.getInstance(this)

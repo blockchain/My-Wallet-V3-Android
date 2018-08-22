@@ -32,7 +32,7 @@ class ShapeShiftStateSelectionPresenter @Inject constructor(
                     shapeShiftDataManager.setState(State(state, stateCode))
                         .doOnComplete { view.finishActivityWithResult(Activity.RESULT_OK) }
                 } else {
-                    view.onError(R.string.shapeshift_unavailable_in_state)
+                    view.onError(R.string.morph_unavailable_in_state)
                     Completable.complete()
                 }
             }

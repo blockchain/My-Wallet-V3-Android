@@ -32,7 +32,7 @@ class TradeInProgressActivity : BaseMvpActivity<TradeInProgressView, TradeInProg
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trade_in_progress)
-        setupToolbar(toolbar_general, R.string.shapeshift_sending_title)
+        setupToolbar(toolbar_general, R.string.morph_sending_title)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setDisplayShowHomeEnabled(false)
@@ -58,7 +58,7 @@ class TradeInProgressActivity : BaseMvpActivity<TradeInProgressView, TradeInProg
         textview_sending_message.setText(uiState.message)
         imageview_progress.setImageDrawable(ContextCompat.getDrawable(this, uiState.icon))
         textview_current_word_step.text =
-            getString(R.string.shapeshift_step_number, uiState.stepNumber)
+            getString(R.string.morph_step_number, uiState.stepNumber)
         textview_current_word_step.visibility =
             if (uiState.showSteps) View.VISIBLE else View.INVISIBLE
     }

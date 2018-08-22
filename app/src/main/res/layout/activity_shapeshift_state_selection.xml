@@ -26,7 +26,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/shapeshift_select_state_residency"
+                android:text="@string/morph_select_state_residency"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerState"
-                tools:text="@string/shapeshift_unavailable_in_state" />
+                tools:text="@string/morph_unavailable_in_state" />
 
             <Button
                 android:id="@+id/btnConfirm"

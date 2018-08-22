@@ -388,10 +388,10 @@ class BalancePresenter @Inject constructor(
 
                 for (trade in it) {
                     trade.hashIn?.let {
-                        mutableMap.put(it, stringUtils.getString(R.string.shapeshift_deposit_to))
+                        mutableMap.put(it, stringUtils.getString(R.string.morph_deposit_to))
                     }
                     trade.hashOut?.let {
-                        mutableMap.put(it, stringUtils.getString(R.string.shapeshift_deposit_from))
+                        mutableMap.put(it, stringUtils.getString(R.string.morph_deposit_from))
                     }
                 }
                 return@map mutableMap.toMap()

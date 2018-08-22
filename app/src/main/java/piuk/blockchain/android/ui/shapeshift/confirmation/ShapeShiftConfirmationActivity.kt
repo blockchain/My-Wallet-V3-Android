@@ -57,8 +57,8 @@ class ShapeShiftConfirmationActivity :
         textView_terms_conditions.setOnClickListener { openShapeShiftTerms() }
         button_confirm.setOnClickListener { presenter.onConfirmClicked() }
 
-        val stringFirstPart = getString(R.string.shapeshift_confirmation_agree)
-        val stringSecondPart = getString(R.string.shapeshift_confirmation_terms)
+        val stringFirstPart = getString(R.string.morph_confirmation_agree)
+        val stringSecondPart = getString(R.string.morph_confirmation_terms)
         val terms = SpannableString(stringFirstPart + stringSecondPart)
         textView_terms_conditions.text = terms.apply {
             setSpan(
@@ -103,7 +103,7 @@ class ShapeShiftConfirmationActivity :
     }
 
     override fun updateCounter(timeRemaining: String) {
-        textview_time_remaining.text = getString(R.string.shapeshift_time_remaining, timeRemaining)
+        textview_time_remaining.text = getString(R.string.morph_time_remaining, timeRemaining)
     }
 
     override fun updateDeposit(label: String, amount: String) {
@@ -146,7 +146,7 @@ class ShapeShiftConfirmationActivity :
     override fun showQuoteExpiredDialog() {
         AlertDialog.Builder(this, R.style.AlertDialogStyle)
             .setTitle(R.string.app_name)
-            .setMessage(R.string.shapeshift_quote_expired_error_message)
+            .setMessage(R.string.morph_quote_expired_error_message)
             .setPositiveButton(android.R.string.ok) { _, _ -> finishPage() }
             .setCancelable(false)
             .show()
