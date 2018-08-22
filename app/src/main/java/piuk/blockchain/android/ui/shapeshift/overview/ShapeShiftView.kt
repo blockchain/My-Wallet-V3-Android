@@ -2,6 +2,7 @@ package piuk.blockchain.android.ui.shapeshift.overview
 
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
+import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcoreui.ui.base.View
 
 interface ShapeShiftView : View {
@@ -14,10 +15,10 @@ interface ShapeShiftView : View {
         btcExchangeRate: Double,
         ethExchangeRate: Double,
         bchExchangeRate: Double,
-        isBtc: Boolean
+        displayMode: CurrencyState.DisplayMode
     )
 
-    fun onViewTypeChanged(isBtc: Boolean)
+    fun onViewTypeChanged(displayMode: CurrencyState.DisplayMode)
 
     fun showStateSelection()
 }

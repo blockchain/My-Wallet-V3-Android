@@ -497,13 +497,13 @@ class AccountPresenter @Inject internal constructor(
         return getUiString(amount)
     }
 
-    private fun getUiString(amount: Long): String {
-        return if (currencyState.isDisplayingCryptoCurrency) {
-            currencyFormatManager.getFormattedSelectedCoinValueWithUnit(amount.toBigInteger())
-        } else {
-            currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(amount.toBigDecimal())
+    private fun getUiString(amount: Long) =
+        when (currencyState.displayMode) {
+            CurrencyState.DisplayMode.Crypto ->
+                currencyFormatManager.getFormattedSelectedCoinValueWithUnit(amount.toBigInteger())
+            CurrencyState.DisplayMode.Fiat ->
+                currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(amount.toBigDecimal())
         }
-    }
 
     private fun getBalanceFromBtcAddress(address: String): Long =
         payloadDataManager.getAddressBalance(address).toLong()

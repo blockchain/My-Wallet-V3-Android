@@ -469,6 +469,8 @@ class AccountPresenterTest {
             .thenReturn(Observable.empty())
 
         whenever(currencyState.cryptoCurrency).thenReturn(CryptoCurrency.BTC)
+        whenever(currencyState.displayMode).thenReturn(CurrencyState.DisplayMode.Crypto)
+        whenever(currencyState.isDisplayingCryptoCurrency).thenReturn(true)
         whenever(
             currencyFormatManager.getFormattedSelectedCoinValueWithUnit(BigInteger.ZERO)
         ).thenReturn("")

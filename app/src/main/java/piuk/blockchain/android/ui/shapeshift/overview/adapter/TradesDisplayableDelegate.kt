@@ -16,6 +16,7 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.DateUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
+import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.utils.extensions.context
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -27,7 +28,7 @@ class TradesDisplayableDelegate<in T>(
     private var btcExchangeRate: Double,
     private var ethExchangeRate: Double,
     private var bchExchangeRate: Double,
-    private var showCrypto: Boolean,
+    private var displayMode: CurrencyState.DisplayMode,
     private val listClickListener: TradesListClickListener
 ) : AdapterDelegate<T> {
 
@@ -66,15 +67,15 @@ class TradesDisplayableDelegate<in T>(
         viewHolder.status.setText(determineStatus(viewHolder, trade))
 
         viewHolder.result.setOnClickListener {
-            showCrypto = !showCrypto
-            listClickListener.onValueClicked(showCrypto)
+            displayMode = displayMode.toggle()
+            listClickListener.onValueClicked(displayMode)
         }
 
         viewHolder.layout.setOnClickListener { listClickListener.onTradeClicked(trade.quote?.deposit ?: "") }
     }
 
-    fun onViewFormatUpdated(isBtc: Boolean) {
-        showCrypto = isBtc
+    fun onViewFormatUpdated(displayMode: CurrencyState.DisplayMode) {
+        this.displayMode = displayMode
     }
 
     fun onPriceUpdated(btcExchangeRate: Double, ethExchangeRate: Double) {
@@ -141,42 +142,36 @@ class TradesDisplayableDelegate<in T>(
         cryptoCurrency: String,
         cryptoAmount: BigDecimal
     ): String {
-
-        val displayAmount: String
-
-        if (showCrypto) {
-            val crypto = when (cryptoCurrency.toUpperCase()) {
-                CryptoCurrency.ETHER.symbol -> currencyFormatUtil.formatEthWithUnit(cryptoAmount)
-                CryptoCurrency.BTC.symbol -> currencyFormatUtil.formatBtcWithUnit(cryptoAmount)
-                CryptoCurrency.BCH.symbol -> currencyFormatUtil.formatBchWithUnit(cryptoAmount)
-                else -> currencyFormatUtil.formatBtcWithUnit(cryptoAmount) // Coin type not specified
+        return when (displayMode) {
+            CurrencyState.DisplayMode.Crypto -> {
+                when (cryptoCurrency.toUpperCase()) {
+                    CryptoCurrency.ETHER.symbol -> currencyFormatUtil.formatEthWithUnit(cryptoAmount)
+                    CryptoCurrency.BTC.symbol -> currencyFormatUtil.formatBtcWithUnit(cryptoAmount)
+                    CryptoCurrency.BCH.symbol -> currencyFormatUtil.formatBchWithUnit(cryptoAmount)
+                    else -> currencyFormatUtil.formatBtcWithUnit(cryptoAmount) // Coin type not specified
+                }
             }
-
-            displayAmount = crypto
-        } else {
-
-            val fiatAmount = when (cryptoCurrency.toUpperCase()) {
-                CryptoCurrency.ETHER.symbol -> cryptoAmount.multiply(
-                    BigDecimal.valueOf(ethExchangeRate)
+            CurrencyState.DisplayMode.Fiat -> {
+                val fiatAmount = when (cryptoCurrency.toUpperCase()) {
+                    CryptoCurrency.ETHER.symbol -> cryptoAmount.multiply(
+                        BigDecimal.valueOf(ethExchangeRate)
+                    )
+                    CryptoCurrency.BTC.symbol -> cryptoAmount.multiply(
+                        BigDecimal.valueOf(btcExchangeRate)
+                    )
+                    CryptoCurrency.BCH.symbol -> cryptoAmount.multiply(
+                        BigDecimal.valueOf(bchExchangeRate)
+                    )
+                    else -> BigDecimal.ZERO // Coin type not specified
+                }
+                currencyFormatUtil.formatFiatWithSymbol(
+                    FiatValue(
+                        getPreferredFiatUnit(),
+                        fiatAmount
+                    ), Locale.getDefault()
                 )
-                CryptoCurrency.BTC.symbol -> cryptoAmount.multiply(
-                    BigDecimal.valueOf(btcExchangeRate)
-                )
-                CryptoCurrency.BCH.symbol -> cryptoAmount.multiply(
-                    BigDecimal.valueOf(bchExchangeRate)
-                )
-                else -> BigDecimal.ZERO // Coin type not specified
             }
-
-            displayAmount = currencyFormatUtil.formatFiatWithSymbol(
-                FiatValue(
-                    getPreferredFiatUnit(),
-                    fiatAmount
-                ), Locale.getDefault()
-            )
         }
-
-        return displayAmount
     }
 
     private fun getPreferredFiatUnit() =

@@ -11,6 +11,7 @@ import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payload.data.LegacyAddress
 import io.reactivex.Completable
 import io.reactivex.Observable
+import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should equal`
@@ -53,7 +54,9 @@ class ReceivePresenterTest {
     private val ethDataStore: EthDataStore = mock()
     private val bchDataManager: BchDataManager = mock()
     private val environmentSettings: EnvironmentConfig = mock()
-    private val currencyState: CurrencyState = mock()
+    private val currencyState: CurrencyState = mock {
+        on { cryptoCurrency } `it returns` CryptoCurrency.BTC
+    }
     private val currencyFormatManager: CurrencyFormatManager = mock()
 
     @Before

@@ -9,7 +9,25 @@ import piuk.blockchain.androidcore.utils.PrefsUtil
  */
 class CurrencyState(private val prefs: PrefsUtil) {
 
-    var isDisplayingCryptoCurrency = true
+    enum class DisplayMode {
+        Crypto,
+        Fiat;
+
+        fun toggle() =
+            when (this) {
+                Crypto -> Fiat
+                Fiat -> Crypto
+            }
+    }
+
+    var displayMode = DisplayMode.Crypto
+
+    @Deprecated("Use displayMode")
+    var isDisplayingCryptoCurrency
+        get() = displayMode == DisplayMode.Crypto
+        set(value) {
+            displayMode = if (value) DisplayMode.Crypto else DisplayMode.Fiat
+        }
 
     val fiatUnit: String
         get() = prefs.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY)

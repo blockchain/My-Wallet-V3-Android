@@ -5,6 +5,7 @@ import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
 import piuk.blockchain.android.ui.adapters.AdapterDelegatesManager
 import piuk.blockchain.android.ui.adapters.DelegationAdapter
+import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
 import java.math.BigDecimal
 import kotlin.properties.Delegates
@@ -14,7 +15,7 @@ class TradesAdapter(
     btcExchangeRate: Double,
     ethExchangeRate: Double,
     bchExchangeRate: Double,
-    showCrypto: Boolean,
+    displayMode: CurrencyState.DisplayMode,
     listClickListener: TradesListClickListener
 ) : DelegationAdapter<Any>(AdapterDelegatesManager(), emptyList()) {
 
@@ -23,7 +24,7 @@ class TradesAdapter(
         btcExchangeRate,
         ethExchangeRate,
         bchExchangeRate,
-        showCrypto,
+        displayMode,
         listClickListener
     )
 
@@ -64,8 +65,8 @@ class TradesAdapter(
      * Notifies the adapter that the View format (ie, whether or not to show BTC) has been changed.
      * Will rebuild the entire adapter.
      */
-    fun onViewFormatUpdated(isBtc: Boolean) {
-        tradesDelegate.onViewFormatUpdated(isBtc)
+    fun onViewFormatUpdated(displayMode: CurrencyState.DisplayMode) {
+        tradesDelegate.onViewFormatUpdated(displayMode)
         notifyDataSetChanged()
     }
 
@@ -93,7 +94,7 @@ interface TradesListClickListener {
 
     fun onTradeClicked(depositAddress: String)
 
-    fun onValueClicked(isBtc: Boolean)
+    fun onValueClicked(displayMode: CurrencyState.DisplayMode)
 
     fun onNewExchangeClicked()
 }

@@ -16,6 +16,7 @@ import piuk.blockchain.android.ui.shapeshift.newexchange.NewExchangeActivity
 import piuk.blockchain.android.ui.shapeshift.overview.adapter.TradesAdapter
 import piuk.blockchain.android.ui.shapeshift.overview.adapter.TradesListClickListener
 import piuk.blockchain.android.ui.shapeshift.stateselection.ShapeShiftStateSelectionActivity
+import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.utils.extensions.gone
@@ -67,14 +68,14 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
         btcExchangeRate: Double,
         ethExchangeRate: Double,
         bchExchangeRate: Double,
-        isBtc: Boolean
+        displayMode: CurrencyState.DisplayMode
     ) {
         tradesAdapter = TradesAdapter(
             this,
             btcExchangeRate,
             ethExchangeRate,
             bchExchangeRate,
-            isBtc,
+            displayMode,
             this
         )
 
@@ -88,10 +89,10 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
         btcExchangeRate: Double,
         ethExchangeRate: Double,
         bchExchangeRate: Double,
-        isBtc: Boolean
+        displayMode: CurrencyState.DisplayMode
     ) {
         if (tradesAdapter == null) {
-            setUpRecyclerView(btcExchangeRate, ethExchangeRate, bchExchangeRate, isBtc)
+            setUpRecyclerView(btcExchangeRate, ethExchangeRate, bchExchangeRate, displayMode)
         } else {
             tradesAdapter?.onPriceUpdated(btcExchangeRate, ethExchangeRate)
         }
@@ -143,16 +144,16 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
         shapeshift_recycler_view.visible()
     }
 
-    override fun onViewTypeChanged(isBtc: Boolean) {
-        tradesAdapter?.onViewFormatUpdated(isBtc)
+    override fun onViewTypeChanged(displayMode: CurrencyState.DisplayMode) {
+        tradesAdapter?.onViewFormatUpdated(displayMode)
     }
 
     override fun onTradeClicked(depositAddress: String) {
         TradeDetailActivity.start(this, depositAddress)
     }
 
-    override fun onValueClicked(isBtc: Boolean) {
-        presenter.setViewType(isBtc)
+    override fun onValueClicked(displayMode: CurrencyState.DisplayMode) {
+        presenter.setViewType(displayMode)
     }
 
     override fun onNewExchangeClicked() {

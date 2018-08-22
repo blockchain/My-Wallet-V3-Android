@@ -67,6 +67,7 @@ class CurrencyStateTest {
 
         // Assert
         subject.isDisplayingCryptoCurrency `should be` true
+        subject.displayMode `should be` CurrencyState.DisplayMode.Crypto
     }
 
     @Test
@@ -78,6 +79,19 @@ class CurrencyStateTest {
         subject.isDisplayingCryptoCurrency = false
         // Assert
         subject.isDisplayingCryptoCurrency `should be` false
+        subject.displayMode `should be` CurrencyState.DisplayMode.Fiat
+    }
+
+    @Test
+    fun `fiat display mode`() {
+        // Arrange
+        whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
+            .thenReturn(CryptoCurrency.ETHER.name)
+        // Act
+        subject.displayMode = CurrencyState.DisplayMode.Fiat
+        // Assert
+        subject.isDisplayingCryptoCurrency `should be` false
+        subject.displayMode `should be` CurrencyState.DisplayMode.Fiat
     }
 
     @Test
@@ -89,6 +103,19 @@ class CurrencyStateTest {
         subject.isDisplayingCryptoCurrency = true
         // Assert
         subject.isDisplayingCryptoCurrency `should be` true
+        subject.displayMode `should be` CurrencyState.DisplayMode.Crypto
+    }
+
+    @Test
+    fun `crypto display mode`() {
+        // Arrange
+        whenever(mockPrefs.getValue(PrefsUtil.KEY_CURRENCY_CRYPTO_STATE, CryptoCurrency.BTC.name))
+            .thenReturn(CryptoCurrency.ETHER.name)
+        // Act
+        subject.displayMode = CurrencyState.DisplayMode.Crypto
+        // Assert
+        subject.isDisplayingCryptoCurrency `should be` true
+        subject.displayMode `should be` CurrencyState.DisplayMode.Crypto
     }
 
     @Test
