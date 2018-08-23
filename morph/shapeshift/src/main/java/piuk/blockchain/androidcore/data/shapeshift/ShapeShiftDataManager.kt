@@ -18,7 +18,7 @@ import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
 import com.blockchain.morph.CoinPair
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.Either
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject

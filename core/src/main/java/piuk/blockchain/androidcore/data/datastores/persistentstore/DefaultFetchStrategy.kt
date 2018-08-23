@@ -2,7 +2,7 @@ package piuk.blockchain.androidcore.data.datastores.persistentstore
 
 import com.blockchain.data.datastores.PersistentStore
 import io.reactivex.Observable
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 
 /**
  * Attempts to fetch from local storage and if not found, triggers a webcall to obtain the data.

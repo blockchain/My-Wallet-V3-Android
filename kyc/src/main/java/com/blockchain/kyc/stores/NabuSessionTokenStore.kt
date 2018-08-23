@@ -3,7 +3,7 @@ package com.blockchain.kyc.stores
 import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
 import io.reactivex.Observable
 import com.blockchain.data.datastores.PersistentStore
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 
 class NabuSessionTokenStore : NabuTokenStore, PersistentStore<NabuSessionTokenResponse> {
 

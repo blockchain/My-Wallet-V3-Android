@@ -31,7 +31,7 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
 import com.blockchain.morph.CoinPair
 import piuk.blockchain.androidcore.utils.Either
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 
 @Suppress("IllegalIdentifier")
 class ShapeShiftDataManagerTest : RxTest() {

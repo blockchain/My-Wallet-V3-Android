@@ -15,7 +15,7 @@ import io.reactivex.SingleSource
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 
 class NabuDataManager(
     private val nabuService: NabuService,

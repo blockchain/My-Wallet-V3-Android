@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Test
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 
 class NabuDataManagerTest {
 

@@ -2,7 +2,7 @@ package piuk.blockchain.androidbuysell.repositories
 
 import io.reactivex.Observable
 import piuk.blockchain.androidbuysell.models.coinify.AuthResponse
-import piuk.blockchain.androidcore.utils.Optional
+import com.blockchain.utils.Optional
 
 interface TokenStore {
 
