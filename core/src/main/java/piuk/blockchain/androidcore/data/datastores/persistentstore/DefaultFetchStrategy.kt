@@ -1,5 +1,6 @@
 package piuk.blockchain.androidcore.data.datastores.persistentstore
 
+import com.blockchain.data.datastores.PersistentStore
 import io.reactivex.Observable
 import piuk.blockchain.androidcore.utils.Optional
 

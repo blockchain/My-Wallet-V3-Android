@@ -2,13 +2,14 @@ package piuk.blockchain.androidbuysell.repositories
 
 import io.reactivex.Observable
 import piuk.blockchain.androidbuysell.models.coinify.AuthResponse
-import piuk.blockchain.androidcore.data.datastores.persistentstore.PersistentStore
+import com.blockchain.data.datastores.PersistentStore
 import piuk.blockchain.androidcore.utils.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AccessTokenStore @Inject constructor() : TokenStore, PersistentStore<AuthResponse> {
+class AccessTokenStore @Inject constructor() : TokenStore,
+    PersistentStore<AuthResponse> {
 
     private var token: Optional<AuthResponse> = Optional.None
 

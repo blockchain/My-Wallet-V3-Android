@@ -8,7 +8,7 @@ import org.amshove.kluent.mock
 import org.junit.Test
 import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.data.datastores.persistentstore.FreshFetchStrategy
-import piuk.blockchain.androidcore.data.datastores.persistentstore.PersistentStore
+import com.blockchain.data.datastores.PersistentStore
 
 class FreshFetchStrategyTest : RxTest() {
 
