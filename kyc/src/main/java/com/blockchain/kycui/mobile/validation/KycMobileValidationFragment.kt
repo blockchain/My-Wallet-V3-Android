@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
+import com.blockchain.kycui.onfidosplash.OnfidoSplashFragment
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
@@ -24,6 +26,7 @@ import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
+import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
@@ -43,6 +46,7 @@ class KycMobileValidationFragment :
     private val displayModel by unsafeLazy {
         arguments!!.getParcelable(ARGUMENT_PHONE_DISPLAY_MODEL) as PhoneDisplayModel
     }
+    private val countryCode by unsafeLazy { arguments!!.getString(ARGUMENT_COUNTRY_CODE) }
     private val verificationCodeObservable by unsafeLazy {
         editTextVerificationCode.afterTextChangeEvents()
             .skipInitialValue()
@@ -51,7 +55,7 @@ class KycMobileValidationFragment :
             .map {
                 PhoneVerificationModel(
                     displayModel.sanitizedString,
-                    it.editable().toString()
+                    VerificationCode(it.editable().toString())
                 )
             }
     }
@@ -112,7 +116,9 @@ class KycMobileValidationFragment :
     }
 
     override fun continueSignUp() {
-        toast("Continue signup!")
+        ViewUtils.hideKeyboard(requireActivity())
+        val args = OnfidoSplashFragment.bundleArgs(countryCode)
+        findNavController(this).navigate(R.id.onfidoSplashFragment, args)
     }
 
     override fun displayErrorDialog(message: Int) {
@@ -155,9 +161,12 @@ class KycMobileValidationFragment :
     companion object {
 
         private const val ARGUMENT_PHONE_DISPLAY_MODEL = "ARGUMENT_PHONE_DISPLAY_MODEL"
+        private const val ARGUMENT_COUNTRY_CODE = "ARGUMENT_COUNTRY_CODE"
 
-        fun bundleArgs(displayModel: PhoneDisplayModel): Bundle = Bundle().apply {
-            putParcelable(ARGUMENT_PHONE_DISPLAY_MODEL, displayModel)
-        }
+        fun bundleArgs(displayModel: PhoneDisplayModel, countryCode: String): Bundle =
+            Bundle().apply {
+                putParcelable(ARGUMENT_PHONE_DISPLAY_MODEL, displayModel)
+                putString(ARGUMENT_COUNTRY_CODE, countryCode)
+            }
     }
 }

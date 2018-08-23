@@ -17,6 +17,7 @@ import com.blockchain.extensions.nextAfterOrNull
 import com.blockchain.kycui.address.models.AddressDialog
 import com.blockchain.kycui.address.models.AddressIntent
 import com.blockchain.kycui.address.models.AddressModel
+import com.blockchain.kycui.mobile.entry.KycMobileEntryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
@@ -107,8 +108,9 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         addressSubject.onNext(AddressIntent.Country(profileModel.countryCode))
     }
 
-    override fun continueSignUp() {
-        findNavController(this).navigate(R.id.kycPhoneNumberFragment)
+    override fun continueSignUp(countryCode: String) {
+        val args = KycMobileEntryFragment.bundleArgs(countryCode)
+        findNavController(this).navigate(R.id.kycPhoneNumberFragment, args)
     }
 
     private fun displayCountryDialog() {

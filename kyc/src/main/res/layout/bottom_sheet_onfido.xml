@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_onfio"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/text_view_document_passport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:gravity="left"
+        android:padding="16dp"
+        android:theme="@style/PlainTheme"
+        android:foreground="?attr/selectableItemBackground"
+        android:drawablePadding="16dp"
+        android:textSize="16sp"
+        android:text="@string/kyc_onfido_splash_passport"
+        tools:drawableLeft="@drawable/vector_plane" />
+
+    <TextView
+        android:id="@+id/text_view_document_drivers_license"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:drawablePadding="16dp"
+        android:theme="@style/PlainTheme"
+        android:foreground="?attr/selectableItemBackground"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/kyc_onfido_splash_drivers_license"
+        tools:drawableLeft="@drawable/vector_car" />
+
+</LinearLayout>

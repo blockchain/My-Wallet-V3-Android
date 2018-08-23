@@ -14,4 +14,9 @@ class VerificationCodeTest {
     fun `code correct length, should return invalid`() {
         VerificationCode("12345").isValid `should equal to` true
     }
+
+    @Test
+    fun `code should always return upper case`() {
+        VerificationCode("abcd1").code `should equal to` "ABCD1"
+    }
 }

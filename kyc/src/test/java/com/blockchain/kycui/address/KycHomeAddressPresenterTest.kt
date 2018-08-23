@@ -188,7 +188,7 @@ class KycHomeAddressPresenterTest {
         // Assert
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
-        verify(view).continueSignUp()
+        verify(view).continueSignUp(countryCode)
     }
 
     @Test

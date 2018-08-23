@@ -6,6 +6,7 @@ import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
+import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
@@ -51,7 +52,7 @@ class KycMobileValidationPresenterTest {
     fun `onViewReady, should progress page`() {
         // Arrange
         val phoneNumberSanitized = "+1234567890"
-        val verificationCode = "VERIFICATION_CODE"
+        val verificationCode = VerificationCode("VERIFICATION_CODE")
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
         whenever(view.uiStateObservable).thenReturn(publishSubject)
@@ -64,7 +65,7 @@ class KycMobileValidationPresenterTest {
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),
                 phoneNumberSanitized,
-                verificationCode
+                verificationCode.code
             )
         ).thenReturn(Completable.complete())
         // Act
@@ -79,7 +80,7 @@ class KycMobileValidationPresenterTest {
         verify(nabuDataManager).verifyMobileNumber(
             offlineToken.mapFromMetadata(),
             phoneNumberSanitized,
-            verificationCode
+            verificationCode.code
         )
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
@@ -90,7 +91,7 @@ class KycMobileValidationPresenterTest {
     fun `onViewReady, should throw exception and resubscribe for next event`() {
         // Arrange
         val phoneNumberSanitized = "+1234567890"
-        val verificationCode = "VERIFICATION_CODE"
+        val verificationCode = VerificationCode("VERIFICATION_CODE")
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
         whenever(view.uiStateObservable).thenReturn(publishSubject)
@@ -103,7 +104,7 @@ class KycMobileValidationPresenterTest {
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),
                 phoneNumberSanitized,
-                verificationCode
+                verificationCode.code
             )
         ).thenReturn(Completable.error { Throwable() })
             .thenReturn(Completable.complete())
@@ -123,7 +124,7 @@ class KycMobileValidationPresenterTest {
     fun `onViewReady, should throw AlreadyRegistered exception and display dialog`() {
         // Arrange
         val phoneNumberSanitized = "+1234567890"
-        val verificationCode = "VERIFICATION_CODE"
+        val verificationCode = VerificationCode("VERIFICATION_CODE")
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
         whenever(view.uiStateObservable).thenReturn(publishSubject)
@@ -141,7 +142,7 @@ class KycMobileValidationPresenterTest {
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),
                 phoneNumberSanitized,
-                verificationCode
+                verificationCode.code
             )
         ).thenReturn(Completable.error {
             NabuApiException.fromResponseBody(
@@ -166,7 +167,7 @@ class KycMobileValidationPresenterTest {
     fun `onViewReady, should throw exception and display toast`() {
         // Arrange
         val phoneNumberSanitized = "+1234567890"
-        val verificationCode = "VERIFICATION_CODE"
+        val verificationCode = VerificationCode("VERIFICATION_CODE")
         val offlineToken = NabuCredentialsMetadata("", "")
         val publishSubject = PublishSubject.create<Pair<PhoneVerificationModel, Unit>>()
         whenever(view.uiStateObservable).thenReturn(publishSubject)
@@ -179,7 +180,7 @@ class KycMobileValidationPresenterTest {
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),
                 phoneNumberSanitized,
-                verificationCode
+                verificationCode.code
             )
         ).thenReturn(Completable.error { Throwable() })
         // Act

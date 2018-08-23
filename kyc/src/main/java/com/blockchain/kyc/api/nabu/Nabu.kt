@@ -3,6 +3,7 @@ package com.blockchain.kyc.api.nabu
 import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.Address
+import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
@@ -10,6 +11,7 @@ import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
 import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.NewUserRequest
+import com.blockchain.kyc.models.nabu.OnfidoApiKey
 import com.blockchain.kyc.models.nabu.UserId
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -99,6 +101,19 @@ internal interface Nabu {
     fun verifyMobileNumber(
         @Url url: String,
         @Body mobileVerificationRequest: MobileVerificationRequest,
+        @Header("authorization") authorization: String
+    ): Completable
+
+    @GET
+    fun getOnfidoApiKey(
+        @Url url: String,
+        @Header("authorization") authorization: String
+    ): Single<OnfidoApiKey>
+
+    @POST
+    fun submitOnfidoVerification(
+        @Url url: String,
+        @Body applicantIdRequest: ApplicantIdRequest,
         @Header("authorization") authorization: String
     ): Completable
 }

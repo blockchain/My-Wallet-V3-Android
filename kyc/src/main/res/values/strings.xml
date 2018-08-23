@@ -62,4 +62,13 @@
     <string name="kyc_phone_number_validation_hint">Confirmation Code</string>
     <string name="kyc_phone_number_validation_error">Error validating phone number. Please check your code</string>
     <string name="kyc_phone_number_validation_error_incorrect">Verification code incorrect. Please double check the code we sent you and try again.</string>
+
+    <!-- Onfido Splash -->
+    <string name="kyc_onfido_splash_title">Verify Your Identity</string>
+    <string name="kyc_onfido_splash_header">Let\'s Confirm It\'s You</string>
+    <string name="kyc_onfido_splash_subtitle">Grab your Passport, Driver\'s License, Govt Issued ID or a Resident Permit Card.</string>
+    <string name="kyc_onfido_splash_message">Once we verify your identity, you are approved to Buy, Sell and Transfer cryptocurrencies on the Blockchain app!</string>
+    <string name="kyc_onfido_splash_verification_error">Error verifying ID, please try again</string>
+    <string name="kyc_onfido_splash_passport">My Passport</string>
+    <string name="kyc_onfido_splash_drivers_license">My Drivers License</string>
 </resources>

@@ -3,15 +3,18 @@ package com.blockchain.kyc.services.nabu
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
+import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
 import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
+import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
-import com.blockchain.kyc.api.nabu.NABU_VERIFICAITIONS
+import com.blockchain.kyc.api.nabu.NABU_VERIFICATIONS
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
+import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
@@ -142,13 +145,32 @@ class NabuService(
     ).wrapErrorMessage()
 
     internal fun verifyMobileNumber(
-        path: String = apiPath + NABU_VERIFICAITIONS,
+        path: String = apiPath + NABU_VERIFICATIONS,
         mobileNumber: String,
         verificationCode: String,
         sessionToken: String
     ): Completable = service.verifyMobileNumber(
         path,
         MobileVerificationRequest(mobileNumber, verificationCode),
+        sessionToken
+    ).wrapErrorMessage()
+
+    internal fun getOnfidoApiKey(
+        path: String = apiPath + NABU_ONFIDO_API_KEY,
+        sessionToken: String
+    ): Single<String> = service.getOnfidoApiKey(
+        path,
+        sessionToken
+    ).map { it.key }
+        .wrapErrorMessage()
+
+    internal fun submitOnfidoVerification(
+        path: String = apiPath + NABU_SUBMIT_VERIFICATION,
+        sessionToken: String,
+        applicantId: String
+    ): Completable = service.submitOnfidoVerification(
+        path,
+        ApplicantIdRequest(applicantId),
         sessionToken
     ).wrapErrorMessage()
 

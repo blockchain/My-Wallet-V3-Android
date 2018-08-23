@@ -45,6 +45,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     private val presenter: KycMobileEntryPresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val compositeDisposable = CompositeDisposable()
+    private val countryCode by unsafeLazy { arguments!!.getString(ARGUMENT_COUNTRY_CODE) }
     private val phoneNumberObservable by unsafeLazy {
         editTextPhoneNumber.afterTextChangeEvents()
             .skipInitialValue()
@@ -75,7 +76,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     private var progressDialog: MaterialProgressDialog? = null
     private val prefixGuess by unsafeLazy {
         "+" + PhoneNumberUtil.createInstance(context)
-            .getCountryCodeForRegion(Locale.getDefault().country)
+            .getCountryCodeForRegion(countryCode)
     }
 
     override fun onCreateView(
@@ -134,7 +135,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     }
 
     override fun continueSignUp(displayModel: PhoneDisplayModel) {
-        val bundle = KycMobileValidationFragment.bundleArgs(displayModel)
+        val bundle = KycMobileValidationFragment.bundleArgs(displayModel, countryCode)
         findNavController(this).navigate(R.id.kycMobileValidationFragment, bundle)
     }
 
@@ -187,4 +188,13 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     override fun createPresenter(): KycMobileEntryPresenter = presenter
 
     override fun getMvpView(): KycMobileEntryView = this
+
+    companion object {
+
+        private const val ARGUMENT_COUNTRY_CODE = "ARGUMENT_COUNTRY_CODE"
+
+        fun bundleArgs(countryCode: String): Bundle = Bundle().apply {
+            putString(ARGUMENT_COUNTRY_CODE, countryCode)
+        }
+    }
 }

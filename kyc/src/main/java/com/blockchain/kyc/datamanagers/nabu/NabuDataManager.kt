@@ -130,6 +130,22 @@ class NabuDataManager(
         ).toSingleDefault(Any())
     }.ignoreElement()
 
+    internal fun getOnfidoApiKey(
+        offlineTokenResponse: NabuOfflineTokenResponse
+    ): Single<String> = authenticate(offlineTokenResponse) {
+        nabuService.getOnfidoApiKey(sessionToken = it.token)
+    }
+
+    internal fun submitOnfidoVerification(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        applicantId: String
+    ): Completable = authenticate(offlineTokenResponse) {
+        nabuService.submitOnfidoVerification(
+            sessionToken = it.token,
+            applicantId = applicantId
+        ).toSingleDefault(Any())
+    }.ignoreElement()
+
     /**
      * Invalidates the [NabuSessionTokenStore] so that on logging out or switching accounts, no data
      * is persisted accidentally.

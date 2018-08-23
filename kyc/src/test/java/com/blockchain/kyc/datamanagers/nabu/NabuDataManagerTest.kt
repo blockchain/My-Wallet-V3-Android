@@ -321,4 +321,47 @@ class NabuDataManagerTest {
         testObserver.assertValue(countriesList)
         verify(nabuService).getCountriesList(scope = Scope.Kyc)
     }
+
+    @Test
+    fun getOnfidoApiKey() {
+        // Arrange
+        val apiKey = "API_KEY"
+        val offlineToken = NabuOfflineTokenResponse("", "")
+        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
+        whenever(nabuTokenStore.getAccessToken())
+            .thenReturn(Observable.just(Optional.Some(sessionToken)))
+        whenever(nabuService.getOnfidoApiKey(sessionToken = sessionToken.token))
+            .thenReturn(Single.just(apiKey))
+        // Act
+        val testObserver = subject.getOnfidoApiKey(offlineToken).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        verify(nabuService).getOnfidoApiKey(sessionToken = sessionToken.token)
+    }
+
+    @Test
+    fun submitOnfidoVerification() {
+        // Arrange
+        val applicantId = "APPLICATION_ID"
+        val offlineToken = NabuOfflineTokenResponse("", "")
+        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
+        whenever(nabuTokenStore.getAccessToken())
+            .thenReturn(Observable.just(Optional.Some(sessionToken)))
+        whenever(nabuService.submitOnfidoVerification(
+            sessionToken = sessionToken.token,
+            applicantId = applicantId
+        )).thenReturn(Completable.complete())
+        // Act
+        val testObserver = subject.submitOnfidoVerification(offlineToken, applicantId).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        verify(nabuService).submitOnfidoVerification(
+            sessionToken = sessionToken.token,
+            applicantId = applicantId
+        )
+    }
 }

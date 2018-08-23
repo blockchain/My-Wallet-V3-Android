@@ -53,5 +53,13 @@
     <fragment
         android:id="@+id/kycMobileValidationFragment"
         android:name="com.blockchain.kycui.mobile.validation.KycMobileValidationFragment"
-        android:label="KycMobileValidationFragment" />
+        android:label="KycMobileValidationFragment" >
+        <action
+            android:id="@+id/action_kycMobileValidationFragment_to_onfidoSplashFragment"
+            app:destination="@id/onfidoSplashFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onfidoSplashFragment"
+        android:name="com.blockchain.kycui.onfidosplash.OnfidoSplashFragment"
+        android:label="OnfidoSplashFragment" />
 </navigation>

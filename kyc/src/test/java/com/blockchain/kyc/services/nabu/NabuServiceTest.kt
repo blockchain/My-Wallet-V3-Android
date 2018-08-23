@@ -3,13 +3,16 @@ package com.blockchain.kyc.services.nabu
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
+import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
 import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
+import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
-import com.blockchain.kyc.api.nabu.NABU_VERIFICAITIONS
+import com.blockchain.kyc.api.nabu.NABU_VERIFICATIONS
 import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
+import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.MobileVerificationRequest
@@ -330,7 +333,7 @@ class NabuServiceTest {
         )
         // Act
         val testObserver = subject.verifyMobileNumber(
-            path = NABU_VERIFICAITIONS,
+            path = NABU_VERIFICATIONS,
             sessionToken = sessionToken,
             mobileNumber = mobileNumber,
             verificationCode = verificationCode
@@ -341,7 +344,7 @@ class NabuServiceTest {
         testObserver.assertNoErrors()
         // Check URL
         val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_VERIFICAITIONS"
+        request.path `should equal to` "/$NABU_VERIFICATIONS"
         // Check Body
         val requestString = request.requestToString()
         val adapter = moshi.adapter(MobileVerificationRequest::class.java)
@@ -349,6 +352,70 @@ class NabuServiceTest {
         mobileVerificationRequest.phoneNumber `should equal to` mobileNumber
         mobileVerificationRequest.verificationCode `should equal to` verificationCode
         mobileVerificationRequest.type `should equal to` "MOBILE"
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
+    fun `get onfido API key`() {
+        // Arrange
+        val sessionToken = "SESSION_TOKEN"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(
+                    "{\n" +
+                        "    \"key\": \"123abc\"\n" +
+                        "}"
+                )
+        )
+        // Act
+        val testObserver = subject.getOnfidoApiKey(
+            path = NABU_ONFIDO_API_KEY,
+            sessionToken = sessionToken
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check Response
+        val apiKey = testObserver.values().first()
+        apiKey `should equal to` "123abc"
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_ONFIDO_API_KEY"
+        // Check Header
+        request.headers.get("authorization") `should equal` sessionToken
+    }
+
+    @Test
+    fun `submit onfido verification ID`() {
+        // Arrange
+        val sessionToken = "SESSION_TOKEN"
+        val appplicantId = "APPLICATION_ID"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody("")
+        )
+        // Act
+        val testObserver = subject.submitOnfidoVerification(
+            path = NABU_SUBMIT_VERIFICATION,
+            applicantId = appplicantId,
+            sessionToken = sessionToken
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check Body
+        val request = server.takeRequest()
+        val requestString = request.requestToString()
+        val adapter = moshi.adapter(ApplicantIdRequest::class.java)
+        val mobileVerificationRequest = adapter.fromJson(requestString)!!
+        mobileVerificationRequest.applicantId `should equal to` appplicantId
+        // Check URL
+        request.path `should equal to` "/$NABU_SUBMIT_VERIFICATION"
         // Check Header
         request.headers.get("authorization") `should equal` sessionToken
     }
