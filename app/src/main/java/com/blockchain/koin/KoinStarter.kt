@@ -44,6 +44,7 @@ object KoinStarter {
                 moshiModule,
                 kycModule,
                 morphMethodModule,
+                morphUiModule,
                 homeBrewModule
             ),
             extraProperties = features + appProperties + keys,

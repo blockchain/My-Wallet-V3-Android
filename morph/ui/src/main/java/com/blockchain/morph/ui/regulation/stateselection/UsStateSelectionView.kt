@@ -1,9 +1,9 @@
-package piuk.blockchain.android.ui.shapeshift.stateselection
+package com.blockchain.morph.ui.regulation.stateselection
 
 import android.support.annotation.StringRes
 import piuk.blockchain.androidcoreui.ui.base.View
 
-interface ShapeShiftStateSelectionView : View {
+internal interface UsStateSelectionView : View {
 
     fun onError(@StringRes message: Int)
 

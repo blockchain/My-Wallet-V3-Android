@@ -1,9 +1,11 @@
 package com.blockchain.koin.modules
 
+import com.blockchain.morph.regulation.UsStatesDataManager
 import com.blockchain.morph.trade.MorphTradeDataManager
 import info.blockchain.wallet.shapeshift.ShapeShiftApi
 import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints
 import info.blockchain.wallet.shapeshift.ShapeShiftUrls
+import info.blockchain.wallet.shapeshift.regulation.ShapeShiftUsStatesDataManager
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManagerAdapter
@@ -36,5 +38,9 @@ val shapeShiftModule = applicationContext {
         factory { ShapeShiftDataManager(get(), get(), get(), get()) }
 
         factory { ShapeShiftDataManagerAdapter(get()) as MorphTradeDataManager }
+
+        factory {
+            ShapeShiftUsStatesDataManager(get(), get()) as UsStatesDataManager
+        }
     }
 }

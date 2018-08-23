@@ -29,4 +29,6 @@
     <string name="please_wait">Please wait</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
 
+    <string name="ok_cap">@android:string/ok</string>
+
 </resources>

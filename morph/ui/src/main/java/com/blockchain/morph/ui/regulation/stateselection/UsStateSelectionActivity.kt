@@ -1,4 +1,4 @@
-package piuk.blockchain.android.ui.shapeshift.stateselection
+package com.blockchain.morph.ui.regulation.stateselection
 
 import android.app.Activity
 import android.content.Intent
@@ -8,40 +8,32 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_shapeshift_state_selection.*
-import kotlinx.android.synthetic.main.toolbar_general.*
-import piuk.blockchain.android.R
-import piuk.blockchain.android.injection.Injector
-import piuk.blockchain.android.util.americanStatesMap
+import com.blockchain.morph.regulation.americanStatesNamesList
+import com.blockchain.morph.ui.R
+import kotlinx.android.synthetic.main.activity_us_state_selection.*
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
 import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.visible
-import javax.inject.Inject
 
-class ShapeShiftStateSelectionActivity :
-    BaseMvpActivity<ShapeShiftStateSelectionView, ShapeShiftStateSelectionPresenter>(),
-    ShapeShiftStateSelectionView {
+internal class UsStateSelectionActivity :
+    BaseMvpActivity<UsStateSelectionView, UsStateSelectionPresenter>(),
+    UsStateSelectionView {
 
-    @Suppress("MemberVisibilityCanPrivate")
-    @Inject
-    lateinit var shapeShiftStateSelectionPresenter: ShapeShiftStateSelectionPresenter
-
-    init {
-        Injector.getInstance().presenterComponent.inject(this)
-    }
+    private val shapeShiftStateSelectionPresenter: UsStateSelectionPresenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shapeshift_state_selection)
-        setupToolbar(toolbar_general, R.string.morph_exchange)
+        setContentView(R.layout.activity_us_state_selection)
+        setupToolbar(R.id.toolbar_general, R.string.morph_exchange)
 
         stateSelectError.invisible()
 
         btnConfirm.setOnClickListener { finishActivityWithResult(Activity.RESULT_CANCELED) }
 
-        val states = americanStatesMap.keys.toTypedArray().sortedArray().toMutableList()
+        val states = americanStatesNamesList.toMutableList()
         states.add(getString(R.string.morph_select_state))
 
         val adapter = object :
@@ -50,15 +42,17 @@ class ShapeShiftStateSelectionActivity :
                 val v = super.getView(position, convertView, parent)
 
                 if (position == count) {
-                    (v.findViewById(android.R.id.text1) as TextView).text = ""
-                    (v.findViewById(android.R.id.text1) as TextView).hint = getItem(count)
+                    with(v.findViewById(android.R.id.text1) as TextView) {
+                        text = ""
+                        hint = getItem(count)
+                    }
                 }
 
                 return v
             }
 
             override fun getCount(): Int {
-                return super.getCount() - 1 // Dont display last item. It is used as hint.
+                return super.getCount() - 1 // Don't display last item. It is used as hint.
             }
         }
 
@@ -110,15 +104,12 @@ class ShapeShiftStateSelectionActivity :
 
     companion object {
 
-        // TODO we need a request code handler/incrementer to avoid potential collisions
-        const val STATE_SELECTION_REQUEST_CODE = 54021
-
         @JvmStatic
-        fun start(context: Activity, requestCode: Int) {
+        fun startForResult(context: Activity, requestCode: Int) {
             context.startActivityForResult(
                 Intent(
                     context,
-                    ShapeShiftStateSelectionActivity::class.java
+                    UsStateSelectionActivity::class.java
                 ), requestCode
             )
         }

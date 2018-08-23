@@ -12,10 +12,11 @@ import kotlinx.android.synthetic.main.toolbar_general.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.injection.Injector
 import com.blockchain.morph.ui.detail.TradeDetailActivity
+import com.blockchain.morph.ui.regulation.stateselection.UsStateSelectionActivityStarter
+import org.koin.android.ext.android.inject
 import piuk.blockchain.android.ui.shapeshift.newexchange.NewExchangeActivity
 import piuk.blockchain.android.ui.shapeshift.overview.adapter.TradesAdapter
 import piuk.blockchain.android.ui.shapeshift.overview.adapter.TradesListClickListener
-import piuk.blockchain.android.ui.shapeshift.stateselection.ShapeShiftStateSelectionActivity
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
@@ -36,6 +37,10 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
         Injector.getInstance().presenterComponent.inject(this)
     }
 
+    private val usStateSelectionActivityStarter: UsStateSelectionActivityStarter by inject()
+
+    private var stateSelectCode: Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shapeshift)
@@ -54,9 +59,7 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == ShapeShiftStateSelectionActivity.STATE_SELECTION_REQUEST_CODE &&
-            resultCode == Activity.RESULT_OK
-        ) {
+        if (requestCode == stateSelectCode && resultCode == Activity.RESULT_OK) {
             // State whitelisted - Reload
             onViewReady()
         } else {
@@ -161,10 +164,7 @@ class ShapeShiftActivity : BaseMvpActivity<ShapeShiftView, ShapeShiftPresenter>(
     }
 
     override fun showStateSelection() {
-        ShapeShiftStateSelectionActivity.start(
-            this,
-            ShapeShiftStateSelectionActivity.STATE_SELECTION_REQUEST_CODE
-        )
+        stateSelectCode = usStateSelectionActivityStarter.startForResult(this)
     }
 
     companion object {

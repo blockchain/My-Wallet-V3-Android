@@ -1,6 +1,6 @@
-package piuk.blockchain.android.util
+package com.blockchain.morph.regulation
 
-val americanStatesMap = hashMapOf(
+val americanStatesList = listOf(
     "Alabama" to "AL",
     "Alaska" to "AK",
     "American Samoa" to "AS",
@@ -60,4 +60,12 @@ val americanStatesMap = hashMapOf(
     "West Virginia" to "WV",
     "Wisconsin" to "WI",
     "Wyoming" to "WY"
-)
+).sortedBy { it.first }
+
+val americanStatesNamesList = americanStatesList.map { it.first }
+
+val americanStatesMap =
+    americanStatesList
+        .map { (name, code) ->
+            name to UsState(name, code)
+        }.toMap()

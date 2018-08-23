@@ -1,35 +1,31 @@
-package piuk.blockchain.android.ui.shapeshift.stateselection
+package com.blockchain.morph.ui.regulation.stateselection
 
 import android.app.Activity
-import info.blockchain.wallet.shapeshift.data.State
+import com.blockchain.morph.regulation.UsStatesDataManager
+import com.blockchain.morph.regulation.americanStatesMap
+import com.blockchain.morph.ui.R
 import io.reactivex.Completable
-import piuk.blockchain.android.R
-import piuk.blockchain.android.util.americanStatesMap
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
-import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager
-import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import timber.log.Timber
-import javax.inject.Inject
 
-class ShapeShiftStateSelectionPresenter @Inject constructor(
-    private val walletOptionsDataManager: WalletOptionsDataManager,
-    private val shapeShiftDataManager: ShapeShiftDataManager
-) : BasePresenter<ShapeShiftStateSelectionView>() {
+internal class UsStateSelectionPresenter(
+    private val usStatesDataManager: UsStatesDataManager
+) : BasePresenter<UsStateSelectionView>() {
 
     override fun onViewReady() {
         // No-op
     }
 
     internal fun updateAmericanState(state: String) {
-        val stateCode = americanStatesMap[state]
-        require(stateCode != null) { "State not found in map" }
+        val usState = americanStatesMap[state]
+        require(usState != null) { "State not found in map" }
 
-        walletOptionsDataManager.isStateWhitelisted(stateCode!!)
+        usStatesDataManager.isStateWhitelisted(usState!!)
             .addToCompositeDisposable(this)
             .flatMapCompletable { whitelisted ->
                 if (whitelisted) {
-                    shapeShiftDataManager.setState(State(state, stateCode))
+                    usStatesDataManager.setState(usState)
                         .doOnComplete { view.finishActivityWithResult(Activity.RESULT_OK) }
                 } else {
                     view.onError(R.string.morph_unavailable_in_state)
