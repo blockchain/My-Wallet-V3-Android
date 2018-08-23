@@ -1,8 +1,8 @@
-package com.blockchain.kyc.stores
+package com.blockchain.nabu.stores
 
-import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
-import io.reactivex.Observable
+import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.utils.Optional
+import io.reactivex.Observable
 
 interface NabuTokenStore {
 

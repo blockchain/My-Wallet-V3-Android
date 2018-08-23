@@ -7,8 +7,8 @@ import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
-import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
-import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
+import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.NewUserRequest
 import com.blockchain.kyc.models.nabu.OnfidoApiKey

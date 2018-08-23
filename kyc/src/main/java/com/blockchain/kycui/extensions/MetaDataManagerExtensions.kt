@@ -1,7 +1,7 @@
 package com.blockchain.kycui.extensions
 
-import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
-import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.serialization.fromMoshiJson
 import io.reactivex.Single

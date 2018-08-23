@@ -5,7 +5,7 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.Scope
-import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.kycui.address.models.AddressModel
 import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional

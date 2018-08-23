@@ -3,7 +3,7 @@ package com.blockchain.kycui.profile
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
-import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.serialization.toMoshiJson
 import com.blockchain.testutils.date

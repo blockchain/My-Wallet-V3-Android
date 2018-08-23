@@ -4,7 +4,7 @@ import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuApiException
-import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.serialization.toMoshiJson

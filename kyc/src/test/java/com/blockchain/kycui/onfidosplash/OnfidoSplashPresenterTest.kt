@@ -7,7 +7,7 @@ import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.UserState
-import com.blockchain.kyc.models.nabu.mapFromMetadata
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.kyc.models.onfido.ApplicantResponse
 import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional

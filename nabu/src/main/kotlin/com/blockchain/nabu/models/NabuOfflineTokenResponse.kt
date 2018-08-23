@@ -1,20 +1,10 @@
-package com.blockchain.kyc.models.nabu
+package com.blockchain.nabu.models
 
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 
 data class NabuOfflineTokenResponse(
     val userId: String,
     val token: String
-)
-
-data class NabuSessionTokenResponse(
-    val id: String,
-    val userId: String,
-    val token: String,
-    val isActive: Boolean,
-    val expiresAt: String,
-    val insertedAt: String,
-    val updatedAt: String
 )
 
 fun NabuOfflineTokenResponse.mapToMetadata(): NabuCredentialsMetadata =

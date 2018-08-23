@@ -6,7 +6,7 @@ import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.UserStateAdapter
 import com.blockchain.kyc.services.nabu.NabuService
 import com.blockchain.kyc.services.onfido.OnfidoService
-import com.blockchain.kyc.stores.NabuSessionTokenStore
+import com.blockchain.nabu.stores.NabuSessionTokenStore
 import com.blockchain.kycui.address.KycHomeAddressPresenter
 import com.blockchain.kycui.countryselection.KycCountrySelectionPresenter
 import com.blockchain.kycui.mobile.entry.KycMobileEntryPresenter

@@ -1,13 +1,13 @@
 package com.blockchain.kyc.datamanagers.nabu
 
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
-import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
-import com.blockchain.kyc.models.nabu.NabuSessionTokenResponse
+import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserId
 import com.blockchain.kyc.services.nabu.NabuService
-import com.blockchain.kyc.stores.NabuSessionTokenStore
+import com.blockchain.nabu.stores.NabuSessionTokenStore
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.api.data.Settings
