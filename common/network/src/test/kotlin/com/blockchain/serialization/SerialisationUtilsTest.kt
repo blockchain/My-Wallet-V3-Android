@@ -1,4 +1,4 @@
-package piuk.blockchain.androidcore.utils.extensions
+package com.blockchain.serialization
 
 import com.squareup.moshi.Json
 import org.amshove.kluent.`should be instance of`
@@ -10,8 +10,8 @@ import org.junit.Test
 class SerialisationUtilsTest {
 
     @Test
-    fun `string to moshi object should return object`() {
-        val testClass = TEST_CLASS_STRING.toMoshiKotlinObject<TestClass>()
+    fun `class fromJsonString should return object`() {
+        val testClass = TestClass::class.fromMoshiJson(TEST_CLASS_STRING)
         testClass `should be instance of` TestClass::class
         testClass.firstParam `should equal to` "parameter 1"
         testClass.secondParam `should equal to` 5
@@ -25,7 +25,7 @@ class SerialisationUtilsTest {
         val thirdParamValue = true
 
         val stringResult = TestClass(firstParamValue, secondParamValue, thirdParamValue)
-            .toMoshiSerialisedString()
+            .toMoshiJson()
 
         val jsonObject = JSONObject(stringResult)
         jsonObject["firstParam"] `should equal` firstParamValue
@@ -45,5 +45,5 @@ class SerialisationUtilsTest {
         val firstParam: String,
         val secondParam: Int,
         @field:Json(name = "third_param") val thirdParam: Boolean
-    )
+    ) : JsonSerializable
 }

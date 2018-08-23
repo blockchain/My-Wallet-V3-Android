@@ -2,11 +2,12 @@ package com.blockchain.kycui.mobile.validation
 
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
+import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
@@ -22,7 +23,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
 import retrofit2.Response
 
 class KycMobileValidationPresenterTest {
@@ -60,7 +60,7 @@ class KycMobileValidationPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),
@@ -99,7 +99,7 @@ class KycMobileValidationPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),
@@ -132,7 +132,7 @@ class KycMobileValidationPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         val responseBody =
             ResponseBody.create(
                 MediaType.parse("application/json"),
@@ -175,7 +175,7 @@ class KycMobileValidationPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.verifyMobileNumber(
                 offlineToken.mapFromMetadata(),

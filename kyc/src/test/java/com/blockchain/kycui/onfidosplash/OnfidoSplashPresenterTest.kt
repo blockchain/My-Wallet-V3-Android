@@ -3,12 +3,13 @@ package com.blockchain.kycui.onfidosplash
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kyc.models.onfido.ApplicantResponse
+import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
@@ -23,7 +24,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
 
 class OnfidoSplashPresenterTest {
 
@@ -62,7 +62,7 @@ class OnfidoSplashPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(nabuDataManager.getOnfidoApiKey(offlineToken.mapFromMetadata()))
             .thenReturn(Single.just(apiKey))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
@@ -96,7 +96,7 @@ class OnfidoSplashPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(nabuDataManager.getOnfidoApiKey(offlineToken.mapFromMetadata()))
             .thenReturn(Single.error { Throwable() })
             .thenReturn(Single.just(apiKey))
@@ -130,7 +130,7 @@ class OnfidoSplashPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.submitOnfidoVerification(
                 offlineToken.mapFromMetadata(),
@@ -155,7 +155,7 @@ class OnfidoSplashPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.submitOnfidoVerification(
                 offlineToken.mapFromMetadata(),

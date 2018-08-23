@@ -2,9 +2,10 @@ package com.blockchain.kycui.profile
 
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kyc.util.toISO8601DateString
+import com.blockchain.serialization.toMoshiJson
 import com.blockchain.testutils.date
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.times
@@ -20,7 +21,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
 import java.util.Locale
 
 class KycProfilePresenterTest {
@@ -137,7 +137,7 @@ class KycProfilePresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.createBasicUser(
                 firstName,

@@ -1,7 +1,8 @@
 package com.blockchain.kycui.extensions
 
 import com.blockchain.android.testutils.rxInit
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
+import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
@@ -10,7 +11,6 @@ import org.amshove.kluent.mock
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
 
 class MetaDataManagerExtensionsKtTest {
 
@@ -33,7 +33,7 @@ class MetaDataManagerExtensionsKtTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         // Act
         val testObserver = metadataManager.fetchNabuToken().test()
         // Assert

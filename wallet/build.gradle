@@ -39,6 +39,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 dependencies {
     api project(':balance')
+    api project(':common:network')
     // Expose Kotlin to all parent modules
     api Libraries.kotlin
     api files('libs/bitcoinj-core-0.15-SNAPSHOT.jar')

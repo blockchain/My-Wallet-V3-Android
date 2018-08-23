@@ -1,6 +1,6 @@
 package com.blockchain.kyc.models.nabu
 
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 
 data class NabuOfflineTokenResponse(
     val userId: String,

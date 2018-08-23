@@ -15,8 +15,10 @@ sourceCompatibility = Versions.javaCompatibilityVersion
 targetCompatibility = Versions.javaCompatibilityVersion
 
 dependencies {
-    implementation project(':balance')
+    implementation project(':wallet')
+    implementation project(':common:network')
     implementation Libraries.kotlin
+    implementation Libraries.moshiKotlin
 
     // Rx
     implementation Libraries.rxKotlin

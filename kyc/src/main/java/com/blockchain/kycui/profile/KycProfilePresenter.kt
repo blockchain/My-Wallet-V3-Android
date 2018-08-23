@@ -1,20 +1,20 @@
 package com.blockchain.kycui.profile
 
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata.Companion.USER_CREDENTIALS_METADATA_NODE
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata.Companion.USER_CREDENTIALS_METADATA_NODE
 import com.blockchain.kyc.models.nabu.NabuOfflineTokenResponse
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kyc.models.nabu.mapToMetadata
 import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.kycui.profile.models.ProfileModel
+import com.blockchain.serialization.fromMoshiJson
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.toMoshiKotlinObject
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
@@ -42,8 +42,7 @@ class KycProfilePresenter(
                 .flatMapCompletable { optionalToken ->
                     if (optionalToken.isPresent) {
                         createBasicUser(
-                            optionalToken.get()
-                                .toMoshiKotlinObject<NabuCredentialsMetadata>()
+                            NabuCredentialsMetadata::class.fromMoshiJson(optionalToken.get())
                                 .mapFromMetadata()
                         )
                     } else {

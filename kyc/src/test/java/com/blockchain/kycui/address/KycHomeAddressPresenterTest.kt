@@ -2,11 +2,12 @@ package com.blockchain.kycui.address
 
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kyc.models.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.mapFromMetadata
 import com.blockchain.kycui.address.models.AddressModel
+import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
@@ -21,7 +22,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.extensions.toMoshiSerialisedString
 
 class KycHomeAddressPresenterTest {
 
@@ -171,7 +171,7 @@ class KycHomeAddressPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(
             nabuDataManager.addAddress(
                 offlineToken.mapFromMetadata(),
@@ -199,7 +199,7 @@ class KycHomeAddressPresenterTest {
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiSerialisedString())))
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         val countryList = listOf(
             NabuCountryResponse("DE", "Germany", emptyList(), emptyList()),
             NabuCountryResponse("UK", "United Kingdom", emptyList(), emptyList()),
