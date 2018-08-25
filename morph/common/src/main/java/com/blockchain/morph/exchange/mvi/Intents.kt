@@ -9,8 +9,11 @@ import java.math.BigDecimal
  */
 sealed class ExchangeIntent
 
-class FieldUpdateIntent(val field: Field, val userText: String) : ExchangeIntent() {
+class FieldUpdateIntent(
+    val field: Field,
+    userText: String,
     val userValue: BigDecimal = userText.tryParseBigDecimal() ?: BigDecimal.ZERO
+) : ExchangeIntent() {
 
     enum class Field {
         FROM_CRYPTO,
@@ -20,7 +23,8 @@ class FieldUpdateIntent(val field: Field, val userText: String) : ExchangeIntent
     }
 }
 
-class CoinExchangeRateUpdateIntent(val exchangeRate: ExchangeRate.CryptoToCrypto) : ExchangeIntent() {
+class CoinExchangeRateUpdateIntent(val exchangeRate: ExchangeRate.CryptoToCrypto) :
+    ExchangeIntent() {
     val from = exchangeRate.from
     val to = exchangeRate.to
     val rate = exchangeRate.rate
