@@ -1,7 +1,6 @@
 package com.blockchain.kyc.services.nabu
 
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
-import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
@@ -18,51 +17,30 @@ import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
+import com.blockchain.kyc.models.nabu.NabuUser
+import com.blockchain.kyc.models.nabu.Scope
+import com.blockchain.nabu.models.NabuOfflineTokenRequest
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
-import com.blockchain.kyc.models.nabu.NabuUser
-import com.blockchain.kyc.models.nabu.NewUserRequest
-import com.blockchain.kyc.models.nabu.Scope
-import com.blockchain.kyc.models.nabu.UserId
 import io.reactivex.Completable
 import io.reactivex.Single
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import retrofit2.Retrofit
 
 class NabuService(
-    val environmentConfig: EnvironmentConfig,
+    environmentConfig: EnvironmentConfig,
     retrofit: Retrofit
 ) {
 
     private val service: Nabu = retrofit.create(Nabu::class.java)
     private val apiPath = environmentConfig.apiUrl
 
-    internal fun createUserId(
-        path: String = apiPath + NABU_CREATE_USER_ID,
-        guid: String,
-        email: String
-    ): Single<UserId> = service.createUser(
-        path,
-        NewUserRequest(email, guid),
-        ""
-    ).wrapErrorMessage()
-
     internal fun getAuthToken(
         path: String = apiPath + NABU_INITIAL_AUTH,
-        guid: String,
-        email: String,
-        userId: String,
-        appVersion: String,
-        deviceId: String
+        jwt: String
     ): Single<NabuOfflineTokenResponse> = service.getAuthToken(
         path,
-        userId,
-        "",
-        guid,
-        email,
-        appVersion,
-        CLIENT_TYPE,
-        deviceId
+        NabuOfflineTokenRequest(jwt)
     ).wrapErrorMessage()
 
     internal fun getSessionToken(
@@ -93,7 +71,7 @@ class NabuService(
     ): Completable = service.createBasicUser(
         path,
         NabuBasicUser(firstName, lastName, dateOfBirth),
-        sessionToken
+        sessionToken.toAuthHeader()
     )
 
     internal fun getUser(
@@ -101,7 +79,7 @@ class NabuService(
         sessionToken: String
     ): Single<NabuUser> = service.getUser(
         path,
-        sessionToken
+        sessionToken.toAuthHeader()
     ).wrapErrorMessage()
 
     internal fun getCountriesList(
@@ -131,7 +109,7 @@ class NabuService(
             countryCode,
             postCode
         ),
-        sessionToken
+        sessionToken.toAuthHeader()
     ).wrapErrorMessage()
 
     internal fun addMobileNumber(
@@ -141,7 +119,7 @@ class NabuService(
     ): Completable = service.addMobileNumber(
         path,
         AddMobileNumberRequest(mobileNumber),
-        sessionToken
+        sessionToken.toAuthHeader()
     ).wrapErrorMessage()
 
     internal fun verifyMobileNumber(
@@ -152,7 +130,7 @@ class NabuService(
     ): Completable = service.verifyMobileNumber(
         path,
         MobileVerificationRequest(mobileNumber, verificationCode),
-        sessionToken
+        sessionToken.toAuthHeader()
     ).wrapErrorMessage()
 
     internal fun getOnfidoApiKey(
@@ -160,7 +138,7 @@ class NabuService(
         sessionToken: String
     ): Single<String> = service.getOnfidoApiKey(
         path,
-        sessionToken
+        sessionToken.toAuthHeader()
     ).map { it.key }
         .wrapErrorMessage()
 
@@ -171,8 +149,10 @@ class NabuService(
     ): Completable = service.submitOnfidoVerification(
         path,
         ApplicantIdRequest(applicantId),
-        sessionToken
+        sessionToken.toAuthHeader()
     ).wrapErrorMessage()
+
+    private fun String.toAuthHeader() = "Bearer $this"
 
     companion object {
         internal const val CLIENT_TYPE = "APP"

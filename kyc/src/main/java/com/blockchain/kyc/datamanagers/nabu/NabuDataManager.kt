@@ -3,22 +3,25 @@ package com.blockchain.kyc.datamanagers.nabu
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuErrorCodes
-import com.blockchain.nabu.models.NabuOfflineTokenResponse
-import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.services.nabu.NabuService
+import com.blockchain.kyc.services.wallet.RetailWalletTokenService
+import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.nabu.stores.NabuSessionTokenStore
+import com.blockchain.utils.Optional
+import info.blockchain.wallet.exceptions.ApiException
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import com.blockchain.utils.Optional
 
 class NabuDataManager(
     private val nabuService: NabuService,
+    private val retailWalletTokenService: RetailWalletTokenService,
     private val nabuTokenStore: NabuSessionTokenStore,
     private val appVersion: String,
     private val deviceId: String,
@@ -28,29 +31,27 @@ class NabuDataManager(
 
     private val guid
         get() = payloadDataManager.guid
+    private val sharedKey
+        get() = payloadDataManager.sharedKey
     private val emailSingle
         get() = settingsDataManager.getSettings()
             .map { it.email }
             .singleOrError()
 
-    internal fun createUserId(): Single<String> =
-        emailSingle.flatMap { email ->
-            nabuService.createUserId(
-                guid = guid,
-                email = email
-            ).map { it.userId }
+    internal fun createUser(): Single<String> =
+        retailWalletTokenService.createUser(
+            guid = guid,
+            sharedKey = sharedKey
+        ).map {
+            if (it.isSuccessful) {
+                return@map it.token!!
+            } else {
+                throw ApiException(it.error)
+            }
         }
 
-    internal fun getAuthToken(userId: String): Single<NabuOfflineTokenResponse> =
-        emailSingle.flatMap {
-            nabuService.getAuthToken(
-                guid = guid,
-                email = it,
-                userId = userId,
-                deviceId = deviceId,
-                appVersion = appVersion
-            )
-        }
+    internal fun getAuthToken(jwt: String): Single<NabuOfflineTokenResponse> =
+        nabuService.getAuthToken(jwt = jwt)
 
     internal fun getSessionToken(
         offlineTokenResponse: NabuOfflineTokenResponse

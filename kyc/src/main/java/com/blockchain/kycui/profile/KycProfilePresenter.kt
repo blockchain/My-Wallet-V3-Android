@@ -1,14 +1,13 @@
 package com.blockchain.kycui.profile
 
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata.Companion.USER_CREDENTIALS_METADATA_NODE
-import com.blockchain.nabu.models.NabuOfflineTokenResponse
-import com.blockchain.nabu.models.mapFromMetadata
-import com.blockchain.nabu.models.mapToMetadata
+import com.blockchain.kyc.models.nabu.NabuApiException
+import com.blockchain.kyc.models.nabu.NabuErrorCodes
 import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.kycui.profile.models.ProfileModel
-import com.blockchain.serialization.fromMoshiJson
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata.Companion.USER_CREDENTIALS_METADATA_NODE
+import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.mapToMetadata
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -41,10 +40,9 @@ class KycProfilePresenter(
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable { optionalToken ->
                     if (optionalToken.isPresent) {
-                        createBasicUser(
-                            NabuCredentialsMetadata::class.fromMoshiJson(optionalToken.get())
-                                .mapFromMetadata()
-                        )
+                        // Here we assume that the user was already created, otherwise metadata wouldn't
+                        // have been stored.
+                        Completable.complete()
                     } else {
                         createUserAndStoreInMetadata()
                     }
@@ -62,14 +60,22 @@ class KycProfilePresenter(
                             view.countryCode
                         ).run { view.continueSignUp(this) }
                     },
-                    onError = { view.showErrorToast(R.string.kyc_profile_error) }
+                    onError = {
+                        if (it is NabuApiException &&
+                            it.getErrorCode() == NabuErrorCodes.AlreadyRegistered
+                        ) {
+                            view.showErrorToast(R.string.kyc_profile_error_conflict)
+                        } else {
+                            view.showErrorToast(R.string.kyc_profile_error)
+                        }
+                    }
                 )
     }
 
-    private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.createUserId()
+    private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.createUser()
         .subscribeOn(Schedulers.io())
-        .flatMapCompletable { userId ->
-            nabuDataManager.getAuthToken(userId)
+        .flatMapCompletable { jwt ->
+            nabuDataManager.getAuthToken(jwt)
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable { tokenResponse ->
                     metadataManager.saveToMetadata(tokenResponse.mapToMetadata())

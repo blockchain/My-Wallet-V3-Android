@@ -1,16 +1,19 @@
 package com.blockchain.kyc.datamanagers.nabu
 
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
-import com.blockchain.nabu.models.NabuOfflineTokenResponse
-import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
-import com.blockchain.kyc.models.nabu.UserId
+import com.blockchain.kyc.models.wallet.RetailJwtResponse
 import com.blockchain.kyc.services.nabu.NabuService
+import com.blockchain.kyc.services.wallet.RetailWalletTokenService
+import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.nabu.stores.NabuSessionTokenStore
+import com.blockchain.utils.Optional
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.api.data.Settings
+import info.blockchain.wallet.exceptions.ApiException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -19,12 +22,12 @@ import org.junit.Before
 import org.junit.Test
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import com.blockchain.utils.Optional
 
 class NabuDataManagerTest {
 
     private lateinit var subject: NabuDataManager
     private val nabuService: NabuService = mock()
+    private val tokenService: RetailWalletTokenService = mock()
     private val nabuTokenStore: NabuSessionTokenStore = mock()
     private val settingsDataManager: SettingsDataManager = mock()
     private val payloadDataManager: PayloadDataManager = mock()
@@ -32,10 +35,12 @@ class NabuDataManagerTest {
     private val deviceId = "DEVICE_ID"
     private val email = "EMAIL"
     private val guid = "GUID"
+    private val sharedKey = "SHARED_KEY"
 
     @Before
     fun setUp() {
         whenever(payloadDataManager.guid).thenReturn(guid)
+        whenever(payloadDataManager.sharedKey).thenReturn(sharedKey)
 
         val settings: Settings = mock()
         whenever(settings.email).thenReturn(email)
@@ -43,6 +48,7 @@ class NabuDataManagerTest {
 
         subject = NabuDataManager(
             nabuService,
+            tokenService,
             nabuTokenStore,
             appVersion,
             deviceId,
@@ -52,24 +58,45 @@ class NabuDataManagerTest {
     }
 
     @Test
-    fun createUser() {
+    fun `createUser success`() {
         // Arrange
-        val userId = "USER_ID"
+        val jwt = "JWT"
         whenever(
-            nabuService.createUserId(
+            tokenService.createUser(
                 guid = guid,
-                email = email
+                sharedKey = sharedKey
             )
-        ).thenReturn(Single.just(UserId(userId)))
+        ).thenReturn(Single.just(RetailJwtResponse(true, jwt, null)))
         // Act
-        val testObserver = subject.createUserId().test()
+        val testObserver = subject.createUser().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
-        testObserver.assertValue(userId)
-        verify(nabuService).createUserId(
+        testObserver.assertValue(jwt)
+        verify(tokenService).createUser(
             guid = guid,
-            email = email
+            sharedKey = sharedKey
+        )
+    }
+
+    @Test
+    fun `createUser failure`() {
+        // Arrange
+        val error = "ERROR"
+        whenever(
+            tokenService.createUser(
+                guid = guid,
+                sharedKey = sharedKey
+            )
+        ).thenReturn(Single.just(RetailJwtResponse(false, null, error)))
+        // Act
+        val testObserver = subject.createUser().test()
+        // Assert
+        testObserver.assertNotComplete()
+        testObserver.assertError(ApiException::class.java)
+        verify(tokenService).createUser(
+            guid = guid,
+            sharedKey = sharedKey
         )
     }
 
@@ -78,29 +105,17 @@ class NabuDataManagerTest {
         // Arrange
         val userId = "USER_ID"
         val token = "TOKEN"
+        val jwt = "JWT"
         val tokenResponse = NabuOfflineTokenResponse(userId, token)
-        whenever(
-            nabuService.getAuthToken(
-                guid = guid,
-                email = email,
-                userId = userId,
-                deviceId = deviceId,
-                appVersion = appVersion
-            )
-        ).thenReturn(Single.just(tokenResponse))
+        whenever(nabuService.getAuthToken(jwt = jwt))
+            .thenReturn(Single.just(tokenResponse))
         // Act
-        val testObserver = subject.getAuthToken(userId).test()
+        val testObserver = subject.getAuthToken(jwt).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(tokenResponse)
-        verify(nabuService).getAuthToken(
-            guid = guid,
-            email = email,
-            userId = userId,
-            deviceId = deviceId,
-            appVersion = appVersion
-        )
+        verify(nabuService).getAuthToken(jwt = jwt)
     }
 
     @Test
@@ -350,10 +365,12 @@ class NabuDataManagerTest {
         whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
-        whenever(nabuService.submitOnfidoVerification(
-            sessionToken = sessionToken.token,
-            applicantId = applicantId
-        )).thenReturn(Completable.complete())
+        whenever(
+            nabuService.submitOnfidoVerification(
+                sessionToken = sessionToken.token,
+                applicantId = applicantId
+            )
+        ).thenReturn(Completable.complete())
         // Act
         val testObserver = subject.submitOnfidoVerification(offlineToken, applicantId).test()
         // Assert

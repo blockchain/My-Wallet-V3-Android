@@ -2,9 +2,10 @@ package com.blockchain.kycui.profile
 
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
+import com.blockchain.kyc.models.nabu.NabuApiException
+import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
-import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.serialization.toMoshiJson
 import com.blockchain.testutils.date
 import com.google.common.base.Optional
@@ -14,6 +15,8 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 import org.amshove.kluent.`should throw`
 import org.amshove.kluent.any
 import org.amshove.kluent.mock
@@ -21,6 +24,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
+import retrofit2.Response
 import java.util.Locale
 
 class KycProfilePresenterTest {
@@ -138,14 +142,6 @@ class KycProfilePresenterTest {
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
         ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
-        whenever(
-            nabuDataManager.createBasicUser(
-                firstName,
-                lastName,
-                dateOfBirth.toISO8601DateString(),
-                offlineToken.mapFromMetadata()
-            )
-        ).thenReturn(Completable.complete())
         // Act
         subject.onContinueClicked()
         // Assert
@@ -162,7 +158,7 @@ class KycProfilePresenterTest {
         val dateOfBirth = date(Locale.US, 2014, 8, 10)
         val countryCode = "UK"
         val offlineToken = NabuCredentialsMetadata("", "")
-        val userId = "USER_ID"
+        val jwt = "JWT"
         whenever(view.firstName).thenReturn(firstName)
         whenever(view.lastName).thenReturn(lastName)
         whenever(view.dateOfBirth).thenReturn(dateOfBirth)
@@ -172,8 +168,8 @@ class KycProfilePresenterTest {
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
         ).thenReturn(Observable.just(Optional.absent()))
-        whenever(nabuDataManager.createUserId()).thenReturn(Single.just(userId))
-        whenever(nabuDataManager.getAuthToken(userId))
+        whenever(nabuDataManager.createUser()).thenReturn(Single.just(jwt))
+        whenever(nabuDataManager.getAuthToken(jwt))
             .thenReturn(Single.just(offlineToken.mapFromMetadata()))
         whenever(metadataManager.saveToMetadata(offlineToken))
             .thenReturn(Completable.complete())
@@ -191,5 +187,53 @@ class KycProfilePresenterTest {
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
         verify(view).continueSignUp(any())
+    }
+
+    @Test
+    fun `on continue clicked all data correct, user conflict`() {
+        // Arrange
+        val firstName = "Adam"
+        val lastName = "Bennett"
+        val dateOfBirth = date(Locale.US, 2014, 8, 10)
+        val countryCode = "UK"
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.firstName).thenReturn(firstName)
+        whenever(view.lastName).thenReturn(lastName)
+        whenever(view.dateOfBirth).thenReturn(dateOfBirth)
+        whenever(view.countryCode).thenReturn(countryCode)
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.absent()))
+        val jwt = "JTW"
+        whenever(nabuDataManager.createUser()).thenReturn(Single.just(jwt))
+        whenever(nabuDataManager.getAuthToken(jwt))
+            .thenReturn(Single.just(offlineToken.mapFromMetadata()))
+        whenever(metadataManager.saveToMetadata(offlineToken))
+            .thenReturn(Completable.complete())
+        val responseBody =
+            ResponseBody.create(
+                MediaType.parse("application/json"),
+                "{}"
+            )
+        whenever(
+            nabuDataManager.createBasicUser(
+                firstName,
+                lastName,
+                dateOfBirth.toISO8601DateString(),
+                offlineToken.mapFromMetadata()
+            )
+        ).thenReturn(Completable.error {
+            NabuApiException.fromResponseBody(
+                Response.error<Unit>(409, responseBody)
+            )
+        })
+        // Act
+        subject.onContinueClicked()
+        // Assert
+        verify(view).showProgressDialog()
+        verify(view).dismissProgressDialog()
+        verify(view).showErrorToast(any())
     }
 }

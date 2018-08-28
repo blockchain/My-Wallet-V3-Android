@@ -26,6 +26,7 @@
     <string name="kyc_profile_dob_hint">Date of Birth</string>
     <string name="kyc_profile_next">Next</string>
     <string name="kyc_profile_error">Error creating user details, try again later</string>
+    <string name="kyc_profile_error_conflict">A user already exists with this email address</string>
 
     <!-- Invalid Country -->
     <string name="kyc_invalid_country_exit">Exit</string>

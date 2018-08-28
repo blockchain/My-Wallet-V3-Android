@@ -7,12 +7,11 @@ import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
+import com.blockchain.kyc.models.nabu.NabuUser
+import com.blockchain.kyc.models.nabu.OnfidoApiKey
+import com.blockchain.nabu.models.NabuOfflineTokenRequest
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
-import com.blockchain.kyc.models.nabu.NabuUser
-import com.blockchain.kyc.models.nabu.NewUserRequest
-import com.blockchain.kyc.models.nabu.OnfidoApiKey
-import com.blockchain.kyc.models.nabu.UserId
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.Body
@@ -26,22 +25,9 @@ import retrofit2.http.Url
 internal interface Nabu {
 
     @POST
-    fun createUser(
-        @Url url: String,
-        @Body userRequest: NewUserRequest,
-        @Header("authorization") authorization: String
-    ): Single<UserId>
-
-    @POST
     fun getAuthToken(
         @Url url: String,
-        @Query("userId") userId: String,
-        @Header("authorization") authorization: String,
-        @Header("X-WALLET-GUID") guid: String,
-        @Header("X-WALLET-EMAIL") email: String,
-        @Header("X-APP-VERSION") appVersion: String,
-        @Header("X-CLIENT-TYPE") clientType: String,
-        @Header("X-DEVICE-ID") deviceId: String
+        @Body jwt: NabuOfflineTokenRequest
     ): Single<NabuOfflineTokenResponse>
 
     @POST

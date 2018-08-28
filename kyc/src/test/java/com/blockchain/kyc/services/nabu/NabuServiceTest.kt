@@ -1,7 +1,6 @@
 package com.blockchain.kyc.services.nabu
 
 import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
-import com.blockchain.kyc.api.nabu.NABU_CREATE_USER_ID
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
@@ -57,41 +56,9 @@ class NabuServiceTest {
     }
 
     @Test
-    fun createUser() {
-        // Arrange
-        val guid = "GUID"
-        val email = "EMAIL"
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(CREATE_USER_RESPONSE)
-        )
-        // Act
-        val testObserver = subject.createUserId(
-            path = NABU_CREATE_USER_ID,
-            email = email,
-            guid = guid
-        ).test()
-        // Assert
-        testObserver.awaitTerminalEvent()
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        // Check response
-        val userId = testObserver.values().first()
-        userId.userId `should equal to` "uniqueUserId"
-        // Check URL
-        val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_CREATE_USER_ID"
-    }
-
-    @Test
     fun getAuthToken() {
         // Arrange
-        val guid = "GUID"
-        val email = "EMAIL"
-        val userId = "USER_ID"
-        val appVersion = "6.14.0"
-        val deviceId = "DEVICE_ID"
+        val jwt = "JWT"
         server.enqueue(
             MockResponse()
                 .setResponseCode(200)
@@ -100,11 +67,7 @@ class NabuServiceTest {
         // Act
         val testObserver = subject.getAuthToken(
             path = NABU_INITIAL_AUTH,
-            email = email,
-            guid = guid,
-            userId = userId,
-            appVersion = appVersion,
-            deviceId = deviceId
+            jwt = jwt
         ).test()
         // Assert
         testObserver.awaitTerminalEvent()
@@ -116,13 +79,7 @@ class NabuServiceTest {
         token `should equal to` "d753109e-23jd-42bd-82f1-cc904702asdfkjf"
         // Check URL
         val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_INITIAL_AUTH?userId=$userId"
-        // Check Headers
-        request.headers.get("X-WALLET-GUID") `should equal` guid
-        request.headers.get("X-WALLET-EMAIL") `should equal` email
-        request.headers.get("X-APP-VERSION") `should equal` appVersion
-        request.headers.get("X-CLIENT-TYPE") `should equal` NabuService.CLIENT_TYPE
-        request.headers.get("X-DEVICE-ID") `should equal` deviceId
+        request.path `should equal to` "/$NABU_INITIAL_AUTH"
     }
 
     @Test
@@ -207,7 +164,7 @@ class NabuServiceTest {
         basicUserBody.lastName `should equal to` lastName
         basicUserBody.dateOfBirth `should equal to` dateOfBirth
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -238,7 +195,7 @@ class NabuServiceTest {
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_USERS_CURRENT"
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -285,7 +242,7 @@ class NabuServiceTest {
         addressRequest.address.countryCode `should equal` countryCode
         addressRequest.address.postCode `should equal` postCode
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -317,7 +274,7 @@ class NabuServiceTest {
         val addMobileNumberRequest = adapter.fromJson(requestString)!!
         addMobileNumberRequest.phoneNumber `should equal to` mobileNumber
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -353,7 +310,7 @@ class NabuServiceTest {
         mobileVerificationRequest.verificationCode `should equal to` verificationCode
         mobileVerificationRequest.type `should equal to` "MOBILE"
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -385,7 +342,7 @@ class NabuServiceTest {
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_ONFIDO_API_KEY"
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -417,7 +374,7 @@ class NabuServiceTest {
         // Check URL
         request.path `should equal to` "/$NABU_SUBMIT_VERIFICATION"
         // Check Header
-        request.headers.get("authorization") `should equal` sessionToken
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }
 
     @Test
@@ -472,10 +429,4 @@ class NabuServiceTest {
 
     private fun RecordedRequest.requestToString(): String =
         body.inputStream().bufferedReader().use { it.readText() }
-
-    companion object {
-        private const val CREATE_USER_RESPONSE = "{\n" +
-            "    \"userId\": \"uniqueUserId\"\n" +
-            "}"
-    }
 }
