@@ -61,5 +61,13 @@
     <fragment
         android:id="@+id/onfidoSplashFragment"
         android:name="com.blockchain.kycui.onfidosplash.OnfidoSplashFragment"
-        android:label="OnfidoSplashFragment" />
+        android:label="OnfidoSplashFragment" >
+        <action
+            android:id="@+id/action_onfidoSplashFragment_to_applicationCompleteFragment"
+            app:destination="@id/applicationCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/applicationCompleteFragment"
+        android:name="com.blockchain.kycui.complete.ApplicationCompleteFragment"
+        android:label="ApplicationCompleteFragment" />
 </navigation>

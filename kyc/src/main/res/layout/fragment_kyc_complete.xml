@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_kyc_complete_title"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:textColor="@color/kyc_splash_title_black"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_onfido_splash_subtitle"
+            style="@style/KycFlowMessage"
+            android:gravity="center"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_kyc_complete_title" />
+
+        <!-- Country Selected -->
+
+        <TextView
+            android:id="@+id/text_view_country_selected"
+            android:layout_width="0dp"
+            android:gravity="left"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:textColor="@color/kyc_splash_title_black"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_country_selected"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_country_selected"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_onfido_splash_subtitle"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/image_view_country_selected"
+            android:layout_marginRight="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_country_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_country_selected"
+            app:layout_constraintTop_toTopOf="@id/text_view_country_selected"
+            app:srcCompat="@drawable/vector_done"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- Profile Created -->
+
+        <TextView
+            android:id="@+id/text_view_profile_created"
+            style="@style/KycCompleteItem"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_profile_created"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_profile_created"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_country_selected"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/image_view_profile_created"
+            android:layout_marginRight="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_profile_created"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_profile_created"
+            app:layout_constraintTop_toTopOf="@id/text_view_profile_created"
+            app:srcCompat="@drawable/vector_done"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- Home Address Added -->
+
+        <TextView
+            android:id="@+id/text_view_home_address"
+            style="@style/KycCompleteItem"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_home_address"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_home_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_profile_created"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/image_view_home_address"
+            android:layout_marginRight="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_home_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_home_address"
+            app:layout_constraintTop_toTopOf="@id/text_view_home_address"
+            app:srcCompat="@drawable/vector_done"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- Device Verified -->
+
+        <TextView
+            android:id="@+id/text_view_device_verified"
+            style="@style/KycCompleteItem"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_device_verified"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_device_verified"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_home_address"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/image_view_device_verified"
+            android:layout_marginRight="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_device_verified"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_device_verified"
+            app:layout_constraintTop_toTopOf="@id/text_view_device_verified"
+            app:srcCompat="@drawable/vector_done"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- ID Uploaded -->
+
+        <TextView
+            android:id="@+id/text_view_id_uploaded"
+            style="@style/KycCompleteItem"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_id_uploaded"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_id_uploaded"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_device_verified"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/image_view_id_uploaded"
+            android:layout_marginRight="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_id_uploaded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_id_uploaded"
+            app:layout_constraintTop_toTopOf="@id/text_view_id_uploaded"
+            app:srcCompat="@drawable/vector_done"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- Hello Blockchain! -->
+
+        <TextView
+            android:id="@+id/text_view_hello_blockchain"
+            style="@style/KycCompleteItem"
+            android:layout_height="wrap_content"
+            android:text="@string/kyc_complete_hello_blockchain"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_hello_blockchain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_id_uploaded"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/image_view_hello_blockchain"
+            android:layout_marginRight="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_hello_blockchain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_view_hello_blockchain"
+            app:layout_constraintTop_toTopOf="@id/text_view_hello_blockchain"
+            app:srcCompat="@drawable/vector_done"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/button_kyc_complete_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/kyc_complete_button_done"
+            android:theme="@style/LightBlueButtonTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_hello_blockchain"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

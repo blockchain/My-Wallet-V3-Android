@@ -72,4 +72,16 @@
     <string name="kyc_onfido_splash_verification_error">Error verifying ID, please try again</string>
     <string name="kyc_onfido_splash_passport">My Passport</string>
     <string name="kyc_onfido_splash_drivers_license">My Drivers License</string>
+
+    <!-- Application Complete -->
+    <string name="kyc_complete_title">Application Complete</string>
+    <string name="kyc_complete_header">Done and Done!</string>
+    <string name="kyc_complete_subtitle">You successfully submitted your information. Your account is now in review!</string>
+    <string name="kyc_complete_button_done">Done</string>
+    <string name="kyc_complete_country_selected">Country Selected</string>
+    <string name="kyc_complete_profile_created">Profile Created</string>
+    <string name="kyc_complete_home_address">Home Address Added</string>
+    <string name="kyc_complete_device_verified">Device Verified</string>
+    <string name="kyc_complete_id_uploaded">ID Uploaded</string>
+    <string name="kyc_complete_hello_blockchain">"Hello Blockchain!"</string>
 </resources>

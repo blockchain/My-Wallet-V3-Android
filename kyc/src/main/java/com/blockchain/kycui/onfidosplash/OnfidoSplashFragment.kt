@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.jakewharton.rxbinding2.view.clicks
@@ -152,7 +153,7 @@ class OnfidoSplashFragment : BaseFragment<OnfidoSplashView, OnfidoSplashPresente
     }
 
     override fun continueToCompletion() {
-        toast("Sign-up completed!")
+        findNavController(this).navigate(R.id.applicationCompleteFragment)
     }
 
     override fun createPresenter(): OnfidoSplashPresenter = presenter
