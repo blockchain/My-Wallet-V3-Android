@@ -150,7 +150,7 @@ class NabuDataManager(
         (it as? NabuApiException?)?.getErrorCode() == NabuErrorCodes.TokenExpired
 
     // TODO: Refactor this logic into a reusable, thoroughly tested class - see AND-1335
-    private fun <T> authenticate(
+    internal fun <T> authenticate(
         offlineToken: NabuOfflineTokenResponse,
         singleFunction: (NabuSessionTokenResponse) -> Single<T>
     ): Single<T> =
