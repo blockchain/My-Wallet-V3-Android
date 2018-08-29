@@ -26,3 +26,9 @@
 -keep class com.onfido.api.client.** {
   public protected private *;
 }
+
+# This isn't necessary as of AGP 3.2-beta01
+# https://issuetracker.google.com/issues/79874119
+# TODO: Remove this once upgraded to 3.2, which is necessary for the KYC release AND-1237
+-keep class com.blockchain.kycui.** extends android.support.v4.app.Fragment{}
+-keep public class com.blockchain.kyc.models.** { *; }

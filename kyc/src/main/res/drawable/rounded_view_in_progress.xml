@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/kyc_in_progress" />
+
+    <padding
+        android:left="8dp"
+        android:right="8dp"
+        android:top="1dp" />
+
+    <corners android:radius="5dp" />
+
+</shape>

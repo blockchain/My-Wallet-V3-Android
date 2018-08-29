@@ -40,7 +40,7 @@ android {
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            multiDexEnabled false
+            multiDexEnabled true
             buildConfigBoolean "USE_CRASHLYTICS", true
             buildConfigBoolean "HOMEBREW_DISABLED", true // TODO: Enable/remove for release AND-1299
         }

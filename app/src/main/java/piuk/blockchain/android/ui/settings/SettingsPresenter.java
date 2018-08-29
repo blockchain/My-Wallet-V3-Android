@@ -2,23 +2,22 @@ package piuk.blockchain.android.ui.settings;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-
-import javax.inject.Inject;
-
+import com.blockchain.kycui.settings.KycStatusHelper;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.settings.SettingsManager;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.android.R;
-import piuk.blockchain.androidcore.data.access.AccessState;
-import piuk.blockchain.androidcore.data.auth.AuthDataManager;
 import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.fingerprint.FingerprintHelper;
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper;
 import piuk.blockchain.android.util.StringUtils;
+import piuk.blockchain.androidcore.data.access.AccessState;
+import piuk.blockchain.androidcore.data.auth.AuthDataManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
@@ -28,6 +27,8 @@ import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.androidcoreui.utils.AndroidUtils;
 import timber.log.Timber;
+
+import javax.inject.Inject;
 
 public class SettingsPresenter extends BasePresenter<SettingsView> {
 
@@ -43,7 +44,9 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     private NotificationTokenManager notificationTokenManager;
     private ExchangeRateDataManager exchangeRateDataManager;
     private CurrencyFormatManager currencyFormatManager;
-    @VisibleForTesting Settings settings;
+    private KycStatusHelper kycStatusHelper;
+    @VisibleForTesting
+    Settings settings;
 
     @Inject
     SettingsPresenter(FingerprintHelper fingerprintHelper,
@@ -57,7 +60,8 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                       SwipeToReceiveHelper swipeToReceiveHelper,
                       NotificationTokenManager notificationTokenManager,
                       ExchangeRateDataManager exchangeRateDataManager,
-                      CurrencyFormatManager currencyFormatManager) {
+                      CurrencyFormatManager currencyFormatManager,
+                      KycStatusHelper kycStatusHelper) {
 
         this.fingerprintHelper = fingerprintHelper;
         this.authDataManager = authDataManager;
@@ -71,6 +75,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         this.notificationTokenManager = notificationTokenManager;
         this.exchangeRateDataManager = exchangeRateDataManager;
         this.currencyFormatManager = currencyFormatManager;
+        this.kycStatusHelper = kycStatusHelper;
     }
 
     @Override
@@ -80,6 +85,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         getCompositeDisposable().add(
                 settingsDataManager.getSettings()
                         .doAfterTerminate(this::handleUpdate)
+                        .doOnNext(ignored -> loadKycState())
                         .subscribe(
                                 updatedSettings -> settings = updatedSettings,
                                 throwable -> {
@@ -90,6 +96,16 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                                     // Warn error when updating
                                     getView().showToast(R.string.settings_error_updating, ToastCustom.TYPE_ERROR);
                                 }));
+    }
+
+    private void loadKycState() {
+        getCompositeDisposable().add(
+                kycStatusHelper.getSettingsKycState()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                settingsKycState -> getView().setKycState(settingsKycState),
+                                Timber::e)
+        );
     }
 
     private void handleUpdate() {
@@ -514,8 +530,8 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                     getView().setPushNotificationPref(true);
                 })
                 .subscribe(() -> {
-                            //no-op
-                        }, Timber::e);
+                    //no-op
+                }, Timber::e);
     }
 
     void disablePushNotifications() {
@@ -526,8 +542,8 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                     getView().setPushNotificationPref(false);
                 })
                 .subscribe(() -> {
-                            //no-op
-                        }, Timber::e);
+                    //no-op
+                }, Timber::e);
     }
 
     public String[] getCurrencyLabels() {

@@ -1,5 +1,6 @@
 package com.blockchain.kyc.datamanagers.nabu
 
+import android.support.annotation.VisibleForTesting
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuErrorCodes
@@ -53,6 +54,7 @@ class NabuDataManager(
     internal fun getAuthToken(jwt: String): Single<NabuOfflineTokenResponse> =
         nabuService.getAuthToken(jwt = jwt)
 
+    @VisibleForTesting
     internal fun getSessionToken(
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Single<NabuSessionTokenResponse> =

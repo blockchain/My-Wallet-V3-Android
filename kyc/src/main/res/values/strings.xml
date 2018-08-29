@@ -84,4 +84,11 @@
     <string name="kyc_complete_device_verified">Device Verified</string>
     <string name="kyc_complete_id_uploaded">ID Uploaded</string>
     <string name="kyc_complete_hello_blockchain">"Hello Blockchain!"</string>
+
+    <!-- Settings -->
+    <string name="kyc_settings_identity_verification">Identity Verification</string>
+    <string name="kyc_settings_status_none">Unverified</string>
+    <string name="kyc_settings_status_pending">In Progress</string>
+    <string name="kyc_settings_status_rejected">Failed</string>
+    <string name="kyc_settings_status_verified">Verified</string>
 </resources>

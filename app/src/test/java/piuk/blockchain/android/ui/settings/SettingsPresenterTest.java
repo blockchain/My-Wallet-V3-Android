@@ -1,48 +1,42 @@
 package piuk.blockchain.android.ui.settings;
 
+import com.blockchain.kycui.settings.KycStatusHelper;
+import com.blockchain.kycui.settings.SettingsKycState;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.settings.SettingsManager;
-
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.ArrayList;
-
-import io.reactivex.Completable;
-import io.reactivex.Observable;
 import piuk.blockchain.android.R;
+import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.android.testutils.RxTest;
+import piuk.blockchain.android.ui.fingerprint.FingerprintHelper;
+import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper;
+import piuk.blockchain.android.util.StringUtils;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.auth.AuthDataManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
-import piuk.blockchain.android.data.notifications.NotificationTokenManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager;
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
-import piuk.blockchain.android.ui.fingerprint.FingerprintHelper;
-import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
-import piuk.blockchain.android.util.StringUtils;
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SettingsPresenterTest extends RxTest {
 
@@ -60,6 +54,7 @@ public class SettingsPresenterTest extends RxTest {
     @Mock private NotificationTokenManager notificationTokenManager;
     @Mock private ExchangeRateDataManager exchangeRateDataManager;
     @Mock private CurrencyFormatManager currencyFormatManager;
+    @Mock private KycStatusHelper kycStatusHelper;
 
     @Before
     public void setUp() {
@@ -76,12 +71,13 @@ public class SettingsPresenterTest extends RxTest {
                 swipeToReceiveHelper,
                 notificationTokenManager,
                 exchangeRateDataManager,
-                currencyFormatManager);
+                currencyFormatManager,
+                kycStatusHelper);
         subject.initView(activity);
     }
 
     @Test
-    public void onViewReadySuccess() throws Exception {
+    public void onViewReadySuccess() {
         // Arrange
         Settings mockSettings = mock(Settings.class);
         when(mockSettings.isNotificationsOn()).thenReturn(true);
@@ -93,6 +89,7 @@ public class SettingsPresenterTest extends RxTest {
         when(mockSettings.getSmsNumber()).thenReturn("sms");
         when(mockSettings.getEmail()).thenReturn("email");
         when(settingsDataManager.getSettings()).thenReturn(Observable.just(mockSettings));
+        when(kycStatusHelper.getSettingsKycState()).thenReturn(Single.just(SettingsKycState.Hidden));
         // Act
         subject.onViewReady();
         // Assert
@@ -103,7 +100,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void onViewReadyFailed() throws Exception {
+    public void onViewReadyFailed() {
         // Arrange
         Settings settings = new Settings();
         when(settingsDataManager.getSettings()).thenReturn(Observable.error(new Throwable()));
@@ -117,7 +114,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void getIfFingerprintHardwareAvailable() throws Exception {
+    public void getIfFingerprintHardwareAvailable() {
         // Arrange
         when(fingerprintHelper.isHardwareDetected()).thenReturn(true);
         // Act
@@ -127,7 +124,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void getIfFingerprintUnlockEnabled() throws Exception {
+    public void getIfFingerprintUnlockEnabled() {
         // Arrange
         when(fingerprintHelper.isFingerprintUnlockEnabled()).thenReturn(true);
         // Act
@@ -137,7 +134,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void setFingerprintUnlockEnabled() throws Exception {
+    public void setFingerprintUnlockEnabled() {
         // Arrange
 
         // Act
@@ -148,7 +145,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void onFingerprintClickedAlreadyEnabled() throws Exception {
+    public void onFingerprintClickedAlreadyEnabled() {
         // Arrange
         when(fingerprintHelper.isFingerprintUnlockEnabled()).thenReturn(true);
         // Act
@@ -158,7 +155,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void onFingerprintClickedNoFingerprintsEnrolled() throws Exception {
+    public void onFingerprintClickedNoFingerprintsEnrolled() {
         // Arrange
         when(fingerprintHelper.isFingerprintUnlockEnabled()).thenReturn(false);
         when(fingerprintHelper.areFingerprintsEnrolled()).thenReturn(false);
@@ -169,7 +166,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void onFingerprintClickedPinStored() throws Exception {
+    public void onFingerprintClickedPinStored() {
         // Arrange
         String pinCode = "1234";
         when(fingerprintHelper.isFingerprintUnlockEnabled()).thenReturn(false);
@@ -184,7 +181,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void onFingerprintClickedPinNotFound() throws Exception {
+    public void onFingerprintClickedPinNotFound() {
         // Arrange
         when(fingerprintHelper.isFingerprintUnlockEnabled()).thenReturn(false);
         when(fingerprintHelper.areFingerprintsEnrolled()).thenReturn(true);
@@ -198,7 +195,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void getTempPassword() throws Exception {
+    public void getTempPassword() {
         // Arrange
         String password = "PASSWORD";
         when(payloadManager.getTempPassword()).thenReturn(password);
@@ -209,7 +206,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void getEmail() throws Exception {
+    public void getEmail() {
         // Arrange
         String email = "email";
         subject.settings = mock(Settings.class);
@@ -221,7 +218,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void getSms() throws Exception {
+    public void getSms() {
         // Arrange
         String sms = "sms";
         subject.settings = mock(Settings.class);
@@ -233,7 +230,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void isSmsVerified() throws Exception {
+    public void isSmsVerified() {
         // Arrange
         subject.settings = mock(Settings.class);
         when(subject.settings.isSmsVerified()).thenReturn(true);
@@ -244,7 +241,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void getAuthType() throws Exception {
+    public void getAuthType() {
         // Arrange
         subject.settings = mock(Settings.class);
         when(subject.settings.getAuthType()).thenReturn(-1);
@@ -255,7 +252,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updatePreferencesString() throws Exception {
+    public void updatePreferencesString() {
         // Arrange
         subject.settings = new Settings();
         String key = "KEY";
@@ -267,7 +264,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updatePreferencesInt() throws Exception {
+    public void updatePreferencesInt() {
         // Arrange
         subject.settings = new Settings();
         String key = "KEY";
@@ -280,7 +277,7 @@ public class SettingsPresenterTest extends RxTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void updatePreferencesBoolean() throws Exception {
+    public void updatePreferencesBoolean() {
         // Arrange
         subject.settings = new Settings();
         String key = "KEY";
@@ -292,7 +289,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateEmailInvalid() throws Exception {
+    public void updateEmailInvalid() {
         // Arrange
         String stringResource = "STRING_RESOURCE";
         when(stringUtils.getString(anyInt())).thenReturn(stringResource);
@@ -304,7 +301,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateEmailSuccess() throws Exception {
+    public void updateEmailSuccess() {
         // Arrange
         Settings mockSettings = mock(Settings.class);
         ArrayList<Integer> notifications = new ArrayList<Integer>() {{
@@ -324,7 +321,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateEmailFailed() throws Exception {
+    public void updateEmailFailed() {
         // Arrange
         String email = "EMAIL";
         when(settingsDataManager.updateEmail(email)).thenReturn(Observable.error(new Throwable()));
@@ -338,7 +335,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateSmsInvalid() throws Exception {
+    public void updateSmsInvalid() {
         // Arrange
         String stringResource = "STRING_RESOURCE";
         when(stringUtils.getString(anyInt())).thenReturn(stringResource);
@@ -350,7 +347,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateSmsSuccess() throws Exception {
+    public void updateSmsSuccess() {
         // Arrange
         Settings mockSettings = mock(Settings.class);
         ArrayList<Integer> notifications = new ArrayList<Integer>() {{
@@ -370,7 +367,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateSmsFailed() throws Exception {
+    public void updateSmsFailed() {
         // Arrange
         String phoneNumber = "PHONE_NUMBER";
         when(settingsDataManager.updateSms(phoneNumber)).thenReturn(Observable.error(new Throwable()));
@@ -385,7 +382,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void verifySmsSuccess() throws Exception {
+    public void verifySmsSuccess() {
         // Arrange
         String verificationCode = "VERIFICATION_CODE";
         Settings mockSettings = mock(Settings.class);
@@ -401,7 +398,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void verifySmsFailed() throws Exception {
+    public void verifySmsFailed() {
         // Arrange
         String verificationCode = "VERIFICATION_CODE";
         when(settingsDataManager.verifySms(anyString())).thenReturn(Observable.error(new Throwable()));
@@ -418,7 +415,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateTorSuccess() throws Exception {
+    public void updateTorSuccess() {
         // Arrange
         Settings mockSettings = mock(Settings.class);
         when(mockSettings.isBlockTorIps()).thenReturn(true);
@@ -432,7 +429,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updateTorFailed() throws Exception {
+    public void updateTorFailed() {
         // Arrange
         when(settingsDataManager.updateTor(true)).thenReturn(Observable.error(new Throwable()));
         subject.settings = mock(Settings.class);
@@ -445,7 +442,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void update2FaSuccess() throws Exception {
+    public void update2FaSuccess() {
         // Arrange
         Settings mockSettings = mock(Settings.class);
         int authType = SettingsManager.AUTH_TYPE_YUBI_KEY;
@@ -458,7 +455,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void update2FaFailed() throws Exception {
+    public void update2FaFailed() {
         // Arrange
         int authType = SettingsManager.AUTH_TYPE_YUBI_KEY;
         when(settingsDataManager.updateTwoFactor(authType)).thenReturn(Observable.error(new Throwable()));
@@ -472,7 +469,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void enableNotificationSuccess() throws Exception {
+    public void enableNotificationSuccess() {
         // Arrange
         int notificationType = SettingsManager.NOTIFICATION_TYPE_EMAIL;
         Settings mockSettingsResponse = mock(Settings.class);
@@ -493,7 +490,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void disableNotificationSuccess() throws Exception {
+    public void disableNotificationSuccess() {
         // Arrange
         int notificationType = SettingsManager.NOTIFICATION_TYPE_EMAIL;
         Settings mockSettingsResponse = mock(Settings.class);
@@ -514,7 +511,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void enableNotificationAlreadyEnabled() throws Exception {
+    public void enableNotificationAlreadyEnabled() {
         // Arrange
         int notificationType = SettingsManager.NOTIFICATION_TYPE_EMAIL;
         Settings mockSettings = mock(Settings.class);
@@ -532,7 +529,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void disableNotificationAlreadyDisabled() throws Exception {
+    public void disableNotificationAlreadyDisabled() {
         // Arrange
         int notificationType = SettingsManager.NOTIFICATION_TYPE_EMAIL;
         Settings mockSettings = mock(Settings.class);
@@ -550,7 +547,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void enableNotificationFailed() throws Exception {
+    public void enableNotificationFailed() {
         // Arrange
         int notificationType = SettingsManager.NOTIFICATION_TYPE_EMAIL;
         Settings mockSettings = mock(Settings.class);
@@ -570,7 +567,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void pinCodeValidatedForChange() throws Exception {
+    public void pinCodeValidatedForChange() {
         // Arrange
 
         // Act
@@ -583,7 +580,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updatePasswordSuccess() throws Exception {
+    public void updatePasswordSuccess() {
         // Arrange
         String newPassword = "NEW_PASSWORD";
         String oldPassword = "OLD_PASSWORD";
@@ -605,7 +602,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void updatePasswordFailed() throws Exception {
+    public void updatePasswordFailed() {
         // Arrange
         String newPassword = "NEW_PASSWORD";
         String oldPassword = "OLD_PASSWORD";
@@ -630,7 +627,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void storeSwipeToReceiveAddressesSuccessful() throws Exception {
+    public void storeSwipeToReceiveAddressesSuccessful() {
         // Arrange
 
         // Act
@@ -646,7 +643,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void storeSwipeToReceiveAddressesFailed() throws Exception {
+    public void storeSwipeToReceiveAddressesFailed() {
         // Arrange
         doThrow(NullPointerException.class).when(swipeToReceiveHelper).updateAndStoreBitcoinAddresses();
         // Act
@@ -662,7 +659,7 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void clearSwipeToReceiveData() throws Exception {
+    public void clearSwipeToReceiveData() {
         // Arrange
 
         // Act

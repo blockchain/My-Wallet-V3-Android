@@ -2,6 +2,7 @@ package com.blockchain.koin.modules
 
 import android.content.Context
 import com.blockchain.koin.getActivity
+import com.blockchain.kycui.settings.KycStatusHelper
 import com.blockchain.ui.chooser.AccountListing
 import com.blockchain.ui.password.SecondPasswordHandler
 import org.koin.dsl.module.applicationContext
@@ -32,6 +33,13 @@ val applicationModule = applicationContext {
         factory { WalletAccountHelperAccountListingAdapter(get()) }
             .bind(AccountListing::class)
 
-        factory { params -> SecondPasswordHandlerDialog(params.getActivity(), get()) as SecondPasswordHandler }
+        factory { params ->
+            SecondPasswordHandlerDialog(
+                params.getActivity(),
+                get()
+            ) as SecondPasswordHandler
+        }
+
+        factory { KycStatusHelper(get(), get(), get()) }
     }
 }

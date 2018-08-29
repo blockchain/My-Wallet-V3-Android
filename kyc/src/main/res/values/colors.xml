@@ -9,5 +9,6 @@
 
     <color name="kyc_progress_green">#FF03A972</color>
     <color name="kyc_splash_title_black">#FF5B5B5B</color>
+    <color name="kyc_in_progress">#FFF28B30</color>
 
 </resources>

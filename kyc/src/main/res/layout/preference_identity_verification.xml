@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/text_view_preference_status"
+        android:layout_width="wrap_content"
+        android:gravity="right"
+        android:padding="8dp"
+        android:layout_gravity="right|center_vertical"
+        android:fontFamily="@font/montserrat"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:background="@drawable/rounded_view_failed"
+        tools:text="Unverified" />
+
+</FrameLayout>

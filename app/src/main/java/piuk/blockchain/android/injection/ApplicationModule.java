@@ -5,6 +5,7 @@ import android.content.Context;
 import com.blockchain.koin.KoinDaggerModule;
 import com.blockchain.koin.modules.MorphActivityLauncher;
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager;
+import com.blockchain.kycui.settings.KycStatusHelper;
 import com.blockchain.network.EnvironmentUrls;
 import com.google.firebase.iid.FirebaseInstanceId;
 import dagger.Module;
@@ -111,5 +112,10 @@ public class ApplicationModule extends KoinDaggerModule {
     @Provides
     MorphActivityLauncher provideMorphActivityLauncher() {
         return get(MorphActivityLauncher.class);
+    }
+
+    @Provides
+    KycStatusHelper provideKycStatusHelper() {
+        return get(KycStatusHelper.class);
     }
 }
