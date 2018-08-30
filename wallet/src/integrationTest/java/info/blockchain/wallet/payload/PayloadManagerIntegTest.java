@@ -1,6 +1,7 @@
 package info.blockchain.wallet.payload;
 
 import info.blockchain.api.blockexplorer.BlockExplorer;
+import info.blockchain.wallet.ApiCode;
 import info.blockchain.wallet.BaseIntegTest;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.WalletApi;
@@ -11,6 +12,7 @@ import info.blockchain.wallet.payload.data.LegacyAddress;
 import info.blockchain.wallet.payload.data.Wallet;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.BitcoinMainNetParams;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +33,14 @@ public final class PayloadManagerIntegTest extends BaseIntegTest {
         payloadManager = new PayloadManager(
                 new WalletApi(
                         BlockchainFramework.getRetrofitExplorerInstance()
-                                .create(WalletExplorerEndpoints.class)
+                                .create(WalletExplorerEndpoints.class),
+                        new ApiCode() {
+                            @NotNull
+                            @Override
+                            public String getApiCode() {
+                                return BlockchainFramework.getApiCode();
+                            }
+                        }
                 ),
                 new MultiAddressFactory(blockExplorer),
                 new BalanceManagerBtc(blockExplorer),

@@ -22,7 +22,7 @@ val serviceModule = applicationContext {
 
     bean { get<Retrofit>("api").create(FeeEndpoints::class.java) }
 
-    factory { WalletApi(get()) }
+    factory { WalletApi(get(), get()) }
 
     factory { Payment() }
 

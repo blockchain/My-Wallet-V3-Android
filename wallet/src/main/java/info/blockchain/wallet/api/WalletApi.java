@@ -1,6 +1,6 @@
 package info.blockchain.wallet.api;
 
-import info.blockchain.wallet.BlockchainFramework;
+import info.blockchain.wallet.ApiCode;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.api.data.SignedToken;
 import info.blockchain.wallet.api.data.Status;
@@ -22,13 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class WalletApi {
 
     private final WalletExplorerEndpoints walletServer;
+    private final ApiCode apiCode;
 
-    public WalletApi(WalletExplorerEndpoints walletServer) {
+    public WalletApi(WalletExplorerEndpoints walletServer, ApiCode apiCode) {
         this.walletServer = walletServer;
+        this.apiCode = apiCode;
     }
 
     private WalletExplorerEndpoints getExplorerInstance() {
@@ -44,7 +45,7 @@ public class WalletApi {
                 sharedKey,
                 token,
                 token.length(),
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<ResponseBody> registerMdid(String guid,
@@ -53,7 +54,7 @@ public class WalletApi {
 
         return getExplorerInstance().postToWallet("register-mdid",
                 guid, sharedKey, signedGuid, signedGuid.length(),
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<ResponseBody> unregisterMdid(String guid,
@@ -62,16 +63,16 @@ public class WalletApi {
 
         return getExplorerInstance().postToWallet("unregister-mdid",
                 guid, sharedKey, signedGuid, signedGuid.length(),
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<Response<Status>> setAccess(String key, String value, String pin) {
         String hex = Hex.toHexString(value.getBytes());
-        return getExplorerInstance().pinStore(key, pin, hex, "put", BlockchainFramework.getApiCode());
+        return getExplorerInstance().pinStore(key, pin, hex, "put", getApiCode());
     }
 
     public Observable<Response<Status>> validateAccess(String key, String pin) {
-        return getExplorerInstance().pinStore(key, pin, null, "get", BlockchainFramework.getApiCode());
+        return getExplorerInstance().pinStore(key, pin, null, "get", getApiCode());
     }
 
     public Call<ResponseBody> insertWallet(String guid,
@@ -97,7 +98,7 @@ public class WalletApi {
                 email,
                 device,
                 null,
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Call<ResponseBody> updateWallet(String guid,
@@ -123,7 +124,7 @@ public class WalletApi {
                 null,
                 device,
                 oldChecksum,
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Call<ResponseBody> fetchWalletData(String guid, String sharedKey) {
@@ -131,7 +132,7 @@ public class WalletApi {
                 guid,
                 sharedKey,
                 "json",
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<ResponseBody> submitTwoFactorCode(String sessionId, String guid, String twoFactorCode) {
@@ -144,7 +145,7 @@ public class WalletApi {
                 twoFactorCode,
                 twoFactorCode.length(),
                 "plain",
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<Response<ResponseBody>> getSessionId(String guid) {
@@ -156,19 +157,19 @@ public class WalletApi {
                 "SID=" + sessionId,
                 "json",
                 false,
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Call<ResponseBody> fetchPairingEncryptionPasswordCall(final String guid) {
         return getExplorerInstance().fetchPairingEncryptionPasswordCall("pairing-encryption-password",
                 guid,
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<ResponseBody> fetchPairingEncryptionPassword(final String guid) {
         return getExplorerInstance().fetchPairingEncryptionPassword("pairing-encryption-password",
                 guid,
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<Settings> fetchSettings(String method, String guid, String sharedKey) {
@@ -176,7 +177,7 @@ public class WalletApi {
                 guid,
                 sharedKey,
                 "plain",
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<ResponseBody> updateSettings(String method, String guid, String sharedKey, String payload) {
@@ -186,11 +187,11 @@ public class WalletApi {
                 payload,
                 payload.length(),
                 "plain",
-                BlockchainFramework.getApiCode());
+                getApiCode());
     }
 
     public Observable<WalletOptions> getWalletOptions() {
-        return getExplorerInstance().getWalletOptions(BlockchainFramework.getApiCode());
+        return getExplorerInstance().getWalletOptions(getApiCode());
     }
 
     public Single<String> getSignedJsonToken(String guid, String sharedKey, String partner) {
@@ -198,7 +199,7 @@ public class WalletApi {
                 sharedKey,
                 "email%7Cwallet_age",
                 partner,
-                BlockchainFramework.getApiCode())
+                getApiCode())
                 .map(new Function<SignedToken, String>() {
                     @Override
                     public String apply(SignedToken signedToken) throws Exception {
@@ -209,5 +210,9 @@ public class WalletApi {
                         }
                     }
                 });
+    }
+
+    private String getApiCode() {
+        return apiCode.getApiCode();
     }
 }

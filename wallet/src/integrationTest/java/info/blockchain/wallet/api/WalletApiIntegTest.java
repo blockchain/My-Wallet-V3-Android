@@ -1,10 +1,12 @@
 package info.blockchain.wallet.api;
 
+import info.blockchain.wallet.ApiCode;
 import info.blockchain.wallet.BaseIntegTest;
 import info.blockchain.wallet.BlockchainFramework;
 import info.blockchain.wallet.api.data.Status;
 import info.blockchain.wallet.exceptions.ApiException;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
 
@@ -30,7 +32,14 @@ public final class WalletApiIntegTest extends BaseIntegTest {
 
     private WalletApi walletApi = new WalletApi(
             BlockchainFramework.getRetrofitExplorerInstance()
-                    .create(WalletExplorerEndpoints.class)
+                    .create(WalletExplorerEndpoints.class),
+            new ApiCode() {
+                @NotNull
+                @Override
+                public String getApiCode() {
+                    return BlockchainFramework.getApiCode();
+                }
+            }
     );
 
     @Test
