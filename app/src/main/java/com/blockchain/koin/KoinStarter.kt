@@ -15,6 +15,7 @@ import com.blockchain.koin.modules.moshiModule
 import com.blockchain.koin.modules.serviceModule
 import com.blockchain.koin.modules.shapeShiftModule
 import com.blockchain.network.modules.apiModule
+import com.blockchain.notifications.koin.notificationModule
 import org.koin.android.ext.android.startKoin
 import org.koin.log.Logger
 import org.koin.standalone.StandAloneContext
@@ -45,7 +46,8 @@ object KoinStarter {
                 kycModule,
                 morphMethodModule,
                 morphUiModule,
-                homeBrewModule
+                homeBrewModule,
+                notificationModule
             ),
             extraProperties = features + appProperties + keys,
             logger = TimberLogger()

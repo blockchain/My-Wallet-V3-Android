@@ -4,8 +4,8 @@ import android.app.LauncherActivity
 import android.content.Intent
 import info.blockchain.wallet.api.data.Settings
 import piuk.blockchain.android.R
-import piuk.blockchain.android.data.notifications.FcmCallbackService.EXTRA_CONTACT_ACCEPTED
-import piuk.blockchain.android.data.notifications.NotificationTokenManager
+import com.blockchain.notifications.NotificationTokenManager
+import piuk.blockchain.android.data.notifications.FcmCallbackService.Companion.EXTRA_CONTACT_ACCEPTED
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.access.AccessState
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager

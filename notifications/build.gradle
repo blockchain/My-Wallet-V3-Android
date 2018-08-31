@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: '../quality/jacocoLibrary.gradle'
+apply from: '../quality/ktlint.gradle'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        // Always show the result of every unit test, even if it passes.
+        unitTests.all {
+            testLogging {
+                events 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+            reports.junitXml.destination = file('../build/test-results/')
+        }
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+dependencies {
+    api project(':coreui')
+    // Google services
+    api Libraries.firebaseMessaging
+    api Libraries.firebaseCore
+    // Unit Test dependencies
+    testImplementation project(':testutils')
+    testImplementation project(':testutils-android')
+    testImplementation Libraries.junit
+    testImplementation Libraries.mockito
+    testImplementation Libraries.hamcrestJunit
+    testImplementation Libraries.kotlinJunit
+    testImplementation Libraries.kluent
+    testImplementation(Libraries.mockitoKotlin) {
+        ['kotlin-stdlib', 'kotlin-reflect'].each { exclude module: it }
+    }
+}

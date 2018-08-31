@@ -18,7 +18,7 @@ import piuk.blockchain.android.data.cache.DynamicFeeCache;
 import piuk.blockchain.android.data.datamanagers.FeeDataManager;
 import piuk.blockchain.android.data.datamanagers.PromptManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
-import piuk.blockchain.android.data.notifications.models.NotificationPayload;
+import com.blockchain.notifications.models.NotificationPayload;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.dashboard.DashboardPresenter;
 import piuk.blockchain.android.ui.home.models.MetadataEvent;

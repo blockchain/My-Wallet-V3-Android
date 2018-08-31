@@ -73,6 +73,7 @@ class KycStatusHelper(
 private fun KycState.toUiState(): SettingsKycState = when (this) {
     KycState.None -> SettingsKycState.Unverified
     KycState.Pending -> SettingsKycState.InProgress
+    KycState.UnderReview -> SettingsKycState.UnderReview
     KycState.Rejected -> SettingsKycState.Failed
     KycState.Expired -> SettingsKycState.Failed
     KycState.Verified -> SettingsKycState.Verified
@@ -82,6 +83,7 @@ enum class SettingsKycState {
     Unverified,
     Verified,
     InProgress,
+    UnderReview,
     Failed,
     Hidden
 }

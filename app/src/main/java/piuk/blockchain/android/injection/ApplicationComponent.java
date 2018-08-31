@@ -3,8 +3,7 @@ package piuk.blockchain.android.injection;
 import dagger.Component;
 import info.blockchain.wallet.util.PrivateKeyFactory;
 import piuk.blockchain.android.BlockchainApplication;
-import piuk.blockchain.android.data.notifications.FcmCallbackService;
-import piuk.blockchain.android.data.notifications.InstanceIdService;
+import com.blockchain.notifications.InstanceIdService;
 import piuk.blockchain.android.util.exceptions.LoggingExceptionHandler;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
 
@@ -40,6 +39,4 @@ public interface ApplicationComponent {
     void inject(BlockchainApplication blockchainApplication);
 
     void inject(ContactsDataManager contactsDataManager);
-
-    void inject(FcmCallbackService fcmCallbackService);
 }

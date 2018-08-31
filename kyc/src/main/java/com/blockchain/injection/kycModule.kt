@@ -13,6 +13,7 @@ import com.blockchain.kycui.mobile.entry.KycMobileEntryPresenter
 import com.blockchain.kycui.mobile.validation.KycMobileValidationPresenter
 import com.blockchain.kycui.onfidosplash.OnfidoSplashPresenter
 import com.blockchain.kycui.profile.KycProfilePresenter
+import com.blockchain.kycui.status.KycStatusPresenter
 import com.blockchain.nabu.stores.NabuSessionTokenStore
 import com.blockchain.network.modules.MoshiBuilderInterceptor
 import com.squareup.moshi.Moshi
@@ -61,6 +62,8 @@ val kycModule = applicationContext {
         factory {
             OnfidoSplashPresenter(get(), get(), get())
         }
+
+        factory { KycStatusPresenter(get(), get(), get()) }
     }
 
     bean("kyc") {

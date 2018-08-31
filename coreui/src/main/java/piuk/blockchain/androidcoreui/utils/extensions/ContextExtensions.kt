@@ -4,7 +4,9 @@ package piuk.blockchain.androidcoreui.utils.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.annotation.ColorRes
+import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -91,4 +93,20 @@ fun Context.getResolvedColor(@ColorRes color: Int): Int = ContextCompat.getColor
  * @param color The Res ID of the color.
  */
 fun Fragment.getResolvedColor(@ColorRes color: Int): Int =
-    ContextCompat.getColor(this.context!!, color)
+    ContextCompat.getColor(requireContext(), color)
+
+/**
+ * Returns a nullable Drawable associated with a particular resource ID.
+ *
+ * @param drawable The Res ID of the Drawable.
+ */
+fun Context.getResolvedDrawable(@DrawableRes drawable: Int): Drawable? =
+    ContextCompat.getDrawable(this, drawable)
+
+/**
+ * Returns a nullable Drawable associated with a particular resource ID.
+ *
+ * @param drawable The Res ID of the Drawable.
+ */
+fun Fragment.getResolvedDrawable(@DrawableRes drawable: Int): Drawable? =
+    ContextCompat.getDrawable(requireContext(), drawable)

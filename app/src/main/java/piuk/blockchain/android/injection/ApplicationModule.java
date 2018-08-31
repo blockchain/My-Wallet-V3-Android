@@ -14,8 +14,8 @@ import info.blockchain.wallet.api.WalletApi;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.payload.PayloadManagerWiper;
 import info.blockchain.wallet.util.PrivateKeyFactory;
-import piuk.blockchain.android.data.notifications.NotificationService;
-import piuk.blockchain.android.data.notifications.NotificationTokenManager;
+import com.blockchain.notifications.NotificationService;
+import com.blockchain.notifications.NotificationTokenManager;
 import piuk.blockchain.android.util.PrngHelper;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
@@ -42,9 +42,8 @@ public class ApplicationModule extends KoinDaggerModule {
     }
 
     @Provides
-    @Singleton
-    NotificationManager provideNotificationManager(Context context) {
-        return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationManager provideNotificationManager() {
+        return get(NotificationManager.class);
     }
 
     @Provides
@@ -74,18 +73,8 @@ public class ApplicationModule extends KoinDaggerModule {
     }
 
     @Provides
-    @Singleton
-    protected NotificationTokenManager provideNotificationTokenManager(PayloadManager payloadManager,
-                                                                       PrefsUtil prefsUtil,
-                                                                       RxBus rxBus,
-                                                                       WalletApi walletApi) {
-
-        return new NotificationTokenManager(
-                new NotificationService(walletApi),
-                payloadManager,
-                prefsUtil,
-                FirebaseInstanceId.getInstance(),
-                rxBus);
+    protected NotificationTokenManager provideNotificationTokenManager() {
+        return get(NotificationTokenManager.class);
     }
 
     @Provides

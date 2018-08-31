@@ -18,6 +18,11 @@ class KycStateAdapterTest {
     }
 
     @Test
+    fun `from under review`() {
+        KycStateAdapter().fromJson("UNDER_REVIEW") `should equal` KycState.UnderReview
+    }
+
+    @Test
     fun `from rejected`() {
         KycStateAdapter().fromJson("REJECTED") `should equal` KycState.Rejected
     }
@@ -47,6 +52,11 @@ class KycStateAdapterTest {
     @Test
     fun `to pending`() {
         KycStateAdapter().toJson(KycState.Pending) `should equal` "PENDING"
+    }
+
+    @Test
+    fun `to under review`() {
+        KycStateAdapter().toJson(KycState.UnderReview) `should equal` "UNDER_REVIEW"
     }
 
     @Test

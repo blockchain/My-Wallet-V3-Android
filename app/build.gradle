@@ -145,6 +145,7 @@ androidExtensions {
 
 dependencies {
     implementation project(':coreui')
+    implementation project(':notifications')
     implementation project(':buysellui')
     implementation project(':kyc')
     implementation project(':morph:shapeshift')
@@ -152,9 +153,6 @@ dependencies {
 
     implementation Libraries.multidex
     kapt Libraries.dataBindingKapt
-    // Google services
-    implementation Libraries.firebaseMessaging
-    implementation Libraries.firebaseCore
     // Utils
     implementation Libraries.yearclass
     // Dagger

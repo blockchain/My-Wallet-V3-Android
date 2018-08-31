@@ -1,15 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.build-properties'
 apply from: '../quality/jacocoLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
-
-buildProperties {
-    secrets {
-        using(file('../app/secrets.properties')).or(file('../app/secretsDefaults.properties'))
-    }
-}
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -21,7 +14,6 @@ android {
         versionName Versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        buildConfigString "ONFIDO_SANDBOX_KEY", buildProperties.secrets['onfidoSandbox']
     }
 
     compileOptions {
@@ -54,9 +46,6 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath Libraries.buildProperties
-    }
 }
 
 repositories {
@@ -65,6 +54,7 @@ repositories {
 
 dependencies {
     api project(':coreui')
+    api project(':notifications')
     api project(':nabu')
     implementation Libraries.onfido
     implementation(Libraries.googlePlayServicesBase) {

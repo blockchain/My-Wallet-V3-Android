@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.notifications.models;
+package com.blockchain.notifications.models;
 
 import android.support.annotation.Nullable;
 

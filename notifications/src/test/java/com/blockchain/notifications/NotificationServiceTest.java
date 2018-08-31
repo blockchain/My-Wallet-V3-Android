@@ -1,27 +1,22 @@
-package piuk.blockchain.android.data.notifications;
+package com.blockchain.notifications;
 
 import info.blockchain.wallet.api.WalletApi;
-
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
+import okhttp3.ResponseBody;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
-import okhttp3.ResponseBody;
 import piuk.blockchain.android.testutils.RxTest;
-import piuk.blockchain.android.data.notifications.NotificationService;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class NotificationServiceTest extends RxTest {
 
     private NotificationService subject;
-    @Mock private WalletApi mockWalletApi;
+    @Mock
+    private WalletApi mockWalletApi;
 
     @Before
     public void setUp() {
@@ -31,7 +26,7 @@ public class NotificationServiceTest extends RxTest {
     }
 
     @Test
-    public void sendNotificationToken() throws Exception {
+    public void sendNotificationToken() {
         // Arrange
         when(mockWalletApi.updateFirebaseNotificationToken("", "", ""))
                 .thenReturn(Observable.just(mock(ResponseBody.class)));
@@ -46,7 +41,7 @@ public class NotificationServiceTest extends RxTest {
 
 
     @Test
-    public void removeNotificationToken() throws Exception {
+    public void removeNotificationToken() {
 
         // TODO: 01/03/2018 Once backend has created this endpoint
 

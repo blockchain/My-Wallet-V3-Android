@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.notifications;
+package com.blockchain.notifications;
 
 import info.blockchain.wallet.api.WalletApi;
 

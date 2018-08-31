@@ -360,6 +360,33 @@ class KycStatusHelperTest {
         testObserver.assertValue(SettingsKycState.InProgress)
     }
 
+    @Test
+    fun `get settings kyc state should return in review`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        val countryCode = "US"
+        val countryList =
+            listOf(NabuCountryResponse("UK", "United Kingdom", emptyList(), listOf("KYC")))
+        whenever(nabuDataManager.getCountriesList(Scope.Kyc))
+            .thenReturn(Single.just(countryList))
+        val settings: Settings = mock()
+        whenever(settings.countryCode).thenReturn(countryCode)
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.just(getNabuUserWithKycState(KycState.UnderReview)))
+        // Act
+        val testObserver = subject.getSettingsKycState().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(SettingsKycState.UnderReview)
+    }
+
     private fun getNabuUserWithKycState(kycState: KycState): NabuUser = NabuUser(
         "",
         "",
@@ -368,6 +395,8 @@ class KycStatusHelperTest {
         false,
         null,
         UserState.None,
-        kycState
+        kycState,
+        "",
+        ""
     )
 }

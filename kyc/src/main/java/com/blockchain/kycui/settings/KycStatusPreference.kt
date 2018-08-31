@@ -66,6 +66,7 @@ class KycStatusPreference @JvmOverloads constructor(
             SettingsKycState.Unverified -> onUnverified()
             SettingsKycState.Verified -> onVerified()
             SettingsKycState.InProgress -> onInProgress()
+            SettingsKycState.UnderReview -> onUnderReview()
             SettingsKycState.Failed -> onFailed()
             SettingsKycState.Hidden -> Unit
         }
@@ -81,6 +82,13 @@ class KycStatusPreference @JvmOverloads constructor(
     private fun onInProgress() {
         textViewStatus?.apply {
             setText(R.string.kyc_settings_status_pending)
+            setBackgroundResource(R.drawable.rounded_view_in_progress)
+        }
+    }
+
+    private fun onUnderReview() {
+        textViewStatus?.apply {
+            setText(R.string.kyc_settings_status_under_review)
             setBackgroundResource(R.drawable.rounded_view_in_progress)
         }
     }

@@ -2,6 +2,11 @@
     package="piuk.blockchain.kyc">
 
     <application>
-        <activity android:name="com.blockchain.kycui.navhost.KycNavHostActivity" />
+        <activity
+            android:name="com.blockchain.kycui.navhost.KycNavHostActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.blockchain.kycui.status.KycStatusActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 </manifest>

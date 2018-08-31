@@ -1,18 +1,15 @@
-package piuk.blockchain.android.data.notifications;
-
-import com.google.common.base.Optional;
-import com.google.firebase.iid.FirebaseInstanceId;
+package com.blockchain.notifications;
 
 import android.support.annotation.NonNull;
-
+import com.google.common.base.Optional;
+import com.google.firebase.iid.FirebaseInstanceId;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.payload.data.Wallet;
-
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.androidcore.data.access.AuthEvent;
-import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import timber.log.Timber;
@@ -108,7 +105,8 @@ public class NotificationTokenManager {
     public Completable disableNotifications() {
         prefsUtil.setValue(PrefsUtil.KEY_PUSH_NOTIFICATION_ENABLED, false);
         return revokeAccessToken()
-                .compose(RxUtil.applySchedulersToCompletable());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -138,7 +136,7 @@ public class NotificationTokenManager {
      * in a state where it may not have registered with the right endpoint or similar.
      * <p>
      * If no stored notification token exists, it will be refreshed
-     * and will be handled appropriately by {@link FcmCallbackService}
+     * and will be handled appropriately by FcmCallbackService
      */
     private Completable resendNotificationToken() {
         return getStoredFirebaseToken()

@@ -89,6 +89,22 @@
     <string name="kyc_settings_identity_verification">Identity Verification</string>
     <string name="kyc_settings_status_none">Unverified</string>
     <string name="kyc_settings_status_pending">In Progress</string>
+    <string name="kyc_settings_status_under_review">Under Review</string>
     <string name="kyc_settings_status_rejected">Failed</string>
     <string name="kyc_settings_status_verified">Verified</string>
+
+    <!-- KYC Status -->
+    <string name="kyc_status_error">Error fetching KYC status</string>
+    <string name="kyc_status_title_in_progress">Verification In Progress</string>
+    <string name="kyc_status_title_approved">Account Approved</string>
+    <string name="kyc_status_title_failed">Verification Failed</string>
+    <string name="kyc_status_title_in_review">Verification Under Review</string>
+    <string name="kyc_status_subtitle">What happens next?</string>
+    <string name="kyc_status_message_in_progress">Your information is being reviewed. When it all looks good, you\'re clear to exchange. You should receive a notification in the next 5 minutes.</string>
+    <string name="kyc_status_message_verified">Congratulations! We successfully verified your identity. You can now exchange cryptocurrencies at Blockchain.</string>
+    <string name="kyc_status_message_failed">Unfortunately we had some trouble verifying your identity with the documents you\'ve supplied and your account can\'t be verified at this time.</string>
+    <string name="kyc_status_message_under_review">We had some trouble verifying your account with the documents provided. Our support team will contact you shortly to resolve this.</string>
+    <string name="kyc_status_button_notify_me">Notify me</string>
+    <string name="kyc_status_button_get_started">Get started</string>
+    <string name="kyc_status_button_notifications_enabled">Notifications enabled</string>
 </resources>

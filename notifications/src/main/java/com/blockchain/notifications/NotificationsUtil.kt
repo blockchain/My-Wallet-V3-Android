@@ -1,4 +1,4 @@
-package piuk.blockchain.android.util
+package com.blockchain.notifications
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,7 +9,6 @@ import android.net.Uri
 import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
-import piuk.blockchain.android.R
 import piuk.blockchain.androidcoreui.utils.AndroidUtils
 
 class NotificationsUtil(
@@ -26,8 +25,10 @@ class NotificationsUtil(
         id: Int
     ) {
 
-        val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(icon)
+        val builder = NotificationCompat.Builder(
+            context,
+            NOTIFICATION_CHANNEL_ID
+        ).setSmallIcon(icon)
             .setColor(ContextCompat.getColor(context, R.color.primary_navy_medium))
             .setContentTitle(title)
             .setContentIntent(pendingIntent)

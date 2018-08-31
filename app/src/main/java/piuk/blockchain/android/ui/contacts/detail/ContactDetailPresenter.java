@@ -25,7 +25,7 @@ import piuk.blockchain.android.R;
 import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionDisplayModel;
 import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionModel;
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager;
-import piuk.blockchain.android.data.notifications.models.NotificationPayload;
+import com.blockchain.notifications.models.NotificationPayload;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;

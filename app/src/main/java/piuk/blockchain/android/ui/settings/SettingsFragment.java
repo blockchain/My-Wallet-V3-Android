@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.*;
 import com.blockchain.kycui.settings.KycStatusPreference;
 import com.blockchain.kycui.settings.SettingsKycState;
+import com.blockchain.kycui.status.KycStatusActivity;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.models.Country;
@@ -410,8 +411,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
             case "identity_verification":
-                // TODO: 29/08/2018 Open KYC status Activity
-                Toast.makeText(getContext(), "KYC Status Activity", Toast.LENGTH_SHORT).show();
+                // TODO: If status == None, redirect to KYC NavHost
+                KycStatusActivity.start(requireContext());
                 break;
             case "email":
                 showDialogEmail();

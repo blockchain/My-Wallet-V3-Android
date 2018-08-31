@@ -31,7 +31,7 @@ import piuk.blockchain.android.BlockchainTestApplication
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.androidcore.data.contacts.models.ContactTransactionModel
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
-import piuk.blockchain.android.data.notifications.models.NotificationPayload
+import com.blockchain.notifications.models.NotificationPayload
 import piuk.blockchain.android.ui.contacts.list.ContactsListActivity.KEY_BUNDLE_CONTACT_ID
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager

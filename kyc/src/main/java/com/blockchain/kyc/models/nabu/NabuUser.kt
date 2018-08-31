@@ -13,7 +13,15 @@ data class NabuUser(
     val mobileVerified: Boolean,
     val address: Address?,
     val state: UserState,
-    val kycState: KycState
+    val kycState: KycState,
+    /**
+     * ISO-8601 Timestamp w/millis, eg 2018-08-15T17:00:45.129Z
+     */
+    val insertedAt: String?,
+    /**
+     * ISO-8601 Timestamp w/millis, eg 2018-08-15T17:00:45.129Z
+     */
+    val updatedAt: String?
 )
 
 data class Address(
@@ -55,6 +63,7 @@ data class AddMobileNumberRequest(@field:Json(name = "mobile") val phoneNumber: 
 sealed class KycState {
     object None : KycState()
     object Pending : KycState()
+    object UnderReview : KycState()
     object Rejected : KycState()
     object Expired : KycState()
     object Verified : KycState()
@@ -73,6 +82,7 @@ class KycStateAdapter {
     fun fromJson(input: String): KycState = when (input) {
         NONE -> KycState.None
         PENDING -> KycState.Pending
+        UNDER_REVIEW -> KycState.UnderReview
         REJECTED -> KycState.Rejected
         EXPIRED -> KycState.Expired
         VERIFIED -> KycState.Verified
@@ -83,6 +93,7 @@ class KycStateAdapter {
     fun toJson(kycState: KycState): String = when (kycState) {
         KycState.None -> NONE
         KycState.Pending -> PENDING
+        KycState.UnderReview -> UNDER_REVIEW
         KycState.Rejected -> REJECTED
         KycState.Expired -> EXPIRED
         KycState.Verified -> VERIFIED
@@ -91,6 +102,7 @@ class KycStateAdapter {
     private companion object {
         private const val NONE = "NONE"
         private const val PENDING = "PENDING"
+        private const val UNDER_REVIEW = "UNDER_REVIEW"
         private const val REJECTED = "REJECTED"
         private const val EXPIRED = "EXPIRED"
         private const val VERIFIED = "VERIFIED"

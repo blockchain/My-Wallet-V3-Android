@@ -52,7 +52,7 @@ import piuk.blockchain.android.ui.balance.BalanceFragment;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.android.ui.home.MainActivity;
 import piuk.blockchain.androidcoreui.utils.AppUtil;
-import piuk.blockchain.android.util.NotificationsUtil;
+import com.blockchain.notifications.NotificationsUtil;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import timber.log.Timber;
 

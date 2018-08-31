@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.notifications;
+package com.blockchain.notifications;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -15,7 +15,6 @@ import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class NotificationTokenManagerTest extends RxTest{
+public class NotificationTokenManagerTest extends RxTest {
 
     private NotificationTokenManager subject;
     @Mock private NotificationService notificationService;
@@ -40,7 +39,7 @@ public class NotificationTokenManagerTest extends RxTest{
     }
 
     @Test
-    public void storeAndUpdateToken_disabledNotifications() throws Exception {
+    public void storeAndUpdateToken_disabledNotifications() {
         // Arrange
         when(prefsUtil.getValue(PrefsUtil.KEY_PUSH_NOTIFICATION_ENABLED, true)).thenReturn(false);
         when(payloadManager.getPayload()).thenReturn(null);
@@ -54,7 +53,7 @@ public class NotificationTokenManagerTest extends RxTest{
     }
 
     @Test
-    public void storeAndUpdateToken_enabledNotifications_notSignedIn() throws Exception {
+    public void storeAndUpdateToken_enabledNotifications_notSignedIn() {
         // Arrange
         when(prefsUtil.getValue(PrefsUtil.KEY_PUSH_NOTIFICATION_ENABLED, true)).thenReturn(true);
         when(payloadManager.getPayload()).thenReturn(null);
@@ -68,7 +67,7 @@ public class NotificationTokenManagerTest extends RxTest{
     }
 
     @Test
-    public void storeAndUpdateToken_enabledNotifications_signedIn() throws Exception {
+    public void storeAndUpdateToken_enabledNotifications_signedIn() {
         // Arrange
         when(prefsUtil.getValue(PrefsUtil.KEY_PUSH_NOTIFICATION_ENABLED, true)).thenReturn(true);
 
@@ -89,7 +88,7 @@ public class NotificationTokenManagerTest extends RxTest{
     }
 
     @Test
-    public void enableNotifications_requestToken() throws Exception {
+    public void enableNotifications_requestToken() {
         // Arrange
         when(prefsUtil.getValue(PrefsUtil.KEY_FIREBASE_TOKEN, "")).thenReturn("");
 
@@ -103,7 +102,7 @@ public class NotificationTokenManagerTest extends RxTest{
     }
 
     @Test
-    public void enableNotifications_storedToken() throws Exception {
+    public void enableNotifications_storedToken() {
         // Arrange
         when(prefsUtil.getValue(PrefsUtil.KEY_FIREBASE_TOKEN, "")).thenReturn("token");
         when(prefsUtil.getValue(PrefsUtil.KEY_PUSH_NOTIFICATION_ENABLED, true)).thenReturn(true);
