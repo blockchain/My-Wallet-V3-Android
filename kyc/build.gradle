@@ -1,8 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.build-properties'
 apply from: '../quality/jacocoLibrary.gradle'
 apply from: '../quality/ktlint.gradle'
+
+buildProperties {
+    secrets {
+        using(file('../app/secrets.properties')).or(file('../app/secretsDefaults.properties'))
+    }
+}
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -24,6 +31,10 @@ android {
     buildTypes{
         release {
             consumerProguardFiles 'proguard-rules.pro'
+            manifestPlaceholders = [PLACES_KEY: buildProperties.secrets['placesReleaseKey'].string]
+        }
+        debug {
+            manifestPlaceholders = [PLACES_KEY: buildProperties.secrets['placesDebugKey'].string]
         }
     }
 
@@ -45,6 +56,10 @@ androidExtensions {
 buildscript {
     repositories {
         jcenter()
+    }
+
+    dependencies {
+        classpath Libraries.buildProperties
     }
 }
 

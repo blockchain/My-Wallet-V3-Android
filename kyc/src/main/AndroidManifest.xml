@@ -8,5 +8,9 @@
         <activity
             android:name="com.blockchain.kycui.status.KycStatusActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${PLACES_KEY}"/>
     </application>
 </manifest>

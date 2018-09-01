@@ -3,9 +3,11 @@ package com.blockchain.kycui.address
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SearchView
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,7 @@ import com.blockchain.extensions.nextAfterOrNull
 import com.blockchain.kycui.address.models.AddressDialog
 import com.blockchain.kycui.address.models.AddressIntent
 import com.blockchain.kycui.address.models.AddressModel
+import com.blockchain.kycui.extensions.skipFirstUnless
 import com.blockchain.kycui.mobile.entry.KycMobileEntryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
@@ -128,7 +131,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
 
     private fun startPlacesActivityForResult() {
         val typeFilter = AutocompleteFilter.Builder()
-            .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+            .setCountry(address.blockingFirst().country)
             .build()
 
         PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
@@ -161,63 +164,77 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_PLACE_AUTOCOMPLETE) {
             when (resultCode) {
-                RESULT_OK -> {
-                    val place = PlaceAutocomplete.getPlace(requireActivity(), data)
-                    Timber.d("Place: " + place.name)
-                    // TODO: map to Address object, update UI. This isn't possible just yet as we're missing
-                    // the API key.
-                }
-                PlaceAutocomplete.RESULT_ERROR -> {
-                    val status = PlaceAutocomplete.getStatus(requireActivity(), data)
-                    Timber.e(status.statusMessage)
-                }
-                RESULT_CANCELED -> {
-                    // User cancelled search
-                }
+                RESULT_CANCELED -> Unit
+                RESULT_OK -> updateAddress(data)
+                PlaceAutocomplete.RESULT_ERROR -> logPlacesError(data)
             }
         }
     }
 
+    private fun logPlacesError(data: Intent?) {
+        val status = PlaceAutocomplete.getStatus(requireActivity(), data)
+        Timber.e("${status.statusMessage}")
+    }
+
+    private fun updateAddress(data: Intent?) {
+        val place = PlaceAutocomplete.getPlace(requireActivity(), data)
+        val address =
+            Geocoder(context, Locale.getDefault())
+                .getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                .first()
+
+        subscribeToTextChanges()
+        editTextFirstLine.text = SpannableStringBuilder(address.featureName)
+        editTextCity.text = SpannableStringBuilder(address.locality)
+        editTextState.text = SpannableStringBuilder(address.adminArea)
+        editTextZipCode.text = SpannableStringBuilder(address.postalCode)
+    }
+
     override fun onResume() {
         super.onResume()
+        subscribeToTextChanges()
+    }
 
-        compositeDisposable += editTextFirstLine
-            .onDelayedChange(KycStep.AddressFirstLine)
-            .doOnNext { addressSubject.onNext(AddressIntent.FirstLine(it)) }
-            .subscribe()
-        compositeDisposable += editTextAptName
-            .onDelayedChange(KycStep.AptNameOrNumber)
-            .doOnNext { addressSubject.onNext(AddressIntent.SecondLine(it)) }
-            .subscribe()
-        compositeDisposable += editTextCity
-            .onDelayedChange(KycStep.City)
-            .doOnNext { addressSubject.onNext(AddressIntent.City(it)) }
-            .subscribe()
-        compositeDisposable += editTextState
-            .onDelayedChange(KycStep.State)
-            .doOnNext { addressSubject.onNext(AddressIntent.State(it)) }
-            .subscribe()
-        compositeDisposable += editTextZipCode
-            .onDelayedChange(KycStep.ZipCode)
-            .doOnNext { addressSubject.onNext(AddressIntent.PostCode(it)) }
-            .subscribe()
+    private fun subscribeToTextChanges() {
+        if (compositeDisposable.size() == 0) {
+            compositeDisposable += editTextFirstLine
+                .onDelayedChange(KycStep.AddressFirstLine)
+                .doOnNext { addressSubject.onNext(AddressIntent.FirstLine(it)) }
+                .subscribe()
+            compositeDisposable += editTextAptName
+                .onDelayedChange(KycStep.AptNameOrNumber)
+                .doOnNext { addressSubject.onNext(AddressIntent.SecondLine(it)) }
+                .subscribe()
+            compositeDisposable += editTextCity
+                .onDelayedChange(KycStep.City)
+                .doOnNext { addressSubject.onNext(AddressIntent.City(it)) }
+                .subscribe()
+            compositeDisposable += editTextState
+                .onDelayedChange(KycStep.State)
+                .doOnNext { addressSubject.onNext(AddressIntent.State(it)) }
+                .subscribe()
+            compositeDisposable += editTextZipCode
+                .onDelayedChange(KycStep.ZipCode)
+                .doOnNext { addressSubject.onNext(AddressIntent.PostCode(it)) }
+                .subscribe()
 
-        compositeDisposable +=
-            searchViewAddress.getEditText()
-                .apply { isFocusable = false }
-                .clicks()
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribeBy(
-                    onNext = {
-                        try {
-                            startPlacesActivityForResult()
-                        } catch (e: GooglePlayServicesRepairableException) {
-                            showRecoverableErrorDialog()
-                        } catch (e: GooglePlayServicesNotAvailableException) {
-                            showUnrecoverableErrorDialog()
+            compositeDisposable +=
+                searchViewAddress.getEditText()
+                    .apply { isFocusable = false }
+                    .clicks()
+                    .debounce(300, TimeUnit.MILLISECONDS)
+                    .subscribeBy(
+                        onNext = {
+                            try {
+                                startPlacesActivityForResult()
+                            } catch (e: GooglePlayServicesRepairableException) {
+                                showRecoverableErrorDialog()
+                            } catch (e: GooglePlayServicesNotAvailableException) {
+                                showUnrecoverableErrorDialog()
+                            }
                         }
-                    }
-                )
+                    )
+        }
     }
 
     override fun onPause() {
@@ -279,7 +296,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         this.afterTextChangeEvents()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.editable()?.toString() ?: "" }
-            .skip(1)
+            .skipFirstUnless { !it.isEmpty() }
             .observeOn(AndroidSchedulers.mainThread())
             .distinctUntilChanged()
             .doOnNext { updateProgress(mapToCompleted(it), kycStep) }
