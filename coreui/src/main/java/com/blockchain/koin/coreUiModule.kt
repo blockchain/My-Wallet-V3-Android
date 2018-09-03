@@ -5,7 +5,10 @@ import com.blockchain.ui.chooser.AccountChooserPresenter
 
 val coreUiModule = applicationContext {
 
-    factory {
-        AccountChooserPresenter(get(), get(), get())
+    context("Payload") {
+
+        factory {
+            AccountChooserPresenter(get(), get(), get())
+        }
     }
 }

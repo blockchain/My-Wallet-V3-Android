@@ -1,5 +1,6 @@
 package piuk.blockchain.android.ui.chooser
 
+import com.blockchain.serialization.JsonSerializableAccount
 import com.blockchain.ui.chooser.AccountChooserItem
 import com.blockchain.ui.chooser.AccountListing
 import com.nhaarman.mockito_kotlin.mock
@@ -17,7 +18,7 @@ class WalletAccountHelperAccountListingAdapterTest {
 
     @Test
     fun `BTC accounts`() {
-        val account = mock<Any>()
+        val account = mock<JsonSerializableAccount>()
         val walletAccountHelper = mock<WalletAccountHelper> {
             on { getHdAccounts() } `it returns` listOf(
                 ItemAccount().apply {
@@ -37,7 +38,7 @@ class WalletAccountHelperAccountListingAdapterTest {
 
     @Test
     fun `BCH accounts`() {
-        val account = mock<Any>()
+        val account = mock<JsonSerializableAccount>()
         val walletAccountHelper = mock<WalletAccountHelper> {
             on { getHdBchAccounts() } `it returns` listOf(
                 ItemAccount().apply {
@@ -57,7 +58,7 @@ class WalletAccountHelperAccountListingAdapterTest {
 
     @Test
     fun `ETH accounts`() {
-        val account = mock<Any>()
+        val account = mock<JsonSerializableAccount>()
         val walletAccountHelper = mock<WalletAccountHelper> {
             on { getEthAccount() } `it returns` listOf(
                 ItemAccount().apply {
@@ -157,7 +158,7 @@ class WalletAccountHelperAccountListingAdapterTest {
 
     @Test
     fun `BTC imported (legacy) addresses - null address when not a legacy`() {
-        val account = mock<Any>()
+        val account = mock<JsonSerializableAccount>()
         val walletAccountHelper = mock<WalletAccountHelper> {
             on { getLegacyAddresses() } `it returns` listOf(
                 ItemAccount().apply {

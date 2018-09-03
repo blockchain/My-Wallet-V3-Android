@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.blockchain.serialization.JsonSerializableAccount
 import piuk.blockchain.androidcoreui.R
 import piuk.blockchain.androidcoreui.utils.extensions.goneIf
 
 class AccountChooserAdapter(
     private val items: List<AccountChooserItem>,
-    private val clickEvent: (Any) -> Unit
+    private val clickEvent: (JsonSerializableAccount) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private fun clickListener(account: Any?): View.OnClickListener = View.OnClickListener {
+    private fun <T : JsonSerializableAccount> clickListener(account: T?): View.OnClickListener = View.OnClickListener {
         if (account != null) {
             clickEvent(account)
         }

@@ -1,5 +1,6 @@
 package info.blockchain.wallet.payload.data;
 
+import com.blockchain.serialization.JsonSerializableAccount;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +20,7 @@ import java.io.IOException;
         setterVisibility = Visibility.NONE,
         creatorVisibility = Visibility.NONE,
         isGetterVisibility = Visibility.NONE)
-public class LegacyAddress {
+public class LegacyAddress implements JsonSerializableAccount {
 
     public static final int NORMAL_ADDRESS = 0;
     public static final int ARCHIVED_ADDRESS = 2;

@@ -1,5 +1,6 @@
 package info.blockchain.wallet.ethereum;
 
+import com.blockchain.serialization.JsonSerializableAccount;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +26,7 @@ import java.util.Arrays;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE)
-public class EthereumAccount {
+public class EthereumAccount implements JsonSerializableAccount {
 
     private static final String DERIVATION_PATH = "m/44'/60'/0'/0";
     private static final int DERIVATION_PATH_PURPOSE = 44;

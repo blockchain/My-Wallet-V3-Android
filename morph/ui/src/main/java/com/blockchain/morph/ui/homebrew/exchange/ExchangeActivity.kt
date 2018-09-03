@@ -1,5 +1,6 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -13,6 +14,8 @@ import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.initial
 import com.blockchain.morph.ui.R
+import com.blockchain.ui.chooser.AccountChooserActivity
+import com.blockchain.ui.chooser.AccountMode
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
@@ -91,6 +94,23 @@ class ExchangeActivity : AppCompatActivity() {
         keyboard = findViewById(R.id.numericKeyboard)
         selectSendAccountButton = findViewById(R.id.select_from_account_button)
         selectReceiveAccountButton = findViewById(R.id.select_to_account_button)
+
+        selectSendAccountButton.setOnClickListener {
+            AccountChooserActivity.startForResult(
+                this@ExchangeActivity,
+                AccountMode.Exchange,
+                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT,
+                R.string.from
+            )
+        }
+        selectReceiveAccountButton.setOnClickListener {
+            AccountChooserActivity.startForResult(
+                this@ExchangeActivity,
+                AccountMode.Exchange,
+                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT,
+                R.string.to
+            )
+        }
     }
 
     override fun onResume() {
@@ -163,4 +183,21 @@ class ExchangeActivity : AppCompatActivity() {
         compositeDisposable.clear()
         super.onPause()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            val account = AccountChooserActivity.getSelectedAccount(data)
+            when (requestCode) {
+                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT ->
+                    Timber.d("new ${account.cryptoCurrency} from account $account")
+                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT ->
+                    Timber.d("new ${account.cryptoCurrency} to account $account")
+                else -> throw IllegalArgumentException("Unknown request code $requestCode")
+            }
+        }
+    }
 }
+
+private const val REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT = 800
+private const val REQUEST_CODE_CHOOSE_SENDING_ACCOUNT = 801

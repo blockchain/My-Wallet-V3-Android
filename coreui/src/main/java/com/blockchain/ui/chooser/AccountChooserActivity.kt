@@ -4,15 +4,22 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import com.blockchain.features.FeatureNames
+import com.blockchain.serialization.JsonSerializableAccount
+import com.blockchain.serialization.toMoshiJson
 import com.fasterxml.jackson.core.JsonProcessingException
 import kotlinx.android.synthetic.main.activity_account_chooser.*
 import kotlinx.android.synthetic.main.toolbar_general.*
+import com.squareup.moshi.Moshi
+import info.blockchain.balance.CryptoCurrency
+import info.blockchain.wallet.coin.GenericMetadataAccount
+import info.blockchain.wallet.ethereum.EthereumAccount
+import info.blockchain.wallet.payload.data.Account
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.property
-import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.R
@@ -59,16 +66,16 @@ class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChoose
         }
 
     override fun updateUi(items: List<AccountChooserItem>) {
-        val adapter = AccountChooserAdapter(items) { any ->
+        val adapter = AccountChooserAdapter(items) { account ->
             try {
                 val intent = Intent().apply {
                     putExtra(
                         EXTRA_SELECTED_ITEM,
-                        any.toSerialisedString()
+                        account.toMoshiJson(account.javaClass)
                     )
                     putExtra(
                         EXTRA_SELECTED_OBJECT_TYPE,
-                        any.javaClass.name
+                        account.javaClass.name
                     )
                 }
 
@@ -116,6 +123,15 @@ class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChoose
             activity: Activity,
             accountMode: AccountMode,
             requestCode: Int,
+            @StringRes title: Int
+        ) {
+            startForResult(activity, accountMode, requestCode, activity.getString(title))
+        }
+
+        fun startForResult(
+            activity: Activity,
+            accountMode: AccountMode,
+            requestCode: Int,
             title: String
         ) {
             val starter = createIntent(
@@ -137,5 +153,30 @@ class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChoose
             putExtra(EXTRA_REQUEST_CODE, requestCode)
             putExtra(EXTRA_ACTIVITY_TITLE, title)
         }
+
+        fun getSelectedRawAccount(data: Intent): JsonSerializableAccount? {
+            val clazz =
+                Class.forName(data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_OBJECT_TYPE))
+
+            val json = data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM)
+            val any = Moshi.Builder().build().adapter(clazz)
+                .fromJson(json)
+            return any as? JsonSerializableAccount
+        }
+
+        fun getSelectedAccount(data: Intent): AccountChooserResult {
+            val account = getSelectedRawAccount(data)
+            return when (account) {
+                is Account -> AccountChooserResult(CryptoCurrency.BTC, account)
+                is EthereumAccount -> AccountChooserResult(CryptoCurrency.ETHER, account)
+                is GenericMetadataAccount -> AccountChooserResult(CryptoCurrency.BCH, account)
+                else -> throw IllegalArgumentException("Unsupported class type")
+            }
+        }
     }
 }
+
+class AccountChooserResult(
+    val cryptoCurrency: CryptoCurrency,
+    val account: JsonSerializableAccount
+)

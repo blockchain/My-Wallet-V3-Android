@@ -1,5 +1,6 @@
 package info.blockchain.wallet.contacts.data;
 
+import com.blockchain.serialization.JsonSerializableAccount;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,7 +25,7 @@ import javax.annotation.Nullable;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE)
-public class Contact {
+public class Contact implements JsonSerializableAccount {
 
     @JsonProperty("id")
     private String id;

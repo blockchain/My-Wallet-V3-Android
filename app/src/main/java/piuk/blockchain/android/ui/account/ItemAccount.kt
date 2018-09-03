@@ -1,5 +1,7 @@
 package piuk.blockchain.android.ui.account
 
+import com.blockchain.serialization.JsonSerializableAccount
+
 @Suppress("LeakingThis")
 class ItemAccount {
 
@@ -12,9 +14,8 @@ class ItemAccount {
     var tag: String? = null
     var absoluteBalance: Long? = null
 
-    // TODO Get rid of this Any
     // Ultimately this is used to sign txs
-    var accountObject: Any? = null
+    var accountObject: JsonSerializableAccount? = null
 
     // Address/Xpub to fetch balance/tx list
     var address: String? = null
@@ -40,7 +41,7 @@ class ItemAccount {
         displayBalance: String?,
         tag: String?,
         absoluteBalance: Long?,
-        accountObject: Any? = null,
+        accountObject: JsonSerializableAccount? = null,
         address: String?,
         type: TYPE = TYPE.SINGLE_ACCOUNT
     ) {

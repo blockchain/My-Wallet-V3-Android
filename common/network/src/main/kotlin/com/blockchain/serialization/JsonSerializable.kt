@@ -21,8 +21,10 @@ fun <T : JsonSerializable> KClass<T>.fromMoshiJson(json: String): T {
 /**
  * Serialize any [JsonSerializable] to a [String] using Moshi.
  */
-inline fun <reified T : JsonSerializable> T.toMoshiJson(): String {
+inline fun <reified T : JsonSerializable> T.toMoshiJson() = toMoshiJson(T::class.java)
+
+inline fun <reified T : JsonSerializable> T.toMoshiJson(clazz: Class<T>): String {
     val moshi = Moshi.Builder().build()
-    val jsonAdapter = moshi.adapter(T::class.java)
+    val jsonAdapter = moshi.adapter(clazz)
     return jsonAdapter.toJson(this)
 }
