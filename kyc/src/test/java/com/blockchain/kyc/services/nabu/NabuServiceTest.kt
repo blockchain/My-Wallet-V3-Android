@@ -4,17 +4,14 @@ import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
-import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
+import com.blockchain.kyc.api.nabu.NABU_UPDATE_WALLET_INFO
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
-import com.blockchain.kyc.api.nabu.NABU_VERIFICATIONS
 import com.blockchain.kyc.models.nabu.AddAddressRequest
-import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
-import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserState
@@ -199,6 +196,39 @@ class NabuServiceTest {
     }
 
     @Test
+    fun updateWalletInformation() {
+        // Arrange
+        val sessionToken = "SESSION_TOKEN"
+        val jwt = "JWT"
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetUser.json"))
+        )
+        // Act
+        val testObserver = subject.updateWalletInformation(
+            path = NABU_UPDATE_WALLET_INFO,
+            sessionToken = sessionToken,
+            jwt = jwt
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check Response
+        val nabuUser = testObserver.values().first()
+        nabuUser.firstName `should equal` "satoshi"
+        nabuUser.address?.city `should equal` "London"
+        nabuUser.state `should equal` UserState.Created
+        nabuUser.kycState `should equal` KycState.None
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_UPDATE_WALLET_INFO"
+        // Check Header
+        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+    }
+
+    @Test
     fun addAddress() {
         // Arrange
         val sessionToken = "SESSION_TOKEN"
@@ -241,74 +271,6 @@ class NabuServiceTest {
         addressRequest.address.state `should equal` state
         addressRequest.address.countryCode `should equal` countryCode
         addressRequest.address.postCode `should equal` postCode
-        // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
-    }
-
-    @Test
-    fun addMobileNumber() {
-        // Arrange
-        val sessionToken = "SESSION_TOKEN"
-        val mobileNumber = "MOBILE_NUMBER"
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .setBody("")
-        )
-        // Act
-        val testObserver = subject.addMobileNumber(
-            path = NABU_PUT_MOBILE,
-            sessionToken = sessionToken,
-            mobileNumber = mobileNumber
-        ).test()
-        // Assert
-        testObserver.awaitTerminalEvent()
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        // Check URL
-        val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_PUT_MOBILE"
-        // Check Body
-        val requestString = request.requestToString()
-        val adapter = moshi.adapter(AddMobileNumberRequest::class.java)
-        val addMobileNumberRequest = adapter.fromJson(requestString)!!
-        addMobileNumberRequest.phoneNumber `should equal to` mobileNumber
-        // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
-    }
-
-    @Test
-    fun verifyMobileNumber() {
-        // Arrange
-        val sessionToken = "SESSION_TOKEN"
-        val mobileNumber = "MOBILE_NUMBER"
-        val verificationCode = "VERIFICATION_CODE"
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .setBody("")
-        )
-        // Act
-        val testObserver = subject.verifyMobileNumber(
-            path = NABU_VERIFICATIONS,
-            sessionToken = sessionToken,
-            mobileNumber = mobileNumber,
-            verificationCode = verificationCode
-        ).test()
-        // Assert
-        testObserver.awaitTerminalEvent()
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        // Check URL
-        val request = server.takeRequest()
-        request.path `should equal to` "/$NABU_VERIFICATIONS"
-        // Check Body
-        val requestString = request.requestToString()
-        val adapter = moshi.adapter(MobileVerificationRequest::class.java)
-        val mobileVerificationRequest = adapter.fromJson(requestString)!!
-        mobileVerificationRequest.phoneNumber `should equal to` mobileNumber
-        mobileVerificationRequest.verificationCode `should equal to` verificationCode
-        mobileVerificationRequest.type `should equal to` "MOBILE"
         // Check Header
         request.headers.get("authorization") `should equal` "Bearer $sessionToken"
     }

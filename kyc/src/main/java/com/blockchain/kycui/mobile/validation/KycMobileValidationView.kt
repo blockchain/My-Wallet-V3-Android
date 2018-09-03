@@ -15,7 +15,5 @@ interface KycMobileValidationView : View {
 
     fun continueSignUp()
 
-    fun showErrorToast(@StringRes message: Int)
-
     fun displayErrorDialog(@StringRes message: Int)
 }

@@ -41,7 +41,7 @@ class RetailWalletTokenServiceTest {
     }
 
     @Test
-    fun `createUser success`() {
+    fun `requestJwt success`() {
         // Arrange
         val guid = "GUID"
         val sharedKey = "SHARED_KEY"
@@ -51,7 +51,7 @@ class RetailWalletTokenServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/wallet/GetSignedTokenSuccess.json"))
         )
         // Act
-        val testObserver = subject.createUser(
+        val testObserver = subject.requestJwt(
             path = RETAIL_JWT_TOKEN,
             guid = guid,
             sharedKey = sharedKey
@@ -71,7 +71,7 @@ class RetailWalletTokenServiceTest {
     }
 
     @Test
-    fun `createUser failure`() {
+    fun `requestJwt failure`() {
         // Arrange
         val guid = "GUID"
         val sharedKey = "SHARED_KEY"
@@ -81,7 +81,7 @@ class RetailWalletTokenServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/wallet/GetSignedTokenFailure.json"))
         )
         // Act
-        val testObserver = subject.createUser(
+        val testObserver = subject.requestJwt(
             path = RETAIL_JWT_TOKEN,
             guid = guid,
             sharedKey = sharedKey

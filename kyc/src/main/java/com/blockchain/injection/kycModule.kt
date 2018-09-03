@@ -49,19 +49,13 @@ val kycModule = applicationContext {
 
         factory { KycProfilePresenter(get(), get()) }
 
-        factory { KycHomeAddressPresenter(get(), get()) }
+        factory { KycHomeAddressPresenter(get(), get(), get()) }
 
-        factory {
-            KycMobileEntryPresenter(get(), get(), get())
-        }
+        factory { KycMobileEntryPresenter(get()) }
 
-        factory {
-            KycMobileValidationPresenter(get(), get())
-        }
+        factory { KycMobileValidationPresenter(get(), get(), get()) }
 
-        factory {
-            OnfidoSplashPresenter(get(), get(), get())
-        }
+        factory { OnfidoSplashPresenter(get(), get(), get()) }
 
         factory { KycStatusPresenter(get(), get(), get()) }
     }

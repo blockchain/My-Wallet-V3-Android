@@ -2,16 +2,20 @@ package com.blockchain.kycui.address
 
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata
+import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
+import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
-import com.blockchain.nabu.models.mapFromMetadata
+import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kycui.address.models.AddressModel
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import info.blockchain.wallet.api.data.Settings
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -22,6 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
+import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 
 class KycHomeAddressPresenterTest {
 
@@ -29,6 +34,7 @@ class KycHomeAddressPresenterTest {
     private val view: KycHomeAddressView = mock()
     private val nabuDataManager: NabuDataManager = mock()
     private val metadataManager: MetadataManager = mock()
+    private val settingsDataManager: SettingsDataManager = mock()
 
     @Suppress("unused")
     @get:Rule
@@ -41,7 +47,8 @@ class KycHomeAddressPresenterTest {
     fun setUp() {
         subject = KycHomeAddressPresenter(
             metadataManager,
-            nabuDataManager
+            nabuDataManager,
+            settingsDataManager
         )
         subject.initView(view)
     }
@@ -147,7 +154,7 @@ class KycHomeAddressPresenterTest {
     }
 
     @Test
-    fun `on continue clicked all data correct, metadata fetch success`() {
+    fun `on continue clicked all data correct, phone number unverified`() {
         // Arrange
         val firstLine = "1"
         val city = "2"
@@ -183,12 +190,65 @@ class KycHomeAddressPresenterTest {
                 countryCode
             )
         ).thenReturn(Completable.complete())
+        whenever(settingsDataManager.fetchSettings()).thenReturn(Observable.just(Settings()))
         // Act
         subject.onContinueClicked()
         // Assert
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
-        verify(view).continueSignUp(countryCode)
+        verify(view).continueToMobileVerification(countryCode)
+    }
+
+    @Test
+    fun `on continue clicked all data correct, phone number verified`() {
+        // Arrange
+        val firstLine = "1"
+        val city = "2"
+        val zipCode = "3"
+        val countryCode = "UK"
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.address)
+            .thenReturn(
+                Observable.just(
+                    AddressModel(
+                        firstLine,
+                        null,
+                        city,
+                        null,
+                        zipCode,
+                        countryCode
+                    )
+                )
+            )
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(
+            nabuDataManager.addAddress(
+                offlineToken.mapFromMetadata(),
+                firstLine,
+                null,
+                city,
+                null,
+                zipCode,
+                countryCode
+            )
+        ).thenReturn(Completable.complete())
+        val settings: Settings = mock()
+        whenever(settings.isSmsVerified).thenReturn(true)
+        whenever(settingsDataManager.fetchSettings()).thenReturn(Observable.just(settings))
+        val jwt = "JWT"
+        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
+        whenever(nabuDataManager.updateUserWalletInfo(offlineToken.mapFromMetadata(), jwt))
+            .thenReturn(Single.just(getNabuUser()))
+        // Act
+        subject.onContinueClicked()
+        // Assert
+        verify(view).showProgressDialog()
+        verify(view).dismissProgressDialog()
+        verify(view).continueToOnfidoSplash()
     }
 
     @Test
@@ -221,4 +281,17 @@ class KycHomeAddressPresenterTest {
         )
         sortedMap `should equal` expectedMap
     }
+
+    private fun getNabuUser(): NabuUser = NabuUser(
+        "",
+        "",
+        "",
+        "",
+        false,
+        null,
+        UserState.None,
+        KycState.None,
+        "",
+        ""
+    )
 }

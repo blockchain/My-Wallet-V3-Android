@@ -9,7 +9,7 @@ import retrofit2.http.Url
 internal interface RetailWallet {
 
     @GET
-    fun createUser(
+    fun requestJwt(
         @Url url: String,
         @Query("guid") guid: String,
         @Query("sharedKey") sharedKey: String,

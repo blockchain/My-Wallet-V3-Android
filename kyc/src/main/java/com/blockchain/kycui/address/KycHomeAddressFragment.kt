@@ -110,9 +110,13 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         addressSubject.onNext(AddressIntent.Country(profileModel.countryCode))
     }
 
-    override fun continueSignUp(countryCode: String) {
+    override fun continueToMobileVerification(countryCode: String) {
         val args = KycMobileEntryFragment.bundleArgs(countryCode)
         findNavController(this).navigate(R.id.kycPhoneNumberFragment, args)
+    }
+
+    override fun continueToOnfidoSplash() {
+        findNavController(this).navigate(R.id.onfidoSplashFragment)
     }
 
     private fun displayCountryDialog() {

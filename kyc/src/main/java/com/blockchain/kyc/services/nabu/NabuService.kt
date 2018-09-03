@@ -4,19 +4,17 @@ import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
-import com.blockchain.kyc.api.nabu.NABU_PUT_MOBILE
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
+import com.blockchain.kyc.api.nabu.NABU_UPDATE_WALLET_INFO
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
-import com.blockchain.kyc.api.nabu.NABU_VERIFICATIONS
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.AddAddressRequest
-import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.ApplicantIdRequest
-import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
+import com.blockchain.kyc.models.nabu.NabuJwt
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.nabu.models.NabuOfflineTokenRequest
@@ -82,6 +80,16 @@ class NabuService(
         sessionToken.toAuthHeader()
     ).wrapErrorMessage()
 
+    internal fun updateWalletInformation(
+        path: String = apiPath + NABU_UPDATE_WALLET_INFO,
+        sessionToken: String,
+        jwt: String
+    ): Single<NabuUser> = service.updateWalletInformation(
+        path,
+        NabuJwt(jwt),
+        sessionToken.toAuthHeader()
+    ).wrapErrorMessage()
+
     internal fun getCountriesList(
         path: String = apiPath + NABU_COUNTRIES,
         scope: Scope
@@ -109,27 +117,6 @@ class NabuService(
             countryCode,
             postCode
         ),
-        sessionToken.toAuthHeader()
-    ).wrapErrorMessage()
-
-    internal fun addMobileNumber(
-        path: String = apiPath + NABU_PUT_MOBILE,
-        mobileNumber: String,
-        sessionToken: String
-    ): Completable = service.addMobileNumber(
-        path,
-        AddMobileNumberRequest(mobileNumber),
-        sessionToken.toAuthHeader()
-    ).wrapErrorMessage()
-
-    internal fun verifyMobileNumber(
-        path: String = apiPath + NABU_VERIFICATIONS,
-        mobileNumber: String,
-        verificationCode: String,
-        sessionToken: String
-    ): Completable = service.verifyMobileNumber(
-        path,
-        MobileVerificationRequest(mobileNumber, verificationCode),
         sessionToken.toAuthHeader()
     ).wrapErrorMessage()
 

@@ -1,12 +1,11 @@
 package com.blockchain.kyc.api.nabu
 
 import com.blockchain.kyc.models.nabu.AddAddressRequest
-import com.blockchain.kyc.models.nabu.AddMobileNumberRequest
 import com.blockchain.kyc.models.nabu.Address
 import com.blockchain.kyc.models.nabu.ApplicantIdRequest
-import com.blockchain.kyc.models.nabu.MobileVerificationRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
+import com.blockchain.kyc.models.nabu.NabuJwt
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.OnfidoApiKey
 import com.blockchain.nabu.models.NabuOfflineTokenRequest
@@ -55,6 +54,13 @@ internal interface Nabu {
         @Header("authorization") authorization: String
     ): Single<NabuUser>
 
+    @PUT
+    fun updateWalletInformation(
+        @Url url: String,
+        @Body jwt: NabuJwt,
+        @Header("authorization") authorization: String
+    ): Single<NabuUser>
+
     @GET
     fun getCountriesList(
         @Url url: String,
@@ -73,20 +79,6 @@ internal interface Nabu {
     fun addAddress(
         @Url url: String,
         @Body address: AddAddressRequest,
-        @Header("authorization") authorization: String
-    ): Completable
-
-    @PUT
-    fun addMobileNumber(
-        @Url url: String,
-        @Body mobileNumber: AddMobileNumberRequest,
-        @Header("authorization") authorization: String
-    ): Completable
-
-    @POST
-    fun verifyMobileNumber(
-        @Url url: String,
-        @Body mobileVerificationRequest: MobileVerificationRequest,
         @Header("authorization") authorization: String
     ): Completable
 

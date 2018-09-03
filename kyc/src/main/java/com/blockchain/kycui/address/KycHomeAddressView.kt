@@ -20,7 +20,9 @@ interface KycHomeAddressView : View {
 
     fun showProgressDialog()
 
-    fun continueSignUp(countryCode: String)
+    fun continueToMobileVerification(countryCode: String)
 
     fun finishPage()
+
+    fun continueToOnfidoSplash()
 }

@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_kycHomeAddressFragment_to_kycPhoneNumberFragment"
             app:destination="@id/kycPhoneNumberFragment" />
+        <action
+            android:id="@+id/action_kycHomeAddressFragment_to_onfidoSplashFragment"
+            app:destination="@id/onfidoSplashFragment" />
     </fragment>
     <fragment
         android:id="@+id/kycPhoneNumberFragment"

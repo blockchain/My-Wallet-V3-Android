@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.blockchain.kycui.extensions.skipFirstUnless
 import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
@@ -24,11 +25,9 @@ import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
-import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
-import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_kyc_mobile_validation.button_kyc_mobile_validation_next as buttonNext
@@ -111,10 +110,6 @@ class KycMobileValidationFragment :
         progressDialog = null
     }
 
-    override fun showErrorToast(message: Int) {
-        toast(message, ToastCustom.TYPE_ERROR)
-    }
-
     override fun continueSignUp() {
         ViewUtils.hideKeyboard(requireActivity())
         val args = OnfidoSplashFragment.bundleArgs(countryCode)
@@ -135,7 +130,7 @@ class KycMobileValidationFragment :
         this.afterTextChangeEvents()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.editable()?.toString() ?: "" }
-            .skip(1)
+            .skipFirstUnless { !it.isEmpty() }
             .observeOn(AndroidSchedulers.mainThread())
             .map { mapToCompleted(it) }
             .distinctUntilChanged()

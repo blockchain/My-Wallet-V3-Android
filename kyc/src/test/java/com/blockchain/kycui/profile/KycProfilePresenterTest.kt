@@ -168,7 +168,7 @@ class KycProfilePresenterTest {
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
         ).thenReturn(Observable.just(Optional.absent()))
-        whenever(nabuDataManager.createUser()).thenReturn(Single.just(jwt))
+        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
         whenever(nabuDataManager.getAuthToken(jwt))
             .thenReturn(Single.just(offlineToken.mapFromMetadata()))
         whenever(metadataManager.saveToMetadata(offlineToken))
@@ -207,7 +207,7 @@ class KycProfilePresenterTest {
             )
         ).thenReturn(Observable.just(Optional.absent()))
         val jwt = "JTW"
-        whenever(nabuDataManager.createUser()).thenReturn(Single.just(jwt))
+        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
         whenever(nabuDataManager.getAuthToken(jwt))
             .thenReturn(Single.just(offlineToken.mapFromMetadata()))
         whenever(metadataManager.saveToMetadata(offlineToken))

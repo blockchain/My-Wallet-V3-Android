@@ -2,13 +2,16 @@ package com.blockchain.kycui.address
 
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.Scope
+import com.blockchain.kycui.address.models.AddressModel
 import com.blockchain.kycui.extensions.fetchNabuToken
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
+import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
@@ -17,7 +20,8 @@ import java.util.SortedMap
 
 class KycHomeAddressPresenter(
     private val metadataManager: MetadataManager,
-    private val nabuDataManager: NabuDataManager
+    private val nabuDataManager: NabuDataManager,
+    private val settingsDataManager: SettingsDataManager
 ) : BasePresenter<KycHomeAddressView>() {
 
     private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
@@ -54,28 +58,59 @@ class KycHomeAddressPresenter(
         compositeDisposable += view.address
             .firstOrError()
             .flatMap { address ->
-                fetchOfflineToken
-                    .flatMapCompletable {
-                        nabuDataManager.addAddress(
-                            it,
-                            address.firstLine,
-                            address.secondLine,
-                            address.city,
-                            address.state,
-                            address.postCode,
-                            address.country
-                        ).subscribeOn(Schedulers.io())
-                    }.andThen(Single.just(address.country))
+                addAddress(address)
+                    .andThen(checkVerifiedPhoneNumber())
+                    .map { verified -> verified to address.country }
+            }
+            .flatMap { (verified, countryCode) ->
+                if (verified) {
+                    updateNabuData()
+                } else {
+                    Completable.complete()
+                }.andThen(Single.just(verified to countryCode))
             }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { view.showProgressDialog() }
             .doOnEvent { _, _ -> view.dismissProgressDialog() }
             .doOnError(Timber::e)
             .subscribeBy(
-                onSuccess = { view.continueSignUp(it) },
+                onSuccess = { (verified, countryCode) ->
+                    if (verified) {
+                        view.continueToOnfidoSplash()
+                    } else {
+                        view.continueToMobileVerification(countryCode)
+                    }
+                },
                 onError = { view.showErrorToast(R.string.kyc_address_error_saving) }
             )
     }
+
+    private fun addAddress(address: AddressModel): Completable = fetchOfflineToken
+        .flatMapCompletable {
+            nabuDataManager.addAddress(
+                it,
+                address.firstLine,
+                address.secondLine,
+                address.city,
+                address.state,
+                address.postCode,
+                address.country
+            ).subscribeOn(Schedulers.io())
+        }
+
+    private fun checkVerifiedPhoneNumber(): Single<Boolean> = settingsDataManager.fetchSettings()
+        .map { it.isSmsVerified }
+        .single(false)
+
+    private fun updateNabuData(): Completable = nabuDataManager.requestJwt()
+        .subscribeOn(Schedulers.io())
+        .flatMap { jwt ->
+            fetchOfflineToken.flatMap {
+                nabuDataManager.updateUserWalletInfo(it, jwt)
+                    .subscribeOn(Schedulers.io())
+            }
+        }
+        .ignoreElement()
 
     private fun enableButtonIfComplete(firstLine: String, city: String, zipCode: String) {
         view.setButtonEnabled(!firstLine.isEmpty() && !city.isEmpty() && !zipCode.isEmpty())

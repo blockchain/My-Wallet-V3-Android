@@ -62,18 +62,18 @@ class NabuDataManagerTest {
         // Arrange
         val jwt = "JWT"
         whenever(
-            tokenService.createUser(
+            tokenService.requestJwt(
                 guid = guid,
                 sharedKey = sharedKey
             )
         ).thenReturn(Single.just(RetailJwtResponse(true, jwt, null)))
         // Act
-        val testObserver = subject.createUser().test()
+        val testObserver = subject.requestJwt().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(jwt)
-        verify(tokenService).createUser(
+        verify(tokenService).requestJwt(
             guid = guid,
             sharedKey = sharedKey
         )
@@ -84,17 +84,17 @@ class NabuDataManagerTest {
         // Arrange
         val error = "ERROR"
         whenever(
-            tokenService.createUser(
+            tokenService.requestJwt(
                 guid = guid,
                 sharedKey = sharedKey
             )
         ).thenReturn(Single.just(RetailJwtResponse(false, null, error)))
         // Act
-        val testObserver = subject.createUser().test()
+        val testObserver = subject.requestJwt().test()
         // Assert
         testObserver.assertNotComplete()
         testObserver.assertError(ApiException::class.java)
-        verify(tokenService).createUser(
+        verify(tokenService).requestJwt(
             guid = guid,
             sharedKey = sharedKey
         )
@@ -254,68 +254,6 @@ class NabuDataManagerTest {
             state = state,
             postCode = postCode,
             countryCode = countryCode
-        )
-    }
-
-    @Test
-    fun addMobileNumber() {
-        // Arrange
-        val mobileNumber = "MOBILE_NUMBER"
-        val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
-        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
-        whenever(nabuTokenStore.getAccessToken())
-            .thenReturn(Observable.just(Optional.Some(sessionToken)))
-        whenever(
-            nabuService.addMobileNumber(
-                mobileNumber = mobileNumber,
-                sessionToken = sessionToken.token
-            )
-        ).thenReturn(Completable.complete())
-        // Act
-        val testObserver = subject.addMobileNumber(
-            offlineToken,
-            mobileNumber
-        ).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        verify(nabuService).addMobileNumber(
-            mobileNumber = mobileNumber,
-            sessionToken = sessionToken.token
-        )
-    }
-
-    @Test
-    fun verifyMobileNumber() {
-        // Arrange
-        val mobileNumber = "MOBILE_NUMBER"
-        val verificationCode = "VERIFICATION_CODE"
-        val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
-        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
-        whenever(nabuTokenStore.getAccessToken())
-            .thenReturn(Observable.just(Optional.Some(sessionToken)))
-        whenever(
-            nabuService.verifyMobileNumber(
-                mobileNumber = mobileNumber,
-                verificationCode = verificationCode,
-                sessionToken = sessionToken.token
-            )
-        ).thenReturn(Completable.complete())
-        // Act
-        val testObserver = subject.verifyMobileNumber(
-            offlineToken,
-            mobileNumber,
-            verificationCode
-        ).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        verify(nabuService).verifyMobileNumber(
-            mobileNumber = mobileNumber,
-            verificationCode = verificationCode,
-            sessionToken = sessionToken.token
         )
     }
 

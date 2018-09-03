@@ -1,7 +1,6 @@
 package com.blockchain.kycui.mobile.entry
 
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.blockchain.kycui.extensions.skipFirstUnless
 import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
 import com.blockchain.kycui.mobile.entry.models.PhoneNumber
 import com.blockchain.kycui.mobile.validation.KycMobileValidationFragment
@@ -152,21 +152,13 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
         progressDialog = null
     }
 
-    override fun displayErrorDialog(errorMessage: Int) {
-        AlertDialog.Builder(requireContext(), R.style.AlertDialogStyle)
-            .setTitle(R.string.app_name)
-            .setMessage(errorMessage)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
     private fun TextView.onDelayedChange(
         kycStep: KycStep
     ): Observable<Boolean> =
         this.afterTextChangeEvents()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.editable()?.toString() ?: "" }
-            .skip(1)
+            .skipFirstUnless { !it.isEmpty() }
             .observeOn(AndroidSchedulers.mainThread())
             .map { mapToCompleted(it) }
             .distinctUntilChanged()

@@ -72,7 +72,7 @@ class KycProfilePresenter(
                 )
     }
 
-    private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.createUser()
+    private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.requestJwt()
         .subscribeOn(Schedulers.io())
         .flatMapCompletable { jwt ->
             nabuDataManager.getAuthToken(jwt)

@@ -16,11 +16,11 @@ class RetailWalletTokenService(
     private val service: RetailWallet = retrofit.create(RetailWallet::class.java)
     private val explorerPath = environmentConfig.explorerUrl
 
-    internal fun createUser(
+    internal fun requestJwt(
         path: String = explorerPath + RETAIL_JWT_TOKEN,
         guid: String,
         sharedKey: String
-    ): Single<RetailJwtResponse> = service.createUser(
+    ): Single<RetailJwtResponse> = service.requestJwt(
         path,
         guid,
         sharedKey,

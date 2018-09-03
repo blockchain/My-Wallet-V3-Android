@@ -19,6 +19,4 @@ interface KycMobileEntryView : View {
     fun showProgressDialog()
 
     fun continueSignUp(displayModel: PhoneDisplayModel)
-
-    fun displayErrorDialog(@StringRes errorMessage: Int)
 }

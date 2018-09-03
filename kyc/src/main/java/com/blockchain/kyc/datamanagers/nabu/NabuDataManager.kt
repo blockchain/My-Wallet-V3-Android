@@ -39,8 +39,8 @@ class NabuDataManager(
             .map { it.email }
             .singleOrError()
 
-    internal fun createUser(): Single<String> =
-        retailWalletTokenService.createUser(
+    internal fun requestJwt(): Single<String> =
+        retailWalletTokenService.requestJwt(
             guid = guid,
             sharedKey = sharedKey
         ).map {
@@ -91,6 +91,14 @@ class NabuDataManager(
             nabuService.getUser(sessionToken = session.token)
         }
 
+    internal fun updateUserWalletInfo(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        jwt: String
+    ): Single<NabuUser> =
+        authenticate(offlineTokenResponse) { session ->
+            nabuService.updateWalletInformation(sessionToken = session.token, jwt = jwt)
+        }
+
     internal fun addAddress(
         offlineTokenResponse: NabuOfflineTokenResponse,
         line1: String,
@@ -107,28 +115,6 @@ class NabuDataManager(
             state = state,
             postCode = postCode,
             countryCode = countryCode,
-            sessionToken = it.token
-        ).toSingleDefault(Any())
-    }.ignoreElement()
-
-    internal fun addMobileNumber(
-        offlineTokenResponse: NabuOfflineTokenResponse,
-        mobileNumber: String
-    ): Completable = authenticate(offlineTokenResponse) {
-        nabuService.addMobileNumber(
-            mobileNumber = mobileNumber,
-            sessionToken = it.token
-        ).toSingleDefault(Any())
-    }.ignoreElement()
-
-    internal fun verifyMobileNumber(
-        offlineTokenResponse: NabuOfflineTokenResponse,
-        mobileNumber: String,
-        verificationCode: String
-    ): Completable = authenticate(offlineTokenResponse) {
-        nabuService.verifyMobileNumber(
-            mobileNumber = mobileNumber,
-            verificationCode = verificationCode,
             sessionToken = it.token
         ).toSingleDefault(Any())
     }.ignoreElement()
