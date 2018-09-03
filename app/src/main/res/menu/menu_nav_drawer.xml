@@ -14,6 +14,12 @@
         android:visible="false" />
 
     <item
+        android:id="@+id/nav_exchange_homebrew_debug"
+        android:icon="@drawable/vector_exchange"
+        android:title="@string/debug_morph_exchange_homebrew"
+        android:visible="false" />
+
+    <item
         android:id="@+id/nav_backup"
         android:icon="@drawable/vector_lock"
         android:title="@string/backup_wallet" />

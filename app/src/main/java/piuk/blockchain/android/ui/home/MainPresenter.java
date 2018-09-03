@@ -12,6 +12,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.data.bitcoincash.BchDataManager;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
@@ -214,7 +215,10 @@ public class MainPresenter extends BasePresenter<MainView> {
     private void setShapeShiftVisibility(boolean showShapeshift) {
         // TODO: 01/08/2018 We need to choose visiblity based on whether to send users to Legacy
         // SS or Homebrew SS
-        getView().showShapeshift();
+        getView().showExchange();
+        if (BuildConfig.DEBUG) {
+            getView().showHomebrewDebug();
+        }
 //        if (showShapeshift) {
 //            getView().showShapeshift();
 //        } else {

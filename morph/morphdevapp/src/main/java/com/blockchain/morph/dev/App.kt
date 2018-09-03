@@ -1,20 +1,16 @@
 package com.blockchain.morph.dev
 
 import android.app.Application
-import com.blockchain.morph.ui.homebrew.exchange.RateStream
+import com.blockchain.koin.morphUiModule
+import com.blockchain.koin.walletModule
 import com.blockchain.network.EnvironmentUrls
 import com.blockchain.network.modules.OkHttpInterceptors
 import com.blockchain.network.modules.apiModule
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.ApiCode
 import info.blockchain.wallet.BlockchainFramework
-import info.blockchain.wallet.prices.CurrentPriceApi
-import info.blockchain.wallet.prices.PriceApi
-import info.blockchain.wallet.prices.PriceEndpoints
-import info.blockchain.wallet.prices.toCachedIndicativeFiatPriceService
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.applicationContext
-import retrofit2.Retrofit
 import timber.log.Timber
 
 class App : Application() {
@@ -27,9 +23,10 @@ class App : Application() {
                 apiModule,
                 serviceModule,
                 environmentModule,
+                morphUiModule,
+                walletModule,
                 applicationContext {
                     bean { OkHttpInterceptors(emptyList()) }
-                    bean { FakeRatesStream(get()) as RateStream }
                 }
             )
         )
@@ -43,12 +40,6 @@ val serviceModule = applicationContext {
                 get() = "ABC1234"
         } as ApiCode
     }
-
-    factory { get<Retrofit>("api").create(PriceEndpoints::class.java) }
-    factory { PriceApi(get(), get()) }
-    factory { get<PriceApi>() as CurrentPriceApi }
-
-    factory { get<CurrentPriceApi>().toCachedIndicativeFiatPriceService() }
 }
 
 val environmentModule = applicationContext {

@@ -8,8 +8,6 @@ import info.blockchain.wallet.api.WalletApi
 import info.blockchain.wallet.api.WalletExplorerEndpoints
 import info.blockchain.wallet.ethereum.EthAccountApi
 import info.blockchain.wallet.payment.Payment
-import info.blockchain.wallet.prices.PriceApi
-import info.blockchain.wallet.prices.PriceEndpoints
 import info.blockchain.wallet.settings.SettingsManager
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.android.data.fingerprint.FingerprintAuth
@@ -21,8 +19,6 @@ val serviceModule = applicationContext {
     bean { SettingsManager(get()) }
 
     bean { get<Retrofit>("explorer").create(WalletExplorerEndpoints::class.java) }
-
-    bean { get<Retrofit>("api").create(PriceEndpoints::class.java) }
 
     bean { get<Retrofit>("api").create(FeeEndpoints::class.java) }
 
@@ -38,8 +34,6 @@ val serviceModule = applicationContext {
                 get() = BlockchainFramework.getApiCode()
         } as ApiCode
     }
-
-    factory { PriceApi(get(), get()) }
 
     factory { FingerprintAuthImpl() as FingerprintAuth }
 

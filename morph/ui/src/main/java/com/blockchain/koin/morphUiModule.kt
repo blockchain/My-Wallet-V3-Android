@@ -28,4 +28,6 @@ val morphUiModule = applicationContext {
 
         factory { UsStateSelectionPresenter(get()) }
     }
+
+    apply { registerDebug() }
 }

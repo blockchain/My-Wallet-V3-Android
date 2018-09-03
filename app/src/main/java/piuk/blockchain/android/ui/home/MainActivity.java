@@ -40,6 +40,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.blockchain.koin.modules.MorphActivityLauncher;
 import com.blockchain.koin.modules.MorphMethodModuleKt;
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.BasePermissionListener;
@@ -491,6 +492,9 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             case R.id.nav_exchange:
                 MorphMethodModuleKt.launchAsync(morphActivityLauncher, MainActivity.this);
                 break;
+            case R.id.nav_exchange_homebrew_debug:
+                startActivity(ExchangeActivity.Companion.intent(this, "GBP"));
+                break;
             case R.id.nav_addresses:
                 startActivityForResult(new Intent(this, AccountActivity.class), ACCOUNT_EDIT);
                 break;
@@ -548,7 +552,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         }
 
         if (!BuildConfig.CONTACTS_ENABLED) {
-            MenuItem contactsMenuItem = binding.navigationView.getMenu().findItem(R.id.nav_contacts);
+            MenuItem contactsMenuItem = getMenu().findItem(R.id.nav_contacts);
             contactsMenuItem.setVisible(false);
         }
     }
@@ -691,7 +695,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     }
 
     private void setBuyBitcoinVisible(boolean visible) {
-        Menu menu = binding.navigationView.getMenu();
+        Menu menu = getMenu();
         menu.findItem(R.id.nav_buy).setVisible(visible);
     }
 
@@ -949,15 +953,22 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     }
 
     @Override
-    public void showShapeshift() {
-        Menu menu = binding.navigationView.getMenu();
-        menu.findItem(R.id.nav_exchange).setVisible(true);
+    public void showExchange() {
+        getMenu().findItem(R.id.nav_exchange).setVisible(true);
     }
 
     @Override
-    public void hideShapeshift() {
-        Menu menu = binding.navigationView.getMenu();
-        menu.findItem(R.id.nav_exchange).setVisible(false);
+    public void hideExchange() {
+        getMenu().findItem(R.id.nav_exchange).setVisible(false);
+    }
+
+    @Override
+    public void showHomebrewDebug() {
+        getMenu().findItem(R.id.nav_exchange_homebrew_debug).setVisible(true);
+    }
+
+    private Menu getMenu() {
+        return binding.navigationView.getMenu();
     }
 
     @Override

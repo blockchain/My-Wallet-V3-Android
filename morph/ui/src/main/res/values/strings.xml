@@ -7,6 +7,7 @@
 
     <!-- HISTORY -->
     <string name="morph_exchange">Exchange</string>
+    <string name="debug_morph_exchange_homebrew" translatable="false">Debug Homebrew</string>
     <string name="morph_loading_orders">Loading order history</string>
     <string name="morph_loading_orders_failed">Loading orders failed</string>
     <string name="morph_order_history">Order history</string>

@@ -1,4 +1,4 @@
-package com.blockchain.morph.dev
+package com.blockchain.homebrew
 
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.toIntent
