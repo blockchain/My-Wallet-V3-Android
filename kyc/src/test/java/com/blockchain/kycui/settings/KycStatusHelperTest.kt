@@ -387,6 +387,60 @@ class KycStatusHelperTest {
         testObserver.assertValue(SettingsKycState.UnderReview)
     }
 
+    @Test
+    fun `sync phone number fails due to missing metadata but returns complete`() {
+        // Arrange
+        val jwt = "JWT"
+        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.absent()))
+        // Act
+        val testObserver = subject.syncPhoneNumberWithNabu().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+    }
+
+    @Test
+    fun `sync phone number fails due to exception, throws correctly`() {
+        // Arrange
+        val jwt = "JWT"
+        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.error { Throwable() })
+        // Act
+        val testObserver = subject.syncPhoneNumberWithNabu().test()
+        // Assert
+        testObserver.assertNotComplete()
+        testObserver.assertError(Throwable::class.java)
+    }
+
+    @Test
+    fun `sync phone number successful`() {
+        // Arrange
+        val jwt = "JWT"
+        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(nabuDataManager.updateUserWalletInfo(offlineToken.mapFromMetadata(), jwt))
+            .thenReturn(Single.just(getNabuUserWithKycState(KycState.None)))
+        // Act
+        val testObserver = subject.syncPhoneNumberWithNabu().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+    }
+
     private fun getNabuUserWithKycState(kycState: KycState): NabuUser = NabuUser(
         "",
         "",

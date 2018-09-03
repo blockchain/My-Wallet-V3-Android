@@ -1,6 +1,7 @@
 package com.blockchain.kycui.extensions
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.exceptions.MetadataNotFoundException
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
@@ -42,5 +43,20 @@ class MetaDataManagerExtensionsKtTest {
         val (userId, token) = testObserver.values().first()
         userId `should equal to` id
         token `should equal to` lifetimeToken
+    }
+
+    @Test
+    fun `should throw MetadataNotFoundException`() {
+        // Arrange
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.absent()))
+        // Act
+        val testObserver = metadataManager.fetchNabuToken().test()
+        // Assert
+        testObserver.assertNotComplete()
+        testObserver.assertError(MetadataNotFoundException::class.java)
     }
 }

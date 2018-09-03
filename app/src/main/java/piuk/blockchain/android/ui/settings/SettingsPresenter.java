@@ -3,6 +3,7 @@ package piuk.blockchain.android.ui.settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import com.blockchain.kycui.settings.KycStatusHelper;
+import com.blockchain.notifications.NotificationTokenManager;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.payload.PayloadManager;
 import info.blockchain.wallet.settings.SettingsManager;
@@ -11,7 +12,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.android.R;
-import com.blockchain.notifications.NotificationTokenManager;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.fingerprint.FingerprintHelper;
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper;
@@ -336,8 +336,10 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         } else {
             getCompositeDisposable().add(
                     settingsDataManager.updateSms(sms)
-                            .subscribe(settings -> {
-                                this.settings = settings;
+                            .doOnNext(settings -> this.settings = settings)
+                            .flatMapCompletable(ignored -> kycStatusHelper.syncPhoneNumberWithNabu())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(() -> {
                                 updateNotification(Settings.NOTIFICATION_TYPE_SMS, false);
                                 getView().showDialogVerifySms();
                             }, throwable -> getView().showToast(R.string.update_failed, ToastCustom.TYPE_ERROR)));
@@ -353,14 +355,16 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         getView().showProgressDialog(R.string.please_wait);
         getCompositeDisposable().add(
                 settingsDataManager.verifySms(code)
+                        .doOnNext(settings -> this.settings = settings)
+                        .flatMapCompletable(ignored -> kycStatusHelper.syncPhoneNumberWithNabu())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .doAfterTerminate(() -> {
                             getView().hideProgressDialog();
                             updateUi();
                         })
-                        .subscribe(settings -> {
-                            this.settings = settings;
-                            getView().showDialogSmsVerified();
-                        }, throwable -> getView().showWarningDialog(R.string.verify_sms_failed)));
+                        .subscribe(
+                                () -> getView().showDialogSmsVerified(),
+                                throwable -> getView().showWarningDialog(R.string.verify_sms_failed)));
     }
 
     /**

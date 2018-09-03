@@ -23,6 +23,8 @@ class NabuApiException private constructor(message: String) : Throwable(message)
 
     fun getErrorCode(): NabuErrorCodes = NabuErrorCodes.fromErrorCode(_httpErrorCode)
 
+    fun getErrorType(): NabuErrorTypes = NabuErrorTypes.fromErrorStatus(_error)
+
     /**
      * Returns a human-readable error message.
      */

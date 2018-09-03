@@ -22,3 +22,29 @@ enum class NabuErrorCodes(val code: Int) {
             NabuErrorCodes.values().firstOrNull { it.code == code } ?: Unknown
     }
 }
+
+enum class NabuErrorTypes(val type: String) {
+    InternalServerError("INTERNAL_SERVER_ERROR"),
+    NotFound("NOT_FOUND"),
+    BadMethod("BAD_METHOD"),
+    Conflict("CONFLICT"),
+    MissingBody("MISSING_BODY"),
+    MissingParam("MISSING_PARAM"),
+    BadParamValue("BAD_PARAM_VALUE"),
+    InvalidCredential("INVALID_CREDENTIALS"),
+    WrongPassword("WRONG_PASSWORD"),
+    Wrong2FA("WRONG_2FA"),
+    Bad2FA("BAD_2FA"),
+    UnknownUser("UNKNOWN_USER"),
+    InvalidRole("INVALID_ROLE"),
+    AlreadyLoggedIn("ALREADY_LOGGED_IN"),
+    InvalidStatus("INVALID_STATUS"),
+    BadParamValus("BAD_PARAM_VALUE"),
+    Unknown("UNKNOWN");
+
+    companion object {
+
+        fun fromErrorStatus(type: String): NabuErrorTypes =
+            NabuErrorTypes.values().firstOrNull { it.type == type } ?: Unknown
+    }
+}

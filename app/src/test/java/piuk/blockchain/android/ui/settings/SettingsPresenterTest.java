@@ -358,6 +358,7 @@ public class SettingsPresenterTest extends RxTest {
         when(settingsDataManager.updateSms(phoneNumber)).thenReturn(Observable.just(mockSettings));
         when(settingsDataManager.disableNotification(Settings.NOTIFICATION_TYPE_SMS, notifications))
                 .thenReturn(Observable.just(mockSettings));
+        when(kycStatusHelper.syncPhoneNumberWithNabu()).thenReturn(Completable.complete());
         // Act
         subject.updateSms(phoneNumber);
         // Assert
@@ -387,6 +388,7 @@ public class SettingsPresenterTest extends RxTest {
         String verificationCode = "VERIFICATION_CODE";
         Settings mockSettings = mock(Settings.class);
         when(settingsDataManager.verifySms(verificationCode)).thenReturn(Observable.just(mockSettings));
+        when(kycStatusHelper.syncPhoneNumberWithNabu()).thenReturn(Completable.complete());
         // Act
         subject.verifySms(verificationCode);
         // Assert
