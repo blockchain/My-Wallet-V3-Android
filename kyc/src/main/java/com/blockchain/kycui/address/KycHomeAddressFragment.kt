@@ -7,7 +7,6 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SearchView
-import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -184,10 +183,10 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
                 .first()
 
         subscribeToTextChanges()
-        editTextFirstLine.text = SpannableStringBuilder(address.featureName)
-        editTextCity.text = SpannableStringBuilder(address.locality)
-        editTextState.text = SpannableStringBuilder(address.adminArea)
-        editTextZipCode.text = SpannableStringBuilder(address.postalCode)
+        editTextFirstLine.setText(address.featureName)
+        editTextCity.setText(address.locality)
+        editTextState.setText(address.adminArea)
+        editTextZipCode.setText(address.postalCode)
     }
 
     override fun onResume() {
