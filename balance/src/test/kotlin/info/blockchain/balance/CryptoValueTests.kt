@@ -65,7 +65,7 @@ class CryptoValueTests {
     }
 
     @Test
-    fun `toMajorUnitDouble`() {
+    fun `toMajorUnit Double`() {
         CryptoValue(CryptoCurrency.BTC, 12300001234L.toBigInteger()).toMajorUnitDouble() `should equal` 123.00001234
     }
 
@@ -87,6 +87,26 @@ class CryptoValueTests {
     @Test
     fun `-1 Satoshi is not positive`() {
         CryptoValue.bitcoinFromSatoshis(-1).isPositive() `should be` false
+    }
+
+    @Test
+    fun `zero isZero`() {
+        CryptoValue.ZeroBtc.isZero() `should be` true
+    }
+
+    @Test
+    fun `1 satoshi is not isZero`() {
+        CryptoValue.bitcoinFromSatoshis(1).isZero() `should be` false
+    }
+
+    @Test
+    fun `1 wei is not isZero`() {
+        CryptoValue.etherFromWei(1).isZero() `should be` false
+    }
+
+    @Test
+    fun `0 wei is isZero`() {
+        CryptoValue.etherFromWei(0).isZero() `should be` true
     }
 
     @Test

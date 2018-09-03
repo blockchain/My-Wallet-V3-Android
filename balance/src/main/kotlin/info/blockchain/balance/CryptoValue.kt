@@ -22,6 +22,10 @@ data class CryptoValue(
         return amount.signum() == 1
     }
 
+    fun isZero(): Boolean {
+        return amount.signum() == 0
+    }
+
     companion object {
         val ZeroBtc = bitcoinFromSatoshis(0L)
         val ZeroBch = bitcoinCashFromSatoshis(0L)
