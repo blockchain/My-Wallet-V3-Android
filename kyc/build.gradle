@@ -63,10 +63,6 @@ buildscript {
     }
 }
 
-repositories {
-    maven { url 'https://onfido.bintray.com/maven/' }
-}
-
 dependencies {
     api project(':coreui')
     api project(':notifications')
