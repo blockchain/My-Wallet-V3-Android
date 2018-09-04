@@ -19,15 +19,22 @@ dependencies {
     implementation project(':common:network')
     implementation Libraries.kotlin
     implementation Libraries.moshiKotlin
+    implementation Libraries.retrofitRxMoshiConverter
+    implementation Libraries.retrofitRxJavaAdapter
 
     // Rx
     implementation Libraries.rxKotlin
+
+    // Retrofit
+    implementation Libraries.retrofit
 
     // Testing
     testImplementation project(':testutils')
     testImplementation Libraries.junit
     testImplementation Libraries.mockito
     testImplementation Libraries.kluent
+    testImplementation Libraries.koinTest
+    testImplementation Libraries.mockWebServer
 }
 
 test {

@@ -46,6 +46,7 @@ object KoinStarter {
                 kycModule,
                 morphMethodModule,
                 morphUiModule,
+                nabuModule,
                 homeBrewModule,
                 notificationModule
             ),

@@ -1,5 +1,6 @@
 package com.blockchain.network.websocket
 
+import com.blockchain.network.initRule
 import io.fabric8.mockwebserver.DefaultMockServer
 import okhttp3.OkHttpClient
 import org.amshove.kluent.`should equal`

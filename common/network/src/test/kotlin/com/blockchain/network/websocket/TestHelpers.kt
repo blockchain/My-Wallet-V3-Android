@@ -1,8 +1,5 @@
 package com.blockchain.network.websocket
 
-import com.blockchain.testutils.after
-import com.blockchain.testutils.before
-import io.fabric8.mockwebserver.DefaultMockServer
 import org.junit.Assert.assertTrue
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -62,13 +59,4 @@ operator fun <INCOMING> WebSocket.Listener<INCOMING>.plus(secondListener: WebSoc
             this@plus.onClose()
             secondListener.onClose()
         }
-    }
-
-fun DefaultMockServer.initRule() = mockWebServerInit(this)
-
-fun mockWebServerInit(server: DefaultMockServer) =
-    before {
-        server.start()
-    } after {
-        server.shutdown()
     }

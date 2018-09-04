@@ -25,6 +25,7 @@ dependencies {
     implementation Libraries.moshi
     implementation Libraries.retrofitRxMoshiConverter
     implementation Libraries.retrofitRxJavaAdapter
+    implementation Libraries.mockWebServer
 
     // Injection
     implementation Libraries.koinTest
