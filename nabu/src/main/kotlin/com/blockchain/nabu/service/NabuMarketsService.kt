@@ -5,7 +5,9 @@ import com.blockchain.nabu.api.NabuMarkets
 import info.blockchain.balance.CryptoValue
 import io.reactivex.Single
 
-class NabuMarketsService(private val nabuMarkets: NabuMarkets) {
+class NabuMarketsService internal constructor(
+    private val nabuMarkets: NabuMarkets
+) {
 
     fun getTradingConfig(tradingPair: CoinPair): Single<TradingConfig> {
         return nabuMarkets.getTradingConfig(

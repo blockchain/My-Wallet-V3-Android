@@ -4,7 +4,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface NabuMarkets {
+internal interface NabuMarkets {
 
     @GET("nabu-app/markets/quotes/{trading_pair}/config")
     fun getTradingConfig(

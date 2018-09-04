@@ -1,5 +1,5 @@
 package com.blockchain.nabu.api
 
-class TradingConfig(
+internal class TradingConfig(
     val minOrderSize: String
 )
