@@ -3,7 +3,7 @@ package com.blockchain.nabu.service
 import com.blockchain.koin.nabuModule
 import com.blockchain.morph.CoinPair
 import com.blockchain.nabu.api.TradingConfig
-import com.blockchain.network.mockWebServerInit
+import com.blockchain.network.initRule
 import com.blockchain.network.modules.apiModule
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
@@ -21,7 +21,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
     private val server = DefaultMockServer()
 
     @get:Rule
-    val initMockServer = mockWebServerInit(server)
+    val initMockServer = server.initRule()
 
     private val subject: NabuMarketsService by inject()
 

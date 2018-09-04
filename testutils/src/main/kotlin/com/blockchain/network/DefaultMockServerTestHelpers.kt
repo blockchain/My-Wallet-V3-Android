@@ -4,11 +4,9 @@ import com.blockchain.testutils.after
 import com.blockchain.testutils.before
 import io.fabric8.mockwebserver.DefaultMockServer
 
-fun DefaultMockServer.initRule() = mockWebServerInit(this)
-
-fun mockWebServerInit(server: DefaultMockServer) =
+fun DefaultMockServer.initRule() =
     before {
-        server.start()
+        this.start()
     } after {
-        server.shutdown()
+        this.shutdown()
     }
