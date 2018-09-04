@@ -33,8 +33,20 @@ class ExchangeActivityConfigurationChangePersistence : ViewModel() {
 
     var currentValue: Long = 0
 
-    val from = CryptoCurrency.BTC
-    val to = CryptoCurrency.ETHER
+    var from = CryptoCurrency.BTC
+        set(value) {
+            if (field != value) {
+                currentValue = 0
+            }
+            field = value
+        }
+    var to = CryptoCurrency.ETHER
+        set(value) {
+            if (field != value) {
+                currentValue = 0
+            }
+            field = value
+        }
 
     var fieldMode = FieldUpdateIntent.Field.FROM_FIAT
 }
@@ -183,10 +195,12 @@ class ExchangeActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && data != null) {
             val account = AccountChooserActivity.getSelectedAccount(data)
             when (requestCode) {
-                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT ->
-                    Timber.d("new ${account.cryptoCurrency} from account $account")
-                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT ->
-                    Timber.d("new ${account.cryptoCurrency} to account $account")
+                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT -> {
+                    configChangePersistence.from = account.cryptoCurrency
+                }
+                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT -> {
+                    configChangePersistence.to = account.cryptoCurrency
+                }
                 else -> throw IllegalArgumentException("Unknown request code $requestCode")
             }
         }
