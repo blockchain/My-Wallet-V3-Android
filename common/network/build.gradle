@@ -11,10 +11,6 @@ buildscript {
     }
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
-
 sourceCompatibility = Versions.javaCompatibilityVersion
 targetCompatibility = Versions.javaCompatibilityVersion
 

@@ -100,4 +100,13 @@ val apiModule = applicationContext {
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()
     }
+
+    bean("nabu") {
+        Retrofit.Builder()
+            .baseUrl(get<EnvironmentUrls>().apiUrl)
+            .client(get())
+            .addConverterFactory(get<MoshiConverterFactory>())
+            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
+            .build()
+    }
 }
