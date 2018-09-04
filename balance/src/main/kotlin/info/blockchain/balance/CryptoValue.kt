@@ -50,10 +50,23 @@ data class CryptoValue(
             currency: CryptoCurrency,
             major: BigDecimal
         ) = CryptoValue(currency, major.movePointRight(currency.dp).toBigInteger())
+
+        fun min(a: CryptoValue, b: CryptoValue) = if (a <= b) a else b
+
+        fun max(a: CryptoValue, b: CryptoValue) = if (a >= b) a else b
     }
 
     /**
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */
     fun toMajorUnitDouble() = toMajorUnit().toDouble()
+}
+
+operator fun CryptoValue.compareTo(other: CryptoValue): Int {
+    ensureComparable(currency, other.currency)
+    return amount.compareTo(other.amount)
+}
+
+private fun ensureComparable(a: CryptoCurrency, b: CryptoCurrency) {
+    if (a != b) throw Exception("Can't compare ${a.symbol} and ${b.symbol}")
 }
