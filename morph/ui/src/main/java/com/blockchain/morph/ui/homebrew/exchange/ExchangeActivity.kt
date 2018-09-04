@@ -1,7 +1,6 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -32,28 +31,6 @@ import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import timber.log.Timber
 import java.util.Locale
-
-class ExchangeActivityConfigurationChangePersistence : ViewModel() {
-
-    var currentValue: Long = 0
-
-    var from = CryptoCurrency.BTC
-        set(value) {
-            if (field != value) {
-                currentValue = 0
-            }
-            field = value
-        }
-    var to = CryptoCurrency.ETHER
-        set(value) {
-            if (field != value) {
-                currentValue = 0
-            }
-            field = value
-        }
-
-    var fieldMode = FieldUpdateIntent.Field.FROM_FIAT
-}
 
 // TODO: AND-1350 Unlikely to be needed long term. Added so that fake data isn't in the release code, only demo app.
 interface RateStream {
