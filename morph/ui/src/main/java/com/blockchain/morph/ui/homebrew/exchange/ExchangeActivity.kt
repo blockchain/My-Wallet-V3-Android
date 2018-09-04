@@ -138,14 +138,8 @@ class ExchangeActivity : AppCompatActivity() {
                 largeValue.text = parts.major
                 largeValueRightHandSide.text = parts.minor
 
-                val fromCryptoString = it.from.cryptoValue.formatWithUnit(
-                    Locale.getDefault(),
-                    precision = FormatPrecision.Short
-                )
-                val toCryptoString = it.to.cryptoValue.formatWithUnit(
-                    Locale.getDefault(),
-                    precision = FormatPrecision.Short
-                )
+                val fromCryptoString = it.from.cryptoValue.formatForExchange()
+                val toCryptoString = it.to.cryptoValue.formatForExchange()
                 smallValue.text = fromCryptoString
                 selectSendAccountButton.text = fromCryptoString
                 selectReceiveAccountButton.text = toCryptoString
@@ -196,6 +190,17 @@ class ExchangeActivity : AppCompatActivity() {
                 else -> throw IllegalArgumentException("Unknown request code $requestCode")
             }
         }
+    }
+}
+
+private fun CryptoValue.formatForExchange(): String {
+    return if (isZero()) {
+        currency.symbol
+    } else {
+        formatWithUnit(
+            Locale.getDefault(),
+            precision = FormatPrecision.Short
+        )
     }
 }
 
