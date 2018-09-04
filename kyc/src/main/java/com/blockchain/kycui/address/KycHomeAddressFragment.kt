@@ -24,13 +24,13 @@ import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
 import com.blockchain.ui.countryselection.CountryDialog
+import com.blockchain.ui.extensions.throttledClicks
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.location.places.AutocompleteFilter
 import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.jakewharton.rx.replayingShare
-import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -90,14 +90,6 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         super.onViewCreated(view, savedInstanceState)
         progressListener.setHostTitle(R.string.kyc_address_title)
         progressListener.incrementProgress(KycStep.AddressPage)
-
-        buttonNext
-            .clicks()
-            .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onNext = { presenter.onContinueClicked() },
-                onError = { Timber.e(it) }
-            )
 
         editTextCountry.setOnClickListener { displayCountryDialog() }
         textInputLayoutCountry.setOnClickListener { displayCountryDialog() }
@@ -186,7 +178,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
                 .getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
                 .first()
 
-        subscribeToTextChanges()
+        subscribeToViewObservables()
         editTextFirstLine.setText(address.featureName)
         editTextCity.setText(address.locality)
         editTextState.setText(address.adminArea)
@@ -195,11 +187,19 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
 
     override fun onResume() {
         super.onResume()
-        subscribeToTextChanges()
+        subscribeToViewObservables()
     }
 
-    private fun subscribeToTextChanges() {
+    private fun subscribeToViewObservables() {
         if (compositeDisposable.size() == 0) {
+            compositeDisposable +=
+                buttonNext
+                    .throttledClicks()
+                    .subscribeBy(
+                        onNext = { presenter.onContinueClicked() },
+                        onError = { Timber.e(it) }
+                    )
+
             compositeDisposable += editTextFirstLine
                 .onDelayedChange(KycStep.AddressFirstLine)
                 .doOnNext { addressSubject.onNext(AddressIntent.FirstLine(it)) }
@@ -224,8 +224,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
             compositeDisposable +=
                 searchViewAddress.getEditText()
                     .apply { isFocusable = false }
-                    .clicks()
-                    .debounce(300, TimeUnit.MILLISECONDS)
+                    .throttledClicks()
                     .subscribeBy(
                         onNext = {
                             try {

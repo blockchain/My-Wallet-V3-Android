@@ -14,7 +14,7 @@ import com.blockchain.kycui.extensions.skipFirstUnless
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
-import com.jakewharton.rxbinding2.view.clicks
+import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -92,13 +92,17 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
 
         inputLayoutDob.setOnClickListener { onDateOfBirthClicked() }
         editTextDob.setOnClickListener { onDateOfBirthClicked() }
-        buttonNext
-            .clicks()
-            .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onNext = { presenter.onContinueClicked() },
-                onError = { Timber.e(it) }
-            )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        compositeDisposable +=
+            buttonNext
+                .throttledClicks()
+                .subscribeBy(
+                    onNext = { presenter.onContinueClicked() },
+                    onError = { Timber.e(it) }
+                )
     }
 
     override fun continueSignUp(profileModel: ProfileModel) {
@@ -182,8 +186,8 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
         buttonNext.isEnabled = enabled
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onPause() {
+        super.onPause()
         compositeDisposable.clear()
     }
 

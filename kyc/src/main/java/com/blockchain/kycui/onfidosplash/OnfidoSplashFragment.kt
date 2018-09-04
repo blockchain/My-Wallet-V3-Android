@@ -15,7 +15,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
-import com.jakewharton.rxbinding2.view.clicks
+import com.blockchain.ui.extensions.throttledClicks
 import com.onfido.android.sdk.capture.DocumentType
 import com.onfido.android.sdk.capture.ExitCode
 import com.onfido.android.sdk.capture.Onfido
@@ -29,7 +29,6 @@ import com.onfido.android.sdk.capture.upload.Captures
 import com.onfido.android.sdk.capture.utils.CountryCode
 import com.onfido.api.client.data.Applicant
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
@@ -41,7 +40,6 @@ import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_kyc_onfido_splash.button_kyc_onfido_splash_next as buttonNext
 
 class OnfidoSplashFragment : BaseFragment<OnfidoSplashView, OnfidoSplashPresenter>(),
@@ -53,10 +51,7 @@ class OnfidoSplashFragment : BaseFragment<OnfidoSplashView, OnfidoSplashPresente
     private val onfido by unsafeLazy { OnfidoFactory.create(requireActivity()).client }
     private var progressDialog: MaterialProgressDialog? = null
     override val uiState: Observable<Unit>
-        get() = buttonNext
-            .clicks()
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
+        get() = buttonNext.throttledClicks()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -14,7 +14,7 @@ import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.onfidosplash.OnfidoSplashFragment
-import com.jakewharton.rxbinding2.view.clicks
+import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -61,10 +61,7 @@ class KycMobileValidationFragment :
     override val uiStateObservable: Observable<Pair<PhoneVerificationModel, Unit>> by unsafeLazy {
         Observables.combineLatest(
             verificationCodeObservable.cache(),
-            buttonNext
-                .clicks()
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
+            buttonNext.throttledClicks()
         )
     }
 

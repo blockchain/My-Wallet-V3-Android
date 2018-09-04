@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.status.KycStatusActivity
-import com.jakewharton.rxbinding2.view.clicks
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.blockchain.ui.extensions.throttledClicks
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
@@ -17,7 +16,6 @@ import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.kyc.R
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_kyc_complete.button_kyc_complete_next as buttonNext
 
 class ApplicationCompleteFragment : Fragment() {
@@ -42,8 +40,7 @@ class ApplicationCompleteFragment : Fragment() {
 
         compositeDisposable +=
             buttonNext
-                .clicks()
-                .debounce(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .throttledClicks()
                 .subscribeBy(
                     onNext = {
                         KycStatusActivity.start(requireContext())

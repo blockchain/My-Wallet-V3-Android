@@ -14,7 +14,7 @@ import com.blockchain.kycui.mobile.entry.models.PhoneNumber
 import com.blockchain.kycui.mobile.validation.KycMobileValidationFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
-import com.jakewharton.rxbinding2.view.clicks
+import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.reactivex.Observable
@@ -66,10 +66,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     override val uiStateObservable: Observable<Pair<PhoneNumber, Unit>> by unsafeLazy {
         Observables.combineLatest(
             phoneNumberObservable.cache(),
-            buttonNext
-                .clicks()
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
+            buttonNext.throttledClicks()
         )
     }
 
