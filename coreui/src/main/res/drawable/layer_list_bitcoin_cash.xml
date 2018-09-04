@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This exists purely for compatibility reasons - vectors can't be used a drawableLeft resources
+     on an EditText below API19 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/vector_bitcoin_cash" />
+</layer-list>

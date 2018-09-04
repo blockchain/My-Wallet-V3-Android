@@ -6,12 +6,16 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
+import com.blockchain.balance.colorRes
+import com.blockchain.balance.layerListDrawableRes
 import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
+import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.initial
 import com.blockchain.morph.ui.R
 import com.blockchain.ui.chooser.AccountChooserActivity
@@ -151,10 +155,9 @@ class ExchangeActivity : AppCompatActivity() {
                 largeValueRightHandSide.text = parts.minor
 
                 val fromCryptoString = it.from.cryptoValue.formatForExchange()
-                val toCryptoString = it.to.cryptoValue.formatForExchange()
                 smallValue.text = fromCryptoString
-                selectSendAccountButton.text = fromCryptoString
-                selectReceiveAccountButton.text = toCryptoString
+                selectSendAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.from)
+                selectReceiveAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.to)
             }
         keyboard.value = configChangePersistence.currentValue
     }
@@ -207,14 +210,38 @@ class ExchangeActivity : AppCompatActivity() {
     }
 }
 
-private fun CryptoValue.formatForExchange(): String {
-    return if (isZero()) {
+private fun CryptoValue.formatOrSymbolForZero() =
+    if (isZero()) {
         currency.symbol
     } else {
-        formatWithUnit(
-            Locale.getDefault(),
-            precision = FormatPrecision.Short
+        formatForExchange()
+    }
+
+private fun CryptoValue.formatForExchange() =
+    formatWithUnit(
+        Locale.getDefault(),
+        precision = FormatPrecision.Short
+    )
+
+private fun Button.setButtonGraphicsAndTextFromCryptoValue(
+    from: Value
+) {
+    val fromCryptoString = from.cryptoValue.formatOrSymbolForZero()
+    setBackgroundResource(from.cryptoValue.currency.colorRes())
+    setCryptoLeftImageIfZero(from.cryptoValue)
+    text = fromCryptoString
+}
+
+private fun Button.setCryptoLeftImageIfZero(cryptoValue: CryptoValue) {
+    if (cryptoValue.isZero()) {
+        setCompoundDrawablesWithIntrinsicBounds(
+            ContextCompat.getDrawable(
+                context,
+                cryptoValue.currency.layerListDrawableRes()
+            ), null, null, null
         )
+    } else {
+        setCompoundDrawables(null, null, null, null)
     }
 }
 

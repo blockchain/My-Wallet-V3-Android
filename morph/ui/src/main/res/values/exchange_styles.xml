@@ -2,8 +2,6 @@
 <resources>
 
     <color name="exchange_button_color">#FFFFFFFF</color>
-    <color name="bitcoin">#FFFF9B22</color>
-    <color name="ether">#FF473BCB</color>
 
     <color name="exchange_blue">#FF004A7C</color>
 

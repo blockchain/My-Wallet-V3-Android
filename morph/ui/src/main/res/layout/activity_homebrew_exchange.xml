@@ -13,13 +13,15 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:background="@color/bitcoin"
-        android:text="@string/bitcoin"
+        android:padding="12dp"
         android:textAllCaps="false"
         android:textColor="@color/exchange_button_color"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:background="@color/color_bitcoin_logo"
+        tools:drawableStart="@drawable/layer_list_bitcoin"
+        tools:text="BTC" />
 
     <Button
         android:id="@+id/select_to_account_button"
@@ -29,13 +31,15 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:background="@color/ether"
-        android:text="@string/ether"
+        android:padding="12dp"
         android:textAllCaps="false"
         android:textColor="@color/exchange_button_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:background="@color/color_ether_logo"
+        tools:drawableStart="@drawable/layer_list_eth"
+        tools:text="ETH" />
 
     <TextView
         android:id="@+id/textView"

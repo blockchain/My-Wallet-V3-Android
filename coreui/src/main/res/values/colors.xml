@@ -65,6 +65,9 @@
     <!-- Official Cryptocurrency colours -->
     <color name="color_bitcoin_logo">#FF9900</color>
 
+    <!-- Non-official Cryptocurrency colours -->
+    <color name="color_bitcoin_cash_logo">#478558</color>
+    <color name="color_ether_logo">#473BCB</color>
 
     <!-- Non-Spendable colours -->
     <color name="non_spendable_button_background">#FFEEEEEE</color>
