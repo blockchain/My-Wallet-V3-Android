@@ -30,6 +30,7 @@ class NabuDataManagerAsAuthenticatorTest {
         val theFunction = mock<(NabuSessionTokenResponse) -> Single<Int>>()
         sut.authenticate(theFunction)
             .test()
+            .values()
 
         verify(nabuDataManager).authenticate(
             eq(NabuOfflineTokenResponse("User", "ABC")),
