@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
@@ -153,7 +154,10 @@ class OnfidoSplashFragment : BaseFragment<OnfidoSplashView, OnfidoSplashPresente
     }
 
     override fun continueToCompletion() {
-        findNavController(this).navigate(R.id.applicationCompleteFragment)
+        val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.kyc_nav_xml, true)
+                .build()
+        findNavController(this).navigate(R.id.applicationCompleteFragment, null, navOptions)
     }
 
     override fun createPresenter(): OnfidoSplashPresenter = presenter
