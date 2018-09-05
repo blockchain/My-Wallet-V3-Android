@@ -2,17 +2,21 @@ package com.blockchain.nabu.service
 
 import com.blockchain.koin.nabuModule
 import com.blockchain.morph.CoinPair
+import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.api.TradingConfig
 import com.blockchain.network.initRule
 import com.blockchain.network.modules.apiModule
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.verify
 import io.fabric8.mockwebserver.DefaultMockServer
 import org.amshove.kluent.`should equal`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.standalone.get
 import org.koin.standalone.inject
 import org.koin.test.AutoCloseKoinTest
 
@@ -64,7 +68,8 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
     @Test
     fun `can get min order size, alternative currency`() {
         server.expect().get().withPath("/nabu-app/markets/quotes/ETH-BCH/config")
-            .andReturn(200,
+            .andReturn(
+                200,
                 TradingConfig(minOrderSize = "1.4")
             )
             .once()
@@ -76,5 +81,13 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             .apply {
                 minOrderSize `should equal` 1.4.ether()
             }
+    }
+
+    @Test
+    fun `mock server lacks ways to ensure headers were set, so at least verify authenticate was called`() {
+        subject.getTradingConfig(CoinPair.ETH_TO_BCH)
+            .test()
+        verify(get<Authenticator>())
+            .authenticate<com.blockchain.nabu.service.TradingConfig>(any())
     }
 }

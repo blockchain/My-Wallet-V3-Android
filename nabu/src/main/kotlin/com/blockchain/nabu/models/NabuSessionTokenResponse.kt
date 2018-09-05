@@ -8,4 +8,6 @@ data class NabuSessionTokenResponse(
     val expiresAt: String,
     val insertedAt: String,
     val updatedAt: String
-)
+) {
+    val authHeader = "Bearer $token"
+}
