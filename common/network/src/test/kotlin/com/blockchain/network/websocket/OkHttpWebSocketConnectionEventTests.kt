@@ -50,15 +50,18 @@ class OkHttpWebSocketConnectionEventTests {
             .done()
             .once()
 
-        val waiter = CloseWaiter(1)
+        val openWaiter = ConnectWaiter(1)
+        val closeWaiter = CloseWaiter(1)
         okHttpClient.newBlockchainWebSocket(
             getOptions("/service"),
-            waiter
+            openWaiter + closeWaiter
         ).apply {
             val test = connectionEvents.test()
             open()
+            openWaiter.waitForAllConnects()
+            Thread.sleep(50)
             close()
-            waiter.waitForAllCloses()
+            closeWaiter.waitForAllCloses()
             test.values().last() `should equal` ConnectionEvent.ClientDisconnect
         }
     }
@@ -70,20 +73,25 @@ class OkHttpWebSocketConnectionEventTests {
             .open()
             .done()
             .times(2)
-
-        val firstWaiter = CloseWaiter(1)
-        val secondWaiter = CloseWaiter(2)
+        val firstOpenWaiter = ConnectWaiter(1)
+        val firstCloseWaiter = CloseWaiter(1)
+        val secondOpenWaiter = ConnectWaiter(2)
+        val secondCloseWaiter = CloseWaiter(2)
         okHttpClient.newBlockchainWebSocket(
             getOptions("/service"),
-            firstWaiter + secondWaiter
-        ).apply {
+            firstOpenWaiter + firstCloseWaiter + secondOpenWaiter + secondCloseWaiter
+        ).autoRetry().apply {
             val test = connectionEvents.test()
             open()
+            firstOpenWaiter.waitForAllConnects()
+            Thread.sleep(50)
             close()
-            firstWaiter.waitForAllCloses()
+            firstCloseWaiter.waitForAllCloses()
             open()
+            secondOpenWaiter.waitForAllConnects()
+            Thread.sleep(50)
             close()
-            secondWaiter.waitForAllCloses()
+            secondCloseWaiter.waitForAllCloses()
             test.values() `should equal` listOf(
                 ConnectionEvent.Connected,
                 ConnectionEvent.ClientDisconnect,
