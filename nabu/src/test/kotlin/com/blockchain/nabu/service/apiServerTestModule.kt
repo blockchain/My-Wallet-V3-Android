@@ -16,7 +16,13 @@ fun apiServerTestModule(server: DefaultMockServer) = applicationContext {
 
     bean { OkHttpInterceptors(emptyList()) }
 
-    bean { MoshiBuilderInterceptorList(emptyList()) }
+    bean {
+        MoshiBuilderInterceptorList(
+            listOf(
+                get("BigDecimal")
+            )
+        )
+    }
 
     bean {
         object : EnvironmentUrls {

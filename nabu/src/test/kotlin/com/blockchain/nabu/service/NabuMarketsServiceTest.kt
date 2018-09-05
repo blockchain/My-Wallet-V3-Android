@@ -72,7 +72,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
         server.expect().get().withPath("/nabu-gateway/markets/quotes/ETH-BCH/config")
             .andReturn(
                 200,
-                TradingConfig(minOrderSize = "1.4")
+                TradingConfig(minOrderSize = 1.4.toBigDecimal())
             )
             .once()
 

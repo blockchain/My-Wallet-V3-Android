@@ -17,7 +17,7 @@ class NabuMarketsService internal constructor(
                 tradingPair.pairCodeUpper,
                 it.authHeader
             ).map {
-                TradingConfig(minOrderSize = CryptoValue.fromMajor(tradingPair.from, it.minOrderSize.toBigDecimal()))
+                TradingConfig(minOrderSize = CryptoValue.fromMajor(tradingPair.from, it.minOrderSize))
             }
         }
     }
