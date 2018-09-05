@@ -1,5 +1,6 @@
 package com.blockchain.kyc.datamanagers.nabu
 
+import com.blockchain.android.testutils.rxInit
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
@@ -14,10 +15,16 @@ import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.amshove.kluent.`it returns`
+import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 
 class NabuDataManagerAsAuthenticatorTest {
+
+    @get:Rule
+    val rx = rxInit {
+        ioTrampoline()
+    }
 
     @Test
     fun `the token is fetched and passed to the manager`() {
