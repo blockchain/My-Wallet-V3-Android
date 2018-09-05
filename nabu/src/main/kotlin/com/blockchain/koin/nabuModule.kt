@@ -9,5 +9,8 @@ val nabuModule = applicationContext {
 
     bean { get<Retrofit>("nabu").create(NabuMarkets::class.java) }
 
-    bean { NabuMarketsService(get(), get()) }
+    context("Payload") {
+
+        factory { NabuMarketsService(get(), get()) }
+    }
 }
