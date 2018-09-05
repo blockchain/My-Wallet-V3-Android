@@ -1,5 +1,6 @@
 package com.blockchain.injection
 
+import com.blockchain.koin.moshiInterceptor
 import com.blockchain.kyc.datamanagers.nabu.NabuAuthenticator
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
@@ -17,8 +18,6 @@ import com.blockchain.kycui.profile.KycProfilePresenter
 import com.blockchain.kycui.status.KycStatusPresenter
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.stores.NabuSessionTokenStore
-import com.blockchain.network.modules.MoshiBuilderInterceptor
-import com.squareup.moshi.Moshi
 import org.koin.dsl.module.applicationContext
 
 val kycModule = applicationContext {
@@ -66,13 +65,9 @@ val kycModule = applicationContext {
         factory { KycStatusPresenter(get(), get(), get()) }
     }
 
-    bean("kyc") {
-        object : MoshiBuilderInterceptor {
-            override fun intercept(builder: Moshi.Builder) {
-                builder
-                    .add(KycStateAdapter())
-                    .add(UserStateAdapter())
-            }
-        } as MoshiBuilderInterceptor
+    moshiInterceptor("kyc") { builder ->
+        builder
+            .add(KycStateAdapter())
+            .add(UserStateAdapter())
     }
 }

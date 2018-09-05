@@ -1,5 +1,6 @@
 package com.blockchain.network.modules
 
+import com.blockchain.koin.moshiInterceptor
 import com.blockchain.network.EnvironmentUrls
 import com.blockchain.network.TLSSocketFactory
 import com.blockchain.serialization.BigDecimalAdaptor
@@ -22,12 +23,8 @@ class OkHttpInterceptors(val list: List<Interceptor>) : List<Interceptor> by lis
 
 val apiModule = applicationContext {
 
-    bean("BigDecimal") {
-        object : MoshiBuilderInterceptor {
-            override fun intercept(builder: Moshi.Builder) {
-                builder.add(BigDecimalAdaptor())
-            }
-        } as MoshiBuilderInterceptor
+    moshiInterceptor("BigDecimal") { builder ->
+        builder.add(BigDecimalAdaptor())
     }
 
     bean { JacksonConverterFactory.create() }
