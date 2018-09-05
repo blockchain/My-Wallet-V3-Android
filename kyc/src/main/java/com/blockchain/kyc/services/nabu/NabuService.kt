@@ -31,7 +31,7 @@ class NabuService(
 ) {
 
     private val service: Nabu = retrofit.create(Nabu::class.java)
-    private val apiPath = environmentConfig.apiUrl
+    private val apiPath = environmentConfig.nabuApi
 
     internal fun getAuthToken(
         path: String = apiPath + NABU_INITIAL_AUTH,

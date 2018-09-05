@@ -27,7 +27,7 @@ val kycModule = applicationContext {
 
     bean { OnfidoService(get("kotlin")) }
 
-    bean { NabuService(get(), get("kotlin")) }
+    bean { NabuService(get(), get("nabu")) }
 
     bean { RetailWalletTokenService(get(), getProperty("api-code"), get("kotlin")) }
 
