@@ -6,4 +6,7 @@ interface EnvironmentUrls {
     val explorerUrl: String
     val apiUrl: String
     fun websocketUrl(currency: CryptoCurrency): String
+
+    val nabuApi: String
+        get() = "${apiUrl}nabu-gateway/"
 }

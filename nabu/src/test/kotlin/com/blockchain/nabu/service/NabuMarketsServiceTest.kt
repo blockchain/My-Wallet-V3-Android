@@ -44,7 +44,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
 
     @Test
     fun `can get min order size from json`() {
-        server.expect().get().withPath("/nabu-app/markets/quotes/BTC-ETH/config")
+        server.expect().get().withPath("/nabu-gateway/markets/quotes/BTC-ETH/config")
             .andReturn(
                 200,
                 """
@@ -69,7 +69,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
 
     @Test
     fun `can get min order size, alternative currency`() {
-        server.expect().get().withPath("/nabu-app/markets/quotes/ETH-BCH/config")
+        server.expect().get().withPath("/nabu-gateway/markets/quotes/ETH-BCH/config")
             .andReturn(
                 200,
                 TradingConfig(minOrderSize = "1.4")
