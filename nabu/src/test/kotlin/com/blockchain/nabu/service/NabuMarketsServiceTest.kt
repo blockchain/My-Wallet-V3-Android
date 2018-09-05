@@ -6,6 +6,8 @@ import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.api.TradingConfig
 import com.blockchain.network.initRule
 import com.blockchain.network.modules.apiModule
+import com.blockchain.serialization.JsonSerializable
+import com.blockchain.testutils.`should be assignable from`
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
 import com.nhaarman.mockito_kotlin.any
@@ -89,5 +91,10 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             .test()
         verify(get<Authenticator>())
             .authenticate<com.blockchain.nabu.service.TradingConfig>(any())
+    }
+
+    @Test
+    fun `ensure type is JsonSerializable for proguard`() {
+        JsonSerializable::class `should be assignable from` TradingConfig::class
     }
 }
