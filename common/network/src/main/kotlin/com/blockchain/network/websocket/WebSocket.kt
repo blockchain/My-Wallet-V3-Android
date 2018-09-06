@@ -1,6 +1,7 @@
 package com.blockchain.network.websocket
 
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 
 sealed class ConnectionEvent {
 
@@ -17,9 +18,29 @@ interface WebSocketConnection {
     val connectionEvents: Observable<ConnectionEvent>
 }
 
-interface WebSocketSendReceive<in OUTGOING, INCOMING> {
-    fun send(message: OUTGOING)
+fun WebSocketConnection.openAsDisposable(): Disposable {
 
+    open()
+
+    return object : Disposable {
+
+        private var isDisposed = false
+
+        override fun isDisposed() = isDisposed
+
+        override fun dispose() {
+            if (isDisposed) return
+            isDisposed = true
+            close()
+        }
+    }
+}
+
+interface WebSocketSend<in OUTGOING> {
+    fun send(message: OUTGOING)
+}
+
+interface WebSocketSendReceive<in OUTGOING, INCOMING> : WebSocketSend<OUTGOING> {
     val responses: Observable<INCOMING>
 }
 
