@@ -152,15 +152,18 @@ class NabuDataManager(
         offlineToken: NabuOfflineTokenResponse,
         singleFunction: (NabuSessionTokenResponse) -> Single<T>
     ): Single<T> =
+        currentToken(offlineToken).flatMap { tokenResponse ->
+            singleFunction(tokenResponse)
+                .onErrorResumeNext { refreshOrReturnError(it, offlineToken, singleFunction) }
+        }
+
+    fun currentToken(offlineToken: NabuOfflineTokenResponse): Single<NabuSessionTokenResponse> =
         if (nabuTokenStore.requiresRefresh()) {
             refreshToken(offlineToken)
         } else {
             nabuTokenStore.getAccessToken()
                 .map { (it as Optional.Some).element }
                 .singleOrError()
-        }.flatMap { tokenResponse ->
-            singleFunction(tokenResponse)
-                .onErrorResumeNext { refreshOrReturnError(it, offlineToken, singleFunction) }
         }
 
     private fun <T> refreshOrReturnError(

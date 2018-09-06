@@ -10,6 +10,12 @@ internal class NabuAuthenticator(
     private val metadataManager: MetadataManager,
     private val nabuDataManager: NabuDataManager
 ) : Authenticator {
+
+    override fun <T> authenticateSingle(singleFunction: (Single<NabuSessionTokenResponse>) -> Single<T>): Single<T> =
+        metadataManager.fetchNabuToken()
+            .map { nabuDataManager.currentToken(it) }
+            .flatMap { singleFunction(it) }
+
     override fun <T> authenticate(singleFunction: (NabuSessionTokenResponse) -> Single<T>): Single<T> =
         metadataManager.fetchNabuToken()
             .flatMap { tokenResponse ->
