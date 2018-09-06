@@ -12,4 +12,9 @@ internal interface NabuMarkets {
         @Path("trading_pair") tradingPair: String,
         @Header("authorization") authorization: String
     ): Single<TradingConfig>
+
+    @GET("trades/limits")
+    fun getTradesLimits(
+        @Header("authorization") authorization: String
+    ): Single<TradesLimits>
 }
