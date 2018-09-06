@@ -82,16 +82,10 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
             }
         }
 
-        compositeDisposable += editTextFirstName
-            .onDelayedChange(KycStep.FirstName) { presenter.firstNameSet = it }
-            .subscribe()
-
-        compositeDisposable += editTextLastName
-            .onDelayedChange(KycStep.LastName) { presenter.lastNameSet = it }
-            .subscribe()
-
         inputLayoutDob.setOnClickListener { onDateOfBirthClicked() }
         editTextDob.setOnClickListener { onDateOfBirthClicked() }
+
+        onViewReady()
     }
 
     override fun onResume() {
@@ -103,6 +97,14 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
                     onNext = { presenter.onContinueClicked() },
                     onError = { Timber.e(it) }
                 )
+
+        compositeDisposable += editTextFirstName
+            .onDelayedChange(KycStep.FirstName) { presenter.firstNameSet = it }
+            .subscribe()
+
+        compositeDisposable += editTextLastName
+            .onDelayedChange(KycStep.LastName) { presenter.lastNameSet = it }
+            .subscribe()
     }
 
     override fun continueSignUp(profileModel: ProfileModel) {
@@ -125,6 +127,19 @@ class KycProfileFragment : BaseFragment<KycProfileView, KycProfilePresenter>(), 
     override fun dismissProgressDialog() {
         progressDialog?.apply { dismiss() }
         progressDialog = null
+    }
+
+    override fun restoreUiState(
+        firstName: String,
+        lastName: String,
+        displayDob: String,
+        dobCalendar: Calendar
+    ) {
+        editTextFirstName.setText(firstName)
+        editTextLastName.setText(lastName)
+        editTextDob.setText(displayDob)
+        dateOfBirth = dobCalendar
+        presenter.dateSet = true
     }
 
     private fun TextView.onDelayedChange(

@@ -10,6 +10,7 @@ data class NabuUser(
     val lastName: String?,
     val email: String?,
     val mobile: String?,
+    val dob: String?,
     val mobileVerified: Boolean,
     val address: Address?,
     val state: UserState,
@@ -57,8 +58,6 @@ data class AddAddressRequest(
         )
     }
 }
-
-data class AddMobileNumberRequest(@field:Json(name = "mobile") val phoneNumber: String)
 
 sealed class KycState {
     object None : KycState()

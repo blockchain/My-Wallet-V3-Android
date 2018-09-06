@@ -1,12 +1,11 @@
 package com.blockchain.kycui.settings
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.getBlankNabuUser
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
-import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
-import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.serialization.toMoshiJson
@@ -146,7 +145,7 @@ class KycStatusHelperTest {
             )
         ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
-            .thenReturn(Single.just(getNabuUserWithKycState(kycState)))
+            .thenReturn(Single.just(getBlankNabuUser(kycState)))
         // Act
         val testObserver = subject.getKycStatus().test()
         // Assert
@@ -270,7 +269,7 @@ class KycStatusHelperTest {
         whenever(settings.countryCode).thenReturn(countryCode)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
-            .thenReturn(Single.just(getNabuUserWithKycState(KycState.None)))
+            .thenReturn(Single.just(getBlankNabuUser(KycState.None)))
         // Act
         val testObserver = subject.getSettingsKycState().test()
         // Assert
@@ -297,7 +296,7 @@ class KycStatusHelperTest {
         whenever(settings.countryCode).thenReturn(countryCode)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
-            .thenReturn(Single.just(getNabuUserWithKycState(KycState.Verified)))
+            .thenReturn(Single.just(getBlankNabuUser(KycState.Verified)))
         // Act
         val testObserver = subject.getSettingsKycState().test()
         // Assert
@@ -324,7 +323,7 @@ class KycStatusHelperTest {
         whenever(settings.countryCode).thenReturn(countryCode)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
-            .thenReturn(Single.just(getNabuUserWithKycState(KycState.Rejected)))
+            .thenReturn(Single.just(getBlankNabuUser(KycState.Rejected)))
         // Act
         val testObserver = subject.getSettingsKycState().test()
         // Assert
@@ -351,7 +350,7 @@ class KycStatusHelperTest {
         whenever(settings.countryCode).thenReturn(countryCode)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
-            .thenReturn(Single.just(getNabuUserWithKycState(KycState.Pending)))
+            .thenReturn(Single.just(getBlankNabuUser(KycState.Pending)))
         // Act
         val testObserver = subject.getSettingsKycState().test()
         // Assert
@@ -378,7 +377,7 @@ class KycStatusHelperTest {
         whenever(settings.countryCode).thenReturn(countryCode)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
         whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
-            .thenReturn(Single.just(getNabuUserWithKycState(KycState.UnderReview)))
+            .thenReturn(Single.just(getBlankNabuUser(KycState.UnderReview)))
         // Act
         val testObserver = subject.getSettingsKycState().test()
         // Assert
@@ -433,24 +432,11 @@ class KycStatusHelperTest {
             )
         ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
         whenever(nabuDataManager.updateUserWalletInfo(offlineToken.mapFromMetadata(), jwt))
-            .thenReturn(Single.just(getNabuUserWithKycState(KycState.None)))
+            .thenReturn(Single.just(getBlankNabuUser(KycState.None)))
         // Act
         val testObserver = subject.syncPhoneNumberWithNabu().test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
     }
-
-    private fun getNabuUserWithKycState(kycState: KycState): NabuUser = NabuUser(
-        "",
-        "",
-        "",
-        "",
-        false,
-        null,
-        UserState.None,
-        kycState,
-        "",
-        ""
-    )
 }

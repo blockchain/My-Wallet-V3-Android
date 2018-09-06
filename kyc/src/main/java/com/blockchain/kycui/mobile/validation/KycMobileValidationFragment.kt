@@ -110,7 +110,11 @@ class KycMobileValidationFragment :
     override fun continueSignUp() {
         ViewUtils.hideKeyboard(requireActivity())
         val args = OnfidoSplashFragment.bundleArgs(countryCode)
-        findNavController(this).navigate(R.id.onfidoSplashFragment, args)
+        findNavController(this).apply {
+            // Remove this page from the stack as allowing users to return to it would be confusing
+            popBackStack()
+            navigate(R.id.onfidoSplashFragment, args)
+        }
     }
 
     override fun displayErrorDialog(message: Int) {

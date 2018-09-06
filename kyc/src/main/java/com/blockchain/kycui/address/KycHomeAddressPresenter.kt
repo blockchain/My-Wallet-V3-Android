@@ -5,6 +5,7 @@ import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kycui.address.models.AddressModel
 import com.blockchain.kycui.extensions.fetchNabuToken
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -52,6 +53,51 @@ class KycHomeAddressPresenter(
                     view.finishPage()
                 }
             )
+
+        restoreDataIfPresent()
+    }
+
+    private fun restoreDataIfPresent() {
+        compositeDisposable +=
+            view.address
+                .firstElement()
+                .flatMap { addressModel ->
+                    // Don't attempt to restore state if data is already present
+                    if (addressModel.containsData()) {
+                        Maybe.empty()
+                    } else {
+                        fetchOfflineToken
+                            .flatMapMaybe { tokenResponse ->
+                                nabuDataManager.getUser(tokenResponse)
+                                    .subscribeOn(Schedulers.io())
+                                    .flatMapMaybe { user ->
+                                        user.address?.let { address ->
+                                            Maybe.just(address)
+                                                .flatMap { getCountryName(address.countryCode!!) }
+                                                .map { it to address }
+                                        } ?: Maybe.empty()
+                                    }
+                            }
+                            .observeOn(AndroidSchedulers.mainThread())
+                    }
+                }
+                .subscribeBy(
+                    onSuccess = { (countryName, address) ->
+                        view.restoreUiState(
+                            address.line1!!,
+                            address.line2,
+                            address.city!!,
+                            address.state,
+                            address.postCode!!,
+                            address.countryCode!!,
+                            countryName
+                        )
+                    },
+                    onError = {
+                        // Silently fail
+                        Timber.e(it)
+                    }
+                )
     }
 
     internal fun onContinueClicked() {
@@ -112,6 +158,10 @@ class KycHomeAddressPresenter(
         }
         .ignoreElement()
 
+    private fun getCountryName(countryCode: String): Maybe<String> = countryCodeSingle
+        .map { it.entries.first { (_, value) -> value == countryCode }.key }
+        .toMaybe()
+
     private fun enableButtonIfComplete(firstLine: String, city: String, zipCode: String) {
         view.setButtonEnabled(!firstLine.isEmpty() && !city.isEmpty() && !zipCode.isEmpty())
     }
@@ -119,4 +169,12 @@ class KycHomeAddressPresenter(
     internal fun onProgressCancelled() {
         compositeDisposable.clear()
     }
+
+    private fun AddressModel.containsData(): Boolean =
+        !firstLine.isEmpty() ||
+            !secondLine.isNullOrEmpty() ||
+            !city.isEmpty() ||
+            !state.isNullOrEmpty() ||
+            !postCode.isEmpty() ||
+            !country.isEmpty()
 }

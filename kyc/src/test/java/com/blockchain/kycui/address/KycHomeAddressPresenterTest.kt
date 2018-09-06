@@ -1,18 +1,18 @@
 package com.blockchain.kycui.address
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.getBlankNabuUser
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kyc.models.nabu.KycState
+import com.blockchain.kyc.models.nabu.Address
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
-import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
-import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kycui.address.models.AddressModel
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.serialization.toMoshiJson
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.api.data.Settings
@@ -57,7 +57,7 @@ class KycHomeAddressPresenterTest {
     fun `onViewReady first line emitted empty should disable button`() {
         // Arrange
         whenever(view.address)
-            .thenReturn(Observable.just(AddressModel("", null, "", null, "", "")))
+            .thenReturn(Observable.just(addressModel()))
         // Act
         subject.onViewReady()
         // Assert
@@ -68,7 +68,7 @@ class KycHomeAddressPresenterTest {
     fun `onViewReady city emitted empty should disable button`() {
         // Arrange
         whenever(view.address)
-            .thenReturn(Observable.just(AddressModel("FIRST_LINE", null, "", null, "", "")))
+            .thenReturn(Observable.just(addressModel(firstLine = "FIRST_LINE")))
         // Act
         subject.onViewReady()
         // Assert
@@ -79,7 +79,7 @@ class KycHomeAddressPresenterTest {
     fun `onViewReady country emitted empty should disable button`() {
         // Arrange
         whenever(view.address)
-            .thenReturn(Observable.just(AddressModel("FIRST_LINE", null, "CITY", null, "", "")))
+            .thenReturn(Observable.just(addressModel(firstLine = "FIRST_LINE", city = "CITY")))
         // Act
         subject.onViewReady()
         // Assert
@@ -92,20 +92,122 @@ class KycHomeAddressPresenterTest {
         whenever(view.address)
             .thenReturn(
                 Observable.just(
-                    AddressModel(
-                        "FIRST_LINE",
-                        null,
-                        "CITY",
-                        null,
-                        "POST_CODE",
-                        ""
-                    )
+                    addressModel(firstLine = "FIRST_LINE", city = "CITY", postCode = "POST_CODE")
                 )
             )
         // Act
         subject.onViewReady()
         // Assert
         verify(view).setButtonEnabled(true)
+    }
+
+    @Test
+    fun `onViewReady no data to restore`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.address).thenReturn(Observable.just(addressModel()))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.just(getBlankNabuUser()))
+        // Act
+        subject.onViewReady()
+        // Assert
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+    }
+
+    @Test
+    fun `onViewReady data already input, should not attempt to restore`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.address).thenReturn(Observable.just(addressModel(firstLine = "FIRST_LINE")))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        // Act
+        subject.onViewReady()
+        // Assert
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+        verify(nabuDataManager, never()).getUser(offlineToken.mapFromMetadata())
+    }
+
+    @Test
+    fun `onViewReady has address to restore`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.address)
+            .thenReturn(Observable.just(addressModel()))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        val firstLine = "FIRST_LINE"
+        val city = "CITY"
+        val postCode = "POST_CODE"
+        val country = "COUNTRY_CODE"
+        val countryName = "COUNTRY_NAME"
+        val address = Address(
+            line1 = firstLine,
+            line2 = null,
+            city = city,
+            state = null,
+            postCode = postCode,
+            countryCode = country
+        )
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.just(getBlankNabuUser().copy(address = address)))
+        val countryList =
+            listOf(NabuCountryResponse(country, countryName, emptyList(), emptyList()))
+        whenever(nabuDataManager.getCountriesList(Scope.None))
+            .thenReturn(Single.just(countryList))
+        // Act
+        subject.onViewReady()
+        // Assert
+        verify(view).restoreUiState(firstLine, null, city, null, postCode, country, countryName)
+    }
+
+    @Test
+    fun `onViewReady has user but no address`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.address)
+            .thenReturn(Observable.just(addressModel()))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.just(getBlankNabuUser().copy(address = null)))
+        // Act
+        subject.onViewReady()
+        // Assert
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+    }
+
+    @Test
+    fun `onViewReady data restoration fails silently`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(view.address)
+            .thenReturn(Observable.just(addressModel()))
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.error { Throwable() })
+        // Act
+        subject.onViewReady()
+        // Assert
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
     }
 
     @Test
@@ -117,18 +219,7 @@ class KycHomeAddressPresenterTest {
         val countryCode = "UK"
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.address)
-            .thenReturn(
-                Observable.just(
-                    AddressModel(
-                        firstLine,
-                        null,
-                        city,
-                        null,
-                        zipCode,
-                        countryCode
-                    )
-                )
-            )
+            .thenReturn(Observable.just(addressModel(firstLine, city, zipCode, countryCode)))
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -162,18 +253,7 @@ class KycHomeAddressPresenterTest {
         val countryCode = "UK"
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.address)
-            .thenReturn(
-                Observable.just(
-                    AddressModel(
-                        firstLine,
-                        null,
-                        city,
-                        null,
-                        zipCode,
-                        countryCode
-                    )
-                )
-            )
+            .thenReturn(Observable.just(addressModel(firstLine, city, zipCode, countryCode)))
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -208,18 +288,7 @@ class KycHomeAddressPresenterTest {
         val countryCode = "UK"
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(view.address)
-            .thenReturn(
-                Observable.just(
-                    AddressModel(
-                        firstLine,
-                        null,
-                        city,
-                        null,
-                        zipCode,
-                        countryCode
-                    )
-                )
-            )
+            .thenReturn(Observable.just(addressModel(firstLine, city, zipCode, countryCode)))
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
@@ -242,7 +311,7 @@ class KycHomeAddressPresenterTest {
         val jwt = "JWT"
         whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
         whenever(nabuDataManager.updateUserWalletInfo(offlineToken.mapFromMetadata(), jwt))
-            .thenReturn(Single.just(getNabuUser()))
+            .thenReturn(Single.just(getBlankNabuUser()))
         // Act
         subject.onContinueClicked()
         // Assert
@@ -282,16 +351,17 @@ class KycHomeAddressPresenterTest {
         sortedMap `should equal` expectedMap
     }
 
-    private fun getNabuUser(): NabuUser = NabuUser(
-        "",
-        "",
-        "",
-        "",
-        false,
+    private fun addressModel(
+        firstLine: String = "",
+        city: String = "",
+        postCode: String = "",
+        country: String = ""
+    ): AddressModel = AddressModel(
+        firstLine,
         null,
-        UserState.None,
-        KycState.None,
-        "",
-        ""
+        city,
+        null,
+        postCode,
+        country
     )
 }

@@ -111,6 +111,24 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         findNavController(this).navigate(R.id.onfidoSplashFragment)
     }
 
+    override fun restoreUiState(
+        line1: String,
+        line2: String?,
+        city: String,
+        state: String?,
+        postCode: String,
+        countryCode: String,
+        countryName: String
+    ) {
+        editTextFirstLine.setText(line1)
+        editTextAptName.setText(line2)
+        editTextCity.setText(city)
+        editTextState.setText(state)
+        editTextZipCode.setText(postCode)
+        editTextCountry.setText(countryName)
+        addressSubject.onNext(AddressIntent.Country(countryCode))
+    }
+
     private fun displayCountryDialog() {
         CountryDialog(
             requireContext(),

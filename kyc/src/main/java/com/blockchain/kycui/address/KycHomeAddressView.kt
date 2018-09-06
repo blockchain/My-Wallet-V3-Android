@@ -25,4 +25,14 @@ interface KycHomeAddressView : View {
     fun finishPage()
 
     fun continueToOnfidoSplash()
+
+    fun restoreUiState(
+        line1: String,
+        line2: String?,
+        city: String,
+        state: String?,
+        postCode: String,
+        countryCode: String,
+        countryName: String
+    )
 }

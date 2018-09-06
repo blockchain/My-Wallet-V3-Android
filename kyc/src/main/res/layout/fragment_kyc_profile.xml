@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:maxLength="64"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapWords" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:maxLength="64"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapWords" />
 
         </android.support.design.widget.TextInputLayout>
 

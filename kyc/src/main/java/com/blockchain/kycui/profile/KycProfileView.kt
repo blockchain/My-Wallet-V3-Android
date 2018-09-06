@@ -24,4 +24,11 @@ interface KycProfileView : View {
     fun dismissProgressDialog()
 
     fun showProgressDialog()
+
+    fun restoreUiState(
+        firstName: String,
+        lastName: String,
+        displayDob: String,
+        dobCalendar: Calendar
+    )
 }

@@ -1,10 +1,8 @@
 package com.blockchain.kycui.mobile.validation
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.getBlankNabuUser
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kyc.models.nabu.KycState
-import com.blockchain.kyc.models.nabu.NabuUser
-import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
@@ -73,7 +71,7 @@ class KycMobileValidationPresenterTest {
                 offlineToken.mapFromMetadata(),
                 jwt
             )
-        ).thenReturn(Single.just(getNabuUser()))
+        ).thenReturn(Single.just(getBlankNabuUser()))
         // Act
         subject.onViewReady()
         publishSubject.onNext(
@@ -115,7 +113,7 @@ class KycMobileValidationPresenterTest {
                 jwt
             )
         ).thenReturn(Single.error { Throwable() })
-            .thenReturn(Single.just(getNabuUser()))
+            .thenReturn(Single.just(getBlankNabuUser()))
         val verificationModel = PhoneVerificationModel(phoneNumberSanitized, verificationCode)
 
         // Act
@@ -165,17 +163,4 @@ class KycMobileValidationPresenterTest {
         verify(view).dismissProgressDialog()
         verify(view).displayErrorDialog(any())
     }
-
-    private fun getNabuUser(): NabuUser = NabuUser(
-        "",
-        "",
-        "",
-        "",
-        false,
-        null,
-        UserState.None,
-        KycState.None,
-        "",
-        ""
-    )
 }

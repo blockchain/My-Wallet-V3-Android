@@ -69,7 +69,7 @@
             app:srcCompat="@drawable/vector_done"
             tools:ignore="RtlHardcoded" />
 
-        <!-- Profile Created -->
+        <!-- ProfileEntered Created -->
 
         <TextView
             android:id="@+id/text_view_profile_created"

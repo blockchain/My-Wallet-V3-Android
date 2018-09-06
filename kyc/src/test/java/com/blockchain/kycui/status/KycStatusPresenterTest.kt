@@ -1,10 +1,9 @@
 package com.blockchain.kycui.status
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.getBlankNabuUser
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.KycState
-import com.blockchain.kyc.models.nabu.NabuUser
-import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.notifications.NotificationTokenManager
@@ -68,18 +67,7 @@ class KycStatusPresenterTest {
         // Arrange
         val offlineToken = NabuCredentialsMetadata("", "")
         val kycState = KycState.UnderReview
-        val user = NabuUser(
-            "",
-            "",
-            "",
-            "",
-            false,
-            null,
-            UserState.None,
-            kycState,
-            "",
-            ""
-        )
+        val user = getBlankNabuUser(kycState)
         whenever(
             metadataManager.fetchMetadata(
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE

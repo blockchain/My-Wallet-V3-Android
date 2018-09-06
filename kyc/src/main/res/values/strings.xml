@@ -18,7 +18,7 @@
     <string name="kyc_country_selection_invalid_country_title">Invalid Country</string>
     <string name="kyc_country_selection_invalid_country_message">Unfortunately the country you selected isn\'t yet supported for Exchange.</string>
 
-    <!-- Profile -->
+    <!-- ProfileEntered -->
     <string name="kyc_profile_title">Profile</string>
     <string name="kyc_profile_message">You must be 18 or older to buy and sell on Blockchain.</string>
     <string name="kyc_profile_first_name_hint">First Name</string>

@@ -1,11 +1,9 @@
 package com.blockchain.kycui.onfidosplash
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.getBlankNabuUser
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
-import com.blockchain.kyc.models.nabu.KycState
-import com.blockchain.kyc.models.nabu.NabuUser
-import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kyc.models.onfido.ApplicantResponse
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
@@ -56,8 +54,7 @@ class OnfidoSplashPresenterTest {
         val publishSubject = PublishSubject.create<Unit>()
         whenever(view.uiState).thenReturn(publishSubject)
         val apiKey = "API_KEY"
-        val nabuUser =
-            NabuUser("", "", "", "", false, null, UserState.Created, KycState.None, "", "")
+        val nabuUser = getBlankNabuUser()
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(
             metadataManager.fetchMetadata(
@@ -91,8 +88,7 @@ class OnfidoSplashPresenterTest {
         val publishSubject = PublishSubject.create<Unit>()
         whenever(view.uiState).thenReturn(publishSubject)
         val apiKey = "API_KEY"
-        val nabuUser =
-            NabuUser("", "", "", "", false, null, UserState.Created, KycState.None, "", "")
+        val nabuUser = getBlankNabuUser()
         val offlineToken = NabuCredentialsMetadata("", "")
         whenever(
             metadataManager.fetchMetadata(

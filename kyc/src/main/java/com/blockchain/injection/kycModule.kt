@@ -13,6 +13,7 @@ import com.blockchain.kycui.address.KycHomeAddressPresenter
 import com.blockchain.kycui.countryselection.KycCountrySelectionPresenter
 import com.blockchain.kycui.mobile.entry.KycMobileEntryPresenter
 import com.blockchain.kycui.mobile.validation.KycMobileValidationPresenter
+import com.blockchain.kycui.navhost.KycNavHostPresenter
 import com.blockchain.kycui.onfidosplash.OnfidoSplashPresenter
 import com.blockchain.kycui.profile.KycProfilePresenter
 import com.blockchain.kycui.status.KycStatusPresenter
@@ -56,13 +57,15 @@ val kycModule = applicationContext {
 
         factory { KycHomeAddressPresenter(get(), get(), get()) }
 
-        factory { KycMobileEntryPresenter(get()) }
+        factory { KycMobileEntryPresenter(get(), get(), get()) }
 
         factory { KycMobileValidationPresenter(get(), get(), get()) }
 
         factory { OnfidoSplashPresenter(get(), get(), get()) }
 
         factory { KycStatusPresenter(get(), get(), get()) }
+
+        factory { KycNavHostPresenter(get(), get()) }
     }
 
     moshiInterceptor("kyc") { builder ->

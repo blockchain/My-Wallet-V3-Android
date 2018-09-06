@@ -4,19 +4,28 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.NabuErrorCodes
 import com.blockchain.kyc.util.toISO8601DateString
+import com.blockchain.kycui.extensions.fetchNabuToken
 import com.blockchain.kycui.profile.models.ProfileModel
+import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata.Companion.USER_CREDENTIALS_METADATA_NODE
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
+import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.nabu.models.mapToMetadata
+import com.blockchain.serialization.fromMoshiJson
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
+import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import kotlin.properties.Delegates
 
 class KycProfilePresenter(
@@ -24,11 +33,15 @@ class KycProfilePresenter(
     private val metadataManager: MetadataManager
 ) : BasePresenter<KycProfileView>() {
 
+    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
+
     var firstNameSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
     var lastNameSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
     var dateSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
 
-    override fun onViewReady() = Unit
+    override fun onViewReady() {
+        restoreDataIfPresent()
+    }
 
     internal fun onContinueClicked() {
         check(!view.firstName.isEmpty()) { "firstName is empty" }
@@ -40,9 +53,10 @@ class KycProfilePresenter(
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable { optionalToken ->
                     if (optionalToken.isPresent) {
-                        // Here we assume that the user was already created, otherwise metadata wouldn't
-                        // have been stored.
-                        Completable.complete()
+                        createBasicUser(
+                            NabuCredentialsMetadata::class.fromMoshiJson(optionalToken.get())
+                                .mapFromMetadata()
+                        )
                     } else {
                         createUserAndStoreInMetadata()
                     }
@@ -56,7 +70,6 @@ class KycProfilePresenter(
                         ProfileModel(
                             view.firstName,
                             view.lastName,
-                            view.dateOfBirth ?: throw IllegalStateException("DoB has not been set"),
                             view.countryCode
                         ).run { view.continueSignUp(this) }
                     },
@@ -70,6 +83,37 @@ class KycProfilePresenter(
                         }
                     }
                 )
+    }
+
+    private fun restoreDataIfPresent() {
+        // Don't restore data if data already present, as it'll overwrite what the user
+        // may have edited themselves
+        if (!firstNameSet && !lastNameSet && !dateSet) {
+            compositeDisposable +=
+                fetchOfflineToken
+                    .flatMap {
+                        nabuDataManager.getUser(it)
+                            .subscribeOn(Schedulers.io())
+                    }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onSuccess = {
+                            val displayFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.US)
+                            val backendFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                            val displayDate = backendFormat.parse(it.dob!!)
+                            view.restoreUiState(
+                                it.firstName!!,
+                                it.lastName!!,
+                                displayFormat.format(displayDate),
+                                displayDate.toCalendar()
+                            )
+                        },
+                        onError = {
+                            // Silently fail
+                            Timber.e(it)
+                        }
+                    )
+        }
     }
 
     private fun createUserAndStoreInMetadata(): Completable = nabuDataManager.requestJwt()
@@ -100,4 +144,7 @@ class KycProfilePresenter(
     internal fun onProgressCancelled() {
         compositeDisposable.clear()
     }
+
+    private fun Date.toCalendar(): Calendar =
+        Calendar.getInstance().apply { time = this@toCalendar }
 }

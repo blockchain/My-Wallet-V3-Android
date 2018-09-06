@@ -2,15 +2,20 @@ package com.blockchain.kycui.profile
 
 import com.blockchain.android.testutils.rxInit
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
+import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuApiException
+import com.blockchain.kyc.models.nabu.NabuUser
+import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kyc.util.toISO8601DateString
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.serialization.toMoshiJson
 import com.blockchain.testutils.date
 import com.google.common.base.Optional
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -142,6 +147,14 @@ class KycProfilePresenterTest {
                 NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
             )
         ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(
+            nabuDataManager.createBasicUser(
+                firstName,
+                lastName,
+                dateOfBirth.toISO8601DateString(),
+                offlineToken.mapFromMetadata()
+            )
+        ).thenReturn(Completable.complete())
         // Act
         subject.onContinueClicked()
         // Assert
@@ -235,5 +248,67 @@ class KycProfilePresenterTest {
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
         verify(view).showErrorToast(any())
+    }
+
+    @Test
+    fun `onViewReady no data to restore`() {
+        // Arrange
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.absent()))
+        // Act
+        subject.onViewReady()
+        // Assert
+        verifyZeroInteractions(view)
+    }
+
+    @Test
+    fun `onViewReady restores data to the UI`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        val nabuUser = NabuUser(
+            firstName = "FIRST_NAME",
+            lastName = "LAST_NAME",
+            email = null,
+            mobile = null,
+            dob = "2000-09-05",
+            mobileVerified = false,
+            address = null,
+            state = UserState.Created,
+            kycState = KycState.None,
+            updatedAt = "",
+            insertedAt = ""
+        )
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.just(nabuUser))
+        // Act
+        subject.onViewReady()
+        // Assert
+        verify(view).restoreUiState(
+            eq(nabuUser.firstName!!),
+            eq(nabuUser.lastName!!),
+            eq("September 05, 2000"),
+            any()
+        )
+    }
+
+    @Test
+    fun `onViewReady does not restore data as it's already present`() {
+        // Arrange
+        subject.firstNameSet = true
+        subject.lastNameSet = true
+        subject.dateSet = true
+        // Act
+        subject.onViewReady()
+        // Assert
+        verifyZeroInteractions(metadataManager)
+        verifyZeroInteractions(nabuDataManager)
     }
 }
