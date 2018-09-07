@@ -1,6 +1,7 @@
 package com.blockchain.network.websocket
 
 import com.blockchain.network.initRule
+import com.blockchain.serialization.JsonSerializable
 import com.squareup.moshi.Moshi
 import io.fabric8.mockwebserver.DefaultMockServer
 import okhttp3.OkHttpClient
@@ -11,9 +12,9 @@ import org.junit.Test
 class OkHttpWebSocketJsonIntegrationTest {
 
     @Suppress("unused")
-    class ClientMessage(val data1: String, val data2: Int)
+    class ClientMessage(val data1: String, val data2: Int) : JsonSerializable
 
-    data class ServerMessage(val data3: String, val data4: Int)
+    data class ServerMessage(val data3: String, val data4: Int) : JsonSerializable
 
     private val server = DefaultMockServer()
 
