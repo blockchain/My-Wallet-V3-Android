@@ -88,6 +88,7 @@ class KycNavHostActivity : BaseAuthActivity(), KycProgressListener {
 
     companion object {
 
+        @JvmStatic
         fun start(context: Context) {
             Intent(context, KycNavHostActivity::class.java)
                 .run { context.startActivity(this) }

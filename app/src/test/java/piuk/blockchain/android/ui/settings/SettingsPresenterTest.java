@@ -114,6 +114,41 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
+    public void onKycStatusClicked_should_launch_homebrew() {
+        // Arrange
+        when(kycStatusHelper.getSettingsKycState())
+                .thenReturn(Single.just(SettingsKycState.Verified));
+        when(prefsUtil.getValue(PrefsUtil.DEFAULT_CURRENCY, "USD"))
+                .thenReturn("GBP");
+        // Act
+        subject.onKycStatusClicked();
+        // Assert
+        verify(activity).launchHomebrew("GBP");
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_flow() {
+        // Arrange
+        when(kycStatusHelper.getSettingsKycState())
+                .thenReturn(Single.just(SettingsKycState.Unverified));
+        // Act
+        subject.onKycStatusClicked();
+        // Assert
+        verify(activity).launchKycFlow();
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_status() {
+        // Arrange
+        when(kycStatusHelper.getSettingsKycState())
+                .thenReturn(Single.just(SettingsKycState.InProgress));
+        // Act
+        subject.onKycStatusClicked();
+        // Assert
+        verify(activity).launchKycStatus();
+    }
+
+    @Test
     public void getIfFingerprintHardwareAvailable() {
         // Arrange
         when(fingerprintHelper.isHardwareDetected()).thenReturn(true);

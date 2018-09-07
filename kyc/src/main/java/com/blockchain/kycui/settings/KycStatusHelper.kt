@@ -36,6 +36,12 @@ class KycStatusHelper(
         }
     )
 
+    fun shouldDisplayKyc(): Single<Boolean> = Single.zip(
+        isInKycRegion(),
+        hasAccount(),
+        BiFunction { allowedRegion, hasAccount -> allowedRegion || hasAccount }
+    )
+
     fun syncPhoneNumberWithNabu(): Completable = nabuDataManager.requestJwt()
         .subscribeOn(Schedulers.io())
         .flatMap { jwt ->
@@ -74,13 +80,6 @@ class KycStatusHelper(
     internal fun hasAccount(): Single<Boolean> = fetchOfflineToken
         .map { true }
         .onErrorReturn { false }
-
-    @VisibleForTesting
-    internal fun shouldDisplayKyc(): Single<Boolean> = Single.zip(
-        isInKycRegion(),
-        hasAccount(),
-        BiFunction { allowedRegion, hasAccount -> allowedRegion || hasAccount }
-    )
 
     @VisibleForTesting
     internal fun getKycStatus(): Single<KycState> = fetchOfflineToken

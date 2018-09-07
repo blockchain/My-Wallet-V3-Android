@@ -2,6 +2,8 @@ package piuk.blockchain.android.ui.home;
 
 import android.content.Context;
 import android.util.Pair;
+import com.blockchain.kycui.settings.KycStatusHelper;
+import com.blockchain.notifications.models.NotificationPayload;
 import info.blockchain.balance.CryptoCurrency;
 import info.blockchain.wallet.api.Environment;
 import info.blockchain.wallet.api.data.FeeOptions;
@@ -10,6 +12,7 @@ import info.blockchain.wallet.exceptions.InvalidCredentialsException;
 import info.blockchain.wallet.payload.PayloadManagerWiper;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.android.BuildConfig;
@@ -19,7 +22,6 @@ import piuk.blockchain.android.data.cache.DynamicFeeCache;
 import piuk.blockchain.android.data.datamanagers.FeeDataManager;
 import piuk.blockchain.android.data.datamanagers.PromptManager;
 import piuk.blockchain.android.data.ethereum.EthDataManager;
-import com.blockchain.notifications.models.NotificationPayload;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.dashboard.DashboardPresenter;
 import piuk.blockchain.android.ui.home.models.MetadataEvent;
@@ -78,6 +80,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     private EnvironmentConfig environmentSettings;
     private CoinifyDataManager coinifyDataManager;
     private ExchangeService exchangeService;
+    private KycStatusHelper kycStatusHelper;
 
     @Inject
     MainPresenter(PrefsUtil prefs,
@@ -103,7 +106,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                   ShapeShiftDataManager shapeShiftDataManager,
                   EnvironmentConfig environmentSettings,
                   CoinifyDataManager coinifyDataManager,
-                  ExchangeService exchangeService) {
+                  ExchangeService exchangeService, KycStatusHelper kycStatusHelper) {
 
         this.prefs = prefs;
         this.appUtil = appUtil;
@@ -129,6 +132,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         this.environmentSettings = environmentSettings;
         this.coinifyDataManager = coinifyDataManager;
         this.exchangeService = exchangeService;
+        this.kycStatusHelper = kycStatusHelper;
     }
 
     private void initPrompts(Context context) {
@@ -195,15 +199,16 @@ public class MainPresenter extends BasePresenter<MainView> {
     // TODO: 24/10/2017  WalletOptions api is also accessed in BuyDataManager - This should be improved soon.
      */
     private void doWalletOptionsChecks() {
-        walletOptionsDataManager.showShapeshift(
-                payloadDataManager.getWallet().getGuid(),
-                payloadDataManager.getWallet().getSharedKey())
-                .doOnNext(this::setShapeShiftVisibility)
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxUtil.addObservableToCompositeDisposable(this))
-                .subscribe(ignored -> {
-                    //no-op
-                }, throwable -> {
+        Single.zip(
+                walletOptionsDataManager.showShapeshift(
+                        payloadDataManager.getWallet().getGuid(),
+                        payloadDataManager.getWallet().getSharedKey())
+                        .singleOrError(),
+                kycStatusHelper.shouldDisplayKyc(),
+                (showShapeShift, showKyc) -> showShapeShift || showKyc
+        ).observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtil.addSingleToCompositeDisposable(this))
+                .subscribe(this::setExchangeVisiblity, throwable -> {
                     //Couldn't retrieve wallet options. Not safe to continue
                     Timber.e(throwable);
                     getView().showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR);
@@ -211,19 +216,16 @@ public class MainPresenter extends BasePresenter<MainView> {
                 });
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private void setShapeShiftVisibility(boolean showShapeshift) {
-        // TODO: 01/08/2018 We need to choose visiblity based on whether to send users to Legacy
-        // SS or Homebrew SS
-        getView().showExchange();
+    private void setExchangeVisiblity(boolean showExchange) {
         if (BuildConfig.DEBUG) {
             getView().showHomebrewDebug();
         }
-//        if (showShapeshift) {
-//            getView().showShapeshift();
-//        } else {
-//            getView().hideShapeshift();
-//        }
+
+        if (showExchange) {
+            getView().showExchange();
+        } else {
+            getView().hideExchange();
+        }
     }
 
     // Could be used in the future

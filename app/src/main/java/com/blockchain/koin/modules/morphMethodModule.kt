@@ -1,18 +1,23 @@
 package com.blockchain.koin.modules
 
 import android.app.Activity
+import android.content.Intent
+import android.support.annotation.VisibleForTesting
 import com.blockchain.kycui.navhost.KycNavHostActivity
+import com.blockchain.kycui.settings.KycStatusHelper
+import com.blockchain.kycui.settings.SettingsKycState
 import com.blockchain.morph.MorphMethodSelector
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.dsl.module.applicationContext
-import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity
 import timber.log.Timber
 
 enum class MorphMethodType {
     ShapeShift,
-    HomeBrew
+    HomeBrew,
+    Kyc
 }
 
 /**
@@ -22,7 +27,7 @@ enum class MorphMethodType {
 interface MorphMethodTypeSelector : MorphMethodSelector<MorphMethodType>
 
 /**
- * Yields a method you can use to launch the correct trading method.
+ * Yields a method you can use to launch the correct trading method or route to KYC.
  * Asynchronous, so you can ask a server or whatever you need to.
  */
 interface MorphActivityLauncher : MorphMethodSelector<(Activity) -> Unit>
@@ -35,14 +40,10 @@ fun MorphActivityLauncher.launchAsync(activity: Activity) {
 
 val morphMethodModule = applicationContext {
 
-    bean {
-        // TODO: We need to choose whether to send users to Legacy SS, or Homebrew/KYC at this point AND-1248
-        // These are fixed choices based on build type, but we have ability to inject a more sophisticated and
-        // asynchronous implementation here.
-        if (BuildConfig.DEBUG) {
-            fixedSelector(MorphMethodType.HomeBrew)
-        } else {
-            fixedSelector(MorphMethodType.ShapeShift)
+    context("Payload") {
+
+        bean {
+            dynamicSelector(get())
         }
     }
 
@@ -53,15 +54,36 @@ val morphMethodModule = applicationContext {
                     .getMorphMethod()
                     .map {
                         when (it) {
-                            MorphMethodType.ShapeShift -> { activity: Activity -> ShapeShiftActivity.start(activity) }
-                            MorphMethodType.HomeBrew -> { activity: Activity -> KycNavHostActivity.start(activity) }
+                            MorphMethodType.ShapeShift -> { activity: Activity ->
+                                ShapeShiftActivity.start(activity)
+                            }
+                            MorphMethodType.HomeBrew -> { activity: Activity ->
+                                activity.startActivity(
+                                    Intent(activity, ExchangeActivity::class.java)
+                                )
+                            }
+                            MorphMethodType.Kyc -> { activity: Activity ->
+                                KycNavHostActivity.start(activity)
+                            }
                         }
                     }
         } as MorphActivityLauncher
     }
 }
 
-private fun fixedSelector(morphMethodType: MorphMethodType): MorphMethodTypeSelector =
+@VisibleForTesting
+internal fun dynamicSelector(
+    kycStatusHelper: KycStatusHelper
+): MorphMethodTypeSelector =
     object : MorphMethodTypeSelector {
-        override fun getMorphMethod() = Single.just(morphMethodType)
+        override fun getMorphMethod(): Single<MorphMethodType> {
+            return kycStatusHelper.getSettingsKycState()
+                .map {
+                    when (it) {
+                        SettingsKycState.Hidden -> return@map MorphMethodType.ShapeShift
+                        SettingsKycState.Verified -> return@map MorphMethodType.HomeBrew
+                        else -> return@map MorphMethodType.Kyc
+                    }
+                }
+        }
     }

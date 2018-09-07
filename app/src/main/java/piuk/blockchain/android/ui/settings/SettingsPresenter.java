@@ -3,6 +3,7 @@ package piuk.blockchain.android.ui.settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import com.blockchain.kycui.settings.KycStatusHelper;
+import com.blockchain.kycui.settings.SettingsKycState;
 import com.blockchain.notifications.NotificationTokenManager;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.payload.PayloadManager;
@@ -104,6 +105,24 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 settingsKycState -> getView().setKycState(settingsKycState),
+                                Timber::e)
+        );
+    }
+
+    void onKycStatusClicked() {
+        getCompositeDisposable().add(
+                kycStatusHelper.getSettingsKycState()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                settingsKycState -> {
+                                    if (settingsKycState == SettingsKycState.Verified) {
+                                        getView().launchHomebrew(prefsUtil.getValue(PrefsUtil.DEFAULT_CURRENCY, "USD"));
+                                    } else if (settingsKycState == SettingsKycState.Unverified) {
+                                        getView().launchKycFlow();
+                                    } else {
+                                        getView().launchKycStatus();
+                                    }
+                                },
                                 Timber::e)
         );
     }

@@ -22,9 +22,11 @@ import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import com.blockchain.kycui.navhost.KycNavHostActivity;
 import com.blockchain.kycui.settings.KycStatusPreference;
 import com.blockchain.kycui.settings.SettingsKycState;
 import com.blockchain.kycui.status.KycStatusActivity;
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.models.Country;
@@ -411,8 +413,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
             case "identity_verification":
-                // TODO: If status == None, redirect to KYC NavHost
-                KycStatusActivity.start(requireContext());
+                settingsPresenter.onKycStatusClicked();
                 break;
             case "email":
                 showDialogEmail();
@@ -865,6 +866,24 @@ public class SettingsFragment extends PreferenceFragmentCompat
             passStrengthBar.setProgressDrawable(ContextCompat.getDrawable(getActivity(), strengthColors[pwStrengthLevel]));
             passStrengthVerdict.setText(getResources().getString(strengthVerdicts[pwStrengthLevel]));
         }
+    }
+
+    @Override
+    public void launchHomebrew(String defaultCurrency) {
+        startActivity(ExchangeActivity.Companion.intent(requireContext(), defaultCurrency));
+        requireActivity().finish();
+    }
+
+    @Override
+    public void launchKycStatus() {
+        KycStatusActivity.start(requireContext());
+        requireActivity().finish();
+    }
+
+    @Override
+    public void launchKycFlow() {
+        KycNavHostActivity.start(requireContext());
+        requireActivity().finish();
     }
 
     private void setCountryFlag(TextView tvCountry, String dialCode, int flagResourceId) {

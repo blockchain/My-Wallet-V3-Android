@@ -59,4 +59,10 @@ interface SettingsView extends View {
     void setLauncherShortcutVisibility(boolean visible);
 
     void showWarningDialog(@StringRes int message);
+
+    void launchHomebrew(String defaultCurrency);
+
+    void launchKycStatus();
+
+    void launchKycFlow();
 }
