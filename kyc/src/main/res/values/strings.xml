@@ -2,25 +2,24 @@
 <resources>
     <!-- Splash Screen -->
     <string name="kyc_splash_title">Exchange</string>
-    <string name="kyc_splash_apply_now">Apply now</string>
-    <string name="kyc_splash_message">Complete your Blockchain profile and identity verification to start buying and selling cryptocurrencies. This will only take 5 minutes.</string>
-    <string name="kyc_splash_terms_and_conditions">By tapping apply now, I agree to Blockchain’s</string>
+    <string name="kyc_splash_apply_now">Begin now</string>
+    <string name="kyc_splash_message">Introducing Blockchain\'s new and improved crypto exchange function. To use this updated feature, please verify your identity. It only takes a couple of minutes.</string>
+    <string name="kyc_splash_terms_and_conditions">By tapping Begin Now, I agree to Blockchain’s</string>
     <string name="kyc_splash_terms_and_conditions_terms">Terms of Service</string>
     <string name="kyc_splash_terms_and_conditions_privacy">Privacy Policy</string>
 
     <!-- Country Selection -->
     <string name="kyc_country_selection_title">Select Your Country</string>
     <string name="kyc_country_selection_header">Why do you need this?</string>
-    <string name="kyc_country_selection_message">Right now, digital cryptocurrency conversions on Blockchain are only available in select countries.</string>
+    <string name="kyc_country_selection_message">Right now, digital cryptocurrency conversions are only available in select countries.</string>
     <string name="kyc_country_selection_search_hint">Search for your country</string>
     <string name="kyc_country_selection_connection_error">Please check your connection</string>
     <string name="kyc_country_selection_please_wait">Please wait…</string>
-    <string name="kyc_country_selection_invalid_country_title">Invalid Country</string>
-    <string name="kyc_country_selection_invalid_country_message">Unfortunately the country you selected isn\'t yet supported for Exchange.</string>
 
     <!-- Profile -->
     <string name="kyc_profile_title">Profile</string>
-    <string name="kyc_profile_message">You must be 18 or older to buy and sell on Blockchain.</string>
+    <string name="kyc_profile_header">Why do we need this information?</string>
+    <string name="kyc_profile_message">Regulations require that users must be 18 or older to trade crypto.</string>
     <string name="kyc_profile_first_name_hint">First Name</string>
     <string name="kyc_profile_last_name_hint">Last Name</string>
     <string name="kyc_profile_dob_hint">Date of Birth</string>
@@ -29,12 +28,14 @@
     <string name="kyc_profile_error_conflict">A user already exists with this email address</string>
 
     <!-- Invalid Country -->
-    <string name="kyc_invalid_country_exit">Exit</string>
+    <string name="kyc_invalid_country_message_me">Message me when available</string>
+    <string name="kyc_invalid_country_no_thanks">No thanks</string>
     <string name="kyc_invalid_country_header">Coming soon to %1$s</string>
     <string name="kyc_invalid_country_message">Every country has different rules on how to buy and sell cryptocurrencies. Keep your eyes peeled, and we\'ll let you know as soon as we launch in %1$s!</string>
 
     <!-- Address -->
     <string name="kyc_address_title">Home Address</string>
+    <string name="kyc_address_header">What is the address used for?</string>
     <string name="kyc_address_message">We may send a verification postcard for added security.</string>
     <string name="kyc_address_search_hint">Search for your %1$s</string>
     <string name="kyc_address_search_hint_postcode">postcode</string>
@@ -49,17 +50,18 @@
     <string name="kyc_address_address_country_hint">Country</string>
     <string name="kyc_address_google_not_available">Google Play Services are not available on this device.</string>
     <string name="kyc_address_error_saving">Error saving address, please try again</string>
+    <string name="kyc_address_error_loading_places">Error connecting to address search</string>
 
     <!-- Phone Number -->
     <string name="kyc_phone_number_title">Verify Your Device</string>
-    <string name="kyc_phone_number_message">Confirm your device to secure your wallet.</string>
+    <string name="kyc_phone_number_message">We will send you an SMS with a verification code.</string>
     <string name="kyc_phone_number_hint_focused">Your Mobile Number</string>
     <string name="kyc_phone_number_hint_unfocused">+1 2345 678 910</string>
     <string name="kyc_phone_number_error_saving_number">Error saving mobile number, please try again</string>
     <string name="kyc_phone_number_error_conflict">Mobile phone number already registered, please use another.</string>
 
     <!-- Phone Number Validation -->
-    <string name="kyc_phone_number_validation_title">Enter the code sent to</string>
+    <string name="kyc_phone_number_validation_header">Enter the code sent to</string>
     <string name="kyc_phone_number_validation_hint">Confirmation Code</string>
     <string name="kyc_phone_number_validation_error">Error validating phone number. Please check your code</string>
     <string name="kyc_phone_number_validation_error_incorrect">Verification code incorrect. Please double check the code we sent you and try again.</string>
@@ -68,7 +70,7 @@
     <string name="kyc_onfido_splash_title">Verify Your Identity</string>
     <string name="kyc_onfido_splash_header">Let\'s Confirm It\'s You</string>
     <string name="kyc_onfido_splash_subtitle">Grab your Passport, Driver\'s License, Govt Issued ID or a Resident Permit Card.</string>
-    <string name="kyc_onfido_splash_message">Once we verify your identity, you are approved to Buy, Sell and Transfer cryptocurrencies on the Blockchain app!</string>
+    <string name="kyc_onfido_splash_message">Once we verify your identity, you are approved to exchange cryptocurrencies on the Blockchain app!</string>
     <string name="kyc_onfido_splash_verification_error">Error verifying ID, please try again</string>
     <string name="kyc_onfido_splash_passport">My Passport</string>
     <string name="kyc_onfido_splash_drivers_license">My Drivers License</string>
@@ -100,7 +102,7 @@
     <string name="kyc_status_title_failed">Verification Failed</string>
     <string name="kyc_status_title_in_review">Verification Under Review</string>
     <string name="kyc_status_subtitle">What happens next?</string>
-    <string name="kyc_status_message_in_progress">Your information is being reviewed. When it all looks good, you\'re clear to exchange. You should receive a notification in the next 5 minutes.</string>
+    <string name="kyc_status_message_in_progress">Your information is being reviewed. When it all looks good, you\'re clear to exchange. You should receive a notification within 5 minutes.</string>
     <string name="kyc_status_message_verified">Congratulations! We successfully verified your identity. You can now exchange cryptocurrencies at Blockchain.</string>
     <string name="kyc_status_message_failed">Unfortunately we had some trouble verifying your identity with the documents you\'ve supplied and your account can\'t be verified at this time.</string>
     <string name="kyc_status_message_under_review">We had some trouble verifying your account with the documents provided. Our support team will contact you shortly to resolve this.</string>

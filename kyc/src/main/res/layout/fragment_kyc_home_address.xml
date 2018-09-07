@@ -15,7 +15,7 @@
             style="@style/KycFlowTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/kyc_country_selection_header"
+            android:text="@string/kyc_address_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -169,6 +169,7 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
     private fun logPlacesError(data: Intent?) {
         val status = PlaceAutocomplete.getStatus(requireActivity(), data)
         Timber.e("${status.statusMessage}")
+        toast(R.string.kyc_address_error_loading_places, ToastCustom.TYPE_ERROR)
     }
 
     private fun updateAddress(data: Intent?) {

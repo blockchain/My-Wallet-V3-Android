@@ -12,7 +12,8 @@ import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.kyc.R
 import java.util.Locale
-import kotlinx.android.synthetic.main.fragment_kyc_invalid_country.button_kyc_invalid_country_exit as buttonExit
+import kotlinx.android.synthetic.main.fragment_kyc_invalid_country.button_kyc_invalid_country_message_me as buttonMessageMe
+import kotlinx.android.synthetic.main.fragment_kyc_invalid_country.text_view_kyc_no_thanks as buttonNoThanks
 import kotlinx.android.synthetic.main.fragment_kyc_invalid_country.text_view_kyc_invalid_country_header as textViewHeader
 import kotlinx.android.synthetic.main.fragment_kyc_invalid_country.text_view_kyc_invalid_country_message as textViewMessage
 
@@ -37,7 +38,11 @@ class KycInvalidCountryFragment : Fragment() {
         textViewHeader.text = getString(R.string.kyc_invalid_country_header, displayCountry)
         textViewMessage.text = getString(R.string.kyc_invalid_country_message, displayCountry)
 
-        buttonExit.setOnClickListener { requireActivity().finish() }
+        buttonNoThanks.setOnClickListener { requireActivity().finish() }
+        buttonMessageMe.setOnClickListener {
+            // TODO: There should be some kind of logging here, but nothing has been decided yet
+            requireActivity().finish()
+        }
     }
 
     companion object {
