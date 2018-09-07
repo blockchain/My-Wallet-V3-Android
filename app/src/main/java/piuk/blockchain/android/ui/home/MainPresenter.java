@@ -106,7 +106,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                   ShapeShiftDataManager shapeShiftDataManager,
                   EnvironmentConfig environmentSettings,
                   CoinifyDataManager coinifyDataManager,
-                  ExchangeService exchangeService, KycStatusHelper kycStatusHelper) {
+                  ExchangeService exchangeService,
+                  KycStatusHelper kycStatusHelper) {
 
         this.prefs = prefs;
         this.appUtil = appUtil;
