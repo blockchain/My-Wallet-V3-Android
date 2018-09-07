@@ -52,7 +52,7 @@ class NabuDataManager(
         }
 
     internal fun getAuthToken(jwt: String): Single<NabuOfflineTokenResponse> =
-        nabuService.getAuthToken(jwt = jwt)
+        nabuService.getAuthToken(jwt)
 
     @VisibleForTesting
     internal fun getSessionToken(
@@ -60,12 +60,12 @@ class NabuDataManager(
     ): Single<NabuSessionTokenResponse> =
         emailSingle.flatMap {
             nabuService.getSessionToken(
-                userId = offlineTokenResponse.userId,
-                offlineToken = offlineTokenResponse.token,
-                guid = guid,
-                email = it,
-                deviceId = deviceId,
-                appVersion = appVersion
+                offlineTokenResponse.userId,
+                offlineTokenResponse.token,
+                guid,
+                it,
+                deviceId,
+                appVersion
             )
         }
 
@@ -75,28 +75,28 @@ class NabuDataManager(
         dateOfBirth: String,
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Completable =
-        authenticate(offlineTokenResponse) { session ->
+        authenticate(offlineTokenResponse) {
             nabuService.createBasicUser(
-                firstName = firstName,
-                lastName = lastName,
-                dateOfBirth = dateOfBirth,
-                sessionToken = session.token
+                firstName,
+                lastName,
+                dateOfBirth,
+                it
             ).toSingleDefault(Any())
         }.ignoreElement()
 
     internal fun getUser(
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Single<NabuUser> =
-        authenticate(offlineTokenResponse) { session ->
-            nabuService.getUser(sessionToken = session.token)
+        authenticate(offlineTokenResponse) {
+            nabuService.getUser(it)
         }
 
     internal fun updateUserWalletInfo(
         offlineTokenResponse: NabuOfflineTokenResponse,
         jwt: String
     ): Single<NabuUser> =
-        authenticate(offlineTokenResponse) { session ->
-            nabuService.updateWalletInformation(sessionToken = session.token, jwt = jwt)
+        authenticate(offlineTokenResponse) {
+            nabuService.updateWalletInformation(it, jwt)
         }
 
     internal fun addAddress(
@@ -109,30 +109,28 @@ class NabuDataManager(
         countryCode: String
     ): Completable = authenticate(offlineTokenResponse) {
         nabuService.addAddress(
-            city = city,
-            line1 = line1,
-            line2 = line2,
-            state = state,
-            postCode = postCode,
-            countryCode = countryCode,
-            sessionToken = it.token
+            it,
+            line1,
+            line2,
+            city,
+            state,
+            postCode,
+            countryCode
         ).toSingleDefault(Any())
     }.ignoreElement()
 
     internal fun getOnfidoApiKey(
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Single<String> = authenticate(offlineTokenResponse) {
-        nabuService.getOnfidoApiKey(sessionToken = it.token)
+        nabuService.getOnfidoApiKey(it)
     }
 
     internal fun submitOnfidoVerification(
         offlineTokenResponse: NabuOfflineTokenResponse,
         applicantId: String
     ): Completable = authenticate(offlineTokenResponse) {
-        nabuService.submitOnfidoVerification(
-            sessionToken = it.token,
-            applicantId = applicantId
-        ).toSingleDefault(Any())
+        nabuService.submitOnfidoVerification(it, applicantId)
+            .toSingleDefault(Any())
     }.ignoreElement()
 
     /**
@@ -144,10 +142,10 @@ class NabuDataManager(
     }
 
     internal fun getCountriesList(scope: Scope): Single<List<NabuCountryResponse>> =
-        nabuService.getCountriesList(scope = scope)
+        nabuService.getCountriesList(scope)
 
-    private fun unauthenticated(it: Throwable) =
-        (it as? NabuApiException?)?.getErrorCode() == NabuErrorCodes.TokenExpired
+    private fun unauthenticated(throwable: Throwable) =
+        (throwable as? NabuApiException?)?.getErrorCode() == NabuErrorCodes.TokenExpired
 
     // TODO: Refactor this logic into a reusable, thoroughly tested class - see AND-1335
     internal fun <T> authenticate(

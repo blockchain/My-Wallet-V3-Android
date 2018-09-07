@@ -1,13 +1,5 @@
 package com.blockchain.kyc.services.nabu
 
-import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
-import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
-import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
-import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
-import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
-import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
-import com.blockchain.kyc.api.nabu.NABU_UPDATE_WALLET_INFO
-import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
 import com.blockchain.kyc.api.nabu.Nabu
 import com.blockchain.kyc.extensions.wrapErrorMessage
 import com.blockchain.kyc.models.nabu.AddAddressRequest
@@ -22,27 +14,19 @@ import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import retrofit2.Retrofit
 
-class NabuService(
-    environmentConfig: EnvironmentConfig,
-    retrofit: Retrofit
-) {
+class NabuService(retrofit: Retrofit) {
 
     private val service: Nabu = retrofit.create(Nabu::class.java)
-    private val apiPath = environmentConfig.nabuApi
 
     internal fun getAuthToken(
-        path: String = apiPath + NABU_INITIAL_AUTH,
         jwt: String
     ): Single<NabuOfflineTokenResponse> = service.getAuthToken(
-        path,
         NabuOfflineTokenRequest(jwt)
     ).wrapErrorMessage()
 
     internal fun getSessionToken(
-        path: String = apiPath + NABU_SESSION_TOKEN,
         userId: String,
         offlineToken: String,
         guid: String,
@@ -50,7 +34,6 @@ class NabuService(
         appVersion: String,
         deviceId: String
     ): Single<NabuSessionTokenResponse> = service.getSessionToken(
-        path,
         userId,
         offlineToken,
         guid,
@@ -61,85 +44,69 @@ class NabuService(
     ).wrapErrorMessage()
 
     internal fun createBasicUser(
-        path: String = apiPath + NABU_USERS_CURRENT,
         firstName: String,
         lastName: String,
         dateOfBirth: String,
-        sessionToken: String
+        sessionToken: NabuSessionTokenResponse
     ): Completable = service.createBasicUser(
-        path,
         NabuBasicUser(firstName, lastName, dateOfBirth),
-        sessionToken.toAuthHeader()
+        sessionToken.authHeader
     )
 
     internal fun getUser(
-        path: String = apiPath + NABU_USERS_CURRENT,
-        sessionToken: String
+        sessionToken: NabuSessionTokenResponse
     ): Single<NabuUser> = service.getUser(
-        path,
-        sessionToken.toAuthHeader()
+        sessionToken.authHeader
     ).wrapErrorMessage()
 
     internal fun updateWalletInformation(
-        path: String = apiPath + NABU_UPDATE_WALLET_INFO,
-        sessionToken: String,
+        sessionToken: NabuSessionTokenResponse,
         jwt: String
     ): Single<NabuUser> = service.updateWalletInformation(
-        path,
         NabuJwt(jwt),
-        sessionToken.toAuthHeader()
+        sessionToken.authHeader
     ).wrapErrorMessage()
 
     internal fun getCountriesList(
-        path: String = apiPath + NABU_COUNTRIES,
         scope: Scope
     ): Single<List<NabuCountryResponse>> = service.getCountriesList(
-        path,
         scope.value
     ).wrapErrorMessage()
 
     internal fun addAddress(
-        path: String = apiPath + NABU_PUT_ADDRESS,
-        city: String,
+        sessionToken: NabuSessionTokenResponse,
         line1: String,
         line2: String?,
+        city: String,
         state: String?,
-        countryCode: String,
         postCode: String,
-        sessionToken: String
+        countryCode: String
     ): Completable = service.addAddress(
-        path,
         AddAddressRequest.fromAddressDetails(
-            city,
             line1,
             line2,
+            city,
             state,
-            countryCode,
-            postCode
+            postCode,
+            countryCode
         ),
-        sessionToken.toAuthHeader()
+        sessionToken.authHeader
     ).wrapErrorMessage()
 
     internal fun getOnfidoApiKey(
-        path: String = apiPath + NABU_ONFIDO_API_KEY,
-        sessionToken: String
+        sessionToken: NabuSessionTokenResponse
     ): Single<String> = service.getOnfidoApiKey(
-        path,
-        sessionToken.toAuthHeader()
+        sessionToken.authHeader
     ).map { it.key }
         .wrapErrorMessage()
 
     internal fun submitOnfidoVerification(
-        path: String = apiPath + NABU_SUBMIT_VERIFICATION,
-        sessionToken: String,
+        sessionToken: NabuSessionTokenResponse,
         applicantId: String
     ): Completable = service.submitOnfidoVerification(
-        path,
         ApplicantIdRequest(applicantId),
-        sessionToken.toAuthHeader()
+        sessionToken.authHeader
     ).wrapErrorMessage()
-
-    private fun String.toAuthHeader() = "Bearer $this"
 
     companion object {
         internal const val CLIENT_TYPE = "APP"

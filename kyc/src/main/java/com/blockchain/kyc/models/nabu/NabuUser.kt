@@ -25,12 +25,12 @@ data class NabuUser(
 )
 
 data class Address(
-    val city: String?,
     val line1: String?,
     val line2: String?,
+    val city: String?,
     val state: String?,
-    @field:Json(name = "country") val countryCode: String?,
-    val postCode: String?
+    val postCode: String,
+    @field:Json(name = "country") val countryCode: String?
 )
 
 data class AddAddressRequest(
@@ -39,20 +39,20 @@ data class AddAddressRequest(
     companion object {
 
         fun fromAddressDetails(
-            city: String,
             line1: String,
             line2: String?,
+            city: String,
             state: String?,
-            countryCode: String,
-            postCode: String
+            postCode: String,
+            countryCode: String
         ): AddAddressRequest = AddAddressRequest(
             Address(
-                city,
                 line1,
                 line2,
+                city,
                 state,
-                countryCode,
-                postCode
+                postCode,
+                countryCode
             )
         )
     }

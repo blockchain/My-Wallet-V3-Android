@@ -1,7 +1,6 @@
 package com.blockchain.kyc.api.nabu
 
 import com.blockchain.kyc.models.nabu.AddAddressRequest
-import com.blockchain.kyc.models.nabu.Address
 import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
@@ -19,19 +18,16 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 internal interface Nabu {
 
-    @POST
+    @POST(NABU_INITIAL_AUTH)
     fun getAuthToken(
-        @Url url: String,
         @Body jwt: NabuOfflineTokenRequest
     ): Single<NabuOfflineTokenResponse>
 
-    @POST
+    @POST(NABU_SESSION_TOKEN)
     fun getSessionToken(
-        @Url url: String,
         @Query("userId") userId: String,
         @Header("authorization") authorization: String,
         @Header("X-WALLET-GUID") guid: String,
@@ -41,56 +37,41 @@ internal interface Nabu {
         @Header("X-DEVICE-ID") deviceId: String
     ): Single<NabuSessionTokenResponse>
 
-    @PUT
+    @PUT(NABU_USERS_CURRENT)
     fun createBasicUser(
-        @Url url: String,
         @Body basicUser: NabuBasicUser,
         @Header("authorization") authorization: String
     ): Completable
 
-    @GET
+    @GET(NABU_USERS_CURRENT)
     fun getUser(
-        @Url url: String,
         @Header("authorization") authorization: String
     ): Single<NabuUser>
 
-    @PUT
+    @PUT(NABU_UPDATE_WALLET_INFO)
     fun updateWalletInformation(
-        @Url url: String,
         @Body jwt: NabuJwt,
         @Header("authorization") authorization: String
     ): Single<NabuUser>
 
-    @GET
+    @GET(NABU_COUNTRIES)
     fun getCountriesList(
-        @Url url: String,
         @Query("scope") scope: String?
     ): Single<List<NabuCountryResponse>>
 
-    @GET
-    fun findAddress(
-        @Url url: String,
-        @Query("postCode") postCode: String,
-        @Query("countryCode") countryCode: String,
-        @Header("authorization") authorization: String
-    ): Single<List<Address>>
-
-    @PUT
+    @PUT(NABU_PUT_ADDRESS)
     fun addAddress(
-        @Url url: String,
         @Body address: AddAddressRequest,
         @Header("authorization") authorization: String
     ): Completable
 
-    @GET
+    @GET(NABU_ONFIDO_API_KEY)
     fun getOnfidoApiKey(
-        @Url url: String,
         @Header("authorization") authorization: String
     ): Single<OnfidoApiKey>
 
-    @POST
+    @POST(NABU_SUBMIT_VERIFICATION)
     fun submitOnfidoVerification(
-        @Url url: String,
         @Body applicantIdRequest: ApplicantIdRequest,
         @Header("authorization") authorization: String
     ): Completable

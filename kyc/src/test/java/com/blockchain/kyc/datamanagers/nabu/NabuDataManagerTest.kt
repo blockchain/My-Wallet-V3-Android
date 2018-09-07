@@ -1,5 +1,6 @@
 package com.blockchain.kyc.datamanagers.nabu
 
+import com.blockchain.kyc.getEmptySessionToken
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.Scope
@@ -7,7 +8,6 @@ import com.blockchain.kyc.models.wallet.RetailJwtResponse
 import com.blockchain.kyc.services.nabu.NabuService
 import com.blockchain.kyc.services.wallet.RetailWalletTokenService
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
-import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.nabu.stores.NabuSessionTokenStore
 import com.blockchain.utils.Optional
 import com.nhaarman.mockito_kotlin.verify
@@ -107,7 +107,7 @@ class NabuDataManagerTest {
         val token = "TOKEN"
         val jwt = "JWT"
         val tokenResponse = NabuOfflineTokenResponse(userId, token)
-        whenever(nabuService.getAuthToken(jwt = jwt))
+        whenever(nabuService.getAuthToken(jwt))
             .thenReturn(Single.just(tokenResponse))
         // Act
         val testObserver = subject.getAuthToken(jwt).test()
@@ -115,38 +115,37 @@ class NabuDataManagerTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(tokenResponse)
-        verify(nabuService).getAuthToken(jwt = jwt)
+        verify(nabuService).getAuthToken(jwt)
     }
 
     @Test
     fun getSessionToken() {
         // Arrange
         val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionTokenResponse = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        val sessionTokenResponse = getEmptySessionToken()
         whenever(
             nabuService.getSessionToken(
-                guid = guid,
-                email = email,
-                offlineToken = offlineToken.token,
-                userId = offlineToken.userId,
-                deviceId = deviceId,
-                appVersion = appVersion
+                offlineToken.userId,
+                offlineToken.token,
+                guid,
+                email,
+                deviceId,
+                appVersion
             )
         ).thenReturn(Single.just(sessionTokenResponse))
         // Act
-        val testObserver =
-            subject.getSessionToken(offlineToken).test()
+        val testObserver = subject.getSessionToken(offlineToken).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(sessionTokenResponse)
         verify(nabuService).getSessionToken(
-            guid = guid,
-            email = email,
-            offlineToken = offlineToken.token,
-            userId = offlineToken.userId,
-            deviceId = deviceId,
-            appVersion = appVersion
+            offlineToken.userId,
+            offlineToken.token,
+            guid,
+            email,
+            deviceId,
+            appVersion
         )
     }
 
@@ -157,16 +156,16 @@ class NabuDataManagerTest {
         val lastName = "LAST_NAME"
         val dateOfBirth = "25-02-1995"
         val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        val sessionToken = getEmptySessionToken()
         whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
         whenever(
             nabuService.createBasicUser(
-                firstName = firstName,
-                lastName = lastName,
-                dateOfBirth = dateOfBirth,
-                sessionToken = sessionToken.token
+                firstName,
+                lastName,
+                dateOfBirth,
+                sessionToken
             )
         ).thenReturn(Completable.complete())
         // Act
@@ -180,10 +179,10 @@ class NabuDataManagerTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(nabuService).createBasicUser(
-            firstName = firstName,
-            lastName = lastName,
-            dateOfBirth = dateOfBirth,
-            sessionToken = sessionToken.token
+            firstName,
+            lastName,
+            dateOfBirth,
+            sessionToken
         )
     }
 
@@ -192,20 +191,19 @@ class NabuDataManagerTest {
         // Arrange
         val userObject: NabuUser = mock()
         val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        val sessionToken = getEmptySessionToken()
         whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
-        whenever(
-            nabuService.getUser(sessionToken = sessionToken.token)
-        ).thenReturn(Single.just(userObject))
+        whenever(nabuService.getUser(sessionToken))
+            .thenReturn(Single.just(userObject))
         // Act
         val testObserver = subject.getUser(offlineToken).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(userObject)
-        verify(nabuService).getUser(sessionToken = sessionToken.token)
+        verify(nabuService).getUser(sessionToken)
     }
 
     @Test
@@ -218,19 +216,19 @@ class NabuDataManagerTest {
         val countryCode = "COUNTRY_CODE"
         val postCode = "POST_CODE"
         val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        val sessionToken = getEmptySessionToken()
         whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
         whenever(
             nabuService.addAddress(
-                sessionToken = sessionToken.token,
-                line1 = line1,
-                line2 = line2,
-                city = city,
-                state = state,
-                postCode = postCode,
-                countryCode = countryCode
+                sessionToken,
+                line1,
+                line2,
+                city,
+                state,
+                postCode,
+                countryCode
             )
         ).thenReturn(Completable.complete())
         // Act
@@ -247,13 +245,13 @@ class NabuDataManagerTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         verify(nabuService).addAddress(
-            sessionToken = sessionToken.token,
-            line1 = line1,
-            line2 = line2,
-            city = city,
-            state = state,
-            postCode = postCode,
-            countryCode = countryCode
+            sessionToken,
+            line1,
+            line2,
+            city,
+            state,
+            postCode,
+            countryCode
         )
     }
 
@@ -264,7 +262,7 @@ class NabuDataManagerTest {
             NabuCountryResponse("GER", "Germany", listOf("EEA"), listOf("KYC")),
             NabuCountryResponse("UK", "United Kingdom", listOf("EEA"), listOf("KYC"))
         )
-        whenever(nabuService.getCountriesList(scope = Scope.Kyc))
+        whenever(nabuService.getCountriesList(Scope.Kyc))
             .thenReturn(Single.just(countriesList))
         // Act
         val testObserver = subject.getCountriesList(Scope.Kyc).test()
@@ -272,7 +270,7 @@ class NabuDataManagerTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(countriesList)
-        verify(nabuService).getCountriesList(scope = Scope.Kyc)
+        verify(nabuService).getCountriesList(Scope.Kyc)
     }
 
     @Test
@@ -280,18 +278,18 @@ class NabuDataManagerTest {
         // Arrange
         val apiKey = "API_KEY"
         val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        val sessionToken = getEmptySessionToken()
         whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
-        whenever(nabuService.getOnfidoApiKey(sessionToken = sessionToken.token))
+        whenever(nabuService.getOnfidoApiKey(sessionToken))
             .thenReturn(Single.just(apiKey))
         // Act
         val testObserver = subject.getOnfidoApiKey(offlineToken).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
-        verify(nabuService).getOnfidoApiKey(sessionToken = sessionToken.token)
+        verify(nabuService).getOnfidoApiKey(sessionToken)
     }
 
     @Test
@@ -299,24 +297,17 @@ class NabuDataManagerTest {
         // Arrange
         val applicantId = "APPLICATION_ID"
         val offlineToken = NabuOfflineTokenResponse("", "")
-        val sessionToken = NabuSessionTokenResponse("", "", "", true, "", "", "")
+        val sessionToken = getEmptySessionToken()
         whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
         whenever(nabuTokenStore.getAccessToken())
             .thenReturn(Observable.just(Optional.Some(sessionToken)))
-        whenever(
-            nabuService.submitOnfidoVerification(
-                sessionToken = sessionToken.token,
-                applicantId = applicantId
-            )
-        ).thenReturn(Completable.complete())
+        whenever(nabuService.submitOnfidoVerification(sessionToken, applicantId))
+            .thenReturn(Completable.complete())
         // Act
         val testObserver = subject.submitOnfidoVerification(offlineToken, applicantId).test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
-        verify(nabuService).submitOnfidoVerification(
-            sessionToken = sessionToken.token,
-            applicantId = applicantId
-        )
+        verify(nabuService).submitOnfidoVerification(sessionToken, applicantId)
     }
 }

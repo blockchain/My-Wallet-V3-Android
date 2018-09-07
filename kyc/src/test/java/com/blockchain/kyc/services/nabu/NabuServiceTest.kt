@@ -8,6 +8,7 @@ import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
 import com.blockchain.kyc.api.nabu.NABU_UPDATE_WALLET_INFO
 import com.blockchain.kyc.api.nabu.NABU_USERS_CURRENT
+import com.blockchain.kyc.getEmptySessionToken
 import com.blockchain.kyc.models.nabu.AddAddressRequest
 import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.KycState
@@ -25,11 +26,9 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should equal`
-import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 
 class NabuServiceTest {
 
@@ -39,17 +38,13 @@ class NabuServiceTest {
         .add(KycStateAdapter())
         .build()
     private val server: MockWebServer = MockWebServer()
-    private val environmentConfig: EnvironmentConfig = mock()
 
     @get:Rule
     val initMockServer = mockWebServerInit(server)
 
     @Before
     fun setUp() {
-        subject = NabuService(
-            environmentConfig,
-            MockedRetrofitTest(moshi, server).retrofit
-        )
+        subject = NabuService(MockedRetrofitTest(moshi, server).retrofit)
     }
 
     @Test
@@ -62,10 +57,7 @@ class NabuServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetNabuOfflineToken.json"))
         )
         // Act
-        val testObserver = subject.getAuthToken(
-            path = NABU_INITIAL_AUTH,
-            jwt = jwt
-        ).test()
+        val testObserver = subject.getAuthToken(jwt).test()
         // Assert
         testObserver.awaitTerminalEvent()
         testObserver.assertComplete()
@@ -95,13 +87,12 @@ class NabuServiceTest {
         )
         // Act
         val testObserver = subject.getSessionToken(
-            path = NABU_SESSION_TOKEN,
-            email = email,
-            guid = guid,
-            userId = userId,
-            offlineToken = offlineToken,
-            appVersion = appVersion,
-            deviceId = deviceId
+            userId,
+            offlineToken,
+            guid,
+            email,
+            appVersion,
+            deviceId
         ).test()
         // Assert
         testObserver.awaitTerminalEvent()
@@ -132,7 +123,7 @@ class NabuServiceTest {
         val firstName = "FIRST_NAME"
         val lastName = "LAST_NAME"
         val dateOfBirth = "12-12-1234"
-        val sessionToken = "SESSION_TOKEN"
+        val sessionToken = getEmptySessionToken()
         server.enqueue(
             MockResponse()
                 .setResponseCode(200)
@@ -140,11 +131,10 @@ class NabuServiceTest {
         )
         // Act
         val testObserver = subject.createBasicUser(
-            path = NABU_USERS_CURRENT,
-            firstName = firstName,
-            lastName = lastName,
-            dateOfBirth = dateOfBirth,
-            sessionToken = sessionToken
+            firstName,
+            lastName,
+            dateOfBirth,
+            sessionToken
         ).test()
         // Assert
         testObserver.awaitTerminalEvent()
@@ -161,23 +151,19 @@ class NabuServiceTest {
         basicUserBody.lastName `should equal to` lastName
         basicUserBody.dateOfBirth `should equal to` dateOfBirth
         // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+        request.headers.get("authorization") `should equal` sessionToken.authHeader
     }
 
     @Test
     fun getUser() {
         // Arrange
-        val sessionToken = "SESSION_TOKEN"
         server.enqueue(
             MockResponse()
                 .setResponseCode(200)
                 .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetUser.json"))
         )
         // Act
-        val testObserver = subject.getUser(
-            path = NABU_USERS_CURRENT,
-            sessionToken = sessionToken
-        ).test()
+        val testObserver = subject.getUser(getEmptySessionToken()).test()
         // Assert
         testObserver.awaitTerminalEvent()
         testObserver.assertComplete()
@@ -192,13 +178,12 @@ class NabuServiceTest {
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_USERS_CURRENT"
         // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+        request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
     }
 
     @Test
     fun updateWalletInformation() {
         // Arrange
-        val sessionToken = "SESSION_TOKEN"
         val jwt = "JWT"
         server.enqueue(
             MockResponse()
@@ -206,11 +191,7 @@ class NabuServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetUser.json"))
         )
         // Act
-        val testObserver = subject.updateWalletInformation(
-            path = NABU_UPDATE_WALLET_INFO,
-            sessionToken = sessionToken,
-            jwt = jwt
-        ).test()
+        val testObserver = subject.updateWalletInformation(getEmptySessionToken(), jwt).test()
         // Assert
         testObserver.awaitTerminalEvent()
         testObserver.assertComplete()
@@ -225,16 +206,15 @@ class NabuServiceTest {
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_UPDATE_WALLET_INFO"
         // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+        request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
     }
 
     @Test
     fun addAddress() {
         // Arrange
-        val sessionToken = "SESSION_TOKEN"
-        val city = "CITY"
         val line1 = "LINE1"
         val line2 = "LINE2"
+        val city = "CITY"
         val state = null
         val countryCode = "COUNTRY_CODE"
         val postCode = "POST_CODE"
@@ -245,14 +225,13 @@ class NabuServiceTest {
         )
         // Act
         val testObserver = subject.addAddress(
-            path = NABU_PUT_ADDRESS,
-            sessionToken = sessionToken,
-            city = city,
-            line1 = line1,
-            line2 = line2,
-            state = state,
-            countryCode = countryCode,
-            postCode = postCode
+            getEmptySessionToken(),
+            line1,
+            line2,
+            city,
+            state,
+            postCode,
+            countryCode
         ).test()
         // Assert
         testObserver.awaitTerminalEvent()
@@ -265,20 +244,19 @@ class NabuServiceTest {
         val requestString = request.requestToString()
         val adapter = moshi.adapter(AddAddressRequest::class.java)
         val addressRequest = adapter.fromJson(requestString)!!
-        addressRequest.address.city `should equal` city
         addressRequest.address.line1 `should equal` line1
         addressRequest.address.line2 `should equal` line2
+        addressRequest.address.city `should equal` city
         addressRequest.address.state `should equal` state
         addressRequest.address.countryCode `should equal` countryCode
         addressRequest.address.postCode `should equal` postCode
         // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+        request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
     }
 
     @Test
     fun `get onfido API key`() {
         // Arrange
-        val sessionToken = "SESSION_TOKEN"
         server.enqueue(
             MockResponse()
                 .setResponseCode(200)
@@ -289,10 +267,7 @@ class NabuServiceTest {
                 )
         )
         // Act
-        val testObserver = subject.getOnfidoApiKey(
-            path = NABU_ONFIDO_API_KEY,
-            sessionToken = sessionToken
-        ).test()
+        val testObserver = subject.getOnfidoApiKey(getEmptySessionToken()).test()
         // Assert
         testObserver.awaitTerminalEvent()
         testObserver.assertComplete()
@@ -304,13 +279,12 @@ class NabuServiceTest {
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_ONFIDO_API_KEY"
         // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+        request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
     }
 
     @Test
     fun `submit onfido verification ID`() {
         // Arrange
-        val sessionToken = "SESSION_TOKEN"
         val appplicantId = "APPLICATION_ID"
         server.enqueue(
             MockResponse()
@@ -319,9 +293,8 @@ class NabuServiceTest {
         )
         // Act
         val testObserver = subject.submitOnfidoVerification(
-            path = NABU_SUBMIT_VERIFICATION,
-            applicantId = appplicantId,
-            sessionToken = sessionToken
+            getEmptySessionToken(),
+            appplicantId
         ).test()
         // Assert
         testObserver.awaitTerminalEvent()
@@ -336,7 +309,7 @@ class NabuServiceTest {
         // Check URL
         request.path `should equal to` "/$NABU_SUBMIT_VERIFICATION"
         // Check Header
-        request.headers.get("authorization") `should equal` "Bearer $sessionToken"
+        request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
     }
 
     @Test
@@ -348,10 +321,7 @@ class NabuServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetEeaCountriesList.json"))
         )
         // Act
-        val testObserver = subject.getCountriesList(
-            path = NABU_COUNTRIES,
-            scope = Scope.Kyc
-        ).test()
+        val testObserver = subject.getCountriesList(Scope.Kyc).test()
         // Assert
         testObserver.awaitTerminalEvent()
         testObserver.assertComplete()
@@ -373,10 +343,7 @@ class NabuServiceTest {
                 .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetEeaCountriesList.json"))
         )
         // Act
-        val testObserver = subject.getCountriesList(
-            path = NABU_COUNTRIES,
-            scope = Scope.None
-        ).test()
+        val testObserver = subject.getCountriesList(Scope.None).test()
         // Assert
         testObserver.awaitTerminalEvent()
         testObserver.assertComplete()
