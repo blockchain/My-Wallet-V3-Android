@@ -10,7 +10,10 @@
             android:name=".detail.TradeDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name="com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity"
+            android:name=".homebrew.exchange.ExchangeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".homebrew.exchange.ExchangeConfirmationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 

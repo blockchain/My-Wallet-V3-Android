@@ -70,6 +70,7 @@ class ExchangeActivity : AppCompatActivity() {
     private lateinit var keyboard: IntegerKeyboardView
     private lateinit var selectSendAccountButton: Button
     private lateinit var selectReceiveAccountButton: Button
+    private lateinit var exchangeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +88,7 @@ class ExchangeActivity : AppCompatActivity() {
         keyboard = findViewById(R.id.numericKeyboard)
         selectSendAccountButton = findViewById(R.id.select_from_account_button)
         selectReceiveAccountButton = findViewById(R.id.select_to_account_button)
+        exchangeButton = findViewById(R.id.exchange_action_button)
 
         selectSendAccountButton.setOnClickListener {
             AccountChooserActivity.startForResult(
@@ -103,6 +105,10 @@ class ExchangeActivity : AppCompatActivity() {
                 REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT,
                 R.string.to
             )
+        }
+        exchangeButton.setOnClickListener {
+            val intent = Intent(this, ExchangeConfirmationActivity::class.java)
+            startActivity(intent)
         }
     }
 

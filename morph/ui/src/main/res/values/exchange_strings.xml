@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="receive">Receive</string>
     <string name="exchange">Exchange</string>
     <string name="min">Min</string>
     <string name="max">Max</string>

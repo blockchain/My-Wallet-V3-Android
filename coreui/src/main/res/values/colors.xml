@@ -73,4 +73,8 @@
     <color name="non_spendable_button_background">#FFEEEEEE</color>
     <color name="non_spendable_button_border">#FFCFCFCF</color>
 
+    <!-- Homebrew Exchange colors -->
+    <color name="exchange_blue_bg">#E2F1F8</color>
+
+
 </resources>
