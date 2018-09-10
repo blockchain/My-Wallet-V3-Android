@@ -106,6 +106,7 @@ class ExchangeActivity : AppCompatActivity() {
                 R.string.to
             )
         }
+        // TODO Temporary to see the full exchange flow UI
         exchangeButton.setOnClickListener {
             val intent = Intent(this, ExchangeConfirmationActivity::class.java)
             startActivity(intent)
