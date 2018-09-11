@@ -57,6 +57,7 @@ class KycNavHostActivity : BaseMvpActivity<KycNavHostView, KycNavHostPresenter>(
 
     override fun navigateToStatus() {
         KycStatusActivity.start(this)
+        finish()
     }
 
     override fun showErrorToastAndFinish(message: Int) {

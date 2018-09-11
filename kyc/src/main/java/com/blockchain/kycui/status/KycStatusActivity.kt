@@ -3,6 +3,9 @@ package com.blockchain.kycui.status
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.ConstraintSet
+import android.support.v7.app.AlertDialog
+import com.blockchain.extensions.px
 import com.blockchain.kyc.models.nabu.KycState
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
@@ -16,7 +19,9 @@ import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
 import piuk.blockchain.kyc.R
 import kotlinx.android.synthetic.main.activity_kyc_status.button_kyc_status_next as buttonNext
+import kotlinx.android.synthetic.main.activity_kyc_status.constraint_layout_kyc_status as constraintLayout
 import kotlinx.android.synthetic.main.activity_kyc_status.image_view_kyc_status as imageView
+import kotlinx.android.synthetic.main.activity_kyc_status.text_view_kyc_status_no_thanks as buttonNoThanks
 import kotlinx.android.synthetic.main.activity_kyc_status.text_view_verification_message as textViewMessage
 import kotlinx.android.synthetic.main.activity_kyc_status.text_view_verification_state as textViewStatus
 import kotlinx.android.synthetic.main.activity_kyc_status.text_view_verification_subtitle as textViewSubtitle
@@ -58,11 +63,7 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
         textViewStatus.setTextColor(getResolvedColor(R.color.kyc_in_progress))
         textViewStatus.setText(R.string.kyc_status_title_in_progress)
         textViewMessage.setText(R.string.kyc_status_message_in_progress)
-        buttonNext.apply {
-            setText(R.string.kyc_status_button_notify_me)
-            setOnClickListener { presenter.onClickNotifyUser() }
-            visible()
-        }
+        displayNotificationButton()
     }
 
     private fun onInReview() {
@@ -70,10 +71,18 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
         textViewStatus.setTextColor(getResolvedColor(R.color.kyc_in_progress))
         textViewStatus.setText(R.string.kyc_status_title_in_review)
         textViewMessage.setText(R.string.kyc_status_message_under_review)
+        displayNotificationButton()
+    }
+
+    private fun displayNotificationButton() {
         buttonNext.apply {
             setText(R.string.kyc_status_button_notify_me)
             setOnClickListener { presenter.onClickNotifyUser() }
             visible()
+        }
+        buttonNoThanks.apply {
+            visible()
+            setOnClickListener { finish() }
         }
     }
 
@@ -93,12 +102,31 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
         buttonNext.apply {
             setText(R.string.kyc_status_button_get_started)
             setOnClickListener { presenter.onClickContinue() }
+            ConstraintSet().apply {
+                clone(constraintLayout)
+                setMargin(
+                    R.id.button_kyc_status_next,
+                    ConstraintSet.BOTTOM,
+                    32.px
+                )
+                applyTo(constraintLayout)
+            }
+
             visible()
         }
     }
 
     override fun showToast(message: Int) {
         toast(message, ToastCustom.TYPE_OK)
+    }
+
+    override fun showNotificationsEnabledDialog() {
+        AlertDialog.Builder(this, R.style.AlertDialogStyle)
+            .setTitle(R.string.kyc_status_button_notifications_enabled_title)
+            .setMessage(R.string.kyc_status_button_notifications_enabled_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .setOnDismissListener { finish() }
+            .show()
     }
 
     override fun showProgressDialog() {

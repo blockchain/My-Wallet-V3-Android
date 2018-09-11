@@ -84,7 +84,7 @@ class KycStatusPresenterTest {
     }
 
     @Test
-    fun `onClickNotifyUser fails, should fail silently`() {
+    fun `onClickNotifyUser fails, should display toast`() {
         // Arrange
         whenever(notificationTokenManager.enableNotifications())
             .thenReturn(Completable.error { Throwable() })
@@ -94,10 +94,11 @@ class KycStatusPresenterTest {
         verify(notificationTokenManager).enableNotifications()
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
+        verify(view).showToast(any())
     }
 
     @Test
-    fun `onClickNotifyUser successful, should display toast`() {
+    fun `onClickNotifyUser successful, should display dialog`() {
         // Arrange
         whenever(notificationTokenManager.enableNotifications())
             .thenReturn(Completable.complete())
@@ -107,7 +108,7 @@ class KycStatusPresenterTest {
         verify(notificationTokenManager).enableNotifications()
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
-        verify(view).showToast(any())
+        verify(view).showNotificationsEnabledDialog()
     }
 
     @Test

@@ -2,12 +2,12 @@ package com.blockchain.kycui.status
 
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kycui.extensions.fetchNabuToken
+import com.blockchain.notifications.NotificationTokenManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import com.blockchain.notifications.NotificationTokenManager
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
@@ -48,9 +48,12 @@ class KycStatusPresenter(
                 .doOnEvent { view.dismissProgressDialog() }
                 .subscribeBy(
                     onComplete = {
-                        view.showToast(R.string.kyc_status_button_notifications_enabled)
+                        view.showNotificationsEnabledDialog()
                     },
-                    onError = { Timber.e(it) }
+                    onError = {
+                        view.showToast(R.string.kyc_status_button_notifications_error)
+                        Timber.e(it)
+                    }
                 )
     }
 

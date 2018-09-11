@@ -32,6 +32,7 @@
         android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraint_layout_kyc_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -103,16 +104,37 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="48dp"
                 android:visibility="gone"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/kyc_status_button_notify_me"
                 android:theme="@style/LightBlueButtonTheme"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_kyc_status_no_thanks"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_verification_message"
                 app:layout_constraintVertical_bias="1.0"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/text_view_kyc_status_no_thanks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="32dp"
+                android:padding="8dp"
+                android:theme="@style/PlainTheme"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:visibility="gone"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/kyc_invalid_country_no_thanks"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 tools:visibility="visible" />
 
         </android.support.constraint.ConstraintLayout>
