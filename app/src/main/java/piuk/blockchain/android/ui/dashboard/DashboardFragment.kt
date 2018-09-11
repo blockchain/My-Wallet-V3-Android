@@ -26,6 +26,7 @@ import piuk.blockchain.android.ui.home.MainActivity.CONTACTS_EDIT
 import piuk.blockchain.android.ui.home.MainActivity.SETTINGS_EDIT
 import piuk.blockchain.android.util.OSUtil
 import info.blockchain.balance.CryptoCurrency
+import piuk.blockchain.android.ui.home.MainActivity.ACTION_SHAPESHIFT
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.base.ToolBarActivity
@@ -148,6 +149,10 @@ class DashboardFragment : BaseFragment<DashboardView, DashboardPresenter>(), Das
 
     override fun startBitcoinCashReceive() {
         broadcastIntent(ACTION_RECEIVE_BCH)
+    }
+
+    override fun startKycFlow() {
+        broadcastIntent(ACTION_SHAPESHIFT)
     }
 
     override fun startWebsocketService() {

@@ -23,7 +23,8 @@ class DashboardDelegateAdapter(
 
     init {
         // Add all necessary AdapterDelegate objects here
-        delegatesManager.addAdapterDelegate(AnnouncementDelegate())
+        delegatesManager.addAdapterDelegate(ImageLeftAnnouncementDelegate())
+        delegatesManager.addAdapterDelegate(ImageRightAnnouncementDelegate())
         delegatesManager.addAdapterDelegate(HeaderDelegate())
         delegatesManager.addAdapterDelegate(onboardingDelegate)
         delegatesManager.addAdapterDelegate(pieChartDelegate)

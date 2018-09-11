@@ -1,25 +1,25 @@
 package piuk.blockchain.android.ui.dashboard.adapter
 
 import android.annotation.SuppressLint
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.item_announcement.view.*
+import kotlinx.android.synthetic.main.item_announcement_left_icon.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
-import piuk.blockchain.android.ui.balance.AnnouncementData
+import piuk.blockchain.android.ui.balance.ImageLeftAnnouncementCard
 import piuk.blockchain.androidcoreui.utils.AndroidUtils
+import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 
-class AnnouncementDelegate<in T> : AdapterDelegate<T> {
+class ImageLeftAnnouncementDelegate<in T> : AdapterDelegate<T> {
 
-    override fun isForViewType(items: List<T>, position: Int) = items[position] is AnnouncementData
+    override fun isForViewType(items: List<T>, position: Int) = items[position] is ImageLeftAnnouncementCard
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-        AnnouncementViewHolder(parent.inflate(R.layout.item_announcement))
+        AnnouncementViewHolder(parent.inflate(R.layout.item_announcement_left_icon))
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
@@ -28,7 +28,7 @@ class AnnouncementDelegate<in T> : AdapterDelegate<T> {
         holder: RecyclerView.ViewHolder,
         payloads: List<*>
     ) {
-        val announcement = items[position] as AnnouncementData
+        val announcement = items[position] as ImageLeftAnnouncementCard
         val context = (holder as AnnouncementViewHolder).itemView.context
 
         if (AndroidUtils.is21orHigher()) {
@@ -39,7 +39,7 @@ class AnnouncementDelegate<in T> : AdapterDelegate<T> {
         }
         holder.description.setText(announcement.description)
         holder.image.setImageDrawable(
-            ContextCompat.getDrawable(holder.image.context, announcement.image)
+            holder.image.context.getResolvedDrawable(announcement.image)
         )
         holder.link.setText(announcement.link)
 

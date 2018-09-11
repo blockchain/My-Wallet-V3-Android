@@ -6,6 +6,7 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.Scope
+import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
 import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.serialization.toMoshiJson
@@ -438,5 +439,40 @@ class KycStatusHelperTest {
         // Assert
         testObserver.assertComplete()
         testObserver.assertNoErrors()
+    }
+
+    @Test
+    fun `get user state fails but returns none`() {
+        // Arrange
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.error { Throwable() })
+        // Act
+        val testObserver = subject.getUserState().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(UserState.None)
+    }
+
+    @Test
+    fun `get user state successful, returns created`() {
+        // Arrange
+        val offlineToken = NabuCredentialsMetadata("", "")
+        whenever(
+            metadataManager.fetchMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+            )
+        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
+        whenever(nabuDataManager.getUser(offlineToken.mapFromMetadata()))
+            .thenReturn(Single.just(getBlankNabuUser().copy(state = UserState.Created)))
+        // Act
+        val testObserver = subject.getUserState().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(UserState.Created)
     }
 }
