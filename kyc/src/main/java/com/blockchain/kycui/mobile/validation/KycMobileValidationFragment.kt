@@ -111,8 +111,8 @@ class KycMobileValidationFragment :
         ViewUtils.hideKeyboard(requireActivity())
         val args = OnfidoSplashFragment.bundleArgs(countryCode)
         findNavController(this).apply {
-            // Remove this page from the stack as allowing users to return to it would be confusing
-            popBackStack()
+            // Remove phone entry and validation pages from back stack as it would be confusing for the user
+            popBackStack(R.id.kycPhoneNumberFragment, true)
             navigate(R.id.onfidoSplashFragment, args)
         }
     }
