@@ -6,6 +6,7 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.Scope
+import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kycui.extensions.fetchNabuToken
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -61,6 +62,24 @@ class KycStatusHelper(
             }
         }
 
+    fun getKycStatus(): Single<KycState> = fetchOfflineToken
+        .flatMap {
+            nabuDataManager.getUser(it)
+                .subscribeOn(Schedulers.io())
+        }
+        .map { it.kycState }
+        .onErrorReturn { KycState.None }
+
+    fun getUserState(): Single<UserState> =
+        fetchOfflineToken
+            .flatMap {
+                nabuDataManager.getUser(it)
+                    .subscribeOn(Schedulers.io())
+            }
+            .map { it.state }
+            .doOnError { Timber.e(it) }
+            .onErrorReturn { UserState.None }
+
     @VisibleForTesting
     internal fun isInKycRegion(): Single<Boolean> = Single.zip(
         nabuDataManager.getCountriesList(Scope.Kyc)
@@ -80,15 +99,6 @@ class KycStatusHelper(
     internal fun hasAccount(): Single<Boolean> = fetchOfflineToken
         .map { true }
         .onErrorReturn { false }
-
-    @VisibleForTesting
-    internal fun getKycStatus(): Single<KycState> = fetchOfflineToken
-        .flatMap {
-            nabuDataManager.getUser(it)
-                .subscribeOn(Schedulers.io())
-        }
-        .map { it.kycState }
-        .onErrorReturn { KycState.None }
 }
 
 private fun KycState.toUiState(): SettingsKycState = when (this) {

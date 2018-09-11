@@ -28,4 +28,6 @@ interface DashboardView : View {
     fun scrollToTop()
 
     fun startWebsocketService()
+
+    fun startKycFlow()
 }

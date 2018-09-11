@@ -69,7 +69,7 @@
     <!-- Onfido Splash -->
     <string name="kyc_onfido_splash_title">Verify Your Identity</string>
     <string name="kyc_onfido_splash_header">Let\'s Confirm It\'s You</string>
-    <string name="kyc_onfido_splash_subtitle">Grab your Passport, Driver\'s License, Govt Issued ID or a Resident Permit Card.</string>
+    <string name="kyc_onfido_splash_subtitle">Grab your Passport or Driver\'s License.</string>
     <string name="kyc_onfido_splash_message">Once we verify your identity, you are approved to exchange cryptocurrencies on the Blockchain app!</string>
     <string name="kyc_onfido_splash_verification_error">Error verifying ID, please try again</string>
     <string name="kyc_onfido_splash_passport">My Passport</string>
@@ -109,4 +109,8 @@
     <string name="kyc_status_button_notify_me">Notify me</string>
     <string name="kyc_status_button_get_started">Get started</string>
     <string name="kyc_status_button_notifications_enabled">Notifications enabled</string>
+
+    <!-- Drop-off Card -->
+    <string name="kyc_drop_off_card_description">Looks like you\'ve started verifying your identity but didn\'t finish. Pick up where you left off?</string>
+    <string name="kyc_drop_off_card_button">Continue verification</string>
 </resources>
