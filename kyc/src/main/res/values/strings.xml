@@ -85,7 +85,7 @@
     <string name="kyc_complete_home_address">Home Address Added</string>
     <string name="kyc_complete_device_verified">Device Verified</string>
     <string name="kyc_complete_id_uploaded">ID Uploaded</string>
-    <string name="kyc_complete_hello_blockchain">"Hello Blockchain!"</string>
+    <string name="kyc_complete_hello_blockchain">Video uploaded</string>
 
     <!-- Settings -->
     <string name="kyc_settings_identity_verification">Identity Verification</string>

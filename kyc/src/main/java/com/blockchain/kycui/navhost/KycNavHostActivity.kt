@@ -123,6 +123,10 @@ class KycNavHostActivity : BaseMvpActivity<KycNavHostView, KycNavHostPresenter>(
         }
     }
 
+    override fun hideBackButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         supportFragmentManager.fragments.forEach { fragment ->
@@ -169,4 +173,6 @@ interface KycProgressListener {
     fun incrementProgress(kycStep: KycStep)
 
     fun decrementProgress(kycStep: KycStep)
+
+    fun hideBackButton()
 }
