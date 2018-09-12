@@ -88,8 +88,7 @@ class KycHomeAddressPresenter(
                             address.line2,
                             address.city!!,
                             address.state,
-                            address.postCode!!,
-                            address.countryCode!!,
+                            address.postCode,
                             countryName
                         )
                     },

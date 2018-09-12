@@ -116,7 +116,7 @@ class KycHomeAddressPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any())
     }
 
     @Test
@@ -132,7 +132,7 @@ class KycHomeAddressPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any())
         verify(nabuDataManager, never()).getUser(offlineToken.mapFromMetadata())
     }
 
@@ -169,7 +169,7 @@ class KycHomeAddressPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(view).restoreUiState(firstLine, null, city, null, postCode, country, countryName)
+        verify(view).restoreUiState(firstLine, null, city, null, postCode, countryName)
     }
 
     @Test
@@ -188,7 +188,7 @@ class KycHomeAddressPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any())
     }
 
     @Test
@@ -207,7 +207,7 @@ class KycHomeAddressPresenterTest {
         // Act
         subject.onViewReady()
         // Assert
-        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any(), any())
+        verify(view, never()).restoreUiState(any(), any(), any(), any(), any(), any())
     }
 
     @Test

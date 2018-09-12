@@ -173,6 +173,7 @@
                 android:id="@+id/edit_text_kyc_address_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:focusable="false" />
 
         </android.support.design.widget.TextInputLayout>

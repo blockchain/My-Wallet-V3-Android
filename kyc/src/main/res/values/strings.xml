@@ -9,7 +9,7 @@
     <string name="kyc_splash_terms_and_conditions_privacy">Privacy Policy</string>
 
     <!-- Country Selection -->
-    <string name="kyc_country_selection_title">Select Your Country</string>
+    <string name="kyc_country_selection_title">Country of Residence</string>
     <string name="kyc_country_selection_header">Why do you need this?</string>
     <string name="kyc_country_selection_message">Right now, digital cryptocurrency conversions are only available in select countries.</string>
     <string name="kyc_country_selection_search_hint">Search for your country</string>

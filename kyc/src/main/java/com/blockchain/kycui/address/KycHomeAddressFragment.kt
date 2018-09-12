@@ -23,7 +23,6 @@ import com.blockchain.kycui.mobile.entry.KycMobileEntryFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.models.ProfileModel
-import com.blockchain.ui.countryselection.CountryDialog
 import com.blockchain.ui.extensions.throttledClicks
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -59,7 +58,6 @@ import kotlinx.android.synthetic.main.fragment_kyc_home_address.edit_text_kyc_ad
 import kotlinx.android.synthetic.main.fragment_kyc_home_address.edit_text_kyc_address_first_line as editTextFirstLine
 import kotlinx.android.synthetic.main.fragment_kyc_home_address.edit_text_kyc_address_state as editTextState
 import kotlinx.android.synthetic.main.fragment_kyc_home_address.edit_text_kyc_address_zip_code as editTextZipCode
-import kotlinx.android.synthetic.main.fragment_kyc_home_address.input_layout_kyc_address_country as textInputLayoutCountry
 import kotlinx.android.synthetic.main.fragment_kyc_home_address.input_layout_kyc_address_state as textInputLayoutState
 import kotlinx.android.synthetic.main.fragment_kyc_home_address.input_layout_kyc_address_zip_code as textInputLayoutZipCode
 import kotlinx.android.synthetic.main.fragment_kyc_home_address.search_view_kyc_address as searchViewAddress
@@ -74,11 +72,21 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
     override val profileModel: ProfileModel by unsafeLazy {
         arguments!!.getParcelable(ARGUMENT_PROFILE_MODEL) as ProfileModel
     }
-    private val initialState = AddressModel("", null, "", null, "", "")
+    private val initialState by unsafeLazy {
+        AddressModel(
+            "",
+            null,
+            "",
+            null,
+            "",
+            profileModel.countryCode
+        )
+    }
     private val addressSubject = PublishSubject.create<AddressIntent>()
-    override val address: Observable<AddressModel> =
+    override val address: Observable<AddressModel> by unsafeLazy {
         AddressDialog(addressSubject, initialState).viewModel
             .replayingShare()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,15 +99,10 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         progressListener.setHostTitle(R.string.kyc_address_title)
         progressListener.incrementProgress(KycStep.AddressPage)
 
-        editTextCountry.setOnClickListener { displayCountryDialog() }
-        textInputLayoutCountry.setOnClickListener { displayCountryDialog() }
-
         setupImeOptions()
         localiseUi()
 
         onViewReady()
-        // Initially emit country code
-        addressSubject.onNext(AddressIntent.Country(profileModel.countryCode))
     }
 
     override fun continueToMobileVerification(countryCode: String) {
@@ -117,7 +120,6 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         city: String,
         state: String?,
         postCode: String,
-        countryCode: String,
         countryName: String
     ) {
         editTextFirstLine.setText(line1)
@@ -126,20 +128,6 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
         editTextState.setText(state)
         editTextZipCode.setText(postCode)
         editTextCountry.setText(countryName)
-        addressSubject.onNext(AddressIntent.Country(countryCode))
-    }
-
-    private fun displayCountryDialog() {
-        CountryDialog(
-            requireContext(),
-            presenter.countryCodeSingle,
-            object :
-                CountryDialog.CountryCodeSelectionListener {
-                override fun onCountrySelected(code: String, name: String) {
-                    addressSubject.onNext(AddressIntent.Country(code))
-                    editTextCountry.setText(name)
-                }
-            }).show()
     }
 
     private fun startPlacesActivityForResult() {

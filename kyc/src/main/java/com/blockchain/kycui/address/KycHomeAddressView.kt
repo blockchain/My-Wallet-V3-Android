@@ -32,7 +32,6 @@ interface KycHomeAddressView : View {
         city: String,
         state: String?,
         postCode: String,
-        countryCode: String,
         countryName: String
     )
 }
