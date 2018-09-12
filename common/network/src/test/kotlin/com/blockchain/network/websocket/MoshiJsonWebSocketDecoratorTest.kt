@@ -1,5 +1,6 @@
 package com.blockchain.network.websocket
 
+import com.blockchain.serialization.JsonSerializable
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.squareup.moshi.Moshi
@@ -12,9 +13,9 @@ import org.junit.Test
 class MoshiJsonWebSocketDecoratorTest {
 
     @Suppress("unused")
-    class TypeOut(val fieldA: String, val fieldB: Int)
+    class TypeOut(val fieldA: String, val fieldB: Int) : JsonSerializable
 
-    data class TypeIn(val fieldC: String, val fieldD: Int)
+    data class TypeIn(val fieldC: String, val fieldD: Int) : JsonSerializable
 
     private val moshi = Moshi.Builder().build()
 

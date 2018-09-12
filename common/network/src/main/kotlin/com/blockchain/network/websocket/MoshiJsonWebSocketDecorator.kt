@@ -1,12 +1,15 @@
 package com.blockchain.network.websocket
 
+import com.blockchain.serialization.JsonSerializable
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 
-inline fun <reified OUTGOING : Any, reified INCOMING : Any> WebSocket<String, String>.toJsonSocket(
-    moshi: Moshi
-): WebSocket<OUTGOING, INCOMING> {
+inline fun <
+    reified OUTGOING : JsonSerializable,
+    reified INCOMING : JsonSerializable
+    >
+    WebSocket<String, String>.toJsonSocket(moshi: Moshi): WebSocket<OUTGOING, INCOMING> {
     return MoshiJsonWebSocketDecorator(this, moshi.adapter(OUTGOING::class.java), moshi.adapter(INCOMING::class.java))
 }
 
