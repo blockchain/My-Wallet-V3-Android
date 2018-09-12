@@ -9,7 +9,7 @@ sealed class ConnectionEvent {
 
     object ClientDisconnect : ConnectionEvent()
 
-    class Failure(throwable: Throwable) : ConnectionEvent()
+    class Failure(val throwable: Throwable) : ConnectionEvent()
 }
 
 interface WebSocketConnection {
