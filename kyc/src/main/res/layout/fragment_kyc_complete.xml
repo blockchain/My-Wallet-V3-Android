@@ -171,7 +171,7 @@
             android:id="@+id/text_view_hello_blockchain"
             style="@style/KycCompleteItem"
             android:layout_height="wrap_content"
-            android:text="@string/kyc_complete_hello_blockchain"
+            android:text="@string/kyc_complete_video_uploaded"
             app:layout_constraintEnd_toStartOf="@+id/image_view_hello_blockchain"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_id_uploaded"
