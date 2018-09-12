@@ -1,107 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/onboarding_cardview_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    android:background="@android:color/transparent">
+    style="@style/DefaultCardStyle"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/primary_gray_lightest">
 
-    <android.support.v7.widget.CardView
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/primary_gray_lightest"
-        style="@style/DefaultCardStyle">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="16dp">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/imageview_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:src="@drawable/ic_clear_white_24dp"
+            android:tint="@color/primary_gray"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/imageview_icon"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageview_close"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="-16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/vector_buy_offset"
+            tools:ignore="RtlHardcoded" />
+
+        <LinearLayout
+            android:id="@+id/layout_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_below="@+id/imageview_close"
+            android:layout_toRightOf="@id/imageview_icon"
             android:orientation="vertical"
-            android:paddingTop="16dp">
-
-            <ImageView
-                android:id="@+id/imageview_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:src="@drawable/ic_clear_white_24dp"
-                android:tint="@color/primary_gray"
-                tools:ignore="RtlHardcoded" />
-
-            <ImageView
-                android:id="@+id/imageview_icon"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageview_close"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="-16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitStart"
-                app:srcCompat="@drawable/vector_buy_offset"
-                tools:ignore="RtlHardcoded" />
+            android:paddingRight="16dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry">
 
             <LinearLayout
-                android:id="@+id/layout_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageview_close"
-                android:layout_toRightOf="@id/imageview_icon"
-                android:orientation="vertical"
-                android:paddingRight="16dp"
-                tools:ignore="RtlHardcoded,RtlSymmetry">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textview_title"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:textAllCaps="true"
-                        android:textColor="@color/primary_navy_medium"
-                        tools:text="@string/onboarding_available_now" />
-
-                </LinearLayout>
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textview_content"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_width="match_parent"
+                    android:id="@+id/textview_title"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:paddingTop="4dp"
-                    android:textColor="@color/primary_gray_dark"
-                    tools:text="@string/onboarding_buy_details" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/primary_navy_medium"
+                    tools:text="@string/onboarding_available_now" />
+
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textview_link"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
+                android:id="@+id/textview_content"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_main"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/imageview_icon"
-                android:layout_toRightOf="@+id/imageview_icon"
                 android:fontFamily="@font/montserrat"
-                android:gravity="center_horizontal|bottom"
-                android:paddingTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="16dp"
-                android:textColor="@color/primary_navy_medium"
-                tools:ignore="RtlHardcoded,RtlSymmetry"
-                tools:text="@string/onboarding_buy_bitcoin" />
+                android:paddingTop="4dp"
+                android:textColor="@color/primary_gray_dark"
+                tools:text="@string/onboarding_buy_details" />
+        </LinearLayout>
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+        <TextView
+            android:id="@+id/textview_link"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_main"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/imageview_icon"
+            android:layout_toRightOf="@+id/imageview_icon"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_horizontal|bottom"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/primary_navy_medium"
+            tools:ignore="RtlHardcoded,RtlSymmetry"
+            tools:text="@string/onboarding_buy_bitcoin" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
