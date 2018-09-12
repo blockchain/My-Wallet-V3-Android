@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
@@ -71,6 +73,7 @@ class ExchangeActivity : AppCompatActivity() {
     private lateinit var selectSendAccountButton: Button
     private lateinit var selectReceiveAccountButton: Button
     private lateinit var exchangeButton: Button
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,11 +109,17 @@ class ExchangeActivity : AppCompatActivity() {
                 R.string.to
             )
         }
-        // TODO Temporary to see the full exchange flow UI
+        // TODO: Temporary to see the full exchange flow UI
         exchangeButton.setOnClickListener {
             val intent = Intent(this, ExchangeConfirmationActivity::class.java)
             startActivity(intent)
         }
+
+        // Set up toolbar
+        toolbar = findViewById(R.id.toolbar)
+        toolbar.title = getString(R.string.morph_new_exchange)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onResume() {
@@ -175,6 +184,11 @@ class ExchangeActivity : AppCompatActivity() {
     override fun onPause() {
         compositeDisposable.clear()
         super.onPause()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

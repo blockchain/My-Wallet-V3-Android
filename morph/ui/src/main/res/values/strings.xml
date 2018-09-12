@@ -74,4 +74,11 @@
     <string name="receive">Receive</string>
     <string name="fees">Fees</string>
     <string name="value">Value</string>
+    <string name="make_a_new_exchange">Make a New Exchange</string>
+    <string name="order_history">Order History</string>
+    <string name="no_orders_found">No Orders Found</string>
+    <string name="done">Done</string>
+    <string name="confirm_exchange">Confirm Exchange</string>
+    <string name="exchange_locked">Exchange Locked</string>
+
 </resources>

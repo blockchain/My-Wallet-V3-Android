@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="exchange_history_sent">#FF004A7C</color>
+    <color name="exchange_history_received">#FF03A972</color>
+    <color name="exchange_history_description">#FF4E4E4E</color>
+    <color name="trade_row_background">#FFF5F7F9</color>
+</resources>

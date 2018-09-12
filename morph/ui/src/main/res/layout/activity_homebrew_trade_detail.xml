@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/status_title_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:text="@string/value"
+        android:textColor="@color/exchange_text_gray_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Status" />
+
+    <TextView
+        android:id="@+id/status_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_gravity="end"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Complete" />
+
+    <TextView
+        android:id="@+id/value_title_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:text="@string/value"
+        android:textColor="@color/exchange_text_gray_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_title_textView"
+        tools:layout_editor_absoluteY="16dp"
+        tools:text="Value" />
+
+    <TextView
+        android:id="@+id/value_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_gravity="end"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/status_textView"
+        tools:layout_editor_absoluteY="16dp"
+        tools:text="$1,642.50" />
+
+    <TextView
+        android:id="@+id/fees_title_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_gray_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value_title_textView"
+        android:text="@string/fees" />
+
+    <TextView
+        android:id="@+id/fees_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_gravity="end"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/value_textView"
+        tools:text="0.000414 BTC" />
+
+    <TextView
+        android:id="@+id/receive_title_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fees_title_textView"
+        android:text="@string/receive" />
+
+    <TextView
+        android:id="@+id/receive_textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/exchange_row_height"
+        android:layout_gravity="end"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/fees_textView"
+        tools:text="5.668586 ETH" />
+
+    <TextView
+        android:id="@+id/send_to_title_textView"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_gray_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receive_title_textView"
+        android:text="@string/send_to" />
+
+    <TextView
+        android:id="@+id/send_to_textView"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/receive_textView"
+        tools:text="My Wallet" />
+
+</android.support.constraint.ConstraintLayout>

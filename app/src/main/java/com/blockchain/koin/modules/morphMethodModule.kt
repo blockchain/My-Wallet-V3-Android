@@ -7,7 +7,7 @@ import com.blockchain.kycui.navhost.KycNavHostActivity
 import com.blockchain.kycui.settings.KycStatusHelper
 import com.blockchain.kycui.settings.SettingsKycState
 import com.blockchain.morph.MorphMethodSelector
-import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeHistoryActivity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.dsl.module.applicationContext
@@ -59,7 +59,7 @@ val morphMethodModule = applicationContext {
                             }
                             MorphMethodType.HomeBrew -> { activity: Activity ->
                                 activity.startActivity(
-                                    Intent(activity, ExchangeActivity::class.java)
+                                    Intent(activity, ExchangeHistoryActivity::class.java)
                                 )
                             }
                             MorphMethodType.Kyc -> { activity: Activity ->

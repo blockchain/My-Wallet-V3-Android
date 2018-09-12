@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:fitsSystemWindows="true" />
+
     <Button
         android:id="@+id/select_from_account_button"
         style="@style/ExchangeButton.SendReceive"
@@ -49,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/receive"
         app:layout_constraintStart_toStartOf="@+id/select_to_account_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -60,7 +65,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/exchange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
