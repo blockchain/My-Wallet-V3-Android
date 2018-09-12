@@ -1,0 +1,37 @@
+{
+  "sequenceNumber": 1,
+  "channel": "conversion",
+  "type": "currencyRatio",
+  "quote": {
+    "pair": "BTC-ETH",
+    "fiatCurrency": "USD",
+    "fix": "baseInFiat",
+    "volume": "100.0",
+    "currencyRatio": {
+      "base": {
+        "fiat": {
+          "symbol": "USD",
+          "value": "96.77"
+        },
+        "crypto": {
+          "symbol": "BTC",
+          "value": "0.15"
+        }
+      },
+      "counter": {
+        "fiat": {
+          "symbol": "USD",
+          "value": "100.0"
+        },
+        "crypto": {
+          "symbol": "ETH",
+          "value": "0.27"
+        }
+      },
+      "baseToFiatRate": "6000.02",
+      "baseToCounterRate": "0.044",
+      "counterToBaseRate": "22.272727",
+      "counterToFiatRate": "234.4"
+    }
+  }
+}

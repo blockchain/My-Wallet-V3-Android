@@ -1,6 +1,7 @@
 package com.blockchain.morph.homebrew.json
 
 import com.blockchain.morph.homebrew.QuoteWebSocketParams
+import com.blockchain.serialization.JsonSerializable
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 
@@ -34,7 +35,7 @@ internal class OutSerialized(
     val channel: String,
     val operation: String,
     val params: Any
-)
+) : JsonSerializable
 
 internal sealed class Out {
     class Subscribe(val params: QuoteWebSocketParams) : Out()

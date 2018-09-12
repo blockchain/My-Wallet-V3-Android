@@ -11,14 +11,14 @@ import com.blockchain.morph.homebrew.json.Out
 
 class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
 
-    private val socket = underlyingSocket.toJsonSocket<Out, QuoteJson>(moshi)
+    private val socket = underlyingSocket.toJsonSocket<Out, QuoteMessageJson>(moshi)
 
     override fun subscribe(quoteRequest: ExchangeQuoteRequest) {
         updateSocketParameters(quoteRequest.mapToSocketParameters())
     }
 
     override val quotes: Observable<Quote>
-        get() = socket.responses.map { it.advice.mapToQuote() }
+        get() = socket.responses.map { it.quote.currencyRatio.mapToQuote() }
 
     private var params: QuoteWebSocketParams? = null
 
