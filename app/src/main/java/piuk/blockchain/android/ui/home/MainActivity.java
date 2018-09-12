@@ -280,7 +280,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
             }
         });
 
-        // Set up toolbar
+        // Set up toolbar_constraint
         toolbar = findViewById(R.id.toolbar_general);
         toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.vector_menu));
         toolbar.setTitle("");

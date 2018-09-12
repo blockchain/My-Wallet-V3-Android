@@ -16,7 +16,7 @@
             android:name=".homebrew.exchange.ExchangeConfirmationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".homebrew.exchange.ExchangeHistoryActivity" />
-        <activity android:name=".homebrew.exchange.ExchangeLockedActivity"></activity>
+        <activity android:name=".homebrew.exchange.ExchangeLockedActivity" />
     </application>
 
 </manifest>

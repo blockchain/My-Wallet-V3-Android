@@ -1,13 +1,14 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.widget.Button
 import com.blockchain.morph.ui.R
+import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
-class ExchangeConfirmationActivity : AppCompatActivity() {
+class ExchangeConfirmationActivity : BaseAuthActivity() {
 
     private lateinit var sendButton: Button
     private lateinit var toolbar: Toolbar
@@ -23,16 +24,8 @@ class ExchangeConfirmationActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        // Set up toolbar
-        toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.confirm_exchange)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupToolbar(R.id.toolbar_constraint, R.string.confirm_exchange)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+    override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
 }

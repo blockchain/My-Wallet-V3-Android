@@ -1,19 +1,15 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.blockchain.morph.ui.R
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.support.v7.widget.Toolbar
+import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
-
-class ExchangeLockedActivity : AppCompatActivity() {
-
+class ExchangeLockedActivity : BaseAuthActivity() {
     private lateinit var doneButton: Button
-    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +23,7 @@ class ExchangeLockedActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        // Set up toolbar
-        toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.exchange_locked)
-        setSupportActionBar(toolbar)
+        setupToolbar(R.id.toolbar_constraint, R.string.exchange_locked)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
-
 }

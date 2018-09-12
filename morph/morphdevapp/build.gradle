@@ -32,6 +32,7 @@ dependencies {
     implementation project(':balance')
     implementation project(':morph:common')
     implementation project(':morph:ui')
+    implementation project(':core')
 
     implementation Libraries.rxKotlin
     implementation Libraries.rxAndroid

@@ -7,8 +7,8 @@
     android:background="@color/exchange_confirmation_blue_bg">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
+        android:id="@+id/toolbar_constraint"
+        layout="@layout/toolbar_constraint"
         android:fitsSystemWindows="true" />
 
     <Button
@@ -57,7 +57,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/receive"
         app:layout_constraintStart_toStartOf="@+id/select_to_account_button"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_constraint" />
 
     <TextView
         android:id="@+id/textView2"
@@ -68,7 +68,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/exchange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_constraint" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -120,7 +120,7 @@
         android:layout_marginTop="16dp"
         android:background="@color/white"
         android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|right"
+        android:gravity="center_vertical|end"
         android:padding="16dp"
         android:textColor="@color/exchange_text_dark_color"
         android:textSize="16sp"
@@ -153,7 +153,7 @@
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|right"
+        android:gravity="center_vertical|end"
         android:padding="16dp"
         android:textColor="@color/exchange_text_dark_color"
         android:textSize="16sp"
@@ -187,7 +187,7 @@
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|right"
+        android:gravity="center_vertical|end"
         android:padding="16dp"
         android:textColor="@color/exchange_text_gray_color"
         android:textSize="16sp"

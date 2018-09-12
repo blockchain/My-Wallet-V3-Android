@@ -5,8 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.Button
 import android.widget.TextView
@@ -30,6 +28,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
+import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import timber.log.Timber
 import java.util.Locale
@@ -44,7 +44,7 @@ interface RateStream {
     ): Observable<ExchangeIntent>
 }
 
-class ExchangeActivity : AppCompatActivity() {
+class ExchangeActivity : BaseAuthActivity() {
 
     companion object {
 
@@ -114,12 +114,7 @@ class ExchangeActivity : AppCompatActivity() {
             val intent = Intent(this, ExchangeConfirmationActivity::class.java)
             startActivity(intent)
         }
-
-        // Set up toolbar
-        toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.morph_new_exchange)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupToolbar(R.id.toolbar_constraint, R.string.morph_new_exchange)
     }
 
     override fun onResume() {
@@ -186,10 +181,7 @@ class ExchangeActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+    override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -1,15 +1,12 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.Toolbar
 import android.widget.Button
 import com.blockchain.morph.ui.R
+import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 
-class ExchangeHistoryActivity : AppCompatActivity() {
+class ExchangeHistoryActivity : BaseAuthActivity() {
 
-    private lateinit var toolbar: Toolbar
     private lateinit var newExchangeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +19,6 @@ class ExchangeHistoryActivity : AppCompatActivity() {
             startActivity(ExchangeActivity.intent(this, "GBP"))
         }
 
-        // Set up toolbar
-        toolbar = findViewById(R.id.toolbar)
-        toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.vector_menu)
-        toolbar.title = getString(R.string.exchange)
-        setSupportActionBar(toolbar)
+        setupToolbar(R.id.toolbar_constraint, R.string.exchange)
     }
 }
