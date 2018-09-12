@@ -18,6 +18,7 @@ dependencies {
     implementation project(':balance')
     implementation project(':common:network')
     implementation project(':morph:common')
+    implementation project(':nabu')
     implementation Libraries.moshi
     implementation Libraries.kotlin
     implementation Libraries.koin
