@@ -74,7 +74,8 @@
     <color name="non_spendable_button_border">#FFCFCFCF</color>
 
     <!-- Homebrew Exchange colors -->
-    <color name="exchange_blue_bg">#E2F1F8</color>
+    <color name="exchange_confirmation_blue_bg">#E2F1F8</color>
+    <color name="exchange_locked_blue_bg">#FF124670</color>
 
 
 </resources>

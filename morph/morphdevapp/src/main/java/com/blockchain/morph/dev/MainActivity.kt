@@ -1,9 +1,10 @@
 package com.blockchain.morph.dev
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeHistoryActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchExchange(view: View) {
-        startActivity(ExchangeActivity.intent(this, "GBP"))
+        val intent = Intent(this, ExchangeHistoryActivity::class.java)
+        startActivity(intent)
     }
 }
