@@ -74,3 +74,5 @@ operator fun CryptoValue.compareTo(other: CryptoValue): Int {
 private fun ensureComparable(a: CryptoCurrency, b: CryptoCurrency) {
     if (a != b) throw Exception("Can't compare ${a.symbol} and ${b.symbol}")
 }
+
+fun CryptoCurrency.withMajorValue(majorValue: BigDecimal) = CryptoValue.fromMajor(this, majorValue)

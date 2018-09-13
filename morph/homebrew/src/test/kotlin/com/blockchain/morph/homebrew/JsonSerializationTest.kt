@@ -5,7 +5,7 @@ import com.blockchain.serialization.JsonSerializable
 import com.blockchain.testutils.`should be assignable from`
 import org.junit.Test
 
-class JsonSerializationTests {
+class JsonSerializationTest {
 
     @Test
     fun `OutSerialized is serialized`() {

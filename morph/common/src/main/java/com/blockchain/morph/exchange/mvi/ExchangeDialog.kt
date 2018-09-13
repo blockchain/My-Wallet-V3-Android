@@ -203,13 +203,13 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
 
     return ExchangeViewModel(
         from = Value(
-            cryptoValue = fromCrypto ?: CryptoValue.fromMajor(vm.from.cryptoValue.currency, BigDecimal.ZERO),
+            cryptoValue = fromCrypto ?: CryptoValue.zero(vm.from.cryptoValue.currency),
             cryptoMode = mode(field, FieldUpdateIntent.Field.FROM_CRYPTO, fromCrypto),
             fiatValue = fromFiat ?: FiatValue.fromMajor(vm.from.fiatValue.currencyCode, BigDecimal.ZERO),
             fiatMode = mode(field, FieldUpdateIntent.Field.FROM_FIAT, fromFiat)
         ),
         to = Value(
-            cryptoValue = toCrypto ?: CryptoValue.fromMajor(vm.to.cryptoValue.currency, BigDecimal.ZERO),
+            cryptoValue = toCrypto ?: CryptoValue.zero(vm.to.cryptoValue.currency),
             cryptoMode = mode(field, FieldUpdateIntent.Field.TO_CRYPTO, toCrypto),
             fiatValue = toFiat ?: FiatValue.fromMajor(vm.to.fiatValue.currencyCode, BigDecimal.ZERO),
             fiatMode = mode(field, FieldUpdateIntent.Field.TO_FIAT, toFiat)

@@ -36,5 +36,8 @@ enum class CryptoCurrency(
 
         fun fromSymbol(symbol: String?): CryptoCurrency? =
             CryptoCurrency.values().firstOrNull { it.symbol.equals(symbol, ignoreCase = true) }
+
+        fun fromSymbolOrThrow(symbol: String?): CryptoCurrency =
+            fromSymbol(symbol) ?: throw Exception("Bad currency symbol \"$symbol\"")
     }
 }

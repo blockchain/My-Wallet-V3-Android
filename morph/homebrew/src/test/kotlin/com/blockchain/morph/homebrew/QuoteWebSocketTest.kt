@@ -32,16 +32,17 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
         StandAloneContext.startKoin(
             listOf(
                 homeBrewModule,
+                apiModule,
                 applicationContext {
                     bean {
                         MoshiBuilderInterceptorList(
                             listOf(
+                                get("BigDecimal"),
                                 get("homeBrew")
                             )
                         )
                     }
-                },
-                apiModule
+                }
             )
         )
     }
