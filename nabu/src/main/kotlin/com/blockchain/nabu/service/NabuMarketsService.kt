@@ -3,7 +3,9 @@ package com.blockchain.nabu.service
 import com.blockchain.morph.CoinPair
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.api.NabuMarkets
+import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.PeriodicLimit
+import com.blockchain.nabu.api.TradeRequest
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import io.reactivex.Single
@@ -38,6 +40,30 @@ class NabuMarketsService internal constructor(
                     annual = it.annual.toFiat(it.currency)
                 )
             }
+        }
+    }
+
+    fun executeTrade(
+        tradeRequest: TradeRequest
+    ): Single<NabuTransaction> {
+        return authenticator.authenticate {
+            nabuMarkets.executeTrade(tradeRequest, it.authHeader)
+        }.map {
+            val coinPair = CoinPair.fromPairCode(it.pair.replace("-", "_"))
+
+            NabuTransaction(
+                id = it.id,
+                createdAt = it.createdAt,
+                pair = coinPair,
+                rate = it.price,
+                refundAddress = it.refundAddress,
+                depositAddress = it.depositAddress,
+                deposit = CryptoValue.fromMajor(coinPair.from, it.depositQuantity),
+                withdrawalAddress = it.withdrawalAddress,
+                withdrawal = CryptoValue.fromMajor(coinPair.to, it.withdrawalQuantity),
+                state = it.state,
+                hashOut = it.withdrawalTxHash
+            )
         }
     }
 }

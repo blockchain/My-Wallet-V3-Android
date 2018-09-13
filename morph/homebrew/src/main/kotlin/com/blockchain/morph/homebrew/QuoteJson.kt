@@ -23,7 +23,11 @@ internal data class QuoteJson(
 
 internal data class CurrencyRatio(
     val base: CryptoAndFiat,
-    val counter: CryptoAndFiat
+    val counter: CryptoAndFiat,
+    val baseToFiatRate: String,
+    val baseToCounterRate: String,
+    val counterToBaseRate: String,
+    val counterToFiatRate: String
 ) : JsonSerializable
 
 internal data class CryptoAndFiat(

@@ -1,8 +1,10 @@
 package com.blockchain.nabu.api
 
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 internal interface NabuMarkets {
@@ -17,4 +19,10 @@ internal interface NabuMarkets {
     fun getTradesLimits(
         @Header("authorization") authorization: String
     ): Single<TradesLimits>
+
+    @POST("trades")
+    fun executeTrade(
+        @Body tradeRequest: TradeRequest,
+        @Header("authorization") authorization: String
+    ): Single<TradeJson>
 }

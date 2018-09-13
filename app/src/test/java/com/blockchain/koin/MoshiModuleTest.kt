@@ -22,7 +22,8 @@ class MoshiModuleTest : AutoCloseKoinTest() {
                 buySellModule,
                 homeBrewModule,
                 apiModule,
-                moshiModule
+                moshiModule,
+                nabuModule
             )
         )
 

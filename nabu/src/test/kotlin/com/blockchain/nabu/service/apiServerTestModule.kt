@@ -19,7 +19,8 @@ fun apiServerTestModule(server: DefaultMockServer) = applicationContext {
     bean {
         MoshiBuilderInterceptorList(
             listOf(
-                get("BigDecimal")
+                get("BigDecimal"),
+                get("nabu")
             )
         )
     }

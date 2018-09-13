@@ -9,6 +9,7 @@ val moshiModule = applicationContext {
         MoshiBuilderInterceptorList(
             listOf(
                 get("BigDecimal"),
+                get("nabu"),
                 get("buySell"),
                 get("kyc"),
                 get("homeBrew")
