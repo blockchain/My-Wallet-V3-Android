@@ -25,27 +25,11 @@ val applicationModule = applicationContext {
     context("Payload") {
 
         factory {
-            EthDataManager(
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get()
-            )
+            EthDataManager(get(), get(), get(), get(), get(), get(), get())
         }
 
         factory {
-            BchDataManager(
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get(),
-                get()
-            )
+            BchDataManager(get(), get(), get(), get(), get(), get(), get())
         }
 
         factory { WalletAccountHelper(get(), get(), get(), get(), get(), get(), get()) }
