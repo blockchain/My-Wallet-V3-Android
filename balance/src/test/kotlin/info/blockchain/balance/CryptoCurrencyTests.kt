@@ -62,7 +62,7 @@ class CryptoCurrencyTests {
         {
             CryptoCurrency.fromSymbolOrThrow("NONE")
         } `should throw the Exception`
-            Exception::class `with message` "Bad currency symbol \"NONE\""
+            IllegalArgumentException::class `with message` "Bad currency symbol \"NONE\""
     }
 
     @Test
@@ -70,7 +70,7 @@ class CryptoCurrencyTests {
         {
             CryptoCurrency.fromSymbolOrThrow(null)
         } `should throw the Exception`
-            Exception::class `with message` "Bad currency symbol \"null\""
+            IllegalArgumentException::class `with message` "Bad currency symbol \"null\""
     }
 
     @Test
