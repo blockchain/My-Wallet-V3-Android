@@ -17,8 +17,8 @@ val morphUiModule = applicationContext {
             override fun startForResult(parent: Activity): Int {
                 val requestCode = requestCode++
                 UsStateSelectionActivity.startForResult(
-                        parent,
-                        requestCode
+                    parent,
+                    requestCode
                 )
                 return requestCode
             }
