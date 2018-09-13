@@ -31,6 +31,7 @@ import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.get
 import org.koin.standalone.inject
 import org.koin.test.AutoCloseKoinTest
+import java.math.BigDecimal
 
 class NabuMarketsServiceTest : AutoCloseKoinTest() {
 
@@ -270,10 +271,10 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             pair = "",
             fiatCurrency = "",
             fix = "",
-            volume = 0.0,
+            volume = BigDecimal.ZERO,
             currencyRatio = CurrencyRatio(
-                base = CryptoAndFiat(Value("", 0.0), Value("", 0.0)),
-                counter = CryptoAndFiat(Value("", 0.0), Value("", 0.0)),
+                base = CryptoAndFiat(Value("", BigDecimal.ZERO), Value("", BigDecimal.ZERO)),
+                counter = CryptoAndFiat(Value("", BigDecimal.ZERO), Value("", BigDecimal.ZERO)),
                 baseToFiatRate = "",
                 baseToCounterRate = "",
                 counterToBaseRate = "",
