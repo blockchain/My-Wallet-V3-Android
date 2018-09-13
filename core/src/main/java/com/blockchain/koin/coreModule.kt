@@ -5,7 +5,6 @@ import info.blockchain.wallet.contacts.Contacts
 import info.blockchain.wallet.util.PrivateKeyFactory
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.androidcore.data.auth.AuthService
-import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
 import piuk.blockchain.androidcore.data.contacts.ContactsService
@@ -14,7 +13,6 @@ import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionLis
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyState
-import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
