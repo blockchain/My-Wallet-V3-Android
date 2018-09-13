@@ -86,7 +86,6 @@
     <string name="pair_wallet_step_2">Go to Settings / General.</string>
     <string name="pair_wallet_step_3">Click Show Pairing Code to reveal a QR Code, a square black &amp; white barcode. Scan the code with your camera.</string>
     <string name="wallet_id">Wallet ID</string>
-    <string name="default_wallet_name">My Bitcoin Wallet</string>
 
     <!-- Recover Funds -->
     <string name="recover_funds">Recover Funds</string>
@@ -795,7 +794,6 @@
     <string name="tx_decode_error">Unable to decode address</string>
 
     <!-- BCH UPDATE -->
-    <string name="bch_default_account_label">My Bitcoin Cash Wallet</string>
     <string name="bch_all_accounts">All Bitcoin Cash Wallets</string>
     <string name="bch_imported_addresses">Imported Bitcoin Cash Addresses</string>
     <string name="transaction_detail_verify_blockchair">Verify on Blockchair.com</string>

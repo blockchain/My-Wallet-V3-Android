@@ -1,3 +1,4 @@
 <resources>
-
+    <string name="default_wallet_name">My Bitcoin Wallet</string>
+    <string name="bch_default_account_label">My Bitcoin Cash Wallet</string>
 </resources>

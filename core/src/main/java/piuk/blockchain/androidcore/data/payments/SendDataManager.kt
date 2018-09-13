@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.payments
+package piuk.blockchain.androidcore.data.payments
 
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.wallet.payment.SpendableUnspentOutputs
@@ -9,14 +9,11 @@ import org.bitcoinj.core.NetworkParameters
 import org.bitcoinj.crypto.BIP38PrivateKey
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
-import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
-import javax.inject.Inject
 
-@PresenterScope
-class SendDataManager @Inject constructor(
+class SendDataManager(
     private val paymentService: PaymentService,
     rxBus: RxBus
 ) {

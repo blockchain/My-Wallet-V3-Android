@@ -19,7 +19,10 @@ import com.blockchain.notifications.NotificationTokenManager;
 import piuk.blockchain.android.util.PrngHelper;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager;
+import piuk.blockchain.androidcore.data.payments.SendDataManager;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcore.utils.PrngFixer;
@@ -107,4 +110,21 @@ public class ApplicationModule extends KoinDaggerModule {
     KycStatusHelper provideKycStatusHelper() {
         return get(KycStatusHelper.class);
     }
+
+    @Provides
+    SendDataManager provideSendDataManager() {
+        return get(SendDataManager.class);
+    }
+
+    @Provides
+    BchDataManager provideBchDataManager() {
+        return get(BchDataManager.class);
+    }
+
+    @Provides
+    EthDataManager provideEthDataManager() {
+        return get(EthDataManager.class);
+    }
+
+
 }

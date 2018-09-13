@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
-import piuk.blockchain.android.data.payments.SendDataManager;
+import piuk.blockchain.androidcore.data.payments.SendDataManager;
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.androidcore.injection.PresenterScope;

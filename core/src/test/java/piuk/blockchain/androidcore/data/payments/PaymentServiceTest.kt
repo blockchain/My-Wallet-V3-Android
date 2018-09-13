@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.payments
+package piuk.blockchain.androidcore.data.payments
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
@@ -41,7 +41,8 @@ class PaymentServiceTest : RxTest() {
 
     @Before
     fun setUp() {
-        subject = PaymentService(environmentSettings, payment)
+        subject =
+            PaymentService(environmentSettings, payment)
 
         whenever(environmentSettings.bitcoinNetworkParameters)
             .thenReturn(BitcoinMainNetParams.get())

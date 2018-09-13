@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.ethereum
+package piuk.blockchain.androidcore.data.ethereum
 
 import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.mock

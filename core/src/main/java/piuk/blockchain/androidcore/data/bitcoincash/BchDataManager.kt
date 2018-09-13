@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.bitcoincash
+package piuk.blockchain.androidcore.data.bitcoincash
 
 import android.support.annotation.VisibleForTesting
 import com.google.common.base.Optional
@@ -12,22 +12,18 @@ import info.blockchain.wallet.multiaddress.TransactionSummary
 import info.blockchain.wallet.payload.data.isArchived
 import io.reactivex.Completable
 import io.reactivex.Observable
-import piuk.blockchain.android.R
 import piuk.blockchain.android.util.StringUtils
+import piuk.blockchain.androidcore.R
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
-import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.math.BigInteger
-import javax.inject.Inject
 
-@PresenterScope
-class BchDataManager @Inject constructor(
+class BchDataManager(
     private val payloadDataManager: PayloadDataManager,
     private val bchDataStore: BchDataStore,
     private val environmentSettings: EnvironmentConfig,
@@ -57,9 +53,15 @@ class BchDataManager @Inject constructor(
             fetchMetadata(defaultLabel, accountTotal)
                 .map { optional ->
                     if (optional.isPresent) {
-                        MetadataPair(optional.get(), false)
+                        MetadataPair(
+                            optional.get(),
+                            false
+                        )
                     } else {
-                        MetadataPair(createMetadata(defaultLabel, accountTotal), true)
+                        MetadataPair(
+                            createMetadata(defaultLabel, accountTotal),
+                            true
+                        )
                     }
                 }.map { pair ->
                     bchDataStore.bchMetadata = pair.metadata

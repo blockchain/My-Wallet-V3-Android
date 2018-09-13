@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.bitcoincash
+package piuk.blockchain.androidcore.data.bitcoincash
 
 import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
@@ -24,7 +24,6 @@ import org.mockito.Mockito
 import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
