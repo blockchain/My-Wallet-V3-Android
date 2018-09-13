@@ -6,11 +6,16 @@ import io.reactivex.rxkotlin.plusAssign
 
 fun <OUTGOING, INCOMING> WebSocket<OUTGOING, INCOMING>.afterOpen(
     afterOpenAction: (WebSocketSend<OUTGOING>) -> Disposable
-): WebSocket<OUTGOING, INCOMING> = AfterOpenWebSocket(this, afterOpenAction)
+): WebSocket<OUTGOING, INCOMING> = AfterConnectionEventWebSocket(this, afterOpenAction, ConnectionEvent.Connected)
 
-private class AfterOpenWebSocket<OUTGOING, INCOMING>(
+fun <OUTGOING, INCOMING> WebSocket<OUTGOING, INCOMING>.afterAuthenticate(
+    afterOpenAction: (WebSocketSend<OUTGOING>) -> Disposable
+): WebSocket<OUTGOING, INCOMING> = AfterConnectionEventWebSocket(this, afterOpenAction, ConnectionEvent.Authenticated)
+
+private class AfterConnectionEventWebSocket<OUTGOING, INCOMING>(
     private val inner: WebSocket<OUTGOING, INCOMING>,
-    private val afterOpenAction: (WebSocketSend<OUTGOING>) -> Disposable
+    private val afterOpenAction: (WebSocketSend<OUTGOING>) -> Disposable,
+    private val event: ConnectionEvent
 ) : WebSocket<OUTGOING, INCOMING> by inner {
 
     private val connections = CompositeDisposable()
@@ -24,7 +29,7 @@ private class AfterOpenWebSocket<OUTGOING, INCOMING>(
     private fun watchEvents(): Disposable =
         connectionEvents
             .subscribe {
-                if (it === ConnectionEvent.Connected) {
+                if (it === event) {
                     connections += afterOpenAction(this)
                 }
             }

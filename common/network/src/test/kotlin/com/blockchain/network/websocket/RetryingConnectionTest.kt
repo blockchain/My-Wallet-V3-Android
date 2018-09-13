@@ -230,4 +230,8 @@ class MockConnection(val mock: WebSocketConnection = mock()) : WebSocketConnecti
     fun simulateSuccess() {
         subject.onNext(ConnectionEvent.Connected)
     }
+
+    fun simulateAuthenticated() {
+        subject.onNext(ConnectionEvent.Authenticated)
+    }
 }
