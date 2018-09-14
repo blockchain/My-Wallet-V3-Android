@@ -10,8 +10,8 @@ android {
         applicationId "com.blockchain.morph.dev"
         targetSdkVersion Versions.targetSdk
         minSdkVersion Versions.minSdk
-        versionCode 1
-        versionName "1.0"
+        versionCode Versions.versionCode
+        versionName Versions.versionName
         multiDexEnabled true
     }
 
@@ -33,6 +33,8 @@ dependencies {
     implementation project(':morph:common')
     implementation project(':morph:ui')
     implementation project(':core')
+
+    implementation project(':kyc')
 
     implementation Libraries.rxKotlin
     implementation Libraries.rxAndroid

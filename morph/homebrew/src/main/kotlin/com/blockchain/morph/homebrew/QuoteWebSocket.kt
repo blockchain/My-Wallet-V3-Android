@@ -18,7 +18,9 @@ class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) 
     }
 
     override val quotes: Observable<Quote>
-        get() = socket.responses.map { it.quote.currencyRatio.mapToQuote() }
+        get() = socket.responses
+            .filter { it.quote != null }
+            .map { it.quote!!.currencyRatio.mapToQuote() }
 
     private var params: QuoteWebSocketParams? = null
 
