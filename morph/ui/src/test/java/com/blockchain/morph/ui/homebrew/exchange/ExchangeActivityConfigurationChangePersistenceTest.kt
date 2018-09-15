@@ -5,6 +5,7 @@ import info.blockchain.balance.CryptoCurrency
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
+import java.math.BigDecimal
 
 class ExchangeActivityConfigurationChangePersistenceTest {
 
@@ -15,7 +16,7 @@ class ExchangeActivityConfigurationChangePersistenceTest {
                 fieldMode `should be` FieldUpdateIntent.Field.FROM_FIAT
                 from `should be` CryptoCurrency.BTC
                 to `should be` CryptoCurrency.ETHER
-                currentValue `should equal` 0L
+                currentValue `should equal` BigDecimal.ZERO
             }
     }
 
@@ -63,9 +64,9 @@ class ExchangeActivityConfigurationChangePersistenceTest {
     fun `setting the "from" clears the current value`() {
         ExchangeActivityConfigurationChangePersistence()
             .apply {
-                currentValue = 1000L
+                currentValue = 1000L.toBigDecimal()
                 from = CryptoCurrency.BCH
-                currentValue `should equal` 0L
+                currentValue `should equal` BigDecimal.ZERO
             }
     }
 
@@ -73,9 +74,9 @@ class ExchangeActivityConfigurationChangePersistenceTest {
     fun `setting the "to" clears the current value`() {
         ExchangeActivityConfigurationChangePersistence()
             .apply {
-                currentValue = 1000L
+                currentValue = 1000L.toBigDecimal()
                 to = CryptoCurrency.BCH
-                currentValue `should equal` 0L
+                currentValue `should equal` BigDecimal.ZERO
             }
     }
 
@@ -84,9 +85,9 @@ class ExchangeActivityConfigurationChangePersistenceTest {
         ExchangeActivityConfigurationChangePersistence()
             .apply {
                 from = CryptoCurrency.BCH
-                currentValue = 1000L
+                currentValue = 1000L.toBigDecimal()
                 from = CryptoCurrency.BCH
-                currentValue `should equal` 1000L
+                currentValue `should equal` 1000L.toBigDecimal()
             }
     }
 
@@ -95,9 +96,9 @@ class ExchangeActivityConfigurationChangePersistenceTest {
         ExchangeActivityConfigurationChangePersistence()
             .apply {
                 to = CryptoCurrency.BCH
-                currentValue = 1000L
+                currentValue = 1000L.toBigDecimal()
                 to = CryptoCurrency.BCH
-                currentValue `should equal` 1000L
+                currentValue `should equal` 1000L.toBigDecimal()
             }
     }
 }
