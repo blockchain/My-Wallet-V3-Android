@@ -7,6 +7,7 @@ import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 
 import com.blockchain.morph.exchange.mvi.Quote
+import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.homebrew.json.Out
 
 class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {

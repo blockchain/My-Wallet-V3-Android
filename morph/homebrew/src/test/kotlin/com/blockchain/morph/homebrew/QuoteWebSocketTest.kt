@@ -2,6 +2,7 @@ package com.blockchain.morph.homebrew
 
 import com.blockchain.koin.modules.homeBrewModule
 import com.blockchain.morph.exchange.mvi.Quote
+import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.apiModule
