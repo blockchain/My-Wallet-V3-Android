@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <include
+        android:id="@+id/toolbar_constraint"
+        layout="@layout/toolbar_constraint"
+        android:fitsSystemWindows="true" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -14,7 +19,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_percent="0.5"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_constraint"/>
 
     <TextView
         android:id="@+id/status_title_textView"
@@ -33,7 +39,7 @@
         tools:text="Status" />
 
     <TextView
-        android:id="@+id/status_textView"
+        android:id="@+id/status"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_gravity="end"
@@ -49,7 +55,7 @@
         tools:text="Complete" />
 
     <TextView
-        android:id="@+id/value_title_textView"
+        android:id="@+id/value_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_marginTop="2dp"
@@ -67,7 +73,7 @@
         tools:text="Value" />
 
     <TextView
-        android:id="@+id/value_textView"
+        android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_gravity="end"
@@ -80,12 +86,12 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/status_textView"
+        app:layout_constraintTop_toBottomOf="@+id/status"
         tools:layout_editor_absoluteY="16dp"
         tools:text="$1,642.50" />
 
     <TextView
-        android:id="@+id/fees_title_textView"
+        android:id="@+id/fees_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_marginTop="2dp"
@@ -97,11 +103,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/value_title_textView"
+        app:layout_constraintTop_toBottomOf="@+id/value_title"
         android:text="@string/fees" />
 
     <TextView
-        android:id="@+id/fees_textView"
+        android:id="@+id/fees"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_gravity="end"
@@ -114,11 +120,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/value_textView"
+        app:layout_constraintTop_toBottomOf="@+id/value"
         tools:text="0.000414 BTC" />
 
     <TextView
-        android:id="@+id/receive_title_textView"
+        android:id="@+id/receive_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_marginTop="2dp"
@@ -131,11 +137,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fees_title_textView"
+        app:layout_constraintTop_toBottomOf="@+id/fees_title"
         android:text="@string/receive" />
 
     <TextView
-        android:id="@+id/receive_textView"
+        android:id="@+id/receive"
         android:layout_width="0dp"
         android:layout_height="@dimen/exchange_row_height"
         android:layout_gravity="end"
@@ -149,11 +155,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/fees_textView"
+        app:layout_constraintTop_toBottomOf="@+id/fees"
         tools:text="5.668586 ETH" />
 
     <TextView
-        android:id="@+id/send_to_title_textView"
+        android:id="@+id/send_to_title"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_marginTop="2dp"
@@ -165,11 +171,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receive_title_textView"
+        app:layout_constraintTop_toBottomOf="@+id/receive_title"
         android:text="@string/send_to" />
 
     <TextView
-        android:id="@+id/send_to_textView"
+        android:id="@+id/send_to"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_gravity="end"
@@ -182,7 +188,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/receive_textView"
+        app:layout_constraintTop_toBottomOf="@+id/receive"
         tools:text="My Wallet" />
 
 </android.support.constraint.ConstraintLayout>

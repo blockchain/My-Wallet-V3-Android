@@ -30,6 +30,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     api project(':coreui')
     api project(':morph:common')

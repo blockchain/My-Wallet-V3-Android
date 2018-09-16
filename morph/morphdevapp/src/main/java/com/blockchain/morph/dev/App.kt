@@ -3,7 +3,7 @@ package com.blockchain.morph.dev
 import android.app.Application
 import com.blockchain.koin.morphUiModule
 import com.blockchain.koin.walletModule
-import com.blockchain.morph.ui.homebrew.exchange.ExchangeHistoryActivity
+import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
 import com.blockchain.network.EnvironmentUrls
 import com.blockchain.network.modules.OkHttpInterceptors
 import com.blockchain.network.modules.apiModule
@@ -35,7 +35,7 @@ class App : Application() {
                 }
             )
         )
-        AccessState.getInstance().initAccessState(this, PrefsUtil(this), RxBus(), ExchangeHistoryActivity::class.java)
+        AccessState.getInstance().initAccessState(this, PrefsUtil(this), RxBus(), TradeHistoryActivity::class.java)
     }
 }
 
