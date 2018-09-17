@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.design.widget.Snackbar
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
@@ -13,37 +15,37 @@ import com.blockchain.balance.layerListDrawableRes
 import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
+import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.initial
+import com.blockchain.morph.exchange.mvi.toIntent
+import com.blockchain.morph.exchange.service.QuoteService
+import com.blockchain.morph.exchange.service.QuoteServiceFactory
+import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.morph.ui.R
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
-import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.formatWithUnit
+import info.blockchain.balance.withMajorValue
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
+import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
 import timber.log.Timber
+import java.math.BigDecimal
 import java.util.Locale
 
-// TODO: AND-1350 Unlikely to be needed long term. Added so that fake data isn't in the release code, only demo app.
-interface RateStream {
-
-    fun rateStream(
-        from: CryptoCurrency,
-        to: CryptoCurrency,
-        fiat: String
-    ): Observable<ExchangeIntent>
-}
-
+// TODO: AND-1363 This class has too much in it. Need to extract and place in
+// :morph:homebrew with interfaces in :morph:common
 class ExchangeActivity : BaseAuthActivity() {
 
     companion object {
@@ -56,10 +58,8 @@ class ExchangeActivity : BaseAuthActivity() {
             }
     }
 
-    // TODO: AND-1350 Needed for Demo only, final implementation will just need a quote stream
-    private val rateStream: RateStream by inject()
-
     private val compositeDisposable = CompositeDisposable()
+    private val dialogDisposable = CompositeDisposable()
 
     private lateinit var configChangePersistence: ExchangeActivityConfigurationChangePersistence
 
@@ -69,11 +69,16 @@ class ExchangeActivity : BaseAuthActivity() {
     private lateinit var largeValue: TextView
     private lateinit var largeValueRightHandSide: TextView
     private lateinit var smallValue: TextView
-    private lateinit var keyboard: IntegerKeyboardView
+    private lateinit var keyboard: FloatKeyboardView
     private lateinit var selectSendAccountButton: Button
     private lateinit var selectReceiveAccountButton: Button
     private lateinit var exchangeButton: Button
-    private lateinit var toolbar: Toolbar
+
+    private val quoteServiceFactory: QuoteServiceFactory by inject()
+
+    private var quoteService: QuoteService? = null
+
+    private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,22 +124,61 @@ class ExchangeActivity : BaseAuthActivity() {
 
     override fun onResume() {
         super.onResume()
-        val keyboard = findViewById<IntegerKeyboardView>(R.id.numericKeyboard)
+        updateMviDialog()
+    }
 
-        compositeDisposable += ExchangeDialog(
+    private fun newQuoteWebSocket(): QuoteService {
+        val quotesService = quoteServiceFactory.createQuoteService()
+
+        compositeDisposable += listenForConnectionErrors(quotesService)
+
+        compositeDisposable += quotesService.openAsDisposable()
+
+        return quotesService
+    }
+
+    private fun listenForConnectionErrors(quotesSocket: QuoteService) =
+        quotesSocket.connectionStatus
+            .map {
+                it != QuoteService.Status.Error
+            }
+            .distinctUntilChanged()
+            .subscribe {
+                if (it) {
+                    snackbar?.dismiss()
+                } else {
+                    snackbar = Snackbar.make(
+                        findViewById(android.R.id.content),
+                        R.string.connection_error,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).apply {
+                        show()
+                    }
+                }
+            }
+
+    private fun updateMviDialog() {
+        dialogDisposable.clear()
+        val newQuoteService = newQuoteWebSocket()
+        quoteService = newQuoteService
+
+        compositeDisposable += newQuoteService.quotes
+            .subscribeBy {
+                Timber.d("Quote: $it")
+            }
+
+        dialogDisposable += ExchangeDialog(
             Observable.merge(
-                allTextUpdates(),
-                rateStream.rateStream(
-                    configChangePersistence.from,
-                    configChangePersistence.to,
-                    currency
-                )
+                allTextUpdates(newQuoteService),
+                newQuoteService.quotes.map(Quote::toIntent)
             ),
             initial(currency, configChangePersistence.from, configChangePersistence.to)
         ).viewModel
             .distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .doOnError { Timber.e(it) }
+            .subscribeBy {
+
                 Timber.d(it.toString())
 
                 val parts = it.from.fiatValue.toParts(Locale.getDefault())
@@ -147,37 +191,39 @@ class ExchangeActivity : BaseAuthActivity() {
                 selectSendAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.from)
                 selectReceiveAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.to)
             }
-        keyboard.value = configChangePersistence.currentValue
     }
 
-    private fun allTextUpdates(): Observable<ExchangeIntent> {
-        return keyboard.valueChanges
+    private fun allTextUpdates(quotesSocket: QuoteService): Observable<ExchangeIntent> {
+        return keyboard.viewStates
             .doOnNext {
-                configChangePersistence.currentValue = it
+                configChangePersistence.currentValue = it.userDecimal
+                if (it.shake) {
+                    val animShake = AnimationUtils.loadAnimation(this, R.anim.fingerprint_failed_shake)
+                    largeValue.startAnimation(animShake)
+                    largeValueRightHandSide.startAnimation(animShake)
+                    largeValueLeftHandSide.startAnimation(animShake)
+                }
+                largeValueRightHandSide.invisibleIf(it.decimalCursor == 0)
+                findViewById<View>(R.id.numberBackSpace).isEnabled = it.previous != null
             }
+            .map { it.userDecimal }
+            .doOnNext {
+                quotesSocket.updateQuoteRequest(it.toExchangeQuoteRequest(configChangePersistence, currency))
+            }
+            .distinctUntilChanged()
             .map {
                 FieldUpdateIntent(
                     configChangePersistence.fieldMode,
                     // TODO: AND-1363 This minor integer input could be an intent of its own. Certainly needs tests.
                     "",
-                    when (configChangePersistence.fieldMode) {
-                        FieldUpdateIntent.Field.FROM_FIAT,
-                        FieldUpdateIntent.Field.TO_FIAT -> FiatValue.fromMinor(currency, it).value
-                        FieldUpdateIntent.Field.FROM_CRYPTO -> CryptoValue(
-                            configChangePersistence.from,
-                            it.toBigInteger()
-                        ).toMajorUnit()
-                        FieldUpdateIntent.Field.TO_CRYPTO -> CryptoValue(
-                            configChangePersistence.to,
-                            it.toBigInteger()
-                        ).toMajorUnit()
-                    }
+                    it
                 )
             }
     }
 
     override fun onPause() {
         compositeDisposable.clear()
+        dialogDisposable.clear()
         super.onPause()
     }
 
@@ -190,13 +236,47 @@ class ExchangeActivity : BaseAuthActivity() {
             when (requestCode) {
                 REQUEST_CODE_CHOOSE_SENDING_ACCOUNT -> {
                     configChangePersistence.from = account.cryptoCurrency
+                    updateMviDialog()
                 }
                 REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT -> {
                     configChangePersistence.to = account.cryptoCurrency
+                    updateMviDialog()
                 }
                 else -> throw IllegalArgumentException("Unknown request code $requestCode")
             }
         }
+    }
+}
+
+private fun BigDecimal.toExchangeQuoteRequest(
+    field: ExchangeActivityConfigurationChangePersistence,
+    currency: String
+): ExchangeQuoteRequest {
+    return when (field.fieldMode) {
+        FieldUpdateIntent.Field.TO_FIAT ->
+            ExchangeQuoteRequest.BuyingFiatLinked(
+                offering = field.from,
+                wanted = field.to,
+                wantedFiatValue = FiatValue.fromMajor(currency, this)
+            )
+        FieldUpdateIntent.Field.FROM_FIAT ->
+            ExchangeQuoteRequest.SellingFiatLinked(
+                offering = field.from,
+                wanted = field.to,
+                offeringFiatValue = FiatValue.fromMajor(currency, this)
+            )
+        FieldUpdateIntent.Field.TO_CRYPTO ->
+            ExchangeQuoteRequest.Buying(
+                offering = field.from,
+                wanted = field.to.withMajorValue(this),
+                indicativeFiatSymbol = currency
+            )
+        FieldUpdateIntent.Field.FROM_CRYPTO ->
+            ExchangeQuoteRequest.Selling(
+                offering = field.from.withMajorValue(this),
+                wanted = field.to,
+                indicativeFiatSymbol = currency
+            )
     }
 }
 

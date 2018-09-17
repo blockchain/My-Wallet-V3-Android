@@ -17,9 +17,9 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.android.R
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.android.ui.balance.AnnouncementData
 import piuk.blockchain.android.ui.balance.ImageRightAnnouncementCard
 import piuk.blockchain.android.ui.balance.ImageLeftAnnouncementCard

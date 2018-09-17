@@ -20,8 +20,8 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import piuk.blockchain.android.R
 import piuk.blockchain.android.testutils.RxTest
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper.Companion.KEY_SWIPE_RECEIVE_ACCOUNT_NAME
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper.Companion.KEY_SWIPE_RECEIVE_ADDRESSES
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveHelper.Companion.KEY_SWIPE_RECEIVE_BCH_ACCOUNT_NAME

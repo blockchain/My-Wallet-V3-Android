@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.ethereum
+package piuk.blockchain.androidcore.data.ethereum
 
 import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.ethereum.EthAccountApi
@@ -23,14 +23,11 @@ import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
-import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.math.BigInteger
 import java.util.HashMap
-import javax.inject.Inject
 
-@PresenterScope
-class EthDataManager @Inject constructor(
+class EthDataManager(
     private val payloadManager: PayloadManager,
     private val ethAccountApi: EthAccountApi,
     private val ethDataStore: EthDataStore,

@@ -7,18 +7,35 @@ import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 
 import com.blockchain.morph.exchange.mvi.Quote
+import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.homebrew.json.Out
+import com.blockchain.network.websocket.ConnectionEvent
+import com.blockchain.network.websocket.openAsDisposable
 
-class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
+class QuoteWebSocket(private val underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
 
     private val socket = underlyingSocket.toJsonSocket<Out, QuoteMessageJson>(moshi)
 
-    override fun subscribe(quoteRequest: ExchangeQuoteRequest) {
+    override fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest) {
         updateSocketParameters(quoteRequest.mapToSocketParameters())
     }
 
     override val quotes: Observable<Quote>
-        get() = socket.responses.map { it.quote.currencyRatio.mapToQuote() }
+        get() = socket.responses
+            .filter { it.quote != null }
+            .map { it.quote!!.currencyRatio.mapToQuote() }
+
+    override val connectionStatus: Observable<QuoteService.Status>
+        get() = socket.connectionEvents.map {
+            when (it) {
+                is ConnectionEvent.ClientDisconnect -> QuoteService.Status.Closed
+                is ConnectionEvent.Connected -> QuoteService.Status.Closed
+                is ConnectionEvent.Authenticated -> QuoteService.Status.Open
+                is ConnectionEvent.Failure -> QuoteService.Status.Error
+            }
+        }
+
+    override fun openAsDisposable() = underlyingSocket.openAsDisposable()
 
     private var params: QuoteWebSocketParams? = null
 

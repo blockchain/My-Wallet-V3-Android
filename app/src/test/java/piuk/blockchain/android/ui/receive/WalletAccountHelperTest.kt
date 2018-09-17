@@ -19,8 +19,8 @@ import org.bitcoinj.params.BitcoinMainNetParams
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.currency.BTCDenomination

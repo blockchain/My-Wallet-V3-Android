@@ -8,8 +8,8 @@ import info.blockchain.wallet.payload.PayloadManager
 import io.reactivex.Observable
 import io.reactivex.Single
 import piuk.blockchain.android.data.balance.adapters.toBalanceReporter
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.android.ui.account.ItemAccount
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.data.transactions.TransactionListStore

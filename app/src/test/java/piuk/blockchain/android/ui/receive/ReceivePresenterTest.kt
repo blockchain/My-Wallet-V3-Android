@@ -27,7 +27,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.Mockito.verifyZeroInteractions
 import piuk.blockchain.android.R
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.QrCodeDataManager
 import piuk.blockchain.android.ui.NotImplementedFrameworkInterface
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig

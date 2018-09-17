@@ -11,7 +11,7 @@ internal data class QuoteMessageJson(
     val sequenceNumber: Int,
     val channel: String,
     val type: String,
-    val quote: QuoteJson
+    val quote: QuoteJson?
 ) : JsonSerializable
 
 internal data class QuoteJson(

@@ -2,7 +2,7 @@ package com.blockchain.homebrew
 
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.toIntent
-import com.blockchain.morph.ui.homebrew.exchange.RateStream
+import com.blockchain.morph.RateStream
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.wallet.prices.IndicativeFiatPriceService

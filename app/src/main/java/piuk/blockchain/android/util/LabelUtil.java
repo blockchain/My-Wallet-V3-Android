@@ -4,7 +4,7 @@ import info.blockchain.wallet.coin.GenericMetadataAccount;
 import info.blockchain.wallet.payload.data.Account;
 import info.blockchain.wallet.payload.data.LegacyAddress;
 
-import piuk.blockchain.android.data.bitcoincash.BchDataManager;
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 
 public final class LabelUtil {

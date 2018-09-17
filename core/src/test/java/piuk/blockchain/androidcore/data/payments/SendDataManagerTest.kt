@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.payments
+package piuk.blockchain.androidcore.data.payments
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -26,7 +26,8 @@ class SendDataManagerTest : RxTest() {
 
     @Before
     fun setUp() {
-        subject = SendDataManager(mockPaymentService, mockRxBus)
+        subject =
+            SendDataManager(mockPaymentService, mockRxBus)
     }
 
     @Test

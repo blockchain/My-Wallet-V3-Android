@@ -16,9 +16,9 @@ import org.amshove.kluent.`should equal to`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import com.blockchain.notifications.models.NotificationPayload
 import com.blockchain.android.testutils.rxInit
 import piuk.blockchain.android.ui.account.ItemAccount

@@ -1,4 +1,4 @@
-package piuk.blockchain.android.data.payments
+package piuk.blockchain.androidcore.data.payments
 
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.wallet.exceptions.ApiException
@@ -12,9 +12,8 @@ import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
 import java.util.HashMap
-import javax.inject.Inject
 
-class PaymentService @Inject constructor(
+class PaymentService(
     private val environmentSettings: EnvironmentConfig,
     private val payment: Payment
 ) {

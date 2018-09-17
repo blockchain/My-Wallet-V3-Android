@@ -161,7 +161,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Exchange BTC for ETH" />
 
-    <com.blockchain.morph.ui.homebrew.exchange.IntegerKeyboardView
+    <com.blockchain.morph.ui.homebrew.exchange.FloatKeyboardView
         android:id="@+id/numericKeyboard"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -14,9 +14,9 @@ import org.bitcoinj.core.ECKey
 import org.web3j.crypto.RawTransaction
 import org.web3j.utils.Convert
 import piuk.blockchain.android.R
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
-import piuk.blockchain.android.data.payments.SendDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.payments.SendDataManager
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig

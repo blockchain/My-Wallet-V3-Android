@@ -17,10 +17,10 @@ import javax.inject.Inject;
 
 import okhttp3.OkHttpClient;
 import piuk.blockchain.androidcore.data.access.AccessState;
-import piuk.blockchain.android.data.bitcoincash.BchDataManager;
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
-import piuk.blockchain.android.data.ethereum.EthDataManager;
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.android.injection.Injector;

@@ -1,9 +1,12 @@
 package com.blockchain.koin
 
+import com.blockchain.logging.NullLogger
+import com.blockchain.logging.TimberLogger
 import info.blockchain.api.blockexplorer.BlockExplorer
 import info.blockchain.wallet.contacts.Contacts
 import info.blockchain.wallet.util.PrivateKeyFactory
 import org.koin.dsl.module.applicationContext
+import piuk.blockchain.androidcore.BuildConfig
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
@@ -20,6 +23,8 @@ import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataS
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadService
+import piuk.blockchain.androidcore.data.payments.PaymentService
+import piuk.blockchain.androidcore.data.payments.SendDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 import piuk.blockchain.androidcore.data.settings.SettingsService
@@ -90,4 +95,15 @@ val coreModule = applicationContext {
     factory { CurrencyFormatUtil() }
 
     bean { CurrencyState(get()) }
+
+    factory { PaymentService(get(), get()) }
+
+    factory { SendDataManager(get(), get()) }
+
+    bean {
+        if (BuildConfig.DEBUG)
+            TimberLogger()
+        else
+            NullLogger
+    }
 }

@@ -22,11 +22,11 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
 import org.web3j.utils.Convert
 import piuk.blockchain.android.R
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.cache.DynamicFeeCache
 import piuk.blockchain.android.data.datamanagers.FeeDataManager
-import piuk.blockchain.android.data.ethereum.EthDataManager
-import piuk.blockchain.android.data.payments.SendDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
+import piuk.blockchain.androidcore.data.payments.SendDataManager
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
 import piuk.blockchain.android.ui.shapeshift.models.ShapeShiftData
 import piuk.blockchain.android.util.StringUtils

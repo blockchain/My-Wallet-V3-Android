@@ -24,7 +24,7 @@ import io.reactivex.observers.TestObserver;
 import piuk.blockchain.android.testutils.RxTest;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
-import piuk.blockchain.android.data.payments.SendDataManager;
+import piuk.blockchain.androidcore.data.payments.SendDataManager;
 import piuk.blockchain.android.ui.account.ItemAccount;
 import piuk.blockchain.android.ui.send.PendingTransaction;
 

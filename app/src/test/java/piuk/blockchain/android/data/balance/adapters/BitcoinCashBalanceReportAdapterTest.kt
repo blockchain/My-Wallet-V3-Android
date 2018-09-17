@@ -8,7 +8,7 @@ import info.blockchain.balance.CryptoValue
 import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
-import piuk.blockchain.android.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import java.math.BigInteger
 
 class BitcoinCashBalanceReportAdapterTest {
