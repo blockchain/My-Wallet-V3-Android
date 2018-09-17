@@ -35,12 +35,6 @@ dependencies {
     api project(':morph:common')
     implementation project(':balance')
 
-    // TODO: AND-1363 Temporary - need to move much of the logic from ExchangeActivity to :morph:homebrew and place
-    // generic interfaces in :morph:common, then these can go
-    api project(':common:network')
-    api project(':morph:homebrew')
-    api project(':nabu')
-
     implementation Libraries.kotlin
 
     api Libraries.appCompat

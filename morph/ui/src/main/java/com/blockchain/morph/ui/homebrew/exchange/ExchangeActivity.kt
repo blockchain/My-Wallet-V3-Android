@@ -20,18 +20,11 @@ import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.initial
 import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
-import com.blockchain.morph.homebrew.QuoteWebSocket
-import com.blockchain.morph.homebrew.authenticate
+import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.morph.ui.R
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
-import com.blockchain.nabu.Authenticator
-import com.blockchain.network.websocket.Options
-import com.blockchain.network.websocket.autoRetry
-import com.blockchain.network.websocket.newBlockchainWebSocket
-import com.blockchain.network.websocket.openAsDisposable
-import com.squareup.moshi.Moshi
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.FormatPrecision
@@ -42,8 +35,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import okhttp3.OkHttpClient
-import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
@@ -82,7 +74,9 @@ class ExchangeActivity : BaseAuthActivity() {
     private lateinit var selectReceiveAccountButton: Button
     private lateinit var exchangeButton: Button
 
-    private var quoteWebSocket: QuoteWebSocket? = null
+    private val quoteServiceFactory: QuoteServiceFactory by inject()
+
+    private var quoteService: QuoteService? = null
 
     private var snackbar: Snackbar? = null
 
@@ -133,25 +127,20 @@ class ExchangeActivity : BaseAuthActivity() {
         updateMviDialog()
     }
 
-    private fun newQuoteWebSocket(): QuoteWebSocket {
-        val auth = get<Authenticator>()
-        val moshi = get<Moshi>()
+    private fun newQuoteWebSocket(): QuoteService {
+        val quotesService = quoteServiceFactory.createQuoteService()
 
-        val socket = get<OkHttpClient>().newBlockchainWebSocket(
-            Options(
-                url = "wss://ws.dev.blockchain.info/nabu-gateway/markets/quotes",
-                origin = "https://blockchain.info"
-            )
-        )
-            .timber("Quotes")
-            .autoRetry()
-            .authenticate(auth)
+        compositeDisposable += listenForConnectionErrors(quotesService)
 
-        val quotesSocket = QuoteWebSocket(socket, moshi)
+        compositeDisposable += quotesService.openAsDisposable()
 
-        compositeDisposable += quotesSocket.connectionStatus
+        return quotesService
+    }
+
+    private fun listenForConnectionErrors(quotesSocket: QuoteService) =
+        quotesSocket.connectionStatus
             .map {
-                it == QuoteService.Status.Open
+                it != QuoteService.Status.Error
             }
             .distinctUntilChanged()
             .subscribe {
@@ -168,25 +157,20 @@ class ExchangeActivity : BaseAuthActivity() {
                 }
             }
 
-        compositeDisposable += socket.openAsDisposable()
-
-        quoteWebSocket = quotesSocket
-        return quotesSocket
-    }
-
     private fun updateMviDialog() {
         dialogDisposable.clear()
-        val quotesSocket = newQuoteWebSocket()
+        val newQuoteService = newQuoteWebSocket()
+        quoteService = newQuoteService
 
-        compositeDisposable += quotesSocket.quotes
+        compositeDisposable += newQuoteService.quotes
             .subscribeBy {
                 Timber.d("Quote: $it")
             }
 
         dialogDisposable += ExchangeDialog(
             Observable.merge(
-                allTextUpdates(quotesSocket),
-                quotesSocket.quotes.map(Quote::toIntent)
+                allTextUpdates(newQuoteService),
+                newQuoteService.quotes.map(Quote::toIntent)
             ),
             initial(currency, configChangePersistence.from, configChangePersistence.to)
         ).viewModel
@@ -209,7 +193,7 @@ class ExchangeActivity : BaseAuthActivity() {
             }
     }
 
-    private fun allTextUpdates(quotesSocket: QuoteWebSocket): Observable<ExchangeIntent> {
+    private fun allTextUpdates(quotesSocket: QuoteService): Observable<ExchangeIntent> {
         return keyboard.viewStates
             .doOnNext {
                 configChangePersistence.currentValue = it.userDecimal

@@ -22,6 +22,7 @@ dependencies {
     implementation Libraries.moshi
     implementation Libraries.kotlin
     implementation Libraries.koin
+    implementation Libraries.okHttp
 
     // Rx
     implementation Libraries.rxKotlin

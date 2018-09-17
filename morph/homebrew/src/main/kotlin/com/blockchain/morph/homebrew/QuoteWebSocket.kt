@@ -10,8 +10,10 @@ import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.homebrew.json.Out
 import com.blockchain.network.websocket.ConnectionEvent
+import com.blockchain.network.websocket.openAsDisposable
 
-class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
+class QuoteWebSocket(private val underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
+
     private val socket = underlyingSocket.toJsonSocket<Out, QuoteMessageJson>(moshi)
 
     override fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest) {
@@ -32,6 +34,8 @@ class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) 
                 is ConnectionEvent.Failure -> QuoteService.Status.Error
             }
         }
+
+    override fun openAsDisposable() = underlyingSocket.openAsDisposable()
 
     private var params: QuoteWebSocketParams? = null
 
