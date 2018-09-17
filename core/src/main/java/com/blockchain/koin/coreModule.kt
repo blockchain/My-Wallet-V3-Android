@@ -1,5 +1,6 @@
 package com.blockchain.koin
 
+import com.blockchain.datamanagers.TransactionSendDataManager
 import com.blockchain.logging.NullLogger
 import com.blockchain.logging.TimberLogger
 import info.blockchain.api.blockexplorer.BlockExplorer
@@ -16,6 +17,7 @@ import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionLis
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyState
+import piuk.blockchain.androidcore.data.ethereum.EthereumAccountWrapper
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
@@ -106,4 +108,8 @@ val coreModule = applicationContext {
         else
             NullLogger
     }
+
+    factory { EthereumAccountWrapper() }
+
+    factory { TransactionSendDataManager(get(), get(), get(), get(), get()) }
 }
