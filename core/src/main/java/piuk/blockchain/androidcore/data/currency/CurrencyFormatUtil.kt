@@ -43,9 +43,6 @@ class CurrencyFormatUtil @Inject constructor() {
     @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.etherFromMajor(eth).format(FormatPrecision.Full)"))
     fun formatEth(eth: BigDecimal): String = format(CryptoValue.etherFromMajor(eth), FormatPrecision.Full)
 
-    @Deprecated("Use format", replaceWith = ReplaceWith("CryptoValue.etherFromWei(wei).format(FormatPrecision.Full)"))
-    fun formatWei(wei: Long): String = format(CryptoValue.etherFromWei(wei), FormatPrecision.Full)
-
     @Deprecated("Use format", replaceWith = ReplaceWith("cryptoValue.format(displayMode)"))
     fun format(cryptoValue: CryptoValue, displayMode: FormatPrecision = FormatPrecision.Short): String =
         cryptoValue.format(precision = displayMode)

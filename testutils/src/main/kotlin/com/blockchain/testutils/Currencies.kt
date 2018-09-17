@@ -18,6 +18,6 @@ private fun Number.numberToBigDecimal(): BigDecimal =
         else -> throw NotImplementedError(this.javaClass.name)
     }
 
-fun Double.bitcoin() = CryptoValue.bitcoinFromMajor(toBigDecimal())
-fun Double.ether() = CryptoValue.etherFromMajor(toBigDecimal())
-fun Double.bitcoinCash() = CryptoValue.bitcoinCashFromMajor(toBigDecimal())
+fun Number.bitcoin() = CryptoValue.bitcoinFromMajor(numberToBigDecimal())
+fun Number.ether() = CryptoValue.etherFromMajor(numberToBigDecimal())
+fun Number.bitcoinCash() = CryptoValue.bitcoinCashFromMajor(numberToBigDecimal())
