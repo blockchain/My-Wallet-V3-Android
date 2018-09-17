@@ -1,5 +1,6 @@
 package com.blockchain.koin
 
+import com.blockchain.datamanagers.TransactionSendDataManager
 import info.blockchain.api.blockexplorer.BlockExplorer
 import info.blockchain.wallet.contacts.Contacts
 import info.blockchain.wallet.util.PrivateKeyFactory
@@ -13,6 +14,7 @@ import piuk.blockchain.androidcore.data.contacts.datastore.PendingTransactionLis
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyState
+import piuk.blockchain.androidcore.data.ethereum.EthereumAccountWrapper
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
@@ -96,4 +98,8 @@ val coreModule = applicationContext {
     factory { PaymentService(get(), get()) }
 
     factory { SendDataManager(get(), get()) }
+
+    factory { EthereumAccountWrapper() }
+
+    factory { TransactionSendDataManager(get(), get(), get(), get(), get()) }
 }

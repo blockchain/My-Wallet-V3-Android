@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.core.NetworkParameters
+import org.bitcoinj.crypto.DeterministicKey
 import org.spongycastle.crypto.InvalidCipherTextException
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.rxjava.RxBus
@@ -25,6 +26,7 @@ import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver
 import java.io.UnsupportedEncodingException
+import java.lang.IllegalStateException
 import java.math.BigInteger
 import java.util.ArrayList
 import java.util.LinkedHashMap
@@ -103,6 +105,9 @@ class PayloadDataManager @Inject constructor(
 
     val sharedKey: String
         get() = wallet!!.sharedKey
+
+    val masterKey: DeterministicKey
+        get() = wallet?.hdWallets?.get(0)?.masterKey ?: throw IllegalStateException("Master key not found")
 
     // /////////////////////////////////////////////////////////////////////////
     // AUTH METHODS
