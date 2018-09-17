@@ -18,6 +18,7 @@ import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.androidcore.data.ethereum.EthereumAccountWrapper
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.payments.SendDataManager
+import timber.log.Timber
 import java.math.BigInteger
 
 class TransactionSendDataManager(
@@ -54,6 +55,54 @@ class TransactionSendDataManager(
             fees.feeForType(feeType)
         )
     }
+
+    fun getMaximumSpendable(
+        cryptoCurrency: CryptoCurrency,
+        account: JsonSerializableAccount,
+        fees: FeeOptions,
+        feeType: FeeType = FeeType.Regular
+    ): Single<CryptoValue> = when (cryptoCurrency) {
+        CryptoCurrency.BTC -> getMaxBitcoin(account as Account, fees, feeType)
+        CryptoCurrency.BCH -> getMaxBitcoinCash(account as GenericMetadataAccount, fees, feeType)
+        CryptoCurrency.ETHER -> getMaxEther(fees)
+    }
+
+    private fun getMaxBitcoin(
+        account: Account,
+        fees: FeeOptions,
+        feeType: FeeType
+    ): Single<CryptoValue> = getMaxBchOrBtc(account.xpub, CryptoCurrency.BTC, fees, feeType)
+        .map { CryptoValue.bitcoinFromSatoshis(it) }
+        .doOnError { Timber.e(it) }
+        .onErrorReturn { CryptoValue.ZeroBtc }
+
+    private fun getMaxBitcoinCash(
+        account: GenericMetadataAccount,
+        fees: FeeOptions,
+        feeType: FeeType
+    ): Single<CryptoValue> = getMaxBchOrBtc(account.xpub, CryptoCurrency.BCH, fees, feeType)
+        .map { CryptoValue.bitcoinCashFromSatoshis(it) }
+        .doOnError { Timber.e(it) }
+        .onErrorReturn { CryptoValue.ZeroBch }
+
+    private fun getMaxBchOrBtc(
+        xPub: String,
+        cryptoCurrency: CryptoCurrency,
+        fees: FeeOptions,
+        feeType: FeeType
+    ): Single<BigInteger> = getUnspentOutputs(xPub, cryptoCurrency)
+        .map { sendDataManager.getMaximumAvailable(it, fees.toSatoshis(feeType)).left }
+
+    private fun getMaxEther(fees: FeeOptions): Single<CryptoValue> =
+        ethDataManager.fetchEthAddress()
+            .map {
+                val wei = (fees.regularFee * fees.gasLimit).gweiToWei()
+                return@map (it.getAddressResponse()!!.balance - wei).max(BigInteger.ZERO)
+            }
+            .map { CryptoValue.etherFromWei(it) }
+            .doOnError { Timber.e(it) }
+            .onErrorReturn { CryptoValue.ZeroEth }
+            .singleOrError()
 
     private fun sendBtcTransaction(
         amount: CryptoValue,
@@ -115,7 +164,7 @@ class TransactionSendDataManager(
             ethDataManager.createEthTransaction(
                 nonce = ethDataManager.getEthResponseModel()!!.getNonce(),
                 to = destination,
-                gasPrice = fees.regularFee.gasPriceToWei(),
+                gasPrice = fees.regularFee.gweiToWei(),
                 gasLimit = fees.gasLimit.toBigInteger(),
                 weiValue = amount.amount
             )
@@ -135,12 +184,15 @@ class TransactionSendDataManager(
         address: String,
         amount: CryptoValue,
         feePerKb: BigInteger
-    ): Single<SpendableUnspentOutputs> = getUnspentOutputs(address, amount)
+    ): Single<SpendableUnspentOutputs> = getUnspentOutputs(address, amount.currency)
         .subscribeOn(Schedulers.io())
         .map { sendDataManager.getSpendableCoins(it, amount.amount, feePerKb) }
 
-    private fun getUnspentOutputs(address: String, amount: CryptoValue): Single<UnspentOutputs> =
-        when (amount.currency) {
+    private fun getUnspentOutputs(
+        address: String,
+        currency: CryptoCurrency
+    ): Single<UnspentOutputs> =
+        when (currency) {
             CryptoCurrency.BTC -> sendDataManager.getUnspentOutputs(address)
             CryptoCurrency.BCH -> sendDataManager.getUnspentBchOutputs(address)
             CryptoCurrency.ETHER -> throw IllegalArgumentException("Ether does not have unspent outputs")
@@ -199,8 +251,13 @@ class TransactionSendDataManager(
         payloadDataManager.getAccountForXPub(this.xpub)
 }
 
-internal fun Long.gasPriceToWei(): BigInteger =
+internal fun Long.gweiToWei(): BigInteger =
     Convert.toWei(this.toBigDecimal(), Convert.Unit.GWEI).toBigInteger()
+
+internal fun FeeOptions.toSatoshis(feeType: FeeType): BigInteger = when (feeType) {
+    FeeType.Regular -> regularFee * 1000
+    FeeType.Priority -> priorityFee * 1000
+}.toBigInteger()
 
 sealed class FeeType {
     object Regular : FeeType()

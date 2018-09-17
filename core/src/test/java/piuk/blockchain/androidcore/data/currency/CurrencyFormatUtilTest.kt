@@ -218,14 +218,6 @@ class CurrencyFormatUtilTest {
     }
 
     @Test
-    fun formatWei() {
-        // Assert
-        assertEquals("0.000000000000000001", subject.formatWei(1L))
-        assertEquals("1.0", subject.formatWei(1000000000000000000L))
-        assertEquals("0", subject.formatWei(0L))
-    }
-
-    @Test
     fun formatFiat() {
         // Assert
         assertEquals("100,000.00", subject.formatFiat(100_000L.usd()))
