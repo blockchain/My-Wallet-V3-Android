@@ -119,6 +119,20 @@ class NabuDataManager(
         ).toSingleDefault(Any())
     }.ignoreElement()
 
+    internal fun recordCountrySelection(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        jwt: String,
+        countryCode: String,
+        notifyWhenAvailable: Boolean
+    ): Completable = authenticate(offlineTokenResponse) {
+        nabuService.recordCountrySelection(
+            it,
+            jwt,
+            countryCode,
+            notifyWhenAvailable
+        ).toSingleDefault(Any())
+    }.ignoreElement()
+
     internal fun getOnfidoApiKey(
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Single<String> = authenticate(offlineTokenResponse) {

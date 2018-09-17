@@ -8,6 +8,7 @@ import com.blockchain.kyc.models.nabu.NabuBasicUser
 import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuJwt
 import com.blockchain.kyc.models.nabu.NabuUser
+import com.blockchain.kyc.models.nabu.RecordCountryRequest
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.nabu.models.NabuOfflineTokenRequest
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
@@ -89,6 +90,20 @@ class NabuService(retrofit: Retrofit) {
             state,
             postCode,
             countryCode
+        ),
+        sessionToken.authHeader
+    ).wrapErrorMessage()
+
+    internal fun recordCountrySelection(
+        sessionToken: NabuSessionTokenResponse,
+        jwt: String,
+        countryCode: String,
+        notifyWhenAvailable: Boolean
+    ): Completable = service.recordSelectedCountry(
+        RecordCountryRequest(
+            jwt,
+            countryCode,
+            notifyWhenAvailable
         ),
         sessionToken.authHeader
     ).wrapErrorMessage()

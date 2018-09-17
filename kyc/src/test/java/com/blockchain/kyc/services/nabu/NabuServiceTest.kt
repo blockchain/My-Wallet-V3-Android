@@ -4,6 +4,7 @@ import com.blockchain.kyc.api.nabu.NABU_COUNTRIES
 import com.blockchain.kyc.api.nabu.NABU_INITIAL_AUTH
 import com.blockchain.kyc.api.nabu.NABU_ONFIDO_API_KEY
 import com.blockchain.kyc.api.nabu.NABU_PUT_ADDRESS
+import com.blockchain.kyc.api.nabu.NABU_RECORD_COUNTRY
 import com.blockchain.kyc.api.nabu.NABU_SESSION_TOKEN
 import com.blockchain.kyc.api.nabu.NABU_SUBMIT_VERIFICATION
 import com.blockchain.kyc.api.nabu.NABU_UPDATE_WALLET_INFO
@@ -14,6 +15,7 @@ import com.blockchain.kyc.models.nabu.ApplicantIdRequest
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.KycStateAdapter
 import com.blockchain.kyc.models.nabu.NabuBasicUser
+import com.blockchain.kyc.models.nabu.RecordCountryRequest
 import com.blockchain.kyc.models.nabu.Scope
 import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.kyc.models.nabu.UserStateAdapter
@@ -250,6 +252,42 @@ class NabuServiceTest {
         addressRequest.address.state `should equal` state
         addressRequest.address.countryCode `should equal` countryCode
         addressRequest.address.postCode `should equal` postCode
+        // Check Header
+        request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
+    }
+
+    @Test
+    fun recordCountrySelection() {
+        // Arrange
+        val jwt = "JWT"
+        val countryCode = "GB"
+        val notifyWhenAvailable = true
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody("")
+        )
+        // Act
+        val testObserver = subject.recordCountrySelection(
+            getEmptySessionToken(),
+            jwt,
+            countryCode,
+            notifyWhenAvailable
+        ).test()
+        // Assert
+        testObserver.awaitTerminalEvent()
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        // Check URL
+        val request = server.takeRequest()
+        request.path `should equal to` "/$NABU_RECORD_COUNTRY"
+        // Check Body
+        val requestString = request.requestToString()
+        val adapter = moshi.adapter(RecordCountryRequest::class.java)
+        val recordCountryRequest = adapter.fromJson(requestString)!!
+        recordCountryRequest.jwt `should equal to` jwt
+        recordCountryRequest.countryCode `should equal to` countryCode
+        recordCountryRequest.notifyWhenAvailable `should equal to` notifyWhenAvailable
         // Check Header
         request.headers.get("authorization") `should equal` getEmptySessionToken().authHeader
     }

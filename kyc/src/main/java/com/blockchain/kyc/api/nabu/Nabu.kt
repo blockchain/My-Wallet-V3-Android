@@ -7,6 +7,7 @@ import com.blockchain.kyc.models.nabu.NabuCountryResponse
 import com.blockchain.kyc.models.nabu.NabuJwt
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.OnfidoApiKey
+import com.blockchain.kyc.models.nabu.RecordCountryRequest
 import com.blockchain.nabu.models.NabuOfflineTokenRequest
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
@@ -62,6 +63,12 @@ internal interface Nabu {
     @PUT(NABU_PUT_ADDRESS)
     fun addAddress(
         @Body address: AddAddressRequest,
+        @Header("authorization") authorization: String
+    ): Completable
+
+    @POST(NABU_RECORD_COUNTRY)
+    fun recordSelectedCountry(
+        @Body recordCountryRequest: RecordCountryRequest,
         @Header("authorization") authorization: String
     ): Completable
 

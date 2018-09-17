@@ -11,6 +11,7 @@ import com.blockchain.kyc.services.onfido.OnfidoService
 import com.blockchain.kyc.services.wallet.RetailWalletTokenService
 import com.blockchain.kycui.address.KycHomeAddressPresenter
 import com.blockchain.kycui.countryselection.KycCountrySelectionPresenter
+import com.blockchain.kycui.invalidcountry.KycInvalidCountryPresenter
 import com.blockchain.kycui.mobile.entry.KycMobileEntryPresenter
 import com.blockchain.kycui.mobile.validation.KycMobileValidationPresenter
 import com.blockchain.kycui.navhost.KycNavHostPresenter
@@ -66,6 +67,8 @@ val kycModule = applicationContext {
         factory { KycStatusPresenter(get(), get(), get()) }
 
         factory { KycNavHostPresenter(get(), get()) }
+
+        factory { KycInvalidCountryPresenter(get(), get()) }
     }
 
     moshiInterceptor("kyc") { builder ->

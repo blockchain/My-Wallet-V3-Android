@@ -256,6 +256,43 @@ class NabuDataManagerTest {
     }
 
     @Test
+    fun recordCountrySelection() {
+        // Arrange
+        val jwt = "JWT"
+        val countryCode = "GB"
+        val notifyWhenAvailable = true
+        val offlineToken = NabuOfflineTokenResponse("", "")
+        val sessionToken = getEmptySessionToken()
+        whenever(nabuTokenStore.requiresRefresh()).thenReturn(false)
+        whenever(nabuTokenStore.getAccessToken())
+            .thenReturn(Observable.just(Optional.Some(sessionToken)))
+        whenever(
+            nabuService.recordCountrySelection(
+                sessionToken,
+                jwt,
+                countryCode,
+                notifyWhenAvailable
+            )
+        ).thenReturn(Completable.complete())
+        // Act
+        val testObserver = subject.recordCountrySelection(
+            offlineToken,
+            jwt,
+            countryCode,
+            notifyWhenAvailable
+        ).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        verify(nabuService).recordCountrySelection(
+            sessionToken,
+            jwt,
+            countryCode,
+            notifyWhenAvailable
+        )
+    }
+
+    @Test
     fun getCountriesList() {
         // Arrange
         val countriesList = listOf(
