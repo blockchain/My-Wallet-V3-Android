@@ -6,7 +6,6 @@ import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.api.data.UnspentOutputs
-import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
@@ -57,54 +56,9 @@ class TransactionSendDataManagerTest {
     }
 
     @Test
-    fun `execute bitcoin transaction should attempt to send bitcoin`() {
-        // Arrange
-        val amount = CryptoValue(CryptoCurrency.BTC, BigInteger.TEN)
-        val destination = "DESTINATION"
-        val account = Account().apply { xpub = "XPUB" }
-        whenever(sendDataManager.getUnspentOutputs("XPUB"))
-            .thenReturn(Observable.empty())
-        // Act
-        subject.executeTransaction(amount, destination, account, feeOptions)
-            .test()
-        // Assert
-        verify(sendDataManager).getUnspentOutputs("XPUB")
-    }
-
-    @Test
-    fun `execute bitcoin cash transaction should attempt to send bitcoin cash`() {
-        // Arrange
-        val amount = CryptoValue(CryptoCurrency.BCH, BigInteger.TEN)
-        val destination = "DESTINATION"
-        val account = GenericMetadataAccount().apply { xpub = "XPUB" }
-        whenever(sendDataManager.getUnspentBchOutputs("XPUB"))
-            .thenReturn(Observable.empty())
-        // Act
-        subject.executeTransaction(amount, destination, account, feeOptions)
-            .test()
-        // Assert
-        verify(sendDataManager).getUnspentBchOutputs("XPUB")
-    }
-
-    @Test
-    fun `execute ethereum transaction should attempt to send ethereum`() {
-        // Arrange
-        val amount = CryptoValue(CryptoCurrency.ETHER, BigInteger.TEN)
-        val destination = "DESTINATION"
-        val account = EthereumAccount()
-        whenever(ethDataManager.fetchEthAddress())
-            .thenReturn(Observable.empty())
-        // Act
-        subject.executeTransaction(amount, destination, account, feeOptions)
-            .test()
-        // Assert
-        verify(ethDataManager).fetchEthAddress()
-    }
-
-    @Test
     fun `execute bitcoin transaction should set regular fee by default`() {
         // Arrange
-        val amount = CryptoValue(CryptoCurrency.BTC, BigInteger.TEN)
+        val amount = CryptoValue.bitcoinFromSatoshis(10)
         val destination = "DESTINATION"
         val account = Account().apply { xpub = "XPUB" }
         val unspentOutputs = UnspentOutputs()
@@ -112,6 +66,8 @@ class TransactionSendDataManagerTest {
             .thenReturn(Observable.just(unspentOutputs))
         whenever(sendDataManager.getSpendableCoins(any(), any(), any()))
             .thenReturn(SpendableUnspentOutputs())
+        whenever(payloadDataManager.getNextChangeAddress(account))
+            .thenReturn(Observable.just("CHANGE"))
         // Act
         subject.executeTransaction(amount, destination, account, feeOptions)
             .test()
@@ -127,7 +83,7 @@ class TransactionSendDataManagerTest {
     @Test
     fun `execute bitcoin transaction with high priority fee`() {
         // Arrange
-        val amount = CryptoValue(CryptoCurrency.BTC, BigInteger.TEN)
+        val amount = CryptoValue.bitcoinFromSatoshis(10)
         val destination = "DESTINATION"
         val account = Account().apply { xpub = "XPUB" }
         val unspentOutputs = UnspentOutputs()
@@ -135,6 +91,8 @@ class TransactionSendDataManagerTest {
             .thenReturn(Observable.just(unspentOutputs))
         whenever(sendDataManager.getSpendableCoins(any(), any(), any()))
             .thenReturn(SpendableUnspentOutputs())
+        whenever(payloadDataManager.getNextChangeAddress(account))
+            .thenReturn(Observable.just("CHANGE"))
         // Act
         subject.executeTransaction(amount, destination, account, feeOptions, FeeType.Priority)
             .test()
@@ -150,7 +108,7 @@ class TransactionSendDataManagerTest {
     @Test
     fun `execute bitcoin transaction verify entire flow`() {
         // Arrange
-        val amount = CryptoValue(CryptoCurrency.BTC, BigInteger.TEN)
+        val amount = CryptoValue.bitcoinFromSatoshis(10)
         val destination = "DESTINATION"
         val change = "CHANGE"
         val account = Account().apply { xpub = "XPUB" }
@@ -183,12 +141,6 @@ class TransactionSendDataManagerTest {
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(txHash)
-        verify(sendDataManager).getUnspentOutputs("XPUB")
-        verify(sendDataManager).getSpendableCoins(
-            unspentOutputs,
-            BigInteger.TEN,
-            feeOptions.regularFee.toBigInteger()
-        )
         verify(sendDataManager).submitBtcPayment(
             spendable,
             listOf(ecKey),
@@ -202,7 +154,7 @@ class TransactionSendDataManagerTest {
     @Test
     fun `execute bitcoin cash transaction verify entire flow`() {
         // Arrange
-        val amount = CryptoValue(CryptoCurrency.BCH, BigInteger.TEN)
+        val amount = CryptoValue.bitcoinCashFromSatoshis(10)
         val destination = "DESTINATION"
         val change = "CHANGE"
         val bchAccount = GenericMetadataAccount().apply { xpub = "XPUB" }
@@ -239,12 +191,6 @@ class TransactionSendDataManagerTest {
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(txHash)
-        verify(sendDataManager).getUnspentBchOutputs("XPUB")
-        verify(sendDataManager).getSpendableCoins(
-            unspentOutputs,
-            BigInteger.TEN,
-            feeOptions.regularFee.toBigInteger()
-        )
         verify(sendDataManager).submitBchPayment(
             spendable,
             listOf(ecKey),
@@ -258,7 +204,7 @@ class TransactionSendDataManagerTest {
     @Test
     fun `execute ethereum transaction verify entire flow`() {
         // Arrange
-        val amount = CryptoValue(CryptoCurrency.ETHER, BigInteger.TEN)
+        val amount = CryptoValue.etherFromWei(10)
         val destination = "DESTINATION"
         val account: EthereumAccount = mock()
         val combinedEthModel: CombinedEthModel = mock()
@@ -298,8 +244,6 @@ class TransactionSendDataManagerTest {
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(txHash)
-        verify(ethDataManager).fetchEthAddress()
-        verify(ethDataManager).getEthResponseModel()
         verify(ethDataManager).createEthTransaction(
             BigInteger.ONE,
             destination,
@@ -307,8 +251,6 @@ class TransactionSendDataManagerTest {
             feeOptions.gasLimit.toBigInteger(),
             amount.amount
         )
-        verify(ethDataManager).pushEthTx(signedTx)
-        verify(ethDataManager).setLastTxHashObservable(eq(txHash), any())
     }
 
     private val feeOptions = FeeOptions().apply {

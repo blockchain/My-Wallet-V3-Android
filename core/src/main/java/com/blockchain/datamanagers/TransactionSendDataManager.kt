@@ -60,34 +60,38 @@ class TransactionSendDataManager(
         destination: String,
         account: Account,
         feePerKb: BigInteger
-    ): Single<String> = getSpendableCoins(account.xpub, amount, feePerKb)
-        .flatMap { spendable ->
-            getSigningKeys(account, spendable)
-                .flatMap { signingKeys ->
-                    account.getChangeAddress()
-                        .flatMap {
-                            submitBitcoinStylePayment(
-                                amount,
-                                spendable,
-                                signingKeys,
-                                destination,
-                                it,
-                                feePerKb
-                            )
-                        }
-                }
-        }
+    ): Single<String> = sendBitcoinStyleTransaction(
+        amount,
+        destination,
+        account,
+        feePerKb,
+        account.getChangeAddress()
+    )
 
     private fun sendBchTransaction(
         amount: CryptoValue,
         destination: String,
         account: GenericMetadataAccount,
         feePerKb: BigInteger
+    ): Single<String> = sendBitcoinStyleTransaction(
+        amount,
+        destination,
+        account.getHdAccount(),
+        feePerKb,
+        account.getChangeAddress()
+    )
+
+    private fun sendBitcoinStyleTransaction(
+        amount: CryptoValue,
+        destination: String,
+        account: Account,
+        feePerKb: BigInteger,
+        changeAddress: Single<String>
     ): Single<String> = getSpendableCoins(account.xpub, amount, feePerKb)
         .flatMap { spendable ->
-            getSigningKeys(account.getHdAccount(), spendable)
+            getSigningKeys(account, spendable)
                 .flatMap { signingKeys ->
-                    account.getChangeAddress()
+                    changeAddress
                         .flatMap {
                             submitBitcoinStylePayment(
                                 amount,
