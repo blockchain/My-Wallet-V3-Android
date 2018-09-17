@@ -1,9 +1,12 @@
 package com.blockchain.koin
 
+import com.blockchain.logging.NullLogger
+import com.blockchain.logging.TimberLogger
 import info.blockchain.api.blockexplorer.BlockExplorer
 import info.blockchain.wallet.contacts.Contacts
 import info.blockchain.wallet.util.PrivateKeyFactory
 import org.koin.dsl.module.applicationContext
+import piuk.blockchain.androidcore.BuildConfig
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
@@ -96,4 +99,11 @@ val coreModule = applicationContext {
     factory { PaymentService(get(), get()) }
 
     factory { SendDataManager(get(), get()) }
+
+    bean {
+        if (BuildConfig.DEBUG)
+            TimberLogger()
+        else
+            NullLogger
+    }
 }

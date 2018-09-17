@@ -6,6 +6,7 @@ import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.apiModule
+import com.blockchain.network.websocket.ConnectionEvent
 import com.blockchain.network.websocket.WebSocket
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
@@ -16,6 +17,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import info.blockchain.balance.CryptoCurrency
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should equal`
@@ -54,7 +56,7 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
             mock<WebSocket<String, String>>()
 
         givenAWebSocket(actualSocket)
-            .subscribe(
+            .updateQuoteRequest(
                 ExchangeQuoteRequest.Selling(
                     offering = 100.0.bitcoin(),
                     wanted = CryptoCurrency.ETHER,
@@ -84,14 +86,14 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
 
         givenAWebSocket(actualSocket)
             .apply {
-                subscribe(
+                updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
                         offering = 100.0.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
                         indicativeFiatSymbol = "USD"
                     )
                 )
-                subscribe(
+                updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
                         offering = 100.0.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
@@ -111,14 +113,14 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
 
         givenAWebSocket(actualSocket)
             .apply {
-                subscribe(
+                updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
                         offering = 200.0.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
                         indicativeFiatSymbol = "USD"
                     )
                 )
-                subscribe(
+                updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
                         offering = 300.0.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
@@ -196,6 +198,41 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
         subject.onNext(getStringFromResource("quotes/quote_subscription_confirmation.json"))
 
         test.values() `should equal` emptyList()
+    }
+
+    @Test
+    fun `Connected is mapped to closed because it's not yet authenticated`() {
+        givenEventExpectStatus(QuoteService.Status.Closed, ConnectionEvent.Connected)
+    }
+
+    @Test
+    fun `Authenticated is mapped`() {
+        givenEventExpectStatus(QuoteService.Status.Open, ConnectionEvent.Authenticated)
+    }
+
+    @Test
+    fun `Failure is mapped`() {
+        givenEventExpectStatus(QuoteService.Status.Error, ConnectionEvent.Failure(Throwable()))
+    }
+
+    @Test
+    fun `ClientDisconnect is mapped`() {
+        givenEventExpectStatus(QuoteService.Status.Closed, ConnectionEvent.ClientDisconnect)
+    }
+
+    private fun givenEventExpectStatus(
+        expectedStatus: QuoteService.Status,
+        connectionEvent: ConnectionEvent
+    ) {
+        val actualSocket =
+            mock<WebSocket<String, String>> {
+                on { connectionEvents } `it returns` Observable.just<ConnectionEvent>(connectionEvent)
+            }
+
+        givenAWebSocket(actualSocket)
+            .connectionStatus
+            .test()
+            .values() `should equal` listOf(expectedStatus)
     }
 
     private fun givenAWebSocket(actualSocket: WebSocket<String, String>): QuoteService =

@@ -19,6 +19,7 @@ import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.initial
 import com.blockchain.morph.exchange.mvi.toIntent
+import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.homebrew.QuoteWebSocket
 import com.blockchain.morph.homebrew.authenticate
 import com.blockchain.morph.quote.ExchangeQuoteRequest
@@ -26,7 +27,6 @@ import com.blockchain.morph.ui.R
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
 import com.blockchain.nabu.Authenticator
-import com.blockchain.network.websocket.ConnectionEvent
 import com.blockchain.network.websocket.Options
 import com.blockchain.network.websocket.autoRetry
 import com.blockchain.network.websocket.newBlockchainWebSocket
@@ -147,19 +147,11 @@ class ExchangeActivity : BaseAuthActivity() {
             .autoRetry()
             .authenticate(auth)
 
-        compositeDisposable += socket
-            .responses
-            .doOnError { Timber.e(it) }
-            .subscribe {
-                Timber.d("Server $it")
-            }
+        val quotesSocket = QuoteWebSocket(socket, moshi)
 
-        compositeDisposable += socket.connectionEvents
+        compositeDisposable += quotesSocket.connectionStatus
             .map {
-                when (it) {
-                    is ConnectionEvent.Failure -> false
-                    else -> true
-                }
+                it == QuoteService.Status.Open
             }
             .distinctUntilChanged()
             .subscribe {
@@ -178,7 +170,6 @@ class ExchangeActivity : BaseAuthActivity() {
 
         compositeDisposable += socket.openAsDisposable()
 
-        val quotesSocket = QuoteWebSocket(socket, moshi)
         quoteWebSocket = quotesSocket
         return quotesSocket
     }
@@ -233,7 +224,7 @@ class ExchangeActivity : BaseAuthActivity() {
             }
             .map { it.userDecimal }
             .doOnNext {
-                quotesSocket.subscribe(it.toExchangeQuoteRequest(configChangePersistence, currency))
+                quotesSocket.updateQuoteRequest(it.toExchangeQuoteRequest(configChangePersistence, currency))
             }
             .distinctUntilChanged()
             .map {

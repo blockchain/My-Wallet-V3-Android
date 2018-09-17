@@ -6,7 +6,24 @@ import io.reactivex.Observable
 
 interface QuoteService {
 
-    fun subscribe(quoteRequest: ExchangeQuoteRequest)
+    /**
+     * Replace the last quote request with a new request
+     */
+    fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest)
 
+    /**
+     * Stream of quotes
+     */
     val quotes: Observable<Quote>
+
+    /**
+     * Stream of connection status
+     */
+    val connectionStatus: Observable<Status>
+
+    enum class Status {
+        Open,
+        Closed,
+        Error
+    }
 }

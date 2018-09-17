@@ -9,12 +9,12 @@ import io.reactivex.Observable
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.homebrew.json.Out
+import com.blockchain.network.websocket.ConnectionEvent
 
 class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
-
     private val socket = underlyingSocket.toJsonSocket<Out, QuoteMessageJson>(moshi)
 
-    override fun subscribe(quoteRequest: ExchangeQuoteRequest) {
+    override fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest) {
         updateSocketParameters(quoteRequest.mapToSocketParameters())
     }
 
@@ -22,6 +22,16 @@ class QuoteWebSocket(underlyingSocket: WebSocket<String, String>, moshi: Moshi) 
         get() = socket.responses
             .filter { it.quote != null }
             .map { it.quote!!.currencyRatio.mapToQuote() }
+
+    override val connectionStatus: Observable<QuoteService.Status>
+        get() = socket.connectionEvents.map {
+            when (it) {
+                is ConnectionEvent.ClientDisconnect -> QuoteService.Status.Closed
+                is ConnectionEvent.Connected -> QuoteService.Status.Closed
+                is ConnectionEvent.Authenticated -> QuoteService.Status.Open
+                is ConnectionEvent.Failure -> QuoteService.Status.Error
+            }
+        }
 
     private var params: QuoteWebSocketParams? = null
 
