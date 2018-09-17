@@ -14,8 +14,7 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
         setContentView(R.layout.activity_homebrew_trade_detail)
 
         val trade = intent.extras.get("EXTRA_TRADE") as Trade
-        setupToolbar(R.id.toolbar_constraint, R.string.exchange)
-        supportActionBar?.title = trade.id
+        setupToolbar(R.id.toolbar_constraint, trade.id)
 
         // TODO: data to test layout - use real object
         status.text = trade.state

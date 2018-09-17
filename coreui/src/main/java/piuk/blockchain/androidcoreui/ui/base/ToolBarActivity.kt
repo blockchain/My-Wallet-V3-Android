@@ -35,6 +35,10 @@ abstract class ToolBarActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
+    fun setupToolbar(@IdRes toolbar: Int, title: String) {
+        setupToolbar(findViewById<Toolbar>(toolbar), title)
+    }
+
     /**
      * Applies the title to the Activity's [ActionBar]. This method is the fragment equivalent
      * of [.setupToolbar].
