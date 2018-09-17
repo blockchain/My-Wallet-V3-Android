@@ -6,14 +6,17 @@ import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.api.data.UnspentOutputs
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.ethereum.EthereumAccount
+import info.blockchain.wallet.ethereum.data.EthAddressResponse
 import info.blockchain.wallet.payload.data.Account
 import info.blockchain.wallet.payment.SpendableUnspentOutputs
 import io.reactivex.Observable
 import org.amshove.kluent.mock
+import org.apache.commons.lang3.tuple.Pair
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.crypto.DeterministicKey
 import org.junit.Before
@@ -219,7 +222,7 @@ class TransactionSendDataManagerTest {
             ethDataManager.createEthTransaction(
                 BigInteger.ONE,
                 destination,
-                feeOptions.regularFee.gasPriceToWei(),
+                feeOptions.regularFee.gweiToWei(),
                 feeOptions.gasLimit.toBigInteger(),
                 amount.amount
             )
@@ -247,10 +250,166 @@ class TransactionSendDataManagerTest {
         verify(ethDataManager).createEthTransaction(
             BigInteger.ONE,
             destination,
-            feeOptions.regularFee.gasPriceToWei(),
+            feeOptions.regularFee.gweiToWei(),
             feeOptions.gasLimit.toBigInteger(),
             amount.amount
         )
+    }
+
+    @Test
+    fun `get maximum spendable BTC with default regular fee`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.BTC
+        val account = Account().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(
+            sendDataManager.getMaximumAvailable(
+                unspentOutputs,
+                feeOptions.toSatoshis(FeeType.Regular)
+            )
+        ).thenReturn(Pair.of(BigInteger.TEN, BigInteger.TEN))
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinFromSatoshis(10))
+    }
+
+    @Test
+    fun `get maximum spendable BTC with priority fee`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.BTC
+        val account = Account().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(
+            sendDataManager.getMaximumAvailable(
+                unspentOutputs,
+                feeOptions.toSatoshis(FeeType.Priority)
+            )
+        ).thenReturn(Pair.of(BigInteger.TEN, BigInteger.TEN))
+        // Act
+        val testObserver =
+            subject.getMaximumSpendable(cryptoCurrency, account, feeOptions, FeeType.Priority)
+                .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinFromSatoshis(10))
+    }
+
+    @Test
+    fun `get maximum spendable BTC should return zero on error`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.BTC
+        val account = Account().apply { xpub = "XPUB" }
+        whenever(sendDataManager.getUnspentOutputs("XPUB"))
+            .thenReturn(Observable.error { Throwable() })
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.ZeroBtc)
+    }
+
+    @Test
+    fun `get maximum spendable BCH`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.BCH
+        val account = GenericMetadataAccount().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentBchOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(
+            sendDataManager.getMaximumAvailable(
+                unspentOutputs,
+                feeOptions.toSatoshis(FeeType.Regular)
+            )
+        )
+            .thenReturn(Pair.of(BigInteger.TEN, BigInteger.TEN))
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinCashFromSatoshis(10))
+    }
+
+    @Test
+    fun `get maximum spendable BCH should return zero on error`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.BCH
+        val account = GenericMetadataAccount().apply { xpub = "XPUB" }
+        whenever(sendDataManager.getUnspentBchOutputs("XPUB"))
+            .thenReturn(Observable.error { Throwable() })
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.ZeroBch)
+    }
+
+    @Test
+    fun `get maximum spendable ETH`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.ETHER
+        val account = EthereumAccount()
+        val combinedEthModel: CombinedEthModel = mock()
+        val addressResponse: EthAddressResponse = mock()
+        whenever(combinedEthModel.getAddressResponse()).thenReturn(addressResponse)
+        whenever(addressResponse.balance).thenReturn(BigInteger.valueOf(1_000_000_000_000_000_000L))
+        whenever(ethDataManager.fetchEthAddress())
+            .thenReturn(Observable.just(combinedEthModel))
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(
+            CryptoValue.etherFromWei(
+                1_000_000_000_000_000_000L.toBigInteger() -
+                    (feeOptions.regularFee * feeOptions.gasLimit).gweiToWei()
+            )
+        )
+    }
+
+    @Test
+    fun `get maximum spendable ETH should not return less than zero`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.ETHER
+        val account = EthereumAccount()
+        val combinedEthModel: CombinedEthModel = mock()
+        val addressResponse: EthAddressResponse = mock()
+        whenever(combinedEthModel.getAddressResponse()).thenReturn(addressResponse)
+        whenever(addressResponse.balance).thenReturn(BigInteger.ZERO)
+        whenever(ethDataManager.fetchEthAddress())
+            .thenReturn(Observable.just(combinedEthModel))
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.ZeroEth)
+    }
+
+    @Test
+    fun `get maximum spendable ETH should return zero if error fetching account`() {
+        // Arrange
+        val cryptoCurrency = CryptoCurrency.ETHER
+        val account = EthereumAccount()
+        whenever(ethDataManager.fetchEthAddress())
+            .thenReturn(Observable.error { Throwable() })
+        // Act
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.ZeroEth)
     }
 
     private val feeOptions = FeeOptions().apply {
