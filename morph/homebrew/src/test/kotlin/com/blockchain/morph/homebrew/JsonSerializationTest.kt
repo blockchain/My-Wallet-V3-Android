@@ -1,16 +1,10 @@
 package com.blockchain.morph.homebrew
 
-import com.blockchain.morph.homebrew.json.OutSerialized
 import com.blockchain.serialization.JsonSerializable
 import com.blockchain.testutils.`should be assignable from`
 import org.junit.Test
 
 class JsonSerializationTest {
-
-    @Test
-    fun `OutSerialized is serialized`() {
-        JsonSerializable::class `should be assignable from` OutSerialized::class
-    }
 
     @Test
     fun `QuoteMessageJson is serialized`() {
@@ -35,5 +29,15 @@ class JsonSerializationTest {
     @Test
     fun `Value is serialized`() {
         JsonSerializable::class `should be assignable from` Value::class
+    }
+
+    @Test
+    fun `QuoteWebSocketParams is serialized`() {
+        JsonSerializable::class `should be assignable from` QuoteWebSocketParams::class
+    }
+
+    @Test
+    fun `QuoteWebSocketUnsubscribeParams is serialized`() {
+        JsonSerializable::class `should be assignable from` QuoteWebSocketUnsubscribeParams::class
     }
 }

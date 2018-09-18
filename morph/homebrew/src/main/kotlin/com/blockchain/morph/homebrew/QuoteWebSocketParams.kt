@@ -1,6 +1,7 @@
 package com.blockchain.morph.homebrew
 
 import com.blockchain.morph.quote.ExchangeQuoteRequest
+import com.blockchain.serialization.JsonSerializable
 import info.blockchain.balance.format
 import io.reactivex.Observable
 import java.util.Locale
@@ -11,7 +12,12 @@ data class QuoteWebSocketParams(
     val fiatCurrency: String,
     val fix: String,
     val type: String = "conversionSpecification"
-)
+) : JsonSerializable
+
+data class QuoteWebSocketUnsubscribeParams(
+    val pair: String,
+    val type: String
+) : JsonSerializable
 
 fun Observable<ExchangeQuoteRequest>.mapToSocketParameters(): Observable<QuoteWebSocketParams> =
     map(ExchangeQuoteRequest::mapToSocketParameters)

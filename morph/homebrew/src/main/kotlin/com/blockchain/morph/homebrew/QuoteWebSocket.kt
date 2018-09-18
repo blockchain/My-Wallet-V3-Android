@@ -8,13 +8,15 @@ import io.reactivex.Observable
 
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.QuoteService
-import com.blockchain.morph.homebrew.json.Out
 import com.blockchain.network.websocket.ConnectionEvent
+import com.blockchain.network.websocket.WebSocketChannel
+import com.blockchain.network.websocket.channelAware
 import com.blockchain.network.websocket.openAsDisposable
 
 class QuoteWebSocket(private val underlyingSocket: WebSocket<String, String>, moshi: Moshi) : QuoteService {
 
-    private val socket = underlyingSocket.toJsonSocket<Out, QuoteMessageJson>(moshi)
+    private val socket = underlyingSocket.toJsonSocket<String, QuoteMessageJson>(moshi)
+    private val channelAware = underlyingSocket.channelAware()
 
     override fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest) {
         updateSocketParameters(quoteRequest.mapToSocketParameters())
@@ -39,11 +41,13 @@ class QuoteWebSocket(private val underlyingSocket: WebSocket<String, String>, mo
 
     private var params: QuoteWebSocketParams? = null
 
+    private var conversionChannel: WebSocketChannel<String>? = null
+
     private fun updateSocketParameters(newSocketParameters: QuoteWebSocketParams) {
         val oldParams = params
         if (oldParams == newSocketParameters) return
         params = newSocketParameters
-        oldParams?.let { socket.send(Out.UnsubscribePair(it)) }
-        socket.send(Out.Subscribe(newSocketParameters))
+        oldParams?.let { conversionChannel?.close(QuoteWebSocketUnsubscribeParams(it.pair, "conversionPair")) }
+        conversionChannel = channelAware.openChannel("conversion", newSocketParameters)
     }
 }

@@ -40,8 +40,7 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
                     bean {
                         MoshiBuilderInterceptorList(
                             listOf(
-                                get("BigDecimal"),
-                                get("homeBrew")
+                                get("BigDecimal")
                             )
                         )
                     }
