@@ -5,7 +5,7 @@ import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
 import info.blockchain.balance.CryptoCurrency
 import java.math.BigDecimal
 
-class ExchangeActivityConfigurationChangePersistence : ViewModel() {
+class ExchangeFragmentConfigurationChangePersistence : ViewModel() {
 
     var currentValue: BigDecimal = BigDecimal.ZERO
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/homebrew_nav.xml"
+    app:startDestination="@id/exchangeFragment">
+
+    <fragment
+        android:id="@+id/exchangeFragment"
+        android:name="com.blockchain.morph.ui.homebrew.exchange.ExchangeFragment"
+        android:label="ExchangeActivity" >
+        <action
+            android:id="@+id/action_exchangeFragment_to_exchangeConfirmationFragment"
+            app:destination="@id/exchangeConfirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exchangeConfirmationFragment"
+        android:name="com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationFragment"
+        android:label="ExchangeConfirmationFragment" />
+</navigation>

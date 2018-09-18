@@ -2,11 +2,13 @@ package com.blockchain.morph.ui.homebrew.exchange
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
@@ -23,6 +25,8 @@ import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.morph.ui.R
+import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationModel
+import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
 import info.blockchain.balance.CryptoValue
@@ -30,15 +34,16 @@ import info.blockchain.balance.FiatValue
 import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.formatWithUnit
 import info.blockchain.balance.withMajorValue
+import info.blockchain.wallet.ethereum.EthereumAccount
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.ext.android.inject
-import piuk.blockchain.androidcore.utils.helperfunctions.consume
-import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
+import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
+import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
 import timber.log.Timber
 import java.math.BigDecimal
@@ -46,22 +51,22 @@ import java.util.Locale
 
 // TODO: AND-1363 This class has too much in it. Need to extract and place in
 // :morph:homebrew with interfaces in :morph:common
-class ExchangeActivity : BaseAuthActivity() {
+internal class ExchangeFragment : Fragment() {
 
     companion object {
 
-        private var Currency = "CURRENCY"
+        private const val ARGUMENT_CURRENCY = "ARGUMENT_CURRENCY"
 
-        fun intent(context: Context, fiatCurrency: String) =
-            Intent(context, ExchangeActivity::class.java).apply {
-                putExtra(Currency, fiatCurrency)
-            }
+        fun bundleArgs(fiatCurrency: String): Bundle = Bundle().apply {
+            putString(ARGUMENT_CURRENCY, fiatCurrency)
+        }
     }
 
     private val compositeDisposable = CompositeDisposable()
     private val dialogDisposable = CompositeDisposable()
+    private val activityListener: HomebrewHostActivityListener by ParentActivityDelegate(this)
 
-    private lateinit var configChangePersistence: ExchangeActivityConfigurationChangePersistence
+    private lateinit var configChangePersistence: ExchangeFragmentConfigurationChangePersistence
 
     private lateinit var currency: String
 
@@ -80,27 +85,33 @@ class ExchangeActivity : BaseAuthActivity() {
 
     private var snackbar: Snackbar? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_homebrew_exchange)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = container?.inflate(R.layout.fragment_homebrew_exchange)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activityListener.setToolbarTitle(R.string.morph_new_exchange)
 
         configChangePersistence = ViewModelProviders.of(this)
-            .get(ExchangeActivityConfigurationChangePersistence::class.java)
+            .get(ExchangeFragmentConfigurationChangePersistence::class.java)
 
-        currency = intent.getStringExtra(Currency) ?: "USD"
+        currency = arguments?.getString(ARGUMENT_CURRENCY) ?: "USD"
 
-        largeValueLeftHandSide = findViewById(R.id.largeValueLeftHandSide)
-        largeValue = findViewById(R.id.largeValue)
-        largeValueRightHandSide = findViewById(R.id.largeValueRightHandSide)
-        smallValue = findViewById(R.id.smallValue)
-        keyboard = findViewById(R.id.numericKeyboard)
-        selectSendAccountButton = findViewById(R.id.select_from_account_button)
-        selectReceiveAccountButton = findViewById(R.id.select_to_account_button)
-        exchangeButton = findViewById(R.id.exchange_action_button)
+        largeValueLeftHandSide = view.findViewById(R.id.largeValueLeftHandSide)
+        largeValue = view.findViewById(R.id.largeValue)
+        largeValueRightHandSide = view.findViewById(R.id.largeValueRightHandSide)
+        smallValue = view.findViewById(R.id.smallValue)
+        keyboard = view.findViewById(R.id.numericKeyboard)
+        selectSendAccountButton = view.findViewById(R.id.select_from_account_button)
+        selectReceiveAccountButton = view.findViewById(R.id.select_to_account_button)
+        exchangeButton = view.findViewById(R.id.exchange_action_button)
 
         selectSendAccountButton.setOnClickListener {
             AccountChooserActivity.startForResult(
-                this@ExchangeActivity,
+                requireActivity(),
                 AccountMode.Exchange,
                 REQUEST_CODE_CHOOSE_SENDING_ACCOUNT,
                 R.string.from
@@ -108,7 +119,7 @@ class ExchangeActivity : BaseAuthActivity() {
         }
         selectReceiveAccountButton.setOnClickListener {
             AccountChooserActivity.startForResult(
-                this@ExchangeActivity,
+                requireActivity(),
                 AccountMode.Exchange,
                 REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT,
                 R.string.to
@@ -116,10 +127,23 @@ class ExchangeActivity : BaseAuthActivity() {
         }
         // TODO: Temporary to see the full exchange flow UI
         exchangeButton.setOnClickListener {
-            val intent = Intent(this, ExchangeConfirmationActivity::class.java)
-            startActivity(intent)
+            val sendingCurrency = CryptoValue.etherFromMajor(BigDecimal(1.2345))
+            val receivingCurrency = CryptoValue.bitcoinFromMajor(BigDecimal(1.2345))
+            val value = FiatValue.fromMajor("USD", BigDecimal(1234))
+                .toStringWithSymbol(Locale.getDefault())
+
+            val confirmationModel = ExchangeConfirmationModel(
+                value,
+                CryptoValue.etherFromMajor(BigDecimal(0.12345)).formatOrSymbolForZero(),
+                receivingCurrency.formatForExchange(),
+                receivingCurrency.currency,
+                sendingCurrency.formatForExchange(),
+                sendingCurrency.currency,
+                EthereumAccount().apply { label = "My Ether Account" }
+            )
+
+            activityListener.launchConfirmation(confirmationModel)
         }
-        setupToolbar(R.id.toolbar_constraint, R.string.morph_new_exchange)
     }
 
     override fun onResume() {
@@ -148,7 +172,7 @@ class ExchangeActivity : BaseAuthActivity() {
                     snackbar?.dismiss()
                 } else {
                     snackbar = Snackbar.make(
-                        findViewById(android.R.id.content),
+                        requireActivity().findViewById(android.R.id.content),
                         R.string.connection_error,
                         Snackbar.LENGTH_INDEFINITE
                     ).apply {
@@ -198,17 +222,25 @@ class ExchangeActivity : BaseAuthActivity() {
             .doOnNext {
                 configChangePersistence.currentValue = it.userDecimal
                 if (it.shake) {
-                    val animShake = AnimationUtils.loadAnimation(this, R.anim.fingerprint_failed_shake)
+                    val animShake = AnimationUtils.loadAnimation(
+                        requireContext(),
+                        R.anim.fingerprint_failed_shake
+                    )
                     largeValue.startAnimation(animShake)
                     largeValueRightHandSide.startAnimation(animShake)
                     largeValueLeftHandSide.startAnimation(animShake)
                 }
                 largeValueRightHandSide.invisibleIf(it.decimalCursor == 0)
-                findViewById<View>(R.id.numberBackSpace).isEnabled = it.previous != null
+                view!!.findViewById<View>(R.id.numberBackSpace).isEnabled = it.previous != null
             }
             .map { it.userDecimal }
             .doOnNext {
-                quotesSocket.updateQuoteRequest(it.toExchangeQuoteRequest(configChangePersistence, currency))
+                quotesSocket.updateQuoteRequest(
+                    it.toExchangeQuoteRequest(
+                        configChangePersistence,
+                        currency
+                    )
+                )
             }
             .distinctUntilChanged()
             .map {
@@ -226,8 +258,6 @@ class ExchangeActivity : BaseAuthActivity() {
         dialogDisposable.clear()
         super.onPause()
     }
-
-    override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -249,7 +279,7 @@ class ExchangeActivity : BaseAuthActivity() {
 }
 
 private fun BigDecimal.toExchangeQuoteRequest(
-    field: ExchangeActivityConfigurationChangePersistence,
+    field: ExchangeFragmentConfigurationChangePersistence,
     currency: String
 ): ExchangeQuoteRequest {
     return when (field.fieldMode) {

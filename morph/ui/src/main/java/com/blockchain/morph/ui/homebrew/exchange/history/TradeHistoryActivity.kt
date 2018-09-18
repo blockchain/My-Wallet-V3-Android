@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.R.layout.activity_homebrew_trade_history
-import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity
+import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity
 import com.blockchain.morph.ui.homebrew.exchange.detail.HomebrewTradeDetailActivity
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
 import kotlinx.android.synthetic.main.activity_homebrew_trade_history.*
@@ -20,12 +20,7 @@ class TradeHistoryActivity : BaseAuthActivity() {
         setContentView(activity_homebrew_trade_history)
 
         button_new_exchange.setOnClickListener {
-            startActivity(
-                ExchangeActivity.intent(
-                    this,
-                    "GBP"
-                )
-            )
+            HomebrewNavHostActivity.start(this)
         }
 
         setupToolbar(R.id.toolbar_constraint, R.string.exchange)

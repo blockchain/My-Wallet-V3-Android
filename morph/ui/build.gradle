@@ -42,6 +42,8 @@ dependencies {
     implementation Libraries.kotlin
 
     api Libraries.appCompat
+    implementation Libraries.navigationControllerCore
+    implementation Libraries.navigationControllerFragments
 
     api Libraries.lifecycleViewModel
     api Libraries.lifecycleExtensions

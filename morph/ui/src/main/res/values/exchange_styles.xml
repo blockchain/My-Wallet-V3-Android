@@ -13,7 +13,7 @@
 
     <style name="ExchangeButton" parent="@android:style/Widget.Button">
         <item name="android:fontFamily">Montserrat</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="ExchangeButton.SendReceive">

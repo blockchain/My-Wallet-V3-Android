@@ -26,7 +26,7 @@ import com.blockchain.kycui.navhost.KycNavHostActivity;
 import com.blockchain.kycui.settings.KycStatusPreference;
 import com.blockchain.kycui.settings.SettingsKycState;
 import com.blockchain.kycui.status.KycStatusActivity;
-import com.blockchain.morph.ui.homebrew.exchange.ExchangeActivity;
+import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.models.Country;
@@ -870,7 +870,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
     @Override
     public void launchHomebrew(String defaultCurrency) {
-        startActivity(ExchangeActivity.Companion.intent(requireContext(), defaultCurrency));
+        HomebrewNavHostActivity.start(requireContext(), defaultCurrency);
         requireActivity().finish();
     }
 

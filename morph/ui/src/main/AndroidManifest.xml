@@ -10,14 +10,17 @@
             android:name=".detail.TradeDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".homebrew.exchange.ExchangeActivity"
+            android:name=".homebrew.exchange.history.TradeHistoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".homebrew.exchange.ExchangeConfirmationActivity"
+            android:name=".homebrew.exchange.ExchangeLockedActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".homebrew.exchange.history.TradeHistoryActivity" />
-        <activity android:name=".homebrew.exchange.ExchangeLockedActivity" />
-        <activity android:name=".homebrew.exchange.detail.HomebrewTradeDetailActivity" />
+        <activity
+            android:name=".homebrew.exchange.detail.HomebrewTradeDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".homebrew.exchange.host.HomebrewNavHostActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>
