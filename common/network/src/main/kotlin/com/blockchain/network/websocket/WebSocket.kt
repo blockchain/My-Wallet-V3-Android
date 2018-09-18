@@ -42,11 +42,14 @@ interface WebSocketSend<in OUTGOING> {
     fun send(message: OUTGOING)
 }
 
-interface WebSocketSendReceive<in OUTGOING, INCOMING> : WebSocketSend<OUTGOING> {
+interface WebSocketReceive<INCOMING> {
     val responses: Observable<INCOMING>
 }
 
+interface WebSocketSendReceive<in OUTGOING, INCOMING> : WebSocketSend<OUTGOING>, WebSocketReceive<INCOMING>
+
 interface WebSocket<in OUTGOING, INCOMING> : WebSocketConnection, WebSocketSendReceive<OUTGOING, INCOMING> {
+
     interface Listener<in INCOMING> {
         fun onOpen()
         fun onMessage(message: INCOMING)
@@ -63,6 +66,8 @@ interface WebSocket<in OUTGOING, INCOMING> : WebSocketConnection, WebSocketSendR
         }
     }
 }
+
+typealias StringWebSocket = WebSocket<String, String>
 
 /**
  * Combine a [WebSocketSendReceive] implementation with [WebSocketConnection] implementation
