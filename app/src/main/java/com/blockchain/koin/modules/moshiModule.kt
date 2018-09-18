@@ -11,8 +11,7 @@ val moshiModule = applicationContext {
                 get("BigDecimal"),
                 get("nabu"),
                 get("buySell"),
-                get("kyc"),
-                get("homeBrew")
+                get("kyc")
             )
         )
     }
