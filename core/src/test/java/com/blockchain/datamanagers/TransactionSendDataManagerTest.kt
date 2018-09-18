@@ -75,7 +75,6 @@ class TransactionSendDataManagerTest {
         subject.executeTransaction(amount, destination, account, feeOptions)
             .test()
         // Assert
-        verify(sendDataManager).getUnspentOutputs("XPUB")
         verify(sendDataManager).getSpendableCoins(
             unspentOutputs,
             amount.amount,
@@ -100,7 +99,6 @@ class TransactionSendDataManagerTest {
         subject.executeTransaction(amount, destination, account, feeOptions, FeeType.Priority)
             .test()
         // Assert
-        verify(sendDataManager).getUnspentOutputs("XPUB")
         verify(sendDataManager).getSpendableCoins(
             unspentOutputs,
             BigInteger.TEN,
