@@ -190,5 +190,54 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/receive"
         tools:text="My Wallet" />
+    <TextView
+        android:id="@+id/trade_id_title"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_gray_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_to_title"
+        android:text="@string/morph_order_id_title" />
+
+    <TextView
+        android:id="@+id/trade_id"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="2dp"
+        android:background="@color/trade_row_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:textColor="@color/exchange_text_dark_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/send_to"
+        tools:text="ede39566-1f0d-4e48-96fa-b558b70e46b7" />
+
+    <TextView
+        android:id="@+id/status_detail_textView"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="@string/status_inprogress_detail"
+        android:textAlignment="center"
+        android:textColor="@color/exchange_text_gray_color"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trade_id"
+        tools:text="Thanks for placing your trade! Funds will usually reach your wallet within 2 hours and we’ll wend you a notification when that happens. Keep track of your trade’s progress in the Order History area." />
 
 </android.support.constraint.ConstraintLayout>

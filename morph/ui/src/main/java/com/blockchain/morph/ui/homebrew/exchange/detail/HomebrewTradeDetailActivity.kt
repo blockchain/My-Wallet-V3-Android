@@ -14,13 +14,14 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
         setContentView(R.layout.activity_homebrew_trade_detail)
 
         val trade = intent.extras.get("EXTRA_TRADE") as Trade
-        setupToolbar(R.id.toolbar_constraint, trade.id)
+        setupToolbar(R.id.toolbar_constraint, R.string.order_detail)
 
         // TODO: data to test layout - use real object
         status.text = trade.state
         value.text = trade.depositQuantity
         receive.text = trade.quantity
         fees.text = trade.price
+        trade_id.text = trade.id
     }
 
     override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }

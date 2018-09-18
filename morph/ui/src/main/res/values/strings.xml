@@ -74,11 +74,17 @@
     <string name="receive">Receive</string>
     <string name="fees">Fees</string>
     <string name="value">Value</string>
+    <string name="order_detail">Order Detail</string>
     <string name="make_a_new_exchange">Make a New Exchange</string>
     <string name="order_history">Order History</string>
     <string name="no_orders_found">No Orders Found</string>
     <string name="done">Done</string>
     <string name="confirm_exchange">Confirm Exchange</string>
     <string name="exchange_locked">Exchange Locked</string>
+    <string name="status_inprogress_detail">Thanks for placing your trade! Funds will usually reach your wallet within 2 hours and we’ll wend you a notification when that happens. Keep track of your trade’s progress in the Order History area.</string>
+    <string name="status_failed_detail">We have refunded your wallet after the trade failed. Please return to the exchange tab to start a new trade.</string>
+    <string name="status_refund_inprogress_detail">We are now processing a refund for any funds broadcast minus the network fee. Please check your Order History to check the refund status.</string>
+    <string name="status_refunded_detail">Exchange Locked</string>
+    <string name="status_expired_detail">Your trade has expired. Any funds broadcast from your wallet will be returned minus the network fee. Contact User Support with your Order ID to request a refund.</string>
 
 </resources>
