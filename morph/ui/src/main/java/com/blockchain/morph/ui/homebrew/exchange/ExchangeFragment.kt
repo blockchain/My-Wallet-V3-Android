@@ -1,10 +1,9 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,10 +21,8 @@ import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.initial
 import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
-import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.morph.ui.R
-import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationModel
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
@@ -34,13 +31,11 @@ import info.blockchain.balance.FiatValue
 import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.formatWithUnit
 import info.blockchain.balance.withMajorValue
-import info.blockchain.wallet.ethereum.EthereumAccount
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
@@ -79,11 +74,17 @@ internal class ExchangeFragment : Fragment() {
     private lateinit var selectReceiveAccountButton: Button
     private lateinit var exchangeButton: Button
 
-    private val quoteServiceFactory: QuoteServiceFactory by inject()
-
     private var quoteService: QuoteService? = null
 
-    private var snackbar: Snackbar? = null
+    private lateinit var exchangeModel: ExchangeModel
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val provider = (context as? ExchangeViewModelProvider)
+            ?: throw Exception("Host activity must support ExchangeViewModelProvider")
+        exchangeModel = provider.exchangeViewModel
+        configChangePersistence = exchangeModel.configChangePersistence
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,9 +95,6 @@ internal class ExchangeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activityListener.setToolbarTitle(R.string.morph_new_exchange)
-
-        configChangePersistence = ViewModelProviders.of(this)
-            .get(ExchangeFragmentConfigurationChangePersistence::class.java)
 
         currency = arguments?.getString(ARGUMENT_CURRENCY) ?: "USD"
 
@@ -125,24 +123,8 @@ internal class ExchangeFragment : Fragment() {
                 R.string.to
             )
         }
-        // TODO: Temporary to see the full exchange flow UI
         exchangeButton.setOnClickListener {
-            val sendingCurrency = CryptoValue.etherFromMajor(BigDecimal(1.2345))
-            val receivingCurrency = CryptoValue.bitcoinFromMajor(BigDecimal(1.2345))
-            val value = FiatValue.fromMajor("USD", BigDecimal(1234))
-                .toStringWithSymbol(Locale.getDefault())
-
-            val confirmationModel = ExchangeConfirmationModel(
-                value,
-                CryptoValue.etherFromMajor(BigDecimal(0.12345)).formatOrSymbolForZero(),
-                receivingCurrency.formatForExchange(),
-                receivingCurrency.currency,
-                sendingCurrency.formatForExchange(),
-                sendingCurrency.currency,
-                EthereumAccount().apply { label = "My Ether Account" }
-            )
-
-            activityListener.launchConfirmation(confirmationModel)
+            activityListener.launchConfirmation()
         }
     }
 
@@ -151,58 +133,23 @@ internal class ExchangeFragment : Fragment() {
         updateMviDialog()
     }
 
-    private fun newQuoteWebSocket(): QuoteService {
-        val quotesService = quoteServiceFactory.createQuoteService()
-
-        compositeDisposable += listenForConnectionErrors(quotesService)
-
-        compositeDisposable += quotesService.openAsDisposable()
-
-        return quotesService
-    }
-
-    private fun listenForConnectionErrors(quotesSocket: QuoteService) =
-        quotesSocket.connectionStatus
-            .map {
-                it != QuoteService.Status.Error
-            }
-            .distinctUntilChanged()
-            .subscribe {
-                if (it) {
-                    snackbar?.dismiss()
-                } else {
-                    snackbar = Snackbar.make(
-                        requireActivity().findViewById(android.R.id.content),
-                        R.string.connection_error,
-                        Snackbar.LENGTH_INDEFINITE
-                    ).apply {
-                        show()
-                    }
-                }
-            }
-
     private fun updateMviDialog() {
         dialogDisposable.clear()
-        val newQuoteService = newQuoteWebSocket()
+        val newQuoteService = exchangeModel.quoteService
         quoteService = newQuoteService
 
-        compositeDisposable += newQuoteService.quotes
-            .subscribeBy {
-                Timber.d("Quote: $it")
-            }
-
-        dialogDisposable += ExchangeDialog(
+        exchangeModel.newDialog(ExchangeDialog(
             Observable.merge(
                 allTextUpdates(newQuoteService),
                 newQuoteService.quotes.map(Quote::toIntent)
             ),
             initial(currency, configChangePersistence.from, configChangePersistence.to)
-        ).viewModel
-            .distinctUntilChanged()
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { Timber.e(it) }
-            .subscribeBy {
+        ))
 
+        dialogDisposable += exchangeModel
+            .exchangeViewModels
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
                 Timber.d(it.toString())
 
                 val parts = it.from.fiatValue.toParts(Locale.getDefault())

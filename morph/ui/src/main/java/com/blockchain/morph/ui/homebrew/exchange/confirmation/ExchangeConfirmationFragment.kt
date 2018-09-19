@@ -1,8 +1,8 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +11,24 @@ import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeLockedActivity
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
-import com.blockchain.serialization.JsonSerializableAccount
 import com.blockchain.ui.extensions.throttledClicks
-import info.blockchain.balance.CryptoCurrency
-import kotlinx.android.parcel.Parcelize
+import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
+import info.blockchain.balance.formatWithUnit
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import timber.log.Timber
+import java.util.Locale
 
 class ExchangeConfirmationFragment :
     BaseMvpFragment<ExchangeConfirmationView, ExchangeConfirmationPresenter>(),
@@ -37,10 +45,6 @@ class ExchangeConfirmationFragment :
     private lateinit var receiveTextView: TextView
     private lateinit var sendToTextView: TextView
 
-    private val exchangeConfirmationModel by unsafeLazy {
-        arguments!!.getParcelable<ExchangeConfirmationModel>(ARGUMENT_CONFIRMATION_MODEL)
-    }
-
     override val clickEvents by unsafeLazy { sendButton.throttledClicks() }
 
     override fun onCreateView(
@@ -48,6 +52,16 @@ class ExchangeConfirmationFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = container?.inflate(R.layout.activity_homebrew_trade_confirmation)
+
+    private lateinit var exchangeModel: ExchangeModel
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        val provider = (context as? ExchangeViewModelProvider)
+            ?: throw Exception("Host activity must support ExchangeViewModelProvider")
+        exchangeModel = provider.exchangeViewModel
+        Timber.d("The view model is $exchangeModel")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,21 +75,40 @@ class ExchangeConfirmationFragment :
 
         activityListener.setToolbarTitle(R.string.confirm_exchange)
 
-        renderUi()
-
         onViewReady()
     }
 
-    private fun renderUi() {
-        with(exchangeConfirmationModel) {
-            toButton.setBackgroundResource(receivingCurrency.colorRes())
-            toButton.text = receiving
-            fromButton.setBackgroundResource(sendingCurrency.colorRes())
-            fromButton.text = sending
-            valueTextView.text = value
-            feesTextView.text = fees
-            receiveTextView.text = receiving
-            sendToTextView.text = accountItem.toString()
+    private var compositeDisposable = CompositeDisposable()
+
+    override fun onResume() {
+        super.onResume()
+        compositeDisposable += exchangeModel
+            .exchangeViewModels
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                ExchangeConfirmationViewModel(
+                    sending = it.from.cryptoValue,
+                    receiving = it.to.cryptoValue,
+                    value = it.to.fiatValue
+                )
+            }
+            .subscribeBy {
+                renderUi(it)
+            }
+    }
+
+    private fun renderUi(viewModel: ExchangeConfirmationViewModel) {
+        val locale = Locale.getDefault()
+        with(viewModel) {
+            fromButton.setBackgroundResource(sending.currency.colorRes())
+            fromButton.text = sending.formatWithUnit(locale)
+            toButton.setBackgroundResource(receiving.currency.colorRes())
+            val receivingCryptoValue = receiving.formatWithUnit(locale)
+            toButton.text = receivingCryptoValue
+            receiveTextView.text = receivingCryptoValue
+            valueTextView.text = value.toStringWithSymbol(locale)
+            feesTextView.text = "TODO"
+            sendToTextView.text = "TODO"
         }
     }
 
@@ -88,24 +121,10 @@ class ExchangeConfirmationFragment :
     override fun createPresenter(): ExchangeConfirmationPresenter = presenter
 
     override fun getMvpView(): ExchangeConfirmationView = this
-
-    companion object {
-        private const val ARGUMENT_CONFIRMATION_MODEL = "ARGUMENT_CONFIRMATION_MODEL"
-
-        fun bundleArgs(exchangeConfirmationModel: ExchangeConfirmationModel): Bundle =
-            Bundle().apply {
-                putParcelable(ARGUMENT_CONFIRMATION_MODEL, exchangeConfirmationModel)
-            }
-    }
 }
 
-@Parcelize
-data class ExchangeConfirmationModel(
-    val value: String,
-    val fees: String,
-    val sending: String,
-    val sendingCurrency: CryptoCurrency,
-    val receiving: String,
-    val receivingCurrency: CryptoCurrency,
-    val accountItem: JsonSerializableAccount
-) : Parcelable
+class ExchangeConfirmationViewModel(
+    val value: FiatValue,
+    val sending: CryptoValue,
+    val receiving: CryptoValue
+)

@@ -53,6 +53,7 @@ dependencies {
     implementation Libraries.rxKotlin
 
     implementation Libraries.koin
+    implementation Libraries.koinAndroidArchitecture
 
     implementation(Libraries.retrofit) { exclude module: 'okhttp' }
 

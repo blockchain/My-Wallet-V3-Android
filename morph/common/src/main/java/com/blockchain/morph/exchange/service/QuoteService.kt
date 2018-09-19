@@ -5,22 +5,27 @@ import com.blockchain.morph.quote.ExchangeQuoteRequest
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 
-interface QuoteService {
-
-    /**
-     * Replace the last quote request with a new request
-     */
-    fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest)
-
-    /**
-     * Start the service. On [Disposable.dispose] it will close.
-     */
-    fun openAsDisposable(): Disposable
+interface ReadOnlyQuoteStream {
 
     /**
      * Stream of quotes
      */
     val quotes: Observable<Quote>
+}
+
+interface QuoteStream : ReadOnlyQuoteStream {
+    /**
+     * Replace the last quote request with a new request
+     */
+    fun updateQuoteRequest(quoteRequest: ExchangeQuoteRequest)
+}
+
+interface QuoteService : QuoteStream {
+
+    /**
+     * Start the service. On [Disposable.dispose] it will close.
+     */
+    fun openAsDisposable(): Disposable
 
     /**
      * Stream of connection status

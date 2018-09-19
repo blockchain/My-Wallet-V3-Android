@@ -1,6 +1,7 @@
 package com.blockchain.koin
 
 import android.app.Activity
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationPresenter
 import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryPresenter
 import com.blockchain.morph.ui.regulation.stateselection.UsStateSelectionActivity
@@ -36,6 +37,12 @@ val morphUiModule = applicationContext {
         factory { ExchangeConfirmationPresenter() }
 
         factory { TradeHistoryPresenter(get(), get()) }
+
+        context("Quotes") {
+
+            factory { ExchangeModel(get()) }
+        }
     }
+
     apply { registerDebug() }
 }
