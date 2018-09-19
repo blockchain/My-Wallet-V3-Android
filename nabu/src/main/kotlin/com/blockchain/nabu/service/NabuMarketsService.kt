@@ -5,6 +5,7 @@ import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.api.NabuMarkets
 import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.PeriodicLimit
+import com.blockchain.nabu.api.TradeJson
 import com.blockchain.nabu.api.TradeRequest
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
@@ -21,7 +22,12 @@ class NabuMarketsService internal constructor(
                 tradingPair.pairCodeUpper,
                 it.authHeader
             ).map {
-                TradingConfig(minOrderSize = CryptoValue.fromMajor(tradingPair.from, it.minOrderSize))
+                TradingConfig(
+                    minOrderSize = CryptoValue.fromMajor(
+                        tradingPair.from,
+                        it.minOrderSize
+                    )
+                )
             }
         }
     }
@@ -48,23 +54,15 @@ class NabuMarketsService internal constructor(
     ): Single<NabuTransaction> {
         return authenticator.authenticate {
             nabuMarkets.executeTrade(tradeRequest, it.authHeader)
-        }.map {
-            val coinPair = CoinPair.fromPairCode(it.pair.replace("-", "_"))
+        }.map { it.map() }
+    }
 
-            NabuTransaction(
-                id = it.id,
-                createdAt = it.createdAt,
-                pair = coinPair,
-                rate = it.price,
-                refundAddress = it.refundAddress,
-                depositAddress = it.depositAddress,
-                deposit = CryptoValue.fromMajor(coinPair.from, it.depositQuantity),
-                withdrawalAddress = it.withdrawalAddress,
-                withdrawal = CryptoValue.fromMajor(coinPair.to, it.withdrawalQuantity),
-                state = it.state,
-                hashOut = it.withdrawalTxHash
-            )
-        }
+    fun getTrades(): Single<List<NabuTransaction>> {
+        return authenticator.authenticate {
+            nabuMarkets.getTrades(it.authHeader)
+        }.flattenAsObservable { it }
+            .map { it.map() }
+            .toList()
     }
 }
 
@@ -74,3 +72,21 @@ private fun PeriodicLimit.toFiat(currencyCode: String) =
         available = FiatValue.fromMajor(currencyCode, available),
         used = FiatValue.fromMajor(currencyCode, used)
     )
+
+private fun TradeJson.map(): NabuTransaction {
+    val coinPair = CoinPair.fromPairCode(this.pair.replace("-", "_"))
+
+    return NabuTransaction(
+        id = this.id,
+        createdAt = this.createdAt,
+        pair = coinPair,
+        rate = this.price,
+        refundAddress = this.refundAddress,
+        depositAddress = this.depositAddress,
+        deposit = CryptoValue.fromMajor(coinPair.from, this.depositQuantity),
+        withdrawalAddress = this.withdrawalAddress,
+        withdrawal = CryptoValue.fromMajor(coinPair.to, this.withdrawalQuantity),
+        state = this.state,
+        hashOut = this.withdrawalTxHash
+    )
+}

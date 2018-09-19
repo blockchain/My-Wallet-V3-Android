@@ -14,7 +14,7 @@ import info.blockchain.wallet.shapeshift.data.Trade
 import kotlinx.android.synthetic.main.item_shapeshift_trade.view.*
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
-import piuk.blockchain.android.util.DateUtil
+import piuk.blockchain.androidcoreui.utils.DateUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.PrefsUtil

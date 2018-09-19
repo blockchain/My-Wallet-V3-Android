@@ -4,6 +4,7 @@ import com.blockchain.kycui.extensions.fetchNabuToken
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.models.NabuSessionTokenResponse
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 
 internal class NabuAuthenticator(
@@ -20,5 +21,6 @@ internal class NabuAuthenticator(
         metadataManager.fetchNabuToken()
             .flatMap { tokenResponse ->
                 nabuDataManager.authenticate(tokenResponse, singleFunction)
+                    .subscribeOn(Schedulers.io())
             }
 }

@@ -9,6 +9,9 @@ import java.math.BigDecimal
 
 internal class TradeAdapter(private val trade: Trade) : MorphTrade {
 
+    override val timestamp: Long
+        get() = trade.timestamp
+
     override val hashOut: String?
         get() = trade.hashOut
 
@@ -54,10 +57,14 @@ internal fun Trade.STATUS?.map(): MorphTrade.Status =
 
 internal fun MorphTrade.Status.map(): Trade.STATUS? =
     when (this) {
-        MorphTrade.Status.UNKNOWN -> null
         MorphTrade.Status.COMPLETE -> Trade.STATUS.COMPLETE
         MorphTrade.Status.FAILED -> Trade.STATUS.FAILED
         MorphTrade.Status.NO_DEPOSITS -> Trade.STATUS.NO_DEPOSITS
         MorphTrade.Status.RECEIVED -> Trade.STATUS.RECEIVED
         MorphTrade.Status.RESOLVED -> Trade.STATUS.RESOLVED
+        MorphTrade.Status.UNKNOWN,
+        MorphTrade.Status.REFUNDED,
+        MorphTrade.Status.REFUND_IN_PROGRESS,
+        MorphTrade.Status.EXPIRED,
+        MorphTrade.Status.IN_PROGRESS -> null
     }

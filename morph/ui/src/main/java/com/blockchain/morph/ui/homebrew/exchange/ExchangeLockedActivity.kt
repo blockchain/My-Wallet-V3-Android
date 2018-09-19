@@ -17,6 +17,7 @@ class ExchangeLockedActivity : BaseAuthActivity() {
 
         button_done.setOnClickListener {
             val intent = Intent(this, TradeHistoryActivity::class.java)
+            // TODO: This is killing the entire activity stack. Not what we want.
             intent.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()

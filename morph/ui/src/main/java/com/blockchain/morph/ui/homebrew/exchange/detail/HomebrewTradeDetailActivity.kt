@@ -2,6 +2,7 @@ package com.blockchain.morph.ui.homebrew.exchange.detail
 
 import android.os.Bundle
 import com.blockchain.morph.ui.R
+import com.blockchain.morph.ui.homebrew.exchange.extensions.toStatusString
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
 import kotlinx.android.synthetic.main.activity_homebrew_trade_detail.*
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
@@ -17,7 +18,7 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
         setupToolbar(R.id.toolbar_constraint, R.string.order_detail)
 
         // TODO: data to test layout - use real object
-        status.text = trade.state
+        status.text = trade.state.toStatusString(this)
         value.text = trade.depositQuantity
         receive.text = trade.quantity
         fees.text = trade.price

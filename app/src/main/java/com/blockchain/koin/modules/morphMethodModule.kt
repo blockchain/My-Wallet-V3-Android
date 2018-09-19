@@ -1,7 +1,6 @@
 package com.blockchain.koin.modules
 
 import android.app.Activity
-import android.content.Intent
 import android.support.annotation.VisibleForTesting
 import com.blockchain.kycui.navhost.KycNavHostActivity
 import com.blockchain.kycui.settings.KycStatusHelper
@@ -58,9 +57,7 @@ val morphMethodModule = applicationContext {
                                 ShapeShiftActivity.start(activity)
                             }
                             MorphMethodType.HomeBrew -> { activity: Activity ->
-                                activity.startActivity(
-                                    Intent(activity, TradeHistoryActivity::class.java)
-                                )
+                                TradeHistoryActivity.start(activity)
                             }
                             MorphMethodType.Kyc -> { activity: Activity ->
                                 KycNavHostActivity.start(activity)

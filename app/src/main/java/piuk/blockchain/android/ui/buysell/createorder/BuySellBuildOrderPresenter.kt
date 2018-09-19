@@ -38,7 +38,7 @@ import piuk.blockchain.androidbuysell.models.coinify.ReviewState
 import piuk.blockchain.androidbuysell.models.coinify.TradeInProgress
 import piuk.blockchain.androidbuysell.models.coinify.Trader
 import piuk.blockchain.androidbuysell.services.ExchangeService
-import piuk.blockchain.androidbuysell.utils.fromIso8601
+import com.blockchain.nabu.extensions.fromIso8601
 import piuk.blockchain.androidcore.data.currency.BTCDenomination
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager

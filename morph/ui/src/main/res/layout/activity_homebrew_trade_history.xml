@@ -48,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="#FFDDDDDD"
+        android:background="@color/nabu_divider_grey"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         android:id="@+id/divider2"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="#FFDDDDDD"
+        android:background="@color/nabu_divider_grey"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,14 +72,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_homebrew_history"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:visibility="visible"
-            tools:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <TextView
             android:id="@+id/emptyState"
@@ -88,19 +92,9 @@
             android:layout_gravity="center"
             android:text="@string/no_orders_found"
             android:visibility="invisible"
-            tools:visibility="visible"
-            tools:text="No Orders Found"/>
-
-        <ProgressBar
-            android:id="@+id/loadingIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
+            tools:text="No Orders Found"
             tools:visibility="visible" />
 
     </FrameLayout>
-
-
 
 </android.support.constraint.ConstraintLayout>

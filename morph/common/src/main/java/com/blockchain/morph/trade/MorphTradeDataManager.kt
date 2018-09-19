@@ -8,6 +8,8 @@ interface MorphTradeDataManager {
 
     fun findTrade(depositAddress: String): Single<MorphTrade>
 
+    fun getTrades(): Single<List<MorphTrade>>
+
     fun updateTrade(
         orderId: String,
         newStatus: MorphTrade.Status,

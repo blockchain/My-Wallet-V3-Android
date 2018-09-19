@@ -87,4 +87,15 @@
     <string name="status_refunded_detail">Exchange Locked</string>
     <string name="status_expired_detail">Your trade has expired. Any funds broadcast from your wallet will be returned minus the network fee. Contact User Support with your Order ID to request a refund.</string>
 
+    <!-- ORDER STATUS -->
+    <string name="morph_status_in_progress">In progress</string>
+    <string name="morph_status_complete">Complete</string>
+    <string name="morph_status_expired">Expired</string>
+    <string name="morph_status_failed">Failed</string>
+    <string name="morph_status_refunded">Refunded</string>
+    <string name="morph_status_refund_in_progress">Refund in Progress</string>
+    <string name="morph_status_refund_unknown">Unknown</string>
+    <string name="morph_status_refund_received">Received</string>
+    <string name="morph_status_refund_resolved">Resolved</string>
+
 </resources>

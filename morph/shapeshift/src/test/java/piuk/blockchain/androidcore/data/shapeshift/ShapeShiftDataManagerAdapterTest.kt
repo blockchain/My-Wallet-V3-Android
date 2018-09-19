@@ -30,6 +30,20 @@ class ShapeShiftDataManagerAdapterTest {
     }
 
     @Test
+    fun `getTrades returns mapped trade list from underlying data manager`() {
+        val shapeShiftDataManager = mock<ShapeShiftDataManager> {
+            on { getTradesList() } `it returns` Observable.just(listOf(Trade().apply { hashOut = "X" }))
+        }
+        ShapeShiftDataManagerAdapter(shapeShiftDataManager)
+            .getTrades()
+            .test()
+            .values()
+            .single()
+            .first()
+            .hashOut `should equal` "X"
+    }
+
+    @Test
     fun `getTradeStatus returns mapped trade status response from underlying data manager`() {
         val shapeShiftDataManager = mock<ShapeShiftDataManager> {
             on { getTradeStatus("address") } `it returns` Observable.just(TradeStatusResponse()
@@ -75,8 +89,13 @@ class ShapeShiftDataManagerAdapterTest {
 
     @Test
     fun `updateTrade updates the trade in underlying data manager if found - all status`() {
-        MorphTrade.Status.values().filter { it != MorphTrade.Status.UNKNOWN }
-            .forEach { morphStatus ->
+        MorphTrade.Status.values().filter {
+            it != MorphTrade.Status.UNKNOWN &&
+                it != MorphTrade.Status.REFUNDED &&
+                it != MorphTrade.Status.REFUND_IN_PROGRESS &&
+                it != MorphTrade.Status.EXPIRED &&
+                it != MorphTrade.Status.IN_PROGRESS
+        }.forEach { morphStatus ->
                 val shapeShiftDataManager = mock<ShapeShiftDataManager> {
                     on { findTradeByOrderId("order") } `it returns` Trade()
                     on { updateTrade(any()) } `it returns` Completable.complete()

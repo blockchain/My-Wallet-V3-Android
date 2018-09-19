@@ -1,4 +1,4 @@
-package com.blockchain.morph.homebrew.dataadapters
+package com.blockchain.nabu.dataadapters
 
 import com.blockchain.morph.CoinPair
 import com.blockchain.nabu.api.NabuTransaction

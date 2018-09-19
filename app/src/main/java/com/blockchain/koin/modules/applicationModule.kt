@@ -12,6 +12,7 @@ import piuk.blockchain.android.ui.account.SecondPasswordHandlerDialog
 import piuk.blockchain.android.ui.chooser.WalletAccountHelperAccountListingAdapter
 import piuk.blockchain.android.ui.receive.WalletAccountHelper
 import piuk.blockchain.android.util.StringUtils
+import piuk.blockchain.androidcoreui.utils.DateUtil
 import java.util.Locale
 
 val applicationModule = applicationContext {
@@ -46,4 +47,6 @@ val applicationModule = applicationContext {
 
         factory { KycStatusHelper(get(), get(), get()) }
     }
+
+    factory { DateUtil(get()) }
 }

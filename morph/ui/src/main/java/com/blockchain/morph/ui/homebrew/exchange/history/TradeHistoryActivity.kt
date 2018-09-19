@@ -1,98 +1,95 @@
 package com.blockchain.morph.ui.homebrew.exchange.history
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.widget.Button
+import android.widget.TextView
 import com.blockchain.morph.ui.R
-import com.blockchain.morph.ui.R.layout.activity_homebrew_trade_history
-import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity
 import com.blockchain.morph.ui.homebrew.exchange.detail.HomebrewTradeDetailActivity
+import com.blockchain.morph.ui.homebrew.exchange.history.adapter.TradeHistoryAdapter
+import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
-import kotlinx.android.synthetic.main.activity_homebrew_trade_history.*
-import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
+import org.koin.android.ext.android.inject
+import piuk.blockchain.androidcore.utils.helperfunctions.consume
+import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
+import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
+import piuk.blockchain.androidcoreui.utils.extensions.gone
+import piuk.blockchain.androidcoreui.utils.extensions.visible
+import java.util.Locale
 
-class TradeHistoryActivity : BaseAuthActivity() {
+class TradeHistoryActivity : BaseMvpActivity<TradeHistoryView, TradeHistoryPresenter>(),
+    TradeHistoryView {
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    override val locale: Locale = Locale.getDefault()
+    private val presenter: TradeHistoryPresenter by inject()
+    private val tradeHistoryAdapter = TradeHistoryAdapter(this::tradeClicked)
+    private val buttonNewExchange by unsafeLazy { findViewById<Button>(R.id.button_new_exchange) }
+    private val swipeLayout by unsafeLazy { findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_homebrew_history) }
+    private val emptyState by unsafeLazy { findViewById<TextView>(R.id.emptyState) }
+    private val recyclerView by unsafeLazy { findViewById<RecyclerView>(R.id.recyclerView) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activity_homebrew_trade_history)
+        setContentView(R.layout.activity_homebrew_trade_history)
 
-        button_new_exchange.setOnClickListener {
+        buttonNewExchange.setOnClickListener {
             HomebrewNavHostActivity.start(this)
         }
 
         setupToolbar(R.id.toolbar_constraint, R.string.exchange)
 
-        linearLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@TradeHistoryActivity)
+            adapter = tradeHistoryAdapter
+        }
 
-        val trades = createTestData()
-        recyclerView.adapter = TradeHistoryAdapter(trades) { trade: Trade -> tradeClicked(trade) }
+        swipeLayout.setOnRefreshListener { onViewReady() }
+
+        onViewReady()
+    }
+
+    override fun renderUi(uiState: ExchangeUiState) {
+        when (uiState) {
+            is ExchangeUiState.Data -> renderData(uiState)
+            ExchangeUiState.Error -> renderError()
+            ExchangeUiState.Empty -> renderError()
+            ExchangeUiState.Loading -> swipeLayout.isRefreshing = true
+        }
+    }
+
+    private fun renderData(uiState: ExchangeUiState.Data) {
+        tradeHistoryAdapter.items = uiState.trades
+        recyclerView.visible()
+        swipeLayout.isRefreshing = false
+    }
+
+    private fun renderError() {
+        swipeLayout.isRefreshing = false
+        emptyState.visible()
+        recyclerView.gone()
     }
 
     private fun tradeClicked(trade: Trade) {
-        val showDetailActivityIntent = Intent(this, HomebrewTradeDetailActivity::class.java)
-        showDetailActivityIntent.putExtra("EXTRA_TRADE", trade)
-        startActivity(showDetailActivityIntent)
+        Intent(this, HomebrewTradeDetailActivity::class.java).apply {
+            putExtra("EXTRA_TRADE", trade)
+        }.run { startActivity(this) }
     }
 
-    // TODO: Fake data to test the layout
-    private fun createTestData(): List<Trade> {
-        val trades: ArrayList<Trade> = ArrayList()
-        trades.add(
-            0,
-            Trade(
-                "ede39566-1f0d-4e48-96fa-b558b70e46b7",
-                "FINISHED",
-                "ETH",
-                "0.06",
-                "BTC-ETH",
-                "0.1345",
-                "01.02.2018",
-                "0.008022"
-            )
-        )
-        trades.add(
-            1,
-            Trade(
-                "adf34565-1f0d-4e48-96fa-b558b70e4ss4",
-                "FINISHED",
-                "BTC",
-                "0.04",
-                "ETH-BTC",
-                "2.6578",
-                "01.02.2018",
-                "0.008022"
-            )
-        )
-        trades.add(
-            2,
-            Trade(
-                "ght32544-1f0d-4e48-96fa-b558b70e45tt",
-                "PENDING_WITHDRAWAL",
-                "BTH",
-                "0.24",
-                "BTC-BTH",
-                "4.3333",
-                "01.02.2018",
-                "0.008022"
-            )
-        )
-        trades.add(
-            3,
-            Trade(
-                "ddd31555-1f0d-4e48-96fa-b558b70e4654",
-                "PENDING_DEPOSIT",
-                "ETH",
-                "4.10",
-                "BTC-ETH",
-                "0.2222",
-                "01.02.2018",
-                "0.008022"
-            )
-        )
-        return trades
+    override fun onSupportNavigateUp(): Boolean = consume { finish() }
+
+    override fun createPresenter(): TradeHistoryPresenter = presenter
+
+    override fun getView(): TradeHistoryView = this
+
+    companion object {
+
+        fun start(context: Context) {
+            Intent(context, TradeHistoryActivity::class.java)
+                .run { context.startActivity(this) }
+        }
     }
 }

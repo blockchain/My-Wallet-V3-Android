@@ -31,4 +31,6 @@
 
     <string name="ok_cap">@android:string/ok</string>
 
+    <string name="YESTERDAY">Yesterday</string>
+
 </resources>

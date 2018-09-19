@@ -1,8 +1,6 @@
-package piuk.blockchain.androidbuysell.utils
+package com.blockchain.nabu.extensions
 
-import android.annotation.SuppressLint
 import org.apache.commons.lang3.time.DateUtils
-import timber.log.Timber
 import java.text.ParseException
 import java.util.Date
 
@@ -17,7 +15,6 @@ import java.util.Date
  *
  * @return A [Date] object or null if the [String] isn't formatted correctly.
  */
-@SuppressLint("SimpleDateFormat")
 fun String.fromIso8601(): Date? {
     val millisFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     val secondsFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -25,7 +22,7 @@ fun String.fromIso8601(): Date? {
     return try {
         DateUtils.parseDate(this, millisFormat, secondsFormat)
     } catch (e: ParseException) {
-        Timber.e(e)
+        e.printStackTrace()
         null
     }
 }

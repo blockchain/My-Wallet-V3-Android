@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 import piuk.blockchain.android.BlockchainTestApplication;
 import piuk.blockchain.android.BuildConfig;
+import piuk.blockchain.androidcoreui.utils.DateUtil;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.junit.MatcherAssert.assertThat;

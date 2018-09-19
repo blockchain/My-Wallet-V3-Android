@@ -25,4 +25,9 @@ internal interface NabuMarkets {
         @Body tradeRequest: TradeRequest,
         @Header("authorization") authorization: String
     ): Single<TradeJson>
+
+    @GET("trades")
+    fun getTrades(
+        @Header("authorization") authorization: String
+    ): Single<List<TradeJson>>
 }

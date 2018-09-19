@@ -20,12 +20,24 @@ internal class ShapeShiftDataManagerAdapter(
             .map { TradeAdapter(it) }
     }
 
+    override fun getTrades(): Single<List<MorphTrade>> {
+        return shapeShiftDataManager
+            .getTradesList()
+            .flatMapIterable { it }
+            .map<MorphTrade> { TradeAdapter(it) }
+            .toList()
+    }
+
     override fun getTradeStatus(depositAddress: String): Observable<MorphTradeStatus> {
         return shapeShiftDataManager.getTradeStatus(depositAddress)
             .map { TradeStatusResponseAdapter(it) }
     }
 
-    override fun updateTrade(orderId: String, newStatus: MorphTrade.Status, newHashOut: String?): Completable {
+    override fun updateTrade(
+        orderId: String,
+        newStatus: MorphTrade.Status,
+        newHashOut: String?
+    ): Completable {
         if (newStatus == MorphTrade.Status.UNKNOWN) {
             return Completable.error(Throwable("Unknown Status"))
         }

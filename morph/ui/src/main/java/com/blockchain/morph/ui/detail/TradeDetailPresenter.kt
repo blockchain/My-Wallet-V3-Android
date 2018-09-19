@@ -167,6 +167,10 @@ class TradeDetailPresenter(
         MorphTrade.Status.FAILED,
         MorphTrade.Status.RESOLVED,
         MorphTrade.Status.UNKNOWN -> onFailed()
+        MorphTrade.Status.REFUNDED,
+        MorphTrade.Status.REFUND_IN_PROGRESS,
+        MorphTrade.Status.EXPIRED,
+        MorphTrade.Status.IN_PROGRESS -> throw IllegalStateException("These statuses shouldn't be possible from SS")
     }
 
     private fun onNoDeposit() {
@@ -226,8 +230,16 @@ class TradeDetailPresenter(
     // endregion
 
     private fun isInFinalState(status: MorphTrade.Status) = when (status) {
-        MorphTrade.Status.NO_DEPOSITS, MorphTrade.Status.RECEIVED, MorphTrade.Status.UNKNOWN -> false
-        MorphTrade.Status.COMPLETE, MorphTrade.Status.FAILED, MorphTrade.Status.RESOLVED -> true
+        MorphTrade.Status.IN_PROGRESS,
+        MorphTrade.Status.REFUND_IN_PROGRESS,
+        MorphTrade.Status.NO_DEPOSITS,
+        MorphTrade.Status.RECEIVED,
+        MorphTrade.Status.UNKNOWN -> false
+        MorphTrade.Status.EXPIRED,
+        MorphTrade.Status.REFUNDED,
+        MorphTrade.Status.COMPLETE,
+        MorphTrade.Status.FAILED,
+        MorphTrade.Status.RESOLVED -> true
     }
 
     private val exchangeRateFormat =

@@ -264,6 +264,55 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             }
     }
 
+    @Test
+    fun `can get list of trades`() {
+        server.expect().get().withPath("/nabu-gateway/trades")
+            .andReturn(
+                200,
+                """
+[
+    {
+        "id": "ede39566-1f0d-4e48-96fa-b558b70e46b7",
+        "createdAt": "2018-07-30T13:45:67.890Z",
+        "updatedAt": "2018-07-30T13:45:67.890Z",
+        "pair": "BTC-ETH",
+        "quantity": "0.1337",
+        "currency": "ETH",
+        "refundAddress": "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
+        "price": "0.06",
+        "depositAddress": "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
+        "depositQuantity": "0.008022",
+        "withdrawalAddress": "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b",
+        "withdrawalQuantity": "0.1337",
+        "depositTxHash": "e6a5cfee8063330577babb6fb92eabccf5c3c1aeea120c550b6779a6c657dfce",
+        "withdrawalTxHash": "0xcc34f317a2fc8fb318777ea2529dfaf2ad9338907637137c3ec7d614abe7557f",
+        "state": "FINISHED"
+    }
+]
+"""
+            )
+            .once()
+
+        subject.getTrades()
+            .test()
+            .values()
+            .asSequence()
+            .single()
+            .first()
+            .apply {
+                id `should equal` "ede39566-1f0d-4e48-96fa-b558b70e46b7"
+                createdAt `should equal` "2018-07-30T13:45:67.890Z"
+                pair `should equal` CoinPair.BTC_TO_ETH
+                rate `should equal` 0.06.toBigDecimal()
+                refundAddress `should equal` "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF"
+                depositAddress `should equal` "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF"
+                deposit `should equal` 0.008022.bitcoin()
+                withdrawalAddress `should equal` "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b"
+                withdrawal `should equal` 0.1337.ether()
+                state `should equal` TransactionState.Finished
+            }
+    }
+
     private val emptyTradeRequest = TradeRequest(
         destinationAddress = "",
         refundAddress = "",

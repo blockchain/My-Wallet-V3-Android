@@ -50,7 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:drawableLeft="@drawable/trade_status_in_progress_circle"
         android:drawablePadding="8dp"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical"
@@ -58,6 +57,18 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trade_price"
+        tools:drawableLeft="@drawable/trade_status_in_progress_circle"
+        tools:ignore="RtlHardcoded"
         tools:text="In progress" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/nabu_divider_grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

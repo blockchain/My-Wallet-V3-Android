@@ -15,6 +15,13 @@ import java.math.BigDecimal
 class TradeAdapterTest {
 
     @Test
+    fun `quote timestamp`() {
+        TradeAdapter(Trade().apply {
+            timestamp = 1234567890L
+        }).timestamp `should equal` 1234567890L
+    }
+
+    @Test
     fun `quote hash out`() {
         TradeAdapter(Trade().apply {
             hashOut = "Hash out"

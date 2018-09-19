@@ -8,7 +8,7 @@ import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellDisplayable
 import piuk.blockchain.android.ui.buysell.overview.models.BuySellTransaction
-import piuk.blockchain.android.util.DateUtil
+import piuk.blockchain.androidcoreui.utils.DateUtil
 import piuk.blockchain.androidbuysell.models.coinify.TradeState
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.utils.extensions.context

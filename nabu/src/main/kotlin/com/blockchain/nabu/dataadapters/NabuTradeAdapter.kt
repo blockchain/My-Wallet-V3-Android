@@ -1,15 +1,19 @@
-package com.blockchain.morph.homebrew.dataadapters
+package com.blockchain.nabu.dataadapters
 
 import com.blockchain.morph.CoinPair
 import com.blockchain.morph.trade.MorphTrade
 import com.blockchain.morph.trade.MorphTradeOrder
 import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.TransactionState
+import com.blockchain.nabu.extensions.fromIso8601
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import java.math.BigDecimal
 
 internal class NabuTradeAdapter(private val trade: NabuTransaction) : MorphTrade {
+
+    override val timestamp: Long
+        get() = trade.createdAt.fromIso8601()?.time?.div(1000) ?: System.currentTimeMillis() / 1000
 
     override val hashOut: String?
         get() = trade.hashOut
@@ -47,11 +51,13 @@ internal class NabuTradeAdapter(private val trade: NabuTransaction) : MorphTrade
 
 internal fun TransactionState.map(): MorphTrade.Status =
     when (this) {
-        TransactionState.PendingExecution,
-        TransactionState.PendingDeposit,
+        TransactionState.PendingWithdrawal,
         TransactionState.FinishedDeposit,
-        TransactionState.PendingWithdrawal -> MorphTrade.Status.NO_DEPOSITS
+        TransactionState.PendingDeposit,
+        TransactionState.PendingExecution -> MorphTrade.Status.IN_PROGRESS
         TransactionState.Finished -> MorphTrade.Status.COMPLETE
-        TransactionState.PendingRefund, TransactionState.Refunded -> MorphTrade.Status.RESOLVED
-        TransactionState.Failed, TransactionState.Expired -> MorphTrade.Status.FAILED
+        TransactionState.PendingRefund -> MorphTrade.Status.REFUND_IN_PROGRESS
+        TransactionState.Failed -> MorphTrade.Status.FAILED
+        TransactionState.Expired -> MorphTrade.Status.EXPIRED
+        TransactionState.Refunded -> MorphTrade.Status.REFUNDED
     }

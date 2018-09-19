@@ -14,7 +14,7 @@ import piuk.blockchain.androidbuysell.models.coinify.BlockchainDetails
 import piuk.blockchain.androidbuysell.models.coinify.CoinifyTradeRequest
 import piuk.blockchain.androidbuysell.models.coinify.exceptions.CoinifyApiException
 import piuk.blockchain.androidbuysell.services.ExchangeService
-import piuk.blockchain.androidbuysell.utils.fromIso8601
+import com.blockchain.nabu.extensions.fromIso8601
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
