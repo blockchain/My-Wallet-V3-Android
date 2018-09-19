@@ -9,7 +9,7 @@ val homeBrewModule = applicationContext {
     context("Payload") {
 
         factory {
-            QuoteWebSocketServiceFactory(get(), get(), get()) as QuoteServiceFactory
+            QuoteWebSocketServiceFactory(get("nabu"), get(), get(), get()) as QuoteServiceFactory
         }
     }
 }

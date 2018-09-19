@@ -13,18 +13,14 @@ import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 
 internal class QuoteWebSocketServiceFactory(
+    private val nabuWebSocketOptions: Options,
     private val auth: Authenticator,
     private val moshi: Moshi,
     private val okHttpClient: OkHttpClient
 ) : QuoteServiceFactory {
 
     override fun createQuoteService(): QuoteService {
-        val socket = okHttpClient.newBlockchainWebSocket(
-            Options(
-                url = "wss://ws.dev.blockchain.info/nabu-gateway/markets/quotes",
-                origin = "https://blockchain.info"
-            )
-        )
+        val socket = okHttpClient.newBlockchainWebSocket(nabuWebSocketOptions)
             .debugLog("Quotes")
             .autoRetry()
             .authenticate(auth)

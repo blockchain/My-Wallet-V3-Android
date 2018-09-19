@@ -9,7 +9,7 @@ import okhttp3.WebSocketListener
 
 class Options(
     val url: String,
-    val origin: String,
+    val origin: String = "https://blockchain.info",
     /**
      * Used in close reason message text
      */

@@ -12,8 +12,10 @@ import com.blockchain.koin.modules.keys
 import com.blockchain.koin.modules.localShapeShift
 import com.blockchain.koin.modules.morphMethodModule
 import com.blockchain.koin.modules.moshiModule
+import com.blockchain.koin.modules.nabuUrlModule
 import com.blockchain.koin.modules.serviceModule
 import com.blockchain.koin.modules.shapeShiftModule
+import com.blockchain.koin.modules.webSocketUrls
 import com.blockchain.network.modules.apiModule
 import com.blockchain.notifications.koin.notificationModule
 import org.koin.android.ext.android.startKoin
@@ -47,10 +49,11 @@ object KoinStarter {
                 morphMethodModule,
                 morphUiModule,
                 nabuModule,
+                nabuUrlModule,
                 homeBrewModule,
                 notificationModule
             ),
-            extraProperties = features + appProperties + keys,
+            extraProperties = features + appProperties + keys + webSocketUrls,
             logger = TimberLogger()
         )
         KoinStarter.application = application

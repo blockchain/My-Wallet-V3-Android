@@ -64,6 +64,7 @@ android {
             buildConfigString "BITCOIN_WEBSOCKET_URL", buildProperties.secrets['prodBtcWebsocket']
             buildConfigString "ETHEREUM_WEBSOCKET_URL", buildProperties.secrets['prodEthWebsocket']
             buildConfigString "BITCOIN_CASH_WEBSOCKET_URL", buildProperties.secrets['prodBchWebsocket']
+            buildConfigString "NABU_WEBSOCKET_URL", buildProperties.secrets['prodNabuWebsocket']
             buildConfigField "String", "ENVIRONMENT", '"env_prod"'
         }
         envDev {
@@ -73,6 +74,7 @@ android {
             buildConfigString "BITCOIN_WEBSOCKET_URL", buildProperties.secrets['devBtcWebsocket']
             buildConfigString "ETHEREUM_WEBSOCKET_URL", buildProperties.secrets['devEthWebsocket']
             buildConfigString "BITCOIN_CASH_WEBSOCKET_URL", buildProperties.secrets['devBchWebsocket']
+            buildConfigString "NABU_WEBSOCKET_URL", buildProperties.secrets['devNabuWebsocket']
             buildConfigField "String", "ENVIRONMENT", '"env_dev"'
             versionNameSuffix '-dev'
         }
@@ -83,6 +85,7 @@ android {
             buildConfigString "BITCOIN_WEBSOCKET_URL", buildProperties.secrets['stagingBtcWebsocket']
             buildConfigString "ETHEREUM_WEBSOCKET_URL", buildProperties.secrets['stagingEthWebsocket']
             buildConfigString "BITCOIN_CASH_WEBSOCKET_URL", buildProperties.secrets['stagingBchWebsocket']
+            buildConfigString "NABU_WEBSOCKET_URL", buildProperties.secrets['stagingNabuWebsocket']
             buildConfigField "String", "ENVIRONMENT", '"env_staging"'
             versionNameSuffix '-staging'
         }
@@ -93,6 +96,7 @@ android {
             buildConfigString "BITCOIN_WEBSOCKET_URL", buildProperties.secrets['testnetBtcWebsocket']
             buildConfigString "ETHEREUM_WEBSOCKET_URL", buildProperties.secrets['testnetEthWebsocket']
             buildConfigString "BITCOIN_CASH_WEBSOCKET_URL", buildProperties.secrets['testnetBchWebsocket']
+            buildConfigString "NABU_WEBSOCKET_URL", buildProperties.secrets['testnetNabuWebsocket']
             buildConfigField "String", "ENVIRONMENT", '"env_testnet"'
             versionNameSuffix '-testnet'
         }
