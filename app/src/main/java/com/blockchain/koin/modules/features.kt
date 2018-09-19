@@ -14,11 +14,3 @@ val appProperties = listOf(
 val keys = listOf(
     "api-code" to "25a6ad13-1633-4dfb-b6ee-9b91cdf0b5c3"
 )
-
-val webSocketUrls = listOf(
-    WebSocketUrlKeys.Nabu to BuildConfig.NABU_WEBSOCKET_URL
-)
-
-object WebSocketUrlKeys {
-    const val Nabu: String = "nabu-webSocket-url"
-}

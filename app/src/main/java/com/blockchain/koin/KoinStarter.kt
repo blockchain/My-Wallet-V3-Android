@@ -15,7 +15,6 @@ import com.blockchain.koin.modules.moshiModule
 import com.blockchain.koin.modules.nabuUrlModule
 import com.blockchain.koin.modules.serviceModule
 import com.blockchain.koin.modules.shapeShiftModule
-import com.blockchain.koin.modules.webSocketUrls
 import com.blockchain.network.modules.apiModule
 import com.blockchain.notifications.koin.notificationModule
 import org.koin.android.ext.android.startKoin
@@ -53,7 +52,7 @@ object KoinStarter {
                 homeBrewModule,
                 notificationModule
             ),
-            extraProperties = features + appProperties + keys + webSocketUrls,
+            extraProperties = features + appProperties + keys,
             logger = TimberLogger()
         )
         KoinStarter.application = application
