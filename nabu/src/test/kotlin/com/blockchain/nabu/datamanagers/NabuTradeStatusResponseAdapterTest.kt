@@ -6,6 +6,7 @@ import com.blockchain.nabu.api.TransactionState
 import com.blockchain.nabu.dataadapters.NabuTradeStatusResponseAdapter
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
+import com.blockchain.testutils.gbp
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
@@ -58,6 +59,8 @@ class NabuTradeStatusResponseAdapterTest {
         withdrawalAddress = "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b",
         withdrawal = 0.1337.ether(),
         state = TransactionState.Finished,
-        hashOut = "0xcc34f317a2fc8fb318777ea2529dfaf2ad9338907637137c3ec7d614abe7557f"
+        hashOut = "0xcc34f317a2fc8fb318777ea2529dfaf2ad9338907637137c3ec7d614abe7557f",
+        fee = 0.000834.ether(),
+        fiatValue = 100.gbp()
     )
 }

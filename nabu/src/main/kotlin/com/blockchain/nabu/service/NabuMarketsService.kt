@@ -7,6 +7,9 @@ import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.PeriodicLimit
 import com.blockchain.nabu.api.TradeJson
 import com.blockchain.nabu.api.TradeRequest
+import com.blockchain.nabu.api.TransactionState
+import com.blockchain.nabu.api.Value
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import io.reactivex.Single
@@ -80,13 +83,21 @@ private fun TradeJson.map(): NabuTransaction {
         id = this.id,
         createdAt = this.createdAt,
         pair = coinPair,
-        rate = this.price,
+        rate = this.rate,
+        fee = this.withdrawalFee.toCryptoValue(),
+        fiatValue = this.fiatValue.toFiatValue(),
         refundAddress = this.refundAddress,
         depositAddress = this.depositAddress,
-        deposit = CryptoValue.fromMajor(coinPair.from, this.depositQuantity),
+        deposit = this.deposit.toCryptoValue(),
         withdrawalAddress = this.withdrawalAddress,
-        withdrawal = CryptoValue.fromMajor(coinPair.to, this.withdrawalQuantity),
+        withdrawal = this.withdrawal.toCryptoValue(),
         state = this.state,
         hashOut = this.withdrawalTxHash
     )
 }
+
+private fun Value.toCryptoValue(): CryptoValue =
+    CryptoValue.fromMajor(CryptoCurrency.fromSymbol(this.symbol)!!, this.value)
+
+private fun Value.toFiatValue(): FiatValue =
+    FiatValue.fromMajor(this.symbol, this.value)

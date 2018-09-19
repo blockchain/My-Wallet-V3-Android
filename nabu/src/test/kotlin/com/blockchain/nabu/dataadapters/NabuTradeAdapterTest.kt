@@ -4,8 +4,11 @@ import com.blockchain.morph.CoinPair
 import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.TransactionState
 import com.blockchain.testutils.bitcoin
+import com.blockchain.testutils.bitcoinCash
 import com.blockchain.testutils.ether
+import com.blockchain.testutils.gbp
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
@@ -56,24 +59,24 @@ class NabuTradeAdapterTest {
     }
 
     @Test
-    fun `quote mining fee returns default ether`() {
+    fun `quote mining fee returns ether`() {
         NabuTradeAdapter(
-            getTransaction(pair = CoinPair.BTC_TO_ETH)
-        ).quote.minerFee `should equal` CryptoValue.ZeroEth
+            getTransaction(fee = 0.00001.ether())
+        ).quote.minerFee `should equal` 0.00001.ether()
     }
 
     @Test
-    fun `quote mining fee returns default bitcoin`() {
+    fun `quote mining fee returns bitcoin`() {
         NabuTradeAdapter(
-            getTransaction(pair = CoinPair.ETH_TO_BTC)
-        ).quote.minerFee `should equal` CryptoValue.ZeroBtc
+            getTransaction(fee = 0.00001.bitcoin())
+        ).quote.minerFee `should equal` 0.00001.bitcoin()
     }
 
     @Test
-    fun `quote mining fee returns default bitcoin cash`() {
+    fun `quote mining fee returns bitcoin cash`() {
         NabuTradeAdapter(
-            getTransaction(pair = CoinPair.ETH_TO_BCH)
-        ).quote.minerFee `should equal` CryptoValue.ZeroBch
+            getTransaction(fee = 0.00001.bitcoinCash())
+        ).quote.minerFee `should equal` 0.00001.bitcoinCash()
     }
 
     @Test
@@ -81,6 +84,20 @@ class NabuTradeAdapterTest {
         NabuTradeAdapter(
             getTransaction(rate = 10.0.toBigDecimal())
         ).quote.quotedRate `should equal` 10.0.toBigDecimal()
+    }
+
+    @Test
+    fun `quote fee`() {
+        NabuTradeAdapter(
+            getTransaction(fee = 0.001.bitcoin())
+        ).quote.minerFee `should equal` 0.001.bitcoin()
+    }
+
+    @Test
+    fun `quote fiat value`() {
+        NabuTradeAdapter(
+            getTransaction(fiatValue = 20.gbp())
+        ).quote.fiatValue `should equal` 20.gbp()
     }
 
     private fun getTransaction(
@@ -94,7 +111,9 @@ class NabuTradeAdapterTest {
         withdrawalAddress: String = "",
         withdrawal: CryptoValue = CryptoValue.ZeroEth,
         state: TransactionState = TransactionState.PendingDeposit,
-        hashOut: String = "Hash out"
+        hashOut: String = "Hash out",
+        fee: CryptoValue = CryptoValue.ZeroEth,
+        fiatValue: FiatValue = 0.0.gbp()
     ): NabuTransaction = NabuTransaction(
         id = id,
         createdAt = createdAt,
@@ -106,6 +125,8 @@ class NabuTradeAdapterTest {
         withdrawalAddress = withdrawalAddress,
         withdrawal = withdrawal,
         state = state,
-        hashOut = hashOut
+        hashOut = hashOut,
+        fee = fee,
+        fiatValue = fiatValue
     )
 }

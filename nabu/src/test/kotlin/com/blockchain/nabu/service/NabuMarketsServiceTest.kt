@@ -19,6 +19,7 @@ import com.blockchain.testutils.`should be assignable from`
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.cad
 import com.blockchain.testutils.ether
+import com.blockchain.testutils.gbp
 import com.blockchain.testutils.usd
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
@@ -228,19 +229,33 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
                 200,
                 """
 {
-    "id": "ede39566-1f0d-4e48-96fa-b558b70e46b7",
-    "createdAt": "2018-07-30T13:45:67.890Z",
-    "updatedAt": "2018-07-30T13:45:67.890Z",
-    "pair": "BTC-ETH",
-    "quantity": "0.1337",
-    "currency": "ETH",
-    "refundAddress": "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
-    "price": "0.06",
-    "depositAddress": "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
-    "depositQuantity": "0.008022",
-    "withdrawalAddress": "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b",
-    "withdrawalQuantity": "0.1337",
-    "state": "PENDING_DEPOSIT"
+  "id": "039267ab-de16-4093-8cdf-a7ea1c732dbd",
+  "state": "FINISHED",
+  "createdAt": "2018-09-19T12:20:42.894Z",
+  "updatedAt": "2018-09-19T12:24:18.943Z",
+  "pair": "ETH-BTC",
+  "refundAddress": "0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDb",
+  "rate": "0.1",
+  "depositAddress": "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359",
+  "deposit": {
+    "symbol": "ETH",
+    "value": "100.0"
+  },
+  "withdrawalAddress": "3H4w1Sqk8UNNEfZoa9Z8FZJ6RYHrxLmzGU",
+  "withdrawal": {
+    "symbol": "BTC",
+    "value": "10.0"
+  },
+  "withdrawalFee": {
+    "symbol": "BTC",
+    "value": "0.0000001"
+  },
+  "fiatValue": {
+    "symbol": "GBP",
+    "value": "10.0"
+  },
+  "depositTxHash": "e6a5cfee8063330577babb6fb92eabccf5c3c1aeea120c550b6779a6c657dfce",
+  "withdrawalTxHash": "0xf902adc8862c6c6ad2cd06f12d952e95c50ad783bae50ef952e1f54b7762a50e"
 }
 """
             )
@@ -251,16 +266,18 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             .values()
             .single()
             .apply {
-                id `should equal` "ede39566-1f0d-4e48-96fa-b558b70e46b7"
-                createdAt `should equal` "2018-07-30T13:45:67.890Z"
-                pair `should equal` CoinPair.BTC_TO_ETH
-                rate `should equal` 0.06.toBigDecimal()
-                refundAddress `should equal` "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF"
-                depositAddress `should equal` "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF"
-                deposit `should equal` 0.008022.bitcoin()
-                withdrawalAddress `should equal` "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b"
-                withdrawal `should equal` 0.1337.ether()
-                state `should equal` TransactionState.PendingDeposit
+                id `should equal` "039267ab-de16-4093-8cdf-a7ea1c732dbd"
+                createdAt `should equal` "2018-09-19T12:20:42.894Z"
+                pair `should equal` CoinPair.ETH_TO_BTC
+                rate `should equal` 0.1.toBigDecimal()
+                refundAddress `should equal` "0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDb"
+                depositAddress `should equal` "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359"
+                deposit `should equal` 100.0.ether()
+                withdrawalAddress `should equal` "3H4w1Sqk8UNNEfZoa9Z8FZJ6RYHrxLmzGU"
+                withdrawal `should equal` 10.0.bitcoin()
+                state `should equal` TransactionState.Finished
+                fee `should equal` 0.0000001.bitcoin()
+                fiatValue `should equal` 10.0.gbp()
             }
     }
 
@@ -272,21 +289,33 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
                 """
 [
     {
-        "id": "ede39566-1f0d-4e48-96fa-b558b70e46b7",
-        "createdAt": "2018-07-30T13:45:67.890Z",
-        "updatedAt": "2018-07-30T13:45:67.890Z",
-        "pair": "BTC-ETH",
-        "quantity": "0.1337",
-        "currency": "ETH",
-        "refundAddress": "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
-        "price": "0.06",
-        "depositAddress": "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
-        "depositQuantity": "0.008022",
-        "withdrawalAddress": "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b",
-        "withdrawalQuantity": "0.1337",
-        "depositTxHash": "e6a5cfee8063330577babb6fb92eabccf5c3c1aeea120c550b6779a6c657dfce",
-        "withdrawalTxHash": "0xcc34f317a2fc8fb318777ea2529dfaf2ad9338907637137c3ec7d614abe7557f",
-        "state": "FINISHED"
+      "id": "039267ab-de16-4093-8cdf-a7ea1c732dbd",
+      "state": "FINISHED",
+      "createdAt": "2018-09-19T12:20:42.894Z",
+      "updatedAt": "2018-09-19T12:24:18.943Z",
+      "pair": "ETH-BTC",
+      "refundAddress": "0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDb",
+      "rate": "0.1",
+      "depositAddress": "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359",
+      "deposit": {
+        "symbol": "ETH",
+        "value": "100.0"
+      },
+      "withdrawalAddress": "3H4w1Sqk8UNNEfZoa9Z8FZJ6RYHrxLmzGU",
+      "withdrawal": {
+        "symbol": "BTC",
+        "value": "10.0"
+      },
+      "withdrawalFee": {
+        "symbol": "BTC",
+        "value": "0.0000001"
+      },
+      "fiatValue": {
+        "symbol": "GBP",
+        "value": "10.0"
+      },
+      "depositTxHash": "e6a5cfee8063330577babb6fb92eabccf5c3c1aeea120c550b6779a6c657dfce",
+      "withdrawalTxHash": "0xf902adc8862c6c6ad2cd06f12d952e95c50ad783bae50ef952e1f54b7762a50e"
     }
 ]
 """
@@ -300,16 +329,18 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             .single()
             .first()
             .apply {
-                id `should equal` "ede39566-1f0d-4e48-96fa-b558b70e46b7"
-                createdAt `should equal` "2018-07-30T13:45:67.890Z"
-                pair `should equal` CoinPair.BTC_TO_ETH
-                rate `should equal` 0.06.toBigDecimal()
-                refundAddress `should equal` "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF"
-                depositAddress `should equal` "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF"
-                deposit `should equal` 0.008022.bitcoin()
-                withdrawalAddress `should equal` "0xwithdrawa7d398351b8be11c439e05c5b3259aec9b"
-                withdrawal `should equal` 0.1337.ether()
+                id `should equal` "039267ab-de16-4093-8cdf-a7ea1c732dbd"
+                createdAt `should equal` "2018-09-19T12:20:42.894Z"
+                pair `should equal` CoinPair.ETH_TO_BTC
+                rate `should equal` 0.1.toBigDecimal()
+                refundAddress `should equal` "0xD1220A0cf47c7B9Be7A2E6BA89F429762e7b9aDb"
+                depositAddress `should equal` "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359"
+                deposit `should equal` 100.0.ether()
+                withdrawalAddress `should equal` "3H4w1Sqk8UNNEfZoa9Z8FZJ6RYHrxLmzGU"
+                withdrawal `should equal` 10.0.bitcoin()
                 state `should equal` TransactionState.Finished
+                fee `should equal` 0.0000001.bitcoin()
+                fiatValue `should equal` 10.0.gbp()
             }
     }
 

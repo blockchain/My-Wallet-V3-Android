@@ -6,8 +6,8 @@ import com.blockchain.morph.trade.MorphTradeOrder
 import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.TransactionState
 import com.blockchain.nabu.extensions.fromIso8601
-import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import java.math.BigDecimal
 
 internal class NabuTradeAdapter(private val trade: NabuTransaction) : MorphTrade {
@@ -39,11 +39,10 @@ internal class NabuTradeAdapter(private val trade: NabuTransaction) : MorphTrade
                 get() = trade.rate
 
             override val minerFee: CryptoValue
-                get() = when (pair.to) {
-                    CryptoCurrency.BTC -> CryptoValue.ZeroBtc
-                    CryptoCurrency.ETHER -> CryptoValue.ZeroEth
-                    CryptoCurrency.BCH -> CryptoValue.ZeroBch
-                }
+                get() = trade.fee
+
+            override val fiatValue: FiatValue
+                get() = trade.fiatValue
         }
 
     override fun enoughInfoForDisplay() = true

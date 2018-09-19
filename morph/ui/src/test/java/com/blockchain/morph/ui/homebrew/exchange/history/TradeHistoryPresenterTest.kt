@@ -7,9 +7,11 @@ import com.blockchain.morph.trade.MorphTradeDataManager
 import com.blockchain.morph.trade.MorphTradeOrder
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
+import com.blockchain.testutils.gbp
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import io.reactivex.Single
 import org.amshove.kluent.any
 import org.amshove.kluent.mock
@@ -96,6 +98,8 @@ class TradeHistoryPresenterTest {
                     get() = 10.0.toBigDecimal()
                 override val minerFee: CryptoValue
                     get() = 0.1.bitcoin()
+                override val fiatValue: FiatValue
+                    get() = 10.gbp()
             }
 
         override fun enoughInfoForDisplay(): Boolean = true

@@ -187,4 +187,13 @@ class TradeAdapterTest {
             }
         ).quote.quotedRate `should equal` 17.56.toBigDecimal()
     }
+
+    @Test
+    fun `fiat value is null, as not provided by API`() {
+        TradeAdapter(
+            Trade().apply {
+                quote = Quote()
+            }
+        ).quote.fiatValue `should equal` null
+    }
 }

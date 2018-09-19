@@ -4,6 +4,7 @@ import com.blockchain.morph.CoinPair
 import com.blockchain.morph.trade.MorphTrade
 import com.blockchain.morph.trade.MorphTradeOrder
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import info.blockchain.wallet.shapeshift.data.Trade
 import java.math.BigDecimal
 
@@ -38,6 +39,9 @@ internal class TradeAdapter(private val trade: Trade) : MorphTrade {
 
             override val minerFee: CryptoValue
                 get() = CryptoValue.fromMajor(pair.to, trade.quote?.minerFee ?: BigDecimal.ZERO)
+
+            override val fiatValue: FiatValue?
+                get() = null
         }
 
     override fun enoughInfoForDisplay() =

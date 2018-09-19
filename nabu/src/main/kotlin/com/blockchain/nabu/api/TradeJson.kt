@@ -15,23 +15,22 @@ import com.squareup.moshi.ToJson
 import java.math.BigDecimal
 import javax.management.remote.JMXConnectionNotification.FAILED
 
-// TODO: This class will need to parse a miner's fee, which is in the works on the API AND-1427
 internal class TradeJson(
     val id: String,
+    val state: TransactionState,
     val createdAt: String,
     val updatedAt: String,
     val pair: String,
-    val quantity: BigDecimal,
-    val currency: String,
     val refundAddress: String,
-    val price: BigDecimal,
+    val rate: BigDecimal,
     val depositAddress: String,
-    val depositQuantity: BigDecimal,
+    val deposit: Value,
     val withdrawalAddress: String,
-    val withdrawalQuantity: BigDecimal,
-    val state: TransactionState,
-    val depositTxHash: String? = null,
-    val withdrawalTxHash: String? = null
+    val withdrawal: Value,
+    val withdrawalFee: Value,
+    val fiatValue: Value,
+    val depositTxHash: String?,
+    val withdrawalTxHash: String?
 ) : JsonSerializable
 
 sealed class TransactionState(val state: String) {

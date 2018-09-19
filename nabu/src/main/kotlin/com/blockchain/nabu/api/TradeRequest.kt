@@ -3,13 +3,13 @@ package com.blockchain.nabu.api
 import com.blockchain.serialization.JsonSerializable
 import java.math.BigDecimal
 
-class TradeRequest(
+data class TradeRequest(
     val destinationAddress: String,
     val refundAddress: String,
     val quote: ReceivedQuote
 ) : JsonSerializable
 
-class ReceivedQuote(
+data class ReceivedQuote(
     val pair: String,
     val fiatCurrency: String,
     val fix: String,
@@ -17,7 +17,7 @@ class ReceivedQuote(
     val currencyRatio: CurrencyRatio
 ) : JsonSerializable
 
-class CurrencyRatio(
+data class CurrencyRatio(
     val base: CryptoAndFiat,
     val counter: CryptoAndFiat,
     val baseToFiatRate: String,
@@ -26,12 +26,12 @@ class CurrencyRatio(
     val counterToFiatRate: String
 ) : JsonSerializable
 
-class CryptoAndFiat(
+data class CryptoAndFiat(
     val fiat: Value,
     val crypto: Value
 ) : JsonSerializable
 
-class Value(
+data class Value(
     val symbol: String,
     val value: BigDecimal
 ) : JsonSerializable
