@@ -9,6 +9,8 @@ import android.content.Context
 import android.provider.Settings
 import com.blockchain.koin.coreModule
 import com.blockchain.morph.dev.BuildConfig
+import com.blockchain.morph.exchange.service.QuoteService
+import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.network.EnvironmentUrls
 import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.OkHttpInterceptors
@@ -53,6 +55,7 @@ class App : Application() {
                 walletModule,
                 kycModule,
                 walletModule,
+                fakeQuotesModule,
                 applicationContext {
                     bean { OkHttpInterceptors(emptyList()) }
                 }
@@ -63,7 +66,7 @@ class App : Application() {
             )
         )
         AccessState.getInstance().initAccessState(this, PrefsUtil(this), RxBus(), TradeHistoryActivity::class.java)
-      
+
         BlockchainFramework.init(object : FrameworkInterface {
             override fun getRetrofitApiInstance(): Retrofit {
                 return get("api")
@@ -100,6 +103,17 @@ class App : Application() {
             override val apiCode: String
                 get() = get<ApiCode>().apiCode
         })
+    }
+}
+
+val fakeQuotesModule = applicationContext {
+
+    bean {
+        object : QuoteServiceFactory {
+            override fun createQuoteService(): QuoteService {
+                return FakeQuoteService()
+            }
+        } as QuoteServiceFactory
     }
 }
 
