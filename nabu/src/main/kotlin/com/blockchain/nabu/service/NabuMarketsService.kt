@@ -7,7 +7,6 @@ import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.PeriodicLimit
 import com.blockchain.nabu.api.TradeJson
 import com.blockchain.nabu.api.TradeRequest
-import com.blockchain.nabu.api.TransactionState
 import com.blockchain.nabu.api.Value
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
