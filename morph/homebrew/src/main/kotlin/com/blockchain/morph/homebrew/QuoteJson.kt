@@ -41,10 +41,11 @@ internal data class Value(
     val value: BigDecimal
 ) : JsonSerializable
 
-internal fun CurrencyRatio.mapToQuote(): Quote {
+internal fun QuoteJson.mapToQuote(): Quote {
     return Quote(
-        from = base.mapToQuoteValue(),
-        to = counter.mapToQuoteValue()
+        from = currencyRatio.base.mapToQuoteValue(),
+        to = currencyRatio.counter.mapToQuoteValue(),
+        rawQuote = this
     )
 }
 

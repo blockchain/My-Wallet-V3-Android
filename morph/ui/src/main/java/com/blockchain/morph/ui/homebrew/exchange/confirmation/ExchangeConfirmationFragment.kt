@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
+import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
@@ -83,11 +84,13 @@ class ExchangeConfirmationFragment :
         compositeDisposable += exchangeModel
             .exchangeViewModels
             .observeOn(AndroidSchedulers.mainThread())
+            .filter { it.latestQuote?.rawQuote != null }
             .map {
                 ExchangeConfirmationViewModel(
                     sending = it.from.cryptoValue,
                     receiving = it.to.cryptoValue,
-                    value = it.to.fiatValue
+                    value = it.to.fiatValue,
+                    quote = it.latestQuote!!
                 )
             }
             .subscribeBy {
@@ -136,5 +139,6 @@ class ExchangeConfirmationFragment :
 class ExchangeConfirmationViewModel(
     val value: FiatValue,
     val sending: CryptoValue,
-    val receiving: CryptoValue
+    val receiving: CryptoValue,
+    val quote: Quote
 )

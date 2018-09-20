@@ -5,7 +5,11 @@ import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import java.math.BigDecimal
 
-data class ExchangeViewModel(val from: Value, val to: Value)
+data class ExchangeViewModel(
+    val from: Value,
+    val to: Value,
+    val latestQuote: Quote? = null
+)
 
 data class Value(
     val cryptoValue: CryptoValue,

@@ -25,7 +25,7 @@ class QuoteWebSocket(private val underlyingSocket: WebSocket<String, String>, mo
     override val quotes: Observable<Quote>
         get() = socket.responses
             .filter { it.quote != null }
-            .map { it.quote!!.currencyRatio.mapToQuote() }
+            .map { it.quote!!.mapToQuote() }
 
     override val connectionStatus: Observable<QuoteService.Status>
         get() = socket.connectionEvents.map {

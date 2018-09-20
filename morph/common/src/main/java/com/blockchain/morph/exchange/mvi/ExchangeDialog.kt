@@ -41,7 +41,8 @@ private fun InnerState.mapQuote(intent: QuoteIntent) =
                     cryptoMode = mode(lastUserInputField, FieldUpdateIntent.Field.TO_CRYPTO),
                     fiatValue = intent.quote.to.fiatValue,
                     fiatMode = mode(lastUserInputField, FieldUpdateIntent.Field.TO_FIAT)
-                )
+                ),
+                latestQuote = intent.quote
             )
         )
     } else {
