@@ -1,21 +1,16 @@
 package com.blockchain.morph.ui.homebrew.exchange.history.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.blockchain.morph.trade.MorphTrade
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.extensions.toDrawable
 import com.blockchain.morph.ui.homebrew.exchange.extensions.toStatusString
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
 import kotlinx.android.synthetic.main.list_item_trade_history.view.*
 import piuk.blockchain.androidcoreui.utils.extensions.autoNotify
-import piuk.blockchain.androidcoreui.utils.extensions.context
-import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import kotlin.properties.Delegates
 
