@@ -6,7 +6,7 @@ import java.math.BigDecimal
 data class TradeRequest(
     val destinationAddress: String,
     val refundAddress: String,
-    val quote: ReceivedQuote
+    val quote: JsonSerializable
 ) : JsonSerializable
 
 data class ReceivedQuote(
