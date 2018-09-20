@@ -1,6 +1,9 @@
 package com.blockchain.datamanagers
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.testutils.bitcoin
+import com.blockchain.testutils.bitcoinCash
+import com.blockchain.testutils.ether
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
@@ -408,6 +411,104 @@ class TransactionSendDataManagerTest {
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(CryptoValue.ZeroEth)
+    }
+
+    @Test
+    fun `get absolute fee for bitcoin`() {
+        // Arrange
+        val amount = 1.23.bitcoin()
+        val account = Account().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(sendDataManager.getSpendableCoins(any(), any(), any()))
+            .thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
+        // Act
+        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinFromSatoshis(500))
+    }
+
+    @Test
+    fun `get absolute fee for bitcoin uses regular fee by default`() {
+        // Arrange
+        val amount = 1.23.bitcoin()
+        val account = Account().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(
+            sendDataManager.getSpendableCoins(
+                any(),
+                any(),
+                eq(feeOptions.regularFee.toBigInteger())
+            )
+        ).thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
+        // Act
+        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinFromSatoshis(500))
+    }
+
+    @Test
+    fun `get absolute fee for bitcoin uses priority fee if specified`() {
+        // Arrange
+        val amount = 1.23.bitcoin()
+        val account = Account().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(
+            sendDataManager.getSpendableCoins(
+                any(),
+                any(),
+                eq(feeOptions.priorityFee.toBigInteger())
+            )
+        ).thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
+        // Act
+        val testObserver =
+            subject.getFeeForTransaction(amount, account, feeOptions, FeeType.Priority)
+                .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinFromSatoshis(500))
+    }
+
+    @Test
+    fun `get absolute fee for bitcoin cash`() {
+        // Arrange
+        val amount = 1.23.bitcoinCash()
+        val account = GenericMetadataAccount().apply { xpub = "XPUB" }
+        val unspentOutputs = UnspentOutputs()
+        whenever(sendDataManager.getUnspentBchOutputs("XPUB"))
+            .thenReturn(Observable.just(unspentOutputs))
+        whenever(sendDataManager.getSpendableCoins(any(), any(), any()))
+            .thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
+        // Act
+        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(CryptoValue.bitcoinCashFromSatoshis(500))
+    }
+
+    @Test
+    fun `get absolute fee for ether`() {
+        // Arrange
+        val amount = 1.23.ether()
+        val account = EthereumAccount()
+        // Act
+        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue(
+            CryptoValue.etherFromWei((feeOptions.regularFee * feeOptions.gasLimit).gweiToWei())
+        )
     }
 
     private val feeOptions = FeeOptions().apply {

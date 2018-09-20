@@ -67,6 +67,52 @@ class TransactionSendDataManager(
         CryptoCurrency.ETHER -> getMaxEther(fees)
     }
 
+    fun getFeeForTransaction(
+        amount: CryptoValue,
+        account: JsonSerializableAccount,
+        fees: FeeOptions,
+        feeType: FeeType = FeeType.Regular
+    ): Single<CryptoValue> = when (amount.currency) {
+        CryptoCurrency.BTC -> calculateBtcFee(
+            account as Account,
+            amount,
+            fees.feeForType(feeType)
+        )
+        CryptoCurrency.BCH -> calculateBchFee(
+            account as GenericMetadataAccount,
+            amount,
+            fees.feeForType(feeType)
+        )
+        CryptoCurrency.ETHER -> Single.just(calculateEtherFee(fees))
+    }
+
+    private fun calculateBtcFee(
+        account: Account,
+        amount: CryptoValue,
+        feePerKb: BigInteger
+    ): Single<CryptoValue> = calculateBtcOrBchAbsoluteFee(account.xpub, amount, feePerKb)
+        .map { CryptoValue.bitcoinFromSatoshis(it) }
+
+    private fun calculateBchFee(
+        account: GenericMetadataAccount,
+        amount: CryptoValue,
+        feePerKb: BigInteger
+    ): Single<CryptoValue> = calculateBtcOrBchAbsoluteFee(account.xpub, amount, feePerKb)
+        .map { CryptoValue.bitcoinCashFromSatoshis(it) }
+
+    private fun calculateBtcOrBchAbsoluteFee(
+        xPub: String,
+        amount: CryptoValue,
+        feePerKb: BigInteger
+    ): Single<BigInteger> = getUnspentOutputs(xPub, amount.currency)
+        .map { getSuggestedAbsoluteFee(it, amount.amount, feePerKb) }
+
+    private fun getSuggestedAbsoluteFee(
+        coins: UnspentOutputs,
+        amountToSend: BigInteger,
+        feePerKb: BigInteger
+    ): BigInteger = sendDataManager.getSpendableCoins(coins, amountToSend, feePerKb).absoluteFee
+
     private fun getMaxBitcoin(
         account: Account,
         fees: FeeOptions,
@@ -96,13 +142,18 @@ class TransactionSendDataManager(
     private fun getMaxEther(fees: FeeOptions): Single<CryptoValue> =
         ethDataManager.fetchEthAddress()
             .map {
-                val wei = (fees.regularFee * fees.gasLimit).gweiToWei()
+                val wei = calculateEtherFee(fees).amount
                 return@map (it.getAddressResponse()!!.balance - wei).max(BigInteger.ZERO)
             }
             .map { CryptoValue.etherFromWei(it) }
             .doOnError { Timber.e(it) }
             .onErrorReturn { CryptoValue.ZeroEth }
             .singleOrError()
+
+    private fun calculateEtherFee(fees: FeeOptions): CryptoValue {
+        val wei = (fees.regularFee * fees.gasLimit).gweiToWei()
+        return CryptoValue.etherFromWei(wei)
+    }
 
     private fun sendBtcTransaction(
         amount: CryptoValue,
