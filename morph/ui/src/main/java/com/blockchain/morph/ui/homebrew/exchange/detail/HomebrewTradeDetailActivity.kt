@@ -1,6 +1,5 @@
 package com.blockchain.morph.ui.homebrew.exchange.detail
 
-import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -27,7 +26,6 @@ import piuk.blockchain.androidcoreui.utils.extensions.visible
 
 class HomebrewTradeDetailActivity : BaseAuthActivity() {
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homebrew_trade_detail)
@@ -42,7 +40,7 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
             null,
             null
         )
-        value.text = if (trade.approximateValue()) "~${trade.price}" else trade.price
+        value.text = if (trade.approximateValue()) trade.price.displayAsApproximate() else trade.price
         receive.text = trade.quantity
         fees.text = trade.fee
 
@@ -51,14 +49,14 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
         }
 
         if (trade.refunding()) {
-            receive.text = "~${trade.quantity}"
-            fees.text = "~${trade.fee}"
+            receive.text = trade.quantity.displayAsApproximate()
+            fees.text = trade.fee.displayAsApproximate()
             receive_title.setText(R.string.morph_status_refund_in_progress)
         }
 
         if (trade.refunded()) {
             receive.text = trade.quantity
-            fees.text = "-${trade.fee}"
+            fees.text = trade.fee.displayAsNegative()
             receive_title.setText(R.string.morph_exchange)
         }
 
@@ -150,6 +148,10 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
 
     private fun Trade.expired(): Boolean =
         this.state == MorphTrade.Status.EXPIRED
+
+    private fun String.displayAsApproximate() = "~$this"
+
+    private fun String.displayAsNegative() = "-$this"
 
     override fun onSupportNavigateUp(): Boolean = consume { onBackPressed() }
 
