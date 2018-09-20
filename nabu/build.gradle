@@ -16,7 +16,6 @@ targetCompatibility = Versions.javaCompatibilityVersion
 
 dependencies {
     implementation project(':wallet')
-    implementation project(':morph:common')
     implementation project(':common:network')
     implementation Libraries.kotlin
     implementation Libraries.moshiKotlin
