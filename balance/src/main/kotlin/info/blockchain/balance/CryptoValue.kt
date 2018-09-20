@@ -10,7 +10,7 @@ data class CryptoValue(
      * Amount in the smallest unit of the currency, Satoshi/Wei for example.
      */
     val amount: BigInteger
-) {
+) : Money {
     /**
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */

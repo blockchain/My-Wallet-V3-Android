@@ -45,7 +45,7 @@ private object FiatFormat {
 data class FiatValue private constructor(
     val currencyCode: String,
     val value: BigDecimal
-) {
+) : Money {
     val isZero: Boolean = value.signum() == 0
 
     val valueMinor: Long =
