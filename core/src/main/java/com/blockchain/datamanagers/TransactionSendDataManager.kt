@@ -83,8 +83,28 @@ class TransactionSendDataManager(
             amount,
             fees.feeForType(feeType)
         )
-        CryptoCurrency.ETHER -> Single.just(calculateEtherFee(fees))
+        CryptoCurrency.ETHER -> calculateEtherFee(fees).just()
     }
+
+    fun getChangeAddress(
+        cryptoCurrency: CryptoCurrency,
+        account: JsonSerializableAccount
+    ): Single<String> =
+        when (cryptoCurrency) {
+            CryptoCurrency.BTC -> (account as Account).getChangeAddress()
+            CryptoCurrency.BCH -> (account as GenericMetadataAccount).getChangeAddress()
+            CryptoCurrency.ETHER -> (account as EthereumAccount).address.just()
+        }
+
+    fun getReceiveAddress(
+        cryptoCurrency: CryptoCurrency,
+        account: JsonSerializableAccount
+    ): Single<String> =
+        when (cryptoCurrency) {
+            CryptoCurrency.BTC -> (account as Account).getReceiveAddress()
+            CryptoCurrency.BCH -> (account as GenericMetadataAccount).getReceiveAddress()
+            CryptoCurrency.ETHER -> (account as EthereumAccount).address.just()
+        }
 
     private fun calculateBtcFee(
         account: Account,
@@ -282,15 +302,24 @@ class TransactionSendDataManager(
         account: Account,
         spendable: SpendableUnspentOutputs
     ): Single<List<ECKey>> =
-        Single.just(payloadDataManager.getHDKeysForSigning(account, spendable))
+        payloadDataManager.getHDKeysForSigning(account, spendable).just()
 
     private fun Account.getChangeAddress(): Single<String> =
         payloadDataManager.getNextChangeAddress(this).singleOrError()
+
+    private fun Account.getReceiveAddress(): Single<String> =
+        payloadDataManager.getNextReceiveAddress(this).singleOrError()
 
     private fun GenericMetadataAccount.getChangeAddress(): Single<String> {
         val position = bchDataManager.getActiveAccounts()
             .indexOfFirst { it.xpub == this.xpub }
         return bchDataManager.getNextChangeAddress(position).singleOrError()
+    }
+
+    private fun GenericMetadataAccount.getReceiveAddress(): Single<String> {
+        val position = bchDataManager.getActiveAccounts()
+            .indexOfFirst { it.xpub == this.xpub }
+        return bchDataManager.getNextReceiveAddress(position).singleOrError()
     }
 
     private fun FeeOptions.feeForType(feeType: FeeType): BigInteger = when (feeType) {
@@ -300,6 +329,8 @@ class TransactionSendDataManager(
 
     private fun GenericMetadataAccount.getHdAccount(): Account =
         payloadDataManager.getAccountForXPub(this.xpub)
+
+    private fun <T> T.just(): Single<T> = Single.just(this)
 }
 
 internal fun Long.gweiToWei(): BigInteger =

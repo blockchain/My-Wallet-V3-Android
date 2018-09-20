@@ -511,6 +511,96 @@ class TransactionSendDataManagerTest {
         )
     }
 
+    @Test
+    fun `get change address bitcoin`() {
+        // Arrange
+        val account = Account()
+        whenever(payloadDataManager.getNextChangeAddress(account))
+            .thenReturn(Observable.just("CHANGE"))
+        // Act
+        val testObserver = subject.getChangeAddress(CryptoCurrency.BTC, account)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue("CHANGE")
+    }
+
+    @Test
+    fun `get change address bitcoin cash`() {
+        // Arrange
+        val bchAccount = GenericMetadataAccount().apply { xpub = "XPUB" }
+        val account = Account().apply { xpub = "XPUB" }
+        whenever(bchDataManager.getActiveAccounts()).thenReturn(listOf(bchAccount))
+        whenever(payloadDataManager.getAccountForXPub("XPUB"))
+            .thenReturn(account)
+        whenever(bchDataManager.getNextChangeAddress(0))
+            .thenReturn(Observable.just("CHANGE"))
+        // Act
+        val testObserver = subject.getChangeAddress(CryptoCurrency.BCH, bchAccount)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue("CHANGE")
+    }
+
+    @Test
+    fun `get change address ethereum`() {
+        // Arrange
+        val account: EthereumAccount = mock()
+        whenever(account.address).thenReturn("ADDRESS")
+        // Act
+        val testObserver = subject.getChangeAddress(CryptoCurrency.ETHER, account)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue("ADDRESS")
+    }
+
+    @Test
+    fun `get receive address bitcoin`() {
+        // Arrange
+        val account = Account()
+        whenever(payloadDataManager.getNextReceiveAddress(account))
+            .thenReturn(Observable.just("RECEIVE"))
+        // Act
+        val testObserver = subject.getReceiveAddress(CryptoCurrency.BTC, account)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue("RECEIVE")
+    }
+
+    @Test
+    fun `get receive address bitcoin cash`() {
+        // Arrange
+        val bchAccount = GenericMetadataAccount().apply { xpub = "XPUB" }
+        val account = Account().apply { xpub = "XPUB" }
+        whenever(bchDataManager.getActiveAccounts()).thenReturn(listOf(bchAccount))
+        whenever(payloadDataManager.getAccountForXPub("XPUB"))
+            .thenReturn(account)
+        whenever(bchDataManager.getNextReceiveAddress(0))
+            .thenReturn(Observable.just("RECEIVE"))
+        // Act
+        val testObserver = subject.getReceiveAddress(CryptoCurrency.BCH, bchAccount)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue("RECEIVE")
+    }
+
+    @Test
+    fun `get receive address ethereum`() {
+        // Arrange
+        val account: EthereumAccount = mock()
+        whenever(account.address).thenReturn("ADDRESS")
+        // Act
+        val testObserver = subject.getReceiveAddress(CryptoCurrency.ETHER, account)
+            .test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertValue("ADDRESS")
+    }
+
     private val feeOptions = FeeOptions().apply {
         priorityFee = 100L
         regularFee = 10L
