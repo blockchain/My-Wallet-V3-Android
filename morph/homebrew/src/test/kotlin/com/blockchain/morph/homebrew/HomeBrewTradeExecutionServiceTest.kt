@@ -1,21 +1,29 @@
 package com.blockchain.morph.homebrew
 
 import com.blockchain.morph.exchange.mvi.Quote
+import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.TradeRequest
 import com.blockchain.nabu.service.NabuMarketsService
 import com.blockchain.serialization.BigDecimalAdaptor
 import com.blockchain.testutils.getStringFromResource
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.squareup.moshi.Moshi
+import io.reactivex.Single
+import org.amshove.kluent.`it returns`
 import org.amshove.kluent.`should throw the Exception`
 import org.amshove.kluent.`with message`
 import org.junit.Test
 
 class HomeBrewTradeExecutionServiceTest {
 
-    private val marketsService: NabuMarketsService = mock()
+    private val nabuTransaction = mock<NabuTransaction>()
+
+    private val marketsService: NabuMarketsService = mock {
+        on { executeTrade(any()) } `it returns` Single.just(nabuTransaction)
+    }
 
     private val homeBrewTradeExecutionService = HomeBrewTradeExecutionService(marketsService)
 
@@ -54,7 +62,7 @@ class HomeBrewTradeExecutionServiceTest {
     }
 
     @Test
-    fun `executing a trade forwards all the expected data`() {
+    fun `executing a trade forwards all the expected data, including the full original quote`() {
         val quote = loadQuoteJsonFromResource("quotes/quote_receive.json")
         homeBrewTradeExecutionService
             .executeTrade(
@@ -75,6 +83,23 @@ class HomeBrewTradeExecutionServiceTest {
                     quote = quote
                 )
             )
+    }
+
+    @Test
+    fun `the result of executing a trade is just direct from marketsService`() {
+        val quote = loadQuoteJsonFromResource("quotes/quote_receive.json")
+        homeBrewTradeExecutionService
+            .executeTrade(
+                Quote(
+                    from = mock(),
+                    to = mock(),
+                    rawQuote = quote
+                ),
+                destinationAddress = "1destAddress",
+                refundAddress = "1refundAddress"
+            )
+            .test()
+            .assertValue(nabuTransaction)
     }
 
     private fun loadQuoteJsonFromResource(filePath: String): QuoteJson {
