@@ -24,11 +24,9 @@ import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_RECEIVING_A
 import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_SENDING_ACCOUNT
 import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationFragment
 import com.blockchain.ui.chooser.AccountChooserActivity
-import info.blockchain.balance.AccountReference
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.architecture.ext.viewModel
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -121,12 +119,12 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
             when (requestCode) {
                 REQUEST_CODE_CHOOSE_SENDING_ACCOUNT -> {
                     exchangeViewModel.inputEventSink.onNext(
-                        ChangeCryptoFromAccount(AccountReference(account.cryptoCurrency))
+                        ChangeCryptoFromAccount(account.accountReference)
                     )
                 }
                 REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT -> {
                     exchangeViewModel.inputEventSink.onNext(
-                        ChangeCryptoToAccount(AccountReference(account.cryptoCurrency))
+                        ChangeCryptoToAccount(account.accountReference)
                     )
                 }
                 else -> throw IllegalArgumentException("Unknown request code $requestCode")

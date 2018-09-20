@@ -1,3 +1,6 @@
 package info.blockchain.balance
 
-class AccountReference(val cryptoCurrency: CryptoCurrency)
+data class AccountReference(
+    val cryptoCurrency: CryptoCurrency,
+    val label: String
+)

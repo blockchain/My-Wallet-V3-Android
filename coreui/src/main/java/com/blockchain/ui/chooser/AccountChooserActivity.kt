@@ -10,14 +10,12 @@ import android.support.v7.widget.LinearLayoutManager
 import com.blockchain.features.FeatureNames
 import com.blockchain.serialization.JsonSerializableAccount
 import com.blockchain.serialization.toMoshiJson
+import com.blockchain.wallet.toAccountReference
 import com.fasterxml.jackson.core.JsonProcessingException
 import kotlinx.android.synthetic.main.activity_account_chooser.*
 import kotlinx.android.synthetic.main.toolbar_general.*
 import com.squareup.moshi.Moshi
-import info.blockchain.balance.CryptoCurrency
-import info.blockchain.wallet.coin.GenericMetadataAccount
-import info.blockchain.wallet.ethereum.EthereumAccount
-import info.blockchain.wallet.payload.data.Account
+import info.blockchain.balance.AccountReference
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.property
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
@@ -154,29 +152,25 @@ class AccountChooserActivity : BaseMvpActivity<AccountChooserView, AccountChoose
             putExtra(EXTRA_ACTIVITY_TITLE, title)
         }
 
-        fun getSelectedRawAccount(data: Intent): JsonSerializableAccount? {
+        fun getSelectedRawAccount(data: Intent): JsonSerializableAccount {
             val clazz =
                 Class.forName(data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_OBJECT_TYPE))
 
             val json = data.getStringExtra(AccountChooserActivity.EXTRA_SELECTED_ITEM)
             val any = Moshi.Builder().build().adapter(clazz)
                 .fromJson(json)
-            return any as? JsonSerializableAccount
+            return any as JsonSerializableAccount
         }
 
-        fun getSelectedAccount(data: Intent): AccountChooserResult {
-            val account = getSelectedRawAccount(data)
-            return when (account) {
-                is Account -> AccountChooserResult(CryptoCurrency.BTC, account)
-                is EthereumAccount -> AccountChooserResult(CryptoCurrency.ETHER, account)
-                is GenericMetadataAccount -> AccountChooserResult(CryptoCurrency.BCH, account)
-                else -> throw IllegalArgumentException("Unsupported class type")
-            }
-        }
+        fun getSelectedAccount(data: Intent) =
+            getSelectedRawAccount(data)
+                .let {
+                    AccountChooserResult(it.toAccountReference(), it)
+                }
     }
 }
 
 class AccountChooserResult(
-    val cryptoCurrency: CryptoCurrency,
+    val accountReference: AccountReference,
     val account: JsonSerializableAccount
 )

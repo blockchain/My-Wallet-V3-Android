@@ -13,7 +13,7 @@ class ChangeCryptoAccountsTest {
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             ChangeCryptoFromAccount(
-                from = AccountReference(CryptoCurrency.BCH)
+                from = AccountReference(CryptoCurrency.BCH, "")
             )
         ) {
             assertValue {
@@ -31,7 +31,7 @@ class ChangeCryptoAccountsTest {
             initial("GBP", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             ChangeCryptoToAccount(
-                to = AccountReference(CryptoCurrency.BCH)
+                to = AccountReference(CryptoCurrency.BCH, "")
             )
         ) {
             assertValue {
@@ -49,7 +49,7 @@ class ChangeCryptoAccountsTest {
             initial("GBP", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             ChangeCryptoFromAccount(
-                from = AccountReference(CryptoCurrency.ETHER)
+                from = AccountReference(CryptoCurrency.ETHER, "")
             )
         ) {
             assertValue {
@@ -67,7 +67,7 @@ class ChangeCryptoAccountsTest {
             initial("GBP", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             ChangeCryptoToAccount(
-                to = AccountReference(CryptoCurrency.BTC)
+                to = AccountReference(CryptoCurrency.BTC, "")
             )
         ) {
             assertValue {
