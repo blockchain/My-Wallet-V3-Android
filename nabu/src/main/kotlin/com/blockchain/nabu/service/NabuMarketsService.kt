@@ -11,6 +11,7 @@ import com.blockchain.nabu.api.Value
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
+import info.blockchain.balance.withMajorValue
 import io.reactivex.Single
 
 class NabuMarketsService internal constructor(
@@ -96,7 +97,7 @@ private fun TradeJson.map(): NabuTransaction {
 }
 
 private fun Value.toCryptoValue(): CryptoValue =
-    CryptoValue.fromMajor(CryptoCurrency.fromSymbol(this.symbol)!!, this.value)
+    CryptoCurrency.fromSymbolOrThrow(symbol).withMajorValue(value)
 
 private fun Value.toFiatValue(): FiatValue =
     FiatValue.fromMajor(this.symbol, this.value)

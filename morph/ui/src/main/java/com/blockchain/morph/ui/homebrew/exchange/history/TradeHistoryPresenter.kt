@@ -43,7 +43,7 @@ class TradeHistoryPresenter(
         id = this.quote.orderId,
         state = this.status,
         currency = this.quote.pair.to.symbol,
-        price = this.quote.fiatValue!!.toStringWithSymbol(view.locale),
+        price = this.quote.fiatValue?.toStringWithSymbol(view.locale) ?: "",
         pair = this.quote.pair.pairCode,
         quantity = this.quote.withdrawalAmount.formatWithUnit(view.locale),
         createdAt = dateUtil.formatted(this.timestamp),
