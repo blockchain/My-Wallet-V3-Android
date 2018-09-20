@@ -69,11 +69,12 @@
     <string name="morph_in_progress_summary">Exchange in Progress</string>
     <string name="morph_failed_summary">Exchange Failed</string>
     <string name="morph_refunded_summary">Exchange Refunded</string>
-    <string name="the_amounts_you_send_and_receive_may_change_slightly_due_to_market_activity_once_an_order_starts_we_are_unable_to_stop_it">The amounts you send and receive may change slightly due to market activity. Once an order starts, we are unable to stop it</string>
+    <string name="locked_disclaimer_message">The amounts you send and receive may change slightly due to market activity. Once an order starts, we are unable to stop it</string>
     <string name="send_to">Send To</string>
     <string name="receive">Receive</string>
     <string name="fees">Fees</string>
     <string name="value">Value</string>
+    <string name="order_id">Order ID</string>
     <string name="order_detail">Order Detail</string>
     <string name="make_a_new_exchange">Make a New Exchange</string>
     <string name="order_history">Order History</string>

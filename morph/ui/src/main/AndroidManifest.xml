@@ -13,7 +13,7 @@
             android:name=".homebrew.exchange.history.TradeHistoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".homebrew.exchange.ExchangeLockedActivity"
+            android:name=".homebrew.exchange.locked.ExchangeLockedActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".homebrew.exchange.detail.HomebrewTradeDetailActivity"

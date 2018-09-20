@@ -1,7 +1,6 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.morph.ui.R
-import com.blockchain.morph.ui.homebrew.exchange.ExchangeLockedActivity
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
@@ -113,9 +111,21 @@ class ExchangeConfirmationFragment :
     }
 
     override fun continueToExchangeLocked() {
-        val intent = Intent(requireContext(), ExchangeLockedActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        // TODO:
+//        ExchangeLockedActivity.start(
+//            requireContext(),
+//            ExchangeLockedModel(
+//                "ORDER ID",
+//                exchangeConfirmationModel.value,
+//                exchangeConfirmationModel.fees,
+//                exchangeConfirmationModel.sending,
+//                exchangeConfirmationModel.sendingCurrency,
+//                exchangeConfirmationModel.receiving,
+//                exchangeConfirmationModel.receivingCurrency,
+//                exchangeConfirmationModel.accountItem
+//            )
+//        )
+//        requireActivity().finish()
     }
 
     override fun createPresenter(): ExchangeConfirmationPresenter = presenter

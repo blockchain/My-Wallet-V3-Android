@@ -266,7 +266,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:text="@string/the_amounts_you_send_and_receive_may_change_slightly_due_to_market_activity_once_an_order_starts_we_are_unable_to_stop_it"
+        android:text="@string/locked_disclaimer_message"
         android:textAlignment="center"
         android:textColor="@color/exchange_text_gray_color"
         android:textSize="12sp"
