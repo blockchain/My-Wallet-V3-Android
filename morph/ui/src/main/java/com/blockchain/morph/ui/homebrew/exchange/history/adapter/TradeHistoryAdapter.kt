@@ -1,6 +1,7 @@
 package com.blockchain.morph.ui.homebrew.exchange.history.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.blockchain.morph.trade.MorphTrade
 import com.blockchain.morph.ui.R
+import com.blockchain.morph.ui.homebrew.exchange.extensions.toDrawable
 import com.blockchain.morph.ui.homebrew.exchange.extensions.toStatusString
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
 import kotlinx.android.synthetic.main.list_item_trade_history.view.*
@@ -48,7 +50,7 @@ class TradeHistoryAdapter(val listener: (Trade) -> Unit) :
         fun bind(trade: Trade, listener: (Trade) -> Unit) = with(itemView) {
             tradeStatus.text = trade.state.toStatusString(context)
             tradeStatus.setCompoundDrawablesWithIntrinsicBounds(
-                trade.state.toDrawable(),
+                trade.state.toDrawable(context),
                 null,
                 null,
                 null
@@ -58,20 +60,5 @@ class TradeHistoryAdapter(val listener: (Trade) -> Unit) :
             tradeCreatedAt.text = trade.createdAt
             setOnClickListener { listener(trade) }
         }
-
-        private fun MorphTrade.Status.toDrawable(): Drawable? =
-            when (this) {
-                MorphTrade.Status.IN_PROGRESS,
-                MorphTrade.Status.NO_DEPOSITS,
-                MorphTrade.Status.RECEIVED -> context.getResolvedDrawable(R.drawable.trade_status_in_progress_circle)
-                MorphTrade.Status.EXPIRED,
-                MorphTrade.Status.UNKNOWN -> context.getResolvedDrawable(R.drawable.trade_status_expired_circle)
-                MorphTrade.Status.RESOLVED,
-                MorphTrade.Status.COMPLETE -> context.getResolvedDrawable(R.drawable.trade_status_completed_circle)
-                MorphTrade.Status.FAILED -> context.getResolvedDrawable(R.drawable.trade_status_failed_circle)
-                MorphTrade.Status.REFUNDED -> context.getResolvedDrawable(R.drawable.trade_status_refunded_circle)
-                MorphTrade.Status.REFUND_IN_PROGRESS ->
-                    context.getResolvedDrawable(R.drawable.trade_status_refund_in_progress_circle)
-            }
     }
 }

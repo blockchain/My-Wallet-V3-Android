@@ -1,243 +1,325 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/white">
 
     <include
-        android:id="@+id/toolbar_constraint"
-        layout="@layout/toolbar_constraint"
-        android:fitsSystemWindows="true" />
+        android:id="@+id/toolbar_general"
+        layout="@layout/toolbar_general" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_constraint"/>
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/status_title_textView"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:text="@string/value"
-        android:textColor="@color/exchange_text_gray_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Status" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraint_layout_morph_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_gravity="end"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|end"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Complete" />
+            <!-- Status -->
 
-    <TextView
-        android:id="@+id/value_title"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:text="@string/value"
-        android:textColor="@color/exchange_text_gray_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status_title_textView"
-        tools:layout_editor_absoluteY="16dp"
-        tools:text="Value" />
+            <View
+                android:id="@+id/view_status"
+                android:layout_width="match_parent"
+                android:background="@color/trade_row_background"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/status" />
 
-    <TextView
-        android:id="@+id/value"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_gravity="end"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|end"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/status"
-        tools:layout_editor_absoluteY="16dp"
-        tools:text="$1,642.50" />
+            <TextView
+                android:id="@+id/status_title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/exchange_row_height"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="@string/value"
+                android:textColor="@color/exchange_text_gray_color"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Status" />
 
-    <TextView
-        android:id="@+id/fees_title"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_gray_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/value_title"
-        android:text="@string/fees" />
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_gravity="end"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical|end"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@id/status_title_textView"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_constraint"
+                tools:drawableLeft="@drawable/trade_status_completed_circle"
+                tools:text="Complete" />
 
-    <TextView
-        android:id="@+id/fees"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_gravity="end"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|end"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/value"
-        tools:text="0.000414 BTC" />
+            <!-- Value -->
 
-    <TextView
-        android:id="@+id/receive_title"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fees_title"
-        android:text="@string/receive" />
+            <View
+                android:id="@+id/view_value"
+                android:layout_width="match_parent"
+                android:background="@color/trade_row_background"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/value" />
 
-    <TextView
-        android:id="@+id/receive"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/exchange_row_height"
-        android:layout_gravity="end"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|end"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/fees"
-        tools:text="5.668586 ETH" />
+            <TextView
+                android:id="@+id/value_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:text="@string/value"
+                android:textColor="@color/exchange_text_gray_color"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/status_title_textView"
+                tools:layout_editor_absoluteY="16dp"
+                tools:text="Value" />
 
-    <TextView
-        android:id="@+id/send_to_title"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_gray_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receive_title"
-        android:text="@string/send_to" />
+            <TextView
+                android:id="@+id/value"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_gravity="end"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical|end"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/value_title"
+                app:layout_constraintTop_toBottomOf="@+id/status"
+                tools:layout_editor_absoluteY="16dp"
+                tools:text="$1,642.50" />
 
-    <TextView
-        android:id="@+id/send_to"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|end"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/receive"
-        tools:text="My Wallet" />
-    <TextView
-        android:id="@+id/trade_id_title"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_gray_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_to_title"
-        android:text="@string/morph_order_id_title" />
+            <!-- Exchange -->
 
-    <TextView
-        android:id="@+id/trade_id"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="2dp"
-        android:background="@color/trade_row_background"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_vertical|end"
-        android:padding="16dp"
-        android:textColor="@color/exchange_text_dark_color"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/send_to"
-        tools:text="ede39566-1f0d-4e48-96fa-b558b70e46b7" />
+            <View
+                android:id="@+id/view_exchange"
+                android:layout_width="match_parent"
+                android:background="@color/trade_row_background"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/exchange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/exchange" />
 
-    <TextView
-        android:id="@+id/status_detail_textView"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:text="@string/status_inprogress_detail"
-        android:textAlignment="center"
-        android:textColor="@color/exchange_text_gray_color"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trade_id"
-        tools:text="Thanks for placing your trade! Funds will usually reach your wallet within 2 hours and we’ll wend you a notification when that happens. Keep track of your trade’s progress in the Order History area." />
+            <TextView
+                android:id="@+id/exchange_title"
+                android:layout_width="wrap_content"
+                android:layout_height="58dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_gray_color"
+                android:textSize="16sp"
+                android:text="@string/exchange"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/value_title" />
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/exchange"
+                android:layout_width="0dp"
+                android:layout_height="58dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical|end"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/exchange_title"
+                app:layout_constraintTop_toBottomOf="@+id/value"
+                tools:text="0.25 BTC" />
+
+            <!-- Fees -->
+
+            <View
+                android:id="@+id/view_fees"
+                android:layout_width="match_parent"
+                android:background="@color/trade_row_background"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/fees"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/fees" />
+
+            <TextView
+                android:id="@+id/fees_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_gray_color"
+                android:textSize="16sp"
+                android:text="@string/fees"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exchange_title" />
+
+            <TextView
+                android:id="@+id/fees"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_gravity="end"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical|end"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fees_title"
+                app:layout_constraintTop_toBottomOf="@+id/exchange"
+                tools:text="0.000414 BTC" />
+
+            <!-- Receive -->
+
+            <View
+                android:id="@+id/view_receive"
+                android:layout_width="match_parent"
+                android:background="@color/trade_row_background"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/receive"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/receive" />
+
+            <TextView
+                android:id="@+id/receive_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@string/receive"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fees_title" />
+
+            <TextView
+                android:id="@+id/receive"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/exchange_row_height"
+                android:layout_gravity="end"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical|end"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/receive_title"
+                app:layout_constraintTop_toBottomOf="@+id/fees"
+                tools:text="5.668586 ETH" />
+
+            <!-- ID -->
+
+            <View
+                android:id="@+id/view_id"
+                android:layout_width="match_parent"
+                android:background="@color/trade_row_background"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/trade_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/trade_id" />
+
+            <TextView
+                android:id="@+id/trade_id_title"
+                android:layout_width="wrap_content"
+                android:layout_height="58dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_gray_color"
+                android:textSize="16sp"
+                android:text="@string/morph_order_id_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receive_title" />
+
+            <TextView
+                android:id="@+id/trade_id"
+                android:layout_width="0dp"
+                android:layout_height="58dp"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center_vertical|end"
+                android:inputType="none"
+                android:maxLines="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="16dp"
+                android:textColor="@color/exchange_text_dark_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/trade_id_title"
+                app:layout_constraintTop_toBottomOf="@+id/receive"
+                tools:text="ede39566-1f0d-4e48-96fa-b558b70e46b7" />
+
+            <TextView
+                android:id="@+id/status_detail_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="center"
+                android:text="@string/status_inprogress_detail"
+                android:textAlignment="center"
+                android:textColor="@color/exchange_text_gray_color"
+                android:textSize="12sp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_request_refund"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trade_id"
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="Thanks for placing your trade! Funds will usually reach your wallet within 2 hours and we’ll wend you a notification when that happens. Keep track of your trade’s progress in the Order History area." />
+
+            <Button
+                android:id="@+id/button_request_refund"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="invisible"
+                android:layout_marginBottom="16dp"
+                android:theme="@style/LightBlueButtonTheme"
+                android:text="@string/status_request_refund"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+</LinearLayout>

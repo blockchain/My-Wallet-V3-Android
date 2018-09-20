@@ -47,7 +47,8 @@ class TradeHistoryPresenter(
         pair = this.quote.pair.pairCode,
         quantity = this.quote.withdrawalAmount.formatWithUnit(view.locale),
         createdAt = dateUtil.formatted(this.timestamp),
-        depositQuantity = this.quote.depositAmount.formatWithUnit(view.locale)
+        depositQuantity = this.quote.depositAmount.formatWithUnit(view.locale),
+        fee = this.quote.minerFee.formatWithUnit(view.locale)
     )
 }
 

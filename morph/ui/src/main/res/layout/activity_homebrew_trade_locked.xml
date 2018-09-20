@@ -23,10 +23,10 @@
         android:textAllCaps="false"
         android:textColor="@color/exchange_button_color"
         android:textStyle="bold"
+        android:background="@color/color_bitcoin"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        android:background="@color/color_bitcoin"
         tools:background="@color/color_bitcoin_logo"
         tools:text="0.25 BTC" />
 
@@ -42,10 +42,10 @@
         android:textAllCaps="false"
         android:textColor="@color/exchange_button_color"
         android:textStyle="bold"
+        android:background="@color/color_ether"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:background="@color/color_ether"
         tools:background="@color/color_ether_logo"
         tools:text="5.67 ETH" />
 
@@ -84,20 +84,17 @@
 
     <Button
         android:id="@+id/button_done"
-        style="@style/ExchangeButton.Exchange"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="#FF10ADE4"
+        android:theme="@style/LightBlueButtonTheme"
         android:text="@string/done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Done" />
-
-
 
     <TextView
         android:id="@+id/order_id_title_textView"
@@ -109,10 +106,10 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:text="@string/value"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_from_account_button"
-        android:text="@string/value"
         tools:text="Order Id" />
 
     <TextView
@@ -141,10 +138,10 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:text="@string/value"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_id_title_textView"
-        android:text="@string/value"
         tools:text="Value" />
 
     <TextView
@@ -173,10 +170,10 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:text="@string/fees"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/value_title_textView"
-        android:text="@string/fees" />
+        app:layout_constraintTop_toBottomOf="@+id/value_title_textView" />
 
     <TextView
         android:id="@+id/fees_textView"
@@ -205,10 +202,10 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:text="@string/receive"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fees_title_textView"
-        android:text="@string/receive" />
+        app:layout_constraintTop_toBottomOf="@+id/fees_title_textView" />
 
     <TextView
         android:id="@+id/receive_textView"
@@ -237,10 +234,10 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:text="@string/send_to"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receive_title_textView"
-        android:text="@string/send_to" />
+        app:layout_constraintTop_toBottomOf="@+id/receive_title_textView" />
 
     <TextView
         android:id="@+id/send_to_textView"
@@ -287,6 +284,5 @@
         app:layout_constraintStart_toEndOf="@+id/select_from_account_button"
         app:layout_constraintTop_toTopOf="@+id/select_from_account_button"
         app:srcCompat="@drawable/ic_arrow_forward_exchange_white_24dp" />
-
 
 </android.support.constraint.ConstraintLayout>

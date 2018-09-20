@@ -25,7 +25,7 @@ object Versions {
     const val googleServices = "15.0.1"
     const val firebaseMessaging = "17.0.0"
     const val firebaseCore = "16.0.1"
-    const val constraintLayout = "1.0.2"
+    const val constraintLayout = "1.1.2"
     const val supportTesting = "1.0.2"
     const val multidex = "1.0.2"
     const val navigation = "1.0.0-alpha05"

@@ -76,10 +76,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textview_week"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@+id/textview_year"
-            app:layout_constraintTop_toBottomOf="@+id/chart"
-            app:layout_constraintVertical_bias="0.0" />
+            tools:layout_editor_absoluteY="320dp" />
 
         <TextView
             android:id="@+id/textview_all_time"
@@ -92,10 +90,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textview_year"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chart"
-            app:layout_constraintVertical_bias="0.0" />
+            tools:layout_editor_absoluteY="320dp" />
 
         <TextView
             android:id="@+id/textview_year"
@@ -108,10 +104,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textview_month"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="@id/textview_all_time"
-            app:layout_constraintTop_toBottomOf="@+id/chart"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toEndOf="@+id/textview_all_time"
+            tools:layout_editor_absoluteY="320dp" />
 
         <TextView
             android:id="@+id/textview_week"
@@ -125,8 +119,7 @@
             app:layout_constraintEnd_toStartOf="@+id/textview_day"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textview_month"
-            app:layout_constraintTop_toBottomOf="@+id/chart"
-            app:layout_constraintVertical_bias="0.0" />
+            tools:layout_editor_absoluteY="320dp" />
 
         <TextView
             android:id="@+id/textview_day"
@@ -140,8 +133,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textview_week"
-            app:layout_constraintTop_toBottomOf="@+id/chart"
-            app:layout_constraintVertical_bias="0.0" />
+            tools:layout_editor_absoluteY="320dp" />
 
         <TextView
             android:id="@+id/textview_currency"

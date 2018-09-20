@@ -10,6 +10,7 @@ data class Trade(
     val state: MorphTrade.Status,
     val currency: String,
     val price: String,
+    val fee: String,
     val pair: String,
     val quantity: String,
     val createdAt: String,
