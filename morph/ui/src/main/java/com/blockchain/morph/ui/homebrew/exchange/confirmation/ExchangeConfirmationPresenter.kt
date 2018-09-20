@@ -12,6 +12,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
@@ -34,10 +35,27 @@ class ExchangeConfirmationPresenter(
         if (payloadDataManager.isDoubleEncrypted) {
             view.showSecondPasswordDialog()
         }
+    }
 
-        // TODO: Fetch fee and update UI
-//        transactionSendDataManager.getFeeForTransaction()
-        view.updateFee(CryptoValue.etherFromWei(1.toBigInteger()))
+    internal fun updateFee(
+        amount: CryptoValue,
+        sendingAccount: JsonSerializableAccount,
+        fees: FeeOptions
+    ) {
+        compositeDisposable +=
+            transactionSendDataManager.getFeeForTransaction(amount, sendingAccount, fees)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess { }
+                .subscribeBy(
+                    onSuccess = {
+                        view.updateFee(it)
+                    },
+                    onError = {
+                        // TODO: Missing data in the UI, how do we handle this?
+                        Timber.e(it)
+                    }
+                )
     }
 
     internal fun executeTrade(
@@ -48,21 +66,21 @@ class ExchangeConfirmationPresenter(
         compositeDisposable +=
             getAddressPair(quote, receivingAccount, sendingAccount)
                 .flatMap { (destination, refund) ->
-                tradeExecutionService.executeTrade(quote, destination, refund)
-                    .subscribeOn(Schedulers.io())
-                    .flatMap { transaction ->
-                        transaction.deposit.currency.getFeeOptions()
-                            .flatMap {
-                                transactionSendDataManager.executeTransaction(
-                                    transaction.deposit,
-                                    transaction.depositAddress,
-                                    sendingAccount,
-                                    it
-                                ).subscribeOn(Schedulers.io())
-                            }
-                            .doOnSuccess { view.continueToExchangeLocked(transaction.id) }
-                    }
-            }
+                    tradeExecutionService.executeTrade(quote, destination, refund)
+                        .subscribeOn(Schedulers.io())
+                        .flatMap { transaction ->
+                            transaction.deposit.currency.getFeeOptions()
+                                .flatMap {
+                                    transactionSendDataManager.executeTransaction(
+                                        transaction.deposit,
+                                        transaction.depositAddress,
+                                        sendingAccount,
+                                        it
+                                    ).subscribeOn(Schedulers.io())
+                                }
+                                .doOnSuccess { view.continueToExchangeLocked(transaction.id) }
+                        }
+                }
                 .doOnSubscribe { view.showProgressDialog() }
                 .doOnEvent { _, _ -> view.dismissProgressDialog() }
                 .doOnError { view.displayErrorDialog() }
@@ -94,20 +112,28 @@ class ExchangeConfirmationPresenter(
 
     internal fun onSecondPasswordValidated(validatedSecondPassword: String) {
         compositeDisposable +=
-            Completable.fromCallable {
-                payloadDataManager.decryptHDWallet(
-                    environmentConfig.bitcoinNetworkParameters,
-                    validatedSecondPassword
-                )
-            }.andThen(
-                Completable.fromCallable {
-                    bchDataManager.decryptWatchOnlyWallet(payloadDataManager.mnemonic)
-                }
-            ).subscribeOn(Schedulers.computation())
+            decryptPayload(validatedSecondPassword)
+                .andThen(decryptBch())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError { Timber.e(it) }
                 .doOnSubscribe { view.showProgressDialog() }
                 .doOnTerminate { view.dismissProgressDialog() }
                 .subscribe()
+    }
+
+    private fun decryptPayload(validatedSecondPassword: String): Completable {
+        return Completable.fromCallable {
+            payloadDataManager.decryptHDWallet(
+                environmentConfig.bitcoinNetworkParameters,
+                validatedSecondPassword
+            )
+        }
+    }
+
+    private fun decryptBch(): Completable {
+        return Completable.fromCallable {
+            bchDataManager.decryptWatchOnlyWallet(payloadDataManager.mnemonic)
+        }
     }
 }
