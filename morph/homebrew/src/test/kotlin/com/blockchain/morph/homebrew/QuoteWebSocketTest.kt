@@ -57,7 +57,7 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
         givenAWebSocket(actualSocket)
             .updateQuoteRequest(
                 ExchangeQuoteRequest.Selling(
-                    offering = 100.0.bitcoin(),
+                    offering = 100.bitcoin(),
                     wanted = CryptoCurrency.ETHER,
                     indicativeFiatSymbol = "USD"
                 )
@@ -87,14 +87,14 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
             .apply {
                 updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
-                        offering = 100.0.bitcoin(),
+                        offering = 100.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
                         indicativeFiatSymbol = "USD"
                     )
                 )
                 updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
-                        offering = 100.0.bitcoin(),
+                        offering = 100.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
                         indicativeFiatSymbol = "USD"
                     )
@@ -114,14 +114,14 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
             .apply {
                 updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
-                        offering = 200.0.bitcoin(),
+                        offering = 200.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
                         indicativeFiatSymbol = "USD"
                     )
                 )
                 updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
-                        offering = 300.0.bitcoin(),
+                        offering = 300.bitcoin(),
                         wanted = CryptoCurrency.ETHER,
                         indicativeFiatSymbol = "USD"
                     )
@@ -176,10 +176,11 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
 
         subject.onNext(getStringFromResource("quotes/quote_receive.json"))
 
-        test.values().single() `should equal` Quote(
-            from = Quote.Value(0.15.bitcoin(), 96.77.usd()),
-            to = Quote.Value(0.27.ether(), 100.0.usd())
-        )
+        test.values().single().apply {
+            from `should equal` Quote.Value(0.15.bitcoin(), 96.77.usd())
+            to `should equal` Quote.Value(0.27.ether(), 100.usd())
+            to `should equal` Quote.Value(0.27.ether(), 100.usd())
+        }
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.blockchain.morph.homebrew
 
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.nabu.api.NabuTransaction
+import com.blockchain.nabu.api.QuoteJson
 import com.blockchain.nabu.api.TradeRequest
 import com.blockchain.nabu.service.NabuMarketsService
 import com.blockchain.serialization.BigDecimalAdaptor

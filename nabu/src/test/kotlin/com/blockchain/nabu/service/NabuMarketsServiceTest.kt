@@ -5,8 +5,8 @@ import com.blockchain.morph.CoinPair
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.api.CryptoAndFiat
 import com.blockchain.nabu.api.CurrencyRatio
-import com.blockchain.nabu.api.ReceivedQuote
 import com.blockchain.nabu.api.PeriodicLimit
+import com.blockchain.nabu.api.QuoteJson
 import com.blockchain.nabu.api.TradeRequest
 import com.blockchain.nabu.api.TradesLimits
 import com.blockchain.nabu.api.TradingConfig
@@ -347,7 +347,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
     private val emptyTradeRequest = TradeRequest(
         destinationAddress = "",
         refundAddress = "",
-        quote = ReceivedQuote(
+        quote = QuoteJson(
             pair = "",
             fiatCurrency = "",
             fix = "",
