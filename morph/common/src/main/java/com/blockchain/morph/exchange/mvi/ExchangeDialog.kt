@@ -1,6 +1,5 @@
 package com.blockchain.morph.exchange.mvi
 
-import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
@@ -18,12 +17,54 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
         intents.scan(InnerState(initial)) { previousState, intent ->
             when (intent) {
                 is FieldUpdateIntent -> previousState.map(intent)
-                is CoinExchangeRateUpdateIntent -> previousState.map(intent)
-                is FiatExchangeRateUpdateIntent -> previousState.map(intent)
                 is SwapIntent -> previousState.mapSwap()
                 is QuoteIntent -> previousState.mapQuote(intent)
+                is ChangeCryptoFromAccount -> previousState.map(intent)
+                is ChangeCryptoToAccount -> previousState.map(intent)
             }
         }.map { it.vm }
+}
+
+private fun InnerState.map(intent: ChangeCryptoFromAccount): InnerState {
+    val from = intent.from.cryptoCurrency
+    val to = vm.to.cryptoValue.currency
+    if (from == to) {
+        return InnerState(
+            initial(
+                fiatCode = vm.to.fiatValue.currencyCode,
+                from = from,
+                to = vm.from.cryptoValue.currency
+            )
+        )
+    }
+    return InnerState(
+        initial(
+            fiatCode = vm.to.fiatValue.currencyCode,
+            from = from,
+            to = to
+        )
+    )
+}
+
+private fun InnerState.map(intent: ChangeCryptoToAccount): InnerState {
+    val from = vm.from.cryptoValue.currency
+    val to = intent.to.cryptoCurrency
+    if (from == to) {
+        return InnerState(
+            initial(
+                fiatCode = vm.to.fiatValue.currencyCode,
+                from = vm.to.cryptoValue.currency,
+                to = to
+            )
+        )
+    }
+    return InnerState(
+        initial(
+            fiatCode = vm.to.fiatValue.currencyCode,
+            from = from,
+            to = to
+        )
+    )
 }
 
 private fun InnerState.mapQuote(intent: QuoteIntent) =
@@ -74,41 +115,6 @@ private fun InnerState.mapSwap() =
             to = vm.from.cryptoValue.currency
         )
     )
-
-private fun InnerState.map(intent: FiatExchangeRateUpdateIntent): InnerState {
-    if (intent.cryptoCurrency == toCrypto && intent.fiatCode == vm.to.fiatValue.currencyCode) {
-        return copy(
-            toFiatRate = intent.exchangeRate
-        ).run { copy(vm = makeVm()) }
-    }
-
-    if (intent.cryptoCurrency == fromCrypto && intent.fiatCode == vm.from.fiatValue.currencyCode) {
-        return copy(
-            fromFiatRate = intent.exchangeRate
-        ).run { copy(vm = makeVm()) }
-    }
-
-    return this
-}
-
-private fun InnerState.map(rateUpdateIntent: CoinExchangeRateUpdateIntent): InnerState {
-    if (rateUpdateIntent.from == fromCrypto &&
-        rateUpdateIntent.to == toCrypto
-    ) {
-        return copy(
-            fromToCryptoRate = rateUpdateIntent.exchangeRate
-        ).run { copy(vm = makeVm()) }
-    }
-
-    if (rateUpdateIntent.from == toCrypto &&
-        rateUpdateIntent.to == fromCrypto
-    ) {
-        return copy(
-            toFromCryptoRateForSwaps = rateUpdateIntent.exchangeRate
-        ).run { copy(vm = makeVm()) }
-    }
-    return this
-}
 
 private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
     return copy(
@@ -256,9 +262,6 @@ private data class InnerState(
 
     val toFiatRate: ExchangeRate.CryptoToFiat? = null
 ) {
-    val fromCrypto: CryptoCurrency = vm.from.cryptoValue.currency
-    val toCrypto: CryptoCurrency = vm.to.cryptoValue.currency
-
     val lastUserInputField: FieldUpdateIntent.Field
         get() = when {
             vm.to.cryptoMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.TO_CRYPTO

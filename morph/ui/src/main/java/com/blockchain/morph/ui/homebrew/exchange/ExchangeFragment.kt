@@ -1,8 +1,6 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -13,13 +11,9 @@ import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.balance.layerListDrawableRes
-import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
-import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.mvi.Value
-import com.blockchain.morph.exchange.mvi.initial
-import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.morph.ui.R
@@ -58,7 +52,6 @@ internal class ExchangeFragment : Fragment() {
     }
 
     private val compositeDisposable = CompositeDisposable()
-    private val dialogDisposable = CompositeDisposable()
     private val activityListener: HomebrewHostActivityListener by ParentActivityDelegate(this)
 
     private lateinit var configChangePersistence: ExchangeFragmentConfigurationChangePersistence
@@ -73,8 +66,6 @@ internal class ExchangeFragment : Fragment() {
     private lateinit var selectSendAccountButton: Button
     private lateinit var selectReceiveAccountButton: Button
     private lateinit var exchangeButton: Button
-
-    private var quoteService: QuoteService? = null
 
     private lateinit var exchangeModel: ExchangeModel
 
@@ -130,23 +121,13 @@ internal class ExchangeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateMviDialog()
-    }
 
-    private fun updateMviDialog() {
-        dialogDisposable.clear()
-        val newQuoteService = exchangeModel.quoteService
-        quoteService = newQuoteService
+        compositeDisposable += allTextUpdates(exchangeModel.quoteService)
+            .subscribeBy {
+                exchangeModel.inputEventSink.onNext(it)
+            }
 
-        exchangeModel.newDialog(ExchangeDialog(
-            Observable.merge(
-                allTextUpdates(newQuoteService),
-                newQuoteService.quotes.map(Quote::toIntent)
-            ),
-            initial(currency, configChangePersistence.from, configChangePersistence.to)
-        ))
-
-        dialogDisposable += exchangeModel
+        compositeDisposable += exchangeModel
             .exchangeViewModels
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
@@ -202,26 +183,7 @@ internal class ExchangeFragment : Fragment() {
 
     override fun onPause() {
         compositeDisposable.clear()
-        dialogDisposable.clear()
         super.onPause()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            val account = AccountChooserActivity.getSelectedAccount(data)
-            when (requestCode) {
-                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT -> {
-                    configChangePersistence.from = account.cryptoCurrency
-                    updateMviDialog()
-                }
-                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT -> {
-                    configChangePersistence.to = account.cryptoCurrency
-                    updateMviDialog()
-                }
-                else -> throw IllegalArgumentException("Unknown request code $requestCode")
-            }
-        }
     }
 }
 
@@ -291,5 +253,5 @@ private fun Button.setCryptoLeftImageIfZero(cryptoValue: CryptoValue) {
     }
 }
 
-private const val REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT = 800
-private const val REQUEST_CODE_CHOOSE_SENDING_ACCOUNT = 801
+internal const val REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT = 800
+internal const val REQUEST_CODE_CHOOSE_SENDING_ACCOUNT = 801

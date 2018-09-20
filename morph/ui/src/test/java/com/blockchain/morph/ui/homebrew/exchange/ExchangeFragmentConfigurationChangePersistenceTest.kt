@@ -41,26 +41,6 @@ class ExchangeFragmentConfigurationChangePersistenceTest {
     }
 
     @Test
-    fun `if "from" matches the "to", then they swap`() {
-        ExchangeFragmentConfigurationChangePersistence()
-            .apply {
-                from = CryptoCurrency.ETHER
-                from `should be` CryptoCurrency.ETHER
-                to `should be` CryptoCurrency.BTC
-            }
-    }
-
-    @Test
-    fun `if "to" matches the "from", then they swap`() {
-        ExchangeFragmentConfigurationChangePersistence()
-            .apply {
-                to = CryptoCurrency.BTC
-                from `should be` CryptoCurrency.ETHER
-                to `should be` CryptoCurrency.BTC
-            }
-    }
-
-    @Test
     fun `setting the "from" clears the current value`() {
         ExchangeFragmentConfigurationChangePersistence()
             .apply {

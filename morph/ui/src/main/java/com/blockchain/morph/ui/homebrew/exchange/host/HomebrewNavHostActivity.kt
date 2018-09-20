@@ -1,5 +1,6 @@
 package com.blockchain.morph.ui.homebrew.exchange.host
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,14 +9,26 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.blockchain.morph.exchange.mvi.ChangeCryptoFromAccount
+import com.blockchain.morph.exchange.mvi.ChangeCryptoToAccount
+import com.blockchain.morph.exchange.mvi.ExchangeDialog
+import com.blockchain.morph.exchange.mvi.Quote
+import com.blockchain.morph.exchange.mvi.initial
+import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeFragment
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
+import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT
+import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_SENDING_ACCOUNT
 import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationFragment
+import com.blockchain.ui.chooser.AccountChooserActivity
+import info.blockchain.balance.AccountReference
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.architecture.ext.viewModel
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -55,6 +68,7 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
     override fun onResume() {
         super.onResume()
         newQuoteWebSocket()
+        updateMviDialog()
     }
 
     override fun onPause() {
@@ -99,6 +113,44 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
                     }
                 }
             }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            val account = AccountChooserActivity.getSelectedAccount(data)
+            when (requestCode) {
+                REQUEST_CODE_CHOOSE_SENDING_ACCOUNT -> {
+                    exchangeViewModel.inputEventSink.onNext(
+                        ChangeCryptoFromAccount(AccountReference(account.cryptoCurrency))
+                    )
+                }
+                REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT -> {
+                    exchangeViewModel.inputEventSink.onNext(
+                        ChangeCryptoToAccount(AccountReference(account.cryptoCurrency))
+                    )
+                }
+                else -> throw IllegalArgumentException("Unknown request code $requestCode")
+            }
+        }
+    }
+
+    private fun updateMviDialog() {
+        val newQuoteService = exchangeViewModel.quoteService
+
+        exchangeViewModel.newDialog(
+            ExchangeDialog(
+                Observable.merge(
+                    exchangeViewModel.inputEventSink,
+                    newQuoteService.quotes.map(Quote::toIntent)
+                ),
+                initial(
+                    defaultCurrency,
+                    exchangeViewModel.configChangePersistence.from,
+                    exchangeViewModel.configChangePersistence.to
+                )
+            )
+        )
+    }
 
     companion object {
 

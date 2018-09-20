@@ -11,23 +11,16 @@ class ExchangeFragmentConfigurationChangePersistence : ViewModel() {
 
     var from = CryptoCurrency.BTC
         set(value) {
-            if (field == value) {
-                return
-            }
-            val newTo = if (value == to) field else to
+            if (field == value) return
             currentValue = BigDecimal.ZERO
             field = value
-            to = newTo
         }
+
     var to = CryptoCurrency.ETHER
         set(value) {
-            if (field == value) {
-                return
-            }
-            val newFrom = if (value == from) field else from
+            if (field == value) return
             currentValue = BigDecimal.ZERO
             field = value
-            from = newFrom
         }
 
     var fieldMode = FieldUpdateIntent.Field.FROM_FIAT
