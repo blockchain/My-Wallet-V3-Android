@@ -100,4 +100,8 @@
     <string name="morph_status_refund_received">Received</string>
     <string name="morph_status_refund_resolved">Resolved</string>
 
+    <!-- EXECUTION -->
+    <string name="execution_error_title">Error executing trade</string>
+    <string name="execution_error_message">There was an error executing your trade. Please try again, or contact support if the issue persists.</string>
+
 </resources>

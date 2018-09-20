@@ -22,6 +22,7 @@ import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
 import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataStore
+import piuk.blockchain.androidcore.data.fees.FeeDataManager
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadService
@@ -78,6 +79,8 @@ val coreModule = applicationContext {
         factory { PayloadDataManager(get(), get(), get(), get(), get()) }
 
         bean { MetadataManager(get(), get(), get()) }
+
+        factory { TransactionSendDataManager(get(), get(), get(), get(), get()) }
     }
 
     bean { BchDataStore() }
@@ -111,5 +114,5 @@ val coreModule = applicationContext {
 
     factory { EthereumAccountWrapper() }
 
-    factory { TransactionSendDataManager(get(), get(), get(), get(), get()) }
+    factory { FeeDataManager(get(), get(), get(), get()) }
 }

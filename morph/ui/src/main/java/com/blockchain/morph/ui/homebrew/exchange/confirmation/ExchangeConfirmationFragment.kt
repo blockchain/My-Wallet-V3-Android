@@ -1,21 +1,27 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
+import com.blockchain.koin.injectActivity
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
+import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedActivity
 import com.blockchain.ui.extensions.throttledClicks
+import com.blockchain.ui.password.SecondPasswordHandler
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
+import info.blockchain.balance.format
 import info.blockchain.balance.formatWithUnit
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -24,6 +30,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
+import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import timber.log.Timber
@@ -34,6 +41,7 @@ class ExchangeConfirmationFragment :
     ExchangeConfirmationView {
 
     private val presenter: ExchangeConfirmationPresenter by inject()
+    private val secondPasswordHandler: SecondPasswordHandler by injectActivity()
     private val activityListener: HomebrewHostActivityListener by ParentActivityDelegate(this)
 
     private lateinit var sendButton: Button
@@ -43,6 +51,8 @@ class ExchangeConfirmationFragment :
     private lateinit var feesTextView: TextView
     private lateinit var receiveTextView: TextView
     private lateinit var sendToTextView: TextView
+
+    private var progressDialog: MaterialProgressDialog? = null
 
     override val clickEvents by unsafeLazy { sendButton.throttledClicks() }
 
@@ -108,27 +118,49 @@ class ExchangeConfirmationFragment :
             toButton.text = receivingCryptoValue
             receiveTextView.text = receivingCryptoValue
             valueTextView.text = value.toStringWithSymbol(locale)
-            feesTextView.text = "TODO"
             sendToTextView.text = "TODO"
         }
     }
 
-    override fun continueToExchangeLocked() {
-        // TODO:
-//        ExchangeLockedActivity.start(
-//            requireContext(),
-//            ExchangeLockedModel(
-//                "ORDER ID",
-//                exchangeConfirmationModel.value,
-//                exchangeConfirmationModel.fees,
-//                exchangeConfirmationModel.sending,
-//                exchangeConfirmationModel.sendingCurrency,
-//                exchangeConfirmationModel.receiving,
-//                exchangeConfirmationModel.receivingCurrency,
-//                exchangeConfirmationModel.accountItem
-//            )
-//        )
-//        requireActivity().finish()
+    override fun continueToExchangeLocked(transactionId: String) {
+        val intent = Intent(requireContext(), ExchangeLockedActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    override fun updateFee(cryptoValue: CryptoValue) {
+        feesTextView.text = cryptoValue.format()
+    }
+
+    override fun showSecondPasswordDialog() {
+        secondPasswordHandler.validate(object : SecondPasswordHandler.ResultListener {
+            override fun onNoSecondPassword() = Unit
+
+            override fun onSecondPasswordValidated(validatedSecondPassword: String) {
+                presenter.onSecondPasswordValidated(validatedSecondPassword)
+            }
+        })
+    }
+
+    override fun showProgressDialog() {
+        progressDialog = MaterialProgressDialog(activity).apply {
+            setMessage(R.string.please_wait)
+            setCancelable(false)
+            show()
+        }
+    }
+
+    override fun dismissProgressDialog() {
+        progressDialog?.apply { dismiss() }
+        progressDialog = null
+    }
+
+    override fun displayErrorDialog() {
+        AlertDialog.Builder(requireContext(), R.style.AlertDialogStyle)
+            .setTitle(R.string.execution_error_title)
+            .setMessage(R.string.execution_error_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     override fun createPresenter(): ExchangeConfirmationPresenter = presenter

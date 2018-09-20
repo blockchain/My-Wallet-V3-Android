@@ -19,7 +19,7 @@ import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
-import piuk.blockchain.android.data.datamanagers.FeeDataManager;
+import piuk.blockchain.androidcore.data.fees.FeeDataManager;
 import piuk.blockchain.android.data.datamanagers.PromptManager;
 import piuk.blockchain.androidcore.data.ethereum.EthDataManager;
 import piuk.blockchain.android.data.rxjava.RxUtil;

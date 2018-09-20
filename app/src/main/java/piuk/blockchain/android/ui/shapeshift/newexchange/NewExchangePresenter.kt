@@ -24,7 +24,7 @@ import org.web3j.utils.Convert
 import piuk.blockchain.android.R
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.cache.DynamicFeeCache
-import piuk.blockchain.android.data.datamanagers.FeeDataManager
+import piuk.blockchain.androidcore.data.fees.FeeDataManager
 import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.androidcore.data.payments.SendDataManager
 import piuk.blockchain.android.ui.receive.WalletAccountHelper

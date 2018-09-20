@@ -22,6 +22,7 @@ import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.data.ethereum.EthDataManager;
+import piuk.blockchain.androidcore.data.fees.FeeDataManager;
 import piuk.blockchain.androidcore.data.payments.SendDataManager;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
@@ -124,6 +125,11 @@ public class ApplicationModule extends KoinDaggerModule {
     @Provides
     EthDataManager provideEthDataManager() {
         return get(EthDataManager.class);
+    }
+
+    @Provides
+    FeeDataManager provideFeeDataManager() {
+        return get(FeeDataManager.class);
     }
 
 

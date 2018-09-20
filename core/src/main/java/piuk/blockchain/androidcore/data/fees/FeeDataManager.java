@@ -1,24 +1,18 @@
-package piuk.blockchain.android.data.datamanagers;
+package piuk.blockchain.androidcore.data.fees;
 
 import info.blockchain.wallet.api.Environment;
 import info.blockchain.wallet.api.FeeApi;
 import info.blockchain.wallet.api.data.FeeLimits;
 import info.blockchain.wallet.api.data.FeeOptions;
-
-import org.bitcoinj.core.Coin;
-import org.web3j.tx.Transfer;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import org.web3j.tx.Transfer;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.data.rxjava.RxPinning;
-import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager;
-import piuk.blockchain.androidcore.injection.PresenterScope;
 
-@PresenterScope
 public class FeeDataManager {
 
     private final RxPinning rxPinning;
@@ -28,8 +22,7 @@ public class FeeDataManager {
     //Bitcoin cash fees are temporarily fetched from wallet-options until an endpoint can be provided
     private WalletOptionsDataManager walletOptionsDataManager;
 
-    @Inject
-    FeeDataManager(FeeApi feeApi, WalletOptionsDataManager walletOptionsDataManager, EnvironmentConfig environmentSettings, RxBus rxBus) {
+    public FeeDataManager(FeeApi feeApi, WalletOptionsDataManager walletOptionsDataManager, EnvironmentConfig environmentSettings, RxBus rxBus) {
         this.feeApi = feeApi;
         this.walletOptionsDataManager = walletOptionsDataManager;
         this.environmentSettings = environmentSettings;
@@ -47,7 +40,8 @@ public class FeeDataManager {
             return Observable.just(createTestnetFeeOptions());
         } else {
             return rxPinning.call(() -> feeApi.getFeeOptions())
-                    .compose(RxUtil.applySchedulersToObservable());
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
         }
     }
 
@@ -63,7 +57,8 @@ public class FeeDataManager {
             return Observable.just(createTestnetFeeOptions());
         } else {
             return rxPinning.call(() -> feeApi.getEthFeeOptions())
-                    .compose(RxUtil.applySchedulersToObservable());
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
         }
     }
 
