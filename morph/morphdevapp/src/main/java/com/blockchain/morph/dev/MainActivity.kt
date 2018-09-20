@@ -1,10 +1,9 @@
 package com.blockchain.morph.dev
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
+import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchExchange(view: View) {
-        val intent = Intent(this, TradeHistoryActivity::class.java)
-        startActivity(intent)
+        HomebrewNavHostActivity.start(this)
     }
 }

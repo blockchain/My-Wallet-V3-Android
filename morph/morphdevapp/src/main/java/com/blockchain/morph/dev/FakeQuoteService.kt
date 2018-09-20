@@ -1,5 +1,6 @@
 package com.blockchain.morph.dev
 
+import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
@@ -20,6 +21,7 @@ class FakeQuoteService : QuoteService {
             when (quoteRequest) {
                 is ExchangeQuoteRequest.Selling ->
                     Quote(
+                        fix = Fix.BASE_CRYPTO,
                         from = Quote.Value(
                             quoteRequest.offering,
                             FiatValue.fromMajor(
@@ -37,6 +39,7 @@ class FakeQuoteService : QuoteService {
                     )
                 is ExchangeQuoteRequest.SellingFiatLinked ->
                     Quote(
+                        fix = Fix.BASE_FIAT,
                         from = Quote.Value(
                             quoteRequest.offering.withMajorValue(
                                 quoteRequest.offeringFiatValue.value / 12.3456.toBigDecimal()

@@ -1,5 +1,6 @@
 package com.blockchain.morph.homebrew
 
+import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.nabu.api.CryptoAndFiat
 import com.blockchain.nabu.api.QuoteJson
@@ -18,10 +19,19 @@ internal data class QuoteMessageJson(
 
 internal fun QuoteJson.mapToQuote(): Quote {
     return Quote(
+        fix = fix.stringToFix(),
         from = currencyRatio.base.mapToQuoteValue(),
         to = currencyRatio.counter.mapToQuoteValue(),
         rawQuote = this
     )
+}
+
+internal fun String.stringToFix() = when (this) {
+    "base" -> Fix.BASE_CRYPTO
+    "baseInFiat" -> Fix.BASE_FIAT
+    "counter" -> Fix.COUNTER_CRYPTO
+    "counterInFiat" -> Fix.COUNTER_FIAT
+    else -> throw IllegalArgumentException("Unknown fix \"$this\"")
 }
 
 private fun CryptoAndFiat.mapToQuoteValue(): Quote.Value {

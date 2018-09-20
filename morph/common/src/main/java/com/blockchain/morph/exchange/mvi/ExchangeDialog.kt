@@ -3,6 +3,7 @@ package com.blockchain.morph.exchange.mvi
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
+import info.blockchain.balance.Money
 import info.blockchain.balance.div
 import info.blockchain.balance.times
 import io.reactivex.Observable
@@ -68,7 +69,11 @@ private fun InnerState.map(intent: ChangeCryptoToAccount): InnerState {
 }
 
 private fun InnerState.mapQuote(intent: QuoteIntent) =
-    if (fromCurrencyMatch(intent) && toCurrencyMatch(intent)) {
+    if (intent.quote.fix == lastUserInputField.toFix() &&
+        intent.quote.fixValue == lastUserValue &&
+        fromCurrencyMatch(intent) &&
+        toCurrencyMatch(intent)
+    ) {
         copy(
             vm = vm.copy(
                 from = Value(
@@ -268,5 +273,12 @@ private data class InnerState(
             vm.to.fiatMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.TO_FIAT
             vm.from.fiatMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.FROM_FIAT
             else -> FieldUpdateIntent.Field.FROM_CRYPTO
+        }
+    val lastUserValue: Money =
+        when (lastUserInputField) {
+            FieldUpdateIntent.Field.FROM_CRYPTO -> vm.from.cryptoValue
+            FieldUpdateIntent.Field.TO_CRYPTO -> vm.to.cryptoValue
+            FieldUpdateIntent.Field.FROM_FIAT -> vm.from.fiatValue
+            FieldUpdateIntent.Field.TO_FIAT -> vm.to.fiatValue
         }
 }

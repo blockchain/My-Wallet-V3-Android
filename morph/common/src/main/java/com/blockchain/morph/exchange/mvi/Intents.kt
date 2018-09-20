@@ -23,6 +23,14 @@ class FieldUpdateIntent(
     }
 }
 
+fun FieldUpdateIntent.Field.toFix() =
+    when (this) {
+        FieldUpdateIntent.Field.FROM_CRYPTO -> Fix.BASE_CRYPTO
+        FieldUpdateIntent.Field.FROM_FIAT -> Fix.BASE_FIAT
+        FieldUpdateIntent.Field.TO_CRYPTO -> Fix.COUNTER_CRYPTO
+        FieldUpdateIntent.Field.TO_FIAT -> Fix.COUNTER_FIAT
+    }
+
 class SwapIntent : ExchangeIntent()
 
 class QuoteIntent(val quote: Quote) : ExchangeIntent()

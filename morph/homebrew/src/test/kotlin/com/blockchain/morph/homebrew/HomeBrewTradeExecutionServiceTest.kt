@@ -1,5 +1,6 @@
 package com.blockchain.morph.homebrew
 
+import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.QuoteJson
@@ -34,6 +35,7 @@ class HomeBrewTradeExecutionServiceTest {
             homeBrewTradeExecutionService
                 .executeTrade(
                     Quote(
+                        fix = Fix.BASE_CRYPTO,
                         from = mock(),
                         to = mock(),
                         rawQuote = null
@@ -51,6 +53,7 @@ class HomeBrewTradeExecutionServiceTest {
             homeBrewTradeExecutionService
                 .executeTrade(
                     Quote(
+                        fix = Fix.BASE_CRYPTO,
                         from = mock(),
                         to = mock(),
                         rawQuote = Any()
@@ -68,6 +71,7 @@ class HomeBrewTradeExecutionServiceTest {
         homeBrewTradeExecutionService
             .executeTrade(
                 Quote(
+                    fix = Fix.BASE_CRYPTO,
                     from = mock(),
                     to = mock(),
                     rawQuote = quote
@@ -92,6 +96,7 @@ class HomeBrewTradeExecutionServiceTest {
         homeBrewTradeExecutionService
             .executeTrade(
                 Quote(
+                    fix = Fix.BASE_CRYPTO,
                     from = mock(),
                     to = mock(),
                     rawQuote = quote
