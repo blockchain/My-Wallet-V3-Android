@@ -56,6 +56,7 @@ class App : Application() {
                 kycModule,
                 walletModule,
                 fakeQuotesModule,
+                simulatedAccountsModule,
                 applicationContext {
                     bean { OkHttpInterceptors(emptyList()) }
                 }
