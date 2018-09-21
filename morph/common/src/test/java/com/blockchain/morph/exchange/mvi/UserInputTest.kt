@@ -15,7 +15,7 @@ class UserInputTest {
     @Test
     fun `user value is sanitized`() {
         FieldUpdateIntent(
-            FieldUpdateIntent.Field.FROM_CRYPTO,
+            Fix.BASE_CRYPTO,
             "1,000.123 BTC"
         )
             .userValue `should equal` 1000.123.toBigDecimal()
@@ -30,7 +30,7 @@ class UserInputTest {
             )
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_CRYPTO,
+                Fix.BASE_CRYPTO,
                 "1,000.123 BTC"
             )
         ) {
@@ -61,7 +61,7 @@ class UserInputTest {
             )
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_CRYPTO,
+                Fix.COUNTER_CRYPTO,
                 "1,000.123 BCH"
             )
         ) {
@@ -78,7 +78,7 @@ class UserInputTest {
             )
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_FIAT,
+                Fix.BASE_FIAT,
                 "GBP 99.34"
             )
         ) {
@@ -95,7 +95,7 @@ class UserInputTest {
             )
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "IGNORED88.56X"
             )
         ) {
@@ -115,7 +115,7 @@ class UserInputWithAlternativeLocaleTest {
 
     @Test
     fun `user value is sanitized`() {
-        FieldUpdateIntent(FieldUpdateIntent.Field.FROM_FIAT, "$1.000,123")
+        FieldUpdateIntent(Fix.BASE_FIAT, "$1.000,123")
             .userValue `should equal` 1000.123.toBigDecimal()
     }
 
@@ -124,7 +124,7 @@ class UserInputWithAlternativeLocaleTest {
         given(
             initial("GBP", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(FieldUpdateIntent.Field.FROM_CRYPTO, "1.000,123 BTC")
+            FieldUpdateIntent(Fix.BASE_CRYPTO, "1.000,123 BTC")
         ) {
             assertValue { it.from.cryptoValue == CryptoValue.bitcoinCashFromMajor(1000.123.toBigDecimal()) }
         }

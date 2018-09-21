@@ -69,7 +69,7 @@ private fun InnerState.map(intent: ChangeCryptoToAccount): InnerState {
 }
 
 private fun InnerState.mapQuote(intent: QuoteIntent) =
-    if (intent.quote.fix == lastUserInputField.toFix() &&
+    if (intent.quote.fix == lastUserInputField &&
         intent.quote.fixValue == lastUserValue &&
         fromCurrencyMatch(intent) &&
         toCurrencyMatch(intent)
@@ -78,15 +78,15 @@ private fun InnerState.mapQuote(intent: QuoteIntent) =
             vm = vm.copy(
                 from = Value(
                     cryptoValue = intent.quote.from.cryptoValue,
-                    cryptoMode = mode(lastUserInputField, FieldUpdateIntent.Field.FROM_CRYPTO),
+                    cryptoMode = mode(lastUserInputField, Fix.BASE_CRYPTO),
                     fiatValue = intent.quote.from.fiatValue,
-                    fiatMode = mode(lastUserInputField, FieldUpdateIntent.Field.FROM_FIAT)
+                    fiatMode = mode(lastUserInputField, Fix.BASE_FIAT)
                 ),
                 to = Value(
                     cryptoValue = intent.quote.to.cryptoValue,
-                    cryptoMode = mode(lastUserInputField, FieldUpdateIntent.Field.TO_CRYPTO),
+                    cryptoMode = mode(lastUserInputField, Fix.COUNTER_CRYPTO),
                     fiatValue = intent.quote.to.fiatValue,
-                    fiatMode = mode(lastUserInputField, FieldUpdateIntent.Field.TO_FIAT)
+                    fiatMode = mode(lastUserInputField, Fix.COUNTER_FIAT)
                 ),
                 latestQuote = intent.quote
             )
@@ -123,8 +123,8 @@ private fun InnerState.mapSwap() =
 
 private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
     return copy(
-        vm = when (intent.field) {
-            FieldUpdateIntent.Field.FROM_CRYPTO -> {
+        vm = when (intent.fixedField) {
+            Fix.BASE_CRYPTO -> {
                 val newFrom = CryptoValue.fromMajor(
                     vm.from.cryptoValue.currency,
                     intent.userValue
@@ -135,7 +135,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
                     )
                 )
             }
-            FieldUpdateIntent.Field.TO_CRYPTO -> {
+            Fix.COUNTER_CRYPTO -> {
                 val newToValue = CryptoValue.fromMajor(
                     vm.to.cryptoValue.currency,
                     intent.userValue
@@ -146,7 +146,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
                     )
                 )
             }
-            FieldUpdateIntent.Field.FROM_FIAT -> vm.copy(
+            Fix.BASE_FIAT -> vm.copy(
                 from = vm.from.copy(
                     fiatValue = FiatValue.fromMajor(
                         vm.from.fiatValue.currencyCode,
@@ -154,7 +154,7 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
                     )
                 )
             )
-            FieldUpdateIntent.Field.TO_FIAT -> vm.copy(
+            Fix.COUNTER_FIAT -> vm.copy(
                 to = vm.to.copy(
                     fiatValue = FiatValue.fromMajor(
                         vm.to.fiatValue.currencyCode,
@@ -164,11 +164,11 @@ private fun InnerState.map(intent: FieldUpdateIntent): InnerState {
             )
         }
     ).run {
-        copy(vm = makeVm(intent.field))
+        copy(vm = makeVm(intent.fixedField))
     }
 }
 
-private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): ExchangeViewModel {
+private fun InnerState.makeVm(intentField: Fix? = null): ExchangeViewModel {
     var fromCrypto: CryptoValue? = null
     var toCrypto: CryptoValue? = null
 
@@ -178,7 +178,7 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
     val field = intentField ?: this.lastUserInputField
 
     when (field) {
-        com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.FROM_CRYPTO -> {
+        Fix.BASE_CRYPTO -> {
             fromCrypto = vm.from.cryptoValue
             toCrypto = fromCrypto * fromToCryptoRate
 
@@ -186,7 +186,7 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
             toFiat = toCrypto * toFiatRate
         }
 
-        com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.TO_CRYPTO -> {
+        Fix.COUNTER_CRYPTO -> {
             toCrypto = vm.to.cryptoValue
             fromCrypto = toCrypto / fromToCryptoRate
 
@@ -194,7 +194,7 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
             toFiat = toCrypto * toFiatRate
         }
 
-        com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.FROM_FIAT -> {
+        Fix.BASE_FIAT -> {
             fromFiat = vm.from.fiatValue
 
             fromCrypto = fromFiat / fromFiatRate
@@ -203,7 +203,7 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
             toFiat = toCrypto * toFiatRate
         }
 
-        com.blockchain.morph.exchange.mvi.FieldUpdateIntent.Field.TO_FIAT -> {
+        Fix.COUNTER_FIAT -> {
             toFiat = vm.to.fiatValue
 
             toCrypto = toFiat / toFiatRate
@@ -216,22 +216,22 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
     return vm.copy(
         from = Value(
             cryptoValue = fromCrypto ?: CryptoValue.zero(vm.from.cryptoValue.currency),
-            cryptoMode = mode(field, FieldUpdateIntent.Field.FROM_CRYPTO, fromCrypto),
+            cryptoMode = mode(field, Fix.BASE_CRYPTO, fromCrypto),
             fiatValue = fromFiat ?: FiatValue.fromMajor(vm.from.fiatValue.currencyCode, BigDecimal.ZERO),
-            fiatMode = mode(field, FieldUpdateIntent.Field.FROM_FIAT, fromFiat)
+            fiatMode = mode(field, Fix.BASE_FIAT, fromFiat)
         ),
         to = Value(
             cryptoValue = toCrypto ?: CryptoValue.zero(vm.to.cryptoValue.currency),
-            cryptoMode = mode(field, FieldUpdateIntent.Field.TO_CRYPTO, toCrypto),
+            cryptoMode = mode(field, Fix.COUNTER_CRYPTO, toCrypto),
             fiatValue = toFiat ?: FiatValue.fromMajor(vm.to.fiatValue.currencyCode, BigDecimal.ZERO),
-            fiatMode = mode(field, FieldUpdateIntent.Field.TO_FIAT, toFiat)
+            fiatMode = mode(field, Fix.COUNTER_FIAT, toFiat)
         )
     )
 }
 
 private fun mode(
-    fieldEntered: FieldUpdateIntent.Field,
-    field: FieldUpdateIntent.Field,
+    fieldEntered: Fix,
+    field: Fix,
     value: Any?
 ): Value.Mode {
     return when {
@@ -242,8 +242,8 @@ private fun mode(
 }
 
 private fun mode(
-    fieldEntered: FieldUpdateIntent.Field,
-    field: FieldUpdateIntent.Field
+    fieldEntered: Fix,
+    field: Fix
 ): Value.Mode {
     return if (fieldEntered == field) {
         Value.Mode.UserEntered
@@ -267,18 +267,19 @@ private data class InnerState(
 
     val toFiatRate: ExchangeRate.CryptoToFiat? = null
 ) {
-    val lastUserInputField: FieldUpdateIntent.Field
+    val lastUserInputField: Fix
         get() = when {
-            vm.to.cryptoMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.TO_CRYPTO
-            vm.to.fiatMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.TO_FIAT
-            vm.from.fiatMode == Value.Mode.UserEntered -> FieldUpdateIntent.Field.FROM_FIAT
-            else -> FieldUpdateIntent.Field.FROM_CRYPTO
+            vm.to.cryptoMode == Value.Mode.UserEntered -> Fix.COUNTER_CRYPTO
+            vm.to.fiatMode == Value.Mode.UserEntered -> Fix.COUNTER_FIAT
+            vm.from.fiatMode == Value.Mode.UserEntered -> Fix.BASE_FIAT
+            else -> Fix.BASE_CRYPTO
         }
+
     val lastUserValue: Money =
         when (lastUserInputField) {
-            FieldUpdateIntent.Field.FROM_CRYPTO -> vm.from.cryptoValue
-            FieldUpdateIntent.Field.TO_CRYPTO -> vm.to.cryptoValue
-            FieldUpdateIntent.Field.FROM_FIAT -> vm.from.fiatValue
-            FieldUpdateIntent.Field.TO_FIAT -> vm.to.fiatValue
+            Fix.BASE_CRYPTO -> vm.from.cryptoValue
+            Fix.COUNTER_CRYPTO -> vm.to.cryptoValue
+            Fix.BASE_FIAT -> vm.from.fiatValue
+            Fix.COUNTER_FIAT -> vm.to.fiatValue
         }
 }

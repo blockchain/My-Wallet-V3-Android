@@ -2,7 +2,7 @@ package com.blockchain.morph.ui.homebrew.exchange
 
 import com.blockchain.accounts.AccountList
 import com.blockchain.accounts.AllAccountList
-import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
+import com.blockchain.morph.exchange.mvi.Fix
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import org.amshove.kluent.`should be`
@@ -16,7 +16,7 @@ class ExchangeFragmentConfigurationChangePersistenceTest {
     fun `initial values`() {
         ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
-                fieldMode `should be` FieldUpdateIntent.Field.FROM_FIAT
+                fieldMode `should be` Fix.BASE_FIAT
                 from `should equal` anyAccountReference(CryptoCurrency.BTC)
                 to `should equal` anyAccountReference(CryptoCurrency.ETHER)
                 currentValue `should equal` BigDecimal.ZERO

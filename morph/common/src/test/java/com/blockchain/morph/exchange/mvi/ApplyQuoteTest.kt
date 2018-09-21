@@ -20,7 +20,7 @@ class ApplyQuoteTest {
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_CRYPTO,
+                Fix.BASE_CRYPTO,
                 "10"
             ),
             Quote(
@@ -49,7 +49,7 @@ class ApplyQuoteTest {
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_CRYPTO,
+                Fix.COUNTER_CRYPTO,
                 "15"
             ),
             Quote(
@@ -78,7 +78,7 @@ class ApplyQuoteTest {
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_FIAT,
+                Fix.BASE_FIAT,
                 "99.12"
             ),
             Quote(
@@ -107,7 +107,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "95.32"
             ),
             Quote(
@@ -136,7 +136,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "95.32"
             ),
             Quote(
@@ -170,7 +170,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "95.32"
             ),
             Quote(
@@ -204,7 +204,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "95.32"
             ),
             Quote(
@@ -238,7 +238,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "95.32"
             ),
             Quote(
@@ -272,7 +272,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "95.32"
             ),
             Quote(
@@ -306,7 +306,7 @@ class ApplyQuoteTest {
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "10"
             ),
             Quote(
@@ -345,7 +345,7 @@ class ApplyQuoteTest {
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_CRYPTO,
+                Fix.BASE_CRYPTO,
                 "10"
             ),
             theQuote.toIntent()

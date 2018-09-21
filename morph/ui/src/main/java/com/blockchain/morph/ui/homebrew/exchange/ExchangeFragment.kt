@@ -13,6 +13,7 @@ import com.blockchain.balance.colorRes
 import com.blockchain.balance.layerListDrawableRes
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
+import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
@@ -192,25 +193,25 @@ private fun BigDecimal.toExchangeQuoteRequest(
     currency: String
 ): ExchangeQuoteRequest {
     return when (field.fieldMode) {
-        FieldUpdateIntent.Field.TO_FIAT ->
+        Fix.COUNTER_FIAT ->
             ExchangeQuoteRequest.BuyingFiatLinked(
                 offering = field.from.cryptoCurrency,
                 wanted = field.to.cryptoCurrency,
                 wantedFiatValue = FiatValue.fromMajor(currency, this)
             )
-        FieldUpdateIntent.Field.FROM_FIAT ->
+        Fix.BASE_FIAT ->
             ExchangeQuoteRequest.SellingFiatLinked(
                 offering = field.from.cryptoCurrency,
                 wanted = field.to.cryptoCurrency,
                 offeringFiatValue = FiatValue.fromMajor(currency, this)
             )
-        FieldUpdateIntent.Field.TO_CRYPTO ->
+        Fix.COUNTER_CRYPTO ->
             ExchangeQuoteRequest.Buying(
                 offering = field.from.cryptoCurrency,
                 wanted = field.to.cryptoCurrency.withMajorValue(this),
                 indicativeFiatSymbol = currency
             )
-        FieldUpdateIntent.Field.FROM_CRYPTO ->
+        Fix.BASE_CRYPTO ->
             ExchangeQuoteRequest.Selling(
                 offering = field.from.cryptoCurrency.withMajorValue(this),
                 wanted = field.to.cryptoCurrency,
