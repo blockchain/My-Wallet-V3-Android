@@ -71,42 +71,42 @@ class CryptoValueTests {
 
     @Test
     fun `zero is not positive`() {
-        CryptoValue.ZeroBtc.isPositive() `should be` false
+        CryptoValue.ZeroBtc.isPositive `should be` false
     }
 
     @Test
     fun `1 Satoshi is positive`() {
-        CryptoValue.bitcoinFromSatoshis(1).isPositive() `should be` true
+        CryptoValue.bitcoinFromSatoshis(1).isPositive `should be` true
     }
 
     @Test
     fun `2 Satoshis is positive`() {
-        CryptoValue.bitcoinFromSatoshis(2).isPositive() `should be` true
+        CryptoValue.bitcoinFromSatoshis(2).isPositive `should be` true
     }
 
     @Test
     fun `-1 Satoshi is not positive`() {
-        CryptoValue.bitcoinFromSatoshis(-1).isPositive() `should be` false
+        CryptoValue.bitcoinFromSatoshis(-1).isPositive `should be` false
     }
 
     @Test
     fun `zero isZero`() {
-        CryptoValue.ZeroBtc.isZero() `should be` true
+        CryptoValue.ZeroBtc.isZero `should be` true
     }
 
     @Test
     fun `1 satoshi is not isZero`() {
-        CryptoValue.bitcoinFromSatoshis(1).isZero() `should be` false
+        CryptoValue.bitcoinFromSatoshis(1).isZero `should be` false
     }
 
     @Test
     fun `1 wei is not isZero`() {
-        CryptoValue.etherFromWei(1).isZero() `should be` false
+        CryptoValue.etherFromWei(BigInteger.ONE).isZero `should be` false
     }
 
     @Test
     fun `0 wei is isZero`() {
-        CryptoValue.etherFromWei(0).isZero() `should be` true
+        CryptoValue.etherFromWei(BigInteger.ZERO).isZero `should be` true
     }
 
     @Test

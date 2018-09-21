@@ -46,7 +46,9 @@ data class FiatValue private constructor(
     val currencyCode: String,
     val value: BigDecimal
 ) : Money {
-    val isZero: Boolean = value.signum() == 0
+    override val isZero: Boolean get() = value.signum() == 0
+
+    override val isPositive: Boolean get() = value.signum() == 1
 
     val valueMinor: Long =
         value.movePointRight(Currency.getInstance(currencyCode).defaultFractionDigits).toLong()

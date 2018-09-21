@@ -18,13 +18,9 @@ data class CryptoValue(
         return currency.smallestUnitValueToBigDecimal(amount)
     }
 
-    fun isPositive(): Boolean {
-        return amount.signum() == 1
-    }
+    override val isPositive: Boolean get() = amount.signum() == 1
 
-    fun isZero(): Boolean {
-        return amount.signum() == 0
-    }
+    override val isZero: Boolean get() = amount.signum() == 0
 
     companion object {
         val ZeroBtc = bitcoinFromSatoshis(0L)
@@ -43,9 +39,10 @@ data class CryptoValue(
         fun bitcoinCashFromSatoshis(satoshi: BigInteger) = CryptoValue(CryptoCurrency.BCH, satoshi)
         @Deprecated(
             message = "Long overflows when the value goes above 9.22+ Ether.",
-            replaceWith = ReplaceWith("etherFromWei(wei: BigInteger)")
+            replaceWith = ReplaceWith("CryptoValue.etherFromWei(wei.toBigInteger())")
         )
         fun etherFromWei(wei: Long) = CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
+
         fun etherFromWei(wei: BigInteger) = CryptoValue(CryptoCurrency.ETHER, wei)
 
         fun bitcoinFromMajor(bitcoin: Int) = bitcoinFromMajor(bitcoin.toBigDecimal())
