@@ -171,7 +171,7 @@
         app:layout_constraintTop_toBottomOf="@+id/minButton" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageview_switch_accounts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -184,5 +184,18 @@
         app:layout_constraintTop_toTopOf="@+id/select_from_account_button"
         app:srcCompat="@drawable/ic_arrow_forward_exchange_blue_24dp"
         tools:ignore="VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/imageview_switch_currency"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_icon_swap"
+        app:layout_constraintBottom_toTopOf="@+id/maxButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_to_account_button"
+        tools:ignore="RtlHardcoded" />
 
 </android.support.constraint.ConstraintLayout>
