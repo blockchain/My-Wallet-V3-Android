@@ -267,19 +267,7 @@ private data class InnerState(
 
     val toFiatRate: ExchangeRate.CryptoToFiat? = null
 ) {
-    val lastUserInputField: Fix
-        get() = when {
-            vm.to.cryptoMode == Value.Mode.UserEntered -> Fix.COUNTER_CRYPTO
-            vm.to.fiatMode == Value.Mode.UserEntered -> Fix.COUNTER_FIAT
-            vm.from.fiatMode == Value.Mode.UserEntered -> Fix.BASE_FIAT
-            else -> Fix.BASE_CRYPTO
-        }
+    val lastUserInputField: Fix = vm.fixedField
 
-    val lastUserValue: Money =
-        when (lastUserInputField) {
-            Fix.BASE_CRYPTO -> vm.from.cryptoValue
-            Fix.COUNTER_CRYPTO -> vm.to.cryptoValue
-            Fix.BASE_FIAT -> vm.from.fiatValue
-            Fix.COUNTER_FIAT -> vm.to.fiatValue
-        }
+    val lastUserValue: Money = vm.fixedMoneyValue
 }

@@ -13,19 +13,14 @@ import com.blockchain.balance.colorRes
 import com.blockchain.balance.layerListDrawableRes
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
-import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Value
-import com.blockchain.morph.exchange.service.QuoteService
-import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
 import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.FiatValue
 import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.formatWithUnit
-import info.blockchain.balance.withMajorValue
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -36,11 +31,8 @@ import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
 import timber.log.Timber
-import java.math.BigDecimal
 import java.util.Locale
 
-// TODO: AND-1363 This class has too much in it. Need to extract and place in
-// :morph:homebrew with interfaces in :morph:common
 internal class ExchangeFragment : Fragment() {
 
     companion object {
@@ -123,7 +115,7 @@ internal class ExchangeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        compositeDisposable += allTextUpdates(exchangeModel.quoteService)
+        compositeDisposable += allTextUpdates()
             .subscribeBy {
                 exchangeModel.inputEventSink.onNext(it)
             }
@@ -146,7 +138,7 @@ internal class ExchangeFragment : Fragment() {
             }
     }
 
-    private fun allTextUpdates(quotesSocket: QuoteService): Observable<ExchangeIntent> {
+    private fun allTextUpdates(): Observable<ExchangeIntent> {
         return keyboard.viewStates
             .doOnNext {
                 configChangePersistence.currentValue = it.userDecimal
@@ -163,14 +155,6 @@ internal class ExchangeFragment : Fragment() {
                 view!!.findViewById<View>(R.id.numberBackSpace).isEnabled = it.previous != null
             }
             .map { it.userDecimal }
-            .doOnNext {
-                quotesSocket.updateQuoteRequest(
-                    it.toExchangeQuoteRequest(
-                        configChangePersistence,
-                        currency
-                    )
-                )
-            }
             .distinctUntilChanged()
             .map {
                 FieldUpdateIntent(
@@ -185,38 +169,6 @@ internal class ExchangeFragment : Fragment() {
     override fun onPause() {
         compositeDisposable.clear()
         super.onPause()
-    }
-}
-
-private fun BigDecimal.toExchangeQuoteRequest(
-    field: ExchangeFragmentConfigurationChangePersistence,
-    currency: String
-): ExchangeQuoteRequest {
-    return when (field.fieldMode) {
-        Fix.COUNTER_FIAT ->
-            ExchangeQuoteRequest.BuyingFiatLinked(
-                offering = field.from.cryptoCurrency,
-                wanted = field.to.cryptoCurrency,
-                wantedFiatValue = FiatValue.fromMajor(currency, this)
-            )
-        Fix.BASE_FIAT ->
-            ExchangeQuoteRequest.SellingFiatLinked(
-                offering = field.from.cryptoCurrency,
-                wanted = field.to.cryptoCurrency,
-                offeringFiatValue = FiatValue.fromMajor(currency, this)
-            )
-        Fix.COUNTER_CRYPTO ->
-            ExchangeQuoteRequest.Buying(
-                offering = field.from.cryptoCurrency,
-                wanted = field.to.cryptoCurrency.withMajorValue(this),
-                indicativeFiatSymbol = currency
-            )
-        Fix.BASE_CRYPTO ->
-            ExchangeQuoteRequest.Selling(
-                offering = field.from.cryptoCurrency.withMajorValue(this),
-                wanted = field.to.cryptoCurrency,
-                indicativeFiatSymbol = currency
-            )
     }
 }
 

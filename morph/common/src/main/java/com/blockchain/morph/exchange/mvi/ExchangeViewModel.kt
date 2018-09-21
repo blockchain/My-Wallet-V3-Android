@@ -3,6 +3,7 @@ package com.blockchain.morph.exchange.mvi
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
+import info.blockchain.balance.Money
 import java.math.BigDecimal
 
 data class ExchangeViewModel(
@@ -11,7 +12,26 @@ data class ExchangeViewModel(
     val from: Value,
     val to: Value,
     val latestQuote: Quote? = null
-)
+) {
+    val fromCryptoCurrency = fromAccount.cryptoCurrency
+    val toCryptoCurrency = toAccount.cryptoCurrency
+}
+
+val ExchangeViewModel.fixedField: Fix
+    get() = when {
+        to.cryptoMode == Value.Mode.UserEntered -> Fix.COUNTER_CRYPTO
+        to.fiatMode == Value.Mode.UserEntered -> Fix.COUNTER_FIAT
+        from.fiatMode == Value.Mode.UserEntered -> Fix.BASE_FIAT
+        else -> Fix.BASE_CRYPTO
+    }
+
+val ExchangeViewModel.fixedMoneyValue: Money
+    get() = when (fixedField) {
+        Fix.BASE_CRYPTO -> from.cryptoValue
+        Fix.COUNTER_CRYPTO -> to.cryptoValue
+        Fix.BASE_FIAT -> from.fiatValue
+        Fix.COUNTER_FIAT -> to.fiatValue
+    }
 
 data class Value(
     val cryptoValue: CryptoValue,
