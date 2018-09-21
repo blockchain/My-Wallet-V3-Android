@@ -13,11 +13,15 @@ import com.blockchain.balance.colorRes
 import com.blockchain.balance.layerListDrawableRes
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
+import com.blockchain.morph.exchange.mvi.Fix
+import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
 import com.blockchain.morph.exchange.mvi.Value
+import com.blockchain.morph.exchange.mvi.fixedField
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
+import com.jakewharton.rxbinding2.view.clicks
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FormatPrecision
 import info.blockchain.balance.formatWithUnit
@@ -115,8 +119,11 @@ internal class ExchangeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        compositeDisposable += allTextUpdates()
-            .subscribeBy {
+        compositeDisposable +=
+            Observable.merge(
+                allTextUpdates(),
+                view!!.findViewById<View>(R.id.imageview_switch_currency).clicks().map { ToggleFiatCryptoIntent() }
+            ).subscribeBy {
                 exchangeModel.inputEventSink.onNext(it)
             }
 
@@ -124,18 +131,35 @@ internal class ExchangeFragment : Fragment() {
             .exchangeViewModels
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
-                Timber.d(it.toString())
-
-                val parts = it.from.fiatValue.toParts(Locale.getDefault())
-                largeValueLeftHandSide.text = parts.symbol
-                largeValue.text = parts.major
-                largeValueRightHandSide.text = parts.minor
-
-                val fromCryptoString = it.from.cryptoValue.formatForExchange()
-                smallValue.text = fromCryptoString
+                when (it.fixedField) {
+                    Fix.BASE_FIAT -> displayFiatLarge(it.from)
+                    Fix.BASE_CRYPTO -> displayCryptoLarge(it.from)
+                    Fix.COUNTER_FIAT -> displayFiatLarge(it.to)
+                    Fix.COUNTER_CRYPTO -> displayCryptoLarge(it.to)
+                }
                 selectSendAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.from)
                 selectReceiveAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.to)
             }
+    }
+
+    private fun displayFiatLarge(from: Value) {
+        val parts = from.fiatValue.toParts(Locale.getDefault())
+        largeValueLeftHandSide.text = parts.symbol
+        largeValue.text = parts.major
+        largeValueRightHandSide.text = parts.minor
+
+        val fromCryptoString = from.cryptoValue.formatForExchange()
+        smallValue.text = fromCryptoString
+    }
+
+    private fun displayCryptoLarge(from: Value) {
+        val parts = from.fiatValue.toParts(Locale.getDefault())
+        largeValueLeftHandSide.text = ""//parts.symbol
+        largeValue.text = from.cryptoValue.formatForExchange()
+        largeValueRightHandSide.text = ""
+
+        val fromFiatString = from.fiatValue.toStringWithSymbol(Locale.getDefault())
+        smallValue.text = fromFiatString
     }
 
     private fun allTextUpdates(): Observable<ExchangeIntent> {
