@@ -183,7 +183,7 @@ class TransactionSendDataManagerTest {
         val ecKey = ECKey()
         whenever(payloadDataManager.getHDKeysForSigning(account, spendable))
             .thenReturn(listOf(ecKey))
-        whenever(bchDataManager.getNextChangeAddress(0))
+        whenever(bchDataManager.getNextChangeCashAddress(0))
             .thenReturn(Observable.just(change))
         val txHash = "TX_ HASH"
         whenever(
@@ -563,7 +563,7 @@ class TransactionSendDataManagerTest {
     fun `get change address ethereum`() {
         // Arrange
         val account: EthereumAccount = mock()
-        whenever(account.address).thenReturn("ADDRESS")
+        whenever(account.checksumAddress).thenReturn("ADDRESS")
         // Act
         val testObserver = subject.getChangeAddress(CryptoCurrency.ETHER, account)
             .test()
@@ -608,7 +608,7 @@ class TransactionSendDataManagerTest {
     fun `get receive address ethereum`() {
         // Arrange
         val account: EthereumAccount = mock()
-        whenever(account.address).thenReturn("ADDRESS")
+        whenever(account.checksumAddress).thenReturn("ADDRESS")
         // Act
         val testObserver = subject.getReceiveAddress(CryptoCurrency.ETHER, account)
             .test()
