@@ -4,8 +4,14 @@ import android.arch.lifecycle.ViewModel
 import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.ExchangeViewModel
+import com.blockchain.morph.exchange.mvi.Fix
+import com.blockchain.morph.exchange.mvi.fixedField
+import com.blockchain.morph.exchange.mvi.fixedMoneyValue
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
+import com.blockchain.morph.quote.ExchangeQuoteRequest
+import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -49,12 +55,42 @@ class ExchangeModel(
             .subscribeBy {
                 configChangePersistence.fromReference = it.fromAccount
                 configChangePersistence.toReference = it.toAccount
+                quoteService.updateQuoteRequest(it.toExchangeQuoteRequest(it.from.fiatValue.currencyCode))
             }
     }
 
     private fun newViewModel(exchangeViewModel: ExchangeViewModel) {
         exchangeViewModelsSubject.onNext(exchangeViewModel)
     }
+}
+
+private fun ExchangeViewModel.toExchangeQuoteRequest(
+    currency: String
+): ExchangeQuoteRequest = when (fixedField) {
+    Fix.COUNTER_FIAT ->
+        ExchangeQuoteRequest.BuyingFiatLinked(
+            offering = fromCryptoCurrency,
+            wanted = toCryptoCurrency,
+            wantedFiatValue = fixedMoneyValue as FiatValue
+        )
+    Fix.BASE_FIAT ->
+        ExchangeQuoteRequest.SellingFiatLinked(
+            offering = fromCryptoCurrency,
+            wanted = toCryptoCurrency,
+            offeringFiatValue = fixedMoneyValue as FiatValue
+        )
+    Fix.COUNTER_CRYPTO ->
+        ExchangeQuoteRequest.Buying(
+            offering = fromCryptoCurrency,
+            wanted = fixedMoneyValue as CryptoValue,
+            indicativeFiatSymbol = currency
+        )
+    Fix.BASE_CRYPTO ->
+        ExchangeQuoteRequest.Selling(
+            offering = fixedMoneyValue as CryptoValue,
+            wanted = toCryptoCurrency,
+            indicativeFiatSymbol = currency
+        )
 }
 
 interface ExchangeViewModelProvider {
