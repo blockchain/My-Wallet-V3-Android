@@ -1,7 +1,6 @@
 package com.blockchain.morph.exchange.mvi
 
 import info.blockchain.balance.AccountReference
-import info.blockchain.utils.tryParseBigDecimal
 import java.math.BigDecimal
 
 /**
@@ -18,6 +17,8 @@ class QuoteIntent(val quote: Quote) : ExchangeIntent()
 class SetFixIntent(val fix: Fix) : ExchangeIntent()
 
 class ToggleFiatCryptoIntent : ExchangeIntent()
+
+class ToggleFromToIntent : ExchangeIntent()
 
 class ChangeCryptoFromAccount(val from: AccountReference) : ExchangeIntent()
 

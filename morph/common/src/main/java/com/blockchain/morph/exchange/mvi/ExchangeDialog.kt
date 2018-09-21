@@ -22,6 +22,7 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is ChangeCryptoFromAccount -> previousState.map(intent)
                 is ChangeCryptoToAccount -> previousState.map(intent)
                 is ToggleFiatCryptoIntent -> previousState.toggleFiatCrypto()
+                is ToggleFromToIntent -> previousState.toggleFromTo()
                 is SetFixIntent -> previousState.map3(intent)
             }
         }.map {
@@ -114,6 +115,16 @@ private fun Fix.toggleFiatCrypto() =
         Fix.BASE_CRYPTO -> Fix.BASE_FIAT
         Fix.COUNTER_FIAT -> Fix.COUNTER_CRYPTO
         Fix.COUNTER_CRYPTO -> Fix.COUNTER_FIAT
+    }
+
+private fun InternalState.toggleFromTo() = copy(fix = fix.toggleFromTo())
+
+private fun Fix.toggleFromTo() =
+    when (this) {
+        Fix.BASE_FIAT -> Fix.COUNTER_FIAT
+        Fix.BASE_CRYPTO -> Fix.COUNTER_CRYPTO
+        Fix.COUNTER_FIAT -> Fix.BASE_FIAT
+        Fix.COUNTER_CRYPTO -> Fix.BASE_CRYPTO
     }
 
 private fun InternalState.map(intent: ChangeCryptoFromAccount): InternalState {

@@ -6,10 +6,10 @@ import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import org.junit.Test
 
-class ToggleFiatCryptoIntentTest {
+class ToggleFromToIntentTest {
 
     @Test
-    fun `can toggle between fiat and crypto entry on the "from" side`() {
+    fun `can toggle between "from" and "to" entry with crypto`() {
         given(
             ExchangeViewModel(
                 fromAccount = aFromAccount(),
@@ -24,7 +24,7 @@ class ToggleFiatCryptoIntentTest {
                 )
             )
         ).on(
-            ToggleFiatCryptoIntent()
+            ToggleFromToIntent()
         ) {
             assertValue(
                 ExchangeViewModel(
@@ -32,10 +32,10 @@ class ToggleFiatCryptoIntentTest {
                     toAccount = aToAccount(),
                     from = value(
                         upToDate(CryptoValue.etherFromMajor(10)),
-                        userEntered(100.gbp())
+                        upToDate(100.gbp())
                     ),
                     to = value(
-                        upToDate(CryptoValue.bitcoinCashFromMajor(25)),
+                        userEntered(CryptoValue.bitcoinCashFromMajor(25)),
                         upToDate(99.gbp())
                     )
                 )
@@ -44,7 +44,7 @@ class ToggleFiatCryptoIntentTest {
     }
 
     @Test
-    fun `can toggle between fiat and crypto entry on the "to" side`() {
+    fun `can toggle between "from" and "to" entry with fiat`() {
         given(
             ExchangeViewModel(
                 fromAccount = aFromAccount(),
@@ -59,7 +59,7 @@ class ToggleFiatCryptoIntentTest {
                 )
             )
         ).on(
-            ToggleFiatCryptoIntent()
+            ToggleFromToIntent()
         ) {
             assertValue(
                 ExchangeViewModel(
@@ -67,10 +67,10 @@ class ToggleFiatCryptoIntentTest {
                     toAccount = aToAccount(),
                     from = value(
                         upToDate(CryptoValue.etherFromMajor(10)),
-                        upToDate(100.gbp())
+                        userEntered(100.gbp())
                     ),
                     to = value(
-                        userEntered(CryptoValue.bitcoinCashFromMajor(25)),
+                        upToDate(CryptoValue.bitcoinCashFromMajor(25)),
                         upToDate(99.gbp())
                     )
                 )
