@@ -95,7 +95,7 @@ val coreModule = applicationContext {
         factory {
             AllAccountsImplementation(
                 btcAccountList = get("BTC"),
-                bchAccountList = get("BTC"),
+                bchAccountList = get("BCH"),
                 etherAccountList = get("ETH")
             ) as AllAccountList
         }
