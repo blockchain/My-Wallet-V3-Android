@@ -18,6 +18,8 @@ import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
 import com.blockchain.morph.exchange.mvi.ToggleFromToIntent
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.fixedField
+import com.blockchain.morph.exchange.mvi.isBase
+import com.blockchain.morph.exchange.mvi.isCounter
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
@@ -128,6 +130,8 @@ internal class ExchangeFragment : Fragment() {
                 exchangeModel.inputEventSink.onNext(it)
             }
 
+        val exchangeIndicator = view!!.findViewById<View>(R.id.imageView_exchange_indicator)
+        val receiveIndicator = view!!.findViewById<View>(R.id.imageView_receive_indicator)
         compositeDisposable += exchangeModel
             .exchangeViewModels
             .observeOn(AndroidSchedulers.mainThread())
@@ -140,6 +144,8 @@ internal class ExchangeFragment : Fragment() {
                 }
                 selectSendAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.from)
                 selectReceiveAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.to)
+                exchangeIndicator.invisibleIf(it.fixedField.isCounter)
+                receiveIndicator.invisibleIf(it.fixedField.isBase)
             }
     }
 
