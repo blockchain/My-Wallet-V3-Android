@@ -39,10 +39,10 @@ public class EthereumAccount implements JsonSerializableAccount {
     private boolean archived;
 
     @JsonProperty("label")
-    private String label;
+    private String label = "";
 
     @JsonProperty("addr")
-    private String address;
+    private String address = "";
 
     @JsonProperty("correct")
     private boolean correct;

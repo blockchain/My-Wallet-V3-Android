@@ -26,7 +26,7 @@ import java.io.IOException;
 public class GenericMetadataAccount implements JsonSerializableAccount {
 
     @JsonProperty("label")
-    private String label;
+    private String label = "";
 
     @JsonProperty("archived")
     private boolean archived;
