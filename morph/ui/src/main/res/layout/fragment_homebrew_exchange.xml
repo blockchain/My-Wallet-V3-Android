@@ -171,7 +171,7 @@
         app:layout_constraintTop_toBottomOf="@+id/minButton" />
 
     <ImageView
-        android:id="@+id/imageview_switch_accounts"
+        android:id="@+id/imageview_switch_from_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -182,7 +182,7 @@
         app:layout_constraintEnd_toStartOf="@+id/select_to_account_button"
         app:layout_constraintStart_toEndOf="@+id/select_from_account_button"
         app:layout_constraintTop_toTopOf="@+id/select_from_account_button"
-        app:srcCompat="@drawable/ic_arrow_forward_exchange_blue_24dp"
+        app:srcCompat="@drawable/ic_icon_exchange"
         tools:ignore="VectorDrawableCompat" />
 
     <ImageView

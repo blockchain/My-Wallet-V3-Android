@@ -5,7 +5,6 @@ import com.blockchain.testutils.ether
 import com.blockchain.testutils.gbp
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
-import info.blockchain.balance.CryptoValue
 import org.junit.Test
 
 class SimpleInputUpdateIntentTest {

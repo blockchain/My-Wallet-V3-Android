@@ -15,6 +15,7 @@ import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.SimpleFieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
+import com.blockchain.morph.exchange.mvi.ToggleFromToIntent
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.fixedField
 import com.blockchain.morph.ui.R
@@ -34,7 +35,6 @@ import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
-import timber.log.Timber
 import java.util.Locale
 
 internal class ExchangeFragment : Fragment() {
@@ -122,7 +122,8 @@ internal class ExchangeFragment : Fragment() {
         compositeDisposable +=
             Observable.merge(
                 allTextUpdates(),
-                view!!.findViewById<View>(R.id.imageview_switch_currency).clicks().map { ToggleFiatCryptoIntent() }
+                view!!.findViewById<View>(R.id.imageview_switch_currency).clicks().map { ToggleFiatCryptoIntent() },
+                view!!.findViewById<View>(R.id.imageview_switch_from_to).clicks().map { ToggleFromToIntent() }
             ).subscribeBy {
                 exchangeModel.inputEventSink.onNext(it)
             }
@@ -153,7 +154,7 @@ internal class ExchangeFragment : Fragment() {
     }
 
     private fun displayCryptoLarge(from: Value) {
-        largeValueLeftHandSide.text = ""//parts.symbol
+        largeValueLeftHandSide.text = ""
         largeValue.text = from.cryptoValue.formatForExchange()
         largeValueRightHandSide.text = ""
 
