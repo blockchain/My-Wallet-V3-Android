@@ -18,7 +18,7 @@
         android:textColor="@color/exchange_button_color"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_exchange"
         tools:background="@color/color_bitcoin_logo"
         tools:drawableStart="@drawable/layer_list_bitcoin"
         tools:text="BTC" />
@@ -36,13 +36,13 @@
         android:textColor="@color/exchange_button_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView_receive"
         tools:background="@color/color_ether_logo"
         tools:drawableStart="@drawable/layer_list_eth"
         tools:text="ETH" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_receive"
         style="@style/ExchangeText.ExchangeReceiveHeaders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_exchange"
         style="@style/ExchangeText.ExchangeReceiveHeaders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -197,5 +197,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_to_account_button"
         tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/imageView_exchange_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_exchange"
+        app:layout_constraintStart_toEndOf="@+id/textView_exchange"
+        app:layout_constraintTop_toTopOf="@+id/textView_exchange"
+        app:srcCompat="@drawable/ic_exchange_indicator" />
+
+    <ImageView
+        android:id="@+id/imageView_receive_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_receive"
+        app:layout_constraintStart_toEndOf="@+id/textView_receive"
+        app:layout_constraintTop_toTopOf="@+id/textView_receive"
+        app:srcCompat="@drawable/ic_exchange_indicator"
+        tools:visibility="visible" />
 
 </android.support.constraint.ConstraintLayout>

@@ -30,3 +30,9 @@ data class Quote(
         val fiatValue: FiatValue
     )
 }
+
+val Fix.isCounter: Boolean
+    get() = this == Fix.COUNTER_CRYPTO || this == Fix.COUNTER_FIAT
+
+val Fix.isBase: Boolean
+    get() = this == Fix.BASE_CRYPTO || this == Fix.BASE_FIAT
