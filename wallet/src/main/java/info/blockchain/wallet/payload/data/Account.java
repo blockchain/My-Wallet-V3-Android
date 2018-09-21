@@ -22,7 +22,7 @@ import java.util.List;
 public class Account implements JsonSerializableAccount {
 
     @JsonProperty("label")
-    private String label;
+    private String label = "";
 
     @JsonProperty("archived")
     private boolean archived;

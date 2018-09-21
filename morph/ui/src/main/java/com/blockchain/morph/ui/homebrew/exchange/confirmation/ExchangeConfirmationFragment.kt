@@ -100,7 +100,6 @@ class ExchangeConfirmationFragment :
         compositeDisposable += exchangeModel
             .exchangeViewModels
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { it.from }
             .filter { it.latestQuote?.rawQuote != null }
             .map {
                 ExchangeConfirmationViewModel(

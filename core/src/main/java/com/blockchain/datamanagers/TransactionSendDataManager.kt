@@ -5,7 +5,9 @@ import com.blockchain.datamanagers.fees.EthereumFees
 import com.blockchain.datamanagers.fees.FeeType
 import com.blockchain.datamanagers.fees.NetworkFees
 import com.blockchain.serialization.JsonSerializableAccount
+import com.blockchain.wallet.toAccountReference
 import info.blockchain.api.data.UnspentOutputs
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.coin.GenericMetadataAccount
@@ -59,22 +61,26 @@ class TransactionSendDataManager(
     }
 
     fun getMaximumSpendable(
-        cryptoCurrency: CryptoCurrency,
         account: JsonSerializableAccount,
         fees: NetworkFees,
         feeType: FeeType = FeeType.Regular
-    ): Single<CryptoValue> = when (cryptoCurrency) {
-        CryptoCurrency.BTC -> getMaxBitcoin(
-            account as Account,
-            fees as BitcoinLikeFees,
-            feeType
-        )
-        CryptoCurrency.BCH -> getMaxBitcoinCash(
-            account as GenericMetadataAccount,
-            fees as BitcoinLikeFees,
-            feeType
-        )
-        CryptoCurrency.ETHER -> getMaxEther(fees as EthereumFees)
+    ) = getMaximumSpendable(
+        account.toAccountReference(),
+        fees,
+        feeType
+    )
+
+    fun getMaximumSpendable(
+        account: AccountReference,
+        fees: NetworkFees,
+        feeType: FeeType = FeeType.Regular
+    ): Single<CryptoValue> = when (account) {
+        is AccountReference.BitcoinLike ->
+            account.getMaximumSpendable(
+                fees as BitcoinLikeFees,
+                feeType
+            )
+        is AccountReference.Ethereum -> getMaxEther(fees as EthereumFees)
     }
 
     fun getFeeForTransaction(
@@ -143,31 +149,19 @@ class TransactionSendDataManager(
         feePerKb: BigInteger
     ): BigInteger = sendDataManager.getSpendableCoins(coins, amountToSend, feePerKb).absoluteFee
 
-    private fun getMaxBitcoin(
-        account: Account,
+    private fun AccountReference.BitcoinLike.getMaximumSpendable(
         fees: BitcoinLikeFees,
         feeType: FeeType
-    ): Single<CryptoValue> = getMaxBchOrBtc(account.xpub, CryptoCurrency.BTC, fees, feeType)
-        .map { CryptoValue.bitcoinFromSatoshis(it) }
-        .doOnError { Timber.e(it) }
-        .onErrorReturn { CryptoValue.ZeroBtc }
-
-    private fun getMaxBitcoinCash(
-        account: GenericMetadataAccount,
-        fees: BitcoinLikeFees,
-        feeType: FeeType
-    ): Single<CryptoValue> = getMaxBchOrBtc(account.xpub, CryptoCurrency.BCH, fees, feeType)
-        .map { CryptoValue.bitcoinCashFromSatoshis(it) }
-        .doOnError { Timber.e(it) }
-        .onErrorReturn { CryptoValue.ZeroBch }
-
-    private fun getMaxBchOrBtc(
-        xPub: String,
-        cryptoCurrency: CryptoCurrency,
-        fees: BitcoinLikeFees,
-        feeType: FeeType
-    ): Single<BigInteger> = getUnspentOutputs(xPub, cryptoCurrency)
-        .map { sendDataManager.getMaximumAvailable(it, fees.feeForType(feeType)).left }
+    ): Single<CryptoValue> =
+        getUnspentOutputs(xpub, cryptoCurrency)
+            .map {
+                CryptoValue(
+                    cryptoCurrency,
+                    sendDataManager.getMaximumAvailable(it, fees.feeForType(feeType)).left
+                )
+            }
+            .doOnError { Timber.e(it) }
+            .onErrorReturn { CryptoValue.zero(cryptoCurrency) }
 
     private fun getMaxEther(fees: EthereumFees): Single<CryptoValue> =
         ethDataManager.fetchEthAddress()
