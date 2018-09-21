@@ -2,6 +2,7 @@ package info.blockchain.balance
 
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.util.Locale
 
 data class CryptoValue(
     val currency: CryptoCurrency,
@@ -11,6 +12,13 @@ data class CryptoValue(
      */
     val amount: BigInteger
 ) : Money {
+
+    override fun symbol(locale: Locale) = currency.symbol
+
+    override fun toStringWithSymbol(locale: Locale) = formatWithUnit(locale)
+
+    override fun toStringWithoutSymbol(locale: Locale) = format(locale)
+
     /**
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */

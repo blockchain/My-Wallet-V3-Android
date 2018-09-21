@@ -10,6 +10,12 @@ internal fun Number.jpy() = FiatValue.fromMajor("JPY", numberToBigDecimal())
 
 internal fun Number.eur() = FiatValue.fromMajor("EUR", numberToBigDecimal())
 
+internal fun Number.cad() = FiatValue.fromMajor("CAD", numberToBigDecimal())
+
+internal fun Number.bitcoin() = CryptoValue.bitcoinFromMajor(numberToBigDecimal())
+
+internal fun Number.ether() = CryptoValue.etherFromMajor(numberToBigDecimal())
+
 private fun Number.numberToBigDecimal(): BigDecimal =
     when (this) {
         is Double -> toBigDecimal()

@@ -46,6 +46,7 @@ data class FiatValue private constructor(
     val currencyCode: String,
     val value: BigDecimal
 ) : Money {
+
     override val isZero: Boolean get() = value.signum() == 0
 
     override val isPositive: Boolean get() = value.signum() == 1
@@ -53,11 +54,11 @@ data class FiatValue private constructor(
     val valueMinor: Long =
         value.movePointRight(Currency.getInstance(currencyCode).defaultFractionDigits).toLong()
 
-    fun toStringWithSymbol(locale: Locale): String =
+    override fun toStringWithSymbol(locale: Locale): String =
         FiatFormat[Key(locale, currencyCode, includeSymbol = true)]
             .format(value)
 
-    fun toStringWithoutSymbol(locale: Locale): String =
+    override fun toStringWithoutSymbol(locale: Locale): String =
         FiatFormat[Key(locale, currencyCode, includeSymbol = false)]
             .format(value)
             .trim()
@@ -86,7 +87,7 @@ data class FiatValue private constructor(
             }
         }
 
-    private fun symbol(locale: Locale) = Currency.getInstance(currencyCode).getSymbol(locale)
+    override fun symbol(locale: Locale): String = Currency.getInstance(currencyCode).getSymbol(locale)
 
     companion object {
 
