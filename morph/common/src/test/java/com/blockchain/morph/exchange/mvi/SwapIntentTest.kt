@@ -31,12 +31,12 @@ class SwapIntentTest {
                     fromAccount = AccountReference.BitcoinLike(CryptoCurrency.BCH, "BCH Account", "xbub123"),
                     toAccount = AccountReference.Ethereum("Ether Account", "0xeth1"),
                     from = value(
-                        upToDate(CryptoValue.ZeroBch),
-                        upToDate(zeroFiat("GBP"))
+                        userEntered(CryptoValue.ZeroBch),
+                        outOfDate(zeroFiat("GBP"))
                     ),
                     to = value(
-                        upToDate(CryptoValue.ZeroEth),
-                        upToDate(zeroFiat("GBP"))
+                        outOfDate(CryptoValue.ZeroEth),
+                        outOfDate(zeroFiat("GBP"))
                     )
                 )
             )

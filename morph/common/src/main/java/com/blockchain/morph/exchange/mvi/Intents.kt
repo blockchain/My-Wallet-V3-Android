@@ -9,17 +9,13 @@ import java.math.BigDecimal
  */
 sealed class ExchangeIntent
 
-class FieldUpdateIntent(
-    val fixedField: Fix,
-    userText: String,
-    val userValue: BigDecimal = userText.tryParseBigDecimal() ?: BigDecimal.ZERO
-) : ExchangeIntent()
-
 class SimpleFieldUpdateIntent(val userValue: BigDecimal) : ExchangeIntent()
 
 class SwapIntent : ExchangeIntent()
 
 class QuoteIntent(val quote: Quote) : ExchangeIntent()
+
+class SetFixIntent(val fix: Fix) : ExchangeIntent()
 
 class ToggleFiatCryptoIntent : ExchangeIntent()
 
