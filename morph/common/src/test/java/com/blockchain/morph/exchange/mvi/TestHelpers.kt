@@ -1,5 +1,6 @@
 package com.blockchain.morph.exchange.mvi
 
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
@@ -26,7 +27,14 @@ fun given(initial: ExchangeViewModel) =
 class Given(val initial: ExchangeViewModel)
 
 fun initial(fiatCode: String, pair: Pair<CryptoCurrency, CryptoCurrency>) =
-    initial(fiatCode, pair.first, pair.second)
+    initial(fiatCode, fakeAccountReference(pair.first), fakeAccountReference(pair.second))
+
+fun fakeAccountReference(cryptoCurrency: CryptoCurrency): AccountReference {
+    return when (cryptoCurrency) {
+        CryptoCurrency.BTC, CryptoCurrency.BCH -> AccountReference.BitcoinLike(cryptoCurrency, "", "")
+        CryptoCurrency.ETHER -> AccountReference.Ethereum("", "")
+    }
+}
 
 fun zeroFiat(currencyCode: String) = FiatValue.fromMajor(currencyCode, BigDecimal.ZERO)
 

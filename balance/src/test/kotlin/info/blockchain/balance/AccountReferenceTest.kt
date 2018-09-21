@@ -9,43 +9,73 @@ class AccountReferenceTest {
 
     @Test
     fun `can reference a bitcoin account`() {
-        AccountReference(CryptoCurrency.BTC, "")
-            .cryptoCurrency `should be` CryptoCurrency.BTC
+        AccountReference.BitcoinLike(CryptoCurrency.BTC, "My Bitcoin account", "xpub123")
+            .apply {
+                cryptoCurrency `should be` CryptoCurrency.BTC
+                label `should be` "My Bitcoin account"
+                xpub `should be` "xpub123"
+            }
     }
 
     @Test
     fun `can reference a bitcoin cash account`() {
-        AccountReference(CryptoCurrency.BCH, "")
-            .cryptoCurrency `should be` CryptoCurrency.BCH
+        AccountReference.BitcoinLike(CryptoCurrency.BCH, "My BitcoinCash account", "xpub456")
+            .apply {
+                cryptoCurrency `should be` CryptoCurrency.BCH
+                label `should be` "My BitcoinCash account"
+                xpub `should be` "xpub456"
+            }
     }
 
     @Test
     fun `can reference an ethereum account`() {
-        AccountReference(CryptoCurrency.ETHER, "")
-            .cryptoCurrency `should be` CryptoCurrency.ETHER
-    }
-
-    @Test
-    fun `can have label`() {
-        AccountReference(CryptoCurrency.ETHER, "label")
-            .label `should be` "label"
+        AccountReference.Ethereum("My Ethereum account", "0xaddress")
+            .apply {
+                cryptoCurrency `should be` CryptoCurrency.ETHER
+                label `should be` "My Ethereum account"
+                address `should be` "0xaddress"
+            }
     }
 
     @Test
     fun `inequality on currency`() {
-        AccountReference(CryptoCurrency.ETHER, "") `should not equal`
-            AccountReference(CryptoCurrency.BTC, "")
+        AccountReference.Ethereum("", "") `should not equal`
+            AccountReference.BitcoinLike(CryptoCurrency.BTC, "", "")
     }
 
     @Test
     fun `inequality on label`() {
-        AccountReference(CryptoCurrency.BTC, "1") `should not equal`
-            AccountReference(CryptoCurrency.BTC, "2")
+        AccountReference.BitcoinLike(CryptoCurrency.BTC, "1", "") `should not equal`
+            AccountReference.BitcoinLike(CryptoCurrency.BTC, "2", "")
     }
 
     @Test
-    fun equality() {
-        AccountReference(CryptoCurrency.BTC, "1") `should equal`
-            AccountReference(CryptoCurrency.BTC, "1")
+    fun `inequality on xpub`() {
+        AccountReference.BitcoinLike(CryptoCurrency.BTC, "1", "xpub1") `should not equal`
+            AccountReference.BitcoinLike(CryptoCurrency.BTC, "1", "xpub2")
+    }
+
+    @Test
+    fun `equality Bitcoin like`() {
+        AccountReference.BitcoinLike(CryptoCurrency.BTC, "1", "xpub1") `should equal`
+            AccountReference.BitcoinLike(CryptoCurrency.BTC, "1", "xpub1")
+    }
+
+    @Test
+    fun `inequality Ethereum label`() {
+        AccountReference.Ethereum("1", "0xAddress1") `should not equal`
+            AccountReference.Ethereum("2", "0xAddress1")
+    }
+
+    @Test
+    fun `inequality Ethereum address`() {
+        AccountReference.Ethereum("1", "0xAddress1") `should not equal`
+            AccountReference.Ethereum("1", "0xAddress2")
+    }
+
+    @Test
+    fun `equality Ethereum`() {
+        AccountReference.Ethereum("1", "0xAddress1") `should equal`
+            AccountReference.Ethereum("1", "0xAddress1")
     }
 }

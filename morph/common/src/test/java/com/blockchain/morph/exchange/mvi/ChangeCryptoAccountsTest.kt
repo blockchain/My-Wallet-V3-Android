@@ -13,7 +13,7 @@ class ChangeCryptoAccountsTest {
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             ChangeCryptoFromAccount(
-                from = AccountReference(CryptoCurrency.BCH, "")
+                from = AccountReference.BitcoinLike(CryptoCurrency.BCH, "", "")
             )
         ) {
             assertValue {
@@ -31,7 +31,7 @@ class ChangeCryptoAccountsTest {
             initial("GBP", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
             ChangeCryptoToAccount(
-                to = AccountReference(CryptoCurrency.BCH, "")
+                to = AccountReference.BitcoinLike(CryptoCurrency.BCH, "", "")
             )
         ) {
             assertValue {
@@ -46,10 +46,14 @@ class ChangeCryptoAccountsTest {
     @Test
     fun `if the "from" currency matches the "to", they swap`() {
         given(
-            initial("GBP", CryptoCurrency.BTC to CryptoCurrency.ETHER)
+            initial(
+                "GBP",
+                AccountReference.BitcoinLike(CryptoCurrency.BTC, "", ""),
+                AccountReference.Ethereum("1", "0x123")
+            )
         ).on(
             ChangeCryptoFromAccount(
-                from = AccountReference(CryptoCurrency.ETHER, "")
+                from = AccountReference.Ethereum("1", "0x456")
             )
         ) {
             assertValue {
@@ -64,10 +68,14 @@ class ChangeCryptoAccountsTest {
     @Test
     fun `if the "to" currency matches the "from", they swap`() {
         given(
-            initial("GBP", CryptoCurrency.BTC to CryptoCurrency.ETHER)
+            initial(
+                "GBP",
+                AccountReference.BitcoinLike(CryptoCurrency.BTC, "1", "xpub123"),
+                AccountReference.Ethereum("", "")
+            )
         ).on(
             ChangeCryptoToAccount(
-                to = AccountReference(CryptoCurrency.BTC, "")
+                to = AccountReference.BitcoinLike(CryptoCurrency.BTC, "2", "xpub456")
             )
         ) {
             assertValue {

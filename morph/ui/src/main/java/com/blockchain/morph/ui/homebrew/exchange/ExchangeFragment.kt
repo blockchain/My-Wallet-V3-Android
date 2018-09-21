@@ -194,26 +194,26 @@ private fun BigDecimal.toExchangeQuoteRequest(
     return when (field.fieldMode) {
         FieldUpdateIntent.Field.TO_FIAT ->
             ExchangeQuoteRequest.BuyingFiatLinked(
-                offering = field.from,
-                wanted = field.to,
+                offering = field.from.cryptoCurrency,
+                wanted = field.to.cryptoCurrency,
                 wantedFiatValue = FiatValue.fromMajor(currency, this)
             )
         FieldUpdateIntent.Field.FROM_FIAT ->
             ExchangeQuoteRequest.SellingFiatLinked(
-                offering = field.from,
-                wanted = field.to,
+                offering = field.from.cryptoCurrency,
+                wanted = field.to.cryptoCurrency,
                 offeringFiatValue = FiatValue.fromMajor(currency, this)
             )
         FieldUpdateIntent.Field.TO_CRYPTO ->
             ExchangeQuoteRequest.Buying(
-                offering = field.from,
-                wanted = field.to.withMajorValue(this),
+                offering = field.from.cryptoCurrency,
+                wanted = field.to.cryptoCurrency.withMajorValue(this),
                 indicativeFiatSymbol = currency
             )
         FieldUpdateIntent.Field.FROM_CRYPTO ->
             ExchangeQuoteRequest.Selling(
-                offering = field.from.withMajorValue(this),
-                wanted = field.to,
+                offering = field.from.cryptoCurrency.withMajorValue(this),
+                wanted = field.to.cryptoCurrency,
                 indicativeFiatSymbol = currency
             )
     }

@@ -8,6 +8,12 @@ import info.blockchain.wallet.contacts.Contacts
 import info.blockchain.wallet.util.PrivateKeyFactory
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.androidcore.BuildConfig
+import com.blockchain.accounts.AccountList
+import com.blockchain.accounts.AllAccountList
+import com.blockchain.accounts.AllAccountsImplementation
+import com.blockchain.accounts.BchAccountListAdapter
+import com.blockchain.accounts.BtcAccountListAdapter
+import com.blockchain.accounts.EthAccountListAdapter
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
@@ -81,6 +87,18 @@ val coreModule = applicationContext {
         bean { MetadataManager(get(), get(), get()) }
 
         factory { TransactionSendDataManager(get(), get(), get(), get(), get()) }
+
+        factory("BTC") { BtcAccountListAdapter(get()) as AccountList }
+        factory("BCH") { BchAccountListAdapter(get()) as AccountList }
+        factory("ETH") { EthAccountListAdapter(get()) as AccountList }
+
+        factory {
+            AllAccountsImplementation(
+                btcAccountList = get("BTC"),
+                bchAccountList = get("BTC"),
+                etherAccountList = get("ETH")
+            ) as AllAccountList
+        }
     }
 
     bean { BchDataStore() }

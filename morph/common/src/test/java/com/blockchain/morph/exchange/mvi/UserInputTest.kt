@@ -34,22 +34,21 @@ class UserInputTest {
                 "1,000.123 BTC"
             )
         ) {
-            assertValue(
-                ExchangeViewModel(
-                    from = value(
-                        userEntered(
-                            CryptoValue.bitcoinCashFromMajor(
-                                1000.123.toBigDecimal()
-                            )
-                        ),
-                        outOfDate(zeroFiat("GBP"))
+            assertValue {
+                it.from `should equal` value(
+                    userEntered(
+                        CryptoValue.bitcoinCashFromMajor(
+                            1000.123.toBigDecimal()
+                        )
                     ),
-                    to = value(
-                        outOfDate(CryptoValue.ZeroEth),
-                        outOfDate(zeroFiat("GBP"))
-                    )
+                    outOfDate(zeroFiat("GBP"))
                 )
-            )
+                it.to `should equal` value(
+                    outOfDate(CryptoValue.ZeroEth),
+                    outOfDate(zeroFiat("GBP"))
+                )
+                true
+            }
         }
     }
 

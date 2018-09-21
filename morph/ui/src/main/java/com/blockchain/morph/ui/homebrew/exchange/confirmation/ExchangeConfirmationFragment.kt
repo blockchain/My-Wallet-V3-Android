@@ -19,6 +19,7 @@ import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListen
 import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedActivity
 import com.blockchain.ui.extensions.throttledClicks
 import com.blockchain.ui.password.SecondPasswordHandler
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.format
@@ -97,6 +98,8 @@ class ExchangeConfirmationFragment :
             .filter { it.latestQuote?.rawQuote != null }
             .map {
                 ExchangeConfirmationViewModel(
+                    fromAccount = it.fromAccount,
+                    toAccount = it.toAccount,
                     sending = it.from.cryptoValue,
                     receiving = it.to.cryptoValue,
                     value = it.to.fiatValue,
@@ -118,7 +121,7 @@ class ExchangeConfirmationFragment :
             toButton.text = receivingCryptoValue
             receiveTextView.text = receivingCryptoValue
             valueTextView.text = value.toStringWithSymbol(locale)
-            sendToTextView.text = "TODO"
+            sendToTextView.text = viewModel.toAccount.label
         }
     }
 
@@ -169,6 +172,8 @@ class ExchangeConfirmationFragment :
 }
 
 class ExchangeConfirmationViewModel(
+    val fromAccount: AccountReference,
+    val toAccount: AccountReference,
     val value: FiatValue,
     val sending: CryptoValue,
     val receiving: CryptoValue,

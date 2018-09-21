@@ -27,14 +27,14 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
 }
 
 private fun InnerState.map(intent: ChangeCryptoFromAccount): InnerState {
-    val from = intent.from.cryptoCurrency
-    val to = vm.to.cryptoValue.currency
-    if (from == to) {
+    val from = intent.from
+    val to = vm.toAccount
+    if (from.cryptoCurrency == to.cryptoCurrency) {
         return InnerState(
             initial(
                 fiatCode = vm.to.fiatValue.currencyCode,
                 from = from,
-                to = vm.from.cryptoValue.currency
+                to = vm.fromAccount
             )
         )
     }
@@ -48,13 +48,13 @@ private fun InnerState.map(intent: ChangeCryptoFromAccount): InnerState {
 }
 
 private fun InnerState.map(intent: ChangeCryptoToAccount): InnerState {
-    val from = vm.from.cryptoValue.currency
-    val to = intent.to.cryptoCurrency
-    if (from == to) {
+    val from = vm.fromAccount
+    val to = intent.to
+    if (from.cryptoCurrency == to.cryptoCurrency) {
         return InnerState(
             initial(
                 fiatCode = vm.to.fiatValue.currencyCode,
-                from = vm.to.cryptoValue.currency,
+                from = vm.toAccount,
                 to = to
             )
         )
@@ -116,8 +116,8 @@ private fun InnerState.mapSwap() =
         toFromCryptoRateForSwaps = fromToCryptoRate,
         vm = initial(
             vm.to.fiatValue.currencyCode,
-            from = vm.to.cryptoValue.currency,
-            to = vm.from.cryptoValue.currency
+            from = vm.toAccount,
+            to = vm.fromAccount
         )
     )
 
@@ -213,7 +213,7 @@ private fun InnerState.makeVm(intentField: FieldUpdateIntent.Field? = null): Exc
         }
     }
 
-    return ExchangeViewModel(
+    return vm.copy(
         from = Value(
             cryptoValue = fromCrypto ?: CryptoValue.zero(vm.from.cryptoValue.currency),
             cryptoMode = mode(field, FieldUpdateIntent.Field.FROM_CRYPTO, fromCrypto),

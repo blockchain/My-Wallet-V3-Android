@@ -1,6 +1,9 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
+import com.blockchain.accounts.AccountList
+import com.blockchain.accounts.AllAccountList
 import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
@@ -11,74 +14,93 @@ class ExchangeFragmentConfigurationChangePersistenceTest {
 
     @Test
     fun `initial values`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
                 fieldMode `should be` FieldUpdateIntent.Field.FROM_FIAT
-                from `should be` CryptoCurrency.BTC
-                to `should be` CryptoCurrency.ETHER
+                from `should equal` anyAccountReference(CryptoCurrency.BTC)
+                to `should equal` anyAccountReference(CryptoCurrency.ETHER)
                 currentValue `should equal` BigDecimal.ZERO
             }
     }
 
     @Test
     fun `can set "from" and it doesn't affect "to"`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
-                from = CryptoCurrency.BCH
-                from `should be` CryptoCurrency.BCH
-                to `should be` CryptoCurrency.ETHER
+                val accountReference = anyAccountReference(CryptoCurrency.BCH)
+                fromReference = accountReference
+                from `should be` accountReference
+                to `should equal` anyAccountReference(CryptoCurrency.ETHER)
             }
     }
 
     @Test
     fun `can set "to" and it doesn't affect "from"`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
-                to = CryptoCurrency.BCH
-                from `should be` CryptoCurrency.BTC
-                to `should be` CryptoCurrency.BCH
+                val accountReference = anyAccountReference(CryptoCurrency.BCH)
+                toReference = accountReference
+                to `should be` accountReference
+                from `should equal` anyAccountReference(CryptoCurrency.BTC)
             }
     }
 
     @Test
     fun `setting the "from" clears the current value`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
                 currentValue = 1000L.toBigDecimal()
-                from = CryptoCurrency.BCH
+                fromReference = anyAccountReference(CryptoCurrency.BCH)
                 currentValue `should equal` BigDecimal.ZERO
             }
     }
 
     @Test
     fun `setting the "to" clears the current value`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
                 currentValue = 1000L.toBigDecimal()
-                to = CryptoCurrency.BCH
+                toReference = anyAccountReference(CryptoCurrency.BCH)
                 currentValue `should equal` BigDecimal.ZERO
             }
     }
 
     @Test
     fun `setting the "from" to what it is already does not clear the current value`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
-                from = CryptoCurrency.BCH
+                fromReference = anyAccountReference(CryptoCurrency.BCH)
                 currentValue = 1000L.toBigDecimal()
-                from = CryptoCurrency.BCH
+                fromReference = anyAccountReference(CryptoCurrency.BCH)
                 currentValue `should equal` 1000L.toBigDecimal()
             }
     }
 
     @Test
     fun `setting the "to" to what it is already does not clear the current value`() {
-        ExchangeFragmentConfigurationChangePersistence()
+        ExchangeFragmentConfigurationChangePersistence(allAccountList())
             .apply {
-                to = CryptoCurrency.BCH
+                toReference = anyAccountReference(CryptoCurrency.BCH)
                 currentValue = 1000L.toBigDecimal()
-                to = CryptoCurrency.BCH
+                toReference = anyAccountReference(CryptoCurrency.BCH)
                 currentValue `should equal` 1000L.toBigDecimal()
             }
+    }
+
+    private fun allAccountList(): AllAccountList =
+        object : AllAccountList {
+            override fun get(cryptoCurrency: CryptoCurrency): AccountList =
+                object : AccountList {
+                    override fun defaultAccountReference(): AccountReference {
+                        return anyAccountReference(cryptoCurrency)
+                    }
+                }
+        }
+}
+
+fun anyAccountReference(cryptoCurrency: CryptoCurrency): AccountReference {
+    return when (cryptoCurrency) {
+        CryptoCurrency.BTC, CryptoCurrency.BCH -> AccountReference.BitcoinLike(cryptoCurrency, "", "")
+        CryptoCurrency.ETHER -> AccountReference.Ethereum("", "")
     }
 }

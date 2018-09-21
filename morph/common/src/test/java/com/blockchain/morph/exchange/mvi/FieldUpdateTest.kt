@@ -5,6 +5,7 @@ import com.blockchain.testutils.usd
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import io.reactivex.subjects.PublishSubject
+import org.amshove.kluent.`should equal`
 import org.junit.Test
 
 class FieldUpdateTest {
@@ -15,18 +16,17 @@ class FieldUpdateTest {
         ExchangeDialog(subject, initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER))
             .viewModel
             .test()
-            .assertValue(
-                ExchangeViewModel(
-                    from = value(
-                        upToDate(CryptoValue.ZeroBtc),
-                        upToDate(zeroFiat("USD"))
-                    ),
-                    to = value(
-                        upToDate(CryptoValue.ZeroEth),
-                        upToDate(zeroFiat("USD"))
-                    )
+            .assertValue {
+                it.from `should equal` value(
+                    upToDate(CryptoValue.ZeroBtc),
+                    upToDate(zeroFiat("USD"))
                 )
-            )
+                it.to `should equal` value(
+                    upToDate(CryptoValue.ZeroEth),
+                    upToDate(zeroFiat("USD"))
+                )
+                true
+            }
     }
 
     @Test
@@ -40,18 +40,17 @@ class FieldUpdateTest {
                     "123.45"
                 )
             ) {
-                assertValue(
-                    ExchangeViewModel(
-                        from = value(
-                            userEntered(CryptoValue.fromMajor(CryptoCurrency.BTC, 123.45.toBigDecimal())),
-                            outOfDate(zeroFiat("USD"))
-                        ),
-                        to = value(
-                            outOfDate(CryptoValue.ZeroEth),
-                            outOfDate(zeroFiat("USD"))
-                        )
+                assertValue {
+                    it.from `should equal` value(
+                        userEntered(CryptoValue.fromMajor(CryptoCurrency.BTC, 123.45.toBigDecimal())),
+                        outOfDate(zeroFiat("USD"))
                     )
-                )
+                    it.to `should equal` value(
+                        outOfDate(CryptoValue.ZeroEth),
+                        outOfDate(zeroFiat("USD"))
+                    )
+                    true
+                }
             }
     }
 
@@ -66,18 +65,17 @@ class FieldUpdateTest {
                     "99.12"
                 )
             ) {
-                assertValue(
-                    ExchangeViewModel(
-                        from = value(
-                            outOfDate(CryptoValue.ZeroBtc),
-                            outOfDate(zeroFiat("GBP"))
-                        ),
-                        to = value(
-                            userEntered(CryptoValue.fromMajor(CryptoCurrency.ETHER, 99.12.toBigDecimal())),
-                            outOfDate(zeroFiat("GBP"))
-                        )
+                assertValue {
+                    it.from `should equal` value(
+                        outOfDate(CryptoValue.ZeroBtc),
+                        outOfDate(zeroFiat("GBP"))
                     )
-                )
+                    it.to `should equal` value(
+                        userEntered(CryptoValue.fromMajor(CryptoCurrency.ETHER, 99.12.toBigDecimal())),
+                        outOfDate(zeroFiat("GBP"))
+                    )
+                    true
+                }
             }
     }
 
@@ -92,18 +90,17 @@ class FieldUpdateTest {
                     "123.45"
                 )
             ) {
-                assertValue(
-                    ExchangeViewModel(
-                        from = value(
-                            outOfDate(CryptoValue.ZeroBtc),
-                            userEntered(123.45.usd())
-                        ),
-                        to = value(
-                            outOfDate(CryptoValue.ZeroEth),
-                            outOfDate(zeroFiat("USD"))
-                        )
+                assertValue {
+                    it.from `should equal` value(
+                        outOfDate(CryptoValue.ZeroBtc),
+                        userEntered(123.45.usd())
                     )
-                )
+                    it.to `should equal` value(
+                        outOfDate(CryptoValue.ZeroEth),
+                        outOfDate(zeroFiat("USD"))
+                    )
+                    true
+                }
             }
     }
 
@@ -118,18 +115,17 @@ class FieldUpdateTest {
                     "45.67"
                 )
             ) {
-                assertValue(
-                    ExchangeViewModel(
-                        from = value(
-                            outOfDate(CryptoValue.ZeroBtc),
-                            outOfDate(zeroFiat("CAD"))
-                        ),
-                        to = value(
-                            outOfDate(CryptoValue.ZeroEth),
-                            userEntered(45.67.cad())
-                        )
+                assertValue {
+                    it.from `should equal` value(
+                        outOfDate(CryptoValue.ZeroBtc),
+                        outOfDate(zeroFiat("CAD"))
                     )
-                )
+                    it.to `should equal` value(
+                        outOfDate(CryptoValue.ZeroEth),
+                        userEntered(45.67.cad())
+                    )
+                    true
+                }
             }
     }
 }

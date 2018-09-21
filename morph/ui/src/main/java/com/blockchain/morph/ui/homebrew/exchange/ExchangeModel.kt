@@ -14,15 +14,16 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
-class ExchangeModel(quoteServiceFactory: QuoteServiceFactory) : ViewModel() {
+class ExchangeModel(
+    quoteServiceFactory: QuoteServiceFactory,
+    var configChangePersistence: ExchangeFragmentConfigurationChangePersistence
+) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
     private val dialogDisposable = CompositeDisposable()
 
     val quoteService: QuoteService by lazy { quoteServiceFactory.createQuoteService() }
-
-    var configChangePersistence = ExchangeFragmentConfigurationChangePersistence()
 
     private val exchangeViewModelsSubject = BehaviorSubject.create<ExchangeViewModel>()
 
@@ -46,8 +47,8 @@ class ExchangeModel(quoteServiceFactory: QuoteServiceFactory) : ViewModel() {
             }
         dialogDisposable += exchangeViewModels
             .subscribeBy {
-                configChangePersistence.from = it.from.cryptoValue.currency
-                configChangePersistence.to = it.to.cryptoValue.currency
+                configChangePersistence.fromReference = it.fromAccount
+                configChangePersistence.toReference = it.toAccount
             }
     }
 
