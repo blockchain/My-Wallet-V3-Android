@@ -19,6 +19,8 @@ class SwapIntent : ExchangeIntent()
 
 class QuoteIntent(val quote: Quote) : ExchangeIntent()
 
+class ToggleFiatCryptoIntent : ExchangeIntent()
+
 class ChangeCryptoFromAccount(val from: AccountReference) : ExchangeIntent()
 
 class ChangeCryptoToAccount(val to: AccountReference) : ExchangeIntent()
