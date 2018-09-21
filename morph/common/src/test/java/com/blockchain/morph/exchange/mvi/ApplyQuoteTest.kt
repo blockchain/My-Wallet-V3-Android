@@ -19,10 +19,8 @@ class ApplyQuoteTest {
         given(
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.BASE_CRYPTO,
-                "10"
-            ),
+            SetFixIntent(Fix.BASE_CRYPTO),
+            SimpleFieldUpdateIntent(10.toBigDecimal()),
             Quote(
                 fix = Fix.BASE_CRYPTO,
                 from = 10.bitcoin() `equivalent to` 99.12.cad(),
@@ -48,10 +46,8 @@ class ApplyQuoteTest {
         given(
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_CRYPTO,
-                "15"
-            ),
+            SetFixIntent(Fix.COUNTER_CRYPTO),
+            SimpleFieldUpdateIntent(15.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_CRYPTO,
                 from = 9.bitcoin() `equivalent to` 299.12.cad(),
@@ -77,10 +73,8 @@ class ApplyQuoteTest {
         given(
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.BASE_FIAT,
-                "99.12"
-            ),
+            SetFixIntent(Fix.BASE_FIAT),
+            SimpleFieldUpdateIntent(99.12.toBigDecimal()),
             Quote(
                 fix = Fix.BASE_FIAT,
                 from = 10.bitcoin() `equivalent to` 99.12.cad(),
@@ -106,10 +100,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "95.32"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(95.32.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoin() `equivalent to` 99.12.usd(),
@@ -135,10 +127,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "95.32"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(95.32.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoin() `equivalent to` 99.12.usd(),
@@ -169,10 +159,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "95.32"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(95.32.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoin() `equivalent to` 99.12.usd(),
@@ -203,10 +191,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "95.32"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(95.32.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoinCash() `equivalent to` 99.12.usd(),
@@ -237,10 +223,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "95.32"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(95.32.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoinCash() `equivalent to` 99.12.usd(),
@@ -271,10 +255,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "95.32"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(95.32.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoinCash() `equivalent to` 99.12.usd(),
@@ -305,10 +287,8 @@ class ApplyQuoteTest {
         given(
             initial("USD", CryptoCurrency.BCH to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.COUNTER_FIAT,
-                "10"
-            ),
+            SetFixIntent(Fix.COUNTER_FIAT),
+            SimpleFieldUpdateIntent(10.toBigDecimal()),
             Quote(
                 fix = Fix.COUNTER_FIAT,
                 from = 10.bitcoinCash() `equivalent to` 10.usd(),
@@ -344,10 +324,8 @@ class ApplyQuoteTest {
         given(
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
         ).on(
-            FieldUpdateIntent(
-                Fix.BASE_CRYPTO,
-                "10"
-            ),
+            SetFixIntent(Fix.BASE_CRYPTO),
+            SimpleFieldUpdateIntent(10.toBigDecimal()),
             theQuote.toIntent()
         ) {
             assertValue {
