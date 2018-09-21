@@ -197,7 +197,7 @@ internal class ExchangeFragment : Fragment() {
 }
 
 private fun CryptoValue.formatOrSymbolForZero() =
-    if (isZero()) {
+    if (isZero) {
         currency.symbol
     } else {
         formatForExchange()
@@ -219,7 +219,7 @@ private fun Button.setButtonGraphicsAndTextFromCryptoValue(
 }
 
 private fun Button.setCryptoLeftImageIfZero(cryptoValue: CryptoValue) {
-    if (cryptoValue.isZero()) {
+    if (cryptoValue.isZero) {
         setCompoundDrawablesWithIntrinsicBounds(
             context.getResolvedDrawable(
                 cryptoValue.currency.layerListDrawableRes()

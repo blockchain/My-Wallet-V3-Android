@@ -1,3 +1,8 @@
 package info.blockchain.balance
 
-interface Money
+interface Money {
+
+    val isZero: Boolean
+
+    val isPositive: Boolean
+}

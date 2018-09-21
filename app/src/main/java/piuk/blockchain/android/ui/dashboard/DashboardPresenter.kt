@@ -208,9 +208,9 @@ class DashboardPresenter @Inject constructor(
 
                         Logging.logCustom(
                             BalanceLoadedEvent(
-                                btcBalance.isPositive(),
-                                bchBalance.isPositive(),
-                                ethBalance.isPositive()
+                                btcBalance.isPositive,
+                                bchBalance.isPositive,
+                                ethBalance.isPositive
                             )
                         )
 

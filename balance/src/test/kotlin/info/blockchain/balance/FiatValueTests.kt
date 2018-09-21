@@ -142,6 +142,21 @@ class FiatValueTests {
     }
 
     @Test
+    fun `zero is not Positive`() {
+        FiatValue.fromMajor("GBP", 0.toBigDecimal()).isPositive `should be` false
+    }
+
+    @Test
+    fun `about zero is positive`() {
+        FiatValue.fromMajor("GBP", 0.1.toBigDecimal()).isPositive `should be` true
+    }
+
+    @Test
+    fun `below zero is not positive`() {
+        FiatValue.fromMajor("GBP", (-1).toBigDecimal()).isZero `should be` false
+    }
+
+    @Test
     fun `can add`() {
         1.2.gbp() + 2.3.gbp() `should equal` 3.5.gbp()
     }
