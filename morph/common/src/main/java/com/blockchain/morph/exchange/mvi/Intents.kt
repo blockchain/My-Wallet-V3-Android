@@ -10,26 +10,10 @@ import java.math.BigDecimal
 sealed class ExchangeIntent
 
 class FieldUpdateIntent(
-    val field: Field,
+    val fixedField: Fix,
     userText: String,
     val userValue: BigDecimal = userText.tryParseBigDecimal() ?: BigDecimal.ZERO
-) : ExchangeIntent() {
-
-    enum class Field {
-        FROM_CRYPTO,
-        TO_CRYPTO,
-        FROM_FIAT,
-        TO_FIAT
-    }
-}
-
-fun FieldUpdateIntent.Field.toFix() =
-    when (this) {
-        FieldUpdateIntent.Field.FROM_CRYPTO -> Fix.BASE_CRYPTO
-        FieldUpdateIntent.Field.FROM_FIAT -> Fix.BASE_FIAT
-        FieldUpdateIntent.Field.TO_CRYPTO -> Fix.COUNTER_CRYPTO
-        FieldUpdateIntent.Field.TO_FIAT -> Fix.COUNTER_FIAT
-    }
+) : ExchangeIntent()
 
 class SwapIntent : ExchangeIntent()
 

@@ -7,21 +7,21 @@ import io.reactivex.Observable
 
 fun Observable<Pair<FieldUpdateIntent, Params>>.toQuoteRequest(): Observable<ExchangeQuoteRequest> =
     map { (fieldUpdate, params) ->
-        when (fieldUpdate.field) {
-            FieldUpdateIntent.Field.FROM_CRYPTO -> ExchangeQuoteRequest.Selling(
+        when (fieldUpdate.fixedField) {
+            Fix.BASE_CRYPTO -> ExchangeQuoteRequest.Selling(
                 offering = CryptoValue.fromMajor(params.from, fieldUpdate.userValue),
                 wanted = params.to
             )
-            FieldUpdateIntent.Field.TO_CRYPTO -> ExchangeQuoteRequest.Buying(
+            Fix.COUNTER_CRYPTO -> ExchangeQuoteRequest.Buying(
                 offering = params.from,
                 wanted = CryptoValue.fromMajor(params.to, fieldUpdate.userValue)
             )
-            FieldUpdateIntent.Field.FROM_FIAT -> ExchangeQuoteRequest.SellingFiatLinked(
+            Fix.BASE_FIAT -> ExchangeQuoteRequest.SellingFiatLinked(
                 offering = params.from,
                 wanted = params.to,
                 offeringFiatValue = FiatValue.fromMajor(params.fiat, fieldUpdate.userValue)
             )
-            FieldUpdateIntent.Field.TO_FIAT -> ExchangeQuoteRequest.BuyingFiatLinked(
+            Fix.COUNTER_FIAT -> ExchangeQuoteRequest.BuyingFiatLinked(
                 offering = params.from,
                 wanted = params.to,
                 wantedFiatValue = FiatValue.fromMajor(params.fiat, fieldUpdate.userValue)

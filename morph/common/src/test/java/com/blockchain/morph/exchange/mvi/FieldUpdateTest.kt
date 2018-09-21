@@ -36,7 +36,7 @@ class FieldUpdateTest {
         )
             .on(
                 FieldUpdateIntent(
-                    FieldUpdateIntent.Field.FROM_CRYPTO,
+                    Fix.BASE_CRYPTO,
                     "123.45"
                 )
             ) {
@@ -61,7 +61,7 @@ class FieldUpdateTest {
         )
             .on(
                 FieldUpdateIntent(
-                    FieldUpdateIntent.Field.TO_CRYPTO,
+                    Fix.COUNTER_CRYPTO,
                     "99.12"
                 )
             ) {
@@ -86,7 +86,7 @@ class FieldUpdateTest {
         )
             .on(
                 FieldUpdateIntent(
-                    FieldUpdateIntent.Field.FROM_FIAT,
+                    Fix.BASE_FIAT,
                     "123.45"
                 )
             ) {
@@ -111,7 +111,7 @@ class FieldUpdateTest {
         )
             .on(
                 FieldUpdateIntent(
-                    FieldUpdateIntent.Field.TO_FIAT,
+                    Fix.COUNTER_FIAT,
                     "45.67"
                 )
             ) {

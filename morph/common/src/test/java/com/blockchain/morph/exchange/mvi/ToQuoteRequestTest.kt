@@ -19,7 +19,7 @@ class ToQuoteRequestTest {
     fun `from crypto`() {
         Observable.just(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_CRYPTO,
+                Fix.BASE_CRYPTO,
                 "10"
             )
         )
@@ -48,7 +48,7 @@ class ToQuoteRequestTest {
     fun `to crypto`() {
         Observable.just(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_CRYPTO,
+                Fix.COUNTER_CRYPTO,
                 "25.5"
             )
         )
@@ -77,7 +77,7 @@ class ToQuoteRequestTest {
     fun `from fiat`() {
         Observable.just(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.FROM_FIAT,
+                Fix.BASE_FIAT,
                 "30.99"
             )
         )
@@ -107,7 +107,7 @@ class ToQuoteRequestTest {
     fun `to fiat`() {
         Observable.just(
             FieldUpdateIntent(
-                FieldUpdateIntent.Field.TO_FIAT,
+                Fix.COUNTER_FIAT,
                 "12.34"
             )
         )
