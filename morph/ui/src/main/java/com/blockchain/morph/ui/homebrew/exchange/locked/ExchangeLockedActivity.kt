@@ -11,6 +11,7 @@ import com.blockchain.balance.colorRes
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
 import com.blockchain.serialization.JsonSerializableAccount
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import kotlinx.android.parcel.Parcelize
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
@@ -57,7 +58,7 @@ class ExchangeLockedActivity : BaseAuthActivity() {
             valueTextView.text = value
             feesTextView.text = fees
             receiveTextView.text = receiving
-            sendToTextView.text = accountItem.toString()
+            sendToTextView.text = accountName
         }
     }
 
@@ -74,7 +75,7 @@ class ExchangeLockedActivity : BaseAuthActivity() {
 }
 
 @Parcelize
-internal data class ExchangeLockedModel(
+data class ExchangeLockedModel(
     val orderId: String,
     val value: String,
     val fees: String,
@@ -82,5 +83,5 @@ internal data class ExchangeLockedModel(
     val sendingCurrency: CryptoCurrency,
     val receiving: String,
     val receivingCurrency: CryptoCurrency,
-    val accountItem: JsonSerializableAccount
+    val accountName: String
 ) : Parcelable

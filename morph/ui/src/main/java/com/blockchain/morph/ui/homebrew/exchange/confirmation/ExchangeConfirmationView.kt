@@ -1,14 +1,18 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
+import android.support.annotation.StringRes
+import com.blockchain.morph.exchange.mvi.ExchangeViewModel
+import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedModel
 import info.blockchain.balance.CryptoValue
 import io.reactivex.Observable
 import piuk.blockchain.androidcoreui.ui.base.View
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 
 interface ExchangeConfirmationView : View {
 
-    val clickEvents: Observable<Unit>
+    val clickEvents: Observable<ExchangeViewModel>
 
-    fun continueToExchangeLocked(transactionId: String)
+    fun continueToExchangeLocked(lockedModel: ExchangeLockedModel)
 
     fun showSecondPasswordDialog()
 
@@ -19,4 +23,6 @@ interface ExchangeConfirmationView : View {
     fun displayErrorDialog()
 
     fun updateFee(cryptoValue: CryptoValue)
+
+    fun showToast(@StringRes message: Int, @ToastCustom.ToastType type: String)
 }

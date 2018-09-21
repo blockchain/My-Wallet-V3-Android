@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import com.blockchain.extensions.px
 import com.blockchain.kyc.models.nabu.KycState
@@ -41,8 +42,9 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
     }
 
     override fun startExchange() {
-        // TODO: Start the exchange activity here
-        TODO("not implemented")
+        LocalBroadcastManager.getInstance(this)
+            .sendBroadcast(Intent(HOMEBREW_LAUNCHER_INTENT))
+        finish()
     }
 
     override fun renderUi(kycState: KycState) {
@@ -154,6 +156,9 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
     override fun getView(): KycStatusView = this
 
     companion object {
+
+        private const val HOMEBREW_LAUNCHER_INTENT =
+            "info.blockchain.wallet.ui.BalanceFragment.SHAPESHIFT"
 
         @JvmStatic
         fun start(context: Context) {

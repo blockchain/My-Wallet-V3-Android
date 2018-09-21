@@ -14,6 +14,7 @@ import org.bitcoinj.crypto.ChildNumber;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.HDKeyDerivation;
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.Keys;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
 
@@ -76,6 +77,10 @@ public class EthereumAccount implements JsonSerializableAccount {
     //TODO: 24/08/2017 https://forum.ethereum.org/discussion/9220/eth-address-upper-and-lower-characters-does-not-matter
     public String getAddress() {
         return address;
+    }
+
+    public String getChecksumAddress() {
+        return Keys.toChecksumAddress(address);
     }
 
     /**

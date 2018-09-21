@@ -35,7 +35,7 @@ val morphUiModule = applicationContext {
 
         factory { UsStateSelectionPresenter(get()) }
 
-        factory { ExchangeConfirmationPresenter(get(), get(), get(), get(), get(), get()) }
+        factory { ExchangeConfirmationPresenter(get(), get(), get(), get(), get(), get(), get()) }
 
         factory { TradeHistoryPresenter(get(), get()) }
 

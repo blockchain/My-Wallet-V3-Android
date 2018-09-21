@@ -1,10 +1,13 @@
 package com.blockchain.datamanagers
 
+import com.blockchain.datamanagers.fees.BitcoinLikeFees
+import com.blockchain.datamanagers.fees.EthereumFees
+import com.blockchain.datamanagers.fees.FeeType
+import com.blockchain.datamanagers.fees.NetworkFees
 import com.blockchain.serialization.JsonSerializableAccount
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
-import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.ethereum.EthereumAccount
 import info.blockchain.wallet.payload.data.Account
@@ -12,7 +15,6 @@ import info.blockchain.wallet.payment.SpendableUnspentOutputs
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.bitcoinj.core.ECKey
-import org.web3j.utils.Convert
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.androidcore.data.ethereum.EthereumAccountWrapper
@@ -33,57 +35,65 @@ class TransactionSendDataManager(
         amount: CryptoValue,
         destination: String,
         account: JsonSerializableAccount,
-        fees: FeeOptions,
+        fees: NetworkFees,
         feeType: FeeType = FeeType.Regular
     ): Single<String> = when (amount.currency) {
         CryptoCurrency.BTC -> sendBtcTransaction(
             amount,
             destination,
             account as Account,
-            fees.feeForType(feeType)
+            (fees as BitcoinLikeFees).feeForType(feeType)
         )
         CryptoCurrency.ETHER -> sendEthTransaction(
             amount,
             destination,
             account as EthereumAccount,
-            fees
+            fees as EthereumFees
         )
         CryptoCurrency.BCH -> sendBchTransaction(
             amount,
             destination,
             account as GenericMetadataAccount,
-            fees.feeForType(feeType)
+            (fees as BitcoinLikeFees).feeForType(feeType)
         )
     }
 
     fun getMaximumSpendable(
         cryptoCurrency: CryptoCurrency,
         account: JsonSerializableAccount,
-        fees: FeeOptions,
+        fees: NetworkFees,
         feeType: FeeType = FeeType.Regular
     ): Single<CryptoValue> = when (cryptoCurrency) {
-        CryptoCurrency.BTC -> getMaxBitcoin(account as Account, fees, feeType)
-        CryptoCurrency.BCH -> getMaxBitcoinCash(account as GenericMetadataAccount, fees, feeType)
-        CryptoCurrency.ETHER -> getMaxEther(fees)
+        CryptoCurrency.BTC -> getMaxBitcoin(
+            account as Account,
+            fees as BitcoinLikeFees,
+            feeType
+        )
+        CryptoCurrency.BCH -> getMaxBitcoinCash(
+            account as GenericMetadataAccount,
+            fees as BitcoinLikeFees,
+            feeType
+        )
+        CryptoCurrency.ETHER -> getMaxEther(fees as EthereumFees)
     }
 
     fun getFeeForTransaction(
         amount: CryptoValue,
         account: JsonSerializableAccount,
-        fees: FeeOptions,
+        fees: NetworkFees,
         feeType: FeeType = FeeType.Regular
     ): Single<CryptoValue> = when (amount.currency) {
         CryptoCurrency.BTC -> calculateBtcFee(
             account as Account,
             amount,
-            fees.feeForType(feeType)
+            (fees as BitcoinLikeFees).feeForType(feeType)
         )
         CryptoCurrency.BCH -> calculateBchFee(
             account as GenericMetadataAccount,
             amount,
-            fees.feeForType(feeType)
+            (fees as BitcoinLikeFees).feeForType(feeType)
         )
-        CryptoCurrency.ETHER -> calculateEtherFee(fees).just()
+        CryptoCurrency.ETHER -> (fees as EthereumFees).absoluteFee.just()
     }
 
     fun getChangeAddress(
@@ -93,7 +103,7 @@ class TransactionSendDataManager(
         when (cryptoCurrency) {
             CryptoCurrency.BTC -> (account as Account).getChangeAddress()
             CryptoCurrency.BCH -> (account as GenericMetadataAccount).getChangeAddress()
-            CryptoCurrency.ETHER -> (account as EthereumAccount).address.just()
+            CryptoCurrency.ETHER -> (account as EthereumAccount).checksumAddress.just()
         }
 
     fun getReceiveAddress(
@@ -103,7 +113,7 @@ class TransactionSendDataManager(
         when (cryptoCurrency) {
             CryptoCurrency.BTC -> (account as Account).getReceiveAddress()
             CryptoCurrency.BCH -> (account as GenericMetadataAccount).getReceiveAddress()
-            CryptoCurrency.ETHER -> (account as EthereumAccount).address.just()
+            CryptoCurrency.ETHER -> (account as EthereumAccount).checksumAddress.just()
         }
 
     private fun calculateBtcFee(
@@ -135,7 +145,7 @@ class TransactionSendDataManager(
 
     private fun getMaxBitcoin(
         account: Account,
-        fees: FeeOptions,
+        fees: BitcoinLikeFees,
         feeType: FeeType
     ): Single<CryptoValue> = getMaxBchOrBtc(account.xpub, CryptoCurrency.BTC, fees, feeType)
         .map { CryptoValue.bitcoinFromSatoshis(it) }
@@ -144,7 +154,7 @@ class TransactionSendDataManager(
 
     private fun getMaxBitcoinCash(
         account: GenericMetadataAccount,
-        fees: FeeOptions,
+        fees: BitcoinLikeFees,
         feeType: FeeType
     ): Single<CryptoValue> = getMaxBchOrBtc(account.xpub, CryptoCurrency.BCH, fees, feeType)
         .map { CryptoValue.bitcoinCashFromSatoshis(it) }
@@ -154,26 +164,20 @@ class TransactionSendDataManager(
     private fun getMaxBchOrBtc(
         xPub: String,
         cryptoCurrency: CryptoCurrency,
-        fees: FeeOptions,
+        fees: BitcoinLikeFees,
         feeType: FeeType
     ): Single<BigInteger> = getUnspentOutputs(xPub, cryptoCurrency)
-        .map { sendDataManager.getMaximumAvailable(it, fees.toSatoshis(feeType)).left }
+        .map { sendDataManager.getMaximumAvailable(it, fees.feeForType(feeType)).left }
 
-    private fun getMaxEther(fees: FeeOptions): Single<CryptoValue> =
+    private fun getMaxEther(fees: EthereumFees): Single<CryptoValue> =
         ethDataManager.fetchEthAddress()
             .map {
-                val wei = calculateEtherFee(fees).amount
-                return@map (it.getAddressResponse()!!.balance - wei).max(BigInteger.ZERO)
+                (it.getAddressResponse()!!.balance - fees.absoluteFee.amount).max(BigInteger.ZERO)
             }
             .map { CryptoValue.etherFromWei(it) }
             .doOnError { Timber.e(it) }
             .onErrorReturn { CryptoValue.ZeroEth }
             .singleOrError()
-
-    private fun calculateEtherFee(fees: FeeOptions): CryptoValue {
-        val wei = (fees.regularFee * fees.gasLimit).gweiToWei()
-        return CryptoValue.etherFromWei(wei)
-    }
 
     private fun sendBtcTransaction(
         amount: CryptoValue,
@@ -229,14 +233,14 @@ class TransactionSendDataManager(
         amount: CryptoValue,
         destination: String,
         account: EthereumAccount,
-        fees: FeeOptions
+        fees: EthereumFees
     ): Single<String> = ethDataManager.fetchEthAddress()
         .map {
             ethDataManager.createEthTransaction(
                 nonce = ethDataManager.getEthResponseModel()!!.getNonce(),
                 to = destination,
-                gasPrice = fees.regularFee.gweiToWei(),
-                gasLimit = fees.gasLimit.toBigInteger(),
+                gasPrice = fees.gasPriceWei,
+                gasLimit = fees.gasLimitWei,
                 weiValue = amount.amount
             )
         }
@@ -322,26 +326,13 @@ class TransactionSendDataManager(
         return bchDataManager.getNextReceiveAddress(position).singleOrError()
     }
 
-    private fun FeeOptions.feeForType(feeType: FeeType): BigInteger = when (feeType) {
-        FeeType.Regular -> regularFee
-        FeeType.Priority -> priorityFee
-    }.toBigInteger()
-
     private fun GenericMetadataAccount.getHdAccount(): Account =
         payloadDataManager.getAccountForXPub(this.xpub)
 
     private fun <T> T.just(): Single<T> = Single.just(this)
-}
 
-internal fun Long.gweiToWei(): BigInteger =
-    Convert.toWei(this.toBigDecimal(), Convert.Unit.GWEI).toBigInteger()
-
-internal fun FeeOptions.toSatoshis(feeType: FeeType): BigInteger = when (feeType) {
-    FeeType.Regular -> regularFee * 1000
-    FeeType.Priority -> priorityFee * 1000
-}.toBigInteger()
-
-sealed class FeeType {
-    object Regular : FeeType()
-    object Priority : FeeType()
+    private fun BitcoinLikeFees.feeForType(feeType: FeeType): BigInteger = when (feeType) {
+        FeeType.Regular -> this.regularFeePerKb
+        FeeType.Priority -> this.priorityFeePerKb
+    }
 }

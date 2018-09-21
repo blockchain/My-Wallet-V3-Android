@@ -1,12 +1,16 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
 import com.blockchain.datamanagers.TransactionSendDataManager
+import com.blockchain.datamanagers.fees.getFeeOptions
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.TradeExecutionService
+import com.blockchain.morph.ui.R
+import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedModel
 import com.blockchain.serialization.JsonSerializableAccount
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
-import info.blockchain.wallet.api.data.FeeOptions
+import info.blockchain.balance.formatWithUnit
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,10 +20,13 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.androidcore.data.fees.FeeDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
+import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import timber.log.Timber
+import java.util.Locale
 
 class ExchangeConfirmationPresenter(
     private val transactionSendDataManager: TransactionSendDataManager,
@@ -27,6 +34,7 @@ class ExchangeConfirmationPresenter(
     private val feeDataManager: FeeDataManager,
     private val payloadDataManager: PayloadDataManager,
     private val bchDataManager: BchDataManager,
+    private val ethDataManager: EthDataManager,
     private val environmentConfig: EnvironmentConfig
 ) : BasePresenter<ExchangeConfirmationView>() {
 
@@ -35,59 +43,90 @@ class ExchangeConfirmationPresenter(
         if (payloadDataManager.isDoubleEncrypted) {
             view.showSecondPasswordDialog()
         }
+
+        compositeDisposable +=
+            view.clickEvents
+                .flatMapSingle { executeTrade(it.latestQuote!!, it.fromAccount, it.toAccount) }
+                .subscribeBy(onError = Timber::e)
     }
 
     internal fun updateFee(
         amount: CryptoValue,
-        sendingAccount: JsonSerializableAccount,
-        fees: FeeOptions
+        sendingAccount: AccountReference
     ) {
         compositeDisposable +=
-            transactionSendDataManager.getFeeForTransaction(amount, sendingAccount, fees)
+            feeDataManager.getFeeOptions(amount.currency)
+                .flatMap {
+                    transactionSendDataManager.getFeeForTransaction(
+                        amount,
+                        sendingAccount.getAccountFromAddressOrXPub(amount.currency),
+                        it
+                    )
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { }
                 .subscribeBy(
-                    onSuccess = {
-                        view.updateFee(it)
-                    },
+                    onSuccess = { view.updateFee(it) },
                     onError = {
-                        // TODO: Missing data in the UI, how do we handle this?
                         Timber.e(it)
+                        view.showToast(
+                            R.string.homebrew_confirmation_error_fetching_fee,
+                            ToastCustom.TYPE_ERROR
+                        )
                     }
                 )
     }
 
-    internal fun executeTrade(
+    private fun executeTrade(
         quote: Quote,
-        sendingAccount: JsonSerializableAccount,
-        receivingAccount: JsonSerializableAccount
-    ) {
-        compositeDisposable +=
-            getAddressPair(quote, receivingAccount, sendingAccount)
-                .flatMap { (destination, refund) ->
-                    tradeExecutionService.executeTrade(quote, destination, refund)
-                        .subscribeOn(Schedulers.io())
-                        .flatMap { transaction ->
-                            transaction.deposit.currency.getFeeOptions()
-                                .flatMap {
-                                    transactionSendDataManager.executeTransaction(
-                                        transaction.deposit,
-                                        transaction.depositAddress,
-                                        sendingAccount,
-                                        it
-                                    ).subscribeOn(Schedulers.io())
-                                }
-                                .doOnSuccess { view.continueToExchangeLocked(transaction.id) }
-                        }
-                }
-                .doOnSubscribe { view.showProgressDialog() }
-                .doOnEvent { _, _ -> view.dismissProgressDialog() }
-                .doOnError { view.displayErrorDialog() }
-                .subscribe()
+        sendingAccount: AccountReference,
+        receivingAccount: AccountReference
+    ): Single<String> {
+        val sending = sendingAccount.getAccountFromAddressOrXPub(quote.from.cryptoValue.currency)
+        val receiving = receivingAccount.getAccountFromAddressOrXPub(quote.to.cryptoValue.currency)
+
+        return deriveAddressPair(quote, receiving, sending)
+            .flatMap { (destination, refund) ->
+                tradeExecutionService.executeTrade(quote, destination, refund)
+                    .subscribeOn(Schedulers.io())
+                    .flatMap { transaction ->
+                        feeDataManager.getFeeOptions(transaction.deposit.currency)
+                            .flatMap {
+                                transactionSendDataManager.executeTransaction(
+                                    transaction.deposit,
+                                    transaction.depositAddress,
+                                    sending,
+                                    it
+                                ).subscribeOn(Schedulers.io())
+                            }
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnSuccess {
+                                view.continueToExchangeLocked(
+                                    ExchangeLockedModel(
+                                        orderId = transaction.id,
+                                        value = transaction.fiatValue.toStringWithSymbol(Locale.getDefault()),
+                                        fees = transaction.fee.formatWithUnit(),
+                                        sending = transaction.deposit.formatWithUnit(),
+                                        sendingCurrency = transaction.deposit.currency,
+                                        receiving = transaction.withdrawal.formatWithUnit(),
+                                        receivingCurrency = transaction.withdrawal.currency,
+                                        accountName = receivingAccount.label
+                                    )
+                                )
+                            }
+                    }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { view.showProgressDialog() }
+            .doOnEvent { _, _ -> view.dismissProgressDialog() }
+            .doOnError {
+                Timber.e(it)
+                view.displayErrorDialog()
+            }
     }
 
-    private fun getAddressPair(
+    private fun deriveAddressPair(
         quote: Quote,
         receivingAccount: JsonSerializableAccount,
         sendingAccount: JsonSerializableAccount
@@ -103,13 +142,6 @@ class ExchangeConfirmationPresenter(
         BiFunction { destination: String, refund: String -> destination to refund }
     )
 
-    private fun CryptoCurrency.getFeeOptions(): Single<FeeOptions> =
-        when (this) {
-            CryptoCurrency.BTC -> feeDataManager.btcFeeOptions
-            CryptoCurrency.ETHER -> feeDataManager.ethFeeOptions
-            CryptoCurrency.BCH -> feeDataManager.bchFeeOptions
-        }.singleOrError()
-
     internal fun onSecondPasswordValidated(validatedSecondPassword: String) {
         compositeDisposable +=
             decryptPayload(validatedSecondPassword)
@@ -122,18 +154,35 @@ class ExchangeConfirmationPresenter(
                 .subscribe()
     }
 
-    private fun decryptPayload(validatedSecondPassword: String): Completable {
-        return Completable.fromCallable {
+    private fun decryptPayload(validatedSecondPassword: String): Completable =
+        Completable.fromCallable {
             payloadDataManager.decryptHDWallet(
                 environmentConfig.bitcoinNetworkParameters,
                 validatedSecondPassword
             )
         }
+
+    private fun decryptBch(): Completable = Completable.fromCallable {
+        bchDataManager.decryptWatchOnlyWallet(payloadDataManager.mnemonic)
     }
 
-    private fun decryptBch(): Completable {
-        return Completable.fromCallable {
-            bchDataManager.decryptWatchOnlyWallet(payloadDataManager.mnemonic)
+    // TODO: Move this to an "all" data manager so that this class doesn't depend on all managers
+    private fun AccountReference.getAccountFromAddressOrXPub(
+        cryptoCurrency: CryptoCurrency
+    ): JsonSerializableAccount {
+        val xpubOrAddress = when (cryptoCurrency) {
+            CryptoCurrency.BTC -> (this as AccountReference.BitcoinLike).xpub
+            CryptoCurrency.ETHER -> (this as AccountReference.Ethereum).address
+            CryptoCurrency.BCH -> (this as AccountReference.BitcoinLike).xpub
+        }
+
+        return when (cryptoCurrency) {
+            CryptoCurrency.BTC -> payloadDataManager.getAccountForXPub(xpubOrAddress)
+            CryptoCurrency.ETHER -> ethDataManager.getEthWallet()!!.account
+            CryptoCurrency.BCH -> bchDataManager.getActiveAccounts()
+                .asSequence()
+                .filter { it.xpub == xpubOrAddress }
+                .first()
         }
     }
 }

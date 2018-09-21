@@ -1,7 +1,6 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
@@ -11,19 +10,21 @@ import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.koin.injectActivity
+import com.blockchain.morph.exchange.mvi.ExchangeViewModel
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedActivity
+import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedModel
 import com.blockchain.ui.extensions.throttledClicks
 import com.blockchain.ui.password.SecondPasswordHandler
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
-import info.blockchain.balance.format
 import info.blockchain.balance.formatWithUnit
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -34,6 +35,7 @@ import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.androidcoreui.utils.extensions.toast
 import timber.log.Timber
 import java.util.Locale
 
@@ -55,7 +57,10 @@ class ExchangeConfirmationFragment :
 
     private var progressDialog: MaterialProgressDialog? = null
 
-    override val clickEvents by unsafeLazy { sendButton.throttledClicks() }
+    override val clickEvents: Observable<ExchangeViewModel> by unsafeLazy {
+        sendButton.throttledClicks()
+            .flatMap { exchangeModel.exchangeViewModels }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,6 +100,7 @@ class ExchangeConfirmationFragment :
         compositeDisposable += exchangeModel
             .exchangeViewModels
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { it.from }
             .filter { it.latestQuote?.rawQuote != null }
             .map {
                 ExchangeConfirmationViewModel(
@@ -106,6 +112,7 @@ class ExchangeConfirmationFragment :
                     quote = it.latestQuote!!
                 )
             }
+            .doOnNext { presenter.updateFee(it.sending, it.fromAccount) }
             .subscribeBy {
                 renderUi(it)
             }
@@ -125,14 +132,13 @@ class ExchangeConfirmationFragment :
         }
     }
 
-    override fun continueToExchangeLocked(transactionId: String) {
-        val intent = Intent(requireContext(), ExchangeLockedActivity::class.java)
-        startActivity(intent)
+    override fun continueToExchangeLocked(lockedModel: ExchangeLockedModel) {
+        ExchangeLockedActivity.start(requireContext(), lockedModel)
         requireActivity().finish()
     }
 
     override fun updateFee(cryptoValue: CryptoValue) {
-        feesTextView.text = cryptoValue.format()
+        feesTextView.text = cryptoValue.formatWithUnit()
     }
 
     override fun showSecondPasswordDialog() {
@@ -164,6 +170,10 @@ class ExchangeConfirmationFragment :
             .setMessage(R.string.execution_error_message)
             .setPositiveButton(android.R.string.ok, null)
             .show()
+    }
+
+    override fun showToast(message: Int, type: String) {
+        toast(message, type)
     }
 
     override fun createPresenter(): ExchangeConfirmationPresenter = presenter

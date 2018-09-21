@@ -1,6 +1,9 @@
 package com.blockchain.datamanagers
 
 import com.blockchain.android.testutils.rxInit
+import com.blockchain.datamanagers.fees.BitcoinLikeFees
+import com.blockchain.datamanagers.fees.EthereumFees
+import com.blockchain.datamanagers.fees.FeeType
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.bitcoinCash
 import com.blockchain.testutils.ether
@@ -11,7 +14,6 @@ import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.api.data.UnspentOutputs
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
-import info.blockchain.wallet.api.data.FeeOptions
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.ethereum.EthereumAccount
 import info.blockchain.wallet.ethereum.data.EthAddressResponse
@@ -75,13 +77,13 @@ class TransactionSendDataManagerTest {
         whenever(payloadDataManager.getNextChangeAddress(account))
             .thenReturn(Observable.just("CHANGE"))
         // Act
-        subject.executeTransaction(amount, destination, account, feeOptions)
+        subject.executeTransaction(amount, destination, account, bitcoinLikeNetworkFee)
             .test()
         // Assert
         verify(sendDataManager).getSpendableCoins(
             unspentOutputs,
             amount.amount,
-            feeOptions.regularFee.toBigInteger()
+            bitcoinLikeNetworkFee.regularFeePerKb
         )
     }
 
@@ -99,13 +101,19 @@ class TransactionSendDataManagerTest {
         whenever(payloadDataManager.getNextChangeAddress(account))
             .thenReturn(Observable.just("CHANGE"))
         // Act
-        subject.executeTransaction(amount, destination, account, feeOptions, FeeType.Priority)
+        subject.executeTransaction(
+            amount,
+            destination,
+            account,
+            bitcoinLikeNetworkFee,
+            FeeType.Priority
+        )
             .test()
         // Assert
         verify(sendDataManager).getSpendableCoins(
             unspentOutputs,
             BigInteger.TEN,
-            feeOptions.priorityFee.toBigInteger()
+            bitcoinLikeNetworkFee.priorityFeePerKb
         )
     }
 
@@ -134,13 +142,13 @@ class TransactionSendDataManagerTest {
                 listOf(ecKey),
                 destination,
                 change,
-                feeOptions.regularFee.toBigInteger(),
+                bitcoinLikeNetworkFee.regularFeePerKb,
                 amount.amount
             )
         ).thenReturn(Observable.just(txHash))
         // Act
         val testObserver =
-            subject.executeTransaction(amount, destination, account, feeOptions)
+            subject.executeTransaction(amount, destination, account, bitcoinLikeNetworkFee)
                 .test()
         // Assert
         testObserver.assertComplete()
@@ -150,7 +158,7 @@ class TransactionSendDataManagerTest {
             listOf(ecKey),
             destination,
             change,
-            feeOptions.regularFee.toBigInteger(),
+            bitcoinLikeNetworkFee.regularFeePerKb,
             amount.amount
         )
     }
@@ -184,13 +192,13 @@ class TransactionSendDataManagerTest {
                 listOf(ecKey),
                 destination,
                 change,
-                feeOptions.regularFee.toBigInteger(),
+                bitcoinLikeNetworkFee.regularFeePerKb,
                 amount.amount
             )
         ).thenReturn(Observable.just(txHash))
         // Act
         val testObserver =
-            subject.executeTransaction(amount, destination, bchAccount, feeOptions)
+            subject.executeTransaction(amount, destination, bchAccount, bitcoinLikeNetworkFee)
                 .test()
         // Assert
         testObserver.assertComplete()
@@ -200,7 +208,7 @@ class TransactionSendDataManagerTest {
             listOf(ecKey),
             destination,
             change,
-            feeOptions.regularFee.toBigInteger(),
+            bitcoinLikeNetworkFee.regularFeePerKb,
             amount.amount
         )
     }
@@ -208,7 +216,7 @@ class TransactionSendDataManagerTest {
     @Test
     fun `execute ethereum transaction verify entire flow`() {
         // Arrange
-        val amount = CryptoValue.etherFromWei(10)
+        val amount = CryptoValue.etherFromWei(10.toBigInteger())
         val destination = "DESTINATION"
         val account: EthereumAccount = mock()
         val combinedEthModel: CombinedEthModel = mock()
@@ -223,8 +231,8 @@ class TransactionSendDataManagerTest {
             ethDataManager.createEthTransaction(
                 BigInteger.ONE,
                 destination,
-                feeOptions.regularFee.gweiToWei(),
-                feeOptions.gasLimit.toBigInteger(),
+                ethereumNetworkFee.gasPriceWei,
+                ethereumNetworkFee.gasLimitWei,
                 amount.amount
             )
         ).thenReturn(rawTransaction)
@@ -243,16 +251,17 @@ class TransactionSendDataManagerTest {
         whenever(ethDataManager.setLastTxHashObservable(eq(txHash), any()))
             .thenReturn(Observable.just(txHash))
         // Act
-        val testObserver = subject.executeTransaction(amount, destination, account, feeOptions)
-            .test()
+        val testObserver =
+            subject.executeTransaction(amount, destination, account, ethereumNetworkFee)
+                .test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(txHash)
         verify(ethDataManager).createEthTransaction(
             BigInteger.ONE,
             destination,
-            feeOptions.regularFee.gweiToWei(),
-            feeOptions.gasLimit.toBigInteger(),
+            ethereumNetworkFee.gasPriceWei,
+            ethereumNetworkFee.gasLimitWei,
             amount.amount
         )
     }
@@ -268,12 +277,13 @@ class TransactionSendDataManagerTest {
         whenever(
             sendDataManager.getMaximumAvailable(
                 unspentOutputs,
-                feeOptions.toSatoshis(FeeType.Regular)
+                bitcoinLikeNetworkFee.regularFeePerKb
             )
         ).thenReturn(Pair.of(BigInteger.TEN, BigInteger.TEN))
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
-            .test()
+        val testObserver =
+            subject.getMaximumSpendable(cryptoCurrency, account, bitcoinLikeNetworkFee)
+                .test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(CryptoValue.bitcoinFromSatoshis(10))
@@ -290,12 +300,17 @@ class TransactionSendDataManagerTest {
         whenever(
             sendDataManager.getMaximumAvailable(
                 unspentOutputs,
-                feeOptions.toSatoshis(FeeType.Priority)
+                bitcoinLikeNetworkFee.priorityFeePerKb
             )
         ).thenReturn(Pair.of(BigInteger.TEN, BigInteger.TEN))
         // Act
         val testObserver =
-            subject.getMaximumSpendable(cryptoCurrency, account, feeOptions, FeeType.Priority)
+            subject.getMaximumSpendable(
+                cryptoCurrency,
+                account,
+                bitcoinLikeNetworkFee,
+                FeeType.Priority
+            )
                 .test()
         // Assert
         testObserver.assertComplete()
@@ -310,8 +325,9 @@ class TransactionSendDataManagerTest {
         whenever(sendDataManager.getUnspentOutputs("XPUB"))
             .thenReturn(Observable.error { Throwable() })
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
-            .test()
+        val testObserver =
+            subject.getMaximumSpendable(cryptoCurrency, account, bitcoinLikeNetworkFee)
+                .test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(CryptoValue.ZeroBtc)
@@ -328,13 +344,14 @@ class TransactionSendDataManagerTest {
         whenever(
             sendDataManager.getMaximumAvailable(
                 unspentOutputs,
-                feeOptions.toSatoshis(FeeType.Regular)
+                bitcoinLikeNetworkFee.regularFeePerKb
             )
         )
             .thenReturn(Pair.of(BigInteger.TEN, BigInteger.TEN))
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
-            .test()
+        val testObserver =
+            subject.getMaximumSpendable(cryptoCurrency, account, bitcoinLikeNetworkFee)
+                .test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(CryptoValue.bitcoinCashFromSatoshis(10))
@@ -348,8 +365,9 @@ class TransactionSendDataManagerTest {
         whenever(sendDataManager.getUnspentBchOutputs("XPUB"))
             .thenReturn(Observable.error { Throwable() })
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
-            .test()
+        val testObserver =
+            subject.getMaximumSpendable(cryptoCurrency, account, bitcoinLikeNetworkFee)
+                .test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(CryptoValue.ZeroBch)
@@ -367,14 +385,14 @@ class TransactionSendDataManagerTest {
         whenever(ethDataManager.fetchEthAddress())
             .thenReturn(Observable.just(combinedEthModel))
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, ethereumNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
         testObserver.assertValue(
             CryptoValue.etherFromWei(
                 1_000_000_000_000_000_000L.toBigInteger() -
-                    (feeOptions.regularFee * feeOptions.gasLimit).gweiToWei()
+                    ethereumNetworkFee.absoluteFee.amount
             )
         )
     }
@@ -391,7 +409,7 @@ class TransactionSendDataManagerTest {
         whenever(ethDataManager.fetchEthAddress())
             .thenReturn(Observable.just(combinedEthModel))
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, ethereumNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
@@ -406,7 +424,7 @@ class TransactionSendDataManagerTest {
         whenever(ethDataManager.fetchEthAddress())
             .thenReturn(Observable.error { Throwable() })
         // Act
-        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, feeOptions)
+        val testObserver = subject.getMaximumSpendable(cryptoCurrency, account, ethereumNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
@@ -424,7 +442,7 @@ class TransactionSendDataManagerTest {
         whenever(sendDataManager.getSpendableCoins(any(), any(), any()))
             .thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
         // Act
-        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+        val testObserver = subject.getFeeForTransaction(amount, account, bitcoinLikeNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
@@ -443,11 +461,11 @@ class TransactionSendDataManagerTest {
             sendDataManager.getSpendableCoins(
                 any(),
                 any(),
-                eq(feeOptions.regularFee.toBigInteger())
+                eq(bitcoinLikeNetworkFee.regularFeePerKb)
             )
         ).thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
         // Act
-        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+        val testObserver = subject.getFeeForTransaction(amount, account, bitcoinLikeNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
@@ -466,12 +484,12 @@ class TransactionSendDataManagerTest {
             sendDataManager.getSpendableCoins(
                 any(),
                 any(),
-                eq(feeOptions.priorityFee.toBigInteger())
+                eq(bitcoinLikeNetworkFee.priorityFeePerKb)
             )
         ).thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
         // Act
         val testObserver =
-            subject.getFeeForTransaction(amount, account, feeOptions, FeeType.Priority)
+            subject.getFeeForTransaction(amount, account, bitcoinLikeNetworkFee, FeeType.Priority)
                 .test()
         // Assert
         testObserver.assertComplete()
@@ -489,7 +507,7 @@ class TransactionSendDataManagerTest {
         whenever(sendDataManager.getSpendableCoins(any(), any(), any()))
             .thenReturn(SpendableUnspentOutputs().apply { absoluteFee = 500.toBigInteger() })
         // Act
-        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+        val testObserver = subject.getFeeForTransaction(amount, account, bitcoinLikeNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
@@ -502,13 +520,11 @@ class TransactionSendDataManagerTest {
         val amount = 1.23.ether()
         val account = EthereumAccount()
         // Act
-        val testObserver = subject.getFeeForTransaction(amount, account, feeOptions)
+        val testObserver = subject.getFeeForTransaction(amount, account, ethereumNetworkFee)
             .test()
         // Assert
         testObserver.assertComplete()
-        testObserver.assertValue(
-            CryptoValue.etherFromWei((feeOptions.regularFee * feeOptions.gasLimit).gweiToWei())
-        )
+        testObserver.assertValue(ethereumNetworkFee.absoluteFee)
     }
 
     @Test
@@ -601,9 +617,13 @@ class TransactionSendDataManagerTest {
         testObserver.assertValue("ADDRESS")
     }
 
-    private val feeOptions = FeeOptions().apply {
-        priorityFee = 100L
-        regularFee = 10L
-        gasLimit = 21000L
-    }
+    private val bitcoinLikeNetworkFee = BitcoinLikeFees(
+        priorityFeePerByte = 100L,
+        regularFeePerByte = 10L
+    )
+
+    private val ethereumNetworkFee = EthereumFees(
+        gasPriceGwei = 10L,
+        gasLimitGwei = 21000L
+    )
 }
