@@ -317,13 +317,13 @@ class TransactionSendDataManager(
     private fun GenericMetadataAccount.getChangeAddress(): Single<String> {
         val position = bchDataManager.getActiveAccounts()
             .indexOfFirst { it.xpub == this.xpub }
-        return bchDataManager.getNextChangeAddress(position).singleOrError()
+        return bchDataManager.getNextChangeCashAddress(position).singleOrError()
     }
 
     private fun GenericMetadataAccount.getReceiveAddress(): Single<String> {
         val position = bchDataManager.getActiveAccounts()
             .indexOfFirst { it.xpub == this.xpub }
-        return bchDataManager.getNextReceiveAddress(position).singleOrError()
+        return bchDataManager.getNextChangeCashAddress(position).singleOrError()
     }
 
     private fun GenericMetadataAccount.getHdAccount(): Account =

@@ -549,7 +549,7 @@ class TransactionSendDataManagerTest {
         whenever(bchDataManager.getActiveAccounts()).thenReturn(listOf(bchAccount))
         whenever(payloadDataManager.getAccountForXPub("XPUB"))
             .thenReturn(account)
-        whenever(bchDataManager.getNextChangeAddress(0))
+        whenever(bchDataManager.getNextChangeCashAddress(0))
             .thenReturn(Observable.just("CHANGE"))
         // Act
         val testObserver = subject.getChangeAddress(CryptoCurrency.BCH, bchAccount)
@@ -594,7 +594,7 @@ class TransactionSendDataManagerTest {
         whenever(bchDataManager.getActiveAccounts()).thenReturn(listOf(bchAccount))
         whenever(payloadDataManager.getAccountForXPub("XPUB"))
             .thenReturn(account)
-        whenever(bchDataManager.getNextReceiveAddress(0))
+        whenever(bchDataManager.getNextReceiveCashAddress(0))
             .thenReturn(Observable.just("RECEIVE"))
         // Act
         val testObserver = subject.getReceiveAddress(CryptoCurrency.BCH, bchAccount)

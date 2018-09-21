@@ -10,8 +10,6 @@ import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
-import com.blockchain.serialization.JsonSerializableAccount
-import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import kotlinx.android.parcel.Parcelize
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
