@@ -12,8 +12,8 @@ import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.balance.layerListDrawableRes
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
-import com.blockchain.morph.exchange.mvi.FieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.Fix
+import com.blockchain.morph.exchange.mvi.SimpleFieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.fixedField
@@ -153,7 +153,6 @@ internal class ExchangeFragment : Fragment() {
     }
 
     private fun displayCryptoLarge(from: Value) {
-        val parts = from.fiatValue.toParts(Locale.getDefault())
         largeValueLeftHandSide.text = ""//parts.symbol
         largeValue.text = from.cryptoValue.formatForExchange()
         largeValueRightHandSide.text = ""
@@ -181,12 +180,7 @@ internal class ExchangeFragment : Fragment() {
             .map { it.userDecimal }
             .distinctUntilChanged()
             .map {
-                FieldUpdateIntent(
-                    configChangePersistence.fieldMode,
-                    // TODO: AND-1363 This minor integer input could be an intent of its own. Certainly needs tests.
-                    "",
-                    it
-                )
+                SimpleFieldUpdateIntent(it)
             }
     }
 

@@ -15,6 +15,8 @@ class FieldUpdateIntent(
     val userValue: BigDecimal = userText.tryParseBigDecimal() ?: BigDecimal.ZERO
 ) : ExchangeIntent()
 
+class SimpleFieldUpdateIntent(val userValue: BigDecimal) : ExchangeIntent()
+
 class SwapIntent : ExchangeIntent()
 
 class QuoteIntent(val quote: Quote) : ExchangeIntent()
