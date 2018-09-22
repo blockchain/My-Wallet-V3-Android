@@ -13,6 +13,10 @@ data class CryptoValue(
     val amount: BigInteger
 ) : Money {
 
+    override val maxDecimalPlaces: Int = currency.dp
+
+    override val userDecimalPlaces: Int = currency.userDp
+
     override fun symbol(locale: Locale) = currency.symbol
 
     override fun toStringWithSymbol(locale: Locale) = formatWithUnit(locale)
