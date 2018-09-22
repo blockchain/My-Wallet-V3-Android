@@ -26,8 +26,7 @@ import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
 import com.jakewharton.rxbinding2.view.clicks
 import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.FormatPrecision
-import info.blockchain.balance.formatWithUnit
+import info.blockchain.balance.Money
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -37,7 +36,6 @@ import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.invisibleIf
-import java.util.Locale
 
 internal class ExchangeFragment : Fragment() {
 
@@ -150,21 +148,21 @@ internal class ExchangeFragment : Fragment() {
     }
 
     private fun displayFiatLarge(from: Value) {
-        val parts = from.fiatValue.toParts(Locale.getDefault())
+        val parts = from.fiatValue.toStringParts()
         largeValueLeftHandSide.text = parts.symbol
         largeValue.text = parts.major
         largeValueRightHandSide.text = parts.minor
 
-        val fromCryptoString = from.cryptoValue.formatForExchange()
+        val fromCryptoString = from.cryptoValue.toStringWithSymbol()
         smallValue.text = fromCryptoString
     }
 
     private fun displayCryptoLarge(from: Value) {
         largeValueLeftHandSide.text = ""
-        largeValue.text = from.cryptoValue.formatForExchange()
+        largeValue.text = from.cryptoValue.toStringWithSymbol()
         largeValueRightHandSide.text = ""
 
-        val fromFiatString = from.fiatValue.toStringWithSymbol(Locale.getDefault())
+        val fromFiatString = from.fiatValue.toStringWithSymbol()
         smallValue.text = fromFiatString
     }
 
@@ -197,18 +195,12 @@ internal class ExchangeFragment : Fragment() {
     }
 }
 
-private fun CryptoValue.formatOrSymbolForZero() =
+private fun Money.formatOrSymbolForZero() =
     if (isZero) {
-        currency.symbol
+        symbol()
     } else {
-        formatForExchange()
+        toStringWithSymbol()
     }
-
-private fun CryptoValue.formatForExchange() =
-    formatWithUnit(
-        Locale.getDefault(),
-        precision = FormatPrecision.Short
-    )
 
 private fun Button.setButtonGraphicsAndTextFromCryptoValue(
     from: Value

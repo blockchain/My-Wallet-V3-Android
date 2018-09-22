@@ -1,8 +1,5 @@
 package info.blockchain.balance
 
-import java.math.BigDecimal
-import java.math.BigInteger
-
 enum class CryptoCurrency(
     val symbol: String,
     val unit: String,
@@ -31,10 +28,6 @@ enum class CryptoCurrency(
         userDp = 8,
         requiredConfirmations = 3
     );
-
-    internal fun smallestUnitValueToBigDecimal(amount: BigInteger): BigDecimal {
-        return amount.toBigDecimal().movePointLeft(dp)
-    }
 
     companion object {
 

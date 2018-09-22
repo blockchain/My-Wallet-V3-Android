@@ -39,29 +39,29 @@ class CryptoValueTests {
     }
 
     @Test
-    fun `toMajorUnit BTC`() {
-        CryptoValue.bitcoinFromSatoshis(12345678901L).toMajorUnit() `should equal` BigDecimal("123.45678901")
+    fun `toBigDecimal BTC`() {
+        CryptoValue.bitcoinFromSatoshis(12345678901L).toBigDecimal() `should equal` BigDecimal("123.45678901")
     }
 
     @Test
-    fun `toMajorUnit BCH`() {
-        CryptoValue.bitcoinCashFromSatoshis(234L).toMajorUnit() `should equal` BigDecimal("0.00000234")
+    fun `toBigDecimal BCH`() {
+        CryptoValue.bitcoinCashFromSatoshis(234L).toBigDecimal() `should equal` BigDecimal("0.00000234")
     }
 
     @Test
-    fun `toMajorUnit ETH`() {
+    fun `toBigDecimal ETH`() {
         CryptoValue(
             CryptoCurrency.ETHER,
             234L.toBigInteger()
-        ).toMajorUnit() `should equal` BigDecimal("0.000000000000000234")
+        ).toBigDecimal() `should equal` BigDecimal("0.000000000000000234")
     }
 
     @Test
-    fun `toMajorUnit keeps all trailing 0s`() {
+    fun `toBigDecimal keeps all trailing 0s`() {
         CryptoValue(
             CryptoCurrency.BTC,
             10000000000L.toBigInteger()
-        ).toMajorUnit() `should equal` BigDecimal("100.00000000")
+        ).toBigDecimal() `should equal` BigDecimal("100.00000000")
     }
 
     @Test

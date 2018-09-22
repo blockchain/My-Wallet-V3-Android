@@ -26,9 +26,7 @@ data class CryptoValue(
     /**
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */
-    fun toMajorUnit(): BigDecimal {
-        return currency.smallestUnitValueToBigDecimal(amount)
-    }
+    override fun toBigDecimal(): BigDecimal = amount.toBigDecimal().movePointLeft(currency.dp)
 
     override val isPositive: Boolean get() = amount.signum() == 1
 
@@ -79,7 +77,7 @@ data class CryptoValue(
     /**
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */
-    fun toMajorUnitDouble() = toMajorUnit().toDouble()
+    fun toMajorUnitDouble() = toBigDecimal().toDouble()
 }
 
 operator fun CryptoValue.compareTo(other: CryptoValue): Int {

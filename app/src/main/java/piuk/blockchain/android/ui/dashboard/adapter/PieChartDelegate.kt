@@ -130,7 +130,7 @@ class PieChartDelegate<in T>(
 
     private infix fun PieChartsState.DataPoint.withLabel(
         label: String
-    ) = PieEntry(fiatValue.value.toFloat(), label, this)
+    ) = PieEntry(fiatValue.toBigDecimal().toFloat(), label, this)
 
     private fun getCoinColors(empty: Boolean): List<Int> = if (empty) {
         listOf(ContextCompat.getColor(context, R.color.primary_gray_light))

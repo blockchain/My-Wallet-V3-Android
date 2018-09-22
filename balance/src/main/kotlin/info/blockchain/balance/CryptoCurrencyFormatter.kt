@@ -29,8 +29,6 @@ fun CryptoValue.formatWithUnit(
 ) =
     getFormatter(locale).formatWithUnit(this, precision)
 
-private const val MaxEthShortDecimalLength = 8
-
 private val formatterMap: MutableMap<Locale, CryptoCurrencyFormatter> = ConcurrentHashMap()
 
 private fun getFormatter(locale: Locale) =
@@ -40,21 +38,20 @@ class CryptoCurrencyFormatter(locale: Locale) {
     private val btcFormat = createCryptoDecimalFormat(locale, CryptoCurrency.BTC.dp)
     private val bchFormat = createCryptoDecimalFormat(locale, CryptoCurrency.BCH.dp)
     private val ethFormat = createCryptoDecimalFormat(locale, CryptoCurrency.ETHER.dp)
-    private val ethShortFormat =
-        createCryptoDecimalFormat(locale, MaxEthShortDecimalLength)
+    private val ethShortFormat = createCryptoDecimalFormat(locale, CryptoCurrency.ETHER.userDp)
 
     fun format(
         cryptoValue: CryptoValue,
         precision: FormatPrecision = FormatPrecision.Short
     ): String =
-        cryptoValue.currency.decimalFormat(precision).formatWithoutUnit(cryptoValue.toMajorUnit())
+        cryptoValue.currency.decimalFormat(precision).formatWithoutUnit(cryptoValue.toBigDecimal())
 
     fun formatWithUnit(
         cryptoValue: CryptoValue,
         precision: FormatPrecision = FormatPrecision.Short
     ) =
         cryptoValue.currency.decimalFormat(precision).formatWithUnit(
-            cryptoValue.toMajorUnit(),
+            cryptoValue.toBigDecimal(),
             cryptoValue.currency.symbol
         )
 

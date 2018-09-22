@@ -61,14 +61,14 @@ class BigDecimalJsonTests {
     @Test
     fun `large btc example big decimal to json`() {
         jsonAdapter.toJson(
-            ExampleDto(12345678.12345678.bitcoin().toMajorUnit())
+            ExampleDto(12345678.12345678.bitcoin().toBigDecimal())
         ) `should equal` """{"value":"12345678.12345678"}"""
     }
 
     @Test
     fun `large ether example big decimal to json`() {
         jsonAdapter.toJson(
-            ExampleDto(12345678.12345678.ether().toMajorUnit())
+            ExampleDto(12345678.12345678.ether().toBigDecimal())
         ) `should equal` """{"value":"12345678.123456780000000000"}"""
     }
 

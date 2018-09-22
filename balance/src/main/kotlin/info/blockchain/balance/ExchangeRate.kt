@@ -15,7 +15,7 @@ sealed class ExchangeRate(var rate: BigDecimal) {
             if (cryptoValue?.currency != from) return null
             return CryptoValue.fromMajor(
                 to,
-                rate.multiply(cryptoValue.toMajorUnit())
+                rate.multiply(cryptoValue.toBigDecimal())
             )
         }
 
@@ -32,7 +32,7 @@ sealed class ExchangeRate(var rate: BigDecimal) {
             if (cryptoValue?.currency != from) return null
             return FiatValue.fromMajor(
                 currencyCode = to,
-                major = rate.multiply(cryptoValue.toMajorUnit())
+                major = rate.multiply(cryptoValue.toBigDecimal())
             )
         }
 
@@ -49,7 +49,7 @@ sealed class ExchangeRate(var rate: BigDecimal) {
             if (fiatValue?.currencyCode != from) return null
             return CryptoValue.fromMajor(
                 to,
-                rate.multiply(fiatValue.value)
+                rate.multiply(fiatValue.toBigDecimal())
             )
         }
 

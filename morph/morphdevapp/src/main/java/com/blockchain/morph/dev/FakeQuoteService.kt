@@ -26,14 +26,14 @@ class FakeQuoteService : QuoteService {
                             quoteRequest.offering,
                             FiatValue.fromMajor(
                                 "USD",
-                                quoteRequest.offering.toMajorUnit() * 12.34.toBigDecimal()
+                                quoteRequest.offering.toBigDecimal() * 12.34.toBigDecimal()
                             )
                         ),
                         to = Quote.Value(
-                            quoteRequest.wanted.withMajorValue(quoteRequest.offering.toMajorUnit() * 2.3456.toBigDecimal()),
+                            quoteRequest.wanted.withMajorValue(quoteRequest.offering.toBigDecimal() * 2.3456.toBigDecimal()),
                             FiatValue.fromMajor(
                                 "USD",
-                                quoteRequest.offering.toMajorUnit() * 11.34.toBigDecimal()
+                                quoteRequest.offering.toBigDecimal() * 11.34.toBigDecimal()
                             )
                         )
                     )
@@ -42,17 +42,17 @@ class FakeQuoteService : QuoteService {
                         fix = Fix.BASE_FIAT,
                         from = Quote.Value(
                             quoteRequest.offering.withMajorValue(
-                                quoteRequest.offeringFiatValue.value / 12.3456.toBigDecimal()
+                                quoteRequest.offeringFiatValue.toBigDecimal() / 12.3456.toBigDecimal()
                             ),
                             quoteRequest.offeringFiatValue
                         ),
                         to = Quote.Value(
                             quoteRequest.wanted.withMajorValue(
-                                quoteRequest.offeringFiatValue.value / 2.3456.toBigDecimal()
+                                quoteRequest.offeringFiatValue.toBigDecimal() / 2.3456.toBigDecimal()
                             ),
                             FiatValue.fromMajor(
                                 "USD",
-                                quoteRequest.offeringFiatValue.value / 11.34.toBigDecimal()
+                                quoteRequest.offeringFiatValue.toBigDecimal() / 11.34.toBigDecimal()
                             )
                         )
                     )

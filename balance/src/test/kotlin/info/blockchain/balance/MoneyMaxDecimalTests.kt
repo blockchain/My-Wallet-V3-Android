@@ -1,9 +1,7 @@
 package info.blockchain.balance
 
 import org.amshove.kluent.`should be`
-import org.amshove.kluent.`should equal`
 import org.junit.Test
-import java.util.Locale
 
 class MoneyMaxDecimalTests {
 

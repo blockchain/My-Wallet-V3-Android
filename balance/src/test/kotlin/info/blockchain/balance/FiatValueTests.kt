@@ -15,7 +15,7 @@ class FiatValueTests {
         FiatValue.fromMajor("USD", 123.45.toBigDecimal())
             .apply {
                 currencyCode `should equal` "USD"
-                value `should equal` 123.45.toBigDecimal()
+                toBigDecimal() `should equal` 123.45.toBigDecimal()
             }
     }
 
@@ -24,7 +24,7 @@ class FiatValueTests {
         FiatValue.fromMajor("GBP", 99.99.toBigDecimal())
             .apply {
                 currencyCode `should equal` "GBP"
-                value `should equal` 99.99.toBigDecimal()
+                toBigDecimal() `should equal` 99.99.toBigDecimal()
             }
     }
 

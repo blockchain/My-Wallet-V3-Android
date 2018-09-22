@@ -26,4 +26,4 @@ private fun ExchangeQuoteRequest.Buying.mapBuy(request: QuoteRequest): QuoteRequ
         request.withdrawalAmount = wanted.majorRoundedTo8()
     }
 
-private fun CryptoValue.majorRoundedTo8() = toMajorUnit().setScale(8, RoundingMode.HALF_DOWN)
+private fun CryptoValue.majorRoundedTo8() = toBigDecimal().setScale(8, RoundingMode.HALF_DOWN)

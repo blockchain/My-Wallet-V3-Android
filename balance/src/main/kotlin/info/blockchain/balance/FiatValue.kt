@@ -35,7 +35,7 @@ private object FiatFormat {
 @Suppress("DataClassPrivateConstructor")
 data class FiatValue private constructor(
     val currencyCode: String,
-    val value: BigDecimal
+    internal val value: BigDecimal
 ) : Money {
 
     override val maxDecimalPlaces: Int get() = maxDecimalPlaces(currencyCode)
@@ -43,6 +43,8 @@ data class FiatValue private constructor(
     override val isZero: Boolean get() = value.signum() == 0
 
     override val isPositive: Boolean get() = value.signum() == 1
+
+    override fun toBigDecimal(): BigDecimal = value
 
     val valueMinor: Long = value.movePointRight(maxDecimalPlaces).toLong()
 
@@ -84,11 +86,5 @@ data class FiatValue private constructor(
         private fun maxDecimalPlaces(currencyCode: String) = Currency.getInstance(currencyCode).defaultFractionDigits
     }
 }
-
-class Parts(
-    val symbol: String,
-    val major: String,
-    val minor: String
-)
 
 class MismatchedCurrencyCodeException(message: String) : Exception(message)

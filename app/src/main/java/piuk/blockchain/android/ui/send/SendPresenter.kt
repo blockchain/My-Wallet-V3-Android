@@ -2020,7 +2020,7 @@ class SendPresenter @Inject constructor(
         val relativeFee =
             absoluteSuggestedFee.toDouble() / pendingTransaction.bigIntAmount.toDouble() * 100.0
 
-        return usdValue.value > SendModel.LARGE_TX_FEE.toBigDecimal() &&
+        return usdValue.toBigDecimal() > SendModel.LARGE_TX_FEE.toBigDecimal() &&
             txSize > SendModel.LARGE_TX_SIZE &&
             relativeFee > SendModel.LARGE_TX_PERCENTAGE
     }
