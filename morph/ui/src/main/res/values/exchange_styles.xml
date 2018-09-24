@@ -4,6 +4,7 @@
     <color name="exchange_button_color">#FFFFFFFF</color>
     <color name="exchange_text_dark_color">#FF4A4A4A</color>
     <color name="exchange_text_gray_color">#FFA4A4A4</color>
+    <color name="exchange_screen_back">#FFFFFFFF</color>
 
     <color name="exchange_blue">#FF004A7C</color>
 
@@ -40,7 +41,9 @@
     </style>
 
     <style name="ExchangeButton.MinMax">
-        <item name="android:textColor">#FF10ADE4</item>
+        <item name="android:textColor">@color/exchange_blue</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@color/exchange_screen_back</item>
         <item name="android:textSize">14sp</item>
     </style>
 
