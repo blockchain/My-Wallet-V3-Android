@@ -7,6 +7,9 @@
 
     <color name="exchange_blue">#FF004A7C</color>
 
+    <color name="exchange_button_blue">#FF10ADE4</color>
+    <color name="exchange_button_blue_disabled">#FFADADAD</color>
+
     <style name="ExchangeText">
         <item name="android:fontFamily">Montserrat</item>
     </style>

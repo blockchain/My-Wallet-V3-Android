@@ -156,6 +156,7 @@ internal class ExchangeFragment : Fragment() {
                     it.fromAccount.cryptoCurrency.symbol,
                     it.toAccount.cryptoCurrency.symbol
                 )
+                exchangeButton.isEnabled = it.isValid()
             }
         compositeDisposable += keyboard.viewStates
             .subscribeBy {
