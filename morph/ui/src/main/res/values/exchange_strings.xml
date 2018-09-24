@@ -3,7 +3,7 @@
     <string name="exchange">Exchange</string>
     <string name="min">Min</string>
     <string name="max">Max</string>
-    <string name="exchange_x_for_y">Exchange BTC for ETH</string>
+    <string name="exchange_x_for_y">Exchange %1$s for %2$s</string>
     <string name="backspace">Backspace</string>
 
     <string name="connection_error">Connection error</string>

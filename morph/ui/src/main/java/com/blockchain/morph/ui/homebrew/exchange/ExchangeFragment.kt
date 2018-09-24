@@ -151,6 +151,11 @@ internal class ExchangeFragment : Fragment() {
                 exchangeIndicator.invisibleIf(it.fixedField.isCounter)
                 receiveIndicator.invisibleIf(it.fixedField.isBase)
                 keyboard.setValue(it.fixedMoneyValue.userDecimalPlaces, it.fixedMoneyValue.toBigDecimal())
+                exchangeButton.text = getString(
+                    R.string.exchange_x_for_y,
+                    it.fromAccount.cryptoCurrency.symbol,
+                    it.toAccount.cryptoCurrency.symbol
+                )
             }
         compositeDisposable += keyboard.viewStates
             .subscribeBy {

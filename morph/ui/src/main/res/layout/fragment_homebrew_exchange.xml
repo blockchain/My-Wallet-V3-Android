@@ -150,7 +150,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:background="#FF10ADE4"
-        android:text="@string/exchange_x_for_y"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
