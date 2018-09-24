@@ -14,7 +14,7 @@ internal fun Given.on(vararg intent: ExchangeIntent, assert: TestObserver<Exchan
 internal fun Given.on(intent: List<ExchangeIntent>, assert: TestObserver<ExchangeViewModel>.() -> Unit) {
     val subject = PublishSubject.create<ExchangeIntent>()
     val testObserver = ExchangeDialog(subject, this.initial)
-        .viewModel
+        .viewModels
         .skip(intent.size.toLong())
         .test()
     intent.forEach(subject::onNext)

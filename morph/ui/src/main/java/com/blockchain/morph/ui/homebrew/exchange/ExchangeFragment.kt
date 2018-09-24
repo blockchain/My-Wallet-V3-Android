@@ -21,6 +21,7 @@ import com.blockchain.morph.exchange.mvi.fixedField
 import com.blockchain.morph.exchange.mvi.fixedMoneyValue
 import com.blockchain.morph.exchange.mvi.isBase
 import com.blockchain.morph.exchange.mvi.isCounter
+import com.blockchain.morph.exchange.mvi.toViewModel
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
@@ -138,6 +139,9 @@ internal class ExchangeFragment : Fragment() {
         val receiveIndicator = view!!.findViewById<View>(R.id.imageView_receive_indicator)
         compositeDisposable += exchangeModel
             .exchangeViewModels
+            .map {
+                it.toViewModel()
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
                 when (it.fixedField) {

@@ -1,6 +1,12 @@
-package com.blockchain.nabu.service
+package com.blockchain.morph.exchange.service
 
 import info.blockchain.balance.FiatValue
+import io.reactivex.Single
+
+interface TradeLimitService {
+
+    fun getTradesLimits(): Single<FiatTradesLimits>
+}
 
 class FiatTradesLimits(
     val minOrder: FiatValue,

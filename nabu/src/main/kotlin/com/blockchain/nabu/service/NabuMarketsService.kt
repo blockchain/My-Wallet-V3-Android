@@ -1,6 +1,9 @@
 package com.blockchain.nabu.service
 
 import com.blockchain.morph.CoinPair
+import com.blockchain.morph.exchange.service.FiatPeriodicLimit
+import com.blockchain.morph.exchange.service.FiatTradesLimits
+import com.blockchain.morph.exchange.service.TradeLimitService
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.api.NabuMarkets
 import com.blockchain.nabu.api.NabuTransaction
@@ -17,7 +20,7 @@ import io.reactivex.Single
 class NabuMarketsService internal constructor(
     private val nabuMarkets: NabuMarkets,
     private val authenticator: Authenticator
-) {
+) : TradeLimitService {
 
     fun getTradingConfig(tradingPair: CoinPair): Single<TradingConfig> {
         return authenticator.authenticate {
@@ -35,7 +38,7 @@ class NabuMarketsService internal constructor(
         }
     }
 
-    fun getTradesLimits(): Single<FiatTradesLimits> {
+    override fun getTradesLimits(): Single<FiatTradesLimits> {
         return authenticator.authenticate {
             nabuMarkets.getTradesLimits(
                 it.authHeader

@@ -43,7 +43,7 @@ val morphUiModule = applicationContext {
 
             factory { ExchangeFragmentConfigurationChangePersistence(get()) }
 
-            factory { ExchangeModel(get(), get()) }
+            factory { ExchangeModel(get(), get(), get()) }
         }
     }
 

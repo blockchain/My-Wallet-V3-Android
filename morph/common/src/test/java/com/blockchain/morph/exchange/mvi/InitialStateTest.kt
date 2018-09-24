@@ -14,7 +14,7 @@ class InitialStateTest {
     fun `initial state`() {
         val subject = PublishSubject.create<ExchangeIntent>()
         ExchangeDialog(subject, initial("USD", CryptoCurrency.BTC to CryptoCurrency.ETHER))
-            .viewModel
+            .viewModels
             .test()
             .assertValue {
                 it.from `should equal` value(

@@ -3,12 +3,11 @@ package com.blockchain.morph.ui.homebrew.exchange
 import android.arch.lifecycle.ViewModel
 import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
-import com.blockchain.morph.exchange.mvi.ExchangeViewModel
+import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.Fix
-import com.blockchain.morph.exchange.mvi.fixedField
-import com.blockchain.morph.exchange.mvi.fixedMoneyValue
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
+import com.blockchain.morph.exchange.service.TradeLimitService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
@@ -22,7 +21,8 @@ import timber.log.Timber
 
 class ExchangeModel(
     quoteServiceFactory: QuoteServiceFactory,
-    var configChangePersistence: ExchangeFragmentConfigurationChangePersistence
+    var configChangePersistence: ExchangeFragmentConfigurationChangePersistence,
+    private var tradeLimitService: TradeLimitService
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -31,11 +31,11 @@ class ExchangeModel(
 
     val quoteService: QuoteService by lazy { quoteServiceFactory.createQuoteService() }
 
-    private val exchangeViewModelsSubject = BehaviorSubject.create<ExchangeViewModel>()
+    private val exchangeViewModelsSubject = BehaviorSubject.create<ExchangeViewState>()
 
     val inputEventSink = PublishSubject.create<ExchangeIntent>()
 
-    val exchangeViewModels: Observable<ExchangeViewModel> = exchangeViewModelsSubject
+    val exchangeViewModels: Observable<ExchangeViewState> = exchangeViewModelsSubject
 
     override fun onCleared() {
         super.onCleared()
@@ -46,7 +46,7 @@ class ExchangeModel(
 
     fun newDialog(exchangeDialog: ExchangeDialog) {
         dialogDisposable.clear()
-        dialogDisposable += exchangeDialog.viewModel.distinctUntilChanged()
+        dialogDisposable += exchangeDialog.viewStates.distinctUntilChanged()
             .doOnError { Timber.e(it) }
             .subscribeBy {
                 newViewModel(it)
@@ -55,40 +55,40 @@ class ExchangeModel(
             .subscribeBy {
                 configChangePersistence.fromReference = it.fromAccount
                 configChangePersistence.toReference = it.toAccount
-                quoteService.updateQuoteRequest(it.toExchangeQuoteRequest(it.from.fiatValue.currencyCode))
+                quoteService.updateQuoteRequest(it.toExchangeQuoteRequest(it.fromFiat.currencyCode))
             }
     }
 
-    private fun newViewModel(exchangeViewModel: ExchangeViewModel) {
+    private fun newViewModel(exchangeViewModel: ExchangeViewState) {
         exchangeViewModelsSubject.onNext(exchangeViewModel)
     }
 }
 
-private fun ExchangeViewModel.toExchangeQuoteRequest(
+private fun ExchangeViewState.toExchangeQuoteRequest(
     currency: String
-): ExchangeQuoteRequest = when (fixedField) {
+): ExchangeQuoteRequest = when (fix) {
     Fix.COUNTER_FIAT ->
         ExchangeQuoteRequest.BuyingFiatLinked(
-            offering = fromCryptoCurrency,
-            wanted = toCryptoCurrency,
-            wantedFiatValue = fixedMoneyValue as FiatValue
+            offering = fromCrypto.currency,
+            wanted = toCrypto.currency,
+            wantedFiatValue = lastUserValue as FiatValue
         )
     Fix.BASE_FIAT ->
         ExchangeQuoteRequest.SellingFiatLinked(
-            offering = fromCryptoCurrency,
-            wanted = toCryptoCurrency,
-            offeringFiatValue = fixedMoneyValue as FiatValue
+            offering = fromCrypto.currency,
+            wanted = toCrypto.currency,
+            offeringFiatValue = lastUserValue as FiatValue
         )
     Fix.COUNTER_CRYPTO ->
         ExchangeQuoteRequest.Buying(
-            offering = fromCryptoCurrency,
-            wanted = fixedMoneyValue as CryptoValue,
+            offering = fromCrypto.currency,
+            wanted = lastUserValue as CryptoValue,
             indicativeFiatSymbol = currency
         )
     Fix.BASE_CRYPTO ->
         ExchangeQuoteRequest.Selling(
-            offering = fixedMoneyValue as CryptoValue,
-            wanted = toCryptoCurrency,
+            offering = lastUserValue as CryptoValue,
+            wanted = toCrypto.currency,
             indicativeFiatSymbol = currency
         )
 }

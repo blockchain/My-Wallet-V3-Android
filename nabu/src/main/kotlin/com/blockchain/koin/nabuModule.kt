@@ -1,7 +1,9 @@
 package com.blockchain.koin
 
+import com.blockchain.morph.exchange.service.TradeLimitService
 import com.blockchain.morph.trade.MorphTradeDataManager
 import com.blockchain.nabu.api.NabuMarkets
+import com.blockchain.nabu.api.TradesLimits
 import com.blockchain.nabu.api.TransactionStateAdapter
 import com.blockchain.nabu.datamanagers.NabuDataManagerAdapter
 import com.blockchain.nabu.service.NabuMarketsService
@@ -15,6 +17,7 @@ val nabuModule = applicationContext {
     context("Payload") {
 
         factory { NabuMarketsService(get(), get()) }
+            .bind(TradeLimitService::class)
 
         factory { NabuDataManagerAdapter(get()) as MorphTradeDataManager }
     }
