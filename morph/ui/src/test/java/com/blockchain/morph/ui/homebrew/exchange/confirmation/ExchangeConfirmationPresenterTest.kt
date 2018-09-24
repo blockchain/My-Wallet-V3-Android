@@ -66,6 +66,7 @@ class ExchangeConfirmationPresenterTest {
     fun `on view ready double encrypted`() {
         // Arrange
         whenever(payloadDataManager.isDoubleEncrypted).thenReturn(true)
+        whenever(view.clickEvents).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
         // Assert
