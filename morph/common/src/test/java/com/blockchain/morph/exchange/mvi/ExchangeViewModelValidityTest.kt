@@ -58,7 +58,6 @@ class ExchangeViewModelValidityTest {
         ).isValid() `should be` false
     }
 
-
     @Test
     fun `is not valid if the value doesn't match`() {
         ExchangeViewModel(
