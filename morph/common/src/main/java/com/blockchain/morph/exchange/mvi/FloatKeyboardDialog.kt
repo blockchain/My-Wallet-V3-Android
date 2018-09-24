@@ -34,7 +34,7 @@ private fun construct(
 ): FloatEntryViewState {
     if (previous.userDecimal.compareTo(intent.value) == 0 && previous.maxDecimal == intent.maxDp) return previous
 
-    val map = intent.value.toString()
+    val map = intent.value.toPlainString().trimEnd('0', '.')
         .toCharArray()
         .map {
             when (it) {

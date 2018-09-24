@@ -266,13 +266,33 @@ class FloatKeyboardDialogTest {
     }
 
     @Test
+    fun `set value to 0 with 8 dp`() {
+        lastStateGivenIntents(setValue(8, BigDecimal.ZERO.setScale(8)))
+            .apply {
+                userDecimal `should equal` BigDecimal.ZERO
+                decimalCursor `should be` 0
+            }
+    }
+
+    @Test
+    fun `set value to non-0 with 8 dp`() {
+        lastStateGivenIntents(setValue(8, "0.1234000".toBigDecimal()))
+            .apply {
+                userDecimal `should equal` "0.12340000".toBigDecimal()
+                decimalCursor `should be` 5
+            }
+    }
+
+    @Test
     fun `set value does not emit an error`() {
         lastStateGivenIntents(setValue(2, 13.123))
             .assertNoShake()
     }
 }
 
-private fun setValue(dp: Int, d: Double): FloatKeyboardIntent = FloatKeyboardIntent.SetValue(dp, d.toBigDecimal())
+private fun setValue(dp: Int, d: Double): FloatKeyboardIntent = setValue(dp, d.toBigDecimal())
+
+private fun setValue(dp: Int, bd: BigDecimal): FloatKeyboardIntent = FloatKeyboardIntent.SetValue(dp, bd)
 
 private fun setMaxDp(maxDp: Int): FloatKeyboardIntent = FloatKeyboardIntent.SetMaxDp(maxDp)
 
