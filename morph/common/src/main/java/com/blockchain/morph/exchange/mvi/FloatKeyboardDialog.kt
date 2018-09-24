@@ -3,6 +3,7 @@ package com.blockchain.morph.exchange.mvi
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.toObservable
 import java.math.BigDecimal
+import java.math.BigInteger
 
 sealed class FloatKeyboardIntent {
     class NumericKey(val key: Int) : FloatKeyboardIntent()
@@ -10,7 +11,7 @@ sealed class FloatKeyboardIntent {
     class Backspace : FloatKeyboardIntent()
     class Clear : FloatKeyboardIntent()
     class SetMaxDp(val maxDp: Int) : FloatKeyboardIntent()
-    class SetValue(val maxDp: Int, val value: BigDecimal) : FloatKeyboardIntent()
+    data class SetValue(val maxDp: Int, val value: BigDecimal) : FloatKeyboardIntent()
 }
 
 class FloatKeyboardDialog(intents: Observable<FloatKeyboardIntent>) {
@@ -34,19 +35,38 @@ private fun construct(
 ): FloatEntryViewState {
     if (previous.userDecimal.compareTo(intent.value) == 0 && previous.maxDecimal == intent.maxDp) return previous
 
-    val map = intent.value.toPlainString().trimEnd('0', '.')
-        .toCharArray()
-        .map {
-            when (it) {
-                '.' -> FloatKeyboardIntent.Period()
-                else -> FloatKeyboardIntent.NumericKey(it - '0')
-            }
-        }
-    return FloatKeyboardDialog((listOf(FloatKeyboardIntent.SetMaxDp(intent.maxDp)) + map).toObservable())
+    return FloatKeyboardDialog((numberToIntents(intent)).toObservable())
         .states
         .last(initialState)
         .blockingGet()
         .copy(shake = false)
+}
+
+private fun numberToIntents(intent: FloatKeyboardIntent.SetValue): List<FloatKeyboardIntent> {
+    val integer = intent.value.toBigInteger()
+    val fraction = (intent.value - integer.toBigDecimal()).movePointRight(intent.maxDp).toBigInteger()
+
+    val integerIntents = listOf(FloatKeyboardIntent.SetMaxDp(intent.maxDp)) + intToIntents(integer, false)
+    val fractionIntents = intToIntents(fraction, true)
+
+    return if (fractionIntents.isEmpty())
+        integerIntents
+    else
+        integerIntents + FloatKeyboardIntent.Period() + fractionIntents
+}
+
+private fun intToIntents(int: BigInteger, ignoreTrailingZeros: Boolean): List<FloatKeyboardIntent> {
+    var int1 = int
+    val intents = mutableListOf<FloatKeyboardIntent>()
+    while (int1.signum() == 1) {
+        val key = int1.remainder(BigInteger.TEN).toInt()
+        if (!ignoreTrailingZeros || key > 0 || !intents.isEmpty()) {
+            intents.add(FloatKeyboardIntent.NumericKey(key))
+        }
+        int1 = int1.divide(BigInteger.TEN)
+    }
+    intents.reverse()
+    return intents
 }
 
 private fun mapPeriodPress(previous: FloatEntryViewState): FloatEntryViewState {

@@ -284,6 +284,24 @@ class FloatKeyboardDialogTest {
     }
 
     @Test
+    fun `set value to non-0 with 8 dp with zeros`() {
+        lastStateGivenIntents(setValue(8, "0.10101000".toBigDecimal()))
+            .apply {
+                userDecimal `should equal` "0.10101000".toBigDecimal()
+                decimalCursor `should be` 6
+            }
+    }
+
+    @Test
+    fun `set value to integer with trailing values`() {
+        lastStateGivenIntents(setValue(3, "10".toBigDecimal()))
+            .apply {
+                userDecimal `should equal` "10".toBigDecimal()
+                decimalCursor `should be` 0
+            }
+    }
+
+    @Test
     fun `set value does not emit an error`() {
         lastStateGivenIntents(setValue(2, 13.123))
             .assertNoShake()
