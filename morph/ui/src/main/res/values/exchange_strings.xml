@@ -2,7 +2,9 @@
 <resources>
     <string name="exchange">Exchange</string>
     <string name="min">Min</string>
+    <string name="min_with_value">%1$s Min</string>
     <string name="max">Max</string>
+    <string name="max_with_value">%1$s Max</string>
     <string name="exchange_x_for_y">Exchange %1$s for %2$s</string>
     <string name="backspace">Backspace</string>
 

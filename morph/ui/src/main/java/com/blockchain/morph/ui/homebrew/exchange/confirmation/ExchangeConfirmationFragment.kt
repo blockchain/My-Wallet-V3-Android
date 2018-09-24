@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.koin.injectActivity
-import com.blockchain.morph.exchange.mvi.ExchangeViewModel
+import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
@@ -58,9 +58,9 @@ class ExchangeConfirmationFragment :
     private var progressDialog: MaterialProgressDialog? = null
 
     override val locale: Locale = Locale.getDefault()
-    override val clickEvents: Observable<ExchangeViewModel> by unsafeLazy {
+    override val exchangeViewState: Observable<ExchangeViewState> by unsafeLazy {
         sendButton.throttledClicks()
-            .flatMap { exchangeModel.exchangeViewModels }
+            .flatMap { exchangeModel.exchangeViewStates }
     }
 
     override fun onCreateView(
@@ -99,16 +99,16 @@ class ExchangeConfirmationFragment :
     override fun onResume() {
         super.onResume()
         compositeDisposable += exchangeModel
-            .exchangeViewModels
+            .exchangeViewStates
             .observeOn(AndroidSchedulers.mainThread())
             .filter { it.latestQuote?.rawQuote != null }
             .map {
                 ExchangeConfirmationViewModel(
                     fromAccount = it.fromAccount,
                     toAccount = it.toAccount,
-                    sending = it.from.cryptoValue,
-                    receiving = it.to.cryptoValue,
-                    value = it.to.fiatValue,
+                    sending = it.fromCrypto,
+                    receiving = it.toCrypto,
+                    value = it.toFiat,
                     quote = it.latestQuote!!
                 )
             }

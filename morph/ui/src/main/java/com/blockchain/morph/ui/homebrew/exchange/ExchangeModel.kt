@@ -5,6 +5,7 @@ import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.Fix
+import com.blockchain.morph.exchange.mvi.SetTradeLimits
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.morph.exchange.service.TradeLimitService
@@ -35,7 +36,7 @@ class ExchangeModel(
 
     val inputEventSink = PublishSubject.create<ExchangeIntent>()
 
-    val exchangeViewModels: Observable<ExchangeViewState> = exchangeViewModelsSubject
+    val exchangeViewStates: Observable<ExchangeViewState> = exchangeViewModelsSubject
 
     override fun onCleared() {
         super.onCleared()
@@ -46,12 +47,16 @@ class ExchangeModel(
 
     fun newDialog(exchangeDialog: ExchangeDialog) {
         dialogDisposable.clear()
+        dialogDisposable += tradeLimitService.getTradesLimits()
+            .subscribeBy {
+                inputEventSink.onNext(SetTradeLimits(it.minOrder, it.maxOrder))
+            }
         dialogDisposable += exchangeDialog.viewStates.distinctUntilChanged()
             .doOnError { Timber.e(it) }
             .subscribeBy {
                 newViewModel(it)
             }
-        dialogDisposable += exchangeViewModels
+        dialogDisposable += exchangeViewStates
             .subscribeBy {
                 configChangePersistence.fromReference = it.fromAccount
                 configChangePersistence.toReference = it.toAccount

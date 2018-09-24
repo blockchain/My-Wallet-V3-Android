@@ -1,7 +1,7 @@
 package com.blockchain.morph.ui.homebrew.exchange.confirmation
 
 import android.support.annotation.StringRes
-import com.blockchain.morph.exchange.mvi.ExchangeViewModel
+import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.ui.homebrew.exchange.locked.ExchangeLockedModel
 import info.blockchain.balance.CryptoValue
 import io.reactivex.Observable
@@ -13,7 +13,7 @@ interface ExchangeConfirmationView : View {
 
     val locale: Locale
 
-    val clickEvents: Observable<ExchangeViewModel>
+    val exchangeViewState: Observable<ExchangeViewState>
 
     fun continueToExchangeLocked(lockedModel: ExchangeLockedModel)
 

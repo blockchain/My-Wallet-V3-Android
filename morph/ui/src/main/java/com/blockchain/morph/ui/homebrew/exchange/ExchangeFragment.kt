@@ -2,6 +2,7 @@ package com.blockchain.morph.ui.homebrew.exchange
 
 import android.content.Context
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,10 @@ import android.widget.Button
 import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.balance.layerListDrawableRes
+import com.blockchain.morph.exchange.mvi.ApplyMaximumLimit
+import com.blockchain.morph.exchange.mvi.ApplyMinimumLimit
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
+import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.SimpleFieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
@@ -68,6 +72,8 @@ internal class ExchangeFragment : Fragment() {
     private lateinit var selectSendAccountButton: Button
     private lateinit var selectReceiveAccountButton: Button
     private lateinit var exchangeButton: Button
+    private lateinit var minButton: Button
+    private lateinit var maxButton: Button
 
     private lateinit var exchangeModel: ExchangeModel
 
@@ -99,6 +105,8 @@ internal class ExchangeFragment : Fragment() {
         selectSendAccountButton = view.findViewById(R.id.select_from_account_button)
         selectReceiveAccountButton = view.findViewById(R.id.select_to_account_button)
         exchangeButton = view.findViewById(R.id.exchange_action_button)
+        minButton = view.findViewById(R.id.minButton)
+        maxButton = view.findViewById(R.id.maxButton)
 
         selectSendAccountButton.setOnClickListener {
             AccountChooserActivity.startForResult(
@@ -129,8 +137,12 @@ internal class ExchangeFragment : Fragment() {
         compositeDisposable +=
             Observable.merge(
                 allTextUpdates(),
-                view!!.findViewById<View>(R.id.imageview_switch_currency).clicks().map { ToggleFiatCryptoIntent() },
-                view!!.findViewById<View>(R.id.imageview_switch_from_to).clicks().map { ToggleFromToIntent() }
+                clicksToIntents(R.id.imageview_switch_currency) { ToggleFiatCryptoIntent() },
+                clicksToIntents(R.id.imageview_switch_from_to) { ToggleFromToIntent() },
+                Observable.merge(
+                    clicksToIntents(minButton) { ApplyMinimumLimit() },
+                    clicksToIntents(maxButton) { ApplyMaximumLimit() }
+                )
             ).subscribeBy {
                 exchangeModel.inputEventSink.onNext(it)
             }
@@ -138,11 +150,14 @@ internal class ExchangeFragment : Fragment() {
         val exchangeIndicator = view!!.findViewById<View>(R.id.imageView_exchange_indicator)
         val receiveIndicator = view!!.findViewById<View>(R.id.imageView_receive_indicator)
         compositeDisposable += exchangeModel
-            .exchangeViewModels
+            .exchangeViewStates
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                updateMinAndMaxButtons(it)
+            }
             .map {
                 it.toViewModel()
             }
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
                 when (it.fixedField) {
                     Fix.BASE_FIAT -> displayFiatLarge(it.from)
@@ -167,6 +182,24 @@ internal class ExchangeFragment : Fragment() {
                 decimalCursor = it.decimalCursor
             }
     }
+
+    private fun updateMinAndMaxButtons(it: ExchangeViewState) {
+        minButton.invisibleIf(it.minTradeLimit == null)
+        minButton.text = it.minTradeLimit?.let {
+            getString(R.string.min_with_value, it.toStringWithSymbol())
+        } ?: getString(R.string.min)
+
+        maxButton.invisibleIf(it.maxTradeLimit == null)
+        maxButton.text = it.maxTradeLimit?.let {
+            getString(R.string.max_with_value, it.toStringWithSymbol())
+        } ?: getString(R.string.max)
+    }
+
+    private fun clicksToIntents(@IdRes id: Int, function: () -> ExchangeIntent) =
+        clicksToIntents(view!!.findViewById<View>(id), function)
+
+    private fun clicksToIntents(view: View, function: () -> ExchangeIntent) =
+        view.clicks().map { function() }
 
     private fun displayFiatLarge(value: Value) {
         val parts = value.fiatValue.toStringParts()

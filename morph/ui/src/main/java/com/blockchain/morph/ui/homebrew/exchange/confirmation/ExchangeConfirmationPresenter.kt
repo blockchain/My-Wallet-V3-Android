@@ -44,7 +44,7 @@ class ExchangeConfirmationPresenter(
         }
 
         compositeDisposable +=
-            view.clickEvents
+            view.exchangeViewState
                 .flatMapSingle { executeTrade(it.latestQuote!!, it.fromAccount, it.toAccount) }
                 .subscribeBy(onError = Timber::e)
     }

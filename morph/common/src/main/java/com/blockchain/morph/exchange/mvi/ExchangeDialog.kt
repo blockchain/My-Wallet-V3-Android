@@ -24,6 +24,9 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is ToggleFiatCryptoIntent -> previousState.toggleFiatCrypto()
                 is ToggleFromToIntent -> previousState.toggleFromTo()
                 is SetFixIntent -> previousState.mapSetFix(intent)
+                is SetTradeLimits -> previousState.mapTradeLimits(intent)
+                is ApplyMinimumLimit -> previousState.applyLimit(previousState.minTradeLimit)
+                is ApplyMaximumLimit -> previousState.applyLimit(previousState.maxTradeLimit)
             }
         }
 
@@ -31,6 +34,22 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
         viewStates.map {
             it.toViewModel()
         }
+}
+
+private fun ExchangeViewState.applyLimit(tradeLimit: FiatValue?) =
+    tradeLimit?.let {
+        copy(
+            fix = Fix.BASE_FIAT,
+            fromFiat = it
+        )
+    } ?: this
+
+private fun ExchangeViewState.mapTradeLimits(intent: SetTradeLimits): ExchangeViewState {
+    if (intent.min.currencyCode != fromFiat.currencyCode) return this
+    return copy(
+        minTradeLimit = intent.min,
+        maxTradeLimit = intent.max
+    )
 }
 
 private fun ExchangeViewModel.toInternalState(): ExchangeViewState {
@@ -90,7 +109,9 @@ data class ExchangeViewState(
     val toCrypto: CryptoValue,
     val fromFiat: FiatValue,
     val toFiat: FiatValue,
-    val latestQuote: Quote?
+    val latestQuote: Quote?,
+    val minTradeLimit: FiatValue? = null,
+    val maxTradeLimit: FiatValue? = null
 ) {
     val lastUserValue: Money =
         when (fix) {
@@ -103,9 +124,15 @@ data class ExchangeViewState(
 
 private fun ExchangeViewState.map(intent: SimpleFieldUpdateIntent): ExchangeViewState {
     return when (fix) {
-        Fix.BASE_FIAT -> copy(fromFiat = FiatValue.fromMajor(fromFiat.currencyCode, intent.userValue), upToDate = false)
+        Fix.BASE_FIAT -> copy(
+            fromFiat = FiatValue.fromMajor(fromFiat.currencyCode, intent.userValue),
+            upToDate = false
+        )
         Fix.BASE_CRYPTO -> copy(fromCrypto = fromCrypto.currency.withMajorValue(intent.userValue), upToDate = false)
-        Fix.COUNTER_FIAT -> copy(toFiat = FiatValue.fromMajor(toFiat.currencyCode, intent.userValue), upToDate = false)
+        Fix.COUNTER_FIAT -> copy(
+            toFiat = FiatValue.fromMajor(toFiat.currencyCode, intent.userValue),
+            upToDate = false
+        )
         Fix.COUNTER_CRYPTO -> copy(toCrypto = toCrypto.currency.withMajorValue(intent.userValue), upToDate = false)
     }
 }
