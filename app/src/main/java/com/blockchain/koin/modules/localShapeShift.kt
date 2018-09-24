@@ -10,6 +10,6 @@ val localShapeShift = applicationContext {
 
     context("Payload") {
 
-        factory { TradeDetailPresenter(get(), get()) }
+        factory { TradeDetailPresenter(get("shapeshift"), get()) }
     }
 }

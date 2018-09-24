@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_homebrew_trade_detail.*
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import piuk.blockchain.androidcoreui.utils.extensions.gone
 import piuk.blockchain.androidcoreui.utils.extensions.invisible
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.androidcoreui.utils.extensions.visible
@@ -106,6 +107,33 @@ class HomebrewTradeDetailActivity : BaseAuthActivity() {
                     setVisibility(trade_id_title.id, View.VISIBLE)
                     applyTo(constraint_layout_morph_detail)
                 }
+            }
+        }
+
+        hidePriceIfShapeShiftTrade(trade)
+    }
+
+    private fun hidePriceIfShapeShiftTrade(trade: Trade) {
+        if (trade.price.isEmpty()) {
+            value.gone()
+            value_title.gone()
+            view_value.gone()
+
+            ConstraintSet().apply {
+                clone(constraint_layout_morph_detail)
+                connect(
+                    exchange_title.id,
+                    ConstraintSet.TOP,
+                    status_title_textView.id,
+                    ConstraintSet.BOTTOM
+                )
+                connect(
+                    exchange.id,
+                    ConstraintSet.TOP,
+                    status.id,
+                    ConstraintSet.BOTTOM
+                )
+                applyTo(constraint_layout_morph_detail)
             }
         }
     }

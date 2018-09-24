@@ -37,7 +37,7 @@ val shapeShiftModule = applicationContext {
 
         factory { ShapeShiftDataManager(get(), get(), get(), get()) }
 
-        factory { ShapeShiftDataManagerAdapter(get()) as MorphTradeDataManager }
+        factory("shapeshift") { ShapeShiftDataManagerAdapter(get()) as MorphTradeDataManager }
 
         factory {
             ShapeShiftUsStatesDataManager(get(), get()) as UsStatesDataManager

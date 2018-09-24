@@ -29,10 +29,10 @@ internal class TradeAdapter(private val trade: Trade) : MorphTrade {
                 get() = trade.quote?.orderId ?: ""
 
             override val depositAmount: CryptoValue
-                get() = CryptoValue.fromMajor(pair.to, trade.quote?.depositAmount ?: BigDecimal.ZERO)
+                get() = CryptoValue.fromMajor(pair.from, trade.quote?.depositAmount ?: BigDecimal.ZERO)
 
             override val withdrawalAmount: CryptoValue
-                get() = CryptoValue.fromMajor(pair.from, trade.quote?.withdrawalAmount ?: BigDecimal.ZERO)
+                get() = CryptoValue.fromMajor(pair.to, trade.quote?.withdrawalAmount ?: BigDecimal.ZERO)
 
             override val quotedRate: BigDecimal
                 get() = trade.quote?.quotedRate ?: BigDecimal.ZERO

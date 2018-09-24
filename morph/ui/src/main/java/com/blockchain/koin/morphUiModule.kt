@@ -37,7 +37,7 @@ val morphUiModule = applicationContext {
 
         factory { ExchangeConfirmationPresenter(get(), get(), get(), get(), get(), get(), get()) }
 
-        factory { TradeHistoryPresenter(get(), get()) }
+        factory { TradeHistoryPresenter(get("nabu"), get("shapeshift"), get()) }
 
         context("Quotes") {
 

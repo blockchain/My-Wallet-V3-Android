@@ -71,13 +71,13 @@ class TradeAdapterTest {
                 withdrawalAmount = 4.56.toBigDecimal()
                 pair = "eth_bch"
             }
-        }).quote.withdrawalAmount `should equal` 4.56.ether()
+        }).quote.withdrawalAmount `should equal` 4.56.bitcoinCash()
     }
 
     @Test
-    fun `quote withdrawal amount default is 0 Bitcoin`() {
+    fun `quote withdrawal amount default is 0 Ether`() {
         TradeAdapter(Trade())
-            .quote.withdrawalAmount `should equal` 0.0.bitcoin()
+            .quote.withdrawalAmount `should equal` 0.0.ether()
     }
 
     @Test
@@ -87,13 +87,13 @@ class TradeAdapterTest {
                 depositAmount = 1.23.toBigDecimal()
                 pair = "eth_bch"
             }
-        }).quote.depositAmount `should equal` 1.23.bitcoinCash()
+        }).quote.depositAmount `should equal` 1.23.ether()
     }
 
     @Test
-    fun `quote deposit amount default is 0 Ether`() {
+    fun `quote deposit amount default is 0 Bitcoin`() {
         TradeAdapter(Trade())
-            .quote.depositAmount `should equal` 0.0.ether()
+            .quote.depositAmount `should equal` 0.0.bitcoin()
     }
 
     @Test

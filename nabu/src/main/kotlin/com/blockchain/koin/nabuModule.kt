@@ -18,7 +18,7 @@ val nabuModule = applicationContext {
         factory { NabuMarketsService(get(), get()) }
             .bind(TradeLimitService::class)
 
-        factory { NabuDataManagerAdapter(get()) as MorphTradeDataManager }
+        factory("nabu") { NabuDataManagerAdapter(get()) as MorphTradeDataManager }
     }
 
     moshiInterceptor("nabu") { builder ->

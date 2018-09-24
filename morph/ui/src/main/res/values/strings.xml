@@ -74,6 +74,7 @@
     <string name="receive">Receive</string>
     <string name="fees">Fees</string>
     <string name="value">Value</string>
+    <string name="status">Status</string>
     <string name="order_id">Order ID</string>
     <string name="order_detail">Order Detail</string>
     <string name="make_a_new_exchange">Make a New Exchange</string>
