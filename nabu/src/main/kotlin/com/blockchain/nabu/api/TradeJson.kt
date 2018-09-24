@@ -22,7 +22,7 @@ internal class TradeJson(
     val updatedAt: String,
     val pair: String,
     val refundAddress: String,
-    val rate: BigDecimal,
+    val rate: BigDecimal?,
     val depositAddress: String,
     val deposit: Value,
     val withdrawalAddress: String,

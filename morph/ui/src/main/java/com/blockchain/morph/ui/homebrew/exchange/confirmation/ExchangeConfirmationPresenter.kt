@@ -26,7 +26,6 @@ import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
 import timber.log.Timber
-import java.util.Locale
 
 class ExchangeConfirmationPresenter(
     private val transactionSendDataManager: TransactionSendDataManager,
@@ -65,7 +64,6 @@ class ExchangeConfirmationPresenter(
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess { }
                 .subscribeBy(
                     onSuccess = { view.updateFee(it) },
                     onError = {
@@ -82,7 +80,7 @@ class ExchangeConfirmationPresenter(
         quote: Quote,
         sendingAccount: AccountReference,
         receivingAccount: AccountReference
-    ): Single<String> {
+    ): Single<ExchangeLockedModel> {
         val sending = sendingAccount.getAccountFromAddressOrXPub(quote.from.cryptoValue.currency)
         val receiving = receivingAccount.getAccountFromAddressOrXPub(quote.to.cryptoValue.currency)
 
@@ -98,21 +96,19 @@ class ExchangeConfirmationPresenter(
                                     transaction.depositAddress,
                                     sending,
                                     it
-                                ).subscribeOn(Schedulers.io())
+                                ).doOnError { Timber.e(it) }
+                                    .subscribeOn(Schedulers.io())
                             }
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnSuccess {
-                                view.continueToExchangeLocked(
-                                    ExchangeLockedModel(
-                                        orderId = transaction.id,
-                                        value = transaction.fiatValue.toStringWithSymbol(Locale.getDefault()),
-                                        fees = transaction.fee.formatWithUnit(),
-                                        sending = transaction.deposit.formatWithUnit(),
-                                        sendingCurrency = transaction.deposit.currency,
-                                        receiving = transaction.withdrawal.formatWithUnit(),
-                                        receivingCurrency = transaction.withdrawal.currency,
-                                        accountName = receivingAccount.label
-                                    )
+                            .map {
+                                ExchangeLockedModel(
+                                    orderId = transaction.id,
+                                    value = transaction.fiatValue.toStringWithSymbol(view.locale),
+                                    fees = transaction.fee.formatWithUnit(),
+                                    sending = transaction.deposit.formatWithUnit(),
+                                    sendingCurrency = transaction.deposit.currency,
+                                    receiving = transaction.withdrawal.formatWithUnit(),
+                                    receivingCurrency = transaction.withdrawal.currency,
+                                    accountName = receivingAccount.label
                                 )
                             }
                     }
@@ -120,10 +116,8 @@ class ExchangeConfirmationPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { view.showProgressDialog() }
             .doOnEvent { _, _ -> view.dismissProgressDialog() }
-            .doOnError {
-                Timber.e(it)
-                view.displayErrorDialog()
-            }
+            .doOnError { view.displayErrorDialog() }
+            .doOnSuccess { view.continueToExchangeLocked(it) }
     }
 
     private fun deriveAddressPair(
@@ -148,9 +142,9 @@ class ExchangeConfirmationPresenter(
                 .andThen(decryptBch())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError { Timber.e(it) }
                 .doOnSubscribe { view.showProgressDialog() }
                 .doOnTerminate { view.dismissProgressDialog() }
+                .doOnError { Timber.e(it) }
                 .subscribe()
     }
 

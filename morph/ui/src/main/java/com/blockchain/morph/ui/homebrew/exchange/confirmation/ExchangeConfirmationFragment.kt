@@ -57,6 +57,7 @@ class ExchangeConfirmationFragment :
 
     private var progressDialog: MaterialProgressDialog? = null
 
+    override val locale: Locale = Locale.getDefault()
     override val clickEvents: Observable<ExchangeViewModel> by unsafeLazy {
         sendButton.throttledClicks()
             .flatMap { exchangeModel.exchangeViewModels }
@@ -118,7 +119,6 @@ class ExchangeConfirmationFragment :
     }
 
     private fun renderUi(viewModel: ExchangeConfirmationViewModel) {
-        val locale = Locale.getDefault()
         with(viewModel) {
             fromButton.setBackgroundResource(sending.currency.colorRes())
             fromButton.text = sending.formatWithUnit(locale)
@@ -173,6 +173,11 @@ class ExchangeConfirmationFragment :
 
     override fun showToast(message: Int, type: String) {
         toast(message, type)
+    }
+
+    override fun onPause() {
+        compositeDisposable.clear()
+        super.onPause()
     }
 
     override fun createPresenter(): ExchangeConfirmationPresenter = presenter

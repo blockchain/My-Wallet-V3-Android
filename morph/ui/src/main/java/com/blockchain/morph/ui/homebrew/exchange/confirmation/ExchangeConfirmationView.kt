@@ -7,8 +7,11 @@ import info.blockchain.balance.CryptoValue
 import io.reactivex.Observable
 import piuk.blockchain.androidcoreui.ui.base.View
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
+import java.util.Locale
 
 interface ExchangeConfirmationView : View {
+
+    val locale: Locale
 
     val clickEvents: Observable<ExchangeViewModel>
 
