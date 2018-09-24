@@ -1,6 +1,7 @@
 package com.blockchain.morph.exchange.mvi
 
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.toObservable
 import java.math.BigDecimal
 
 sealed class FloatKeyboardIntent {
@@ -9,10 +10,10 @@ sealed class FloatKeyboardIntent {
     class Backspace : FloatKeyboardIntent()
     class Clear : FloatKeyboardIntent()
     class SetMaxDp(val maxDp: Int) : FloatKeyboardIntent()
+    class SetValue(val maxDp: Int, val value: BigDecimal) : FloatKeyboardIntent()
 }
 
 class FloatKeyboardDialog(intents: Observable<FloatKeyboardIntent>) {
-
     val states: Observable<FloatEntryViewState> =
         intents.scan(initialState) { previous, intent ->
             when (intent) {
@@ -21,8 +22,31 @@ class FloatKeyboardDialog(intents: Observable<FloatKeyboardIntent>) {
                 is FloatKeyboardIntent.Period -> mapPeriodPress(previous)
                 is FloatKeyboardIntent.NumericKey -> mapKeyPress(previous, intent.key)
                 is FloatKeyboardIntent.SetMaxDp -> previous.copy(maxDecimal = intent.maxDp)
+                is FloatKeyboardIntent.SetValue -> construct(previous, initialState, intent)
+            }
+        }.distinctUntilChanged { a, b -> a === b }
+}
+
+private fun construct(
+    previous: FloatEntryViewState,
+    initialState: FloatEntryViewState,
+    intent: FloatKeyboardIntent.SetValue
+): FloatEntryViewState {
+    if (previous.userDecimal.compareTo(intent.value) == 0 && previous.maxDecimal == intent.maxDp) return previous
+
+    val map = intent.value.toString()
+        .toCharArray()
+        .map {
+            when (it) {
+                '.' -> FloatKeyboardIntent.Period()
+                else -> FloatKeyboardIntent.NumericKey(it - '0')
             }
         }
+    return FloatKeyboardDialog((listOf(FloatKeyboardIntent.SetMaxDp(intent.maxDp)) + map).toObservable())
+        .states
+        .last(initialState)
+        .blockingGet()
+        .copy(shake = false)
 }
 
 private fun mapPeriodPress(previous: FloatEntryViewState): FloatEntryViewState {

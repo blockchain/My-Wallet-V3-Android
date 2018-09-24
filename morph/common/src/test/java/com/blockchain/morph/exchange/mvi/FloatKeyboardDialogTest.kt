@@ -78,6 +78,17 @@ class FloatKeyboardDialogTest {
     }
 
     @Test
+    fun `backspace from empty twice`() {
+        FloatKeyboardDialog(Observable.fromArray(*keys("<<")))
+            .states
+            .test()
+            .values()
+            .apply { size `should be` 3 }
+            .apply { get(1).assertShake() }
+            .apply { get(2).assertShake() }
+    }
+
+    @Test
     fun `multiple periods in a row - no shake`() {
         lastStateGivenIntents(*keys("1.."))
             .assertNoShake()
@@ -149,7 +160,119 @@ class FloatKeyboardDialogTest {
             .assertNoShake()
             .maxDecimal `should equal` 3
     }
+
+    @Test
+    fun `can set the value`() {
+        lastStateGivenIntents(setValue(4, 3.1234))
+            .assertNoShake()
+            .userDecimal `should equal` 3.1234.toBigDecimal()
+    }
+
+    @Test
+    fun `can set the value and then go back`() {
+        lastStateGivenIntents(setValue(4, 3.1234), *keys("<"))
+            .assertNoShake()
+            .userDecimal `should equal` "3.1230".toBigDecimal()
+    }
+
+    @Test
+    fun `can set the value and then go back before the decimal point`() {
+        lastStateGivenIntents(setValue(3, 13.123), *keys("<<<<"))
+            .assertNoShake()
+            .userDecimal `should equal` "13".toBigDecimal()
+    }
+
+    @Test
+    fun `can set the value and then go back before all the way and get shake`() {
+        lastStateGivenIntents(*keys("123"), setValue(3, 13.123), *keys("<<<<<<<"))
+            .assertShake()
+            .userDecimal `should equal` "0".toBigDecimal()
+    }
+
+    @Test
+    fun `only emits one state on setValue`() {
+        FloatKeyboardDialog(Observable.just(setValue(3, 13.123)))
+            .states
+            .test()
+            .values()
+            .apply { size `should be` 2 }
+            .last()
+            .userDecimal `should equal` "13.123".toBigDecimal()
+    }
+
+    @Test
+    fun `does not emit an additional state if it matches the current one`() {
+        FloatKeyboardDialog(
+            Observable.just(
+                setValue(3, 13.123),
+                setValue(3, 13.123)
+            )
+        )
+            .states
+            .test()
+            .values()
+            .apply { size `should be` 2 }
+            .last()
+            .userDecimal `should equal` "13.123".toBigDecimal()
+    }
+
+    @Test
+    fun `does not emit an additional state if it matches the current one, by value`() {
+        FloatKeyboardDialog(
+            Observable.just(
+                setValue(3, 13.100),
+                setValue(3, 13.1)
+            )
+        )
+            .states
+            .test()
+            .values()
+            .apply { size `should be` 2 }
+            .last()
+            .userDecimal `should equal` "13.100".toBigDecimal()
+    }
+
+    @Test
+    fun `does not emits an additional state if it matches the current one`() {
+        FloatKeyboardDialog(
+            Observable.just(
+                setValue(3, 13.123),
+                setValue(3, 13.123)
+            )
+        )
+            .states
+            .test()
+            .values()
+            .apply { size `should be` 2 }
+            .last()
+            .userDecimal `should equal` "13.123".toBigDecimal()
+    }
+
+    @Test
+    fun `does not emit an additional state if the previous one was an error but the setValue is the same`() {
+        FloatKeyboardDialog(
+            Observable.just(
+                setValue(3, 13.123),
+                userKey('1'),
+                setValue(3, 13.123)
+            )
+        )
+            .states
+            .test()
+            .values()
+            .apply { size `should be` 3 }
+            .last()
+            .userDecimal `should equal` "13.123".toBigDecimal()
+    }
+
+    @Test
+    fun `set value does not emit an error`() {
+        lastStateGivenIntents(setValue(2, 13.123))
+            .assertNoShake()
+    }
 }
+
+private fun setValue(dp: Int, d: Double): FloatKeyboardIntent = FloatKeyboardIntent.SetValue(dp, d.toBigDecimal())
 
 private fun setMaxDp(maxDp: Int): FloatKeyboardIntent = FloatKeyboardIntent.SetMaxDp(maxDp)
 

@@ -9,6 +9,7 @@ import com.blockchain.morph.exchange.mvi.FloatKeyboardIntent
 import com.blockchain.morph.exchange.mvi.FloatKeyboardDialog
 import com.blockchain.morph.ui.R
 import io.reactivex.subjects.BehaviorSubject
+import java.math.BigDecimal
 
 class FloatKeyboardView @JvmOverloads constructor(
     context: Context,
@@ -63,6 +64,10 @@ class FloatKeyboardView @JvmOverloads constructor(
     private fun clearValue() = OnLongClickListener {
         values.onNext(FloatKeyboardIntent.Clear())
         true
+    }
+
+    fun setValue(maxDp: Int, value: BigDecimal) {
+        values.onNext(FloatKeyboardIntent.SetValue(maxDp, value))
     }
 }
 
