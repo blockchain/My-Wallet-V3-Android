@@ -293,6 +293,15 @@ class FloatKeyboardDialogTest {
     }
 
     @Test
+    fun `set value with leading fractional zeros`() {
+        lastStateGivenIntents(setValue(8, "0.00123".toBigDecimal()))
+            .apply {
+                userDecimal `should equal` "0.00123000".toBigDecimal()
+                decimalCursor `should be` 6
+            }
+    }
+
+    @Test
     fun `set value to integer with trailing values`() {
         lastStateGivenIntents(setValue(3, "10".toBigDecimal()))
             .apply {

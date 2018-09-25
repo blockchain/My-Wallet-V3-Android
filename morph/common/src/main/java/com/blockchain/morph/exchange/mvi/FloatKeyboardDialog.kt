@@ -23,12 +23,12 @@ class FloatKeyboardDialog(intents: Observable<FloatKeyboardIntent>) {
                 is FloatKeyboardIntent.Period -> mapPeriodPress(previous)
                 is FloatKeyboardIntent.NumericKey -> mapKeyPress(previous, intent.key)
                 is FloatKeyboardIntent.SetMaxDp -> previous.copy(maxDecimal = intent.maxDp)
-                is FloatKeyboardIntent.SetValue -> construct(previous, initialState, intent)
+                is FloatKeyboardIntent.SetValue -> constructViewStateFromValue(previous, initialState, intent)
             }
         }.distinctUntilChanged { a, b -> a === b }
 }
 
-private fun construct(
+private fun constructViewStateFromValue(
     previous: FloatEntryViewState,
     initialState: FloatEntryViewState,
     intent: FloatKeyboardIntent.SetValue
@@ -44,15 +44,18 @@ private fun construct(
 
 private fun numberToIntents(intent: FloatKeyboardIntent.SetValue): List<FloatKeyboardIntent> {
     val integer = intent.value.toBigInteger()
-    val fraction = (intent.value - integer.toBigDecimal()).movePointRight(intent.maxDp).toBigInteger()
+    val onePlusFraction =
+        (BigDecimal.ONE + intent.value - integer.toBigDecimal()).movePointRight(intent.maxDp).toBigInteger()
 
     val integerIntents = listOf(FloatKeyboardIntent.SetMaxDp(intent.maxDp)) + intToIntents(integer, false)
-    val fractionIntents = intToIntents(fraction, true)
+    val onePlusFractionIntents = intToIntents(onePlusFraction, true)
 
-    return if (fractionIntents.isEmpty())
-        integerIntents
-    else
+    return if (onePlusFractionIntents.size > 1) {
+        val fractionIntents = onePlusFractionIntents.takeLast(onePlusFractionIntents.size - 1)
         integerIntents + FloatKeyboardIntent.Period() + fractionIntents
+    } else {
+        integerIntents
+    }
 }
 
 private fun intToIntents(int: BigInteger, ignoreTrailingZeros: Boolean): List<FloatKeyboardIntent> {
