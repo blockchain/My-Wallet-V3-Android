@@ -33,7 +33,6 @@ import piuk.blockchain.androidcoreui.utils.extensions.getTextString
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
 import piuk.blockchain.kyc.R
-import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_kyc_add_phone_number.button_kyc_phone_number_next as buttonNext
