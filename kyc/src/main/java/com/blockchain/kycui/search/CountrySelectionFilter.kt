@@ -13,7 +13,6 @@ fun Observable<List<CountryDisplayModel>>.filterCountries(
         list.asSequence()
             .map { country -> country.searchCode.indexOf(q.toString(), ignoreCase = true) to country }
             .filter { it.first != -1 }
-            .asSequence()
             .sortedBy { it.first }
             .map { it.second }
             .toList()

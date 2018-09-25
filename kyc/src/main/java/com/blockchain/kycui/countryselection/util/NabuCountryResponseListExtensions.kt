@@ -28,6 +28,8 @@ data class CountryDisplayModel(
     val searchCode = "${name.acronym()};$countryCode;$name"
 }
 
-internal fun String.acronym(): String = this.toCharArray()
-    .filter { it.isUpperCase() }
-    .joinToString(separator = "")
+internal fun String.acronym(): String = String(
+    toCharArray()
+        .filter(Char::isUpperCase)
+        .toCharArray()
+)
