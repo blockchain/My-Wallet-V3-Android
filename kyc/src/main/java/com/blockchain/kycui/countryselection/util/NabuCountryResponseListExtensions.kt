@@ -24,4 +24,11 @@ data class CountryDisplayModel(
     val name: String,
     val countryCode: String,
     val flag: String
-)
+) {
+
+    private val acronym = name.trim()
+        .split(" ")
+        .fold("") { total, next -> total + next.first() }
+
+    val searchCode = "$acronym;$countryCode;$name"
+}

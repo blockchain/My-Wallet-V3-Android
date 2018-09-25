@@ -10,8 +10,11 @@ fun Observable<List<CountryDisplayModel>>.filterCountries(
         Observable.just<CharSequence>("").concatWith(query),
         this
     ).matchingItems { q, list ->
-        list.filter {
-            it.name.contains(q, ignoreCase = true) ||
-                it.countryCode.contains(q, ignoreCase = true)
-        }
+        list.asSequence()
+            .map { country -> country.searchCode.indexOf(q.toString(), ignoreCase = true) to country }
+            .filter { it.first != -1 }
+            .asSequence()
+            .sortedBy { it.first }
+            .map { it.second }
+            .toList()
     }
