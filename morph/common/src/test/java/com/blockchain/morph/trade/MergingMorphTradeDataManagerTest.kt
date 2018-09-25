@@ -16,9 +16,9 @@ import java.math.BigDecimal
 
 class MergingMorphTradeDataManagerTest {
 
-    private lateinit var subject: MergingMorphTradeDataManager
-    private val firstTradeManager: MorphTradeDataManager = mock()
-    private val secondTradeDataManager: MorphTradeDataManager = mock()
+    private lateinit var subject: MorphTradeDataHistoryList
+    private val firstTradeManager: MorphTradeDataHistoryList = mock()
+    private val secondTradeDataManager: MorphTradeDataHistoryList = mock()
 
     @Before
     fun setUp() {
@@ -56,7 +56,7 @@ class MergingMorphTradeDataManagerTest {
         val trade = getMorphTrade()
         whenever(firstTradeManager.getTrades()).thenReturn(Single.error { Throwable() })
         whenever(secondTradeDataManager.getTrades()).thenReturn(Single.just(listOf(trade)))
-        // Actt
+        // Act
         val testObserver = subject.getTrades().test()
         // Assert
         testObserver.assertValue(listOf(trade))

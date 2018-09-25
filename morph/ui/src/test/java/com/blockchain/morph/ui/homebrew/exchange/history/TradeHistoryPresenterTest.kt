@@ -1,7 +1,7 @@
 package com.blockchain.morph.ui.homebrew.exchange.history
 
 import com.blockchain.android.testutils.rxInit
-import com.blockchain.morph.trade.MergingMorphTradeDataManager
+import com.blockchain.morph.trade.MorphTradeDataHistoryList
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
@@ -16,7 +16,7 @@ import java.util.Locale
 class TradeHistoryPresenterTest {
 
     private lateinit var subject: TradeHistoryPresenter
-    private val dataManager: MergingMorphTradeDataManager = mock()
+    private val dataManager: MorphTradeDataHistoryList = mock()
     private val dateUtil: DateUtil = mock()
     private val view: TradeHistoryView = mock()
 

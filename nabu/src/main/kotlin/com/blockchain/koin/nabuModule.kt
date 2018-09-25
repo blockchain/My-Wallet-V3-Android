@@ -1,6 +1,7 @@
 package com.blockchain.koin
 
 import com.blockchain.morph.exchange.service.TradeLimitService
+import com.blockchain.morph.trade.MorphTradeDataHistoryList
 import com.blockchain.morph.trade.MorphTradeDataManager
 import com.blockchain.nabu.api.NabuMarkets
 import com.blockchain.nabu.api.TransactionStateAdapter
@@ -18,7 +19,9 @@ val nabuModule = applicationContext {
         factory { NabuMarketsService(get(), get()) }
             .bind(TradeLimitService::class)
 
-        factory("nabu") { NabuDataManagerAdapter(get()) as MorphTradeDataManager }
+        factory("nabu") { NabuDataManagerAdapter(get()) }
+            .bind(MorphTradeDataManager::class)
+            .bind(MorphTradeDataHistoryList::class)
     }
 
     moshiInterceptor("nabu") { builder ->

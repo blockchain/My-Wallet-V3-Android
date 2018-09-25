@@ -4,8 +4,8 @@ import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 
 class MergingMorphTradeDataManager(
-    private val firstTradeManager: MorphTradeDataManager,
-    private val secondTradeDataManager: MorphTradeDataManager
+    private val firstTradeManager: MorphTradeDataHistoryList,
+    private val secondTradeDataManager: MorphTradeDataHistoryList
 ) : MorphTradeDataHistoryList {
 
     override fun getTrades(): Single<List<MorphTrade>> = Single.zip(

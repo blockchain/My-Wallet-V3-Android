@@ -2,6 +2,7 @@ package com.blockchain.koin
 
 import android.app.Activity
 import com.blockchain.morph.trade.MergingMorphTradeDataManager
+import com.blockchain.morph.trade.MorphTradeDataHistoryList
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeFragmentConfigurationChangePersistence
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationPresenter
@@ -38,9 +39,14 @@ val morphUiModule = applicationContext {
 
         factory { ExchangeConfirmationPresenter(get(), get(), get(), get(), get(), get(), get()) }
 
-        factory { TradeHistoryPresenter(get(), get()) }
+        factory("merge") {
+            MergingMorphTradeDataManager(
+                get("nabu"),
+                get("shapeshift")
+            )
+        }.bind(MorphTradeDataHistoryList::class)
 
-        factory { MergingMorphTradeDataManager(get("nabu"), get("shapeshift")) }
+        factory { TradeHistoryPresenter(get("merge"), get()) }
 
         context("Quotes") {
 

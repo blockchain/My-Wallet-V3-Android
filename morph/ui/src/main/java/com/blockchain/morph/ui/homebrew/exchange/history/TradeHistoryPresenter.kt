@@ -1,7 +1,7 @@
 package com.blockchain.morph.ui.homebrew.exchange.history
 
-import com.blockchain.morph.trade.MergingMorphTradeDataManager
 import com.blockchain.morph.trade.MorphTrade
+import com.blockchain.morph.trade.MorphTradeDataHistoryList
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
 import info.blockchain.balance.formatWithUnit
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +13,7 @@ import piuk.blockchain.androidcoreui.utils.DateUtil
 import timber.log.Timber
 
 class TradeHistoryPresenter(
-    private val dataManager: MergingMorphTradeDataManager,
+    private val dataManager: MorphTradeDataHistoryList,
     private val dateUtil: DateUtil
 ) : BasePresenter<TradeHistoryView>() {
 
