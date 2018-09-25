@@ -14,6 +14,7 @@ import com.blockchain.morph.ui.homebrew.exchange.history.adapter.TradeHistoryAda
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity
 import com.blockchain.morph.ui.homebrew.exchange.model.Trade
 import org.koin.android.ext.android.inject
+import piuk.blockchain.androidcore.data.currency.CurrencyState
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity
@@ -26,6 +27,7 @@ class TradeHistoryActivity : BaseMvpActivity<TradeHistoryView, TradeHistoryPrese
 
     override val locale: Locale = Locale.getDefault()
     private val presenter: TradeHistoryPresenter by inject()
+    private val fiat: CurrencyState by inject()
     private val tradeHistoryAdapter = TradeHistoryAdapter(this::tradeClicked)
     private val buttonNewExchange by unsafeLazy { findViewById<Button>(R.id.button_new_exchange) }
     private val swipeLayout by unsafeLazy { findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_homebrew_history) }
@@ -37,7 +39,7 @@ class TradeHistoryActivity : BaseMvpActivity<TradeHistoryView, TradeHistoryPrese
         setContentView(R.layout.activity_homebrew_trade_history)
 
         buttonNewExchange.setOnClickListener {
-            HomebrewNavHostActivity.start(this)
+            HomebrewNavHostActivity.start(this, fiat.fiatUnit)
         }
 
         setupToolbar(R.id.toolbar_constraint, R.string.exchange)

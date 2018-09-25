@@ -157,7 +157,7 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
 
         @JvmStatic
         @JvmOverloads
-        fun start(context: Context, defaultCurrency: String = "USD") {
+        fun start(context: Context, defaultCurrency: String) {
             Intent(context, HomebrewNavHostActivity::class.java).apply {
                 putExtra(EXTRA_DEFAULT_CURRENCY, defaultCurrency)
             }.run { context.startActivity(this) }

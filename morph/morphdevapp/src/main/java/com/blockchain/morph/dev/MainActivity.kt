@@ -13,6 +13,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchExchange(view: View) {
-        HomebrewNavHostActivity.start(this)
+        HomebrewNavHostActivity.start(this, "USD")
     }
 }

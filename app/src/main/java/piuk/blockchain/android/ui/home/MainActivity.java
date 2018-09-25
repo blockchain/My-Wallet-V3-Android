@@ -80,6 +80,7 @@ import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType;
 import info.blockchain.balance.CryptoCurrency;
+import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog;
@@ -493,7 +494,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 MorphMethodModuleKt.launchAsync(morphActivityLauncher, MainActivity.this);
                 break;
             case R.id.nav_exchange_homebrew_debug:
-                HomebrewNavHostActivity.start(this);
+                HomebrewNavHostActivity.start(this, "GBP");
                 break;
             case R.id.nav_addresses:
                 startActivityForResult(new Intent(this, AccountActivity.class), ACCOUNT_EDIT);
