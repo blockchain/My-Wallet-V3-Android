@@ -26,7 +26,6 @@ import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver
 import java.io.UnsupportedEncodingException
-import java.lang.IllegalStateException
 import java.math.BigInteger
 import java.util.ArrayList
 import java.util.LinkedHashMap
@@ -107,7 +106,8 @@ class PayloadDataManager @Inject constructor(
         get() = wallet!!.sharedKey
 
     val masterKey: DeterministicKey
-        get() = wallet?.hdWallets?.get(0)?.masterKey ?: throw IllegalStateException("Master key not found")
+        get() = wallet?.hdWallets?.get(0)?.masterKey
+            ?: throw IllegalStateException("Master key not found")
 
     // /////////////////////////////////////////////////////////////////////////
     // AUTH METHODS
@@ -553,7 +553,11 @@ class PayloadDataManager @Inject constructor(
      * @return An [Observable] wrapping a [MetadataNodeFactory]
      */
     fun getMetadataNodeFactory(): Observable<MetadataNodeFactory> =
-        Observable.just(payloadManager.metadataNodeFactory)
+        if (payloadManager.metadataNodeFactory == null) {
+            loadNodes().map { payloadManager.metadataNodeFactory }
+        } else {
+            Observable.just(payloadManager.metadataNodeFactory)
+        }
 
     /**
      * Loads previously saved nodes from the Metadata service. If none are found, the [Observable] returns false.

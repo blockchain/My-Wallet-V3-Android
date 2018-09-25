@@ -669,14 +669,31 @@ class PayloadDataManagerTest {
     }
 
     @Test
-    fun getMetadataNodeFactory() {
+    fun `getMetadataNodeFactory returns node`() {
         // Arrange
         val mockNodeFactory: MetadataNodeFactory = mock()
         whenever(payloadManager.metadataNodeFactory).thenReturn(mockNodeFactory)
         // Act
         val testObserver = subject.getMetadataNodeFactory().test()
         // Assert
-        verify(payloadManager).metadataNodeFactory
+        verify(payloadManager, atLeastOnce()).metadataNodeFactory
+        verifyNoMoreInteractions(payloadManager)
+        testObserver.assertComplete()
+        testObserver.assertValue(mockNodeFactory)
+    }
+
+    @Test
+    fun `getMetadataNodeFactory null, attempt node setup`() {
+        // Arrange
+        val mockNodeFactory: MetadataNodeFactory = mock()
+        whenever(payloadManager.metadataNodeFactory)
+            .thenReturn(null)
+            .thenReturn(mockNodeFactory)
+        whenever(payloadService.loadNodes()).thenReturn(Observable.just(true))
+        // Act
+        val testObserver = subject.getMetadataNodeFactory().test()
+        // Assert
+        verify(payloadManager, atLeastOnce()).metadataNodeFactory
         verifyNoMoreInteractions(payloadManager)
         testObserver.assertComplete()
         testObserver.assertValue(mockNodeFactory)
