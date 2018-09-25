@@ -7,15 +7,11 @@
 
     <color name="exchange_blue">#FF004A7C</color>
 
-    <color name="exchange_button_blue">#FF10ADE4</color>
-    <color name="exchange_button_blue_disabled">#FFADADAD</color>
-
     <style name="ExchangeText">
         <item name="android:fontFamily">Montserrat</item>
     </style>
 
-    <style name="ExchangeButton" parent="@android:style/Widget.Button">
-        <item name="android:fontFamily">Montserrat</item>
+    <style name="ExchangeButton" parent="@style/ButtonStyle">
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -49,8 +45,7 @@
     </style>
 
     <style name="ExchangeButton.Exchange">
-        <item name="android:textColor">#FFFFFFFF</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:theme">@style/LightBlueButtonTheme</item>
     </style>
 
     <!-- keyboard -->
