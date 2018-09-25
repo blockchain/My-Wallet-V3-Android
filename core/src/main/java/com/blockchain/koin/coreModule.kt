@@ -14,6 +14,8 @@ import com.blockchain.accounts.AllAccountsImplementation
 import com.blockchain.accounts.BchAccountListAdapter
 import com.blockchain.accounts.BtcAccountListAdapter
 import com.blockchain.accounts.EthAccountListAdapter
+import com.blockchain.datamanagers.MaximumSpendableCalculator
+import com.blockchain.datamanagers.MaximumSpendableCalculatorImplementation
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager
@@ -87,6 +89,8 @@ val coreModule = applicationContext {
         bean { MetadataManager(get(), get(), get()) }
 
         factory { TransactionSendDataManager(get(), get(), get(), get(), get()) }
+
+        factory { MaximumSpendableCalculatorImplementation(get(), get()) as MaximumSpendableCalculator }
 
         factory("BTC") { BtcAccountListAdapter(get()) as AccountList }
         factory("BCH") { BchAccountListAdapter(get()) as AccountList }
