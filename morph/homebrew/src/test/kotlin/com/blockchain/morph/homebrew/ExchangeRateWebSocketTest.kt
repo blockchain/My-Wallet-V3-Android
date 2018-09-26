@@ -1,25 +1,24 @@
 package com.blockchain.morph.homebrew
 
 import com.blockchain.koin.modules.homeBrewModule
-import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.apiModule
-import com.blockchain.network.websocket.ConnectionEvent
 import com.blockchain.network.websocket.WebSocket
 import com.blockchain.testutils.bitcoin
 import com.blockchain.testutils.ether
 import com.blockchain.testutils.getStringFromResource
-import com.blockchain.testutils.usd
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import info.blockchain.balance.CryptoCurrency
-import io.reactivex.Observable
+import info.blockchain.balance.ExchangeRate
 import io.reactivex.subjects.PublishSubject
 import org.amshove.kluent.`it returns`
+import org.amshove.kluent.`should be instance of`
+import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Before
 import org.junit.Test
@@ -28,7 +27,7 @@ import org.koin.standalone.StandAloneContext
 import org.koin.standalone.get
 import org.koin.test.AutoCloseKoinTest
 
-class QuoteWebSocketTest : AutoCloseKoinTest() {
+class ExchangeRateWebSocketTest : AutoCloseKoinTest() {
 
     @Before
     fun startKoin() {
@@ -64,15 +63,8 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
             )
 
         verify(actualSocket).send(
-            "{\"channel\":\"conversion\"," +
-                "\"operation\":\"subscribe\"," +
-                "\"params\":{" +
-                "\"fiatCurrency\":\"USD\"," +
-                "\"fix\":\"base\"," +
-                "\"pair\":\"BTC-ETH\"," +
-                "\"type\":\"conversionSpecification\"," +
-                "\"volume\":\"100.0\"}" +
-                "}"
+            "{\"channel\":\"exchange_rate\",\"operation\":\"subscribe\"," +
+                "\"params\":{\"pairs\":[\"BTC-USD\"],\"type\":\"exchangeRates\"}}"
         )
 
         verifyNoMoreInteractions(actualSocket)
@@ -106,7 +98,7 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun `when you change the subscription, an unsubscribe happens`() {
+    fun `when you change the subscription, an unsubscribe doesn't happen`() {
         val actualSocket =
             mock<WebSocket<String, String>>()
 
@@ -121,44 +113,21 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
                 )
                 updateQuoteRequest(
                     ExchangeQuoteRequest.Selling(
-                        offering = 300.bitcoin(),
-                        wanted = CryptoCurrency.ETHER,
-                        indicativeFiatSymbol = "USD"
+                        offering = 300.ether(),
+                        wanted = CryptoCurrency.BCH,
+                        indicativeFiatSymbol = "CAD"
                     )
                 )
             }
 
         verify(actualSocket).send(
-            "{\"channel\":\"conversion\"," +
-                "\"operation\":\"subscribe\"," +
-                "\"params\":{" +
-                "\"fiatCurrency\":\"USD\"," +
-                "\"fix\":\"base\"," +
-                "\"pair\":\"BTC-ETH\"," +
-                "\"type\":\"conversionSpecification\"," +
-                "\"volume\":\"200.0\"}" +
-                "}"
+            "{\"channel\":\"exchange_rate\",\"operation\":\"subscribe\"," +
+                "\"params\":{\"pairs\":[\"BTC-USD\"],\"type\":\"exchangeRates\"}}"
         )
 
         verify(actualSocket).send(
-            "{\"channel\":\"conversion\"," +
-                "\"operation\":\"unsubscribe\"," +
-                "\"params\":{" +
-                "\"pair\":\"BTC-ETH\"," +
-                "\"type\":\"conversionPair\"}" +
-                "}"
-        )
-
-        verify(actualSocket).send(
-            "{\"channel\":\"conversion\"," +
-                "\"operation\":\"subscribe\"," +
-                "\"params\":{" +
-                "\"fiatCurrency\":\"USD\"," +
-                "\"fix\":\"base\"," +
-                "\"pair\":\"BTC-ETH\"," +
-                "\"type\":\"conversionSpecification\"," +
-                "\"volume\":\"300.0\"}" +
-                "}"
+            "{\"channel\":\"exchange_rate\",\"operation\":\"subscribe\"," +
+                "\"params\":{\"pairs\":[\"ETH-CAD\"],\"type\":\"exchangeRates\"}}"
         )
     }
 
@@ -171,15 +140,25 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
             }
 
         val test = givenAWebSocket(actualSocket)
-            .quotes
+            .rates
             .test()
 
-        subject.onNext(getStringFromResource("quotes/quote_receive.json"))
+        subject.onNext(
+            """
+                {
+                  "sequenceNumber":2,"channel":"exchange_rate",
+                  "type":"exchangeRate",
+                  "rates":[{"pair":"GBP-ETH","price":"2018.41"}]
+                }
+            """.trimMargin()
+        )
 
         test.values().single().apply {
-            from `should equal` Quote.Value(0.15.bitcoin(), 96.77.usd())
-            to `should equal` Quote.Value(0.27.ether(), 100.usd())
-            to `should equal` Quote.Value(0.27.ether(), 100.usd())
+            this `should be instance of` ExchangeRate.CryptoToFiat::class
+            val c2f = this as ExchangeRate.CryptoToFiat
+            c2f.from `should be` CryptoCurrency.ETHER
+            c2f.to `should equal` "GBP"
+            c2f.rate `should equal` "2018.41".toBigDecimal()
         }
     }
 
@@ -192,49 +171,14 @@ class QuoteWebSocketTest : AutoCloseKoinTest() {
             }
 
         val test = givenAWebSocket(actualSocket)
-            .quotes
+            .rates
             .test()
 
-        subject.onNext(getStringFromResource("quotes/quote_subscription_confirmation.json"))
+        subject.onNext(getStringFromResource("quotes/exchange_subscription_confirmation.json"))
 
         test.values() `should equal` emptyList()
     }
 
-    @Test
-    fun `Connected is mapped to closed because it's not yet authenticated`() {
-        givenEventExpectStatus(QuoteService.Status.Closed, ConnectionEvent.Connected)
-    }
-
-    @Test
-    fun `Authenticated is mapped`() {
-        givenEventExpectStatus(QuoteService.Status.Open, ConnectionEvent.Authenticated)
-    }
-
-    @Test
-    fun `Failure is mapped`() {
-        givenEventExpectStatus(QuoteService.Status.Error, ConnectionEvent.Failure(Throwable()))
-    }
-
-    @Test
-    fun `ClientDisconnect is mapped`() {
-        givenEventExpectStatus(QuoteService.Status.Closed, ConnectionEvent.ClientDisconnect)
-    }
-
-    private fun givenEventExpectStatus(
-        expectedStatus: QuoteService.Status,
-        connectionEvent: ConnectionEvent
-    ) {
-        val actualSocket =
-            mock<WebSocket<String, String>> {
-                on { connectionEvents } `it returns` Observable.just<ConnectionEvent>(connectionEvent)
-            }
-
-        givenAWebSocket(actualSocket)
-            .connectionStatus
-            .test()
-            .values() `should equal` listOf(expectedStatus)
-    }
-
     private fun givenAWebSocket(actualSocket: WebSocket<String, String>): QuoteService =
-        QuoteWebSocket(actualSocket, get(), exchangeRateStream = mock())
+        QuoteWebSocket(actualSocket, get(), quoteWebSocketStream = mock())
 }
