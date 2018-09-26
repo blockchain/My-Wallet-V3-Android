@@ -10,6 +10,12 @@ inline fun <reified OUTGOING : Any, reified INCOMING : Any> WebSocket<String, St
     return MoshiJsonWebSocketDecorator(this, moshi.adapter(OUTGOING::class.java), moshi.adapter(INCOMING::class.java))
 }
 
+inline fun <reified INCOMING : Any> WebSocketReceive<String>.toJsonReceive(
+    moshi: Moshi
+): WebSocketReceive<INCOMING> {
+    return MoshiJsonWebSocketReceiveDecorator(this, moshi.adapter(INCOMING::class.java))
+}
+
 class MoshiJsonWebSocketDecorator<OUTGOING : Any, INCOMING : Any>(
     private val inner: WebSocket<String, String>,
     private val outgoingAdapter: JsonAdapter<OUTGOING>,
@@ -19,6 +25,15 @@ class MoshiJsonWebSocketDecorator<OUTGOING : Any, INCOMING : Any>(
     override fun send(message: OUTGOING) {
         inner.send(outgoingAdapter.toJson(message))
     }
+
+    override val responses: Observable<INCOMING>
+        get() = inner.responses.map { incomingAdapter.fromJson(it)!! }
+}
+
+class MoshiJsonWebSocketReceiveDecorator<INCOMING : Any>(
+    private val inner: WebSocketReceive<String>,
+    private val incomingAdapter: JsonAdapter<INCOMING>
+) : WebSocketReceive<INCOMING> {
 
     override val responses: Observable<INCOMING>
         get() = inner.responses.map { incomingAdapter.fromJson(it)!! }
