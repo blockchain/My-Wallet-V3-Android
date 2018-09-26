@@ -88,3 +88,12 @@ data class FiatValue private constructor(
 }
 
 class MismatchedCurrencyCodeException(message: String) : Exception(message)
+
+private fun ensureComparable(a: String, b: String) {
+    if (a != b) throw Exception("Can't compare $a and $b")
+}
+
+operator fun FiatValue.compareTo(b: FiatValue): Int {
+    ensureComparable(currencyCode, b.currencyCode)
+    return valueMinor.compareTo(b.valueMinor)
+}
