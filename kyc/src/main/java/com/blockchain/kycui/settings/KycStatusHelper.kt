@@ -14,7 +14,6 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import timber.log.Timber
 
 class KycStatusHelper(
@@ -23,7 +22,8 @@ class KycStatusHelper(
     private val settingsDataManager: SettingsDataManager
 ) {
 
-    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
+    private val fetchOfflineToken
+        get() = metadataManager.fetchNabuToken()
 
     fun getSettingsKycState(): Single<SettingsKycState> = Single.zip(
         shouldDisplayKyc(),
@@ -68,6 +68,7 @@ class KycStatusHelper(
                 .subscribeOn(Schedulers.io())
         }
         .map { it.kycState }
+        .doOnError { Timber.e(it) }
         .onErrorReturn { KycState.None }
 
     fun getUserState(): Single<UserState> =
