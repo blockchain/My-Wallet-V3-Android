@@ -18,8 +18,8 @@ import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.SimpleFieldUpdateIntent
+import com.blockchain.morph.exchange.mvi.SwapIntent
 import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
-import com.blockchain.morph.exchange.mvi.ToggleFromToIntent
 import com.blockchain.morph.exchange.mvi.Value
 import com.blockchain.morph.exchange.mvi.fixedField
 import com.blockchain.morph.exchange.mvi.fixedMoneyValue
@@ -138,7 +138,7 @@ internal class ExchangeFragment : Fragment() {
             Observable.merge(
                 allTextUpdates(),
                 clicksToIntents(R.id.imageview_switch_currency) { ToggleFiatCryptoIntent() },
-                clicksToIntents(R.id.imageview_switch_from_to) { ToggleFromToIntent() },
+                clicksToIntents(R.id.imageview_switch_from_to) { SwapIntent() },
                 Observable.merge(
                     clicksToIntents(minButton) { ApplyMinimumLimit() },
                     clicksToIntents(maxButton) { ApplyMaximumLimit() }
