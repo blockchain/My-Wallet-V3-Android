@@ -12,6 +12,7 @@ import piuk.blockchain.androidcore.data.exchangerate.datastore.ExchangeRateDataS
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsState
+import piuk.blockchain.androidcore.utils.FiatCurrencyPreference
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import javax.inject.Singleton
 
@@ -65,5 +66,10 @@ class ContextModule(private val appContext: Context) : KoinDaggerModule() {
     @Provides
     fun providePrefsUtil(): PrefsUtil {
         return get(PrefsUtil::class)
+    }
+
+    @Provides
+    fun provideFiatCurrencyPreference(): FiatCurrencyPreference {
+        return get(FiatCurrencyPreference::class)
     }
 }

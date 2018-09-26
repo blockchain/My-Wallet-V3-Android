@@ -42,6 +42,7 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus;
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager;
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager;
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager;
+import piuk.blockchain.androidcore.utils.FiatCurrencyPreference;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
@@ -81,6 +82,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     private CoinifyDataManager coinifyDataManager;
     private ExchangeService exchangeService;
     private KycStatusHelper kycStatusHelper;
+    private FiatCurrencyPreference fiatCurrencyPreference;
 
     @Inject
     MainPresenter(PrefsUtil prefs,
@@ -107,7 +109,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                   EnvironmentConfig environmentSettings,
                   CoinifyDataManager coinifyDataManager,
                   ExchangeService exchangeService,
-                  KycStatusHelper kycStatusHelper) {
+                  KycStatusHelper kycStatusHelper,
+                  FiatCurrencyPreference fiatCurrencyPreference) {
 
         this.prefs = prefs;
         this.appUtil = appUtil;
@@ -134,6 +137,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         this.coinifyDataManager = coinifyDataManager;
         this.exchangeService = exchangeService;
         this.kycStatusHelper = kycStatusHelper;
+        this.fiatCurrencyPreference = fiatCurrencyPreference;
     }
 
     private void initPrompts(Context context) {
@@ -401,6 +405,10 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     String getCurrentServerUrl() {
         return walletOptionsDataManager.getBuyWebviewWalletLink();
+    }
+
+    String getDefaultCurrency() {
+        return fiatCurrencyPreference.getFiatCurrencyPreference();
     }
 
     // Usage commented out for now

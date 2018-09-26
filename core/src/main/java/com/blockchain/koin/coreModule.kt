@@ -43,6 +43,8 @@ import piuk.blockchain.androidcore.data.settings.datastore.SettingsDataStore
 import piuk.blockchain.androidcore.data.settings.datastore.SettingsMemoryStore
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsState
+import piuk.blockchain.androidcore.utils.FiatCurrencyPreference
+import piuk.blockchain.androidcore.utils.SharedPreferencesFiatCurrencyPreference
 import piuk.blockchain.androidcore.utils.MetadataUtils
 import piuk.blockchain.androidcore.utils.PrefsUtil
 
@@ -116,6 +118,8 @@ val coreModule = applicationContext {
     factory { ExchangeRateService(get()) }
 
     bean { PrefsUtil(get()) }
+
+    bean { SharedPreferencesFiatCurrencyPreference(get()) as FiatCurrencyPreference }
 
     factory { CurrencyFormatManager(get(), get(), get(), get(), get()) }
 
