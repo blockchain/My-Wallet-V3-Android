@@ -35,6 +35,8 @@ private fun StringWebSocket.asChannel(
 
     return object : WebSocketChannel<String> {
 
+        val channelMessageFilter = this@asChannel.channelMessageFilter(name, throwErrors = true)
+
         private val closed = PublishSubject.create<Any>()
 
         override fun close(params: JsonSerializable?) {
@@ -43,21 +45,34 @@ private fun StringWebSocket.asChannel(
         }
 
         override val responses: Observable<String>
-            get() = this@asChannel.responses.filter { json ->
+            get() = channelMessageFilter.responses.takeUntil(closed)
+    }
+}
+
+/**
+ * Filters messages to those that match the channel name and are not subscribe/unsubscribe messages.
+ */
+fun WebSocketReceive<String>.channelMessageFilter(name: String, throwErrors: Boolean = true): WebSocketReceive<String> {
+
+    return object : WebSocketReceive<String> {
+
+        override val responses: Observable<String>
+            get() = this@channelMessageFilter.responses.filter { json ->
                 incomingAdapter.fromJson(json)
                     ?.let {
                         it.channel == name &&
                             it.type != "subscribed" &&
                             it.type != "unsubscribed" &&
-                            throwIfError(it, json)
+                            !handleError(it, json)
                     } ?: false
             }
-                .takeUntil(closed)
 
-        private fun throwIfError(message: IncomingMessage, json: String): Boolean {
-            if (message.type == "error")
-                throw ErrorFromServer(json)
-            return true
+        private fun handleError(message: IncomingMessage, json: String): Boolean {
+            return when {
+                message.type != "error" -> false
+                throwErrors -> throw ErrorFromServer(json)
+                else -> true
+            }
         }
 
         private val incomingAdapter = Moshi.Builder().build().adapter(IncomingMessage::class.java)
