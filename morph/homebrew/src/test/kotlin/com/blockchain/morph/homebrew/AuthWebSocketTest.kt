@@ -1,5 +1,6 @@
 package com.blockchain.morph.homebrew
 
+import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.network.websocket.ConnectionEvent
 import com.blockchain.network.websocket.WebSocket
@@ -21,14 +22,15 @@ import org.junit.Test
 
 class AuthWebSocketTest {
 
+    private val authenticator = mock<Authenticator> {
+        on { authenticate() } `it returns` Single.just(nabuSessionTokenResponse("TheToken"))
+    }
+
     private fun givenAuthenticatedSocket(
         underlyingSocket: MockSendReceive,
         connection: MockConnection
-    ): WebSocket<String, String> {
-        return (underlyingSocket + connection).authenticate(mock {
-            on { authenticate() } `it returns` Single.just(nabuSessionTokenResponse("TheToken"))
-        })
-    }
+    ): WebSocket<String, String> =
+        (underlyingSocket + connection).authenticate(authenticator)
 
     @Test
     fun `after a successful connection, the token from authenticator is sent to the socket`() {
@@ -80,17 +82,36 @@ class AuthWebSocketTest {
         socket.open()
         val connectionEvents = socket.connectionEvents.test()
         connection.simulateSuccess()
+        simulateAuthFailure(underlyingSocket)
+        connectionEvents.values() `should equal` listOf(
+            ConnectionEvent.Connected,
+            ConnectionEvent.Failure(AuthenticationException("Can not process auth request, token can not be found"))
+        )
+    }
+
+    @Test
+    fun `after a unsuccessful auth, the token is refreshed`() {
+        val connection = MockConnection()
+        val underlyingSocket = MockSendReceive()
+        val socket: WebSocket<String, String> = givenAuthenticatedSocket(underlyingSocket, connection)
+
+        socket.open()
+        connection.simulateSuccess()
+        simulateAuthFailure(underlyingSocket)
+        verify(authenticator).invalidateToken()
+    }
+
+    private fun simulateAuthFailure(underlyingSocket: MockSendReceive) {
         underlyingSocket.simulateResponse(
             """
-{
-  "sequenceNumber": 0,
-  "channel": "auth",
-  "type": "error",
-  "description": "Can not process auth request, token can not be found"
-}
-        """
+    {
+      "sequenceNumber": 0,
+      "channel": "auth",
+      "type": "error",
+      "description": "Can not process auth request, token can not be found"
+    }
+            """
         )
-        connectionEvents.values() `should equal` listOf(ConnectionEvent.Connected)
     }
 
     @Test

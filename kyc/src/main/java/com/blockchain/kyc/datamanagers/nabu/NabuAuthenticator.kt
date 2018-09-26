@@ -23,4 +23,8 @@ internal class NabuAuthenticator(
                 nabuDataManager.authenticate(tokenResponse, singleFunction)
                     .subscribeOn(Schedulers.io())
             }
+
+    override fun invalidateToken() {
+        nabuDataManager.invalidateToken()
+    }
 }

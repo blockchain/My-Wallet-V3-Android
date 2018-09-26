@@ -16,6 +16,7 @@ import io.reactivex.subjects.PublishSubject
 
 fun WebSocket<String, String>.authenticate(authenticator: Authenticator): WebSocket<String, String> =
     AuthenticatorWebSocket(
+        authenticator,
         afterOpen {
             authenticator.authenticate()
                 .subscribeBy {
@@ -34,6 +35,7 @@ fun WebSocket<String, String>.authenticate(authenticator: Authenticator): WebSoc
     )
 
 private class AuthenticatorWebSocket(
+    private val authenticator: Authenticator,
     private val inner: WebSocket<String, String>
 ) : WebSocket<String, String> by inner {
 
@@ -56,6 +58,13 @@ private class AuthenticatorWebSocket(
             if (authResponse.channel == "auth" && authResponse.type == "authenticated") {
                 authConnectionEventsSubject.onNext(ConnectionEvent.Authenticated)
             }
+            if (authResponse.channel == "auth" && authResponse.type == "error") {
+                println("AUTH ERROR : Invalidating TOKEN and retrying")
+                authenticator.invalidateToken()
+                authConnectionEventsSubject.onNext(
+                    ConnectionEvent.Failure(AuthenticationException(authResponse.description))
+                )
+            }
         }
 
     override fun close() {
@@ -63,6 +72,8 @@ private class AuthenticatorWebSocket(
         inner.close()
     }
 }
+
+data class AuthenticationException(private val _message: String?) : Exception(_message ?: "No description")
 
 @Suppress("unused")
 private class AuthSubscribe(
@@ -78,5 +89,6 @@ private class Params(
 
 private class AuthenticatedResponse(
     val channel: String,
-    val type: String
+    val type: String,
+    val description: String?
 ) : JsonSerializable

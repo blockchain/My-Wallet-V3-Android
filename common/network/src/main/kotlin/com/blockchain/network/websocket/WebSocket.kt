@@ -11,7 +11,7 @@ sealed class ConnectionEvent {
 
     object ClientDisconnect : ConnectionEvent()
 
-    class Failure(val throwable: Throwable) : ConnectionEvent()
+    data class Failure(val throwable: Throwable) : ConnectionEvent()
 }
 
 interface WebSocketConnection {

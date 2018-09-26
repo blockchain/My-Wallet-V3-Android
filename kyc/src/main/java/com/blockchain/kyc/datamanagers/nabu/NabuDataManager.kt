@@ -171,6 +171,10 @@ class NabuDataManager(
                 .onErrorResumeNext { refreshOrReturnError(it, offlineToken, singleFunction) }
         }
 
+    internal fun invalidateToken() {
+        nabuTokenStore.invalidate()
+    }
+
     fun currentToken(offlineToken: NabuOfflineTokenResponse): Single<NabuSessionTokenResponse> =
         if (nabuTokenStore.requiresRefresh()) {
             refreshToken(offlineToken)

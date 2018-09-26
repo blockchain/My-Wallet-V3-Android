@@ -28,4 +28,7 @@ class MockAuthenticator(val token: String) : Authenticator {
                 updatedAt = ""
             )
         )
+
+    override fun invalidateToken() {
+    }
 }

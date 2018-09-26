@@ -15,4 +15,6 @@ interface Authenticator {
 
     fun authenticate(): Single<NabuSessionTokenResponse> =
         authenticateSingle { it }
+
+    fun invalidateToken()
 }
