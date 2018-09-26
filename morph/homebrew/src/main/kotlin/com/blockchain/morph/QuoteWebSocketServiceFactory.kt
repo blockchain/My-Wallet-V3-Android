@@ -7,6 +7,7 @@ import com.blockchain.morph.homebrew.authenticate
 import com.blockchain.nabu.Authenticator
 import com.blockchain.network.websocket.Options
 import com.blockchain.network.websocket.autoRetry
+import com.blockchain.network.websocket.bufferUntilAuthenticated
 import com.blockchain.network.websocket.debugLog
 import com.blockchain.network.websocket.newBlockchainWebSocket
 import com.squareup.moshi.Moshi
@@ -24,6 +25,7 @@ internal class QuoteWebSocketServiceFactory(
             .debugLog("Quotes")
             .autoRetry()
             .authenticate(auth)
+            .bufferUntilAuthenticated(limit = 10)
 
         return QuoteWebSocket(socket, moshi)
     }
