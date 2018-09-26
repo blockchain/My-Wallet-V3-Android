@@ -190,7 +190,7 @@ internal class ExchangeFragment : Fragment() {
         } ?: getString(R.string.min)
 
         maxButton.invisibleIf(it.maxTradeLimit == null)
-        maxButton.text = it.maxTradeLimit?.let {
+        maxButton.text = it.maxTrade?.let {
             getString(R.string.max_with_value, it.toStringWithSymbol())
         } ?: getString(R.string.max)
     }

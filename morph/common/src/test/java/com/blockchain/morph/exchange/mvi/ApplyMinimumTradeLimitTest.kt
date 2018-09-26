@@ -5,7 +5,7 @@ import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
 
-class ApplyMinimumTradeLimit {
+class ApplyMinimumTradeLimitTest {
 
     @Test
     fun `can apply the minimum trade limit`() {

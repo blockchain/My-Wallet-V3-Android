@@ -5,6 +5,8 @@ import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.Money
+import info.blockchain.balance.compareTo
+import info.blockchain.balance.times
 import info.blockchain.balance.withMajorValue
 import io.reactivex.Observable
 import java.math.BigDecimal
@@ -27,7 +29,7 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is SetFixIntent -> previousState.mapSetFix(intent)
                 is SetTradeLimits -> previousState.mapTradeLimits(intent)
                 is ApplyMinimumLimit -> previousState.applyLimit(previousState.minTradeLimit)
-                is ApplyMaximumLimit -> previousState.applyLimit(previousState.maxTradeLimit)
+                is ApplyMaximumLimit -> previousState.applyLimit(previousState.maxTrade)
                 is FiatExchangeRateIntent -> previousState.setFiatRate(intent.c2fRate)
                 is SpendableValueIntent -> previousState.setSpendable(intent.cryptoValue)
             }
@@ -38,14 +40,6 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
             it.toViewModel()
         }
 }
-
-private fun ExchangeViewState.applyLimit(tradeLimit: FiatValue?) =
-    tradeLimit?.let {
-        copy(
-            fix = Fix.BASE_FIAT,
-            fromFiat = it
-        )
-    } ?: this
 
 private fun ExchangeViewState.setSpendable(cryptoValue: CryptoValue): ExchangeViewState {
     if (cryptoValue.currency != fromAccount.cryptoCurrency) {
@@ -60,6 +54,24 @@ private fun ExchangeViewState.setFiatRate(c2fRate: ExchangeRate.CryptoToFiat): E
     }
     return copy(c2fRate = c2fRate)
 }
+
+private fun ExchangeViewState.applyLimit(tradeLimit: Money?) =
+    when (tradeLimit) {
+        null -> this
+        is FiatValue -> tradeLimit.let {
+            copy(
+                fix = Fix.BASE_FIAT,
+                fromFiat = it
+            )
+        }
+        is CryptoValue -> tradeLimit.let {
+            copy(
+                fix = Fix.BASE_CRYPTO,
+                fromCrypto = it
+            )
+        }
+        else -> this
+    }
 
 private fun ExchangeViewState.mapTradeLimits(intent: SetTradeLimits): ExchangeViewState {
     if (intent.min.currencyCode != fromFiat.currencyCode) return this
@@ -138,6 +150,19 @@ data class ExchangeViewState(
             Fix.BASE_CRYPTO -> fromCrypto
             Fix.COUNTER_FIAT -> toFiat
             Fix.COUNTER_CRYPTO -> toCrypto
+        }
+
+    val maxTrade: Money?
+        get() {
+            val maxSpendableFiat = maxSpendable * c2fRate ?: return maxTradeLimit
+            if (maxSpendableFiat.currencyCode != fromFiat.currencyCode) return maxTradeLimit
+            if (maxTradeLimit == null) return maxSpendableFiat
+            if (maxTradeLimit.currencyCode != maxSpendableFiat.currencyCode) return null
+            return if (maxSpendableFiat > maxTradeLimit) {
+                maxTradeLimit
+            } else {
+                maxSpendable
+            }
         }
 }
 
