@@ -2,6 +2,7 @@ package com.blockchain.morph.exchange.mvi
 
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.Money
 import info.blockchain.balance.withMajorValue
@@ -27,6 +28,7 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is SetTradeLimits -> previousState.mapTradeLimits(intent)
                 is ApplyMinimumLimit -> previousState.applyLimit(previousState.minTradeLimit)
                 is ApplyMaximumLimit -> previousState.applyLimit(previousState.maxTradeLimit)
+                is FiatExchangeRateIntent -> previousState.setFiatRate(intent.c2fRate)
             }
         }
 
@@ -43,6 +45,13 @@ private fun ExchangeViewState.applyLimit(tradeLimit: FiatValue?) =
             fromFiat = it
         )
     } ?: this
+
+private fun ExchangeViewState.setFiatRate(c2fRate: ExchangeRate.CryptoToFiat): ExchangeViewState {
+    if (c2fRate.to != fromFiat.currencyCode || c2fRate.from != fromAccount.cryptoCurrency) {
+        return this
+    }
+    return copy(c2fRate = c2fRate)
+}
 
 private fun ExchangeViewState.mapTradeLimits(intent: SetTradeLimits): ExchangeViewState {
     if (intent.min.currencyCode != fromFiat.currencyCode) return this
@@ -111,7 +120,8 @@ data class ExchangeViewState(
     val toFiat: FiatValue,
     val latestQuote: Quote?,
     val minTradeLimit: FiatValue? = null,
-    val maxTradeLimit: FiatValue? = null
+    val maxTradeLimit: FiatValue? = null,
+    val c2fRate: ExchangeRate.CryptoToFiat? = null
 ) {
     val lastUserValue: Money =
         when (fix) {
