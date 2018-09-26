@@ -89,11 +89,10 @@ class KycStatusHelper(
             .map { it.countryCode }
             .singleOrError(),
         BiFunction { countries: List<NabuCountryResponse>, countryCode: String ->
-            // STOPSHIP: For testing purposes only  
-            true
-//            countries
-//                .map { it.code }
-//                .contains(countryCode)
+            countries
+                .asSequence()
+                .map { it.code }
+                .contains(countryCode)
         }
     )
 
