@@ -164,8 +164,6 @@ public class MainPresenter extends BasePresenter<MainView> {
 
             initMetadataElements();
 
-            doWalletOptionsChecks();
-
             doPushNotifications();
         }
     }
@@ -252,6 +250,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .andThen(bchCompletable())
                 .andThen(feesCompletable())
                 .doAfterTerminate(() -> {
+                            doWalletOptionsChecks();
                             getView().hideProgressDialog();
 
                             initPrompts(getView().getActivityContext());
