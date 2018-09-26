@@ -38,9 +38,10 @@ class NabuMarketsService internal constructor(
         }
     }
 
-    override fun getTradesLimits(): Single<FiatTradesLimits> {
+    override fun getTradesLimits(fiatCurrency: String): Single<FiatTradesLimits> {
         return authenticator.authenticate {
             nabuMarkets.getTradesLimits(
+                fiatCurrency,
                 it.authHeader
             ).map {
                 FiatTradesLimits(

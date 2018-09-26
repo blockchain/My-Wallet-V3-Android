@@ -148,7 +148,7 @@ class ExchangeRateWebSocketTest : AutoCloseKoinTest() {
                 {
                   "sequenceNumber":2,"channel":"exchange_rate",
                   "type":"exchangeRate",
-                  "rates":[{"pair":"GBP-ETH","price":"2018.41"}]
+                  "rates":[{"pair":"ETH-GBP","price":"2018.41"}]
                 }
             """.trimMargin()
         )

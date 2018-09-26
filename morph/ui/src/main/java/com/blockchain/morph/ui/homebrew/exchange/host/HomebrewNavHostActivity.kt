@@ -136,6 +136,7 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
         val newQuoteService = exchangeViewModel.quoteService
 
         exchangeViewModel.newDialog(
+            defaultCurrency,
             ExchangeDialog(
                 Observable.merge(
                     exchangeViewModel.inputEventSink,

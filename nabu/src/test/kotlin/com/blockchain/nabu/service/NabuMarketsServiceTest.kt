@@ -118,7 +118,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
 
     @Test
     fun `can get trade limits from json`() {
-        server.expect().get().withPath("/nabu-gateway/trades/limits")
+        server.expect().get().withPath("/nabu-gateway/trades/limits?currency=CAD")
             .andReturn(
                 200,
                 """
@@ -147,7 +147,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             )
             .once()
 
-        subject.getTradesLimits()
+        subject.getTradesLimits("CAD")
             .test()
             .values()
             .single()
@@ -172,7 +172,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
 
     @Test
     fun `can get trade limits alternative values`() {
-        server.expect().get().withPath("/nabu-gateway/trades/limits")
+        server.expect().get().withPath("/nabu-gateway/trades/limits?currency=CAD")
             .andReturn(
                 200,
                 TradesLimits(
@@ -199,7 +199,7 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
             )
             .once()
 
-        subject.getTradesLimits()
+        subject.getTradesLimits("CAD")
             .test()
             .values()
             .single()

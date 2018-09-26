@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 internal interface NabuMarkets {
 
@@ -17,6 +18,7 @@ internal interface NabuMarkets {
 
     @GET("trades/limits")
     fun getTradesLimits(
+        @Query("currency") fiatCurrency: String,
         @Header("authorization") authorization: String
     ): Single<TradesLimits>
 

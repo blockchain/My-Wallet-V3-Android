@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 interface TradeLimitService {
 
-    fun getTradesLimits(): Single<FiatTradesLimits>
+    fun getTradesLimits(fiatCurrency: String): Single<FiatTradesLimits>
 }
 
 class FiatTradesLimits(

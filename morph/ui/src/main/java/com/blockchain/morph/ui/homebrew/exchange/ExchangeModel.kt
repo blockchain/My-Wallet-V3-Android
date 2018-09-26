@@ -56,7 +56,10 @@ class ExchangeModel(
         Timber.d("ExchangeViewModel cleared")
     }
 
-    fun newDialog(exchangeDialog: ExchangeDialog) {
+    fun newDialog(
+        fiatCurrency: String,
+        exchangeDialog: ExchangeDialog
+    ) {
         dialogDisposable.clear()
         dialogDisposable += quoteService.rates.subscribeBy {
             Timber.d("RawExchangeRate: $it")
@@ -64,7 +67,7 @@ class ExchangeModel(
                 is ExchangeRate.CryptoToFiat -> inputEventSink.onNext(FiatExchangeRateIntent(it))
             }
         }
-        dialogDisposable += tradeLimitService.getTradesLimits()
+        dialogDisposable += tradeLimitService.getTradesLimits(fiatCurrency)
             .subscribeBy {
                 inputEventSink.onNext(SetTradeLimits(it.minOrder, it.maxOrder))
             }

@@ -37,9 +37,9 @@ class ExchangeWebSocket(private val underlyingSocket: WebSocket<String, String>,
                         val split = rate.pair.split("-")
                         val lhs = split.firstOrNull()
                         val rhs = split.lastOrNull()
-                        val fromCrypto = CryptoCurrency.fromSymbol(rhs)
-                        if (fromCrypto != null && lhs != null) {
-                            ExchangeRate.CryptoToFiat(fromCrypto, lhs, rate.price)
+                        val fromCrypto = CryptoCurrency.fromSymbol(lhs)
+                        if (fromCrypto != null && rhs != null) {
+                            ExchangeRate.CryptoToFiat(fromCrypto, rhs, rate.price)
                         } else {
                             null
                         }
