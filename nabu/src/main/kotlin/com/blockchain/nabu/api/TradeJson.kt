@@ -26,7 +26,7 @@ internal class TradeJson(
     val depositAddress: String,
     val deposit: Value,
     val withdrawalAddress: String,
-    val withdrawal: Value,
+    val withdrawal: Value?,
     val withdrawalFee: Value,
     val fiatValue: Value,
     val depositTxHash: String?,
