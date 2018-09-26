@@ -29,6 +29,7 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is ApplyMinimumLimit -> previousState.applyLimit(previousState.minTradeLimit)
                 is ApplyMaximumLimit -> previousState.applyLimit(previousState.maxTradeLimit)
                 is FiatExchangeRateIntent -> previousState.setFiatRate(intent.c2fRate)
+                is SpendableValueIntent -> previousState.setSpendable(intent.cryptoValue)
             }
         }
 
@@ -45,6 +46,13 @@ private fun ExchangeViewState.applyLimit(tradeLimit: FiatValue?) =
             fromFiat = it
         )
     } ?: this
+
+private fun ExchangeViewState.setSpendable(cryptoValue: CryptoValue): ExchangeViewState {
+    if (cryptoValue.currency != fromAccount.cryptoCurrency) {
+        return this
+    }
+    return copy(maxSpendable = cryptoValue)
+}
 
 private fun ExchangeViewState.setFiatRate(c2fRate: ExchangeRate.CryptoToFiat): ExchangeViewState {
     if (c2fRate.to != fromFiat.currencyCode || c2fRate.from != fromAccount.cryptoCurrency) {
@@ -121,7 +129,8 @@ data class ExchangeViewState(
     val latestQuote: Quote?,
     val minTradeLimit: FiatValue? = null,
     val maxTradeLimit: FiatValue? = null,
-    val c2fRate: ExchangeRate.CryptoToFiat? = null
+    val c2fRate: ExchangeRate.CryptoToFiat? = null,
+    val maxSpendable: CryptoValue? = null
 ) {
     val lastUserValue: Money =
         when (fix) {
