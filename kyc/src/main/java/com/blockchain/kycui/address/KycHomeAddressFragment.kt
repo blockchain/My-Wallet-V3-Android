@@ -186,8 +186,9 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
                 .first()
 
         subscribeToViewObservables()
-        editTextFirstLine.setText(address.featureName)
-        editTextCity.setText(address.locality)
+        editTextFirstLine.setText(address.thoroughfare ?: address.subThoroughfare)
+        editTextAptName.setText(address.featureName)
+        editTextCity.setText(address.locality ?: address.subAdminArea)
         editTextState.setText(address.adminArea)
         editTextZipCode.setText(address.postalCode)
     }
