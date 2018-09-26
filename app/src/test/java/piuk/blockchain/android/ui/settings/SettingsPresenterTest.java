@@ -118,7 +118,7 @@ public class SettingsPresenterTest extends RxTest {
         // Arrange
         when(kycStatusHelper.getSettingsKycState())
                 .thenReturn(Single.just(SettingsKycState.Verified));
-        when(prefsUtil.getValue(PrefsUtil.DEFAULT_CURRENCY, "USD"))
+        when(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
                 .thenReturn("GBP");
         // Act
         subject.onKycStatusClicked();

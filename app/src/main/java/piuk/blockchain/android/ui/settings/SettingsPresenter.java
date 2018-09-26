@@ -116,7 +116,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                         .subscribe(
                                 settingsKycState -> {
                                     if (settingsKycState == SettingsKycState.Verified) {
-                                        getView().launchHomebrew(prefsUtil.getValue(PrefsUtil.DEFAULT_CURRENCY, PrefsUtil.DEFAULT_CURRENCY));
+                                        getView().launchHomebrew(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY));
                                     } else if (settingsKycState == SettingsKycState.Unverified) {
                                         getView().launchKycFlow();
                                     } else {
