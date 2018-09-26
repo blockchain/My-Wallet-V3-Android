@@ -4,6 +4,7 @@ import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
+import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.withMajorValue
 import io.reactivex.Observable
@@ -13,6 +14,8 @@ import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
 class FakeQuoteService : QuoteService {
+    override val rates: Observable<ExchangeRate>
+        get() = TODO("not implemented")
 
     private val subject = PublishSubject.create<Quote>()
 

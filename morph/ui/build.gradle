@@ -35,6 +35,7 @@ androidExtensions {
 }
 
 dependencies {
+    api project(':core')
     api project(':coreui')
     api project(':morph:common')
     implementation project(':balance')
