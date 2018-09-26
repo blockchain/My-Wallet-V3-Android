@@ -403,6 +403,10 @@ public class MainPresenter extends BasePresenter<MainView> {
         return walletOptionsDataManager.getBuyWebviewWalletLink();
     }
 
+    String getDefaultCurrency() {
+        return prefs.getValue(PrefsUtil.DEFAULT_CURRENCY, "USD");
+    }
+
     // Usage commented out for now
     @SuppressWarnings("unused")
     private void initContactsService() {
