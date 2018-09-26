@@ -12,7 +12,6 @@ import info.blockchain.balance.FiatValue
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
-import java.math.BigDecimal
 
 class NabuTradeAdapterTest {
 
@@ -80,10 +79,10 @@ class NabuTradeAdapterTest {
     }
 
     @Test
-    fun `quote rate`() {
+    fun `quote rate should return default`() {
         NabuTradeAdapter(
-            getTransaction(rate = 10.0.toBigDecimal())
-        ).quote.quotedRate `should equal` 10.0.toBigDecimal()
+            getTransaction()
+        ).quote.quotedRate `should equal` 0.toBigDecimal()
     }
 
     @Test
@@ -104,7 +103,6 @@ class NabuTradeAdapterTest {
         id: String = "",
         createdAt: String = "",
         pair: CoinPair = CoinPair.BTC_TO_ETH,
-        rate: BigDecimal = 0.0.toBigDecimal(),
         refundAddress: String = "",
         depositAddress: String = "",
         deposit: CryptoValue = CryptoValue.ZeroBtc,
@@ -118,7 +116,6 @@ class NabuTradeAdapterTest {
         id = id,
         createdAt = createdAt,
         pair = pair,
-        rate = rate,
         refundAddress = refundAddress,
         depositAddress = depositAddress,
         deposit = deposit,

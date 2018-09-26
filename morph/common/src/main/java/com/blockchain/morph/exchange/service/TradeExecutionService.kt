@@ -5,7 +5,6 @@ import com.blockchain.morph.exchange.mvi.Quote
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import io.reactivex.Single
-import java.math.BigDecimal
 
 interface TradeExecutionService {
 
@@ -20,7 +19,6 @@ interface TradeTransaction {
     val id: String
     val createdAt: String
     val pair: CoinPair
-    val rate: BigDecimal
     val fee: CryptoValue
     val fiatValue: FiatValue
     val refundAddress: String

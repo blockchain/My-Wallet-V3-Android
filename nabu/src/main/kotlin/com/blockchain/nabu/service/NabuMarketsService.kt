@@ -16,8 +16,6 @@ import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import info.blockchain.balance.withMajorValue
 import io.reactivex.Single
-import java.math.BigDecimal
-import java.math.BigInteger
 
 class NabuMarketsService internal constructor(
     private val nabuMarkets: NabuMarkets,
@@ -84,20 +82,17 @@ private fun PeriodicLimit.toFiat(currencyCode: String) =
 private fun TradeJson.map(): NabuTransaction {
     val coinPair = CoinPair.fromPairCode(this.pair.replace("-", "_"))
 
-    val rate = this.rate ?: if (withdrawal != null) withdrawal.value / deposit.value else BigDecimal.ZERO
-
     return NabuTransaction(
         id = this.id,
         createdAt = this.createdAt,
         pair = coinPair,
-        rate = rate,
         fee = this.withdrawalFee.toCryptoValue(),
         fiatValue = this.fiatValue.toFiatValue(),
         refundAddress = this.refundAddress,
         depositAddress = this.depositAddress,
         deposit = this.deposit.toCryptoValue(),
         withdrawalAddress = this.withdrawalAddress,
-        withdrawal = this.withdrawal?.toCryptoValue() ?: CryptoValue(coinPair.to, BigInteger.ZERO),
+        withdrawal = this.withdrawal?.toCryptoValue() ?: CryptoValue.zero(coinPair.to),
         state = this.state,
         hashOut = this.withdrawalTxHash
     )

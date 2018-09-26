@@ -52,7 +52,6 @@ class NabuTradeStatusResponseAdapterTest {
         id = "ede39566-1f0d-4e48-96fa-b558b70e46b7",
         createdAt = "2018-07-30T13:45:67.890Z",
         pair = CoinPair.BTC_TO_ETH,
-        rate = 0.06.toBigDecimal(),
         refundAddress = "1Refund6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
         depositAddress = "1Deposit6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
         deposit = 0.008022.bitcoin(),

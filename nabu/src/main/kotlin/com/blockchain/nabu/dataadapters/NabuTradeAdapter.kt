@@ -36,7 +36,7 @@ internal class NabuTradeAdapter(private val trade: NabuTransaction) : MorphTrade
                 get() = trade.withdrawal
 
             override val quotedRate: BigDecimal
-                get() = trade.rate
+                get() = BigDecimal.ZERO
 
             override val minerFee: CryptoValue
                 get() = trade.fee
