@@ -494,7 +494,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 MorphMethodModuleKt.launchAsync(morphActivityLauncher, MainActivity.this);
                 break;
             case R.id.nav_exchange_homebrew_debug:
-                HomebrewNavHostActivity.start(this, "GBP");
+                HomebrewNavHostActivity.start(this, mainPresenter.getDefaultCurrency());
                 break;
             case R.id.nav_addresses:
                 startActivityForResult(new Intent(this, AccountActivity.class), ACCOUNT_EDIT);
