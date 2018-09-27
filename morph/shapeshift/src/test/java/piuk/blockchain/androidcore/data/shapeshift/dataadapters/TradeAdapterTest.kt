@@ -15,10 +15,10 @@ import java.math.BigDecimal
 class TradeAdapterTest {
 
     @Test
-    fun `quote timestamp`() {
+    fun `quote timestamp should be in seconds not millis`() {
         TradeAdapter(Trade().apply {
             timestamp = 1234567890L
-        }).timestamp `should equal` 1234567890L
+        }).timestamp `should equal` 1234567890L / 1000
     }
 
     @Test

@@ -11,7 +11,7 @@ import java.math.BigDecimal
 internal class TradeAdapter(private val trade: Trade) : MorphTrade {
 
     override val timestamp: Long
-        get() = trade.timestamp
+        get() = trade.timestamp / 1000
 
     override val hashOut: String?
         get() = trade.hashOut
