@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import com.blockchain.morph.exchange.mvi.FloatKeyboardIntent
 import com.blockchain.morph.exchange.mvi.FloatKeyboardDialog
+import com.blockchain.morph.exchange.mvi.Maximums
 import com.blockchain.morph.ui.R
 import io.reactivex.subjects.BehaviorSubject
 import java.math.BigDecimal
@@ -68,6 +69,10 @@ class FloatKeyboardView @JvmOverloads constructor(
 
     fun setValue(maxDp: Int, value: BigDecimal) {
         values.onNext(FloatKeyboardIntent.SetValue(maxDp, value))
+    }
+
+    fun setMaximums(maximums: Maximums) {
+        values.onNext(FloatKeyboardIntent.SetMaximums(maximums))
     }
 }
 

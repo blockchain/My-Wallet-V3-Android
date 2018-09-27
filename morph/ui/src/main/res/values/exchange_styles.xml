@@ -26,9 +26,12 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <dimen name="large_exchange_text_size">72sp</dimen>
+    <dimen name="large_exchange_text_size_long">55sp</dimen>
+
     <style name="ExchangeText.LargeValue">
         <item name="android:textColor">@color/exchange_blue</item>
-        <item name="android:textSize">72sp</item>
+        <item name="android:textSize">@dimen/large_exchange_text_size</item>
     </style>
 
     <style name="ExchangeText.LargeValue.Currency">

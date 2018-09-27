@@ -311,6 +311,104 @@ class FloatKeyboardDialogTest {
     }
 
     @Test
+    fun `maximum integer digits`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxIntLength = 4)), *keys("12345"))
+            .assertShake()
+            .apply {
+                userDecimal `should equal` "1234".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `maximum absolute value`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxValue = 99.9.toBigDecimal())), *keys("99.91"))
+            .assertShake()
+            .apply {
+                userDecimal `should equal` "99.90".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `maximum absolute value - over`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxValue = 99.9.toBigDecimal())), *keys("100"))
+            .assertShake()
+            .apply {
+                userDecimal `should equal` "99.90".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `maximum absolute value - over, then back`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxValue = 99.9.toBigDecimal())), *keys("100<"))
+            .assertNoShake()
+            .apply {
+                userDecimal `should equal` "99.00".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `maximum absolute value - over, then back all the way`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxValue = 99.9.toBigDecimal())), *keys("100<<<<<"))
+            .assertShake()
+            .apply {
+                userDecimal `should equal` "0".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `maximum digits`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxDigits = 4)), *keys("112.34"))
+            .assertShake()
+            .apply {
+                userDecimal `should equal` "112.30".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `maximum digits all ints`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxDigits = 4)), *keys("11234"))
+            .assertShake()
+            .apply {
+                userDecimal `should equal` "1123".toBigDecimal()
+            }
+    }
+
+    @Test
+    fun `applying same maximums yields same state`() {
+        FloatKeyboardDialog(
+            Observable.just(
+                setMaximums(Maximums(maxDigits = 8)),
+                setMaximums(Maximums(maxDigits = 8))
+            )
+        )
+            .states
+            .test()
+            .values()
+            .size `should equal` 2
+    }
+
+    @Test
+    fun `setValue keeps maximum`() {
+        lastStateGivenIntents(setMaximums(Maximums(maxDigits = 4)), setValue(3, "11.234".toBigDecimal()))
+            .apply {
+                userDecimal `should equal` "11.230".toBigDecimal()
+                maximums.maxDigits `should equal` 4
+            }
+    }
+
+    @Test
+    fun `clear keeps maximum`() {
+        lastStateGivenIntents(
+            setMaximums(Maximums(maxDigits = 5)),
+            setValue(3, "11.234".toBigDecimal()),
+            FloatKeyboardIntent.Clear()
+        ).apply {
+            userDecimal `should equal` "0".toBigDecimal()
+            maximums.maxDigits `should equal` 5
+        }
+    }
+
+    @Test
     fun `set value does not emit an error`() {
         lastStateGivenIntents(setValue(2, 13.123))
             .assertNoShake()
@@ -320,6 +418,8 @@ class FloatKeyboardDialogTest {
 private fun setValue(dp: Int, d: Double): FloatKeyboardIntent = setValue(dp, d.toBigDecimal())
 
 private fun setValue(dp: Int, bd: BigDecimal): FloatKeyboardIntent = FloatKeyboardIntent.SetValue(dp, bd)
+
+private fun setMaximums(maximums: Maximums): FloatKeyboardIntent = FloatKeyboardIntent.SetMaximums(maximums)
 
 private fun setMaxDp(maxDp: Int): FloatKeyboardIntent = FloatKeyboardIntent.SetMaxDp(maxDp)
 

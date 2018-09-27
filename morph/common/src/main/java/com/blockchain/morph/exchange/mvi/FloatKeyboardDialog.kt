@@ -10,6 +10,7 @@ sealed class FloatKeyboardIntent {
     class Period : FloatKeyboardIntent()
     class Backspace : FloatKeyboardIntent()
     class Clear : FloatKeyboardIntent()
+    class SetMaximums(val maximums: Maximums) : FloatKeyboardIntent()
     class SetMaxDp(val maxDp: Int) : FloatKeyboardIntent()
     data class SetValue(val maxDp: Int, val value: BigDecimal) : FloatKeyboardIntent()
 }
@@ -19,14 +20,21 @@ class FloatKeyboardDialog(intents: Observable<FloatKeyboardIntent>) {
         intents.scan(initialState) { previous, intent ->
             when (intent) {
                 is FloatKeyboardIntent.Backspace -> previous.previous ?: previous.copy(shake = true)
-                is FloatKeyboardIntent.Clear -> initialState.copy(maxDecimal = previous.maxDecimal)
+                is FloatKeyboardIntent.Clear -> initialState.copy(
+                    maxDecimal = previous.maxDecimal,
+                    maximums = previous.maximums
+                )
                 is FloatKeyboardIntent.Period -> mapPeriodPress(previous)
                 is FloatKeyboardIntent.NumericKey -> mapKeyPress(previous, intent.key)
                 is FloatKeyboardIntent.SetMaxDp -> previous.copy(maxDecimal = intent.maxDp)
                 is FloatKeyboardIntent.SetValue -> constructViewStateFromValue(previous, initialState, intent)
+                is FloatKeyboardIntent.SetMaximums -> previous.setMaximum(intent)
             }
         }.distinctUntilChanged { a, b -> a === b }
 }
+
+private fun FloatEntryViewState.setMaximum(intent: FloatKeyboardIntent.SetMaximums) =
+    if (maximums == intent.maximums) this else copy(maximums = intent.maximums)
 
 private fun constructViewStateFromValue(
     previous: FloatEntryViewState,
@@ -35,7 +43,10 @@ private fun constructViewStateFromValue(
 ): FloatEntryViewState {
     if (previous.userDecimal.compareTo(intent.value) == 0 && previous.maxDecimal == intent.maxDp) return previous
 
-    return FloatKeyboardDialog((numberToIntents(intent)).toObservable())
+    val intents = listOf(
+        FloatKeyboardIntent.SetMaximums(previous.maximums)
+    ) + numberToIntents(intent)
+    return FloatKeyboardDialog(intents.toObservable())
         .states
         .last(initialState)
         .blockingGet()
@@ -106,7 +117,30 @@ private fun mapKeyPress(previous: FloatEntryViewState, key: Int): FloatEntryView
             shake = false,
             previous = previous
         )
+    }.let { new ->
+        val integerDigits = new.userDecimal.log10() + 1
+        val decimalDigitCount = Math.max(0, new.decimalCursor - 1)
+        val allDigits = integerDigits + decimalDigitCount
+        if (previous.maximums.maxIntLength in 1..(integerDigits - 1)) {
+            previous.shake()
+        } else if (previous.maximums.maxDigits in 1..(allDigits - 1)) {
+            previous.shake()
+        } else if (previous.maximums.maxValue > BigDecimal.ZERO && new.userDecimal > previous.maximums.maxValue) {
+            constructViewStateFromValue(
+                previous,
+                previous,
+                FloatKeyboardIntent.SetValue(previous.maxDecimal, previous.maximums.maxValue)
+            ).shake()
+        } else {
+            new
+        }
     }
+}
+
+private fun FloatEntryViewState.shake() = copy(shake = true)
+
+private fun BigDecimal.log10(): Int {
+    return Math.log10(toDouble()).toInt()
 }
 
 private val initialState = FloatEntryViewState()
@@ -116,5 +150,12 @@ data class FloatEntryViewState(
     val decimalCursor: Int = 0,
     val maxDecimal: Int = 2,
     val shake: Boolean = false,
-    val previous: FloatEntryViewState? = null
+    val previous: FloatEntryViewState? = null,
+    val maximums: Maximums = Maximums()
+)
+
+data class Maximums(
+    val maxValue: BigDecimal = BigDecimal.ZERO,
+    val maxIntLength: Int = 0,
+    val maxDigits: Int = 0
 )

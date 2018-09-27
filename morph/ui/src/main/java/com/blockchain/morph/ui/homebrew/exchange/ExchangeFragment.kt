@@ -1,9 +1,12 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
+import android.support.v4.widget.TextViewCompat
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +20,7 @@ import com.blockchain.morph.exchange.mvi.ApplyMinimumLimit
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.Fix
+import com.blockchain.morph.exchange.mvi.Maximums
 import com.blockchain.morph.exchange.mvi.SimpleFieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.SwapIntent
 import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
@@ -64,6 +68,7 @@ internal class ExchangeFragment : Fragment() {
 
     private lateinit var largeValueLeftHandSide: TextView
     private lateinit var largeValue: TextView
+    private lateinit var largeValueCrypto: TextView
     private lateinit var largeValueRightHandSide: TextView
     private lateinit var smallValue: TextView
     private lateinit var keyboard: FloatKeyboardView
@@ -96,6 +101,7 @@ internal class ExchangeFragment : Fragment() {
 
         largeValueLeftHandSide = view.findViewById(R.id.largeValueLeftHandSide)
         largeValue = view.findViewById(R.id.largeValue)
+        largeValueCrypto = view.findViewById(R.id.largeValueCrypto)
         largeValueRightHandSide = view.findViewById(R.id.largeValueRightHandSide)
         smallValue = view.findViewById(R.id.smallValue)
         keyboard = view.findViewById(R.id.numericKeyboard)
@@ -104,6 +110,11 @@ internal class ExchangeFragment : Fragment() {
         exchangeButton = view.findViewById(R.id.exchange_action_button)
         minButton = view.findViewById(R.id.minButton)
         maxButton = view.findViewById(R.id.maxButton)
+
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(
+            largeValueCrypto,
+            TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM
+        )
 
         selectSendAccountButton.setOnClickListener {
             AccountChooserActivity.startForResult(
@@ -130,6 +141,13 @@ internal class ExchangeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        keyboard.setMaximums(
+            Maximums(
+                maxDigits = 11,
+                maxValue = 999_999.toBigDecimal()
+            )
+        )
 
         compositeDisposable +=
             Observable.merge(
@@ -201,22 +219,40 @@ internal class ExchangeFragment : Fragment() {
     private fun displayFiatLarge(value: Value) {
         val parts = value.fiatValue.toStringParts()
         largeValueLeftHandSide.text = parts.symbol
+        largeValue.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            resources.getDimension(
+                if (parts.major.length > 8) R.dimen.large_exchange_text_size_long else R.dimen.large_exchange_text_size
+            )
+        )
         largeValue.text = parts.major
-        largeValueRightHandSide.text = parts.minor
-        largeValueRightHandSide.invisibleIf(decimalCursor == 0)
+        largeValueCrypto.text = ""
+        largeValueRightHandSide.text = if (decimalCursor != 0) parts.minor else ""
 
         val fromCryptoString = value.cryptoValue.toStringWithSymbol()
         smallValue.text = fromCryptoString
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayCryptoLarge(value: Value) {
         largeValueLeftHandSide.text = ""
-        largeValue.text = value.cryptoValue.formatExactly(decimalCursor)
-        largeValueRightHandSide.text = value.cryptoValue.symbol()
+        largeValue.text = ""
+        largeValueRightHandSide.text = ""
         largeValueRightHandSide.visibility = View.VISIBLE
+        largeValueCrypto.text = value.cryptoValue.formatExactly(decimalCursor) + " " + value.cryptoValue.symbol()
 
         val fromFiatString = value.fiatValue.toStringWithSymbol()
         smallValue.text = fromFiatString
+    }
+
+    private fun setLargeText(largeText: String) {
+        largeValue.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            resources.getDimension(
+                if (largeText.length > 8) R.dimen.large_exchange_text_size_long else R.dimen.large_exchange_text_size
+            )
+        )
+        largeValue.text = largeText
     }
 
     private fun allTextUpdates(): Observable<ExchangeIntent> {
@@ -228,6 +264,7 @@ internal class ExchangeFragment : Fragment() {
                         R.anim.fingerprint_failed_shake
                     )
                     largeValue.startAnimation(animShake)
+                    largeValueCrypto.startAnimation(animShake)
                     largeValueRightHandSide.startAnimation(animShake)
                     largeValueLeftHandSide.startAnimation(animShake)
                 }
