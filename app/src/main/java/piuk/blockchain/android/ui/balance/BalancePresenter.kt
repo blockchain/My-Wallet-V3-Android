@@ -170,6 +170,7 @@ class BalancePresenter @Inject constructor(
 
     @VisibleForTesting
     internal fun updateBchWallet() = bchDataManager.refreshMetadataCompletable()
+        .subscribeOn(Schedulers.io())
         .doOnError { Timber.e(it) }
 
     /**

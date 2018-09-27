@@ -17,9 +17,8 @@ import org.bitcoinj.core.NetworkParameters
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver
 import java.util.LinkedHashMap
-import javax.inject.Inject
 
-class PayloadService @Inject constructor(private val payloadManager: PayloadManager) {
+class PayloadService(private val payloadManager: PayloadManager) {
 
     // /////////////////////////////////////////////////////////////////////////
     // AUTH METHODS

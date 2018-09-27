@@ -253,8 +253,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .andThen(shapeshiftCompletable())
                 .andThen(bchCompletable())
                 .andThen(feesCompletable())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() -> {
-                            doWalletOptionsChecks();
                             getView().hideProgressDialog();
 
                             initPrompts(getView().getActivityContext());
@@ -267,6 +267,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                         }
                 )
                 .subscribe(ignore -> {
+                    doWalletOptionsChecks();
                     if (getView().isBuySellPermitted()) {
                         initBuyService();
                     } else {
@@ -295,7 +296,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .doOnError(throwable -> {
                     Logging.INSTANCE.logException(throwable);
                     // TODO: 21/02/2018 Reload or disable?
-                    Timber.e("Failed to load bch wallet");
+                    Timber.e(throwable, "Failed to load bch wallet");
                 });
     }
 
@@ -306,7 +307,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .doOnError(throwable -> {
                     Logging.INSTANCE.logException(throwable);
                     // TODO: 21/02/2018 Reload or disable?
-                    Timber.e("Failed to load eth wallet");
+                    Timber.e(throwable, "Failed to load eth wallet");
                 });
     }
 
@@ -316,7 +317,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .doOnError(throwable -> {
                     Logging.INSTANCE.logException(throwable);
                     // TODO: 21/02/2018 Reload or disable?
-                    Timber.e("Failed to load shape shift trades");
+                    Timber.e(throwable, "Failed to load shape shift trades");
                 });
     }
 

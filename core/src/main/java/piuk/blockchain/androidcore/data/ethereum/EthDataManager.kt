@@ -13,6 +13,7 @@ import info.blockchain.wallet.payload.PayloadManager
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import org.bitcoinj.core.ECKey
 import org.spongycastle.util.encoders.Hex
 import org.web3j.crypto.RawTransaction
@@ -222,7 +223,7 @@ class EthDataManager(
                         Completable.complete()
                     }
                 }
-        }.applySchedulers()
+        }.observeOn(Schedulers.io())
 
     /**
      * @param gasPrice Represents the fee the sender is willing to pay for gas. One unit of gas
@@ -278,7 +279,6 @@ class EthDataManager(
     @Throws(Exception::class)
     private fun fetchOrCreateEthereumWallet(defaultLabel: String) =
         metadataManager.fetchMetadata(EthereumWallet.METADATA_TYPE_EXTERNAL)
-            .applySchedulers()
             .map { optional ->
 
                 val walletJson = optional.orNull()

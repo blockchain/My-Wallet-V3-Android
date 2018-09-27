@@ -12,6 +12,7 @@ import info.blockchain.wallet.multiaddress.TransactionSummary
 import info.blockchain.wallet.payload.data.isArchived
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.androidcore.R
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
@@ -85,7 +86,7 @@ class BchDataManager(
                         Completable.complete()
                     }
                 }
-        }.applySchedulers()
+        }.subscribeOn(Schedulers.io())
 
     /**
      * Refreshes bitcoin cash metadata. Useful if another platform performed any changes to wallet state.
@@ -102,10 +103,8 @@ class BchDataManager(
     internal fun fetchMetadata(
         defaultLabel: String,
         accountTotal: Int
-    ): Observable<Optional<GenericMetadataWallet>> {
-
-        return metadataManager.fetchMetadata(BitcoinCashWallet.METADATA_TYPE_EXTERNAL)
-            .applySchedulers()
+    ): Observable<Optional<GenericMetadataWallet>> =
+        metadataManager.fetchMetadata(BitcoinCashWallet.METADATA_TYPE_EXTERNAL)
             .map { optional ->
 
                 if (optional.isPresent) {
@@ -134,7 +133,6 @@ class BchDataManager(
                     Optional.absent()
                 }
             }
-    }
 
     @VisibleForTesting
     internal fun createMetadata(defaultLabel: String, accountTotal: Int): GenericMetadataWallet {

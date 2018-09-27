@@ -22,17 +22,14 @@ import org.spongycastle.crypto.InvalidCipherTextException
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
-import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import piuk.blockchain.androidcore.utils.rxjava.IgnorableDefaultObserver
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
 import java.util.ArrayList
 import java.util.LinkedHashMap
-import javax.inject.Inject
 
-@PresenterScope
-class PayloadDataManager @Inject constructor(
+class PayloadDataManager(
     private val payloadService: PayloadService,
     private val privateKeyFactory: PrivateKeyFactory,
     private val payloadManager: PayloadManager,

@@ -19,6 +19,7 @@ import com.blockchain.morph.CoinPair
 import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.Either
 import com.blockchain.utils.Optional
+import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import javax.inject.Inject
@@ -51,7 +52,7 @@ class ShapeShiftDataManager @Inject constructor(
                     } else {
                         Completable.complete()
                     }
-                }.applySchedulers()
+                }.subscribeOn(Schedulers.io())
         }
 
     /**
@@ -280,7 +281,6 @@ class ShapeShiftDataManager @Inject constructor(
     @Throws(Exception::class)
     private fun fetchOrCreateShapeShiftTradeData(): Observable<Pair<ShapeShiftTrades, Boolean>> =
         metadataManager.fetchMetadata(ShapeShiftTrades.METADATA_TYPE_EXTERNAL)
-            .applySchedulers()
             .map { optional ->
 
                 val json = optional.orNull()

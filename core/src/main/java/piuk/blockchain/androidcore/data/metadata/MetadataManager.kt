@@ -5,14 +5,13 @@ import com.google.common.base.Optional
 import info.blockchain.wallet.exceptions.InvalidCredentialsException
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.bitcoinj.core.NetworkParameters
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
-import piuk.blockchain.androidcore.injection.PresenterScope
 import piuk.blockchain.androidcore.utils.MetadataUtils
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
-import javax.inject.Inject
 
 /**
  * Manages metadata nodes/keys derived from a user's wallet credentials.
@@ -28,8 +27,7 @@ import javax.inject.Inject
  * keys with just a user's credentials and not derive them again.
  *
  */
-@PresenterScope
-class MetadataManager @Inject constructor(
+class MetadataManager(
     private val payloadDataManager: PayloadDataManager,
     private val metadataUtils: MetadataUtils,
     rxBus: RxBus
@@ -38,7 +36,10 @@ class MetadataManager @Inject constructor(
 
     fun attemptMetadataSetup() = initMetadataNodesObservable()
 
-    fun decryptAndSetupMetadata(networkParameters: NetworkParameters, secondPassword: String): Completable {
+    fun decryptAndSetupMetadata(
+        networkParameters: NetworkParameters,
+        secondPassword: String
+    ): Completable {
         payloadDataManager.decryptHDWallet(networkParameters, secondPassword)
         return payloadDataManager.generateNodes()
             .andThen(initMetadataNodesObservable())
@@ -50,7 +51,7 @@ class MetadataManager @Inject constructor(
                 metadataUtils.getMetadataNode(nodeFactory.metadataNode, metadataType)
                     .metadataOptional
             }
-        }.applySchedulers()
+        }.subscribeOn(Schedulers.io())
 
     fun saveToMetadata(data: String, metadataType: Int): Completable = rxPinning.call {
         payloadDataManager.getMetadataNodeFactory().flatMapCompletable {
