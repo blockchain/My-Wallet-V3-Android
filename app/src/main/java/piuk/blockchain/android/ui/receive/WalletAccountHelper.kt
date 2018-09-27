@@ -213,15 +213,15 @@ class WalletAccountHelper @Inject constructor(
         val btcBalance = getAccountAbsoluteBalance(account)
 
         return if (!currencyState.isDisplayingCryptoCurrency) {
-            "(${currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(
+            currencyFormatManager.getFormattedFiatValueFromBtcValueWithSymbol(
                 coinValue = btcBalance.toBigDecimal(),
                 convertBtcDenomination = BTCDenomination.SATOSHI
-            )})"
+            )
         } else {
-            "(${currencyFormatManager.getFormattedBtcValueWithUnit(
+            currencyFormatManager.getFormattedBtcValueWithUnit(
                 btcBalance.toBigDecimal(),
                 BTCDenomination.SATOSHI
-            )})"
+            )
         }
     }
 
@@ -232,15 +232,15 @@ class WalletAccountHelper @Inject constructor(
         val bchBalance = getAccountAbsoluteBalance(account)
 
         return if (!currencyState.isDisplayingCryptoCurrency) {
-            "(${currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(
+            currencyFormatManager.getFormattedFiatValueFromBchValueWithSymbol(
                 coinValue = bchBalance.toBigDecimal(),
                 convertBtcDenomination = BTCDenomination.SATOSHI
-            )})"
+            )
         } else {
-            "(${currencyFormatManager.getFormattedBchValueWithUnit(
+            currencyFormatManager.getFormattedBchValueWithUnit(
                 bchBalance.toBigDecimal(),
                 BTCDenomination.SATOSHI
-            )})"
+            )
         }
     }
 
@@ -263,14 +263,14 @@ class WalletAccountHelper @Inject constructor(
         val btcBalance = getAddressAbsoluteBalance(legacyAddress)
 
         return if (!currencyState.isDisplayingCryptoCurrency) {
-            "(${currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
+            currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
                 btcBalance.toBigDecimal()
-            )})"
+            )
         } else {
-            "(${currencyFormatManager.getFormattedBtcValueWithUnit(
+            currencyFormatManager.getFormattedBtcValueWithUnit(
                 btcBalance.toBigDecimal(),
                 BTCDenomination.SATOSHI
-            )})"
+            )
         }
     }
 
@@ -281,14 +281,14 @@ class WalletAccountHelper @Inject constructor(
         val btcBalance = getBchAddressAbsoluteBalance(legacyAddress)
 
         return if (!currencyState.isDisplayingCryptoCurrency) {
-            "(${currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
+            currencyFormatManager.getFormattedFiatValueFromSelectedCoinValueWithSymbol(
                 btcBalance.toBigDecimal()
-            )})"
+            )
         } else {
-            "(${currencyFormatManager.getFormattedBchValueWithUnit(
+            currencyFormatManager.getFormattedBchValueWithUnit(
                 btcBalance.toBigDecimal(),
                 BTCDenomination.SATOSHI
-            )})"
+            )
         }
     }
 
@@ -381,25 +381,15 @@ class WalletAccountHelper @Inject constructor(
     /**
      * Returns a list of [ItemAccount] objects containing both HD accounts and [LegacyAddress]
      * objects, eg from importing accounts.
-     *
-     * @return Returns a list of [ItemAccount] objects
      */
-    fun getAccountItemsForOverview(): List<ItemAccount> = when (currencyState.cryptoCurrency) {
-        CryptoCurrency.BTC -> getBtcOverviewList()
-        CryptoCurrency.BCH -> getBchOverviewList()
-        else -> getEthOverviewList()
-    }
-
-    private fun getEthOverviewList(): List<ItemAccount> {
-        val ethList = getEthAccount()
-
-        ethList.forEach {
-            it.displayBalance = it.displayBalance!!
-                .removePrefix("(")
-                .removeSuffix(")")
+    fun getAccountItemsForOverview(): List<ItemAccount> =
+        when (currencyState.cryptoCurrency) {
+            CryptoCurrency.BTC -> getBtcOverviewList()
+            CryptoCurrency.BCH -> getBchOverviewList()
+            CryptoCurrency.ETHER -> getEthOverviewList()
         }
-        return ethList
-    }
+
+    private fun getEthOverviewList(): List<ItemAccount> = getEthAccount()
 
     private fun getBchOverviewList(): MutableList<ItemAccount> {
         return mutableListOf<ItemAccount>().apply {
@@ -411,13 +401,6 @@ class WalletAccountHelper @Inject constructor(
             if (accounts.size > 1 || legacyAddresses.isNotEmpty()) {
                 add(getBchWalletAccountItem())
             }
-
-            accounts.forEach {
-                it.displayBalance = it.displayBalance!!
-                    .removePrefix("(")
-                    .removeSuffix(")")
-            }
-
             addAll(accounts)
 
             // Create consolidated "Imported Addresses"
@@ -437,13 +420,6 @@ class WalletAccountHelper @Inject constructor(
             if (accounts.size > 1 || legacyAddresses.isNotEmpty()) {
                 add(getBtcWalletAccountItem())
             }
-
-            accounts.forEach {
-                it.displayBalance = it.displayBalance!!
-                    .removePrefix("(")
-                    .removeSuffix(")")
-            }
-
             addAll(accounts)
 
             // Create consolidated "Imported Addresses"
