@@ -8,11 +8,11 @@ object Versions {
     const val compileSdk = 27
     const val versionCode = 311
     const val versionName = "6.12.0-rc5"
-    const val buildTools = "27.0.3"
+    const val buildTools = "28.0.2"
 
     // Build tools and languages
-    const val androidPlugin = "3.1.3"
-    const val kotlin = "1.2.51"
+    const val androidPlugin = "3.2.0"
+    const val kotlin = "1.2.71"
     const val googleServicesPlugin = "4.0.1"
     const val coveralls = "2.8.2"
     const val buildProperties = "0.4"
@@ -28,7 +28,7 @@ object Versions {
     const val constraintLayout = "1.1.2"
     const val supportTesting = "1.0.2"
     const val multidex = "1.0.2"
-    const val navigation = "1.0.0-alpha05"
+    const val navigation = "1.0.0-alpha06"
     const val lifecycle_version = "1.1.1"
 
     // Networking, RxJava
@@ -80,8 +80,8 @@ object Versions {
     // Logging
     const val timber = "4.6.0"
     const val slf4j = "1.7.20"
-    const val crashlytics = "2.9.4"
-    const val fabricTools = "1.24.4"
+    const val crashlytics = "2.9.5"
+    const val fabricTools = "1.26.0"
 
     // Testing
     const val mockito = "2.10.0"
@@ -120,7 +120,6 @@ object Libraries {
     const val annotations = "com.android.support:support-annotations:${Versions.supportLibs}"
     const val constraintLayout =
         "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
-    const val dataBindingKapt = "com.android.databinding:compiler:${Versions.androidPlugin}"
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
     const val navigationControllerCore = "android.arch.navigation:navigation-ui:${Versions.navigation}"
     const val navigationControllerFragments = "android.arch.navigation:navigation-fragment:${Versions.navigation}"

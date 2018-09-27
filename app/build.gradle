@@ -9,7 +9,7 @@ apply from: '../quality/ktlint.gradle'
 
 buildProperties {
     secrets {
-        using(file('secrets.properties')).or(file('secretsDefaults.properties'))
+        (using(file('secrets.properties')) | file('secretsDefaults.properties'))
     }
 }
 
@@ -156,7 +156,6 @@ dependencies {
     implementation project(':morph:homebrew')
 
     implementation Libraries.multidex
-    kapt Libraries.dataBindingKapt
     // Utils
     implementation Libraries.yearclass
     // Dagger

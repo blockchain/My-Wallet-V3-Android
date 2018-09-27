@@ -24,6 +24,11 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url 'https://onfido.bintray.com/maven/' }
     }
+    configurations.all {
+        resolutionStrategy.force Libraries.findbugs
+        resolutionStrategy.force Libraries.jacksonCore
+        resolutionStrategy.force Libraries.okIo
+    }
 }
 
 task clean(type: Delete) {

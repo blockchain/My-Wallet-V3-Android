@@ -630,7 +630,7 @@
     <string name="tor_summary">Bloquez les adresses IP connues comme faisant partie du réseau Internet anonyme Tor. Le réseau Tor est souvent utilisé par les pirates pour tenter d\'accéder aux portefeuilles Blockchain des utilisateurs.</string>
     <string name="enable_screenshots_summary">Certains écrans dans l\'application peuvent afficher des données sensibles. D\'autres applications pourront accéder à ces captures d\'écran.</string>
     <string name="two_fa_summary">Protégez votre portefeuille contre tout accès non autorisé en activant la validation en 2 étapes.</string>
-    <string name="two_fa_description">Protégez votre portefeuille contre tout accès non autorisé en activant la validation en 2 étapes. Vous pouvez choisir d\’utiliser votre numéro de téléphone portable pour sécuriser votre portefeuille. Ce code vous sera demandé lorsque vous essayerez d\'accéder à votre portefeuille à travers votre navigateur Internet.\n\nPour utiliser d'autres méthodes d'authentification, veuillez vous connecter à notre portefeuille en ligne à l'adresse %1$s</string>
+    <string name="two_fa_description">Protégez votre portefeuille contre tout accès non autorisé en activant la validation en 2 étapes. Vous pouvez choisir d\’utiliser votre numéro de téléphone portable pour sécuriser votre portefeuille. Ce code vous sera demandé lorsque vous essayerez d\'accéder à votre portefeuille à travers votre navigateur Internet.\n\nPour utiliser d\'autres méthodes d\'authentification, veuillez vous connecter à notre portefeuille en ligne à l\'adresse %1$s</string>
     <string name="email_request_subject_eth">Demande de paiement en ether</string>
     <string name="email_request_body_eth">Veuillez envoyer des ETH à l\'adresse Ether %1$s.</string>
     <string name="api_fail">Impossible de se connecter au serveur. Veuillez réessayer plus tard.</string>
@@ -648,7 +648,7 @@
     <string name="onboarding_receive_bitcoin">Demander des fonds</string>
     <string name="onboarding_receive_content">Envoie votre adresse de portefeuille à un ami pour demander des fonds. Une adresse est une chaîne de lettres et de chiffres aléatoires qui changent pour chaque transaction.</string>
     <string name="onboarding_get_eth">Recevoir des Ether</string>
-    <string name="buy_second_password_prompt">Pour utiliser ce service, nous vous prions d\'entrer votre deuxième mot de passe. Vous ne devriez avoir à le saisir qu'une fois pour utiliser la fonction Acheter.</string>
+    <string name="buy_second_password_prompt">Pour utiliser ce service, nous vous prions d\'entrer votre deuxième mot de passe. Vous ne devriez avoir à le saisir qu\'une fois pour utiliser la fonction Acheter.</string>
     <string name="what_s_this">Qu\'est-ce que c\'est ?</string>
     <string name="dismiss">Passer</string>
 
