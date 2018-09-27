@@ -341,7 +341,7 @@
     <!-- FEE WARNING --><string name="large_tx_warning">Esta es una transacción Bitcoin de tamaño excesivo. Tu monedero necesita consolidar muchos pagos más pequeños que hayas recibido en el pasado. Esto requiere una comisión relativamente alta para que pueda ser confirmada rápidamente.</string>
     <string name="go_back">Volver</string>
     <string name="accept_higher_fee">Aceptar la comisión más alta</string>
-    <string name="large_tx_high_fee_warning">"Esta transacción requiere una comisión más alta para el consumo 'polvo', debido al bajo monto del cambio a devolver."</string>
+    <string name="large_tx_high_fee_warning">"Esta transacción requiere una comisión más alta para el consumo \'polvo\', debido al bajo monto del cambio a devolver."</string>
 
     <string name="invalid_password_too_short">Por favor, ingrese más de 3 caracteres</string>
     <string name="change_pin_new_matches_current">No puede usar su PIN actual como PIN nuevo</string>
