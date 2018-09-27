@@ -69,6 +69,18 @@ class BufferUntilAuthenticatedWebSocketTest {
     }
 
     @Test
+    fun `if close connection, starts buffering again`() {
+        webSocket.open()
+        mockConnection.simulateAuthenticated()
+        webSocket.close()
+        webSocket.send("Test1")
+        verify(inner, never()).send("Test1")
+        webSocket.open()
+        mockConnection.simulateAuthenticated()
+        verify(inner).send("Test1")
+    }
+
+    @Test
     fun `if lose connection twice, does not clear the queue`() {
         webSocket.open()
         mockConnection.simulateAuthenticated()

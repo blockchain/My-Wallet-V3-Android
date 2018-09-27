@@ -41,14 +41,19 @@ private class BufferUntilAuthenticated<OUTGOING, INCOMING>(
                         }
                     }
                     is ConnectionEvent.Failure, ConnectionEvent.ClientDisconnect -> {
-                        buffer.compareAndSet(null, newQueue())
+                        startQueuing()
                     }
                 }
             }
 
     override fun close() {
+        startQueuing()
         connections.clear()
         inner.close()
+    }
+
+    private fun startQueuing() {
+        buffer.compareAndSet(null, newQueue())
     }
 
     override fun send(message: OUTGOING) {
