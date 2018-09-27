@@ -11,10 +11,6 @@ import android.support.v7.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.morph.exchange.mvi.ChangeCryptoFromAccount
 import com.blockchain.morph.exchange.mvi.ChangeCryptoToAccount
-import com.blockchain.morph.exchange.mvi.ExchangeDialog
-import com.blockchain.morph.exchange.mvi.Quote
-import com.blockchain.morph.exchange.mvi.initial
-import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeFragment
@@ -24,7 +20,6 @@ import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_RECEIVING_A
 import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_SENDING_ACCOUNT
 import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationFragment
 import com.blockchain.ui.chooser.AccountChooserActivity
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.architecture.ext.viewModel
@@ -66,7 +61,6 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
     override fun onResume() {
         super.onResume()
         newQuoteWebSocket()
-        updateMviDialog()
     }
 
     override fun onPause() {
@@ -132,32 +126,12 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
         }
     }
 
-    private fun updateMviDialog() {
-        val newQuoteService = exchangeViewModel.quoteService
-
-        exchangeViewModel.newDialog(
-            defaultCurrency,
-            ExchangeDialog(
-                Observable.merge(
-                    exchangeViewModel.inputEventSink,
-                    newQuoteService.quotes.map(Quote::toIntent)
-                ),
-                initial(
-                    defaultCurrency,
-                    exchangeViewModel.configChangePersistence.from,
-                    exchangeViewModel.configChangePersistence.to
-                )
-            )
-        )
-    }
-
     companion object {
 
         private const val EXTRA_DEFAULT_CURRENCY =
             "com.blockchain.morph.ui.homebrew.exchange.EXTRA_DEFAULT_CURRENCY"
 
         @JvmStatic
-        @JvmOverloads
         fun start(context: Context, defaultCurrency: String) {
             Intent(context, HomebrewNavHostActivity::class.java).apply {
                 putExtra(EXTRA_DEFAULT_CURRENCY, defaultCurrency)

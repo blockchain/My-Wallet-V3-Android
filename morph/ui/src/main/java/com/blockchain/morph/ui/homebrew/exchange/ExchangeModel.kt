@@ -1,19 +1,24 @@
 package com.blockchain.morph.ui.homebrew.exchange
 
 import android.arch.lifecycle.ViewModel
+import com.blockchain.accounts.AllAccountList
 import com.blockchain.datamanagers.MaximumSpendableCalculator
 import com.blockchain.morph.exchange.mvi.ExchangeDialog
 import com.blockchain.morph.exchange.mvi.ExchangeIntent
 import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.FiatExchangeRateIntent
 import com.blockchain.morph.exchange.mvi.Fix
+import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.mvi.SetTradeLimits
 import com.blockchain.morph.exchange.mvi.SpendableValueIntent
+import com.blockchain.morph.exchange.mvi.initial
+import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.morph.exchange.service.TradeLimitService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
 import info.blockchain.balance.AccountReference
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
 import info.blockchain.balance.FiatValue
@@ -23,14 +28,16 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import piuk.blockchain.androidcore.utils.FiatCurrencyPreference
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicReference
 
 class ExchangeModel(
     quoteServiceFactory: QuoteServiceFactory,
-    var configChangePersistence: ExchangeFragmentConfigurationChangePersistence,
-    private var tradeLimitService: TradeLimitService,
-    private var maximumSpendableCalculator: MaximumSpendableCalculator
+    private val allAccountList: AllAccountList,
+    private val tradeLimitService: TradeLimitService,
+    private val maximumSpendableCalculator: MaximumSpendableCalculator,
+    private val currencyPreference: FiatCurrencyPreference
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -39,7 +46,10 @@ class ExchangeModel(
 
     private val maxSpendableDisposable = CompositeDisposable()
 
-    val quoteService: QuoteService by lazy { quoteServiceFactory.createQuoteService() }
+    val quoteService: QuoteService by lazy {
+        quoteServiceFactory.createQuoteService()
+            .also { initDialog(it) }
+    }
 
     private val exchangeViewModelsSubject = BehaviorSubject.create<ExchangeViewState>()
 
@@ -56,8 +66,28 @@ class ExchangeModel(
         Timber.d("ExchangeViewModel cleared")
     }
 
-    fun newDialog(
+    private fun initDialog(quoteService: QuoteService) {
+        val fiatCurrency = currencyPreference.fiatCurrencyPreference
+        newDialog(
+            fiatCurrency,
+            quoteService,
+            ExchangeDialog(
+                Observable.merge(
+                    inputEventSink,
+                    quoteService.quotes.map(Quote::toIntent)
+                ),
+                initial(
+                    fiatCurrency,
+                    allAccountList[CryptoCurrency.BTC].defaultAccountReference(),
+                    allAccountList[CryptoCurrency.ETHER].defaultAccountReference()
+                )
+            )
+        )
+    }
+
+    private fun newDialog(
         fiatCurrency: String,
+        quoteService: QuoteService,
         exchangeDialog: ExchangeDialog
     ) {
         dialogDisposable.clear()
@@ -78,8 +108,6 @@ class ExchangeModel(
             }
         dialogDisposable += exchangeViewStates
             .subscribeBy {
-                configChangePersistence.fromReference = it.fromAccount
-                configChangePersistence.toReference = it.toAccount
                 quoteService.updateQuoteRequest(it.toExchangeQuoteRequest(it.fromFiat.currencyCode))
 
                 updateMaxSpendable(it.fromAccount)

@@ -9,7 +9,6 @@ import info.blockchain.balance.compareTo
 import info.blockchain.balance.times
 import info.blockchain.balance.withMajorValue
 import io.reactivex.Observable
-import java.math.BigDecimal
 
 /**
  * The dialog is the conversation between the User and the System.
@@ -22,8 +21,8 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is SimpleFieldUpdateIntent -> previousState.map(intent)
                 is SwapIntent -> previousState.mapSwap()
                 is QuoteIntent -> previousState.mapQuote(intent)
-                is ChangeCryptoFromAccount -> previousState.map(intent)
-                is ChangeCryptoToAccount -> previousState.map(intent)
+                is ChangeCryptoFromAccount -> previousState.mapNewFromAccount(intent)
+                is ChangeCryptoToAccount -> previousState.mapNewToAccount(intent)
                 is ToggleFiatCryptoIntent -> previousState.toggleFiatCrypto()
                 is ToggleFromToIntent -> previousState.toggleFromTo()
                 is SetFixIntent -> previousState.mapSetFix(intent)
@@ -97,8 +96,8 @@ private fun ExchangeViewModel.toInternalState(): ExchangeViewState {
 
 private fun ExchangeViewState.resetToZero(): ExchangeViewState {
     return copy(
-        fromFiat = FiatValue.fromMajor(fromFiat.currencyCode, BigDecimal.ZERO),
-        toFiat = FiatValue.fromMajor(toFiat.currencyCode, BigDecimal.ZERO),
+        fromFiat = fromFiat.toZero(),
+        toFiat = toFiat.toZero(),
         fromCrypto = CryptoValue.zero(fromAccount.cryptoCurrency),
         toCrypto = CryptoValue.zero(toAccount.cryptoCurrency),
         upToDate = false
@@ -201,25 +200,45 @@ private fun Fix.toggleFromTo() =
         Fix.COUNTER_CRYPTO -> Fix.BASE_CRYPTO
     }
 
-private fun ExchangeViewState.map(intent: ChangeCryptoFromAccount): ExchangeViewState {
-    if (intent.from.cryptoCurrency == toAccount.cryptoCurrency) {
-        return copy(
-            fromAccount = intent.from,
-            toAccount = fromAccount
-        ).resetToZero()
-    }
-    return copy(fromAccount = intent.from).resetToZero()
-}
+private fun ExchangeViewState.mapNewFromAccount(intent: ChangeCryptoFromAccount) =
+    changeAccounts(
+        newFrom = intent.from,
+        newTo = if (intent.from.cryptoCurrency == toAccount.cryptoCurrency) {
+            fromAccount
+        } else {
+            toAccount
+        }
+    )
 
-private fun ExchangeViewState.map(intent: ChangeCryptoToAccount): ExchangeViewState {
-    if (intent.to.cryptoCurrency == fromAccount.cryptoCurrency) {
-        return copy(
-            fromAccount = toAccount,
-            toAccount = intent.to
-        ).resetToZero()
-    }
-    return copy(toAccount = intent.to).resetToZero()
-}
+private fun ExchangeViewState.mapNewToAccount(intent: ChangeCryptoToAccount) =
+    changeAccounts(
+        newFrom = if (intent.to.cryptoCurrency == fromAccount.cryptoCurrency) {
+            toAccount
+        } else {
+            fromAccount
+        },
+        newTo = intent.to
+    )
+
+private fun ExchangeViewState.mapSwap() =
+    changeAccounts(
+        newFrom = toAccount,
+        newTo = fromAccount
+    )
+
+private fun ExchangeViewState.changeAccounts(
+    newFrom: AccountReference,
+    newTo: AccountReference
+) =
+    copy(fromAccount = newFrom, toAccount = newTo)
+        .resetToZeroKeepingUserFiat()
+
+private fun ExchangeViewState.resetToZeroKeepingUserFiat() =
+    resetToZero()
+        .copy(
+            fromFiat = if (fix.isFiat) this.fromFiat else this.fromFiat.toZero(),
+            toFiat = if (fix.isFiat) this.toFiat else this.fromFiat.toZero()
+        )
 
 private fun ExchangeViewState.mapQuote(intent: QuoteIntent) =
     if (intent.quote.fix == fix &&
@@ -252,12 +271,6 @@ private fun currencyMatch(
 ) =
     quote.fiatValue.currencyCode == vmFiatValue.currencyCode &&
         quote.cryptoValue.currency == vmValue.currency
-
-private fun ExchangeViewState.mapSwap() =
-    copy(
-        fromAccount = toAccount,
-        toAccount = fromAccount
-    ).resetToZero()
 
 private fun mode(
     fieldEntered: Fix,

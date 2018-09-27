@@ -60,8 +60,6 @@ internal class ExchangeFragment : Fragment() {
     private val compositeDisposable = CompositeDisposable()
     private val activityListener: HomebrewHostActivityListener by ParentActivityDelegate(this)
 
-    private lateinit var configChangePersistence: ExchangeFragmentConfigurationChangePersistence
-
     private lateinit var currency: String
 
     private lateinit var largeValueLeftHandSide: TextView
@@ -82,7 +80,6 @@ internal class ExchangeFragment : Fragment() {
         val provider = (context as? ExchangeViewModelProvider)
             ?: throw Exception("Host activity must support ExchangeViewModelProvider")
         exchangeModel = provider.exchangeViewModel
-        configChangePersistence = exchangeModel.configChangePersistence
     }
 
     override fun onCreateView(
@@ -225,7 +222,6 @@ internal class ExchangeFragment : Fragment() {
     private fun allTextUpdates(): Observable<ExchangeIntent> {
         return keyboard.viewStates
             .doOnNext {
-                configChangePersistence.currentValue = it.userDecimal
                 if (it.shake) {
                     val animShake = AnimationUtils.loadAnimation(
                         requireContext(),

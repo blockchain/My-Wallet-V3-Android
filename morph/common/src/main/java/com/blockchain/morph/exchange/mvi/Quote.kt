@@ -36,3 +36,9 @@ val Fix.isCounter: Boolean
 
 val Fix.isBase: Boolean
     get() = this == Fix.BASE_CRYPTO || this == Fix.BASE_FIAT
+
+val Fix.isFiat: Boolean
+    get() = this == Fix.BASE_FIAT || this == Fix.COUNTER_FIAT
+
+val Fix.isCrypto: Boolean
+    get() = this == Fix.BASE_CRYPTO || this == Fix.COUNTER_CRYPTO
