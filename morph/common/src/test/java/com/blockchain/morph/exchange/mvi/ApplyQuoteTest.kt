@@ -6,8 +6,6 @@ import com.blockchain.testutils.cad
 import com.blockchain.testutils.ether
 import com.blockchain.testutils.usd
 import info.blockchain.balance.CryptoCurrency
-import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.FiatValue
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
@@ -334,7 +332,4 @@ class ApplyQuoteTest {
             }
         }
     }
-
-    private infix fun CryptoValue.`equivalent to`(fiatValue: FiatValue) =
-        Quote.Value(this, fiatValue)
 }

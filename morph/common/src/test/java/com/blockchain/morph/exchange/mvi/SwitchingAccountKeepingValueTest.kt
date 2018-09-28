@@ -5,12 +5,9 @@ import com.blockchain.testutils.cad
 import com.blockchain.testutils.ether
 import com.blockchain.testutils.usd
 import info.blockchain.balance.CryptoCurrency
-import info.blockchain.balance.CryptoValue
-import info.blockchain.balance.FiatValue
 import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should equal`
 import org.junit.Test
-import java.math.BigDecimal
 
 class SwitchingAccountKeepingValueTest {
 
@@ -120,22 +117,5 @@ class SwitchingAccountKeepingValueTest {
             toFiat `should equal` 100.usd()
             fix `should be` Fix.COUNTER_FIAT
         }
-    }
-
-    private fun ExchangeViewModel.setSomeValues(): ExchangeViewModel {
-        return copy(
-            from = value(
-                crypto = upToDate(CryptoValue.fromMajor(fromCryptoCurrency, BigDecimal.ONE)),
-                fiat = upToDate(
-                    FiatValue.fromMajor(from.fiatValue.currencyCode, BigDecimal.ONE)
-                )
-            ),
-            to = value(
-                crypto = upToDate(CryptoValue.fromMajor(toCryptoCurrency, BigDecimal.ONE)),
-                fiat = upToDate(
-                    FiatValue.fromMajor(to.fiatValue.currencyCode, BigDecimal.ONE)
-                )
-            )
-        )
     }
 }

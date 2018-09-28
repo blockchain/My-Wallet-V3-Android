@@ -11,6 +11,7 @@ import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Quote
 import com.blockchain.morph.exchange.mvi.SetTradeLimits
 import com.blockchain.morph.exchange.mvi.SpendableValueIntent
+import com.blockchain.morph.exchange.mvi.allQuoteClearingConditions
 import com.blockchain.morph.exchange.mvi.initial
 import com.blockchain.morph.exchange.mvi.toIntent
 import com.blockchain.morph.exchange.service.QuoteService
@@ -111,6 +112,10 @@ class ExchangeModel(
                 quoteService.updateQuoteRequest(it.toExchangeQuoteRequest(it.fromFiat.currencyCode))
 
                 updateMaxSpendable(it.fromAccount)
+            }
+        dialogDisposable += exchangeViewStates.allQuoteClearingConditions()
+            .subscribeBy {
+                inputEventSink.onNext(it)
             }
     }
 

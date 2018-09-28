@@ -77,3 +77,23 @@ fun value(
         fiatMode = fiat.second
     )
 }
+
+fun ExchangeViewModel.setSomeValues(): ExchangeViewModel {
+    return copy(
+        from = value(
+            crypto = upToDate(CryptoValue.fromMajor(fromCryptoCurrency, BigDecimal.ONE)),
+            fiat = upToDate(
+                FiatValue.fromMajor(from.fiatValue.currencyCode, BigDecimal.ONE)
+            )
+        ),
+        to = value(
+            crypto = upToDate(CryptoValue.fromMajor(toCryptoCurrency, BigDecimal.ONE)),
+            fiat = upToDate(
+                FiatValue.fromMajor(to.fiatValue.currencyCode, BigDecimal.ONE)
+            )
+        )
+    )
+}
+
+infix fun CryptoValue.`equivalent to`(fiatValue: FiatValue) =
+    Quote.Value(this, fiatValue)

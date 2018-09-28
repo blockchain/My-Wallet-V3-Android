@@ -38,3 +38,5 @@ class ApplyMaximumLimit : ExchangeIntent()
 class FiatExchangeRateIntent(val c2fRate: ExchangeRate.CryptoToFiat) : ExchangeIntent()
 
 class SpendableValueIntent(val cryptoValue: CryptoValue) : ExchangeIntent()
+
+object ClearQuoteIntent : ExchangeIntent()
