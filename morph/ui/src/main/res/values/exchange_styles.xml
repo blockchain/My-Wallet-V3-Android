@@ -16,6 +16,13 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <array name="exchange_send_receive_autosize_text_sizes">
+        <item>10sp</item>
+        <item>12sp</item>
+        <item>14sp</item>
+        <item>16sp</item>
+    </array>
+
     <style name="ExchangeButton.SendReceive">
         <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:textSize">16sp</item>
