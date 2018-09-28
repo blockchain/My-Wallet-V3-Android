@@ -114,6 +114,11 @@
                 android:gravity="center_vertical|end"
                 android:padding="16dp"
                 android:textColor="@color/white"
+                android:ellipsize="end"
+                android:inputType="none"
+                android:maxLines="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/order_id_title_textView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -259,9 +264,11 @@
                 android:textAlignment="center"
                 android:textColor="@color/exchange_text_gray_color"
                 android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/button_done"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/send_to_title_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/send_to_title_textView"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/imageView"
