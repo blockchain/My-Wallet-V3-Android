@@ -200,15 +200,8 @@ internal class ExchangeFragment : Fragment() {
     }
 
     private fun updateMinAndMaxButtons(it: ExchangeViewState) {
-        minButton.invisibleIf(it.minTradeLimit == null)
-        minButton.text = it.minTradeLimit?.let {
-            getString(R.string.min_with_value, it.toStringWithSymbol())
-        } ?: getString(R.string.min)
-
-        maxButton.invisibleIf(it.maxTradeLimit == null)
-        maxButton.text = it.maxTrade?.let {
-            getString(R.string.max_with_value, it.toStringWithSymbol())
-        } ?: getString(R.string.max)
+        minButton.isEnabled = it.minTradeLimit != null
+        maxButton.isEnabled = it.maxTradeLimit != null
     }
 
     private fun clicksToIntents(@IdRes id: Int, function: () -> ExchangeIntent) =
