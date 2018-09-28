@@ -34,7 +34,6 @@
     </style>
 
     <dimen name="large_exchange_text_size">72sp</dimen>
-    <dimen name="large_exchange_text_size_long">55sp</dimen>
 
     <style name="ExchangeText.LargeValue">
         <item name="android:textColor">@color/exchange_blue</item>

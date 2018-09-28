@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.widget.TextViewCompat
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,6 +76,7 @@ internal class ExchangeFragment : Fragment() {
     private lateinit var exchangeButton: Button
     private lateinit var minButton: Button
     private lateinit var maxButton: Button
+    private lateinit var largeValueFiatGroup: View
 
     private lateinit var exchangeModel: ExchangeModel
 
@@ -100,6 +100,7 @@ internal class ExchangeFragment : Fragment() {
         currency = arguments?.getString(ARGUMENT_CURRENCY) ?: "USD"
 
         largeValueLeftHandSide = view.findViewById(R.id.largeValueLeftHandSide)
+        largeValueFiatGroup = view.findViewById(R.id.fiatLargeValueGroup)
         largeValue = view.findViewById(R.id.largeValue)
         largeValueCrypto = view.findViewById(R.id.largeValueCrypto)
         largeValueRightHandSide = view.findViewById(R.id.largeValueRightHandSide)
@@ -219,12 +220,6 @@ internal class ExchangeFragment : Fragment() {
     private fun displayFiatLarge(value: Value) {
         val parts = value.fiatValue.toStringParts()
         largeValueLeftHandSide.text = parts.symbol
-        largeValue.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            resources.getDimension(
-                if (parts.major.length > 8) R.dimen.large_exchange_text_size_long else R.dimen.large_exchange_text_size
-            )
-        )
         largeValue.text = parts.major
         largeValueCrypto.text = ""
         largeValueRightHandSide.text = if (decimalCursor != 0) parts.minor else ""
@@ -245,16 +240,6 @@ internal class ExchangeFragment : Fragment() {
         smallValue.text = fromFiatString
     }
 
-    private fun setLargeText(largeText: String) {
-        largeValue.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            resources.getDimension(
-                if (largeText.length > 8) R.dimen.large_exchange_text_size_long else R.dimen.large_exchange_text_size
-            )
-        )
-        largeValue.text = largeText
-    }
-
     private fun allTextUpdates(): Observable<ExchangeIntent> {
         return keyboard.viewStates
             .doOnNext {
@@ -263,10 +248,8 @@ internal class ExchangeFragment : Fragment() {
                         requireContext(),
                         R.anim.fingerprint_failed_shake
                     )
-                    largeValue.startAnimation(animShake)
+                    largeValueFiatGroup.startAnimation(animShake)
                     largeValueCrypto.startAnimation(animShake)
-                    largeValueRightHandSide.startAnimation(animShake)
-                    largeValueLeftHandSide.startAnimation(animShake)
                 }
                 view!!.findViewById<View>(R.id.numberBackSpace).isEnabled = it.previous != null
             }

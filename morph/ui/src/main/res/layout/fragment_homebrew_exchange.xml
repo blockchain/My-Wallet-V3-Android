@@ -15,7 +15,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:maxLines="1"
-        android:padding="12dp"
         android:textColor="@color/exchange_button_color"
         app:autoSizePresetSizes="@array/exchange_send_receive_autosize_text_sizes"
         app:autoSizeTextType="uniform"
@@ -35,7 +34,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:maxLines="1"
-        android:padding="12dp"
         android:textColor="@color/exchange_button_color"
         app:autoSizePresetSizes="@array/exchange_send_receive_autosize_text_sizes"
         app:autoSizeTextType="uniform"
@@ -74,65 +72,98 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/largeValue"
-        style="@style/ExchangeText.LargeValue"
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineKeyboard"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.55"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/fiatLargeValueGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:gravity="top"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/smallValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_from_account_button"
-        tools:text="0" />
+        tools:text="0">
+
+        <TextView
+            android:id="@+id/largeValueLeftHandSide"
+            style="@style/ExchangeText.LargeValue.Currency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            app:autoSizeTextType="uniform"
+            tools:text="$" />
+
+        <TextView
+            android:id="@+id/largeValue"
+            style="@style/ExchangeText.LargeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxLines="1"
+            app:autoSizeMaxTextSize="@dimen/large_exchange_text_size"
+            app:autoSizeTextType="uniform"
+            tools:text="0.000000" />
+
+        <TextView
+            android:id="@+id/largeValueRightHandSide"
+            style="@style/ExchangeText.LargeValue.Currency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            app:autoSizeTextType="uniform"
+            tools:text="01" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/largeValueCrypto"
         style="@style/ExchangeText.LargeValue"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:gravity="center"
+        android:maxLines="1"
+        app:autoSizeMaxTextSize="@dimen/large_exchange_text_size"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/smallValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_from_account_button"
-        tools:text="0.123 BTC" />
-
-    <TextView
-        android:id="@+id/largeValueLeftHandSide"
-        style="@style/ExchangeText.LargeValue.Currency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/largeValue"
-        app:layout_constraintTop_toTopOf="@+id/largeValue"
-        tools:text="$" />
-
-    <TextView
-        android:id="@+id/largeValueRightHandSide"
-        style="@style/ExchangeText.LargeValue.Currency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/largeValue"
-        app:layout_constraintTop_toTopOf="@+id/largeValue"
-        tools:text="01" />
+        tools:text="0.1 BTC" />
 
     <TextView
         android:id="@+id/smallValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/maxButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/largeValue"
         tools:text="0 BTC" />
 
     <Button
@@ -140,26 +171,26 @@
         style="@style/ExchangeButton.MinMax"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/min"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineKeyboard"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smallValue" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/maxButton"
         style="@style/ExchangeButton.MinMax"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/max"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineKeyboard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/smallValue" />
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <Button
         android:id="@+id/exchange_action_button"
@@ -181,12 +212,11 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/exchange_action_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="300dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/minButton" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineKeyboard" />
 
     <ImageView
         android:id="@+id/imageview_switch_from_to"
