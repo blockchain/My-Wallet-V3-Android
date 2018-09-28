@@ -1,5 +1,6 @@
 package piuk.blockchain.android.ui.login;
 
+import com.blockchain.android.testutils.LazyImpl;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.HDWalletException;
 
@@ -61,7 +62,11 @@ public class ManualPairingPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mSubject = new ManualPairingPresenter(mAppUtil, mAuthDataManager, mPayloadDataManager, mPrefsUtil);
+        mSubject = new ManualPairingPresenter(
+                mAppUtil,
+                mAuthDataManager,
+                new LazyImpl(mPayloadDataManager),
+                mPrefsUtil);
         mSubject.initView(mActivity);
     }
 

@@ -3,51 +3,50 @@ package piuk.blockchain.android.ui.login;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.annotation.VisibleForTesting;
-
+import dagger.Lazy;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.exceptions.DecryptionException;
 import info.blockchain.wallet.exceptions.HDWalletException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
+import org.json.JSONException;
+import org.json.JSONObject;
 import piuk.blockchain.android.R;
 import piuk.blockchain.android.ui.launcher.LauncherActivity;
-import piuk.blockchain.androidcoreui.utils.logging.Logging;
-import piuk.blockchain.androidcoreui.utils.logging.PairingEvent;
-import piuk.blockchain.androidcoreui.utils.logging.PairingMethod;
 import piuk.blockchain.androidcore.data.auth.AuthDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
+import piuk.blockchain.androidcore.utils.PrefsUtil;
+import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
 import piuk.blockchain.androidcoreui.utils.AppUtil;
-import piuk.blockchain.androidcore.utils.PrefsUtil;
-import piuk.blockchain.androidcore.utils.annotations.Thunk;
+import piuk.blockchain.androidcoreui.utils.logging.Logging;
+import piuk.blockchain.androidcoreui.utils.logging.PairingEvent;
+import piuk.blockchain.androidcoreui.utils.logging.PairingMethod;
 import retrofit2.Response;
 import timber.log.Timber;
 
+import javax.inject.Inject;
+import java.io.IOException;
+
 public class ManualPairingPresenter extends BasePresenter<ManualPairingView> {
 
-    @VisibleForTesting static final String KEY_AUTH_REQUIRED = "authorization_required";
+    @VisibleForTesting
+    static final String KEY_AUTH_REQUIRED = "authorization_required";
 
     private String sessionId;
     private AppUtil appUtil;
     private AuthDataManager authDataManager;
-    private final PayloadDataManager payloadDataManager;
+    private final Lazy<PayloadDataManager> payloadDataManager;
     private final PrefsUtil prefsUtil;
-    @VisibleForTesting boolean waitingForAuth = false;
+    @VisibleForTesting
+    boolean waitingForAuth = false;
 
     @Inject
     ManualPairingPresenter(AppUtil appUtil,
                            AuthDataManager authDataManager,
-                           PayloadDataManager payloadDataManager,
+                           Lazy<PayloadDataManager> payloadDataManager,
                            PrefsUtil prefsUtil) {
 
         this.appUtil = appUtil;
@@ -103,7 +102,7 @@ public class ManualPairingPresenter extends BasePresenter<ManualPairingView> {
 
     private Observable<String> getSessionId(String guid) {
 
-        if(sessionId == null) {
+        if (sessionId == null) {
             return authDataManager.getSessionId(guid);
         } else {
             return Observable.just(sessionId);
@@ -180,11 +179,12 @@ public class ManualPairingPresenter extends BasePresenter<ManualPairingView> {
     }
 
     private void attemptDecryptPayload(String password, String payload) {
+        PayloadDataManager manager = payloadDataManager.get();
         getCompositeDisposable().add(
-                payloadDataManager.initializeFromPayload(payload, password)
+                manager.initializeFromPayload(payload, password)
                         .doOnComplete(() -> {
-                            prefsUtil.setValue(PrefsUtil.KEY_GUID, payloadDataManager.getWallet().getGuid());
-                            appUtil.setSharedKey(payloadDataManager.getWallet().getSharedKey());
+                            prefsUtil.setValue(PrefsUtil.KEY_GUID, manager.getWallet().getGuid());
+                            appUtil.setSharedKey(manager.getWallet().getSharedKey());
                             prefsUtil.setValue(PrefsUtil.KEY_EMAIL_VERIFIED, true);
                         })
                         .subscribe(() -> {
