@@ -174,6 +174,5 @@ class KycHomeAddressPresenter(
             !secondLine.isNullOrEmpty() ||
             !city.isEmpty() ||
             !state.isNullOrEmpty() ||
-            !postCode.isEmpty() ||
-            !country.isEmpty()
+            !postCode.isEmpty()
 }

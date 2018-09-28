@@ -90,8 +90,8 @@ class KycNavHostActivity : BaseMvpActivity<KycNavHostView, KycNavHostPresenter>(
     }
 
     override fun navigateToOnfido(profileModel: ProfileModel, countryCode: String) {
-        // Here we skip adding mobile verification to the back stack
-        navigateToMobileEntry(profileModel, countryCode)
+        // Here we skip adding mobile verification to the back stack, as number already verified
+        navigateToAddress(profileModel, countryCode)
         val args = OnfidoSplashFragment.bundleArgs(countryCode)
         navController.navigate(R.id.onfidoSplashFragment, args)
     }
