@@ -173,14 +173,4 @@ class FiatValueTests {
         } `should throw the Exception` MismatchedCurrencyCodeException::class `with message`
             "Mismatched currency codes during add"
     }
-
-    @Test
-    fun `toZero gbp`() {
-        1.2.gbp().toZero() `should equal` 0.gbp()
-    }
-
-    @Test
-    fun `toZero usd`() {
-        9.8.usd().toZero() `should equal` 0.usd()
-    }
 }

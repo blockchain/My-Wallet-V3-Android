@@ -78,6 +78,8 @@ data class CryptoValue(
      * Amount in the major value of the currency, Bitcoin/Ether for example.
      */
     fun toMajorUnitDouble() = toBigDecimal().toDouble()
+
+    override fun toZero(): CryptoValue = zero(currency)
 }
 
 operator fun CryptoValue.compareTo(other: CryptoValue): Int {

@@ -65,9 +65,7 @@ data class FiatValue private constructor(
 
     override fun symbol(locale: Locale): String = Currency.getInstance(currencyCode).getSymbol(locale)
 
-    fun toZero(): FiatValue {
-        return fromMajor(currencyCode, BigDecimal.ZERO)
-    }
+    override fun toZero(): FiatValue = fromMajor(currencyCode, BigDecimal.ZERO)
 
     companion object {
 

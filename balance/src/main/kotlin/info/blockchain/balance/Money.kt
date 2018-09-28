@@ -20,6 +20,8 @@ interface Money {
 
     fun toBigDecimal(): BigDecimal
 
+    fun toZero(): Money
+
     /**
      * User displayable symbol
      */
