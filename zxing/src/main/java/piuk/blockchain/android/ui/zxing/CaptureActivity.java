@@ -49,7 +49,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
-import piuk.blockchain.android.R;
+import piuk.blockchain.zxing.R;
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity;
 import piuk.blockchain.android.ui.zxing.camera.CameraManager;
 
@@ -389,15 +389,15 @@ public final class CaptureActivity extends BaseAuthActivity implements SurfaceHo
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_flash_light:
-                try {
-                    toggleTorch();
-                } catch (Exception e) {
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int i = item.getItemId();
+        if (i == R.id.action_flash_light) {
+            try {
+                toggleTorch();
+            } catch (Exception e) {
+            }
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

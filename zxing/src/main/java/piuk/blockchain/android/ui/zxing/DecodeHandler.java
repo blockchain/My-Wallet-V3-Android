@@ -31,7 +31,7 @@ import android.util.Log;
 
 import java.util.Map;
 
-import piuk.blockchain.android.R;
+import piuk.blockchain.zxing.R;
 import timber.log.Timber;
 
 final class DecodeHandler extends Handler {

@@ -163,7 +163,7 @@ dependencies {
     implementation Libraries.koin
     implementation Libraries.koinAndroid
     // Views
-    implementation(Libraries.zxing) { transitive = true }
+    implementation project(":zxing")
     implementation Libraries.countryPicker
     implementation Libraries.bottomNav
     implementation Libraries.circleIndicator

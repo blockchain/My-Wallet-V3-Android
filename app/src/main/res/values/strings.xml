@@ -200,7 +200,6 @@
 
     <string name="send_payment">Send Payment</string>
     <string name="share">Share Receive Address</string>
-    <string name="scan_qr">Scan QR Code</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="check_email_to_auth_login">Please check your email to approve this login attempt.</string>
     <string name="transaction_fee">Transaction Fee</string>

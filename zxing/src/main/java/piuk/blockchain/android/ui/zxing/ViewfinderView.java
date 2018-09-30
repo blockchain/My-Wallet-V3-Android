@@ -31,7 +31,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import piuk.blockchain.android.R;
+import piuk.blockchain.zxing.R;
 import piuk.blockchain.android.ui.zxing.camera.CameraManager;
 
 /**

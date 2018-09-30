@@ -16,4 +16,5 @@ include ':app',
         ':morph:morphdevapp',
         ':nabu',
         ':testutils',
-        ':testutils-android'
+        ':testutils-android',
+        ':zxing'
