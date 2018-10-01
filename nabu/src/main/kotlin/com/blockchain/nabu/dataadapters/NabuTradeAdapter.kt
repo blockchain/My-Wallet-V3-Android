@@ -5,7 +5,8 @@ import com.blockchain.morph.trade.MorphTrade
 import com.blockchain.morph.trade.MorphTradeOrder
 import com.blockchain.nabu.api.NabuTransaction
 import com.blockchain.nabu.api.TransactionState
-import com.blockchain.nabu.extensions.fromIso8601
+import com.blockchain.nabu.extensions.fromIso8601ToUtc
+import com.blockchain.nabu.extensions.toLocalTime
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FiatValue
 import java.math.BigDecimal
@@ -13,7 +14,8 @@ import java.math.BigDecimal
 internal class NabuTradeAdapter(private val trade: NabuTransaction) : MorphTrade {
 
     override val timestamp: Long
-        get() = trade.createdAt.fromIso8601()?.time?.div(1000) ?: System.currentTimeMillis() / 1000
+        get() = trade.createdAt.fromIso8601ToUtc()?.toLocalTime()?.time?.div(1000)
+            ?: System.currentTimeMillis() / 1000
 
     override val hashOut: String?
         get() = trade.hashOut

@@ -18,7 +18,7 @@ import piuk.blockchain.androidbuysell.models.coinify.CoinifyTrade
 import piuk.blockchain.androidbuysell.models.coinify.CoinifyTradeRequest
 import piuk.blockchain.androidbuysell.models.coinify.exceptions.CoinifyApiException
 import piuk.blockchain.androidbuysell.services.ExchangeService
-import com.blockchain.nabu.extensions.fromIso8601
+import com.blockchain.nabu.extensions.fromIso8601ToUtc
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -49,7 +49,7 @@ class CoinifyBuyConfirmationPresenter @Inject constructor(
     override fun onViewReady() = Unit
 
     internal fun startCountdownTimer() {
-        val expiryDateGmt = view.displayableQuote.originalQuote.expiryTime.fromIso8601()!!
+        val expiryDateGmt = view.displayableQuote.originalQuote.expiryTime.fromIso8601ToUtc()!!
         val calendar = Calendar.getInstance()
         val timeZone = calendar.timeZone
         val offset = timeZone.getOffset(expiryDateGmt.time)

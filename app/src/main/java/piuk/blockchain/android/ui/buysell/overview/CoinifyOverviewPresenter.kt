@@ -31,7 +31,7 @@ import piuk.blockchain.androidbuysell.models.coinify.ReviewState
 import piuk.blockchain.androidbuysell.models.coinify.Subscription
 import piuk.blockchain.androidbuysell.models.coinify.TradeState
 import piuk.blockchain.androidbuysell.services.ExchangeService
-import com.blockchain.nabu.extensions.fromIso8601
+import com.blockchain.nabu.extensions.fromIso8601ToUtc
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatUtil
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.utils.extensions.toSerialisedString
@@ -205,7 +205,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                     val trade = it.second
 
                     val calendar = Calendar.getInstance()
-                        .apply { time = trade.createTime.fromIso8601()!! }
+                        .apply { time = trade.createTime.fromIso8601ToUtc()!! }
                     val dayOfWeek = calendar.getDisplayName(
                         Calendar.DAY_OF_WEEK,
                         Calendar.LONG,
@@ -234,7 +234,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                     val currency = trade.transferIn.currency.toUpperCase()
 
                     var dateString =
-                        subscription.endTime?.fromIso8601()?.toFormattedString(
+                        subscription.endTime?.fromIso8601ToUtc()?.toFormattedString(
                             view.locale
                         )
                     if (dateString != null) {
@@ -343,7 +343,7 @@ class CoinifyOverviewPresenter @Inject constructor(
                     it.map { (subscription, trade) ->
 
                         val calendar = Calendar.getInstance()
-                            .apply { time = trade.createTime.fromIso8601()!! }
+                            .apply { time = trade.createTime.fromIso8601ToUtc()!! }
                         val dayOfWeek = calendar.getDisplayName(
                             Calendar.DAY_OF_WEEK,
                             Calendar.LONG,
@@ -438,7 +438,7 @@ class CoinifyOverviewPresenter @Inject constructor(
 
         return BuySellTransaction(
             transactionId = coinifyTrade.id,
-            time = coinifyTrade.createTime.fromIso8601()!!,
+            time = coinifyTrade.createTime.fromIso8601ToUtc()!!,
             displayAmount = displayString,
             tradeStateString = if (coinifyTrade.isAwaitingCardPayment()) {
                 R.string.buy_sell_state_pending_buy
@@ -465,7 +465,7 @@ class CoinifyOverviewPresenter @Inject constructor(
             stringUtils.getFormattedString(titleStringRes, stateString)
         }
         // Date
-        val time = coinifyTrade.updateTime.fromIso8601() ?: Date()
+        val time = coinifyTrade.updateTime.fromIso8601ToUtc() ?: Date()
         val calendar = Calendar.getInstance()
         val timeZone = calendar.timeZone
         val offset = timeZone.getOffset(time.time)

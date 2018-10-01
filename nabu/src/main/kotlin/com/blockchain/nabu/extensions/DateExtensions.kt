@@ -2,6 +2,7 @@ package com.blockchain.nabu.extensions
 
 import org.apache.commons.lang3.time.DateUtils
 import java.text.ParseException
+import java.util.Calendar
 import java.util.Date
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date
  *
  * @return A [Date] object or null if the [String] isn't formatted correctly.
  */
-fun String.fromIso8601(): Date? {
+fun String.fromIso8601ToUtc(): Date? {
     val millisFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     val secondsFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
@@ -25,4 +26,12 @@ fun String.fromIso8601(): Date? {
         e.printStackTrace()
         null
     }
+}
+
+fun Date.toLocalTime(): Date {
+    val calendar = Calendar.getInstance()
+    val timeZone = calendar.timeZone
+    val offset = timeZone.getOffset(this.time)
+
+    return Date(this.time + offset)
 }
