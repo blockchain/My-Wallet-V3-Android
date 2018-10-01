@@ -28,6 +28,7 @@ class ApplyMaximumTradeLimitTest {
         given(
             initial("CAD")
         ).onLastStateAfter(
+            SetFixIntent(Fix.BASE_CRYPTO),
             ApplyMaximumLimit()
         ) {
             fix `should be` Fix.BASE_CRYPTO

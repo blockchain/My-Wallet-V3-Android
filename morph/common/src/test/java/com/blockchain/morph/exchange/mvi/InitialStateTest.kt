@@ -18,8 +18,8 @@ class InitialStateTest {
             .test()
             .assertValue {
                 it.from `should equal` value(
-                    userEntered(0.bitcoin()),
-                    outOfDate(0.usd())
+                    outOfDate(0.bitcoin()),
+                    userEntered(0.usd())
                 )
                 it.to `should equal` value(
                     outOfDate(0.ether()),

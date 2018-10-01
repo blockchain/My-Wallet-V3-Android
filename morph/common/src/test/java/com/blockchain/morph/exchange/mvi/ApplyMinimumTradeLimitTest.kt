@@ -25,6 +25,7 @@ class ApplyMinimumTradeLimitTest {
         given(
             initial("CAD")
         ).onLastStateAfter(
+            SetFixIntent(Fix.BASE_CRYPTO),
             ApplyMinimumLimit()
         ) {
             fix `should be` Fix.BASE_CRYPTO

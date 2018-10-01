@@ -27,7 +27,8 @@ val ExchangeViewModel.fixedField: Fix
         to.cryptoMode == Value.Mode.UserEntered -> Fix.COUNTER_CRYPTO
         to.fiatMode == Value.Mode.UserEntered -> Fix.COUNTER_FIAT
         from.fiatMode == Value.Mode.UserEntered -> Fix.BASE_FIAT
-        else -> Fix.BASE_CRYPTO
+        from.cryptoMode == Value.Mode.UserEntered -> Fix.BASE_CRYPTO
+        else -> Fix.BASE_FIAT
     }
 
 val ExchangeViewModel.fixedMoneyValue: Money
