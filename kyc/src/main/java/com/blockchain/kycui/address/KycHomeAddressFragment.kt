@@ -179,18 +179,24 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
     }
 
     private fun updateAddress(data: Intent?) {
-        val place = PlaceAutocomplete.getPlace(requireActivity(), data)
-        val address =
-            Geocoder(context, Locale.getDefault())
-                .getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
-                .first()
-
         subscribeToViewObservables()
-        editTextFirstLine.setText(address.thoroughfare ?: address.subThoroughfare)
-        editTextAptName.setText(address.featureName)
-        editTextCity.setText(address.locality ?: address.subAdminArea)
-        editTextState.setText(address.adminArea)
-        editTextZipCode.setText(address.postalCode)
+        try {
+            val place = PlaceAutocomplete.getPlace(requireActivity(), data)
+            val address =
+                Geocoder(context, Locale.getDefault())
+                    .getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                    ?.firstOrNull()
+
+            if (address != null) {
+                editTextFirstLine.setText(address.thoroughfare ?: address.subThoroughfare)
+                editTextAptName.setText(address.featureName)
+                editTextCity.setText(address.locality ?: address.subAdminArea)
+                editTextState.setText(address.adminArea)
+                editTextZipCode.setText(address.postalCode)
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
     }
 
     override fun onResume() {
