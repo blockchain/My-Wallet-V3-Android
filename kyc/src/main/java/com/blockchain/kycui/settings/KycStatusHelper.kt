@@ -13,15 +13,12 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import piuk.blockchain.androidcore.utils.PersistentPrefs
-import piuk.blockchain.androidcore.utils.PrefsUtil
 import timber.log.Timber
 
 class KycStatusHelper(
     private val nabuDataManager: NabuDataManager,
     private val metadataManager: MetadataManager,
-    private val settingsDataManager: SettingsDataManager,
-    private val prefsUtil: PrefsUtil
+    private val settingsDataManager: SettingsDataManager
 ) {
 
     private val fetchOfflineToken
@@ -89,16 +86,7 @@ class KycStatusHelper(
         .onErrorReturn { false }
 
     @VisibleForTesting
-    internal fun isInKycRegion(): Single<Boolean> = Single.zip(
-        isStoredCountryInKycRegion(),
-        isBestGuessCountryInKycRegion(),
-        BiFunction { stored: Boolean, current: Boolean -> stored || current }
-    )
-
-    private fun isStoredCountryInKycRegion(): Single<Boolean> =
-        isInKycRegion(prefsUtil.getValue(PersistentPrefs.PREF_CHOSEN_KYC_COUNTRY, null))
-
-    private fun isBestGuessCountryInKycRegion(): Single<Boolean> =
+    internal fun isInKycRegion(): Single<Boolean> =
         settingsDataManager.getSettings()
             .subscribeOn(Schedulers.io())
             .map { it.countryCode }

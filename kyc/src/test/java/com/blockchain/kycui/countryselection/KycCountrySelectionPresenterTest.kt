@@ -14,7 +14,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
-import piuk.blockchain.androidcore.utils.PrefsUtil
 
 class KycCountrySelectionPresenterTest {
 
@@ -22,7 +21,6 @@ class KycCountrySelectionPresenterTest {
     private val view: KycCountrySelectionView = mock()
     private val nabuDataManager: NabuDataManager = mock()
     private val walletOptionsDataManager: WalletOptionsDataManager = mock()
-    private val prefsUtil: PrefsUtil = mock()
 
     @Suppress("unused")
     @get:Rule
@@ -33,7 +31,7 @@ class KycCountrySelectionPresenterTest {
 
     @Before
     fun setUp() {
-        subject = KycCountrySelectionPresenter(nabuDataManager, walletOptionsDataManager, prefsUtil)
+        subject = KycCountrySelectionPresenter(nabuDataManager, walletOptionsDataManager)
         subject.initView(view)
     }
 

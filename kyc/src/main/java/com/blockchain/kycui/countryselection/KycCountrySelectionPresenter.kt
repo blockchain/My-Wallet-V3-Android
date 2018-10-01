@@ -9,8 +9,6 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
-import piuk.blockchain.androidcore.utils.PersistentPrefs.PREF_CHOSEN_KYC_COUNTRY
-import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
@@ -18,8 +16,7 @@ import timber.log.Timber
 
 class KycCountrySelectionPresenter(
     private val nabuDataManager: NabuDataManager,
-    private val walletOptionsDataManager: WalletOptionsDataManager,
-    private val prefsUtil: PrefsUtil
+    private val walletOptionsDataManager: WalletOptionsDataManager
 ) : BasePresenter<KycCountrySelectionView>() {
 
     private val countriesList by unsafeLazy {
@@ -60,7 +57,6 @@ class KycCountrySelectionPresenter(
                 .subscribeBy(
                     onSuccess = {
                         if (it) {
-                            prefsUtil.setValue(PREF_CHOSEN_KYC_COUNTRY, countryCode)
                             view.redirectToShapeShift()
                         } else {
                             view.invalidCountry(countryCode)
