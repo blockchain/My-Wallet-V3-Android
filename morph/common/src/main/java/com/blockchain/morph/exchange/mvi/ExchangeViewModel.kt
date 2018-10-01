@@ -11,13 +11,9 @@ data class ExchangeViewModel(
     val toAccount: AccountReference,
     val from: Value,
     val to: Value,
-    val latestQuote: Quote? = null
+    val latestQuote: Quote? = null,
+    val isValid: Boolean = false
 ) {
-    fun isValid(): Boolean =
-        latestQuote != null &&
-        latestQuote.fix == fixedField &&
-        latestQuote.fixValue == fixedMoneyValue
-
     val fromCryptoCurrency = fromAccount.cryptoCurrency
     val toCryptoCurrency = toAccount.cryptoCurrency
 }

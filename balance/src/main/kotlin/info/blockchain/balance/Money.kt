@@ -5,6 +5,11 @@ import java.util.Locale
 
 interface Money {
 
+    /**
+     * Use [symbol] for user display. This can be used by APIs etc.
+     */
+    val currencyCode: String
+
     val isZero: Boolean
 
     val isPositive: Boolean
@@ -68,4 +73,22 @@ interface Money {
         val minor: String,
         val majorAndMinor: String
     )
+}
+
+class ComparisonException(lhsSymbol: String, rhsSymbol: String) : Exception("Can't compare $lhsSymbol and $rhsSymbol")
+
+operator fun Money.compareTo(other: Money): Int {
+    return when (this) {
+        is FiatValue -> {
+            compareTo(
+                other as? FiatValue ?: throw ComparisonException(currencyCode, other.currencyCode)
+            )
+        }
+        is CryptoValue -> {
+            compareTo(
+                other as? CryptoValue ?: throw ComparisonException(currencyCode, other.currencyCode)
+            )
+        }
+        else -> throw IllegalArgumentException()
+    }
 }

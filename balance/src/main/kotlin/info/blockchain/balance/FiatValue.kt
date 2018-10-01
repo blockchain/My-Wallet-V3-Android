@@ -34,7 +34,7 @@ private object FiatFormat {
 // TODO: AND-1363 Remove suppress, possibly by implementing equals manually as copy is not needed
 @Suppress("DataClassPrivateConstructor")
 data class FiatValue private constructor(
-    val currencyCode: String,
+    override val currencyCode: String,
     internal val value: BigDecimal
 ) : Money {
 
@@ -92,7 +92,7 @@ data class FiatValue private constructor(
 class MismatchedCurrencyCodeException(message: String) : Exception(message)
 
 private fun ensureComparable(a: String, b: String) {
-    if (a != b) throw Exception("Can't compare $a and $b")
+    if (a != b) throw ComparisonException(a, b)
 }
 
 operator fun FiatValue.compareTo(b: FiatValue): Int {

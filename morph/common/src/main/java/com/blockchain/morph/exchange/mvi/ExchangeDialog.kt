@@ -90,7 +90,7 @@ private fun ExchangeViewState.mapTradeLimits(intent: SetTradeLimits): ExchangeVi
     )
 }
 
-private fun ExchangeViewModel.toInternalState(): ExchangeViewState {
+internal fun ExchangeViewModel.toInternalState(): ExchangeViewState {
     return ExchangeViewState(
         fromAccount = fromAccount,
         toAccount = toAccount,
@@ -134,7 +134,8 @@ fun ExchangeViewState.toViewModel(): ExchangeViewModel {
             cryptoMode = mode(fix, Fix.COUNTER_CRYPTO, toCrypto, upToDate),
             fiatMode = mode(fix, Fix.COUNTER_FIAT, toFiat, upToDate)
         ),
-        latestQuote = latestQuote
+        latestQuote = latestQuote,
+        isValid = isValid()
     )
 }
 
@@ -173,6 +174,28 @@ data class ExchangeViewState(
                 maxSpendable
             }
         }
+
+    val fixedMoneyValue: Money
+        get() = when (fix) {
+            Fix.BASE_CRYPTO -> fromCrypto
+            Fix.COUNTER_CRYPTO -> toCrypto
+            Fix.BASE_FIAT -> fromFiat
+            Fix.COUNTER_FIAT -> toFiat
+        }
+
+    fun isValid() = latestQuote != null &&
+        quoteMatchesFixAndValue(latestQuote) &&
+        enoughFundsIfKnown(latestQuote)
+
+    private fun quoteMatchesFixAndValue(latestQuote: Quote) =
+        latestQuote.fix == fix &&
+            latestQuote.fixValue == fixedMoneyValue
+
+    private fun enoughFundsIfKnown(latestQuote: Quote): Boolean {
+        if (maxSpendable == null) return true
+        if (maxSpendable.currency != latestQuote.from.cryptoValue.currency) return true
+        return maxSpendable >= latestQuote.from.cryptoValue
+    }
 }
 
 private fun ExchangeViewState.map(intent: SimpleFieldUpdateIntent): ExchangeViewState {

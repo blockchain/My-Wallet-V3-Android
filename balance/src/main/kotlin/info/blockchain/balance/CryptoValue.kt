@@ -17,7 +17,9 @@ data class CryptoValue(
 
     override val userDecimalPlaces: Int = currency.userDp
 
-    override fun symbol(locale: Locale) = currency.symbol
+    override val currencyCode: String = currency.symbol
+
+    override fun symbol(locale: Locale) = currencyCode
 
     override fun toStringWithSymbol(locale: Locale) = formatWithUnit(locale)
 
@@ -88,7 +90,7 @@ operator fun CryptoValue.compareTo(other: CryptoValue): Int {
 }
 
 private fun ensureComparable(a: CryptoCurrency, b: CryptoCurrency) {
-    if (a != b) throw Exception("Can't compare ${a.symbol} and ${b.symbol}")
+    if (a != b) throw ComparisonException(a.symbol, b.symbol)
 }
 
 fun CryptoCurrency.withMajorValue(majorValue: BigDecimal) = CryptoValue.fromMajor(this, majorValue)
