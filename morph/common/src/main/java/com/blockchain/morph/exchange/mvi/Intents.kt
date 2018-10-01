@@ -11,7 +11,7 @@ import java.math.BigDecimal
  */
 sealed class ExchangeIntent
 
-class SimpleFieldUpdateIntent(val userValue: BigDecimal) : ExchangeIntent()
+class SimpleFieldUpdateIntent(val userValue: BigDecimal, val decimalCursor: Int = 0) : ExchangeIntent()
 
 class SwapIntent : ExchangeIntent()
 

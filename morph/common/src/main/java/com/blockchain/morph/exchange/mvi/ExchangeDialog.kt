@@ -152,7 +152,8 @@ data class ExchangeViewState(
     val minTradeLimit: FiatValue? = null,
     val maxTradeLimit: FiatValue? = null,
     val c2fRate: ExchangeRate.CryptoToFiat? = null,
-    val maxSpendable: CryptoValue? = null
+    val maxSpendable: CryptoValue? = null,
+    val decimalCursor: Int = 0
 ) {
     val lastUserValue: Money =
         when (fix) {
@@ -210,7 +211,7 @@ private fun ExchangeViewState.map(intent: SimpleFieldUpdateIntent): ExchangeView
             upToDate = false
         )
         Fix.COUNTER_CRYPTO -> copy(toCrypto = toCrypto.currency.withMajorValue(intent.userValue), upToDate = false)
-    }
+    }.copy(decimalCursor = intent.decimalCursor)
 }
 
 private fun ExchangeViewState.toggleFiatCrypto() = copy(fix = fix.toggleFiatCrypto())

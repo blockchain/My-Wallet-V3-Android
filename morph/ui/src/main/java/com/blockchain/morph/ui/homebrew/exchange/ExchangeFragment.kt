@@ -23,18 +23,15 @@ import com.blockchain.morph.exchange.mvi.Maximums
 import com.blockchain.morph.exchange.mvi.SimpleFieldUpdateIntent
 import com.blockchain.morph.exchange.mvi.SwapIntent
 import com.blockchain.morph.exchange.mvi.ToggleFiatCryptoIntent
-import com.blockchain.morph.exchange.mvi.Value
-import com.blockchain.morph.exchange.mvi.fixedField
-import com.blockchain.morph.exchange.mvi.fixedMoneyValue
 import com.blockchain.morph.exchange.mvi.isBase
 import com.blockchain.morph.exchange.mvi.isCounter
-import com.blockchain.morph.exchange.mvi.toViewModel
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewHostActivityListener
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
 import com.jakewharton.rxbinding2.view.clicks
 import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
 import info.blockchain.balance.Money
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -138,8 +135,6 @@ internal class ExchangeFragment : Fragment() {
         }
     }
 
-    private var decimalCursor: Int = 0
-
     override fun onResume() {
         super.onResume()
 
@@ -168,34 +163,25 @@ internal class ExchangeFragment : Fragment() {
         compositeDisposable += exchangeModel
             .exchangeViewStates
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                updateMinAndMaxButtons(it)
-            }
-            .map {
-                it.toViewModel()
-            }
             .subscribeBy {
-                when (it.fixedField) {
-                    Fix.BASE_FIAT -> displayFiatLarge(it.from)
-                    Fix.BASE_CRYPTO -> displayCryptoLarge(it.from)
-                    Fix.COUNTER_FIAT -> displayFiatLarge(it.to)
-                    Fix.COUNTER_CRYPTO -> displayCryptoLarge(it.to)
+                updateMinAndMaxButtons(it)
+                when (it.fix) {
+                    Fix.BASE_FIAT -> displayFiatLarge(it.fromFiat, it.fromCrypto, it.decimalCursor)
+                    Fix.BASE_CRYPTO -> displayCryptoLarge(it.fromCrypto, it.fromFiat, it.decimalCursor)
+                    Fix.COUNTER_FIAT -> displayFiatLarge(it.toFiat, it.toCrypto, it.decimalCursor)
+                    Fix.COUNTER_CRYPTO -> displayCryptoLarge(it.toCrypto, it.toFiat, it.decimalCursor)
                 }
-                selectSendAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.from)
-                selectReceiveAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.to)
-                exchangeIndicator.invisibleIf(it.fixedField.isCounter)
-                receiveIndicator.invisibleIf(it.fixedField.isBase)
-                keyboard.setValue(it.fixedMoneyValue.userDecimalPlaces, it.fixedMoneyValue.toBigDecimal())
+                selectSendAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.fromCrypto)
+                selectReceiveAccountButton.setButtonGraphicsAndTextFromCryptoValue(it.toCrypto)
+                exchangeIndicator.invisibleIf(it.fix.isCounter)
+                receiveIndicator.invisibleIf(it.fix.isBase)
+                keyboard.setValue(it.lastUserValue.userDecimalPlaces, it.lastUserValue.toBigDecimal())
                 exchangeButton.text = getString(
                     R.string.exchange_x_for_y,
                     it.fromAccount.cryptoCurrency.symbol,
                     it.toAccount.cryptoCurrency.symbol
                 )
-                exchangeButton.isEnabled = it.isValid
-            }
-        compositeDisposable += keyboard.viewStates
-            .subscribeBy {
-                decimalCursor = it.decimalCursor
+                exchangeButton.isEnabled = it.isValid()
             }
     }
 
@@ -210,26 +196,26 @@ internal class ExchangeFragment : Fragment() {
     private fun clicksToIntents(view: View, function: () -> ExchangeIntent) =
         view.clicks().map { function() }
 
-    private fun displayFiatLarge(value: Value) {
-        val parts = value.fiatValue.toStringParts()
+    private fun displayFiatLarge(fiatValue: FiatValue, cryptoValue: CryptoValue, decimalCursor: Int) {
+        val parts = fiatValue.toStringParts()
         largeValueLeftHandSide.text = parts.symbol
         largeValue.text = parts.major
         largeValueCrypto.text = ""
         largeValueRightHandSide.text = if (decimalCursor != 0) parts.minor else ""
 
-        val fromCryptoString = value.cryptoValue.toStringWithSymbol()
+        val fromCryptoString = cryptoValue.toStringWithSymbol()
         smallValue.text = fromCryptoString
     }
 
     @SuppressLint("SetTextI18n")
-    private fun displayCryptoLarge(value: Value) {
+    private fun displayCryptoLarge(cryptoValue: CryptoValue, fiatValue: FiatValue, decimalCursor: Int) {
         largeValueLeftHandSide.text = ""
         largeValue.text = ""
         largeValueRightHandSide.text = ""
         largeValueRightHandSide.visibility = View.VISIBLE
-        largeValueCrypto.text = value.cryptoValue.formatExactly(decimalCursor) + " " + value.cryptoValue.symbol()
+        largeValueCrypto.text = cryptoValue.formatExactly(decimalCursor) + " " + cryptoValue.symbol()
 
-        val fromFiatString = value.fiatValue.toStringWithSymbol()
+        val fromFiatString = fiatValue.toStringWithSymbol()
         smallValue.text = fromFiatString
     }
 
@@ -246,10 +232,8 @@ internal class ExchangeFragment : Fragment() {
                 }
                 view!!.findViewById<View>(R.id.numberBackSpace).isEnabled = it.previous != null
             }
-            .map { it.userDecimal }
-            .distinctUntilChanged()
             .map {
-                SimpleFieldUpdateIntent(it)
+                SimpleFieldUpdateIntent(it.userDecimal, it.decimalCursor)
             }
     }
 
@@ -282,12 +266,10 @@ private fun Money.formatOrSymbolForZero() =
         toStringWithSymbol()
     }
 
-private fun Button.setButtonGraphicsAndTextFromCryptoValue(
-    from: Value
-) {
-    val fromCryptoString = from.cryptoValue.formatOrSymbolForZero()
-    setBackgroundResource(from.cryptoValue.currency.colorRes())
-    setCryptoLeftImageIfZero(from.cryptoValue)
+private fun Button.setButtonGraphicsAndTextFromCryptoValue(cryptoValue: CryptoValue) {
+    val fromCryptoString = cryptoValue.formatOrSymbolForZero()
+    setBackgroundResource(cryptoValue.currency.colorRes())
+    setCryptoLeftImageIfZero(cryptoValue)
     text = fromCryptoString
 }
 

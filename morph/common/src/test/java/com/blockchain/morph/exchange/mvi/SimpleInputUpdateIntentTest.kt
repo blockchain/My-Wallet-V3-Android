@@ -5,6 +5,7 @@ import com.blockchain.testutils.ether
 import com.blockchain.testutils.gbp
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
+import org.amshove.kluent.`should be`
 import org.junit.Test
 
 class SimpleInputUpdateIntentTest {
@@ -146,6 +147,28 @@ class SimpleInputUpdateIntentTest {
                     )
                 )
             )
+        }
+    }
+
+    @Test
+    fun `default decimal places`() {
+        given(
+            initial("CAD")
+        ).onLastStateAfter(
+            SimpleFieldUpdateIntent(123.45.toBigDecimal())
+        ) {
+            decimalCursor `should be` 0
+        }
+    }
+
+    @Test
+    fun `can update the decimal places`() {
+        given(
+            initial("CAD")
+        ).onLastStateAfter(
+            SimpleFieldUpdateIntent(123.45.toBigDecimal(), decimalCursor = 2)
+        ) {
+            decimalCursor `should be` 2
         }
     }
 
