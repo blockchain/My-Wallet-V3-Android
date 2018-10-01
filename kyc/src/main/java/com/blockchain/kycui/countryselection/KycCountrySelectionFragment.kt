@@ -1,6 +1,8 @@
 package com.blockchain.kycui.countryselection
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.KycProfileFragment
 import com.blockchain.kycui.search.filterCountries
+import com.blockchain.kycui.status.KycStatusActivity.Companion.HOMEBREW_LAUNCHER_INTENT
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -94,6 +97,12 @@ class KycCountrySelectionFragment :
         findNavController(this).navigate(R.id.kycInvalidCountryFragment, bundleArgs)
     }
 
+    override fun redirectToShapeShift() {
+        LocalBroadcastManager.getInstance(requireContext())
+            .sendBroadcast(Intent(HOMEBREW_LAUNCHER_INTENT))
+        requireActivity().finish()
+    }
+
     override fun renderUiState(state: CountrySelectionState) {
         when (state) {
             CountrySelectionState.Loading -> showProgress()
@@ -131,8 +140,4 @@ class KycCountrySelectionFragment :
     override fun createPresenter(): KycCountrySelectionPresenter = presenter
 
     override fun getMvpView(): KycCountrySelectionView = this
-
-    companion object {
-        const val EXTRA_COUNTRY_CODE = "com.blockchain.kycui.countryselection.EXTRA_COUNTRY_CODE"
-    }
 }

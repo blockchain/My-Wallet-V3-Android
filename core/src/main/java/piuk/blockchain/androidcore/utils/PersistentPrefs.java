@@ -39,6 +39,7 @@ public interface PersistentPrefs {
     String KEY_CONTACTS_INTRODUCTION_COMPLETE = "contacts_intro_complete";
     String KEY_CURRENCY_CRYPTO_STATE = "KEY_CURRENCY_CRYPTO_STATE";
     String KEY_PUSH_NOTIFICATION_ENABLED = "push_notification_enabled";
+    String PREF_CHOSEN_KYC_COUNTRY = "PREF_CHOSEN_KYC_COUNTRY";
 
     String KEY_LATEST_ANNOUNCEMENT_DISMISSED = "latest_announcement_dismissed";
     String KEY_LATEST_ANNOUNCEMENT_SEEN = "latest_announcement_seen";

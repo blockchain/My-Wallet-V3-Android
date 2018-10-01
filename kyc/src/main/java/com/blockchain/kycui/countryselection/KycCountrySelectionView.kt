@@ -10,4 +10,6 @@ interface KycCountrySelectionView : View {
     fun invalidCountry(countryCode: String)
 
     fun renderUiState(state: CountrySelectionState)
+
+    fun redirectToShapeShift()
 }

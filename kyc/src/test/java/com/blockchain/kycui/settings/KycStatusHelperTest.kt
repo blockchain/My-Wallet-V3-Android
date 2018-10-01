@@ -21,6 +21,8 @@ import org.junit.Rule
 import org.junit.Test
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
+import piuk.blockchain.androidcore.utils.PersistentPrefs.PREF_CHOSEN_KYC_COUNTRY
+import piuk.blockchain.androidcore.utils.PrefsUtil
 
 class KycStatusHelperTest {
 
@@ -28,6 +30,7 @@ class KycStatusHelperTest {
     private val nabuDataManager: NabuDataManager = mock()
     private val metadataManager: MetadataManager = mock()
     private val settingsDataManager: SettingsDataManager = mock()
+    private val prefsUtil: PrefsUtil = mock()
 
     @Suppress("unused")
     @get:Rule
@@ -41,7 +44,8 @@ class KycStatusHelperTest {
         subject = KycStatusHelper(
             nabuDataManager,
             metadataManager,
-            settingsDataManager
+            settingsDataManager,
+            prefsUtil
         )
     }
 
@@ -95,6 +99,46 @@ class KycStatusHelperTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(false)
+    }
+
+    @Test
+    fun `is in kyc region returns false as country code not found, nor stored country`() {
+        // Arrange
+        val countryCode = "US"
+        val countryList =
+            listOf(NabuCountryResponse("UK", "United Kingdom", emptyList(), listOf("KYC")))
+        whenever(nabuDataManager.getCountriesList(Scope.Kyc))
+            .thenReturn(Single.just(countryList))
+        val settings: Settings = mock()
+        whenever(settings.countryCode).thenReturn(countryCode)
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
+        whenever(prefsUtil.getValue(PREF_CHOSEN_KYC_COUNTRY, null)).thenReturn("DE")
+        // Act
+        val testObserver = subject.isInKycRegion().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(false)
+    }
+
+    @Test
+    fun `is in kyc region returns true as stored country code found in list`() {
+        // Arrange
+        val countryCode = "US"
+        val countryList =
+            listOf(NabuCountryResponse("UK", "United Kingdom", emptyList(), listOf("KYC")))
+        whenever(nabuDataManager.getCountriesList(Scope.Kyc))
+            .thenReturn(Single.just(countryList))
+        val settings: Settings = mock()
+        whenever(settings.countryCode).thenReturn(countryCode)
+        whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
+        whenever(prefsUtil.getValue(PREF_CHOSEN_KYC_COUNTRY, null)).thenReturn("UK")
+        // Act
+        val testObserver = subject.isInKycRegion().test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(true)
     }
 
     @Test

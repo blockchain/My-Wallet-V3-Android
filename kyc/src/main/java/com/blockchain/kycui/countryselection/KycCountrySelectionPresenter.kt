@@ -8,13 +8,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
+import piuk.blockchain.androidcore.utils.PersistentPrefs.PREF_CHOSEN_KYC_COUNTRY
+import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 
 class KycCountrySelectionPresenter(
-    nabuDataManager: NabuDataManager
+    private val nabuDataManager: NabuDataManager,
+    private val walletOptionsDataManager: WalletOptionsDataManager,
+    private val prefsUtil: PrefsUtil
 ) : BasePresenter<KycCountrySelectionView>() {
 
     private val countriesList by unsafeLazy {
@@ -42,9 +47,24 @@ class KycCountrySelectionPresenter(
             countriesList.filter { it.isKycCountry(countryCode) }
                 .subscribeBy(
                     onSuccess = { view.continueFlow(countryCode) },
-                    onComplete = { view.invalidCountry(countryCode) },
+                    onComplete = { checkShapeShift(countryCode) },
                     onError = {
                         throw IllegalStateException("Countries list should already be cached")
+                    }
+                )
+    }
+
+    private fun checkShapeShift(countryCode: String) {
+        compositeDisposable +=
+            walletOptionsDataManager.isInShapeShiftCountry(countryCode)
+                .subscribeBy(
+                    onSuccess = {
+                        if (it) {
+                            prefsUtil.setValue(PREF_CHOSEN_KYC_COUNTRY, countryCode)
+                            view.redirectToShapeShift()
+                        } else {
+                            view.invalidCountry(countryCode)
+                        }
                     }
                 )
     }

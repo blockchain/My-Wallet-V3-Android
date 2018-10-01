@@ -52,7 +52,7 @@ val kycModule = applicationContext {
             NabuAuthenticator(get(), get()) as Authenticator
         }
 
-        factory { KycCountrySelectionPresenter(get()) }
+        factory { KycCountrySelectionPresenter(get(), get(), get()) }
 
         factory { KycProfilePresenter(get(), get()) }
 

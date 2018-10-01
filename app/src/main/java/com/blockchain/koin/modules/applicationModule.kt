@@ -45,7 +45,7 @@ val applicationModule = applicationContext {
             ) as SecondPasswordHandler
         }
 
-        factory { KycStatusHelper(get(), get(), get()) }
+        factory { KycStatusHelper(get(), get(), get(), get()) }
     }
 
     factory { DateUtil(get()) }

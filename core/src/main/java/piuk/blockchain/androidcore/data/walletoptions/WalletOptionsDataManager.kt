@@ -3,6 +3,7 @@ package piuk.blockchain.androidcore.data.walletoptions
 import info.blockchain.wallet.api.data.Settings
 import info.blockchain.wallet.api.data.WalletOptions
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.auth.AuthService
@@ -56,6 +57,15 @@ class WalletOptionsDataManager @Inject constructor(
             }
         )
     }
+
+    fun isInShapeShiftCountry(countryCode: String): Single<Boolean> =
+        walletOptionsState.walletOptionsSource
+            .firstOrError()
+            .map { options ->
+                options.shapeshift.countriesBlacklist.let {
+                    it?.contains(countryCode)?.not() ?: true
+                }
+            }
 
     private fun isShapeshiftAllowed(options: WalletOptions, settings: Settings): Boolean {
         val isShapeShiftAllowed = options.androidFlags.let { it?.get(SHOW_SHAPESHIFT) ?: false }
@@ -144,9 +154,9 @@ class WalletOptionsDataManager @Inject constructor(
 
             result = when {
                 map.containsKey(language) -> map[language] ?: ""
-            // Regional
+                // Regional
                 map.containsKey(lcid) -> map[lcid] ?: ""
-            // Default
+                // Default
                 else -> map["en"] ?: ""
             }
         }
