@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew coveralls -Dpre-dex=false -Pkotlin.incremental=false --stacktrace
+./gradlew coveralls -Dpre-dex=false -Pkotlin.incremental=false --stacktrace --no-daemon
