@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew assembleEnvProdDebug -Dpre-dex=false -Pkotlin.incremental=false --stacktrace
+./gradlew assembleEnvProdDebug -Dpre-dex=false -Pkotlin.incremental=false --stacktrace --no-daemon
