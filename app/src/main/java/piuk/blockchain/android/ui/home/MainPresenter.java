@@ -17,11 +17,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.android.BuildConfig;
 import piuk.blockchain.android.R;
-import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.android.data.cache.DynamicFeeCache;
-import piuk.blockchain.androidcore.data.fees.FeeDataManager;
 import piuk.blockchain.android.data.datamanagers.PromptManager;
-import piuk.blockchain.androidcore.data.ethereum.EthDataManager;
 import piuk.blockchain.android.data.rxjava.RxUtil;
 import piuk.blockchain.android.ui.dashboard.DashboardPresenter;
 import piuk.blockchain.android.ui.home.models.MetadataEvent;
@@ -32,10 +29,13 @@ import piuk.blockchain.androidbuysell.datamanagers.CoinifyDataManager;
 import piuk.blockchain.androidbuysell.services.ExchangeService;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig;
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager;
 import piuk.blockchain.androidcore.data.contacts.ContactsDataManager;
 import piuk.blockchain.androidcore.data.contacts.models.ContactsEvent;
 import piuk.blockchain.androidcore.data.currency.CurrencyState;
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
+import piuk.blockchain.androidcore.data.fees.FeeDataManager;
 import piuk.blockchain.androidcore.data.metadata.MetadataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 import piuk.blockchain.androidcore.data.rxjava.RxBus;
@@ -211,12 +211,10 @@ public class MainPresenter extends BasePresenter<MainView> {
                 (showShapeShift, showKyc) -> showShapeShift || showKyc
         ).observeOn(AndroidSchedulers.mainThread())
                 .compose(RxUtil.addSingleToCompositeDisposable(this))
-                .subscribe(this::setExchangeVisiblity, throwable -> {
-                    //Couldn't retrieve wallet options. Not safe to continue
-                    Timber.e(throwable);
-                    getView().showToast(R.string.unexpected_error, ToastCustom.TYPE_ERROR);
-                    accessState.logout(applicationContext);
-                });
+                .subscribe(
+                        this::setExchangeVisiblity,
+                        throwable -> Timber.e(throwable)
+                );
     }
 
     private void setExchangeVisiblity(boolean showExchange) {

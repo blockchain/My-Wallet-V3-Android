@@ -17,12 +17,10 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.android.R
-import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.android.data.datamanagers.TransactionListDataManager
-import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.android.ui.balance.AnnouncementData
-import piuk.blockchain.android.ui.balance.ImageRightAnnouncementCard
 import piuk.blockchain.android.ui.balance.ImageLeftAnnouncementCard
+import piuk.blockchain.android.ui.balance.ImageRightAnnouncementCard
 import piuk.blockchain.android.ui.dashboard.models.OnboardingModel
 import piuk.blockchain.android.ui.home.MainActivity
 import piuk.blockchain.android.ui.home.models.MetadataEvent
@@ -32,7 +30,9 @@ import piuk.blockchain.android.util.StringUtils
 import piuk.blockchain.android.util.extensions.addToCompositeDisposable
 import piuk.blockchain.androidbuysell.datamanagers.BuyDataManager
 import piuk.blockchain.androidcore.data.access.AccessState
+import piuk.blockchain.androidcore.data.bitcoincash.BchDataManager
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager
+import piuk.blockchain.androidcore.data.ethereum.EthDataManager
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager
 import piuk.blockchain.androidcore.data.exchangerate.toFiat
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -314,11 +314,8 @@ class DashboardPresenter @Inject constructor(
     private fun checkKycPrompt() {
         if (!prefsUtil.getValue(KYC_INCOMPLETE_DISMISSED, false)) {
             compositeDisposable +=
-                Single.zip(
-                    kycStatusHelper.getUserState(),
-                    kycStatusHelper.getKycStatus(),
-                    BiFunction { userState: UserState, kycStatus: KycState -> userState to kycStatus }
-                ).observeOn(AndroidSchedulers.mainThread())
+                getKycStatus()
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
                         onSuccess = { (userState, kycStatus) ->
                             if ((userState == UserState.Created || userState == UserState.Active) &&
@@ -343,6 +340,12 @@ class DashboardPresenter @Inject constructor(
                     )
         }
     }
+
+    private fun getKycStatus(): Single<Pair<UserState, KycState>> = Single.zip(
+        kycStatusHelper.getUserState(),
+        kycStatusHelper.getKycStatus(),
+        BiFunction { userState: UserState, kycStatus: KycState -> userState to kycStatus }
+    ).onErrorReturn { UserState.None to KycState.None }
 
     private fun getOnboardingPages(isBuyAllowed: Boolean): OnboardingModel {
         val pages = mutableListOf<OnboardingPagerContent>()
