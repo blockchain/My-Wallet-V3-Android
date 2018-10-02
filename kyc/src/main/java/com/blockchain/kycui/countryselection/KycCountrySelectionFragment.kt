@@ -17,7 +17,7 @@ import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import com.blockchain.kycui.profile.KycProfileFragment
 import com.blockchain.kycui.search.filterCountries
-import com.blockchain.kycui.status.KycStatusActivity.Companion.HOMEBREW_LAUNCHER_INTENT
+import com.blockchain.kycui.status.KycStatusActivity.Companion.LEGACY_SHAPESHIFT_INTENT
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -99,7 +99,7 @@ class KycCountrySelectionFragment :
 
     override fun redirectToShapeShift() {
         LocalBroadcastManager.getInstance(requireContext())
-            .sendBroadcast(Intent(HOMEBREW_LAUNCHER_INTENT))
+            .sendBroadcast(Intent(LEGACY_SHAPESHIFT_INTENT))
         requireActivity().finish()
     }
 

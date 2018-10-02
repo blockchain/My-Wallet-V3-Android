@@ -46,6 +46,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.single.BasePermissionListener;
 import com.karumi.dexter.listener.single.CompositePermissionListener;
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
+import info.blockchain.balance.CryptoCurrency;
 import info.blockchain.wallet.util.FormatsUtil;
 import io.reactivex.Observable;
 import kotlin.Unit;
@@ -74,13 +75,12 @@ import piuk.blockchain.android.ui.pairingcode.PairingCodeActivity;
 import piuk.blockchain.android.ui.receive.ReceiveFragment;
 import piuk.blockchain.android.ui.send.SendFragment;
 import piuk.blockchain.android.ui.settings.SettingsActivity;
+import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
 import piuk.blockchain.android.ui.zxing.CaptureActivity;
 import piuk.blockchain.androidbuysell.models.WebViewLoginDetails;
 import piuk.blockchain.androidcore.data.access.AccessState;
 import piuk.blockchain.androidcore.data.contacts.models.PaymentRequestType;
-import info.blockchain.balance.CryptoCurrency;
-import piuk.blockchain.androidcore.data.currency.CurrencyState;
 import piuk.blockchain.androidcore.utils.annotations.Thunk;
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpActivity;
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog;
@@ -115,7 +115,8 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
     public static final String ACTION_RECEIVE_ETH = "info.blockchain.wallet.ui.BalanceFragment.RECEIVE_ETH";
     public static final String ACTION_RECEIVE_BCH = "info.blockchain.wallet.ui.BalanceFragment.RECEIVE_BCH";
     public static final String ACTION_BUY = "info.blockchain.wallet.ui.BalanceFragment.BUY";
-    public static final String ACTION_SHAPESHIFT = "info.blockchain.wallet.ui.BalanceFragment.SHAPESHIFT";
+    public static final String ACTION_EXCHANGE = "info.blockchain.wallet.ui.BalanceFragment.ACTION_EXCHANGE";
+    public static final String ACTION_LEGACY_SHAPESHIFT = "info.blockchain.wallet.ui.BalanceFragment.ACTION_LEGACY_SHAPESHIFT";
     public static final String ACTION_BTC_BALANCE = "info.blockchain.wallet.ui.BalanceFragment.ACTION_BTC_BALANCE";
     public static final String ACTION_ETH_BALANCE = "info.blockchain.wallet.ui.BalanceFragment.ACTION_ETH_BALANCE";
     public static final String ACTION_BCH_BALANCE = "info.blockchain.wallet.ui.BalanceFragment.ACTION_BCH_BALANCE";
@@ -174,8 +175,10 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
                 binding.bottomNavigation.setCurrentItem(3);
             } else if (intent.getAction().equals(ACTION_BUY) && getActivity() != null) {
                 getPresenter().routeToBuySell();
-            } else if (intent.getAction().equals(ACTION_SHAPESHIFT) && getActivity() != null) {
+            } else if (intent.getAction().equals(ACTION_EXCHANGE) && getActivity() != null) {
                 MorphMethodModuleKt.launchAsync(morphActivityLauncher, MainActivity.this);
+            } else if (intent.getAction().equals(ACTION_LEGACY_SHAPESHIFT)) {
+                ShapeShiftActivity.start(MainActivity.this);
             } else if (intent.getAction().equals(ACTION_BTC_BALANCE)) {
                 getPresenter().setCryptoCurrency(CryptoCurrency.BTC);
                 // This forces the balance page to reload
@@ -242,7 +245,7 @@ public class MainActivity extends BaseMvpActivity<MainView, MainPresenter> imple
         IntentFilter filterReceiveEth = new IntentFilter(ACTION_RECEIVE_ETH);
         IntentFilter filterReceiveBch = new IntentFilter(ACTION_RECEIVE_BCH);
         IntentFilter filterBuy = new IntentFilter(ACTION_BUY);
-        IntentFilter filterShapeshift = new IntentFilter(ACTION_SHAPESHIFT);
+        IntentFilter filterShapeshift = new IntentFilter(ACTION_EXCHANGE);
         IntentFilter filterBtcBalance = new IntentFilter(ACTION_BTC_BALANCE);
         IntentFilter filterEthBalance = new IntentFilter(ACTION_ETH_BALANCE);
         IntentFilter filterBchBalance = new IntentFilter(ACTION_BCH_BALANCE);

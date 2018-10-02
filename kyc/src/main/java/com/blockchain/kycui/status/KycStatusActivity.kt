@@ -158,7 +158,9 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
     companion object {
 
         internal const val HOMEBREW_LAUNCHER_INTENT =
-            "info.blockchain.wallet.ui.BalanceFragment.SHAPESHIFT"
+            "info.blockchain.wallet.ui.BalanceFragment.ACTION_EXCHANGE"
+        internal const val LEGACY_SHAPESHIFT_INTENT =
+            "info.blockchain.wallet.ui.BalanceFragment.ACTION_LEGACY_SHAPESHIFT"
 
         @JvmStatic
         fun start(context: Context) {
