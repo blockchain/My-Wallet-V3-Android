@@ -16,6 +16,7 @@ import com.blockchain.kyc.models.nabu.SupportedDocuments
 import com.blockchain.nabu.models.NabuOfflineTokenRequest
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
+import com.blockchain.veriff.VeriffApplicantAndToken
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -137,10 +138,25 @@ class NabuService(retrofit: Retrofit) {
     ).map { it.key }
         .wrapErrorMessage()
 
+    internal fun getVeriffToken(
+        sessionToken: NabuSessionTokenResponse
+    ): Single<VeriffApplicantAndToken> = service.getVeriffToken(
+        sessionToken.authHeader
+    ).map { VeriffApplicantAndToken(it.applicantId, it.token) }
+        .wrapErrorMessage()
+
     internal fun submitOnfidoVerification(
         sessionToken: NabuSessionTokenResponse,
         applicantId: String
-    ): Completable = service.submitOnfidoVerification(
+    ): Completable = service.submitVerification(
+        ApplicantIdRequest(applicantId),
+        sessionToken.authHeader
+    ).wrapErrorMessage()
+
+    internal fun submitVeriffVerification(
+        sessionToken: NabuSessionTokenResponse,
+        applicantId: String
+    ): Completable = service.submitVerification(
         ApplicantIdRequest(applicantId),
         sessionToken.authHeader
     ).wrapErrorMessage()

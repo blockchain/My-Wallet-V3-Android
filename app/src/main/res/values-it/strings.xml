@@ -247,7 +247,7 @@ Mantieni privato il tuo xPub.         Chiunque acceda al tuo xPub potrà vedere 
   <string name="watch_only_description">Questo è un indirizzo di sola visualizzazione. Per spendere i tuoi fondi</string>
   <string name="success">Successo</string>
   <string name="default_label">Predefinito</string>
-  <string name="try_again">Riprova</string>
+  <string name="import_try_again">Riprova</string>
   <string name="transfer">Trasferisci</string>
   <string name="transfer_funds">Trasferisci fondi</string>
   <string name="transfer_recommend">Potresti avere dei Bitcoin negli indirizzi importati. Gli indirizzi importati non sono protetti dalla tua frase di backup. Per tenere questi fondi al sicuro, ti consigliamo di trasferirli per includerli nel tuo backup.</string>

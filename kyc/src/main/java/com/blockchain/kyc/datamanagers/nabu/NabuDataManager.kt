@@ -15,6 +15,7 @@ import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
 import com.blockchain.nabu.stores.NabuSessionTokenStore
 import com.blockchain.utils.Optional
+import com.blockchain.veriff.VeriffApplicantAndToken
 import info.blockchain.wallet.exceptions.ApiException
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -67,7 +68,16 @@ interface NabuDataManager {
         offlineTokenResponse: NabuOfflineTokenResponse
     ): Single<String>
 
+    fun getVeriffToken(
+        offlineTokenResponse: NabuOfflineTokenResponse
+    ): Single<VeriffApplicantAndToken>
+
     fun submitOnfidoVerification(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        applicantId: String
+    ): Completable
+
+    fun submitVeriffVerification(
         offlineTokenResponse: NabuOfflineTokenResponse,
         applicantId: String
     ): Completable
@@ -222,11 +232,25 @@ internal class NabuDataManagerImpl(
         nabuService.getOnfidoApiKey(it)
     }
 
+    override fun getVeriffToken(
+        offlineTokenResponse: NabuOfflineTokenResponse
+    ): Single<VeriffApplicantAndToken> = authenticate(offlineTokenResponse) {
+        nabuService.getVeriffToken(it)
+    }
+
     override fun submitOnfidoVerification(
         offlineTokenResponse: NabuOfflineTokenResponse,
         applicantId: String
     ): Completable = authenticate(offlineTokenResponse) {
         nabuService.submitOnfidoVerification(it, applicantId)
+            .toSingleDefault(Any())
+    }.ignoreElement()
+
+    override fun submitVeriffVerification(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        applicantId: String
+    ): Completable = authenticate(offlineTokenResponse) {
+        nabuService.submitVeriffVerification(it, applicantId)
             .toSingleDefault(Any())
     }.ignoreElement()
 

@@ -14,6 +14,7 @@ import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
+import com.blockchain.kycui.navigate
 import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
@@ -30,6 +31,7 @@ import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.kyc.BuildConfig
 import piuk.blockchain.kyc.KycNavXmlDirections
 import piuk.blockchain.kyc.R
 import java.util.concurrent.TimeUnit
@@ -132,7 +134,11 @@ class KycMobileValidationFragment :
         findNavController(this).apply {
             // Remove phone entry and validation pages from back stack as it would be confusing for the user
             popBackStack(R.id.kycPhoneNumberFragment, true)
-            navigate(KycNavXmlDirections.ActionStartOnfido(countryCode))
+            if (BuildConfig.VERIFF) {
+                navigate(KycNavXmlDirections.ActionStartVeriff(countryCode))
+            } else {
+                navigate(KycNavXmlDirections.ActionStartOnfido(countryCode))
+            }
         }
     }
 

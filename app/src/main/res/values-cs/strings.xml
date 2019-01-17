@@ -249,7 +249,7 @@ Uschovejte svůj klíč xPub do bezpečí.         Osoba s přístupem k Vašemu
   <string name="watch_only_description">Toto je adresa pouze pro sledování. Chcete-li utratit své prostředky z</string>
   <string name="success">Úspěch</string>
   <string name="default_label">Výchozí</string>
-  <string name="try_again">Zkuste to znovu</string>
+  <string name="import_try_again">Zkuste to znovu</string>
   <string name="transfer">Převést</string>
   <string name="transfer_funds">Převést prostředky</string>
   <string name="transfer_recommend">Vypadá to že, že na importované adrese máte nějaké bitcoiny. Importované adresy se nezálohují pomocí vaší Zálohové fráze. Pokud chcete svoje prostředky zajistit, doporučujeme převést tyto zůstatky do zálohy.</string>

@@ -24,6 +24,8 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url 'https://onfido.bintray.com/maven/' }
+        // Veriff
+        maven { url "http://dl.bintray.com/argo/sdk" }
     }
     configurations.all {
         resolutionStrategy.force Libraries.findbugs

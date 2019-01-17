@@ -3,11 +3,11 @@
 object Versions {
 
     // Release info
-    const val minSdk = 17
+    const val minSdk = 19
     const val targetSdk = 27
     const val compileSdk = 27
-    const val versionCode = 359
-    const val versionName = "6.16.0"
+    const val versionCode = 405
+    const val versionName = "6.17.0"
     const val buildTools = "28.0.3"
 
     // Build tools and languages
@@ -22,7 +22,7 @@ object Versions {
 
     // Support Libraries
     const val supportLibs = "27.1.1"
-    const val googleServices = "15.0.1"
+    const val googleServices = "16.0.0"
     const val firebaseMessaging = "17.3.3"
     const val firebaseCore = "16.0.4"
     const val firebaseConfig = "16.0.1"
@@ -34,8 +34,8 @@ object Versions {
     const val lifecycle_version = "1.1.1"
 
     // Networking, RxJava
-    const val retrofit = "2.4.0"
-    const val okHttp = "3.10.0"
+    const val retrofit = "2.5.0"
+    const val okHttp = "3.12.0"
     const val mockWebServer = "v0.1.0"
     const val okIo = "1.14.1"
     const val moshi = "1.6.0"
@@ -148,6 +148,7 @@ object Libraries {
     const val retrofitRxMoshiConverter =
         "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     const val retrofitRxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:2.5.0"
     const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
     const val okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
     const val okIo = "com.squareup.okio:okio:${Versions.okIo}"

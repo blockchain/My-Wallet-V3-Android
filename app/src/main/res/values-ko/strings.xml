@@ -242,7 +242,7 @@
   <string name="watch_only_description">이것은 보기만 하는 주소입니다. 다음에서 귀하 돈 쓰기</string>
   <string name="success">성공</string>
   <string name="default_label">디폴트</string>
-  <string name="try_again">다시 해 보세요</string>
+  <string name="import_try_again">다시 해 보세요</string>
   <string name="transfer">이체</string>
   <string name="transfer_funds">자금 이체</string>
   <string name="transfer_recommend">가져온 주소에 비트코인이 좀 있는 것 같습니다. 가져온 주소가 귀하 백업 구절로 백업 되지 않았습니다. 이 자금을 확보하기 위해 이 잔액들을 이체해서 귀하 백업에 포함 시키는 것을 추천합니다.</string>

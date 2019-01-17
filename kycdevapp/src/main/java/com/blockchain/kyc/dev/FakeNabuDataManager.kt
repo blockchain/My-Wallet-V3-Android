@@ -13,6 +13,7 @@ import com.blockchain.kyc.models.nabu.Tiers
 import com.blockchain.kyc.models.nabu.UserState
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.NabuSessionTokenResponse
+import com.blockchain.veriff.VeriffApplicantAndToken
 import io.reactivex.Completable
 import io.reactivex.Single
 import timber.log.Timber
@@ -45,7 +46,7 @@ class FakeNabuDataManager : NabuDataManager {
         email = "jdoe@email.com",
         emailVerified = true,
         mobile = "+447123456789",
-        mobileVerified = false,
+        mobileVerified = true,
         dob = "2000-01-02",
         address = address,
         state = UserState.Created,
@@ -112,7 +113,18 @@ class FakeNabuDataManager : NabuDataManager {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun getVeriffToken(offlineTokenResponse: NabuOfflineTokenResponse): Single<VeriffApplicantAndToken> {
+        return Single.just(VeriffApplicantAndToken(applicantId = "applicant", token = "token"))
+    }
+
     override fun submitOnfidoVerification(
+        offlineTokenResponse: NabuOfflineTokenResponse,
+        applicantId: String
+    ): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun submitVeriffVerification(
         offlineTokenResponse: NabuOfflineTokenResponse,
         applicantId: String
     ): Completable {
@@ -127,7 +139,13 @@ class FakeNabuDataManager : NabuDataManager {
         offlineTokenResponse: NabuOfflineTokenResponse,
         countryCode: String
     ): Single<List<SupportedDocuments>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.just(
+            listOf(
+                SupportedDocuments.DRIVING_LICENCE,
+                SupportedDocuments.NATIONAL_IDENTITY_CARD,
+                SupportedDocuments.PASSPORT
+            )
+        )
     }
 
     override fun registerCampaign(

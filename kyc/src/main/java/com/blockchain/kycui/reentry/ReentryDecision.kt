@@ -6,6 +6,7 @@ import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kycui.navhost.toProfileModel
 import com.blockchain.nabu.NabuToken
 import io.reactivex.Single
+import piuk.blockchain.kyc.BuildConfig
 import piuk.blockchain.kyc.KycNavXmlDirections
 
 interface ReentryDecision {
@@ -46,6 +47,13 @@ internal class ReentryDecisionKycNavigator(
             ReentryPoint.Profile -> KycNavXmlDirections.ActionStartProfile(user.requireCountryCode())
             ReentryPoint.Address -> KycNavXmlDirections.ActionStartAddressEntry(user.toProfileModel())
             ReentryPoint.MobileEntry -> KycNavXmlDirections.ActionStartMobileVerification(user.requireCountryCode())
-            ReentryPoint.Onfido -> KycNavXmlDirections.ActionStartOnfido(user.requireCountryCode())
+            ReentryPoint.Onfido -> {
+                val countryCode = user.requireCountryCode()
+                if (BuildConfig.VERIFF) {
+                    KycNavXmlDirections.ActionStartVeriff(countryCode)
+                } else {
+                    KycNavXmlDirections.ActionStartOnfido(countryCode)
+                }
+            }
         }
 }

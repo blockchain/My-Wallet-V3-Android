@@ -286,7 +286,7 @@ class KycNavHostPresenterTest {
         subject.onViewReady()
         // Assert
         verify(view).displayLoading(true)
-        verify(view).navigate(KycNavXmlDirections.ActionStartOnfido("regionCode"))
+        verify(view).navigate(KycNavXmlDirections.ActionStartVeriff("regionCode"))
         verify(view).displayLoading(false)
     }
 

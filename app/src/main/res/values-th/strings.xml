@@ -244,7 +244,7 @@
   <string name="watch_only_description">ที่อยู่นี้คือที่อยู่แบบชมอย่างเดียว เพื่อใช้เงินของคุณจาก</string>
   <string name="success">สำเร็จ</string>
   <string name="default_label">ค่าเริ่มต้น</string>
-  <string name="try_again">ลองอีกครั้ง</string>
+  <string name="import_try_again">ลองอีกครั้ง</string>
   <string name="transfer">โอน</string>
   <string name="transfer_funds">โอนเงิน</string>
   <string name="transfer_recommend">ดูเหมือนว่าคุณมี bitcoin บางส่วนอยู่ในที่อยู่ที่นำเข้า บัญชีที่นำเข้าไม่ได้รับการสำรองข้อมูลโดยวลีสำรองของคุณ เพื่อทำให้เงินเหล่านี้ปลอดภัย เราแนะนำให้คุณโอนยอดคงเหลือไปรวมในการสำรองของคุณ</string>

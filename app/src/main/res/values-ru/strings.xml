@@ -249,7 +249,7 @@
   <string name="watch_only_description">Это адрес только для просмотра. Извлечь средства из</string>
   <string name="success">Успешно</string>
   <string name="default_label">По умолчанию</string>
-  <string name="try_again">Повторите попытку</string>
+  <string name="import_try_again">Повторите попытку</string>
   <string name="transfer">Перевести</string>
   <string name="transfer_funds">Перевод средств</string>
   <string name="transfer_recommend">Похоже, у вас есть биткойны в импортированных адресах. Импортированные адреса не восстанавливаются фразой для восстановления доступа. Чтобы обезопасить эти средства, мы рекомендуем перевести эти балансы, чтобы включить их в резервную копию.</string>

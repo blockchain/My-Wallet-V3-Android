@@ -84,13 +84,13 @@ class KycTierSplashPresenterTest {
     fun `on tier2 selected`() {
         val view: KycTierSplashView = mock()
         val tierUpdater: TierUpdater = givenTierUpdater()
-        KycTierSplashPresenter(tierUpdater, givenTiers(), givenRedirect(onfido()))
+        KycTierSplashPresenter(tierUpdater, givenTiers(), givenRedirect(veriff()))
             .also {
                 it.initView(view)
                 it.onViewResumed()
             }
             .tier2Selected()
-        verify(view).navigateTo(onfido(), 2)
+        verify(view).navigateTo(veriff(), 2)
         verify(tierUpdater).setUserTier(2)
     }
 
@@ -98,7 +98,7 @@ class KycTierSplashPresenterTest {
     fun `on tier2 selected - error setting tier`() {
         val view: KycTierSplashView = mock()
         val tierUpdater: TierUpdater = givenUnableToSetTier()
-        KycTierSplashPresenter(tierUpdater, givenTiers(), givenRedirect(onfido()))
+        KycTierSplashPresenter(tierUpdater, givenTiers(), givenRedirect(veriff()))
             .also {
                 it.initView(view)
                 it.onViewResumed()
@@ -189,7 +189,7 @@ fun tiers(tier1: Pair<KycTierState, FiatValue>, tier2: Pair<KycTierState, FiatVa
 
 private fun email(): NavDirections = KycNavXmlDirections.ActionStartEmailVerification()
 private fun mobile(): NavDirections = KycNavXmlDirections.ActionStartMobileVerification("DE")
-private fun onfido(): NavDirections = KycNavXmlDirections.ActionStartOnfido("DE")
+private fun veriff(): NavDirections = KycNavXmlDirections.ActionStartVeriff("DE")
 
 private fun givenRedirect(email: NavDirections): KycNavigator =
     mock {

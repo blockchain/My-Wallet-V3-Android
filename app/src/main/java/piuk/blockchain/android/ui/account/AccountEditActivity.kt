@@ -259,7 +259,7 @@ class AccountEditActivity : BaseMvpActivity<AccountEditView, AccountEditPresente
                     R.string.private_key_not_matching_address
                 )
             )
-            .setPositiveButton(R.string.try_again) { _, _ ->
+            .setPositiveButton(R.string.import_try_again) { _, _ ->
                 presenter.onClickScanXpriv(View(this))
             }
             .setNegativeButton(android.R.string.cancel, null)

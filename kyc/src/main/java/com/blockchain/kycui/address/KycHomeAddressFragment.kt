@@ -50,6 +50,7 @@ import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
 import piuk.blockchain.androidcoreui.utils.extensions.toast
+import piuk.blockchain.kyc.BuildConfig
 import piuk.blockchain.kyc.KycNavXmlDirections
 import piuk.blockchain.kyc.R
 import timber.log.Timber
@@ -120,7 +121,11 @@ class KycHomeAddressFragment : BaseMvpFragment<KycHomeAddressView, KycHomeAddres
 
     override fun continueToOnfidoSplash(countryCode: String) {
         closeKeyboard()
-        navigate(KycNavXmlDirections.ActionStartOnfido(countryCode))
+        if (BuildConfig.VERIFF) {
+            navigate(KycNavXmlDirections.ActionStartVeriff(countryCode))
+        } else {
+            navigate(KycNavXmlDirections.ActionStartOnfido(countryCode))
+        }
     }
 
     override fun tier1Complete() {

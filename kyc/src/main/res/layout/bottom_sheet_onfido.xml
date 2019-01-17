@@ -59,4 +59,20 @@
         tools:drawableLeft="@drawable/vector_government"
         tools:visibility="visible" />
 
+    <TextView
+        android:id="@+id/text_view_document_residence_permit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:fontFamily="@font/montserrat"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="left"
+        android:padding="16dp"
+        android:text="@string/kyc_onfido_splash_residence_permit"
+        android:textSize="16sp"
+        android:theme="@style/PlainTheme"
+        android:visibility="gone"
+        tools:drawableLeft="@drawable/vector_government"
+        tools:visibility="visible" />
+
 </LinearLayout>

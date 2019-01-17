@@ -247,7 +247,7 @@ Seuls les utilisateurs avancés devraient utiliser ces options. Continuer ? </st
   <string name="watch_only_description">Il s\'agit d\'une adresse en lecture seule.  Pour dépenser vos fonds depuis</string>
   <string name="success">Succès</string>
   <string name="default_label">Par défaut</string>
-  <string name="try_again">Réessayez</string>
+  <string name="import_try_again">Réessayez</string>
   <string name="transfer">Transférer</string>
   <string name="transfer_funds">Transférer des fonds</string>
   <string name="transfer_recommend">Il semble que vous ayez des bitcoins dans ces adresses importées. Les adresses importées ne sont pas sécurisées par votre Phrase de Récupération. Pour assurer ces fonds, nous vous recommandons de transférer ces soldes pour les inclure dans votre sauvegarde.</string>

@@ -247,7 +247,7 @@ Behandeln Sie Ihren xPub vertraulich.         Jede Person mit Zugriff auf Ihren 
   <string name="watch_only_description">Dies ist eine Watch-Only-Adresse. Zur Ausgabe Ihres Guthabens von</string>
   <string name="success">Das hat geklappt</string>
   <string name="default_label">Standard</string>
-  <string name="try_again">Erneut versuchen</string>
+  <string name="import_try_again">Erneut versuchen</string>
   <string name="transfer">Überweisen</string>
   <string name="transfer_funds">Guthaben überweisen</string>
   <string name="transfer_recommend">Anscheinend verfügen Sie über einige Bitcoin-Beträge auf importierten Adressen. Ihr Wiederherstellungspasswort sichert keine importierten Adressen. Zur Sicherung der Guthaben und deren Einbezug in Ihr Backup raten wir dazu, diese zu überweisen.</string>

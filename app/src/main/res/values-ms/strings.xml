@@ -257,7 +257,7 @@
 </string>
   <string name="success">Kejayaan</string>
   <string name="default_label">Lalai</string>
-  <string name="try_again">Cuba lagi</string>
+  <string name="import_try_again">Cuba lagi</string>
   <string name="transfer">Pemindahan</string>
   <string name="transfer_funds">Memindahkan alamat yang diimport?</string>
   <string name="transfer_recommend">Sepertinya anda mempunyai beberapa bitcoin dalam alamat yang diimport. Alamat yang diimport tidak disokong oleh Franca Cadangan anda. Untuk menjamin dana ini, kami mengesyorkan pemindahan baki ini untuk disertakan dalam sandaran anda.</string>

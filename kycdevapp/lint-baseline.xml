@@ -2,39 +2,24 @@
 <issues format="4" by="lint 3.2.1" client="gradle" variant="debug" version="3.2.1">
 
     <issue
+        id="ObsoleteLintCustomCheck"
+        message="Lint found an issue registry (`timber.lint.TimberIssueRegistry`) which is older than the current API level; these checks may not work correctly.&#xA;&#xA;Recompile the checks against the latest version. Custom check API version is 1 (3.1+), current lint API level is 2 (3.2+)">
+        <location
+            file="../../.gradle/caches/transforms-1/files-1.1/timber-4.7.1.aar/69c74cf5ba16f0901f0ca9f20b40afb3/jars/lint.jar"/>
+    </issue>
+
+    <issue
         id="InvalidPackage"
         message="Invalid package reference in library; not included in Android: `javax.naming.directory`. Referenced from `org.spongycastle.jce.provider.X509LDAPCertStoreSpi`.">
         <location
-            file="../../../.gradle/caches/modules-2/files-2.1/com.madgag.spongycastle/prov/1.54.0.0/2761c67fdffa21ffcd73cfb8c3acd52ca8866694/prov-1.54.0.0.jar"/>
+            file="../../.gradle/caches/modules-2/files-2.1/com.madgag.spongycastle/prov/1.54.0.0/2761c67fdffa21ffcd73cfb8c3acd52ca8866694/prov-1.54.0.0.jar"/>
     </issue>
 
     <issue
         id="InvalidPackage"
         message="Invalid package reference in library; not included in Android: `javax.naming`. Referenced from `org.spongycastle.jce.provider.X509LDAPCertStoreSpi`.">
         <location
-            file="../../../.gradle/caches/modules-2/files-2.1/com.madgag.spongycastle/prov/1.54.0.0/2761c67fdffa21ffcd73cfb8c3acd52ca8866694/prov-1.54.0.0.jar"/>
-    </issue>
-
-    <issue
-        id="HardwareIds"
-        message="Using `getString` to get device identifiers is not recommended."
-        errorLine1="        Settings.Secure.getString("
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/blockchain/morph/dev/App.kt"
-            line="175"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="AllowBackup"
-        message="On SDK version 23 and up, your app data will be automatically backed up, and restored on app install. Your GCM regid will not work across restores, so you must ensure that it is excluded from the back-up set. Use the attribute `android:fullBackupContent` to specify an `@xml` resource which configures which files to backup. More info: https://developer.android.com/training/backup/autosyncapi.html"
-        errorLine1="    &lt;application"
-        errorLine2="     ~~~~~~~~~~~">
-        <location
-            file="src/main/AndroidManifest.xml"
-            line="5"
-            column="6"/>
+            file="../../.gradle/caches/modules-2/files-2.1/com.madgag.spongycastle/prov/1.54.0.0/2761c67fdffa21ffcd73cfb8c3acd52ca8866694/prov-1.54.0.0.jar"/>
     </issue>
 
     <issue

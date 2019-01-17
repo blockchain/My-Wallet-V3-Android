@@ -22,6 +22,7 @@ android {
         versionName Versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        buildConfigField "boolean", "VERIFF", 'true'
     }
 
     compileOptions {
@@ -75,6 +76,7 @@ dependencies {
     api project(':notifications')
     api project(':nabu')
     implementation Libraries.onfido
+    implementation project(':veriff')
     implementation(Libraries.googlePlayServicesBase) {
         exclude group: 'com.android.support'
     }

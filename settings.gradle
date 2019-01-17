@@ -23,4 +23,6 @@ include ':app',
         ':sunriver:stellar-sdk-wrapper',
         ':testutils',
         ':testutils-android',
+        ':veriff',
+        ':veriffLibrary',
         ':zxing'

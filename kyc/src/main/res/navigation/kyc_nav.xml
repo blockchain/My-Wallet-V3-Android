@@ -96,6 +96,18 @@
             app:argType="string" />
     </fragment>
     <fragment
+        android:id="@+id/veriffSplashFragment"
+        android:name="com.blockchain.kycui.veriffsplash.VeriffSplashFragment"
+        android:label="VeriffSplashFragment"
+        tools:layout="@layout/fragment_kyc_veriff_splash">
+        <action
+            android:id="@+id/action_veriffSplashFragment_to_applicationCompleteFragment"
+            app:destination="@id/applicationCompleteFragment" />
+        <argument
+            android:name="countryCode"
+            app:argType="string" />
+    </fragment>    
+    <fragment
         android:id="@+id/applicationCompleteFragment"
         android:name="com.blockchain.kycui.complete.ApplicationCompleteFragment"
         android:label="ApplicationCompleteFragment"
@@ -184,6 +196,10 @@
     <action
         android:id="@+id/action_startOnfido"
         app:destination="@id/onfidoSplashFragment"
+        app:popUpTo="@+id/kycTierSplashFragment" />
+    <action
+        android:id="@+id/action_startVeriff"
+        app:destination="@id/veriffSplashFragment"
         app:popUpTo="@+id/kycTierSplashFragment" />
     <action
         android:id="@+id/action_startEmailVerification"

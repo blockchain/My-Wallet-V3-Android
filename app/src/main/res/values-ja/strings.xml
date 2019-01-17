@@ -246,7 +246,7 @@ xPubのプライバシーを維持してください。あなたのxPubにアク
   <string name="watch_only_description">これは読み取り専用アドレスです。送金するには</string>
   <string name="success">成功です</string>
   <string name="default_label">既定</string>
-  <string name="try_again">再試行してください</string>
+  <string name="import_try_again">再試行してください</string>
   <string name="transfer">移動</string>
   <string name="transfer_funds">資金の移動</string>
   <string name="transfer_recommend">インポートしたアドレスにビットコインがあるようです。インポートっしたアドレスはバックアップフレーズで保護されていません。これらの資金の安全性を確実にするには、バックアップにこれらの残高の移行を含めることを推奨します。</string>

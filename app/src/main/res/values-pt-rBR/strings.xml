@@ -258,7 +258,7 @@
     <string name="extended_public_key_description">Se você é um estabelecimento, mostre seu xPub e use o Blockchain Merchant App para receber fundos de forma privada e segura. \n\nMantenha seu xPub privado.         Quem tiver acesso ao seu xPub poderá visualizar todos os seus fundos e transações. </string>
     <string name="success">Sucesso</string>
     <string name="default_label">Padrão</string>
-    <string name="try_again">Tente Novamente</string>
+    <string name="import_try_again">Tente Novamente</string>
     <string name="transfer">Transferir</string>
     <string name="transfer_funds">Transferir fundos</string>
     <string name="spendable_addresses">endereços passíveis de gasto de bitcoins</string>

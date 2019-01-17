@@ -257,7 +257,7 @@
 </string>
   <string name="success">Framgång</string>
   <string name="default_label">Standard</string>
-  <string name="try_again">Försök igen</string>
+  <string name="import_try_again">Försök igen</string>
   <string name="transfer">Överföra</string>
   <string name="transfer_funds">Överför importerade adresser?</string>
   <string name="transfer_recommend">Det verkar som om du har några bitcoins i importerade adresser. Importerade adresser säkerhetskopieras inte av din Backup-fras. För att säkra dessa medel rekommenderar vi att du överför dessa saldon till att inkludera i din säkerhetskopia.</string>

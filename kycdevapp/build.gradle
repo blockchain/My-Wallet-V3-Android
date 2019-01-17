@@ -33,10 +33,15 @@ android {
 }
 
 dependencies {
-    implementation project(':balance')
-    implementation project(':core')
-    implementation project(':coreui')
-    implementation project(':kyc')
+    implementation(project(':balance'))
+    implementation(project(':core'))
+    implementation(project(':coreui')) {
+        exclude module: 'crashlytics'
+    }
+    implementation(project(':kyc')) {
+        exclude module: 'crashlytics'
+    }
+    implementation(project(':veriff'))
 
     implementation Libraries.rxKotlin
     implementation Libraries.rxAndroid

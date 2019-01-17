@@ -247,7 +247,7 @@ Mantener tu xPub privada.         Alguien con acceso a tu xPub podrá ver todos 
   <string name="watch_only_description">Esta es una dirección de tipo \"solo ver\". Para gastar tus fondos de</string>
   <string name="success">¡Éxito!</string>
   <string name="default_label">Predeterminado</string>
-  <string name="try_again">Vuelve a intentarlo</string>
+  <string name="import_try_again">Vuelve a intentarlo</string>
   <string name="transfer">Transferir</string>
   <string name="transfer_funds">Transferir fondos</string>
   <string name="transfer_recommend">Parece que tienes algunos bitcoins en las direcciones importadas. Las direcciones importadas no están respaldadas por tu frase de copia de seguridad. Para asegurar estos fondos, se recomienda transferir estos saldos para incluir en la copia de seguridad.</string>

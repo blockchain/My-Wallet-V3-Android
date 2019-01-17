@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.blockchain.veriff">
+
+    <!-- "signature" permission granted automatically by system, without notifying user. -->
+    <!--
+    <uses-permission android:name="${applicationId}.VERIFF_STATUS_BROADCAST_PERMISSION" />
+    -->
+    <!-- Implement you own BroadcastReceiver to track VeriffSDK status, should be protected by "signature" permission -->
+
+    <application>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <!--
+        <receiver
+            android:name="mobi.lab.veriff.sample.receiver.VeriffStatusReceiver"
+            android:permission="${applicationId}.VERIFF_STATUS_BROADCAST_PERMISSION">
+            <intent-filter>
+                <category android:name="${applicationId}" />
+                <action android:name="veriff.info.status" />
+            </intent-filter>
+        </receiver>
+        -->
+
+    </application>
+
+</manifest>

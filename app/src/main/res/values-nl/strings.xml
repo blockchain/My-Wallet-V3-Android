@@ -247,7 +247,7 @@ Vertel uw xPub aan niemand.         Iemand met toegang tot uw xPub kan al uw teg
   <string name="watch_only_description">Dit is een alleen-bekijken-adres. Om uw saldo te besteden van</string>
   <string name="success">Succes</string>
   <string name="default_label">Standaard</string>
-  <string name="try_again">Probeer het opnieuw</string>
+  <string name="import_try_again">Probeer het opnieuw</string>
   <string name="transfer">Overboeken</string>
   <string name="transfer_funds">Tegoeden overmaken</string>
   <string name="transfer_recommend">Zo te zien hebt u enkele bitcoins beschikbaar in de geïmporteerde adressen. Geïmporteerde adressen worden niet ondersteund door uw back-upzin. Om dit saldo te beveiligen, adviseren we u aan om dit in uw back-up op te nemen.</string>

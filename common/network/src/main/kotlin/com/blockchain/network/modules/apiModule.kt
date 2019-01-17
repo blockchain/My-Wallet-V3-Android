@@ -6,6 +6,7 @@ import com.blockchain.network.TLSSocketFactory
 import com.blockchain.serialization.BigDecimalAdaptor
 import com.blockchain.serialization.BigIntegerAdapter
 import com.squareup.moshi.Moshi
+import io.reactivex.schedulers.Schedulers
 import okhttp3.CertificatePinner
 import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
@@ -34,7 +35,7 @@ val apiModule = applicationContext {
 
     bean { JacksonConverterFactory.create() }
 
-    bean { RxJava2CallAdapterFactory.create() }
+    bean { RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()) }
 
     bean {
         CertificatePinner.Builder()

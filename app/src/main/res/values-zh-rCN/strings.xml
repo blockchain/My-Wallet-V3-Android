@@ -250,7 +250,7 @@
     </string>
   <string name="success">成功</string>
   <string name="default_label">默认</string>
-  <string name="try_again">重试</string>
+  <string name="import_try_again">重试</string>
   <string name="transfer">转账</string>
   <string name="transfer_funds">转账到导入的地址？</string>
   <string name="transfer_recommend">您导入的地址下似乎有一些比特币。您的备份短语并没有备份您的导入地址。为了这些资金的安全，我们建议您将导入的地址中的资金转移到您的备份中。</string>

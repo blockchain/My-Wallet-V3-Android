@@ -21,6 +21,7 @@ import com.blockchain.testutils.cad
 import com.blockchain.testutils.ether
 import com.blockchain.testutils.gbp
 import com.blockchain.testutils.lumens
+import com.blockchain.testutils.rxInit
 import com.blockchain.testutils.usd
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
@@ -42,6 +43,11 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
 
     @get:Rule
     val initMockServer = server.initRule()
+
+    @get:Rule
+    val initRx = rxInit {
+        ioTrampoline()
+    }
 
     private val subject: NabuMarketsService by inject()
 

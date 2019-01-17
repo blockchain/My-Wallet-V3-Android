@@ -249,7 +249,7 @@ Nie udostępniaj swojego klucza xPub.         Osoby z dostępem do Twojego klucz
   <string name="watch_only_description">To jest adres tylko do odczytu. Aby móc wydać swoje środki z</string>
   <string name="success">Udało się</string>
   <string name="default_label">Domyślne</string>
-  <string name="try_again">Spróbuj ponownie</string>
+  <string name="import_try_again">Spróbuj ponownie</string>
   <string name="transfer">Prześlij</string>
   <string name="transfer_funds">Prześlij środki</string>
   <string name="transfer_recommend">Wygląda na to, że masz nieco bitcoinów na zaimportowanych adresach. Importowane adresy nie są wspierane przez Twój zwrot zapasowy. Aby zabezpieczyć te środki, zalecamy przelanie tych sald, by zostały uwzględnione w kopii bezpieczeństwa.</string>

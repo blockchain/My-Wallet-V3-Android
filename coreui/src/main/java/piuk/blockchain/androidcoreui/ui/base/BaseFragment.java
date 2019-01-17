@@ -2,9 +2,8 @@ package piuk.blockchain.androidcoreui.ui.base;
 
 import android.support.annotation.CallSuper;
 import android.support.v4.view.ViewPager;
-
 import com.crashlytics.android.answers.ContentViewEvent;
-
+import piuk.blockchain.androidcoreui.BuildConfig;
 import piuk.blockchain.androidcoreui.utils.logging.Logging;
 
 /**
@@ -27,8 +26,10 @@ public abstract class BaseFragment<VIEW extends View, PRESENTER extends BasePres
          *  Note that this isn't triggered if a Fragment isn't in a ViewPager */
         if (isVisibleToUser && !logged) {
             logged = true;
-            Logging.INSTANCE.logContentView(new ContentViewEvent()
-                    .putContentName(getClass().getSimpleName()));
+            if (!BuildConfig.DEBUG) {
+                Logging.INSTANCE.logContentView(new ContentViewEvent()
+                        .putContentName(getClass().getSimpleName()));
+            }
         }
     }
 
@@ -45,8 +46,10 @@ public abstract class BaseFragment<VIEW extends View, PRESENTER extends BasePres
         } else {
             if (!logged) {
                 logged = true;
-                Logging.INSTANCE.logContentView(new ContentViewEvent()
-                        .putContentName(getClass().getSimpleName()));
+                if (!BuildConfig.DEBUG) {
+                    Logging.INSTANCE.logContentView(new ContentViewEvent()
+                            .putContentName(getClass().getSimpleName()));
+                }
             }
         }
     }

@@ -43,6 +43,7 @@ import com.blockchain.kycui.status.KycStatusPresenter
 import com.blockchain.kycui.sunriver.SunriverAirdropRemoteConfig
 import com.blockchain.kycui.sunriver.SunriverCampaignHelper
 import com.blockchain.kycui.tiersplash.KycTierSplashPresenter
+import com.blockchain.kycui.veriffsplash.VeriffSplashPresenter
 import com.blockchain.nabu.Authenticator
 import com.blockchain.nabu.CreateNabuToken
 import com.blockchain.nabu.CurrentTier
@@ -87,6 +88,8 @@ val kycModule = applicationContext {
         factory { KycEmailValidationPresenter(get(), get()) }
 
         factory { OnfidoSplashPresenter(get(), get(), get()) }
+
+        factory { VeriffSplashPresenter(get(), get()) }
 
         factory { KycStatusPresenter(get(), get(), get()) }
 

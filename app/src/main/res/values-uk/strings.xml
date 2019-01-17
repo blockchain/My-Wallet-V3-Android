@@ -249,7 +249,7 @@
   <string name="watch_only_description">Ця адреса дійсна тільки для перегляну. Щоб витрачати кошти з</string>
   <string name="success">Успіх</string>
   <string name="default_label">За замовчуванням</string>
-  <string name="try_again">Спробуйте ще раз</string>
+  <string name="import_try_again">Спробуйте ще раз</string>
   <string name="transfer">Переказ</string>
   <string name="transfer_funds">Переказ коштів</string>
   <string name="transfer_recommend">Схоже, у вас є біткойни в імпортованих адресах. Імпортовані адреси не захищені вашою фразою для відновлення доступу. Щоб захистити ці кошти, ми радимо перевести їх, щоб включити до вашої резервної копії.</string>

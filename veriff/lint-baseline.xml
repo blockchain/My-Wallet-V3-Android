@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="4" by="lint 3.2.1" client="gradle" variant="debug" version="3.2.1">
+
+    <issue
+        id="ObsoleteLintCustomCheck"
+        message="Lint found an issue registry (`timber.lint.TimberIssueRegistry`) which is older than the current API level; these checks may not work correctly.&#xA;&#xA;Recompile the checks against the latest version. Custom check API version is 1 (3.1+), current lint API level is 2 (3.2+)">
+        <location
+            file="../../.gradle/caches/transforms-1/files-1.1/timber-4.7.1.aar/b7217c70b989322c7783e42e162a09c9/jars/lint.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in library; not included in Android: `javax.xml.bind`. Referenced from `io.jsonwebtoken.impl.Base64Codec`.">
+        <location
+            file="../../.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt/0.9.0/64e3ed8a5f0bc93ecea592a0b3280f995efbdfe9/jjwt-0.9.0.jar"/>
+    </issue>
+
+    <issue
+        id="LogNotTimber"
+        message="Using &apos;Log&apos; instead of &apos;Timber&apos;"
+        errorLine1="        Log.d(&quot;VeriffStatusReceiver&quot;,&quot;Broadcast received&quot;);"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/mobi/lab/veriff/sample/receiver/VeriffStatusReceiver.java"
+            line="16"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/city_tartu.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/city_tartu.jpg"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/veriff_logo.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/veriff_logo.png"/>
+    </issue>
+
+</issues>

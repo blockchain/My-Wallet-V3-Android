@@ -70,7 +70,7 @@ class OnfidoSplashFragment : BaseFragment<OnfidoSplashView, OnfidoSplashPresente
         logEvent(LoggableEvent.KycVerifyIdentity)
 
         progressListener.setHostTitle(R.string.kyc_onfido_splash_title)
-        progressListener.incrementProgress(KycStep.OnfidoSplashPage)
+        progressListener.incrementProgress(KycStep.VeriffSplashPage)
 
         onViewReady()
     }
@@ -213,6 +213,11 @@ class OnfidoSplashFragment : BaseFragment<OnfidoSplashView, OnfidoSplashPresente
             R.drawable.vector_government,
             R.id.text_view_document_id_card,
             DocumentType.NATIONAL_IDENTITY_CARD
+        )
+        SupportedDocuments.RESIDENCE_PERMIT -> SupportedDocumentUiData(
+            R.drawable.vector_government,
+            R.id.text_view_document_residence_permit,
+            DocumentType.RESIDENCE_PERMIT
         )
     }
 

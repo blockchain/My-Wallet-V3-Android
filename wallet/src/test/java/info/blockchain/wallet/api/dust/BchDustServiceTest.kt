@@ -4,6 +4,7 @@ import com.blockchain.koin.modules.walletApiServiceTestModule
 import com.blockchain.koin.walletModule
 import com.blockchain.network.initRule
 import com.blockchain.network.modules.apiModule
+import com.blockchain.testutils.rxInit
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.ApiCode
 import io.fabric8.mockwebserver.DefaultMockServer
@@ -21,6 +22,11 @@ class BchDustServiceTest : AutoCloseKoinTest() {
 
     @get:Rule
     val initMockServer = server.initRule()
+
+    @get:Rule
+    val initRx = rxInit {
+        ioTrampoline()
+    }
 
     private val subject: DustService by inject()
     private val apiCode: ApiCode by inject()

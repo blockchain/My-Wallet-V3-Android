@@ -8,5 +8,6 @@ internal data class SupportedDocumentsResponse(
 enum class SupportedDocuments {
     PASSPORT,
     DRIVING_LICENCE,
-    NATIONAL_IDENTITY_CARD
+    NATIONAL_IDENTITY_CARD,
+    RESIDENCE_PERMIT
 }

@@ -246,7 +246,7 @@ Jaga xPub Anda tetap pribadi.         Seseorang yang memiliki akses ke xPub Anda
   <string name="watch_only_description">Ini adalah alamat untuk dilihat saja. Untuk menggunakan dana Anda dari</string>
   <string name="success">Berhasil</string>
   <string name="default_label">Default</string>
-  <string name="try_again">Coba Lagi</string>
+  <string name="import_try_again">Coba Lagi</string>
   <string name="transfer">Transfer</string>
   <string name="transfer_funds">Transfer Dana</string>
   <string name="transfer_recommend">Kelihatannya Anda memiliki sejumlah bitcoin pada alamat yang diimpor. Alamat yang diimpor tidak dicadangkan oleh Frasa Cadangan Anda. Untuk mengamankan dana ini, kami merekomendasikan untuk mentransfer saldo ini untuk menyertakan di cadangan Anda.</string>

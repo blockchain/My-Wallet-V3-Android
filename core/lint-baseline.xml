@@ -2,20 +2,13 @@
 <issues format="4" by="lint 3.2.1" client="gradle" variant="debug" version="3.2.1">
 
     <issue
-        id="ObsoleteLintCustomCheck"
-        message="Lint found an issue registry (`timber.lint.TimberIssueRegistry`) which is older than the current API level; these checks may not work correctly.&#xA;&#xA;Recompile the checks against the latest version. Custom check API version is 1 (3.1+), current lint API level is 2 (3.2+)">
-        <location
-            file="../../.gradle/caches/transforms-1/files-1.1/timber-4.7.1.aar/5201c4380ac1e5fcce729bf4da23d4cf/jars/lint.jar"/>
-    </issue>
-
-    <issue
         id="CheckResult"
         message="The result of `subscribeWith` is not used"
         errorLine1="        walletOptionsService"
         errorLine2="        ^">
         <location
             file="src/main/java/piuk/blockchain/androidcore/data/walletoptions/WalletOptionsDataManager.kt"
-            line="33"
+            line="30"
             column="9"/>
     </issue>
 
@@ -26,7 +19,7 @@
         errorLine2="        ^">
         <location
             file="src/main/java/piuk/blockchain/androidcore/data/walletoptions/WalletOptionsDataManager.kt"
-            line="41"
+            line="39"
             column="9"/>
     </issue>
 

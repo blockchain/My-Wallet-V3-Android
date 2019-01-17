@@ -258,7 +258,7 @@
 </string>
   <string name="success">Succesul</string>
   <string name="default_label">Mod implicit</string>
-  <string name="try_again">Încercați din nou</string>
+  <string name="import_try_again">Încercați din nou</string>
   <string name="transfer">Transfer</string>
   <string name="transfer_funds">Transferați adresele importate?</string>
   <string name="transfer_recommend">Se pare că aveți niște bitcoins în adresele importate. Adresele importate nu sunt susținute de fraza de rezervă. Pentru a vă asigura aceste fonduri, vă recomandăm să transferați aceste solduri pentru a include în rezervă.</string>

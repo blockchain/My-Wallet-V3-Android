@@ -246,7 +246,7 @@ Giữ an toàn cho xPub.         Ai đó truy cập vào xPub của bạn sẽ c
   <string name="watch_only_description">Đây là một địa chỉ chỉ xem. Để chi tiêu các khoản tiền của bạn từ</string>
   <string name="success">Thành công</string>
   <string name="default_label">Mặc định</string>
-  <string name="try_again">Thử lại</string>
+  <string name="import_try_again">Thử lại</string>
   <string name="transfer">Chuyển khoản</string>
   <string name="transfer_funds">Chuyển khoản tiền</string>
   <string name="transfer_recommend">Có vẻ như bạn có một ít bitcoin trong các địa chỉ đã nhập. Các địa chỉ đã nhập không được sao lưu bằng Nhóm từ Sao lưu của bạn. Để đảm bảo an toàn cho các khoản tiền này, chúng tôi khuyến nghị chuyển khoản số dư này đến bản sao lưu của bạn.</string>

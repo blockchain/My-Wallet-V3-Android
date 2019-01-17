@@ -247,7 +247,7 @@ Genişletilmiş ortak anahtarınızı gizli tutun.         Genişletilmiş ortak
   <string name="watch_only_description">Bu, sadece izlenebilir bir adrestir. Buradaki paranızı harcamak için:</string>
   <string name="success">Başarılı</string>
   <string name="default_label">Varsayılan</string>
-  <string name="try_again">Tekrar Dene</string>
+  <string name="import_try_again">Tekrar Dene</string>
   <string name="transfer">Transfer Et</string>
   <string name="transfer_funds">Para Transfer Et</string>
   <string name="transfer_recommend">Alınan adreslerde bitcoininiz olduğu görünmektedir. Alınan adresler Yedekleme İfadesi tarafından yedenlenmez. Bu paraları güvende tutmak adına bu bakiyeleri yedeklemenize dahil etmek için transfer etmenizi tavsiye ederiz.</string>

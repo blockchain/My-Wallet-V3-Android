@@ -308,7 +308,7 @@
     </string>
     <string name="success">Success</string>
     <string name="default_label">Default</string>
-    <string name="try_again">Try Again</string>
+    <string name="import_try_again">Try Again</string>
 
     <!-- FUNDS TRANSFER -->
     <string name="transfer">Transfer</string>

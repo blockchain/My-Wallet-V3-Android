@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: '../quality/jacocoLibrary.gradle'
+apply from: '../quality/ktlint.gradle'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        // Always show the result of every unit test, even if it passes.
+        unitTests.all {
+            testLogging {
+                events 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+            reports.junitXml.destination = file('../build/test-results/')
+        }
+    }
+
+    lintOptions {
+        baseline file("lint-baseline.xml")
+        warningsAsErrors true
+        abortOnError true
+    }
+}
+
+dependencies {
+    implementation Libraries.kotlin
+
+    implementation project(':veriffLibrary')
+
+    implementation Libraries.appCompat
+    implementation Libraries.constraintLayout
+    implementation Libraries.design
+    implementation 'io.probity.sdk:collector:1.0.0'
+    implementation 'io.jsonwebtoken:jjwt:0.9.0'
+
+    implementation Libraries.timber
+    implementation(Libraries.retrofit) { exclude module: 'okhttp' }
+    implementation Libraries.retrofitGsonConverter
+    implementation Libraries.okHttp
+    implementation Libraries.okHttpInterceptor
+}
