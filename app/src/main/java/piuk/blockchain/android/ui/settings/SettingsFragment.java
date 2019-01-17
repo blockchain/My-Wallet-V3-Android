@@ -27,7 +27,6 @@ import android.support.v7.preference.SwitchPreferenceCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -41,11 +40,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.blockchain.kyc.models.nabu.Kyc2TierState;
 import com.blockchain.kycui.navhost.KycNavHostActivity;
 import com.blockchain.kycui.navhost.models.CampaignType;
 import com.blockchain.kycui.settings.KycStatusPreference;
-import com.blockchain.kycui.settings.SettingsKycState;
-import com.blockchain.kycui.status.KycStatusActivity;
 import com.blockchain.morph.ui.homebrew.exchange.host.HomebrewNavHostActivity;
 import com.blockchain.notifications.analytics.EventLogger;
 import com.blockchain.notifications.analytics.LoggableEvent;
@@ -73,13 +71,15 @@ import piuk.blockchain.androidcoreui.utils.logging.Logging;
 
 import javax.inject.Inject;
 
+import java.util.Objects;
+
 import static android.app.Activity.RESULT_OK;
-import static piuk.blockchain.android.R.string.email;
 import static piuk.blockchain.android.R.string.success;
 import static piuk.blockchain.android.constants.SettingsConstantsKt.URL_PRIVACY_POLICY;
 import static piuk.blockchain.android.constants.SettingsConstantsKt.URL_TOS_POLICY;
 import static piuk.blockchain.android.ui.auth.PinEntryFragment.KEY_VALIDATING_PIN_FOR_RESULT;
 import static piuk.blockchain.android.ui.auth.PinEntryFragment.REQUEST_CODE_VALIDATE_PIN;
+import static piuk.blockchain.android.ui.settings.UpdateEmailDialogKt.showUpdateEmailDialog;
 
 public class SettingsFragment extends PreferenceFragmentCompat
         implements Preference.OnPreferenceClickListener,
@@ -246,7 +246,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         if (getActivity().getIntent() != null && getActivity().getIntent().hasExtra(EXTRA_SHOW_TWO_FA_DIALOG)) {
             showDialogTwoFA();
         } else if (getActivity().getIntent() != null && getActivity().getIntent().hasExtra(EXTRA_SHOW_ADD_EMAIL_DIALOG)) {
-            showDialogEmail();
+            showUpdateEmailDialog(getActivity(), settingsPresenter);
         }
     }
 
@@ -302,7 +302,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
     }
 
     @Override
-    public void setKycState(SettingsKycState kycState) {
+    public void setKycState(Kyc2TierState kycState) {
         idVerificationPref.setKycStatus(kycState);
     }
 
@@ -442,7 +442,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 settingsPresenter.onKycStatusClicked();
                 break;
             case "email":
-                showDialogEmail();
+                showUpdateEmailDialog(Objects.requireNonNull(getActivity()), settingsPresenter);
                 break;
             case "email_notifications":
                 showDialogEmailNotifications();
@@ -495,35 +495,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
         }
 
         return true;
-    }
-
-    private void showDialogEmail() {
-        AppCompatEditText editText = new AppCompatEditText(getActivity());
-        editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        editText.setText(settingsPresenter.getEmail());
-        editText.setSelection(editText.getText().length());
-
-        new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle)
-                .setTitle(email)
-                .setMessage(R.string.verify_email2)
-                .setView(ViewUtils.getAlertDialogPaddedView(getActivity(), editText))
-                .setCancelable(false)
-                .setPositiveButton(R.string.update, (dialogInterface, i) -> {
-                    String email = editText.getText().toString();
-
-                    if (!FormatsUtil.isValidEmailAddress(email)) {
-                        ToastCustom.makeText(getActivity(), getString(R.string.invalid_email), ToastCustom.LENGTH_SHORT, ToastCustom.TYPE_ERROR);
-                    } else {
-                        settingsPresenter.updateEmail(email);
-                    }
-                })
-                .setNeutralButton(R.string.resend, (dialogInterface, i) -> {
-                    // Resend verification code
-                    settingsPresenter.updateEmail(settingsPresenter.getEmail());
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .create()
-                .show();
     }
 
     @Override
@@ -901,14 +872,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
     }
 
     @Override
-    public void launchKycStatus() {
-        KycStatusActivity.start(requireContext(), CampaignType.NativeBuySell);
-        requireActivity().finish();
-    }
-
-    @Override
     public void launchKycFlow() {
-        KycNavHostActivity.start(requireContext(), CampaignType.NativeBuySell);
+        KycNavHostActivity.start(requireContext(), CampaignType.Swap);
         requireActivity().finish();
     }
 

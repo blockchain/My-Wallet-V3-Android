@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
-import com.blockchain.kycui.status.KycStatusActivity
+import com.blockchain.kycui.navigate
 import com.blockchain.ui.extensions.throttledClicks
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -44,9 +44,7 @@ class ApplicationCompleteFragment : Fragment() {
                 .throttledClicks()
                 .subscribeBy(
                     onNext = {
-                        KycStatusActivity.start(requireContext(), progressListener.campaignType)
-                        // Clear entire KYC flow
-                        requireActivity().finish()
+                        navigate(ApplicationCompleteFragmentDirections.actionTier2Complete())
                     },
                     onError = { Timber.e(it) }
                 )

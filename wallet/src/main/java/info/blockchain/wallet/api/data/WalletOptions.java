@@ -26,9 +26,6 @@ public class WalletOptions {
     @JsonProperty("android")
     private Map<String, Boolean> androidFlags = new HashMap<>();
 
-    @JsonProperty("shapeshift")
-    private ShapeShiftOptions shapeshift;
-
     @JsonProperty("ethereum")
     private EthereumOptions ethereum;
 
@@ -61,10 +58,6 @@ public class WalletOptions {
 
     public Map<String, Boolean> getAndroidFlags() {
         return androidFlags;
-    }
-
-    public ShapeShiftOptions getShapeshift() {
-        return shapeshift;
     }
 
     public EthereumOptions getEthereum() {

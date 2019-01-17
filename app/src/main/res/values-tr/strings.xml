@@ -213,7 +213,7 @@ Tüm hakları saklıdır.</string>
   <string name="not_archived_description">Bu işlem maddesi arşivlenemez. Daha fazla kullanmak İSTEMİYORSANIZ bu işlem maddesini arşivleyin. Paranız güvende kalacak ve istediğiniz zaman arşivden çıkarabileceksiniz.</string>
   <string name="transfer_success_archive_prompt_title">Temizlenen adresleri arşivle?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 adres başarıyla Bitcoin Cüzdanıma transfer edildi. Bu adresi şimdi arşivlemek ister misiniz?</item>
+    <item quantity="one">%d adres başarıyla Bitcoin Cüzdanıma transfer edildi. Bu adresi şimdi arşivlemek ister misiniz?</item>
     <item quantity="other">%d adres başarıyla Bitcoin Cüzdanıma transfer edildi. Bu adresleri şimdi arşivlemek istiyor musunuz?</item>
   </plurals>
   <string name="default_account_description">Bu işlem maddesi varsayılan olarak ayarlanmış ve arşivlenemez.</string>
@@ -258,7 +258,7 @@ Genişletilmiş ortak anahtarınızı gizli tutun.         Genişletilmiş ortak
   <string name="transfer_amount">Transfer miktarı</string>
   <string name="transfer_archive_message">Transferden sonra alınmış adresleri arşivle</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 içe aktarılmış adres</item>
+    <item quantity="one">%d içe aktarılmış adres</item>
     <item quantity="other">%d içe aktarılmış adres</item>
   </plurals>
   <string name="transfer_archive">Arşiv Onaylandı</string>
@@ -804,7 +804,6 @@ Bu sadece bir öneridir: gerçek miktar farklılık gösterebilir.</string>
   <string name="sunriver_splash_message">XLM\'nizi talep etmek için kimliğinizi doğrulayın. Sadece birkaç dakika sürüyor. Doğrulandıktan sonra, yeni nesil ticari ürünümüz Swap\'ı kullanabilirsiniz.</string>
   <string name="sunriver_status_message">Bilgileriniz inceleniyor. İnceleme 5 dakika içinde tamamlanmalıdır. Başarılı bir şekilde doğrulandıktan sonra Stellar\'ı bir hafta içinde göndeririz.</string>
   <string name="YESTERDAY">Dün</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Yetersiz para</string>
   <string name="ok_cap">TAMAM</string>
   <string name="scan_qr">QR Kodu Tara</string>
@@ -826,7 +825,7 @@ Bu sadece bir öneridir: gerçek miktar farklılık gösterebilir.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Kilitli Kutunuzu Alın</string>
   <string name="lockbox_landing_get_yours_message">Cryptocurrency\'nızı çevrimdışı olarak güvenle saklayın.</string>
-  <string name="lockbox_landing_get_yours_button">Hemen şimdi 99 USD karşılığında alın</string>
+  <string name="lockbox_landing_get_yours_button">Şimdi satın al</string>
   <string name="lockbox_landing_already_owned_title">Zaten bir tane var mı?</string>
   <string name="lockbox_landing_already_owned_message">Bilgisayarınızdan blockchain.com\'a giriş yapın ve kilit kutunuzu bağlayın.</string>
   <string name="lockbox_landing_learn_more">Daha fazla öğrenmek ister misiniz? Ziyaret etmek için buraya dokunun 
@@ -1031,4 +1030,9 @@ Bu sadece bir öneridir: gerçek miktar farklılık gösterebilir.</string>
   <string name="buy_sell_recurring_frequency_daily">Her gün</string>
   <string name="buy_sell_recurring_frequency_monthly">Her ayın %1$s günü</string>
   <string name="buy_sell_transaction_list_label">Sipariş Kimliği # %1$s Coinify</string>
+  <string name="sunriver_set_memo">Notu Ayarla</string>
+  <string name="xlm_memo_explain">Notlar, isteğe bağlı bilgileri alıcıya iletmek için kullanılır.</string>
+  <string name="xlm_memo_text_hint">not</string>
+  <string name="xlm_memo_id_hint">Sayısal Kimlik</string>
+  <string name="xlm_memo_hash_hint">32 bayt onaltılık karma</string>
 </resources>

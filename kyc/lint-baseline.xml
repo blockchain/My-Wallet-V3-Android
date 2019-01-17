@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="4" by="lint 3.2.1" client="gradle" variant="debug" version="3.2.1">
+<issues format="4" by="lint 3.2.1" client="gradle" variant="all" version="3.2.1">
 
     <issue
         id="ObsoleteLintCustomCheck"
-        message="Lint found an issue registry (`timber.lint.TimberIssueRegistry`) which is older than the current API level; these checks may not work correctly.&#xA;&#xA;Recompile the checks against the latest version. Custom check API version is 1 (3.1+), current lint API level is 2 (3.2+)">
+        message="Lint found an issue registry (`timber.lint.TimberIssueRegistry`) which is older than the current API level; these checks may not work correctly.&#xA;&#xA;Recompile the checks against the latest version. Custom check API version is 1 (3.1+), current lint API level is 2 (3.2+)"
+        includedVariants="debug"
+        excludedVariants="release">
         <location
-            file="../../.gradle/caches/transforms-1/files-1.1/timber-4.7.1.aar/5201c4380ac1e5fcce729bf4da23d4cf/jars/lint.jar"/>
+            file="../../.gradle/caches/transforms-1/files-1.1/timber-4.7.1.aar/2d3017e2a1e65a065e89774d48f3562e/jars/lint.jar"/>
     </issue>
 
     <issue
@@ -215,6 +217,17 @@
             file="src/main/res/layout/fragment_kyc_invalid_country.xml"
             line="7"
             column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_kyc_more_info_splash.xml"
+            line="41"
+            column="10"/>
     </issue>
 
     <issue

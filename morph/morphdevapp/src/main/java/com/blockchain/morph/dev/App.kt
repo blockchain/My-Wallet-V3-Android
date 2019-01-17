@@ -1,25 +1,36 @@
 package com.blockchain.morph.dev
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.provider.Settings
+import android.widget.Toast
+import com.blockchain.datamanagers.MaximumSpendableCalculator
+import com.blockchain.injection.kycModule
 import com.blockchain.koin.morphUiModule
 import com.blockchain.koin.walletModule
-import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
-import com.blockchain.injection.kycModule
-import android.content.Context
-import android.provider.Settings
-import com.blockchain.koin.coreModule
-import com.blockchain.morph.dev.BuildConfig
+import com.blockchain.morph.exchange.service.FiatPeriodicLimit
+import com.blockchain.morph.exchange.service.FiatTradesLimits
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
+import com.blockchain.morph.exchange.service.TradeLimitService
+import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
+import com.blockchain.nabu.CurrentTier
+import com.blockchain.nabu.StartKyc
 import com.blockchain.network.EnvironmentUrls
 import com.blockchain.network.modules.MoshiBuilderInterceptorList
 import com.blockchain.network.modules.OkHttpInterceptors
 import com.blockchain.network.modules.apiModule
+import com.blockchain.notifications.analytics.EventLogger
+import com.blockchain.notifications.analytics.Loggable
+import com.blockchain.preferences.FiatCurrencyPreference
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
+import info.blockchain.balance.FiatValue
+import info.blockchain.balance.withMajorValue
 import info.blockchain.wallet.ApiCode
 import info.blockchain.wallet.BlockchainFramework
-import org.koin.android.ext.android.startKoin
-import org.koin.dsl.module.applicationContext
 import info.blockchain.wallet.FrameworkInterface
 import info.blockchain.wallet.api.Environment
 import info.blockchain.wallet.api.FeeApi
@@ -29,16 +40,21 @@ import info.blockchain.wallet.api.WalletExplorerEndpoints
 import info.blockchain.wallet.ethereum.EthAccountApi
 import info.blockchain.wallet.payment.Payment
 import info.blockchain.wallet.settings.SettingsManager
+import io.reactivex.Single
 import org.bitcoinj.core.NetworkParameters
 import org.bitcoinj.params.BitcoinCashMainNetParams
 import org.bitcoinj.params.BitcoinMainNetParams
 import org.koin.android.ext.android.get
-import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import retrofit2.Retrofit
-import timber.log.Timber
+import org.koin.android.ext.android.startKoin
+import org.koin.dsl.module.applicationContext
 import piuk.blockchain.androidcore.data.access.AccessState
+import piuk.blockchain.androidcore.data.access.LogoutTimer
+import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.utils.PrefsUtil
+import retrofit2.Retrofit
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class App : Application() {
 
@@ -48,14 +64,13 @@ class App : Application() {
         startKoin(
             this, listOf(
                 apiModule,
-                coreModule,
                 serviceModule,
                 environmentModule,
                 morphUiModule,
                 walletModule,
                 kycModule,
                 walletModule,
-                fakeQuotesModule,
+                fakesModule,
                 simulatedAccountsModule,
                 applicationContext {
                     bean { OkHttpInterceptors(emptyList()) }
@@ -107,7 +122,17 @@ class App : Application() {
     }
 }
 
-val fakeQuotesModule = applicationContext {
+val fakesModule = applicationContext {
+
+    bean {
+        object : StartKyc {
+            override fun startKycActivity(context: Any) {
+                Timber.d("Would start KYC here")
+                Toast.makeText(context as Context, "Would start KYC here", Toast.LENGTH_SHORT).show()
+                context.startActivity(Intent(context, MainActivity::class.java))
+            }
+        } as StartKyc
+    }
 
     bean {
         object : QuoteServiceFactory {
@@ -115,6 +140,63 @@ val fakeQuotesModule = applicationContext {
                 return FakeQuoteService()
             }
         } as QuoteServiceFactory
+    }
+
+    bean {
+        object : MaximumSpendableCalculator {
+            override fun getMaximumSpendable(accountReference: AccountReference): Single<CryptoValue> {
+                return Single.just(accountReference.cryptoCurrency.withMajorValue(1000.toBigDecimal()))
+            }
+        } as MaximumSpendableCalculator
+    }
+
+    bean {
+        object : CurrentTier {
+            var count = 0
+            override fun usersCurrentTier(): Single<Int> =
+                Single.just(count++ % 2).delay(100, TimeUnit.MILLISECONDS)
+        } as CurrentTier
+    }
+
+    bean {
+        object : FiatCurrencyPreference {
+            override val fiatCurrencyPreference: String
+                get() = "USD"
+        } as FiatCurrencyPreference
+    }
+
+    bean {
+        object : EventLogger {
+            override fun logEvent(loggable: Loggable) {
+                Timber.d(loggable.eventName)
+            }
+        } as EventLogger
+    }
+
+    bean {
+        object : LogoutTimer {
+            override fun start(context: Context) {}
+
+            override fun stop(context: Context) {}
+        } as LogoutTimer
+    }
+
+    bean {
+        object : TradeLimitService {
+            override fun getTradesLimits(fiatCurrency: String): Single<FiatTradesLimits> {
+                fun Int.usd() = FiatValue.fromMajor("USD", toBigDecimal())
+                return Single.just(
+                    FiatTradesLimits(
+                        minOrder = 1.usd(),
+                        maxOrder = 50000.usd(),
+                        maxPossibleOrder = 10000.usd(),
+                        daily = FiatPeriodicLimit(100.usd(), 30.usd(), 70.usd()),
+                        weekly = FiatPeriodicLimit(700.usd(), (7 * 30).usd(), (7 * 70).usd()),
+                        annual = FiatPeriodicLimit(1000.usd(), 300.usd(), 700.usd())
+                    )
+                ).delay(100, TimeUnit.MILLISECONDS)
+            }
+        } as TradeLimitService
     }
 }
 

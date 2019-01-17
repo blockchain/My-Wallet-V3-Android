@@ -802,7 +802,6 @@ Xác nhận dấu vân tay để tiếp tục</string>
   <string name="sunriver_splash_message">Hãy xác minh danh tính để nhận XLM của bạn. Quá trình này chỉ mất vài phút. Sau khi xác minh, bạn sẽ có thể sử dụng sản phẩm giao dịch thế hệ mới của chúng tôi, Swap.</string>
   <string name="sunriver_status_message">Thông tin của bạn đang được xem xét. Quá trình xem xét sẽ hoàn thành trong 5 phút. Sau khi bạn được xác minh thành công, chúng tôi sẽ gửi Stellar cho bạn trong vòng một tuần.</string>
   <string name="YESTERDAY">Hôm qua</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Không đủ tiền</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Quét mã QR</string>
@@ -824,7 +823,7 @@ Xác nhận dấu vân tay để tiếp tục</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Nhận Lockbox của bạn</string>
   <string name="lockbox_landing_get_yours_message">Lưu trữ tiền kỹ thuật số của bạn ngoại tuyến một cách an toàn.</string>
-  <string name="lockbox_landing_get_yours_button">Mua ngay với giá 99 USD</string>
+  <string name="lockbox_landing_get_yours_button">Mua ngay</string>
   <string name="lockbox_landing_already_owned_title">Bạn đã sở hữu một chiếc?</string>
   <string name="lockbox_landing_already_owned_message">Từ máy tính của bạn, đăng nhập vào blockchain.com và kết nối lockbox của bạn.</string>
   <string name="lockbox_landing_learn_more">Bạn muốn tìm hiểu thêm? Hãy nhấn vào đây để truy cập
@@ -1029,4 +1028,9 @@ Lệnh đã được tạo</string>
   <string name="buy_sell_recurring_frequency_daily">Mỗi ngày</string>
   <string name="buy_sell_recurring_frequency_monthly">Vào ngày %1$s hàng tháng</string>
   <string name="buy_sell_transaction_list_label"># ID Lệnh Coinify%1$s</string>
+  <string name="sunriver_set_memo">Đặt Bản ghi nhớ</string>
+  <string name="xlm_memo_explain">Phần ghi chú được dùng để cung cấp thông tin không bắt buộc cho người nhận.</string>
+  <string name="xlm_memo_text_hint">Bản ghi nhớ</string>
+  <string name="xlm_memo_id_hint">ID số</string>
+  <string name="xlm_memo_hash_hint">Hàm băm thập lục phân 32 byte</string>
 </resources>

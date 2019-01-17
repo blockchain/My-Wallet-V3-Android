@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="exchange">Exchange</string>
+    <string name="exchange">Swap</string>
     <string name="min">Min</string>
     <string name="min_with_value">%1$s Min</string>
     <string name="max">Max</string>
@@ -12,6 +12,7 @@
 
     <string name="under_min">Your Min is %1$s</string>
     <string name="over_max">Your Max is %1$s</string>
+    <string name="upgrade_now">Upgrade now</string>
 
     <string name="dialog_title_exchange">What do you want to exchange?</string>
     <string name="dialog_title_receive">What do you want to receive?</string>

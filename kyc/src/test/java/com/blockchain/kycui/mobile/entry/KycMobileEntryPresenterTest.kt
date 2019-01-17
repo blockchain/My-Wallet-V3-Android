@@ -1,37 +1,34 @@
 package com.blockchain.kycui.mobile.entry
 
 import com.blockchain.android.testutils.rxInit
-import com.blockchain.getBlankNabuUser
-import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
+import com.blockchain.nabu.NabuUserSync
 import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
-import com.blockchain.kycui.mobile.entry.models.PhoneNumber
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata
-import com.blockchain.nabu.models.mapFromMetadata
-import com.blockchain.serialization.toMoshiJson
-import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argThat
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
-import info.blockchain.wallet.api.data.Settings
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
-import org.amshove.kluent.mock
+import org.amshove.kluent.`it returns`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.data.settings.SettingsDataManager
+import piuk.blockchain.androidcore.data.settings.PhoneNumber
+import piuk.blockchain.androidcore.data.settings.PhoneNumberUpdater
 
 class KycMobileEntryPresenterTest {
 
     private lateinit var subject: KycMobileEntryPresenter
     private val view: KycMobileEntryView = mock()
-    private val settingsDataManager: SettingsDataManager = mock()
-    private val nabuDataManager: NabuDataManager = mock()
-    private val metadataManager: MetadataManager = mock()
+    private val phoneNumberUpdater: PhoneNumberUpdater = mock()
+    private val nabuUserSync: NabuUserSync = mock {
+        on { syncUser() } `it returns` Completable.complete()
+    }
 
     @Suppress("unused")
     @get:Rule
@@ -42,15 +39,14 @@ class KycMobileEntryPresenterTest {
 
     @Before
     fun setUp() {
-        subject = KycMobileEntryPresenter(settingsDataManager, nabuDataManager, metadataManager)
+        subject = KycMobileEntryPresenter(phoneNumberUpdater, nabuUserSync)
         subject.initView(view)
     }
 
     @Test
     fun `onViewReady no phone number found, should not attempt to update UI`() {
         // Arrange
-        val settings = Settings()
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
+        whenever(phoneNumberUpdater.smsNumber()).thenReturn(Single.just(""))
         whenever(view.uiStateObservable).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
@@ -62,10 +58,8 @@ class KycMobileEntryPresenterTest {
     @Test
     fun `onViewReady phone number found, should attempt to update UI`() {
         // Arrange
-        val settings: Settings = mock()
         val phoneNumber = "+1234567890"
-        whenever(settings.smsNumber).thenReturn(phoneNumber)
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
+        whenever(phoneNumberUpdater.smsNumber()).thenReturn(Single.just(phoneNumber))
         whenever(view.uiStateObservable).thenReturn(Observable.empty())
         // Act
         subject.onViewReady()
@@ -79,27 +73,18 @@ class KycMobileEntryPresenterTest {
         val phoneNumber = "+1 (234) 567-890"
         val phoneNumberSanitized = "+1234567890"
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(phoneNumberUpdater.smsNumber()).thenReturn(Single.just(""))
         whenever(view.uiStateObservable).thenReturn(publishSubject)
-        whenever(settingsDataManager.updateSms(phoneNumberSanitized)).thenReturn(Observable.empty())
-        val offlineToken = NabuCredentialsMetadata("", "")
-        whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.just(Optional.of(offlineToken.toMoshiJson())))
-        val jwt = "JWT"
-        whenever(nabuDataManager.requestJwt()).thenReturn(Single.just(jwt))
-        whenever(nabuDataManager.updateUserWalletInfo(offlineToken.mapFromMetadata(), jwt))
-            .thenReturn(Single.just(getBlankNabuUser()))
+        whenever(phoneNumberUpdater.updateSms(any())).thenReturn(Single.just("+1234567890"))
         // Act
         subject.onViewReady()
         publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
         // Assert
-        verify(settingsDataManager).updateSms(phoneNumberSanitized)
+        verify(phoneNumberUpdater).updateSms(argThat { sanitized == "+1234567890" })
         verify(view).showProgressDialog()
         verify(view).dismissProgressDialog()
         verify(view).continueSignUp(PhoneDisplayModel(phoneNumber, phoneNumberSanitized))
+        verify(nabuUserSync).syncUser()
     }
 
     @Test
@@ -108,32 +93,33 @@ class KycMobileEntryPresenterTest {
         val phoneNumber = "+1 (234) 567-890"
         val phoneNumberSanitized = "+1234567890"
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(phoneNumberUpdater.smsNumber()).thenReturn(Single.just(""))
         whenever(view.uiStateObservable).thenReturn(publishSubject)
-        whenever(settingsDataManager.updateSms(phoneNumberSanitized))
-            .thenReturn(Observable.error { Throwable() })
-            .thenReturn(Observable.empty())
+        whenever(phoneNumberUpdater.updateSms(any()))
+            .thenReturn(Single.error { Throwable() })
+            .thenReturn(Single.just("+1234567890"))
         // Act
         subject.onViewReady()
         publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
         publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)
         // Assert
+        verify(phoneNumberUpdater, times(2)).updateSms(argThat { sanitized == "+1234567890" })
         verify(view, times(2)).showProgressDialog()
         verify(view, times(2)).dismissProgressDialog()
         verify(view).showErrorToast(any())
         verify(view).continueSignUp(PhoneDisplayModel(phoneNumber, phoneNumberSanitized))
+        verify(nabuUserSync).syncUser()
     }
 
     @Test
     fun `onViewReady, should throw exception and display toast`() {
         // Arrange
         val phoneNumber = "+1 (234) 567-890"
-        val phoneNumberSanitized = "+1234567890"
         val publishSubject = PublishSubject.create<Pair<PhoneNumber, Unit>>()
-        whenever(settingsDataManager.getSettings()).thenReturn(Observable.empty())
+        whenever(phoneNumberUpdater.smsNumber()).thenReturn(Single.just(""))
         whenever(view.uiStateObservable).thenReturn(publishSubject)
-        whenever(settingsDataManager.updateSms(phoneNumberSanitized))
-            .thenReturn(Observable.error { Throwable() })
+        whenever(phoneNumberUpdater.updateSms(any()))
+            .thenReturn(Single.error { Throwable() })
         // Act
         subject.onViewReady()
         publishSubject.onNext(PhoneNumber(phoneNumber) to Unit)

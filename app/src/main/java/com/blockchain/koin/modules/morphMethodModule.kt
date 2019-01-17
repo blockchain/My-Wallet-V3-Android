@@ -1,23 +1,19 @@
 package com.blockchain.koin.modules
 
 import android.app.Activity
-import android.support.annotation.VisibleForTesting
+import android.content.Context
+import com.blockchain.activities.StartSwap
 import com.blockchain.kycui.navhost.KycNavHostActivity
 import com.blockchain.kycui.navhost.models.CampaignType
-import com.blockchain.kycui.settings.KycStatusHelper
-import com.blockchain.kycui.settings.SettingsKycState
 import com.blockchain.morph.MorphMethodSelector
 import com.blockchain.morph.ui.homebrew.exchange.history.TradeHistoryActivity
-import com.blockchain.notifications.analytics.EventLogger
-import com.blockchain.notifications.analytics.LoggableEvent
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.dsl.module.applicationContext
-import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity
+import piuk.blockchain.android.kyc.morphmethod.TiersMorphMethodTypeSelectorSelector
+import piuk.blockchain.android.kyc.morphmethod.logCalls
 import timber.log.Timber
 
 enum class MorphMethodType {
-    ShapeShift,
     HomeBrew,
     Kyc
 }
@@ -45,8 +41,12 @@ val morphMethodModule = applicationContext {
     context("Payload") {
 
         bean {
-            dynamicSelector(get(), get())
+            TiersMorphMethodTypeSelectorSelector(get(), get()).logCalls(get())
         }
+    }
+
+    bean {
+        SwapStarter() as StartSwap
     }
 
     bean {
@@ -54,16 +54,13 @@ val morphMethodModule = applicationContext {
             override fun getMorphMethod() =
                 get<MorphMethodTypeSelector>()
                     .getMorphMethod()
-                    .map {
-                        when (it) {
-                            MorphMethodType.ShapeShift -> { activity: Activity ->
-                                ShapeShiftActivity.start(activity)
-                            }
+                    .map { morphMethodType ->
+                        when (morphMethodType) {
                             MorphMethodType.HomeBrew -> { activity: Activity ->
-                                TradeHistoryActivity.start(activity)
+                                startSwap(activity)
                             }
                             MorphMethodType.Kyc -> { activity: Activity ->
-                                KycNavHostActivity.start(activity, CampaignType.NativeBuySell)
+                                KycNavHostActivity.start(activity, CampaignType.Swap)
                             }
                         }
                     }
@@ -71,21 +68,13 @@ val morphMethodModule = applicationContext {
     }
 }
 
-@VisibleForTesting
-internal fun dynamicSelector(
-    kycStatusHelper: KycStatusHelper,
-    eventLogger: EventLogger
-): MorphMethodTypeSelector =
-    object : MorphMethodTypeSelector {
-        override fun getMorphMethod(): Single<MorphMethodType> {
-            eventLogger.logEvent(LoggableEvent.Exchange)
-            return kycStatusHelper.getSettingsKycState()
-                .map {
-                    when (it) {
-                        SettingsKycState.Hidden -> return@map MorphMethodType.ShapeShift
-                        SettingsKycState.Verified -> return@map MorphMethodType.HomeBrew
-                        else -> return@map MorphMethodType.Kyc
-                    }
-                }
-        }
+private class SwapStarter : StartSwap {
+
+    override fun startSwapActivity(context: Any) {
+        startSwap(context as Context)
     }
+}
+
+private fun startSwap(context: Context) {
+    TradeHistoryActivity.start(context)
+}

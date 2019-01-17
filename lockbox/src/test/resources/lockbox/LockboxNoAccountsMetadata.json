@@ -1,0 +1,8 @@
+{
+  "devices": [
+    {
+      "device_type": "ledger",
+      "device_name": "Ledger"
+    }
+  ]
+}

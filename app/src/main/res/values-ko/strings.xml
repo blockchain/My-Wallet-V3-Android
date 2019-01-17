@@ -253,7 +253,7 @@
   <string name="transfer_amount">이체 금액</string>
   <string name="transfer_archive_message">이체 후 가져온 주소 보관</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">가져온 주소 1 개</item>
+    <item quantity="one">가져온 주소 %d 개</item>
     <item quantity="other">가져온 주소 %d</item>
   </plurals>
   <string name="transfer_archive">보관 확인됨</string>
@@ -799,7 +799,6 @@
   <string name="sunriver_splash_message">신원을 확인하여 XLM을 청구하십시오. 몇 분 밖에 걸리지 않습니다. 검증이 완료되면 차세대 거래 상품인 스왑을 사용할 수 있습니다.</string>
   <string name="sunriver_status_message">귀하의 정보가 검토 중입니다. 검토는 5 분 안에 완료되어야합니다. 성공적으로 확인되면 1 주 이내에 스텔라를 보냅니다.</string>
   <string name="YESTERDAY">어제</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">불 충분한 자금</string>
   <string name="ok_cap">좋아요</string>
   <string name="scan_qr">QR 코드 스캔</string>
@@ -821,7 +820,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">귀하의 잠금 상자 가져 오기</string>
   <string name="lockbox_landing_get_yours_message">cryptocurrency를 안전하게 오프라인에 안전하게 저장하십시오.</string>
-  <string name="lockbox_landing_get_yours_button">$ 99에 대한 지금 구입</string>
+  <string name="lockbox_landing_get_yours_button">지금 구입</string>
   <string name="lockbox_landing_already_owned_title">이미 소유하고 계신가요?</string>
   <string name="lockbox_landing_already_owned_message">컴퓨터에서 blockchain.com에 로그인하고 lockbox를 연결하십시오.</string>
   <string name="lockbox_landing_learn_more">더 배우고 싶습니까? 방문하려면 여기를 누르십시오. 
@@ -1026,4 +1025,9 @@
   <string name="buy_sell_recurring_frequency_daily">매일</string>
   <string name="buy_sell_recurring_frequency_monthly">매월 %1$s 에</string>
   <string name="buy_sell_transaction_list_label">주문 ID # %1$s 일치 시키십시오.</string>
+  <string name="sunriver_set_memo">메모 설정</string>
+  <string name="xlm_memo_explain">메모는받는 사람에게 선택적 정보를 전달하는 데 사용됩니다.</string>
+  <string name="xlm_memo_text_hint">메모</string>
+  <string name="xlm_memo_id_hint">숫자 ID</string>
+  <string name="xlm_memo_hash_hint">32 바이트 16 진수 해시</string>
 </resources>

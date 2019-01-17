@@ -2,7 +2,7 @@
     <string name="lockbox_title">Lockbox</string>
     <string name="lockbox_landing_get_yours_title">Get Your Lockbox</string>
     <string name="lockbox_landing_get_yours_message">Safely store your cryptocurrency offline.</string>
-    <string name="lockbox_landing_get_yours_button">Buy now for $99</string>
+    <string name="lockbox_landing_get_yours_button">Buy now</string>
     <string name="lockbox_landing_already_owned_title">Already own one?</string>
     <string name="lockbox_landing_already_owned_message">From your computer, log into blockchain.com and connect your lockbox.</string>
     <string name="lockbox_landing_learn_more">Want to learn more? Tap here to visit\n%1$s</string>

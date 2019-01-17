@@ -213,7 +213,7 @@ Tous droits réservés.</string>
   <string name="not_archived_description">Cet élément n\'est pas archivé. Archivez cet élément si vous NE souhaitez PLUS l\'utiliser. Vos fonds resteront en sécurité et vous pouvez les désarchiver à tout moment.</string>
   <string name="transfer_success_archive_prompt_title">Archiver les adresses balayées ?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 adresse a été transférée à « Mon portefeuille Bitcoin » avec succès. Souhaitez-vous archiver cette adresse maintenant ?</item>
+    <item quantity="one">%d adresse a été transférée à « Mon portefeuille Bitcoin » avec succès. Souhaitez-vous archiver cette adresse maintenant ?</item>
     <item quantity="other">%d adresses ont été transférées à « Mon portefeuille Bitcoin » avec succès. Souhaitez-vous archiver ces adresses maintenant ?</item>
   </plurals>
   <string name="default_account_description">Cet élément est défini comme votre valeur par défaut et ne peut pas être archivé.</string>
@@ -669,7 +669,7 @@ Ceci n\'est qu\'une suggestion : le montant réel peut être différent.</strin
   <string name="dashboard_price_charts">Graphiques des prix</string>
   <string name="dashboard_see_charts">Voir les graphiques</string>
   <string name="dashboard_price">%1$s prix</string>
-  <string name="dashboard_non_spendable_value">%1$s Bloqués</string>
+  <string name="dashboard_non_spendable_value">%1$s Non Disponible</string>
   <string name="dashboard_lockbox_disclaimer">Le solde total affiché sur cet appareil n\'inclut pas les %1$s que vous avez liés.</string>
   <string name="metadata_load_failure">Erreur lors du chargement de toutes les fonctions du portefeuille. Le service pourra être momentanément indisponible.</string>
   <string name="more">Plus</string>
@@ -803,7 +803,6 @@ Ceci n\'est qu\'une suggestion : le montant réel peut être différent.</strin
   <string name="sunriver_splash_message">Vérifiez votre identité pour recevoir votre XLM. Cela ne prend que quelques minutes. Une fois vérifié, vous serez en mesure d\'utiliser notre produit commercial de nouvelle génération, Swap.</string>
   <string name="sunriver_status_message">Vos informations sont en cours d\'examen. L\'examen devrait se terminer dans 5 minutes. Une fois la vérification réussie, nous enverrons votre Stellar dans un délai d\'une semaine.</string>
   <string name="YESTERDAY">Hier</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Fonds insuffisants</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Scanner le code QR</string>
@@ -825,7 +824,7 @@ Ceci n\'est qu\'une suggestion : le montant réel peut être différent.</strin
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Obtenez votre Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Sécurisez votre cryptomonnaie hors ligne</string>
-  <string name="lockbox_landing_get_yours_button">Achetez maintenant pour 99 dollars</string>
+  <string name="lockbox_landing_get_yours_button">Acheter maintenant</string>
   <string name="lockbox_landing_already_owned_title">Vous en avez déjà un ?</string>
   <string name="lockbox_landing_already_owned_message">À partir de votre ordinateur, connectez-vous à blockchain.com et connectez votre lockbox.</string>
   <string name="lockbox_landing_learn_more">Voulez-vous en savoir plus ? Appuyez ici pour visiter 
@@ -1027,4 +1026,9 @@ Commande créée</string>
   <string name="buy_sell_recurring_frequency_daily">Tous les jours</string>
   <string name="buy_sell_recurring_frequency_monthly">Le %1$s de chaque mois</string>
   <string name="buy_sell_transaction_list_label">Numéro de l\'identifiant de la commande Coinify%1$s</string>
+  <string name="sunriver_set_memo">Définir un mémo</string>
+  <string name="xlm_memo_explain">Les mémos permettent de communiquer des informations facultatives au destinataire.</string>
+  <string name="xlm_memo_text_hint">Mémo</string>
+  <string name="xlm_memo_id_hint">ID numérique</string>
+  <string name="xlm_memo_hash_hint">Hachage hexadécimal de 32 octets</string>
 </resources>

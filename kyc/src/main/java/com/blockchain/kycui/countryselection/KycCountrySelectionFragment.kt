@@ -1,8 +1,6 @@
 package com.blockchain.kycui.countryselection
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,20 +9,17 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.countryselection.adapter.CountryCodeAdapter
 import com.blockchain.kycui.countryselection.models.CountrySelectionState
 import com.blockchain.kycui.countryselection.util.CountryDisplayModel
-import com.blockchain.kycui.invalidcountry.KycInvalidCountryFragment
+import com.blockchain.notifications.analytics.logEvent
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
-import com.blockchain.kycui.profile.KycProfileFragment
+import com.blockchain.kycui.navigate
 import com.blockchain.kycui.search.filterCountries
-import com.blockchain.kycui.status.KycStatusActivity.Companion.LEGACY_SHAPESHIFT_INTENT
-import com.blockchain.notifications.analytics.EventLogger
 import com.blockchain.notifications.analytics.LoggableEvent
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.ReplaySubject
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
@@ -37,6 +32,7 @@ import piuk.blockchain.kyc.R
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_kyc_country_selection.recycler_view_country_selection as recyclerView
 import kotlinx.android.synthetic.main.fragment_kyc_country_selection.search_view_kyc as searchView
+import kotlinx.android.synthetic.main.fragment_kyc_country_selection.text_view_country_selection_message as messageView
 
 internal class KycCountrySelectionFragment :
     BaseFragment<KycCountrySelectionView, KycCountrySelectionPresenter>(), KycCountrySelectionView {
@@ -66,17 +62,18 @@ internal class KycCountrySelectionFragment :
             setHasFixedSize(true)
             adapter = countryCodeAdapter
         }
-        val title = when (regionType) {
+        val texts = when (regionType) {
             RegionType.Country -> {
-                get<EventLogger>().logEvent(LoggableEvent.KycCountry)
-                R.string.kyc_country_selection_title
+                logEvent(LoggableEvent.KycCountry)
+                R.string.kyc_country_selection_title to R.string.kyc_country_selection_message
             }
             RegionType.State -> {
-                get<EventLogger>().logEvent(LoggableEvent.KycStates)
-                R.string.kyc_country_selection_state_title
+                logEvent(LoggableEvent.KycStates)
+                R.string.kyc_country_selection_state_title to R.string.kyc_country_selection_message_state
             }
         }
-        progressListener.setHostTitle(title)
+        progressListener.setHostTitle(texts.first)
+        messageView.setText(texts.second)
         progressListener.incrementProgress(KycStep.CountrySelection)
 
         onViewReady()
@@ -103,24 +100,22 @@ internal class KycCountrySelectionFragment :
     }
 
     override fun continueFlow(countryCode: String) {
-        val args = KycProfileFragment.bundleArgs(countryCode)
-        findNavController(this).navigate(R.id.kycProfileFragment, args)
+        navigate(
+            KycCountrySelectionFragmentDirections.ActionKycCountrySelectionFragmentToKycProfileFragment(countryCode)
+        )
     }
 
     override fun invalidCountry(displayModel: CountryDisplayModel) {
-        val args = KycInvalidCountryFragment.bundleArgs(displayModel)
-        findNavController(this).navigate(R.id.kycInvalidCountryFragment, args)
+        navigate(
+            KycCountrySelectionFragmentDirections.ActionKycCountrySelectionFragmentToKycInvalidCountryFragment(
+                displayModel
+            )
+        )
     }
 
     override fun requiresStateSelection() {
         val args = bundleArgs(RegionType.State)
         findNavController(this).navigate(R.id.kycCountrySelectionFragment, args)
-    }
-
-    override fun redirectToShapeShift() {
-        LocalBroadcastManager.getInstance(requireContext())
-            .sendBroadcast(Intent(LEGACY_SHAPESHIFT_INTENT))
-        requireActivity().finish()
     }
 
     override fun renderUiState(state: CountrySelectionState) {

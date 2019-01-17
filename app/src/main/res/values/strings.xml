@@ -162,6 +162,7 @@
     <string name="drawer_addresses">Addresses</string>
     <string name="create_new">Create New</string>
     <string name="import_address">Import Address</string>
+    <string name="wallet">Wallet</string>
     <string name="wallets">Wallets</string>
     <string name="save_name">Save name</string>
 
@@ -836,5 +837,11 @@
     <string name="sunriver_code_does_not_exist_title">Code does not exist.</string>
 
     <string name="sunriver_set_memo">Set memo</string>
+
+    <string-array name="balance_type">
+        <item>@string/total</item>
+        <item>@string/wallet</item>
+        <item>@string/lockbox_title</item>
+    </string-array>
 
 </resources>

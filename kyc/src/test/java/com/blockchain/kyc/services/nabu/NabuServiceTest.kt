@@ -38,6 +38,7 @@ import org.amshove.kluent.`should contain`
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should equal`
 import org.amshove.kluent.`should have key`
+import org.amshove.kluent.`should not be`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -181,12 +182,18 @@ class NabuServiceTest {
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         // Check Response
-        val nabuUser = testObserver.values().first()
-        nabuUser.firstName `should equal` "satoshi"
-        nabuUser.address?.city `should equal` "London"
-        nabuUser.state `should equal` UserState.Created
-        nabuUser.kycState `should equal` KycState.None
-        nabuUser.tags!! `should have key` "SUNRIVER"
+        testObserver.values().first()
+            .apply {
+                firstName `should equal` "satoshi"
+                address?.city `should equal` "London"
+                state `should equal` UserState.Created
+                kycState `should equal` KycState.None
+                email `should equal` "satoshi@btc.com"
+                emailVerified `should equal` false
+                mobile `should equal` "+447123123123"
+                mobileVerified `should equal` true
+                tags!! `should have key` "SUNRIVER"
+            }
         // Check URL
         val request = server.takeRequest()
         request.path `should equal to` "/$NABU_USERS_CURRENT"
@@ -409,6 +416,26 @@ class NabuServiceTest {
     }
 
     @Test
+    fun getUserTiers() {
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(getStringFromResource("com/blockchain/kyc/services/nabu/GetUser.json"))
+        )
+        subject.getUser(getEmptySessionToken())
+            .test()
+            .assertComplete()
+            .assertNoErrors()
+            .values().single()
+            .apply {
+                tiers `should not be` null
+                tiers!!.current `should equal` 0
+                tiers!!.selected `should equal` 1
+                tiers!!.next `should equal` 2
+            }
+    }
+
+    @Test
     fun `get kyc states`() {
         // Arrange
         server.enqueue(
@@ -483,7 +510,7 @@ class NabuServiceTest {
         jwt.jwt `should equal to` "jwt"
         // Check URL
         request.path `should equal to` "/$NABU_RECOVER_USER/${offlineToken.userId}"
-        request.headers.get("authorization") `should equal` offlineToken.authHeader
+        request.headers.get("authorization") `should equal` "Bearer ${offlineToken.token}"
     }
 
     @Test

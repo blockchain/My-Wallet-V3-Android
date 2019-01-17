@@ -4,6 +4,7 @@ import android.content.Context
 import info.blockchain.balance.CryptoCurrency
 import piuk.blockchain.android.ui.adapters.AdapterDelegatesManager
 import piuk.blockchain.android.ui.adapters.DelegationAdapter
+import piuk.blockchain.android.ui.dashboard.BalanceFilter
 import piuk.blockchain.android.ui.dashboard.PieChartsState
 import piuk.blockchain.android.ui.dashboard.adapter.delegates.AssetPriceCardDelegate
 import piuk.blockchain.android.ui.dashboard.adapter.delegates.HeaderDelegate
@@ -17,15 +18,17 @@ import piuk.blockchain.android.ui.dashboard.adapter.delegates.SunriverAnnounceme
  * @param context The Activity/Fragment [Context]
  * @param assetSelector A callback for getting the selected coin from the asset balance card
  * @param coinSelector A callback for getting the selected coin from the pie Chart
+ * @param balanceModeSelector A callback for getting the selected balance mode from the pie Chart
  */
 class DashboardDelegateAdapter(
     context: Context,
     assetSelector: (CryptoCurrency) -> Unit,
-    coinSelector: (CryptoCurrency) -> Unit
+    coinSelector: (CryptoCurrency) -> Unit,
+    balanceModeSelector: (BalanceFilter) -> Unit
 ) : DelegationAdapter<Any>(AdapterDelegatesManager(), emptyList()) {
 
     private val onboardingDelegate = OnboardingDelegate<Any>(context)
-    private val pieChartDelegate = PieChartDelegate<Any>(context, coinSelector)
+    private val pieChartDelegate = PieChartDelegate<Any>(context, coinSelector, balanceModeSelector)
     private val assetPriceDelegate = AssetPriceCardDelegate<Any>(context, assetSelector)
 
     init {

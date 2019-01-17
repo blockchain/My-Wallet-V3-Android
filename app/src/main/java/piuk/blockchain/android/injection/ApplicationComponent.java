@@ -13,7 +13,6 @@ import javax.inject.Singleton;
  * Created by adambennett on 08/08/2016.
  */
 
-@SuppressWarnings("WeakerAccess")
 @Singleton
 @Component(modules = {
         ApplicationModule.class,

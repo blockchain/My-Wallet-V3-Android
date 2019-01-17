@@ -151,7 +151,7 @@ class NabuService(retrofit: Retrofit) {
     ): Completable = service.recoverUser(
         offlineToken.userId,
         NabuJwt(jwt),
-        offlineToken.authHeader
+        authorization = "Bearer ${offlineToken.token}"
     ).wrapErrorMessage()
 
     internal fun registerCampaign(

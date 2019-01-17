@@ -80,6 +80,33 @@ class ApplyMaximumTradeLimitTest {
     }
 
     @Test
+    fun `before apply maximum given a spendable balance over the fiat tier maximum`() {
+        given(
+            initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
+        ).onLastStateAfter(
+            SetTierLimit(1000.cad()),
+            FiatExchangeRateIntent(ExchangeRate.CryptoToFiat(CryptoCurrency.BTC, "CAD", 1001.toBigDecimal())),
+            SpendableValueIntent(1.bitcoin())
+        ) {
+            maxTrade `should equal` 1000.cad()
+        }
+    }
+
+    @Test
+    fun `applies ths smallest of tier and max trade`() {
+        given(
+            initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)
+        ).onLastStateAfter(
+            SetTierLimit(1000.cad()),
+            SetTradeLimits(0.cad(), 900.cad()),
+            FiatExchangeRateIntent(ExchangeRate.CryptoToFiat(CryptoCurrency.BTC, "CAD", 1001.toBigDecimal())),
+            SpendableValueIntent(1.bitcoin())
+        ) {
+            maxTrade `should equal` 900.cad()
+        }
+    }
+
+    @Test
     fun `apply maximum given a spendable balance over the fiat maximum`() {
         given(
             initial("CAD", CryptoCurrency.BTC to CryptoCurrency.ETHER)

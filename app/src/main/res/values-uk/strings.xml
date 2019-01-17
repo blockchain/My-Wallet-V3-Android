@@ -213,7 +213,7 @@
   <string name="not_archived_description">Цей елемент незаархівовано. Додайте цей елемент в архів, якщо ви більше НЕ хочете його використовувати. Ваші кошти будуть в безпеці, і ви можете розпакувати його у будь-який час.</string>
   <string name="transfer_success_archive_prompt_title">Архів стер адреси?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 адресу успішно перенесено у Мій Bitcoin-гаманець. Бажаєте архівувати цю адресу зараз?</item>
+    <item quantity="one">%d адресу успішно перенесено у Мій Bitcoin-гаманець. Бажаєте архівувати цю адресу зараз?</item>
     <item quantity="few"></item>
     <item quantity="many"></item>
     <item quantity="other">%d адреси успішно перенесено у Мій Bitcoin-гаманець. Бажаєте архівувати ці адреси зараз?</item>
@@ -808,7 +808,6 @@
   <string name="sunriver_splash_message">Перевірте свою особу, щоб претендувати на XLM. Це займає всього кілька хвилин. Після перевірки ви зможете використовувати наш товарний продукт наступного покоління Swap.</string>
   <string name="sunriver_status_message">Ваша інформація розглядається. Огляд має завершитися через 5 хвилин. Після успішної перевірки ми надішлемо ваш Stellar протягом одного тижня.</string>
   <string name="YESTERDAY">Вчора</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Недостатньо коштів</string>
   <string name="ok_cap">ОК</string>
   <string name="scan_qr">Сканувати QR-код</string>
@@ -830,7 +829,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Отримати свій Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Безпечно зберігайте свою криптовалютну офлайн.</string>
-  <string name="lockbox_landing_get_yours_button">Купуйте зараз за ціною $ 99</string>
+  <string name="lockbox_landing_get_yours_button">Придбайте зараз</string>
   <string name="lockbox_landing_already_owned_title">Уже є власник?</string>
   <string name="lockbox_landing_already_owned_message">З вашого комп\'ютера, увійдіть в блок-chain.com і підключіть свій блокбанк.</string>
   <string name="lockbox_landing_learn_more">Хочете дізнатися більше? Торкніться тут, щоб відвідати 
@@ -1035,4 +1034,9 @@
   <string name="buy_sell_recurring_frequency_daily">Кожен день</string>
   <string name="buy_sell_recurring_frequency_monthly">%1$s кожного місяця</string>
   <string name="buy_sell_transaction_list_label">Котирувати ідентифікатор замовлення # %1$s</string>
+  <string name="sunriver_set_memo">Встановити пам\'ятку</string>
+  <string name="xlm_memo_explain">Записки використовуються для передачі необов\'язкової інформації одержувачу.</string>
+  <string name="xlm_memo_text_hint">Пам\'ятка</string>
+  <string name="xlm_memo_id_hint">Числовий ідентифікатор</string>
+  <string name="xlm_memo_hash_hint">32 байти шістнадцятковий хеш</string>
 </resources>

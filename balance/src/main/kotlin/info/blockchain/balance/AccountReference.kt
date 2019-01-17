@@ -20,3 +20,13 @@ sealed class AccountReference(
         val accountId: String
     ) : AccountReference(CryptoCurrency.XLM, _label)
 }
+
+enum class AccountType {
+    Spendable,
+    ColdStorage,
+    WatchOnly
+}
+
+data class Account(val reference: AccountReference, val type: AccountType)
+
+fun AccountReference.toAccount(type: AccountType): Account = Account(this, type)

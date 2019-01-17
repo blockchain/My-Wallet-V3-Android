@@ -4,6 +4,7 @@ import org.amshove.kluent.`should be`
 import org.amshove.kluent.`should throw the Exception`
 import org.amshove.kluent.`with message`
 import org.junit.Test
+import java.math.BigInteger
 
 class CryptoValueMinAndMaxTest {
 
@@ -60,7 +61,7 @@ class CryptoValueMinAndMaxTest {
 
     @Test
     fun `min of two with different currencies`() {
-        val a = CryptoValue.etherFromWei(1)
+        val a = CryptoValue(CryptoCurrency.ETHER, BigInteger.ONE)
         val b = CryptoValue.bitcoinFromSatoshis(2);
         {
             CryptoValue.min(a, b)

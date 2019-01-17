@@ -3,8 +3,6 @@ package piuk.blockchain.androidcore.data.walletoptions
 import com.blockchain.android.testutils.rxInit
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import info.blockchain.wallet.api.data.Settings
-import info.blockchain.wallet.api.data.ShapeShiftOptions
 import info.blockchain.wallet.api.data.WalletOptions
 import io.reactivex.Observable
 import org.junit.Before
@@ -40,92 +38,6 @@ class WalletOptionsDataManagerTest {
             mockSettingsDataManager,
             explorerUrl
         )
-    }
-
-    @Test
-    fun `showShapeshift flag false`() {
-
-        val showShapeshiftFlag = false
-
-        // Arrange
-        // Shapeshift flag
-        val walletOptions: WalletOptions = mock()
-        val shapeshift: ShapeShiftOptions = mock()
-        val flagmap = hashMapOf("showShapeshift" to showShapeshiftFlag)
-        whenever(walletOptions.androidFlags).thenReturn(flagmap)
-        whenever(walletOptions.shapeshift).thenReturn(shapeshift)
-        whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
-
-        // Country code
-        val settings: Settings = mock()
-        whenever(settings.countryCode).thenReturn("GB")
-        whenever(mockSettingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-
-        // State code - none
-
-        // Act
-        val testObserver = subject.showShapeshift("", "").test()
-        // Assert
-        assertEquals(showShapeshiftFlag, testObserver.values()[0])
-        testObserver.assertComplete()
-    }
-
-    @Test
-    fun `showShapeshift flagtrue`() {
-
-        val showShapeshiftFlag = true
-
-        // Arrange
-        // Shapeshift flag
-        val walletOptions: WalletOptions = mock()
-        val shapeshift: ShapeShiftOptions = mock()
-        val flagmap = hashMapOf("showShapeshift" to showShapeshiftFlag)
-        whenever(walletOptions.androidFlags).thenReturn(flagmap)
-        whenever(walletOptions.shapeshift).thenReturn(shapeshift)
-        whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
-
-        // Country code
-        val settings: Settings = mock()
-        whenever(settings.countryCode).thenReturn("GB")
-        whenever(mockSettingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-
-        // State code - none
-
-        // Act
-        val testObserver = subject.showShapeshift("", "").test()
-        // Assert
-        assertEquals(showShapeshiftFlag, testObserver.values()[0])
-        testObserver.assertComplete()
-    }
-
-    @Test
-    fun `showShapeshift flag true blacklisted country`() {
-
-        val showShapeshiftFlag = true
-
-        // Arrange
-        // Shapeshift flag
-        val walletOptions: WalletOptions = mock()
-        val shapeshift: ShapeShiftOptions = mock()
-        val flagmap = hashMapOf("showShapeshift" to showShapeshiftFlag)
-        whenever(walletOptions.androidFlags).thenReturn(flagmap)
-        whenever(walletOptions.shapeshift).thenReturn(shapeshift)
-        whenever(authService.getWalletOptions()).thenReturn(Observable.just(walletOptions))
-
-        // Country code
-        val settings: Settings = mock()
-        whenever(settings.countryCode).thenReturn("DE")
-        whenever(mockSettingsDataManager.getSettings()).thenReturn(Observable.just(settings))
-        // Blacklist me
-        whenever(shapeshift.countriesBlacklist).thenReturn(listOf("GB", "DE"))
-
-        // State code - none
-
-        // Act
-        val testObserver = subject.showShapeshift("", "").test()
-        // Assert
-        assertEquals(false, testObserver.values()[0])
-        testObserver.assertComplete()
     }
 
     @Test

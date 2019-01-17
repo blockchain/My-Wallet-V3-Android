@@ -6,29 +6,24 @@ import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
 import com.blockchain.kyc.models.nabu.SupportedDocuments
 import com.blockchain.kyc.models.onfido.ApplicantResponse
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata
-import com.blockchain.nabu.models.mapFromMetadata
-import com.blockchain.serialization.toMoshiJson
+import com.blockchain.nabu.NabuToken
 import com.blockchain.validOfflineToken
-import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
 
 class OnfidoSplashPresenterTest {
 
     private lateinit var subject: OnfidoSplashPresenter
-    private val metadataManager: MetadataManager = mock()
+    private val nabuToken: NabuToken = mock()
     private val nabuDataManager: NabuDataManager = mock()
     private val onfidoDataManager: OnfidoDataManager = mock()
     private val view: OnfidoSplashView = mock()
@@ -43,7 +38,7 @@ class OnfidoSplashPresenterTest {
     @Before
     fun setUp() {
         subject = OnfidoSplashPresenter(
-            metadataManager,
+            nabuToken,
             nabuDataManager,
             onfidoDataManager
         )
@@ -58,13 +53,11 @@ class OnfidoSplashPresenterTest {
         val apiKey = "API_KEY"
         val nabuUser = getBlankNabuUser()
         whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.just(Optional.of(validOfflineToken.toMoshiJson())))
-        whenever(nabuDataManager.getOnfidoApiKey(validOfflineToken.mapFromMetadata()))
+            nabuToken.fetchNabuToken()
+        ).thenReturn(Single.just(validOfflineToken))
+        whenever(nabuDataManager.getOnfidoApiKey(validOfflineToken))
             .thenReturn(Single.just(apiKey))
-        whenever(nabuDataManager.getUser(validOfflineToken.mapFromMetadata()))
+        whenever(nabuDataManager.getUser(validOfflineToken))
             .thenReturn(Single.just(nabuUser))
         val applicantResponse = ApplicantResponse("12345", "", false, "", "", "")
         whenever(
@@ -74,7 +67,7 @@ class OnfidoSplashPresenterTest {
                 apiKey
             )
         ).thenReturn(Single.just(applicantResponse))
-        whenever(nabuDataManager.getSupportedDocuments(validOfflineToken.mapFromMetadata(), "US"))
+        whenever(nabuDataManager.getSupportedDocuments(validOfflineToken, "US"))
             .thenReturn(Single.just(listOf(SupportedDocuments.NATIONAL_IDENTITY_CARD)))
         // Act
         subject.onViewReady()
@@ -93,14 +86,12 @@ class OnfidoSplashPresenterTest {
         val apiKey = "API_KEY"
         val nabuUser = getBlankNabuUser()
         whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.just(Optional.of(validOfflineToken.toMoshiJson())))
-        whenever(nabuDataManager.getOnfidoApiKey(validOfflineToken.mapFromMetadata()))
+            nabuToken.fetchNabuToken()
+        ).thenReturn(Single.just(validOfflineToken))
+        whenever(nabuDataManager.getOnfidoApiKey(validOfflineToken))
             .thenReturn(Single.error { Throwable() })
             .thenReturn(Single.just(apiKey))
-        whenever(nabuDataManager.getUser(validOfflineToken.mapFromMetadata()))
+        whenever(nabuDataManager.getUser(validOfflineToken))
             .thenReturn(Single.just(nabuUser))
         val applicantResponse = ApplicantResponse("12345", "", false, "", "", "")
         whenever(
@@ -110,7 +101,7 @@ class OnfidoSplashPresenterTest {
                 apiKey
             )
         ).thenReturn(Single.just(applicantResponse))
-        whenever(nabuDataManager.getSupportedDocuments(validOfflineToken.mapFromMetadata(), "US"))
+        whenever(nabuDataManager.getSupportedDocuments(validOfflineToken, "US"))
             .thenReturn(Single.just(listOf(SupportedDocuments.NATIONAL_IDENTITY_CARD)))
         // Act
         subject.onViewReady()
@@ -128,13 +119,11 @@ class OnfidoSplashPresenterTest {
         // Arrange
         val applicantId = "APPLICANT_ID"
         whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.just(Optional.of(validOfflineToken.toMoshiJson())))
+            nabuToken.fetchNabuToken()
+        ).thenReturn(Single.just(validOfflineToken))
         whenever(
             nabuDataManager.submitOnfidoVerification(
-                validOfflineToken.mapFromMetadata(),
+                validOfflineToken,
                 applicantId
             )
         )
@@ -152,13 +141,11 @@ class OnfidoSplashPresenterTest {
         // Arrange
         val applicantId = "APPLICANT_ID"
         whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.just(Optional.of(validOfflineToken.toMoshiJson())))
+            nabuToken.fetchNabuToken()
+        ).thenReturn(Single.just(validOfflineToken))
         whenever(
             nabuDataManager.submitOnfidoVerification(
-                validOfflineToken.mapFromMetadata(),
+                validOfflineToken,
                 applicantId
             )
         ).thenReturn(Completable.error { Throwable() })

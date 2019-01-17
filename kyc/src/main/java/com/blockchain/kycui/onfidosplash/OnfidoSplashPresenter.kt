@@ -1,25 +1,21 @@
 package com.blockchain.kycui.onfidosplash
 
+import com.blockchain.BaseKycPresenter
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.datamanagers.onfido.OnfidoDataManager
-import com.blockchain.kycui.extensions.fetchNabuToken
+import com.blockchain.nabu.NabuToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
-import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 
 class OnfidoSplashPresenter(
-    private val metadataManager: MetadataManager,
+    nabuToken: NabuToken,
     private val nabuDataManager: NabuDataManager,
     private val onfidoDataManager: OnfidoDataManager
-) : BasePresenter<OnfidoSplashView>() {
-
-    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
+) : BaseKycPresenter<OnfidoSplashView>(nabuToken) {
 
     override fun onViewReady() {
         compositeDisposable +=

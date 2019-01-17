@@ -20,6 +20,13 @@ public abstract class BaseMvpFragment<VIEW extends View, PRESENTER extends BaseP
 
     @CallSuper
     @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onViewResumed();
+    }
+
+    @CallSuper
+    @Override
     public void onPause() {
         super.onPause();
         presenter.onViewPaused();

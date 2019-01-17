@@ -14,7 +14,5 @@ internal interface KycCountrySelectionView : View {
 
     fun renderUiState(state: CountrySelectionState)
 
-    fun redirectToShapeShift()
-
     fun requiresStateSelection()
 }

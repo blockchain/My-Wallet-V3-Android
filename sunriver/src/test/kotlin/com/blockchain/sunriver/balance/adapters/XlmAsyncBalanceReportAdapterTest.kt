@@ -6,6 +6,7 @@ import com.blockchain.testutils.lumens
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
+import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoValue
 import io.reactivex.Single
 import org.amshove.kluent.`it returns`
@@ -16,8 +17,10 @@ class XlmAsyncBalanceReportAdapterTest {
 
     private val xlmDataManager: XlmDataManager = mock {
         on { getBalance() } `it returns` Single.just(100.lumens())
-        on { getBalance(any()) } `it returns` Single.just(CryptoValue.ZeroXlm)
-        on { getBalance(argThat { accountId == "GABC123" }) } `it returns` Single.just(50.lumens())
+        on { getBalance(any<AccountReference.Xlm>()) } `it returns` Single.just(CryptoValue.ZeroXlm)
+        on {
+            getBalance(argThat<AccountReference.Xlm> { accountId == "GABC123" })
+        } `it returns` Single.just(50.lumens())
     }
     private val balanceReporter: AsyncBalanceReporter = xlmDataManager.toAsyncBalanceReporter()
 

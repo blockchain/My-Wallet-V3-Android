@@ -8,8 +8,8 @@
           {
             "label": "Ledger - BTC Wallet",
             "archived": false,
-            "xpriv": "xpriv",
-            "xpub": "xpub",
+            "xpriv": "",
+            "xpub": "xpubBTC",
             "address_labels": [],
             "cache": {
               "receiveAccount": "receiveAccount",
@@ -23,8 +23,8 @@
           {
             "label": "Ledger - BCH Wallet",
             "archived": false,
-            "xpriv": "xpriv",
-            "xpub": "xpub",
+            "xpriv": "",
+            "xpub": "xpubBCH",
             "address_labels": [],
             "cache": {
               "receiveAccount": "receiveAccount",
@@ -39,11 +39,22 @@
             "label": "Ledger - ETH Wallet",
             "archived": false,
             "correct": true,
-            "addr": "addr"
+            "addr": "addrETH"
           }
         ],
         "last_tx": null,
         "last_tx_timestamp": null
+      },
+      "xlm": {
+        "default_account_idx": 0,
+        "accounts": [
+          {
+            "publicKey": "publicKeyXLM",
+            "label": "Ledger - XLM Wallet",
+            "archived": false
+          }
+        ],
+        "tx_notes": {}
       }
     }
   ]

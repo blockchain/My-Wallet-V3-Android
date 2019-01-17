@@ -7,8 +7,11 @@
     <color name="onfidoTextColorSecondary">@color/white</color>
     <color name="onfidoColorAccent">@color/primary_blue_accent</color>
 
+    <color name="kyc_progress_text_blue">#FF004A7C</color>
+    <color name="kyc_progress_text_white">#FFFFFFFF</color>
     <color name="kyc_progress_green">#FF03A972</color>
     <color name="kyc_splash_title_black">#FF5B5B5B</color>
     <color name="kyc_in_progress">#FFF28B30</color>
+
 
 </resources>

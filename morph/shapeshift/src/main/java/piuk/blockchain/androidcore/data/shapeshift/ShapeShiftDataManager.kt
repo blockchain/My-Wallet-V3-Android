@@ -1,12 +1,8 @@
 package piuk.blockchain.androidcore.data.shapeshift
 
-import com.blockchain.morph.CoinPair
 import com.blockchain.utils.Optional
 import info.blockchain.wallet.shapeshift.ShapeShiftApi
 import info.blockchain.wallet.shapeshift.ShapeShiftTrades
-import info.blockchain.wallet.shapeshift.data.MarketInfo
-import info.blockchain.wallet.shapeshift.data.Quote
-import info.blockchain.wallet.shapeshift.data.QuoteRequest
 import info.blockchain.wallet.shapeshift.data.State
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
@@ -18,7 +14,6 @@ import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
-import piuk.blockchain.androidcore.utils.Either
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 
@@ -32,7 +27,7 @@ class ShapeShiftDataManager(
     private val rxPinning = RxPinning(rxBus)
 
     private val tradeData
-        get() = shapeShiftDataStore.tradeData ?: throw IllegalStateException("ShapeShiftTrades not initialized")
+        get() = shapeShiftDataStore.tradeData ?: ShapeShiftTrades()
 
     /**
      * Must be called to initialize the ShapeShift trade metadata information.
@@ -201,70 +196,6 @@ class ShapeShiftDataManager(
                 }
         }.applySchedulers()
     }
-
-    /**
-     * Gets the [TradeStatusResponse] for a given [Trade] deposit address and returns it along with the original trade.
-     * Note that this won't
-     * return an invalid [TradeStatusResponse] if the server returned an error response.
-     *
-     * @param tradeMetadata The [Trade] data stored in kv-store
-     * @return An [Observable] wrapping a [Pair<Trade, TradeStatusResponse>] object.
-     */
-    fun getTradeStatusPair(tradeMetadata: Trade): Observable<TradeStatusPair> =
-        rxPinning.call<TradeStatusPair> {
-            shapeShiftApi.getTradeStatus(tradeMetadata.quote?.deposit)
-                .map {
-                    TradeStatusPair(
-                        tradeMetadata,
-                        it
-                    )
-                }
-        }.applySchedulers()
-
-    /**
-     * Gets the current approximate [MarketInfo] for a given [CoinPair] object.
-     *
-     * @param coinPair A [CoinPair]
-     * @return An [Observable] wrapping the most recent [MarketInfo]
-     */
-    fun getRate(coinPair: CoinPair): Observable<MarketInfo> =
-        rxPinning.call<MarketInfo> { shapeShiftApi.getRate(coinPair) }
-            .applySchedulers()
-
-    /**
-     * Returns an [Either] where the left object is an error String, or a valid [Quote] object for
-     * the given [QuoteRequest].
-     *
-     * @param quoteRequest A valid [QuoteRequest] object
-     * @return An [Observable] wrapping an [Either]
-     */
-    fun getQuote(quoteRequest: QuoteRequest): Observable<Either<String, Quote>> =
-        rxPinning.call<Either<String, Quote>> {
-            shapeShiftApi.getQuote(quoteRequest)
-                .map {
-                    when {
-                        it.error != null -> Either.Left<String>(it.error)
-                        else -> Either.Right<Quote>(it.wrapper)
-                    }
-                }
-        }.applySchedulers()
-
-    /**
-     * Returns an [Either] where the left object is an error String, or a valid [Quote] object for
-     * the given [QuoteRequest]. This returns only an approximate quote.
-     *
-     * @param quoteRequest A valid [QuoteRequest] object
-     * @return An [Observable] wrapping an [Either]
-     */
-    fun getApproximateQuote(quoteRequest: QuoteRequest): Observable<Either<String, Quote>> =
-        rxPinning.call<Either<String, Quote>> {
-            shapeShiftApi.getApproximateQuote(quoteRequest).map {
-                when {
-                    it.error != null -> Either.Left<String>(it.error)
-                    else -> Either.Right<Quote>(it.wrapper)
-                }
-            }
-        }.applySchedulers()
 
     /**
      * Fetches the current trade metadata from the web, or else creates a new metadata entry

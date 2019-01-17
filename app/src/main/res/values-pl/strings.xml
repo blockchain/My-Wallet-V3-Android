@@ -213,7 +213,7 @@ Wszelkie prawa zastrzeżone.</string>
   <string name="not_archived_description">Ten adres nie jest zarchiwizowany. Archiwizuj ten adres, jeśli NIE chcesz więcej z niego korzystać. Twoje środki pozostaną bezpieczne, a Ty możesz \"wyjąć\" go z archiwum w dowolnej chwili.</string>
   <string name="transfer_success_archive_prompt_title">Archiwizować przeniesione adresy?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 adres udało się przenieść do mojego portfela bitcoin. Czy chcesz teraz zarchiwizować ten adres?</item>
+    <item quantity="one">%d adres udało się przenieść do mojego portfela bitcoin. Czy chcesz teraz zarchiwizować ten adres?</item>
     <item quantity="few"></item>
     <item quantity="many"></item>
     <item quantity="other">%d adresy/adresów udało się przenieść do mojego portfela bitcoin. Czy chcesz teraz zarchiwizować te adresy?</item>
@@ -260,7 +260,7 @@ Nie udostępniaj swojego klucza xPub.         Osoby z dostępem do Twojego klucz
   <string name="transfer_amount">Kwota przelewu</string>
   <string name="transfer_archive_message">Zarchiwizuj zaimportowane adresy po dokonaniu przelewu</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 zaimportowany adres</item>
+    <item quantity="one">%d zaimportowany adres</item>
     <item quantity="few"></item>
     <item quantity="many"></item>
     <item quantity="other">%d zaimportowanych adresów</item>
@@ -807,7 +807,6 @@ To tylko sugestia: faktyczna kwota może być inna.</string>
   <string name="sunriver_splash_message">Zweryfikuj swoją tożsamość, aby odebrać swój zestaw XLM. To zajmuje tylko kilka minut. Po zweryfikowaniu będziesz mógł skorzystać z naszego produktu handlowego nowej generacji - Swap.</string>
   <string name="sunriver_status_message">Twoje informacje są sprawdzane. Przegląd powinien zakończyć się za 5 minut. Po pomyślnym zweryfikowaniu, wyślemy Ci Stellar w ciągu tygodnia.</string>
   <string name="YESTERDAY">Wczoraj</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Niewystarczające środki</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Skanuj kod QR</string>
@@ -829,7 +828,7 @@ To tylko sugestia: faktyczna kwota może być inna.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Zdobądź swoją skrytkę</string>
   <string name="lockbox_landing_get_yours_message">Bezpiecznie przechowuj swoją kryptowalutę offline.</string>
-  <string name="lockbox_landing_get_yours_button">Kup teraz za 99 USD</string>
+  <string name="lockbox_landing_get_yours_button">Kup Teraz</string>
   <string name="lockbox_landing_already_owned_title">Masz już własny?</string>
   <string name="lockbox_landing_already_owned_message">Z poziomu komputera, zaloguj się na blockchain.com i podłącz swoja skrytkę.</string>
   <string name="lockbox_landing_learn_more">Chcesz się dowiedzieć więcej? Kliknij tutaj, aby odwiedzić 
@@ -1034,4 +1033,9 @@ To tylko sugestia: faktyczna kwota może być inna.</string>
   <string name="buy_sell_recurring_frequency_daily">Codzienny</string>
   <string name="buy_sell_recurring_frequency_monthly">Na %1$s każdego miesiąca</string>
   <string name="buy_sell_transaction_list_label">Coinify Order ID # %1$s</string>
+  <string name="sunriver_set_memo">Ustaw Memo</string>
+  <string name="xlm_memo_explain">Notatki służą do przekazywania opcjonalnych informacji odbiorcy.</string>
+  <string name="xlm_memo_text_hint">Notatka</string>
+  <string name="xlm_memo_id_hint">Numeryczny identyfikator</string>
+  <string name="xlm_memo_hash_hint">32 bajtowy szyk heksadecymalny</string>
 </resources>

@@ -4,6 +4,8 @@ public interface Presenter<VIEW extends View> {
 
     void onViewDestroyed();
 
+    void onViewResumed();
+
     void onViewPaused();
 
     void initView(VIEW view);

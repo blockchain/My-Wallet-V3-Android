@@ -1,14 +1,8 @@
 package piuk.blockchain.androidcore.data.shapeshift;
 
-import com.blockchain.morph.CoinPair;
 import info.blockchain.wallet.shapeshift.ShapeShiftApi;
 import info.blockchain.wallet.shapeshift.ShapeShiftEndpoints;
 import info.blockchain.wallet.shapeshift.ShapeShiftUrls;
-import info.blockchain.wallet.shapeshift.data.MarketInfo;
-import info.blockchain.wallet.shapeshift.data.Quote;
-import info.blockchain.wallet.shapeshift.data.QuoteRequest;
-import info.blockchain.wallet.shapeshift.data.QuoteResponseWrapper;
-import info.blockchain.wallet.shapeshift.data.TimeRemaining;
 import info.blockchain.wallet.shapeshift.data.Trade;
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse;
 import io.reactivex.observers.TestObserver;
@@ -29,51 +23,6 @@ public final class ShapeShiftApiTest extends MockedResponseTest {
     private ShapeShiftApi subject = new ShapeShiftApi(
             getRetrofitShapeShiftInstance().create(ShapeShiftEndpoints.class)
     );
-
-    @Test
-    public void getMarketInfo() {
-        mockInterceptor
-                .setResponseString("{\"pair\":\"btc_eth\",\"rate\":15.06742777,\"minerFee\":0.001,\"limit\":2.17562517,\"minimum\":0.0001324,\"maxLimit\":1.08781258}");
-        final TestObserver<MarketInfo> testObserver = subject.getRate(CoinPair.BTC_TO_ETH).test();
-
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        MarketInfo response = testObserver.values().get(0);
-        assertEquals(BigDecimal.valueOf(15.06742777), response.getRate());
-        assertEquals(BigDecimal.valueOf(2.17562517), response.getLimit());
-        assertEquals(BigDecimal.valueOf(0.0001324), response.getMinimum());
-        assertEquals(BigDecimal.valueOf(1.08781258), response.getMaxLimit());
-        assertEquals(BigDecimal.valueOf(0.001), response.getMinerFee());
-        assertEquals("btc_eth", response.getPair());
-    }
-
-    @Test
-    public void getQuote() {
-        mockInterceptor
-                .setResponseString("{\"success\":{\"orderId\":\"2b087b88-4d92-4dce-8167-2a616accfe23\","
-                        + "\"pair\":\"eth_btc\","
-                        + "\"withdrawalAmount\":\"0.11029696\","
-                        + "\"depositAmount\":\"1.7278182\","
-                        + "\"expiration\":1000,"
-                        + "\"quotedRate\":\"0.06441474\","
-                        + "\"maxLimit\":16.65419494,"
-                        + "\"minerFee\":\"0.001\"}}");
-
-        QuoteRequest request = new QuoteRequest();
-        request.setDepositAmount(BigDecimal.valueOf(0.1102969));
-        request.setPair("eth_btc");
-        final TestObserver<QuoteResponseWrapper> testObserver = subject.getApproximateQuote(request).test();
-
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        Quote wrapper = testObserver.values().get(0).getWrapper();
-        assertEquals("eth_btc", wrapper.getPair());
-        assertEquals(BigDecimal.valueOf(0.11029696), wrapper.getWithdrawalAmount());
-        assertEquals(BigDecimal.valueOf(1.7278182), wrapper.getDepositAmount());
-        assertEquals(1000L, wrapper.getExpiration());
-        assertEquals(BigDecimal.valueOf(0.06441474), wrapper.getQuotedRate());
-        assertEquals(BigDecimal.valueOf(0.001), wrapper.getMinerFee());
-    }
 
     @Test
     public void getSendAmount() {
@@ -105,22 +54,5 @@ public final class ShapeShiftApiTest extends MockedResponseTest {
         assertEquals("0xc1361e8ec096dfe48f524bd67fe811e5fd86a41c868ff5843f04619906882123", response.getTransaction());
         assertEquals("BTC_ETH", response.getPair());
         assertNull(response.getError());
-    }
-
-    @Test
-    public void getTimeRemaining() {
-        // Arrange
-        mockInterceptor.setResponseString("{\n" +
-                "\"status\": \"pending\",\n" +
-                "\"seconds_remaining\": \"311\"\n" +
-                "}");
-        // Act
-        final TestObserver<TimeRemaining> testObserver = subject.getTimeRemaining("address").test();
-        // Assert
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        final TimeRemaining result = testObserver.values().get(0);
-        assertEquals(((Integer) 311), result.getSecondsRemaining());
-        assertEquals("pending", result.getStatus());
     }
 }

@@ -213,7 +213,7 @@
   <string name="not_archived_description">Item ini tidak diarkibkan. Arkib perkara ini jika anda TIDAK mahu menggunakannya lagi. Dana anda akan tetap selamat, dan anda boleh menyaharkrakannya pada bila-bila masa.</string>
   <string name="transfer_success_archive_prompt_title">Arkib menyapu alamat?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">Alamat 1 berjaya dipindahkan ke Wallet My Bitcoin. Adakah anda ingin mengarkibkan alamat ini sekarang?</item>
+    <item quantity="one">Alamat %d berjaya dipindahkan ke Wallet My Bitcoin. Adakah anda ingin mengarkibkan alamat ini sekarang?</item>
     <item quantity="other">%d alamat berjaya dipindahkan ke Wallet Bitcoin saya. Adakah anda ingin mengarkibkan alamat ini sekarang?</item>
   </plurals>
   <string name="default_account_description">Item ini ditetapkan sebagai lalai anda dan tidak boleh diarkibkan.</string>
@@ -268,7 +268,7 @@
   <string name="transfer_amount">Jumlah Pindah</string>
   <string name="transfer_archive_message">Arahan alamat yang diimport selepas pemindahan</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 alamat yang diimport</item>
+    <item quantity="one">%d alamat yang diimport</item>
     <item quantity="other">%d alamat yang diimport</item>
   </plurals>
   <string name="transfer_archive">Arkib Dikesahkan</string>
@@ -817,15 +817,13 @@
   <string name="sunriver_splash_message">Sahkan identiti anda untuk menuntut XLM anda. Ia hanya mengambil masa beberapa minit. Setelah disahkan, anda akan dapat menggunakan produk dagangan generasi akan datang kami, Pertukaran.</string>
   <string name="sunriver_status_message">Maklumat anda sedang disemak. Semakan itu perlu disiapkan dalam masa 5 minit. Sebaik sahaja anda berjaya disahkan, kami akan menghantar Stellar anda dalam masa satu minggu.</string>
   <string name="YESTERDAY">Semalam</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Kekurangan dana</string>
   <string name="ok_cap">\@android: string / ok</string>
-  <string name="scan_qr"></string>
+  <string name="scan_qr">Imbas Kod QR</string>
   <string name="transaction_submitted">Transaksi selesai</string>
   <string name="transaction_failed">transaksi gagal</string>
   <string name="unexpected_error">Ralat yang tidak dijangka, sila cuba lagi kemudian.</string>
   <string name="contacts_no_confirmed_contacts_found">Tiada kenalan yang disahkan didapati!</string>
-  <string name="eth_default_account_label"></string>
   <string name="cannot_launch_app">Wallet Blockchain tidak dapat dijalankan pada peranti ini.</string>
   <string name="exit">Keluar</string>
   <string name="screen_overlay_warning">Hamparan skrin dikesan!</string>
@@ -842,7 +840,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Dapatkan Peti Masuk Anda</string>
   <string name="lockbox_landing_get_yours_message">Selamat menyimpan simpanan cryptocurrency anda di luar talian.</string>
-  <string name="lockbox_landing_get_yours_button">Beli sekarang untuk $ 99</string>
+  <string name="lockbox_landing_get_yours_button">Beli sekarang</string>
   <string name="lockbox_landing_already_owned_title">Sudah sendiri?</string>
   <string name="lockbox_landing_already_owned_message">Dari komputer anda, log masuk ke blokchain.com dan sambungkan kotak kunci anda.</string>
   <string name="lockbox_landing_learn_more">Ingin mengetahui lebih lanjut? Ketik sini untuk melawat 
@@ -1047,4 +1045,9 @@
   <string name="buy_sell_recurring_frequency_daily">Setiap hari</string>
   <string name="buy_sell_recurring_frequency_monthly">Pada %1$s setiap bulan</string>
   <string name="buy_sell_transaction_list_label">Kod Pesanan Kod Kuasa # %1$s</string>
+  <string name="sunriver_set_memo">Tetapkan Memo</string>
+  <string name="xlm_memo_explain">Memo digunakan untuk menyampaikan maklumat pilihan kepada penerima.</string>
+  <string name="xlm_memo_text_hint">Memo</string>
+  <string name="xlm_memo_id_hint">ID nombor</string>
+  <string name="xlm_memo_hash_hint">32 Byte Hexadecimal Hash</string>
 </resources>

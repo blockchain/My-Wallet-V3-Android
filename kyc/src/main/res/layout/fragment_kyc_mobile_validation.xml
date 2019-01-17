@@ -36,8 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
             android:hint="@string/kyc_phone_number_validation_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,21 +48,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
-                android:maxLength="8"
                 android:inputType="textVisiblePassword"
+                android:maxLength="8"
                 tools:text="F96N7" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text_view_resend_prompt"
+            style="@style/KycFlowMessage"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/button_kyc_mobile_validation_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_mobile_validation_code"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="@string/kyc_phone_send_again_hyperlink" />
 
         <Button
             android:id="@+id/button_kyc_mobile_validation_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginRight="32dp"
             android:layout_marginBottom="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="48dp"
             android:enabled="false"
             android:text="@string/kyc_profile_next"
             android:theme="@style/LightBlueButtonTheme"
@@ -72,7 +87,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_layout_kyc_mobile_validation_code"
             app:layout_constraintVertical_bias="1.0" />
-
 
     </android.support.constraint.ConstraintLayout>
 

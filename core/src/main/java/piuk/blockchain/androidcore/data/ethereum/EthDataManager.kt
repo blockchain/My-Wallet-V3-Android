@@ -13,6 +13,7 @@ import info.blockchain.wallet.exceptions.InvalidCredentialsException
 import info.blockchain.wallet.payload.PayloadManager
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import org.bitcoinj.core.ECKey
@@ -26,6 +27,7 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
+import timber.log.Timber
 import java.math.BigInteger
 import java.util.HashMap
 
@@ -67,6 +69,15 @@ class EthDataManager(
                     .subscribeOn(Schedulers.io())
             }
         }
+
+    fun getBalance(account: String): Single<BigInteger> =
+        ethAccountApi.getEthAddress(listOf(account))
+            .map(::CombinedEthModel)
+            .map { it.getTotalBalance() }
+            .singleOrError()
+            .doOnError(Timber::e)
+            .onErrorReturn { BigInteger.ZERO }
+            .subscribeOn(Schedulers.io())
 
     fun fetchEthAddressCompletable(): Completable = Completable.fromObservable(fetchEthAddress())
 

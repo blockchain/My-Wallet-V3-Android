@@ -1,5 +1,6 @@
 package piuk.blockchain.android.injection;
 
+import com.blockchain.morph.ui.detail.TradeDetailActivity;
 import dagger.Subcomponent;
 import org.jetbrains.annotations.NotNull;
 import piuk.blockchain.android.data.websocket.WebSocketService;
@@ -52,11 +53,6 @@ import piuk.blockchain.android.ui.receive.ReceiveQrActivity;
 import piuk.blockchain.android.ui.recover.RecoverFundsActivity;
 import piuk.blockchain.android.ui.send.SendFragment;
 import piuk.blockchain.android.ui.settings.SettingsFragment;
-import piuk.blockchain.android.ui.shapeshift.confirmation.ShapeShiftConfirmationActivity;
-import com.blockchain.morph.ui.detail.TradeDetailActivity;
-import piuk.blockchain.android.ui.shapeshift.inprogress.TradeInProgressActivity;
-import piuk.blockchain.android.ui.shapeshift.newexchange.NewExchangeActivity;
-import piuk.blockchain.android.ui.shapeshift.overview.ShapeShiftActivity;
 import piuk.blockchain.android.ui.ssl.SSLVerifyActivity;
 import piuk.blockchain.android.ui.swipetoreceive.SwipeToReceiveFragment;
 import piuk.blockchain.android.ui.transactions.TransactionDetailActivity;
@@ -67,7 +63,6 @@ import piuk.blockchain.androidcore.injection.PresenterScope;
  * Subcomponents have access to all upstream objects in the graph but can have their own scope -
  * they don't need to explicitly state their dependencies as they have access anyway
  */
-@SuppressWarnings("NullableProblems")
 @PresenterScope
 @Subcomponent
 public interface PresenterComponent {
@@ -141,14 +136,6 @@ public interface PresenterComponent {
     void inject(@NotNull SendFragment sendFragment);
 
     void inject(@NotNull DashboardFragment dashboardFragment);
-
-    void inject(@NotNull ShapeShiftActivity shapeshiftActivity);
-
-    void inject(@NotNull NewExchangeActivity newExchangeActivity);
-
-    void inject(@NotNull ShapeShiftConfirmationActivity shapeShiftConfirmationActivity);
-
-    void inject(@NotNull TradeInProgressActivity tradeInProgressActivity);
 
     void inject(@NotNull TradeDetailActivity tradeDetailActivity);
 

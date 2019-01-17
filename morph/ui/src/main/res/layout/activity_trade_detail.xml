@@ -42,7 +42,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageview_progress"
-                tools:text="Exchange in Progress" />
+                tools:text="Swap in Progress" />
 
             <TextView
                 android:id="@+id/textview_current_step"

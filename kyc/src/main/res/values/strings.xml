@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- General -->
+    <string name="kyc_non_specific_server_error">Error, please try again</string>
+
     <!-- Splash Screen -->
-    <string name="kyc_splash_title">Exchange</string>
+    <string name="kyc_splash_title">Swap</string>
     <string name="kyc_splash_apply_now">Begin now</string>
-    <string name="kyc_splash_message">Introducing Blockchain\'s faster, smarter way to trade your crypto. Upgrade now to enjoy benefits such as better prices, higher trade limits and live rates.</string>
-    <string name="kyc_splash_terms_and_conditions">By tapping Begin Now, I agree to Blockchain’s</string>
+    <string name="kyc_splash_message">Announcing Swap by Blockchain - the faster, smarter way to trade your crypto.</string>
+    <string name="kyc_splash_terms_and_conditions">By tapping Begin Now, you agree to Blockchain’s</string>
+    <string name="kyc_splash_terms_and_conditions_submit">By tapping Submit, you agree to Blockchain’s</string>
     <string name="kyc_splash_terms_and_conditions_terms">Terms of Service</string>
     <string name="kyc_splash_terms_and_conditions_privacy">Privacy Policy</string>
 
@@ -13,6 +17,7 @@
     <string name="kyc_country_selection_state_title">State</string>
     <string name="kyc_country_selection_header">Why do you need this?</string>
     <string name="kyc_country_selection_message">Every country has different rules on trading cryptocurrencies.</string>
+    <string name="kyc_country_selection_message_state">Every state has different rules on trading cryptocurrencies.</string>
     <string name="kyc_country_selection_search_hint">Search for your country</string>
     <string name="kyc_country_selection_connection_error">Please check your connection</string>
     <string name="kyc_country_selection_please_wait">Please wait…</string>
@@ -25,6 +30,7 @@
     <string name="kyc_profile_last_name_hint">Last Name</string>
     <string name="kyc_profile_dob_hint">Date of Birth</string>
     <string name="kyc_profile_next">Next</string>
+    <string name="kyc_profile_submit">Submit</string>
     <string name="kyc_profile_error">Error creating user details, try again later</string>
     <string name="kyc_profile_error_conflict">A user already exists with this email address</string>
 
@@ -53,19 +59,42 @@
     <string name="kyc_address_error_saving">Error saving address, please try again</string>
     <string name="kyc_address_error_loading_places">Error connecting to address search</string>
 
+    <!-- Email -->
+    <string name="kyc_email_title">Verify Your Email</string>
+    <string name="kyc_email_message">We need to verify your email address as an added layer of security.</string>
+    <string name="kyc_email_hint_focused">Your Email</string>
+    <string name="kyc_email_hint_unfocused">@string/kyc_email_hint_focused</string>
+    <string name="kyc_email_error_saving_email">Error saving email, please try again</string>
+    <string name="kyc_email_error_conflict">Email already registered, please use another.</string>
+    <string name="kyc_email_send_verification">Send Email</string>
+
+    <!-- Email Validation -->
+    <string name="kyc_email_validation_header">Check your inbox.</string>
+    <string name="kyc_email_validation_message">We just sent you an email with further instructions.</string>
+    <string name="kyc_email_validation_hint">Confirmation Code</string>
+    <string name="kyc_email_validation_error">Error validating phone number. Please check your code</string>
+    <string name="kyc_email_validation_error_incorrect">Verification code incorrect. Please double check the code we sent you and try again.</string>
+    <string name="kyc_email_didnt_see_email">Didn\'t see email? %1$s</string>
+    <string name="kyc_email_send_again_hyperlink">Send again</string>
+    <string name="kyc_email_email_was_resent">Email was resent</string>
+
     <!-- Phone Number -->
     <string name="kyc_phone_number_title">Verify Your Device</string>
     <string name="kyc_phone_number_message">This will help us to verify your identity today, and also keep your account secure in the future. To do this an SMS will be sent to your phone with a verification code.</string>
     <string name="kyc_phone_number_hint_focused">Your Mobile Number</string>
     <string name="kyc_phone_number_hint_unfocused">+1 2345 678 910</string>
+    <string name="kyc_phone_didnt_see_sms">%1$s</string>
+    <string name="kyc_phone_send_again_hyperlink">Resend Code</string>
     <string name="kyc_phone_number_error_saving_number">Error saving mobile number, please try again</string>
     <string name="kyc_phone_number_error_conflict">Mobile phone number already registered, please use another.</string>
+    <string name="kyc_phone_number_code_was_resent">Code was resent</string>
 
     <!-- Phone Number Validation -->
     <string name="kyc_phone_number_validation_header">Enter the code sent to</string>
     <string name="kyc_phone_number_validation_hint">Confirmation Code</string>
     <string name="kyc_phone_number_validation_error">Error validating phone number. Please check your code</string>
     <string name="kyc_phone_number_validation_error_incorrect">Verification code incorrect. Please double check the code we sent you and try again.</string>
+    <string name="kyc_phone_number_error_resending">Error sending Code, please try again</string>
 
     <!-- Onfido Splash -->
     <string name="kyc_onfido_splash_title">Verify Your Identity</string>
@@ -97,6 +126,13 @@
     <string name="kyc_settings_status_rejected">Failed</string>
     <string name="kyc_settings_status_verified">Verified</string>
 
+    <!-- Tier status -->
+    <string name="kyc_settings_swap_limit">Swap Limit</string>
+    <string name="kyc_settings_tier_status_locked">Locked</string>
+    <string name="kyc_settings_tier_status_in_review">Tier %1$d - In review</string>
+    <string name="kyc_settings_tier_status_approved">Tier %1$d - Approved</string>
+    <string name="kyc_settings_tier_status_failed">@string/kyc_settings_status_rejected</string>
+
     <!-- KYC Status -->
     <string name="kyc_status_error">Error fetching KYC status</string>
     <string name="kyc_status_title_in_progress">Verification In Progress</string>
@@ -115,6 +151,11 @@
     <string name="kyc_status_button_notifications_error">Error enabling notifications</string>
     <string name="kyc_status_button_notifications_enabled">Notifications enabled</string>
 
+    <!-- More info Splash -->
+    <string name="kyc_more_info_splash_title">More Info Needed</string>
+    <string name="kyc_more_info_splash_header">We Need Some More Information to Complete Your Profile</string>
+    <string name="kyc_more_info_splash_subtitle">You’ll need to verify your phone number. provide a government issued ID and a Selfie.</string>
+
     <!-- Drop-off Card -->
     <string name="kyc_drop_off_card_description">Looks like you\'ve started verifying your identity but didn\'t finish. Pick up where you left off?</string>
     <string name="kyc_drop_off_card_button">Continue verification</string>
@@ -123,4 +164,32 @@
     <string name="sunriver_splash_title">Identity Verification</string>
     <string name="sunriver_splash_message">Verify your identity to claim your XLM. It only takes a few minutes. Once verified, you\'ll be able to use our next generation trading product, Swap.</string>
     <string name="sunriver_status_message">Your information is being reviewed. The review should complete in 5 minutes. Once you\'re successfully verified, we\'ll send your Stellar within one week.</string>
+
+    <!-- KYC Tiers -->
+    <string name="a_better_way_to_trade_crypto">A Better Way to Trade Crypto</string>
+    <string name="announcing_swap">Announcing Swap by Blockchain - the faster, smarter way to trade your crypto.</string>
+    <string name="tier_1">TIER 1</string>
+    <string name="tier_2">TIER 2</string>
+    <string name="tier_verification">VERIFICATION</string>
+    <string name="_1_000">$1,000</string>
+    <string name="_25_000">$25,000</string>
+    <string name="annual_swap_limit">Annual Swap Limit</string>
+    <string name="daily_swap_limit">Daily Swap Limit</string>
+    <string name="takes_3_min">Takes 3 min</string>
+    <string name="takes_10_min">Takes 10 min</string>
+    <string name="get_free_crypto">GET FREE CRYPTO</string>
+    <string name="by_completing_tier_2_you_will_be_eligible_to_participate_in_our_airdrop_program">By completing Tier 2 you will be eligible to participate in our airdrop program.</string>
+    <string name="start_arrow">start arrow</string>
+    <string name="approved">Approved!</string>
+    <string name="in_review">In Review</string>
+    <string name="available">Available</string>
+    <string name="swap_limit">Your Swap Limit is the maximum amount of crypto you can trade</string>
+    <string name="swap_unavailable">Swap Currently Unavailable</string>
+    <string name="swap_unavailable_explained">We had trouble verifying your identity. Your Swap feature has been disabled at this time.</string>
+    <string name="tier_in_review"  tools:ignore="PluralsCandidate">Your Tier %d verification is currently being reviewed by a Blockchain Support Member</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="swap_now">Swap Now</string>
+    <string name="requires_email_name_date_of_birth_and_address">Requires Email, Name, Date of Birth and Address</string>
+    <string name="requires_tier_1_phone_number_govt_id_and_a_selfie">Requires Tier 1, Phone Number, Govt. ID and a Selfie</string>
+    <string name="learn_more">Learn More</string>
 </resources>

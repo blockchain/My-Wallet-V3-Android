@@ -213,7 +213,7 @@ Všechna práva vyhrazena.</string>
   <string name="not_archived_description">Tato položka není archivovaná. Archivujte tuto položku, pokud ji už NECHCETE používat. Vaše prostředky budou v bezpečí a můžete ji kdykoli odarchivovat.</string>
   <string name="transfer_success_archive_prompt_title">Archivovat použité adresy?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 adresa byla úspěšně převedena do Mojí bitcoinové peněženky. Chcete nyní tuto adresu archivovat?</item>
+    <item quantity="one">%d adresa byla úspěšně převedena do Mojí bitcoinové peněženky. Chcete nyní tuto adresu archivovat?</item>
     <item quantity="few"></item>
     <item quantity="many"></item>
     <item quantity="other">%d adres bylo úspěšně převedeno do Mojí bitcoinové peněženky. Chcete tyto adresy nyní archivovat?</item>
@@ -260,7 +260,7 @@ Uschovejte svůj klíč xPub do bezpečí.         Osoba s přístupem k Vašemu
   <string name="transfer_amount">Převést částku</string>
   <string name="transfer_archive_message">Po převodu archivovat importované adresy</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 importovaná adresa</item>
+    <item quantity="one">%d importovaná adresa</item>
     <item quantity="few"></item>
     <item quantity="many"></item>
     <item quantity="other">%d importovaných adres</item>
@@ -808,7 +808,6 @@ Toto je jen návrh: skutečná částka se může lišit.</string>
   <string name="sunriver_splash_message">Ověřte svoji totožnost, abyste mohli nárokovat svůj XLM. Trvá to jen pár minut. Až budete ověřeni, budete moci používat náš obchodní produkt příští generace, výměna.</string>
   <string name="sunriver_status_message">Vaše informace jsou přezkoumány. Přezkum by měl být dokončen za 5 minut. Jakmile budete úspěšně ověřeni, pošleme váš hvězdou do jednoho týdne.</string>
   <string name="YESTERDAY">Včera</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Nedostatek prostředků</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Naskenovat QR kód</string>
@@ -830,7 +829,7 @@ Toto je jen návrh: skutečná částka se může lišit.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Získejte svůj zámek</string>
   <string name="lockbox_landing_get_yours_message">Bezpečně ukládejte svůj kryptografický účet offline.</string>
-  <string name="lockbox_landing_get_yours_button">Kupte nyní za 99 dolarů</string>
+  <string name="lockbox_landing_get_yours_button">Kup nyní</string>
   <string name="lockbox_landing_already_owned_title">Již vlastní?</string>
   <string name="lockbox_landing_already_owned_message">Z počítače se přihlaste na bloku.cz a připojte svou schránku.</string>
   <string name="lockbox_landing_learn_more">Chcete se dozvědět více? Klikněte sem pro návštěvu 
@@ -1035,4 +1034,9 @@ Toto je jen návrh: skutečná částka se může lišit.</string>
   <string name="buy_sell_recurring_frequency_daily">Každý den</string>
   <string name="buy_sell_recurring_frequency_monthly">Na %1$s každého měsíce</string>
   <string name="buy_sell_transaction_list_label">Coinify ID objednávky # %1$s</string>
+  <string name="sunriver_set_memo">Nastavit poznámku</string>
+  <string name="xlm_memo_explain">Poznámky slouží k informování příjemců o nepovinných informacích.</string>
+  <string name="xlm_memo_text_hint">Memo</string>
+  <string name="xlm_memo_id_hint">Číselné ID</string>
+  <string name="xlm_memo_hash_hint">32 bajtů hexadecimální hash</string>
 </resources>

@@ -213,7 +213,7 @@ Tutti i diritti riservati.</string>
   <string name="not_archived_description">Questo elemento non è archiviato. Archivia questo elemento se NON vuoi più usarlo. I tuoi fondi rimarranno al sicuro, e tu potrai estrarlo dall\'archivio in qualsiasi momento.</string>
   <string name="transfer_success_archive_prompt_title">Vuoi archiviare gli indirizzi eliminati?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 indirizzo è stato trasferito con successo al mio portafoglio dei Bitcoin. Vuoi archiviare questo indirizzo ora?</item>
+    <item quantity="one">%d indirizzo è stato trasferito con successo al mio portafoglio dei Bitcoin. Vuoi archiviare questo indirizzo ora?</item>
     <item quantity="other">%d indirizzi sono stati trasferiti con successo al mio portafoglio dei Bitcoin. Vuoi archiviare questi indirizzi ora?</item>
   </plurals>
   <string name="default_account_description">Questo elemento è impostato come predefinito per te e non può essere archiviato.</string>
@@ -258,7 +258,7 @@ Mantieni privato il tuo xPub.         Chiunque acceda al tuo xPub potrà vedere 
   <string name="transfer_amount">Importo Trasferimento</string>
   <string name="transfer_archive_message">Indirizzi importati nell\'archivio in seguito al trasferimento</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 indirizzo importato</item>
+    <item quantity="one">%d indirizzo importato</item>
     <item quantity="other">%d indirizzi importati</item>
   </plurals>
   <string name="transfer_archive">Archivio Confermato</string>
@@ -804,7 +804,6 @@ Giusto un suggerimento: l\'importo effettivo potrebbe variare.</string>
   <string name="sunriver_splash_message">Verifica la tua identità per richiedere il tuo XLM. Ci vogliono solo pochi minuti. Una volta verificato, sarai in grado di utilizzare il nostro prodotto di trading di nuova generazione, Swap.</string>
   <string name="sunriver_status_message">Le tue informazioni sono in revisione. La revisione dovrebbe essere completata in 5 minuti. Una volta verificato, invieremo il tuo Stellar entro una settimana.</string>
   <string name="YESTERDAY">Ieri</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Fondi insufficienti</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Fai la scansione del Codice QR</string>
@@ -826,7 +825,7 @@ Giusto un suggerimento: l\'importo effettivo potrebbe variare.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Ottieni il tuo Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Memorizza in modo sicuro la tua criptovaluta offline.</string>
-  <string name="lockbox_landing_get_yours_button">Acquista ora per $ 99</string>
+  <string name="lockbox_landing_get_yours_button">Acquista ora</string>
   <string name="lockbox_landing_already_owned_title">Ne possiedi già uno?</string>
   <string name="lockbox_landing_already_owned_message">Dal tuo computer, accedi a blockchain.com e connetti il ​​tuo lockbox.</string>
   <string name="lockbox_landing_learn_more">Vuoi saperne di più? Tocca qui per visitare 
@@ -1031,4 +1030,9 @@ Giusto un suggerimento: l\'importo effettivo potrebbe variare.</string>
   <string name="buy_sell_recurring_frequency_daily">Ogni giorno</string>
   <string name="buy_sell_recurring_frequency_monthly">Su %1$s di ogni mese</string>
   <string name="buy_sell_transaction_list_label">ID ordine Coinify # %1$s</string>
+  <string name="sunriver_set_memo">Imposta Memo</string>
+  <string name="xlm_memo_explain">I memo sono usati per comunicare informazioni opzionali al destinatario.</string>
+  <string name="xlm_memo_text_hint">promemoria</string>
+  <string name="xlm_memo_id_hint">ID numerico</string>
+  <string name="xlm_memo_hash_hint">32 byte Hash esadecimale</string>
 </resources>

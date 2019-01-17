@@ -5,7 +5,6 @@ import android.support.annotation.VisibleForTesting;
 import com.blockchain.kyc.models.nabu.NabuApiException;
 import com.blockchain.kyc.models.nabu.NabuErrorCodes;
 import com.blockchain.kycui.settings.KycStatusHelper;
-import com.blockchain.kycui.settings.SettingsKycState;
 import com.blockchain.notifications.NotificationTokenManager;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.payload.PayloadManager;
@@ -24,6 +23,7 @@ import piuk.blockchain.androidcore.data.auth.AuthDataManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
+import piuk.blockchain.androidcore.data.settings.EmailSyncUpdater;
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter;
@@ -38,6 +38,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     private FingerprintHelper fingerprintHelper;
     private AuthDataManager authDataManager;
     private SettingsDataManager settingsDataManager;
+    private EmailSyncUpdater emailUpdater;
     private PayloadManager payloadManager;
     private PayloadDataManager payloadDataManager;
     private StringUtils stringUtils;
@@ -55,6 +56,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     SettingsPresenter(FingerprintHelper fingerprintHelper,
                       AuthDataManager authDataManager,
                       SettingsDataManager settingsDataManager,
+                      EmailSyncUpdater emailUpdater,
                       PayloadManager payloadManager,
                       PayloadDataManager payloadDataManager,
                       StringUtils stringUtils,
@@ -69,6 +71,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         this.fingerprintHelper = fingerprintHelper;
         this.authDataManager = authDataManager;
         this.settingsDataManager = settingsDataManager;
+        this.emailUpdater = emailUpdater;
         this.payloadManager = payloadManager;
         this.payloadDataManager = payloadDataManager;
         this.stringUtils = stringUtils;
@@ -86,9 +89,9 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         getView().showProgressDialog(R.string.please_wait);
         // Fetch updated settings
         getCompositeDisposable().add(
-                settingsDataManager.getSettings()
+                settingsDataManager.fetchSettings()
                         .doAfterTerminate(this::handleUpdate)
-                        .doOnNext(ignored -> loadKycState())
+                        .doOnNext(ignored -> loadKyc2TierState())
                         .subscribe(
                                 updatedSettings -> settings = updatedSettings,
                                 throwable -> {
@@ -101,9 +104,9 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
                                 }));
     }
 
-    private void loadKycState() {
+    private void loadKyc2TierState() {
         getCompositeDisposable().add(
-                kycStatusHelper.getSettingsKycState()
+                kycStatusHelper.getSettingsKycState2Tier()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 settingsKycState -> getView().setKycState(settingsKycState),
@@ -112,21 +115,7 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
     }
 
     void onKycStatusClicked() {
-        getCompositeDisposable().add(
-                kycStatusHelper.getSettingsKycState()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                settingsKycState -> {
-                                    if (settingsKycState == SettingsKycState.Verified) {
-                                        getView().launchHomebrew(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY));
-                                    } else if (settingsKycState == SettingsKycState.Unverified) {
-                                        getView().launchKycFlow();
-                                    } else {
-                                        getView().launchKycStatus();
-                                    }
-                                },
-                                Timber::e)
-        );
+        getView().launchKycFlow();
     }
 
     private void handleUpdate() {
@@ -286,6 +275,10 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
         return settings.isSmsVerified();
     }
 
+    boolean isEmailVerified() {
+        return settings.isEmailVerified();
+    }
+
     /**
      * @return the current auth type
      * @see Settings
@@ -337,7 +330,8 @@ public class SettingsPresenter extends BasePresenter<SettingsView> {
             getView().setEmailSummary(stringUtils.getString(R.string.not_specified));
         } else {
             getCompositeDisposable().add(
-                    settingsDataManager.updateEmail(email)
+                    emailUpdater.updateEmailAndSync(email)
+                            .flatMap(e -> settingsDataManager.fetchSettings().singleOrError())
                             .subscribe(settings -> {
                                 this.settings = settings;
                                 updateNotification(Settings.NOTIFICATION_TYPE_EMAIL, false);

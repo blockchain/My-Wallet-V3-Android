@@ -29,6 +29,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
+import org.mockito.Mockito.RETURNS_DEEP_STUBS
 import org.web3j.crypto.RawTransaction
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.ethereum.datastores.EthDataStore
@@ -36,6 +37,7 @@ import piuk.blockchain.androidcore.data.ethereum.models.CombinedEthModel
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
+import java.math.BigInteger
 
 class EthDataManagerTest {
 
@@ -112,6 +114,42 @@ class EthDataManagerTest {
         testObserver.assertNoErrors()
         verify(ethDataStore).ethAddressResponse = null
         verifyZeroInteractions(ethDataStore)
+        verifyNoMoreInteractions(ethAccountApi)
+    }
+
+    @Test
+    fun `get balance found`() {
+        // Arrange
+        val ethAddress = "ADDRESS"
+        val ethAddressResponseMap: EthAddressResponseMap = mock(defaultAnswer = RETURNS_DEEP_STUBS)
+        val response: EthAddressResponse = mock()
+        whenever(response.balance).thenReturn(BigInteger.TEN)
+        whenever(ethAddressResponseMap.ethAddressResponseMap.values).thenReturn(mutableListOf(response))
+        whenever(ethAccountApi.getEthAddress(listOf(ethAddress)))
+            .thenReturn(Observable.just(ethAddressResponseMap))
+        // Act
+        val testObserver = subject.getBalance(ethAddress).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(BigInteger.TEN)
+        verify(ethAccountApi).getEthAddress(listOf(ethAddress))
+        verifyNoMoreInteractions(ethAccountApi)
+    }
+
+    @Test
+    fun `get balance error, still returns value`() {
+        // Arrange
+        val ethAddress = "ADDRESS"
+        whenever(ethAccountApi.getEthAddress(listOf(ethAddress)))
+            .thenReturn(Observable.error(Exception()))
+        // Act
+        val testObserver = subject.getBalance(ethAddress).test()
+        // Assert
+        testObserver.assertComplete()
+        testObserver.assertNoErrors()
+        testObserver.assertValue(BigInteger.ZERO)
+        verify(ethAccountApi).getEthAddress(listOf(ethAddress))
         verifyNoMoreInteractions(ethAccountApi)
     }
 

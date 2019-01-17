@@ -32,6 +32,8 @@ class ExchangeDialog(intents: Observable<ExchangeIntent>, initial: ExchangeViewM
                 is FiatExchangeRateIntent -> previousState.setFiatRate(intent.c2fRate)
                 is SpendableValueIntent -> previousState.setSpendable(intent.cryptoValue)
                 is ClearQuoteIntent -> previousState.clearQuote()
+                is SetUserTier -> previousState.copy(userTier = intent.tier)
+                is SetTierLimit -> previousState.mapTierLimits(intent)
             }
         }
 
@@ -90,6 +92,13 @@ private fun ExchangeViewState.mapTradeLimits(intent: SetTradeLimits): ExchangeVi
     )
 }
 
+private fun ExchangeViewState.mapTierLimits(intent: SetTierLimit): ExchangeViewState {
+    if (intent.availableOnTier.currencyCode != fromFiat.currencyCode) return this
+    return copy(
+        maxTierLimit = intent.availableOnTier
+    )
+}
+
 internal fun ExchangeViewModel.toInternalState(): ExchangeViewState {
     return ExchangeViewState(
         fromAccount = fromAccount,
@@ -145,6 +154,7 @@ enum class QuoteValidity {
     MissMatch,
     UnderMinTrade,
     OverMaxTrade,
+    OverTierLimit,
     OverUserBalance
 }
 
@@ -160,10 +170,20 @@ data class ExchangeViewState(
     val latestQuote: Quote?,
     val minTradeLimit: FiatValue? = null,
     val maxTradeLimit: FiatValue? = null,
+    val maxTierLimit: FiatValue? = null,
     val c2fRate: ExchangeRate.CryptoToFiat? = null,
     val maxSpendable: CryptoValue? = null,
-    val decimalCursor: Int = 0
+    val decimalCursor: Int = 0,
+    val userTier: Int = 0
 ) {
+    private val maxTradeOrTierLimit: FiatValue?
+        get() {
+            if (maxTradeLimit != null && maxTierLimit != null) {
+                return if (maxTradeLimit < maxTierLimit) maxTradeLimit else maxTierLimit
+            }
+            return maxTradeLimit ?: maxTierLimit
+        }
+
     val lastUserValue: Money =
         when (fix) {
             Fix.BASE_FIAT -> fromFiat
@@ -174,12 +194,13 @@ data class ExchangeViewState(
 
     val maxTrade: Money?
         get() {
-            val maxSpendableFiat = maxSpendable * c2fRate ?: return maxTradeLimit
-            if (maxSpendableFiat.currencyCode != fromFiat.currencyCode) return maxTradeLimit
-            if (maxTradeLimit == null) return maxSpendableFiat
-            if (maxTradeLimit.currencyCode != maxSpendableFiat.currencyCode) return null
-            return if (maxSpendableFiat > maxTradeLimit) {
-                maxTradeLimit
+            val limit = maxTradeOrTierLimit
+            val maxSpendableFiat = maxSpendable * c2fRate ?: return limit
+            if (maxSpendableFiat.currencyCode != fromFiat.currencyCode) return limit
+            if (limit == null) return maxSpendableFiat
+            if (limit.currencyCode != maxSpendableFiat.currencyCode) return null
+            return if (maxSpendableFiat > limit) {
+                limit
             } else {
                 maxSpendable
             }
@@ -200,6 +221,7 @@ data class ExchangeViewState(
         if (!quoteMatchesFixAndValue(latestQuote)) return QuoteValidity.MissMatch
         if (!enoughFundsIfKnown(latestQuote)) return QuoteValidity.OverUserBalance
         if (exceedsTheFiatLimit(latestQuote, maxTradeLimit)) return QuoteValidity.OverMaxTrade
+        if (exceedsTheFiatLimit(latestQuote, maxTierLimit)) return QuoteValidity.OverTierLimit
         if (underTheFiatLimit(latestQuote, minTradeLimit)) return QuoteValidity.UnderMinTrade
         return QuoteValidity.Valid
     }

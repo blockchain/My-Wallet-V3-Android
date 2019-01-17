@@ -18,6 +18,11 @@ public abstract class BasePresenter<VIEW extends View> implements Presenter<VIEW
     }
 
     @Override
+    public void onViewResumed() {
+        // No-op
+    }
+
+    @Override
     public void onViewPaused() {
         // No-op
     }

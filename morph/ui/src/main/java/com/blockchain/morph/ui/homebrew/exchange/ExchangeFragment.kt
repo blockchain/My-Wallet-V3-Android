@@ -2,6 +2,7 @@ package com.blockchain.morph.ui.homebrew.exchange
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.constraint.ConstraintLayout
@@ -15,6 +16,9 @@ import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.SwitchCompat
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -48,8 +52,9 @@ import com.blockchain.morph.ui.logging.AmountErrorType
 import com.blockchain.morph.ui.logging.FixType
 import com.blockchain.morph.ui.logging.FixTypeEvent
 import com.blockchain.morph.ui.logging.MarketRatesViewedEvent
-import com.blockchain.notifications.analytics.EventLogger
+import com.blockchain.nabu.StartKyc
 import com.blockchain.notifications.analytics.LoggableEvent
+import com.blockchain.notifications.analytics.logEvent
 import com.blockchain.ui.chooserdialog.AccountChooserBottomDialog
 import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.view.clicks
@@ -63,7 +68,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
-import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedColor
 import piuk.blockchain.androidcoreui.utils.extensions.getResolvedDrawable
@@ -111,12 +116,18 @@ internal class ExchangeFragment : Fragment() {
 
     private lateinit var exchangeModel: ExchangeModel
 
+    private lateinit var exchangeLimitState: ExchangeLimitState
+
+    private val startKyc: StartKyc by inject()
+
     private var keyboardVisible = true
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val provider = (context as? ExchangeViewModelProvider)
             ?: throw Exception("Host activity must support ExchangeViewModelProvider")
+        exchangeLimitState = (context as? ExchangeLimitState)
+            ?: throw Exception("Host activity must support ExchangeLimitState")
         exchangeModel = provider.exchangeViewModel
     }
 
@@ -129,7 +140,7 @@ internal class ExchangeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activityListener.setToolbarTitle(R.string.morph_new_exchange)
-        get<EventLogger>().logEvent(LoggableEvent.ExchangeCreate)
+        logEvent(LoggableEvent.ExchangeCreate)
 
         currency = arguments?.getString(ARGUMENT_CURRENCY) ?: "USD"
 
@@ -304,7 +315,12 @@ internal class ExchangeFragment : Fragment() {
     }
 
     private fun updateUserFeedBack(exchangeViewState: ExchangeViewState) {
-        feedback.text = exchangeViewState.isValidMessage()
+        val (validMessage, bufferType) = exchangeViewState.isValidMessage()
+        feedback.apply {
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = Color.TRANSPARENT
+            setText(validMessage, bufferType)
+        }
     }
 
     private fun clicksToIntents(@IdRes id: Int, function: () -> ExchangeIntent) =
@@ -372,24 +388,37 @@ internal class ExchangeFragment : Fragment() {
             }.format(toMajorUnitDouble())
     }
 
-    private fun ExchangeViewState.isValidMessage(): String {
+    private fun ExchangeViewState.isValidMessage(): Pair<CharSequence, TextView.BufferType> {
         logMinMaxErrors()
-        return when (validity()) {
+        val validity = validity()
+        exchangeLimitState.setOverTierLimit(validity == QuoteValidity.OverTierLimit)
+        return when (validity) {
             QuoteValidity.Valid,
             QuoteValidity.NoQuote,
-            QuoteValidity.MissMatch -> ""
+            QuoteValidity.MissMatch -> "" to TextView.BufferType.NORMAL
             QuoteValidity.UnderMinTrade -> getString(
                 R.string.under_min,
                 minTradeLimit?.toStringWithSymbol()
-            )
+            ) to TextView.BufferType.NORMAL
             QuoteValidity.OverMaxTrade -> getString(
                 R.string.over_max,
                 maxTradeLimit?.toStringWithSymbol()
-            )
+            ) to TextView.BufferType.NORMAL
+            QuoteValidity.OverTierLimit -> {
+                val overMax = getString(
+                    R.string.over_max,
+                    maxTierLimit?.toStringWithSymbol()
+                )
+                if (userTier < 2) {
+                    addLink(overMax, getString(R.string.upgrade_now))
+                } else {
+                    overMax to TextView.BufferType.NORMAL
+                }
+            }
             QuoteValidity.OverUserBalance -> getString(
                 R.string.over_max,
                 maxSpendable?.toStringWithSymbol()
-            )
+            ) to TextView.BufferType.NORMAL
         }
     }
 
@@ -400,6 +429,7 @@ internal class ExchangeFragment : Fragment() {
             QuoteValidity.MissMatch -> null
             QuoteValidity.UnderMinTrade -> AmountErrorType.UnderMin
             QuoteValidity.OverMaxTrade -> AmountErrorType.OverMax
+            QuoteValidity.OverTierLimit -> AmountErrorType.OverMax
             QuoteValidity.OverUserBalance -> AmountErrorType.OverBalance
         }
 
@@ -452,6 +482,27 @@ internal class ExchangeFragment : Fragment() {
         } else {
             setCompoundDrawables(null, null, null, null)
         }
+    }
+
+    private fun addLink(prefixText: String, link: String): Pair<CharSequence, TextView.BufferType> {
+        val finalString = "$prefixText. $link"
+        val spannableString = SpannableString(finalString)
+
+        val span = object : ClickableSpan() {
+            override fun onClick(widget: View?) {
+                startKyc.startKycActivity(requireContext())
+            }
+        }
+
+        val startIndexOfLink = finalString.indexOf(link)
+        spannableString.setSpan(
+            span,
+            startIndexOfLink,
+            startIndexOfLink + link.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        return spannableString to TextView.BufferType.SPANNABLE
     }
 }
 

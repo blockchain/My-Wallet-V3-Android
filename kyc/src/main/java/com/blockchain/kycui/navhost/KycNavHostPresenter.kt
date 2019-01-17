@@ -1,33 +1,31 @@
 package com.blockchain.kycui.navhost
 
-import android.support.annotation.VisibleForTesting
+import com.blockchain.BaseKycPresenter
 import com.blockchain.exceptions.MetadataNotFoundException
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.KycState
 import com.blockchain.kyc.models.nabu.NabuUser
 import com.blockchain.kyc.models.nabu.UserState
-import com.blockchain.kycui.extensions.fetchNabuToken
 import com.blockchain.kycui.logging.KycResumedEvent
-import com.blockchain.kycui.logging.ReentryPoint
 import com.blockchain.kycui.navhost.models.CampaignType
 import com.blockchain.kycui.profile.models.ProfileModel
+import com.blockchain.kycui.reentry.KycNavigator
+import com.blockchain.kycui.reentry.ReentryDecision
+import com.blockchain.nabu.NabuToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
-import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.androidcoreui.utils.logging.Logging
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 
 class KycNavHostPresenter(
-    private val metadataManager: MetadataManager,
-    private val nabuDataManager: NabuDataManager
-) : BasePresenter<KycNavHostView>() {
-
-    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
+    nabuToken: NabuToken,
+    private val nabuDataManager: NabuDataManager,
+    private val reentryDecision: ReentryDecision,
+    private val kycNavigator: KycNavigator
+) : BaseKycPresenter<KycNavHostView>(nabuToken) {
 
     override fun onViewReady() {
         compositeDisposable +=
@@ -51,38 +49,24 @@ class KycNavHostPresenter(
     }
 
     private fun redirectUserFlow(user: NabuUser) {
-        if (user.kycState != KycState.None) {
-            // User has completed KYC but not confirmed, proceed to status page
-            view.navigateToStatus()
-        } else {
-            if (user.state == UserState.Active) {
-                // All data is present and mobile verified, proceed to Onfido splash
-                view.navigateToOnfido(user.toProfileModel(), user.address!!.countryCode!!)
-                Logging.logCustom(KycResumedEvent(ReentryPoint.Onfido))
-            } else if (user.state == UserState.Created && user.address?.countryCode != null && user.mobile != null) {
-                // User backed out at phone number, proceed to phone entry
-                view.navigateToMobileEntry(user.toProfileModel(), user.address.countryCode)
-                Logging.logCustom(KycResumedEvent(ReentryPoint.MobileEntry))
-            } else if (user.state == UserState.Created && user.address?.countryCode != null) {
-                // Address has been entered, skip forward to address
-                view.navigateToAddress(user.toProfileModel(), user.address.countryCode)
-                Logging.logCustom(KycResumedEvent(ReentryPoint.Address))
-            } else if (user.state == UserState.Created && user.address?.countryCode == null) {
-                if (view.campaignType == CampaignType.NativeBuySell) {
-                    // Only profile data has been entered, skip to county code
-                    view.navigateToCountrySelection()
-                    Logging.logCustom(KycResumedEvent(ReentryPoint.CountrySelection))
-                }
+        if (user.state != UserState.None && user.kycState == KycState.None) {
+            val current = user.tiers?.current
+            if (current == null || current == 0) {
+                val reentryPoint = reentryDecision.findReentryPoint(user)
+                val directions = kycNavigator.userAndReentryPointToDirections(user, reentryPoint)
+                view.navigate(directions)
+                Logging.logCustom(KycResumedEvent(reentryPoint))
             }
-
-            // If no other methods are triggered, this will start KYC from scratch. If others have been called,
-            // this will make the host fragment visible.
-            view.displayLoading(false)
+        } else if (view.campaignType == CampaignType.Sunriver) {
+            view.navigateToAirdropSplash()
         }
+
+        // If no other methods are triggered, this will start KYC from scratch. If others have been called,
+        // this will make the host fragment visible.
+        view.displayLoading(false)
     }
 }
 
-@VisibleForTesting
 internal fun NabuUser.toProfileModel(): ProfileModel = ProfileModel(
     firstName ?: throw IllegalStateException("First Name is null"),
     lastName ?: throw IllegalStateException("Last Name is null"),

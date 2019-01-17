@@ -213,7 +213,7 @@ Alle rechten voorbehouden.</string>
   <string name="not_archived_description">Dit item wordt niet gearchiveerd. Archiveer dit item als u het NIET meer wilt gebruiken. Uw tegoeden zullen veilig blijven en u kunt het op elk moment de-archiveren.</string>
   <string name="transfer_success_archive_prompt_title">Opgeruimde adressen archiveren?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">Er is 1 adres met succes overgebracht naar Mijn Bitcoin Portemonnee. Wilt u dit adres nu archiveren?</item>
+    <item quantity="one">Er is %d adres met succes overgebracht naar Mijn Bitcoin Portemonnee. Wilt u dit adres nu archiveren?</item>
     <item quantity="other">Er zijn %d adressen met succes overgebracht naar Mijn Bitcoin Portemonnee. Wilt u nu deze adressen archiveren?</item>
   </plurals>
   <string name="default_account_description">Dit item staat als standaard ingesteld en kan niet worden gearchiveerd.</string>
@@ -258,7 +258,7 @@ Vertel uw xPub aan niemand.         Iemand met toegang tot uw xPub kan al uw teg
   <string name="transfer_amount">Overboekingsbedrag</string>
   <string name="transfer_archive_message">Archiveer geïmporteerde adressen na overboeking</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 geïmporteerd adres</item>
+    <item quantity="one">%d geïmporteerd adres</item>
     <item quantity="other">%d geïmporteerde adressen</item>
   </plurals>
   <string name="transfer_archive">Archief bevestigd</string>
@@ -804,7 +804,6 @@ Dit is slechts een suggestie: het werkelijke bedrag kan verschillen.</string>
   <string name="sunriver_splash_message">Verifieer uw identiteit om uw XLM te claimen. Het duurt maar een paar minuten. Na verificatie kunt u ons handelsproduct van de volgende generatie, Swap, gebruiken.</string>
   <string name="sunriver_status_message">Uw informatie wordt beoordeeld. De beoordeling zou binnen 5 minuten moeten zijn voltooid. Zodra je bent geverifieerd, sturen we je Stellar binnen een week.</string>
   <string name="YESTERDAY">Gisteren</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Onvoldoende saldo</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">QR-code scannen</string>
@@ -826,7 +825,7 @@ Dit is slechts een suggestie: het werkelijke bedrag kan verschillen.</string>
   <string name="lockbox_title">lockbox</string>
   <string name="lockbox_landing_get_yours_title">Krijg uw Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Bewaar uw cryptocurrency veilig online.</string>
-  <string name="lockbox_landing_get_yours_button">Koop nu voor $ 99</string>
+  <string name="lockbox_landing_get_yours_button">Koop nu</string>
   <string name="lockbox_landing_already_owned_title">Heb je er al een?</string>
   <string name="lockbox_landing_already_owned_message">Log vanaf uw computer in op blockchain.com en sluit uw lockbox aan.</string>
   <string name="lockbox_landing_learn_more">Wilt u meer weten? Tik hier om te bezoeken 
@@ -1031,4 +1030,9 @@ Dit is slechts een suggestie: het werkelijke bedrag kan verschillen.</string>
   <string name="buy_sell_recurring_frequency_daily">Elke dag</string>
   <string name="buy_sell_recurring_frequency_monthly">Op de %1$s van elke maand</string>
   <string name="buy_sell_transaction_list_label">ID van Coinify-bestelling # %1$s</string>
+  <string name="sunriver_set_memo">Memo instellen</string>
+  <string name="xlm_memo_explain">Memo\'s worden gebruikt om optionele informatie over te brengen naar de ontvanger.</string>
+  <string name="xlm_memo_text_hint">memo</string>
+  <string name="xlm_memo_id_hint">Numeriek ID</string>
+  <string name="xlm_memo_hash_hint">32 bytes hexadecimale hash</string>
 </resources>

@@ -52,11 +52,6 @@ data class CryptoValue(
         fun bitcoinFromSatoshis(satoshi: BigInteger) = CryptoValue(CryptoCurrency.BTC, satoshi)
         fun bitcoinCashFromSatoshis(satoshi: Long) = CryptoValue(CryptoCurrency.BCH, satoshi.toBigInteger())
         fun bitcoinCashFromSatoshis(satoshi: BigInteger) = CryptoValue(CryptoCurrency.BCH, satoshi)
-        @Deprecated(
-            message = "Long overflows when the value goes above 9.22+ Ether.",
-            replaceWith = ReplaceWith("CryptoValue.etherFromWei(wei.toBigInteger())")
-        )
-        fun etherFromWei(wei: Long) = CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
 
         fun etherFromWei(wei: BigInteger) = CryptoValue(CryptoCurrency.ETHER, wei)
 

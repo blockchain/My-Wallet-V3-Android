@@ -807,7 +807,6 @@
   <string name="sunriver_splash_message">验证身份以认领您的 XLM。仅需几分钟时间。通过验证之后，您将能够使用我们新一代的交易产品 Swap。</string>
   <string name="sunriver_status_message">正在审核您的信息，5 分钟内完成审核。您的验证通过之后，一周之内将收到我们汇入的 Stellar。</string>
   <string name="YESTERDAY">昨天</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">资金不足</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">扫描二维码</string>
@@ -830,7 +829,7 @@
   <string name="lockbox_title">密码箱</string>
   <string name="lockbox_landing_get_yours_title">获取您的 Lockbox</string>
   <string name="lockbox_landing_get_yours_message">离线安全储存您的加密货币。</string>
-  <string name="lockbox_landing_get_yours_button">现在购买 $99</string>
+  <string name="lockbox_landing_get_yours_button">立即购买</string>
   <string name="lockbox_landing_already_owned_title">已有  lockbox？</string>
   <string name="lockbox_landing_already_owned_message">在您的电脑上登录 blockchain.com 并连接您的 lockbox。</string>
   <string name="lockbox_landing_learn_more">想了解更多？点击此处访问
@@ -1035,4 +1034,9 @@
   <string name="buy_sell_recurring_frequency_daily">每一天</string>
   <string name="buy_sell_recurring_frequency_monthly">在每月的%1$s上</string>
   <string name="buy_sell_transaction_list_label">Coinify 订单 ID #%1$s</string>
+  <string name="sunriver_set_memo">设置备忘录</string>
+  <string name="xlm_memo_explain">备注用于将可选信息传达给收件人。</string>
+  <string name="xlm_memo_text_hint">备忘录</string>
+  <string name="xlm_memo_id_hint">数字ID</string>
+  <string name="xlm_memo_hash_hint">32 字节十六进制哈希</string>
 </resources>

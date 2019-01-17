@@ -1,40 +1,29 @@
 package com.blockchain.kycui.mobile.validation
 
-import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kycui.extensions.fetchNabuToken
+import com.blockchain.nabu.NabuUserSync
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.data.settings.SettingsDataManager
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
+import piuk.blockchain.androidcore.data.settings.PhoneNumberUpdater
 import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 
 class KycMobileValidationPresenter(
-    private val metadataManager: MetadataManager,
-    private val nabuDataManager: NabuDataManager,
-    private val settingsDataManager: SettingsDataManager
+    private val nabuUserSync: NabuUserSync,
+    private val phoneNumberUpdater: PhoneNumberUpdater
 ) : BasePresenter<KycMobileValidationView>() {
 
-    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
-
     override fun onViewReady() {
+        setupRxEvents()
+    }
+
+    private fun setupRxEvents() {
         compositeDisposable +=
             view.uiStateObservable
                 .flatMapCompletable { (verificationModel, _) ->
-                    settingsDataManager.verifySms(verificationModel.verificationCode.code)
-                        .flatMapCompletable { _ ->
-                            nabuDataManager.requestJwt()
-                                .subscribeOn(Schedulers.io())
-                                .flatMap { jwt ->
-                                    fetchOfflineToken.flatMap {
-                                        nabuDataManager.updateUserWalletInfo(it, jwt)
-                                            .subscribeOn(Schedulers.io())
-                                    }
-                                }
-                                .ignoreElement()
+                    phoneNumberUpdater.verifySms(verificationModel.verificationCode.code)
+                        .flatMapCompletable {
+                            nabuUserSync.syncUser()
                         }
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe { view.showProgressDialog() }
@@ -48,12 +37,31 @@ class KycMobileValidationPresenter(
                 .retry()
                 .doOnError(Timber::e)
                 .subscribe()
+        compositeDisposable +=
+            view.resendObservable
+                .flatMapCompletable { (phoneNumber, _) ->
+                    phoneNumberUpdater.updateSms(phoneNumber)
+                        .flatMapCompletable {
+                            nabuUserSync.syncUser()
+                        }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe { view.showProgressDialog() }
+                        .doOnTerminate { view.dismissProgressDialog() }
+                        .doOnError {
+                            Timber.e(it)
+                            view.displayErrorDialog(R.string.kyc_phone_number_error_resending)
+                        }
+                        .doOnComplete { view.theCodeWasResent() }
+                }
+                .retry()
+                .doOnError(Timber::e)
+                .subscribe()
     }
 
     internal fun onProgressCancelled() {
         // Clear outbound requests
         compositeDisposable.clear()
         // Resubscribe
-        onViewReady()
+        setupRxEvents()
     }
 }

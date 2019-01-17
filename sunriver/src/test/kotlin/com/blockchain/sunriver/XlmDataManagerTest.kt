@@ -84,11 +84,47 @@ class XlmDataManagerTest {
     }
 
     @Test
-    fun `get balance for an address`() {
+    fun `balanceOf with reference - there should be no interactions before subscribe`() {
+        verifyNoInteractionsBeforeSubscribe {
+            balanceOf(AccountReference.Xlm("", "ANY"))
+        }
+    }
+
+    @Test
+    fun `get balance for an account reference`() {
         givenXlmDataManager(
             givenBalances("ANY" to 123.lumens())
         )
             .getBalance(AccountReference.Xlm("", "ANY"))
+            .testSingle() `should equal` 123.lumens()
+    }
+
+    @Test
+    fun `balanceOf an account reference`() {
+        givenXlmDataManager(
+            givenBalances("ANY" to 456.lumens())
+        )
+            .balanceOf(AccountReference.Xlm("", "ANY"))
+            .testSingle() `should equal` 456.lumens()
+    }
+
+    @Test
+    fun `balanceOf a non-xlm account reference should be empty`() {
+        givenXlmDataManager(
+            givenBalances("ANY" to 456.lumens())
+        )
+            .balanceOf(AccountReference.Ethereum("", "ANY"))
+            .test()
+            .assertComplete()
+            .assertValueCount(0)
+    }
+
+    @Test
+    fun `get balance for an address`() {
+        givenXlmDataManager(
+            givenBalances("ANY" to 123.lumens())
+        )
+            .getBalance("ANY")
             .testSingle() `should equal` 123.lumens()
     }
 
@@ -1028,6 +1064,8 @@ private fun HorizonProxy.verifyJustTheOneDryRunNoSends() {
 }
 
 private fun <T> Single<T>.testSingle() = test().values().single()
+
+private fun <T> Maybe<T>.testSingle() = test().values().single()
 
 private fun givenBalances(
     vararg balances: Pair<String, CryptoValue>

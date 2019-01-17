@@ -1,25 +1,24 @@
 package com.blockchain.kycui.profile
 
+import com.blockchain.BaseKycPresenter
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.NabuApiException
 import com.blockchain.kyc.models.nabu.NabuErrorCodes
 import com.blockchain.kyc.util.toISO8601DateString
-import com.blockchain.kycui.extensions.fetchNabuToken
 import com.blockchain.kycui.profile.models.ProfileModel
+import com.blockchain.metadata.MetadataRepository
+import com.blockchain.nabu.NabuToken
 import com.blockchain.nabu.metadata.NabuCredentialsMetadata
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata.Companion.USER_CREDENTIALS_METADATA_NODE
 import com.blockchain.nabu.models.NabuOfflineTokenResponse
 import com.blockchain.nabu.models.mapFromMetadata
 import com.blockchain.nabu.models.mapToMetadata
-import com.blockchain.serialization.fromMoshiJson
 import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
-import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -27,13 +26,13 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.properties.Delegates
+import com.google.common.base.Optional
 
 class KycProfilePresenter(
+    nabuToken: NabuToken,
     private val nabuDataManager: NabuDataManager,
-    private val metadataManager: MetadataManager
-) : BasePresenter<KycProfileView>() {
-
-    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
+    private val metadataRepository: MetadataRepository
+) : BaseKycPresenter<KycProfileView>(nabuToken) {
 
     var firstNameSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
     var lastNameSet by Delegates.observable(false) { _, _, _ -> enableButtonIfComplete() }
@@ -49,12 +48,13 @@ class KycProfilePresenter(
         check(view.dateOfBirth != null) { "dateOfBirth is null" }
 
         compositeDisposable +=
-            metadataManager.fetchMetadata(USER_CREDENTIALS_METADATA_NODE)
-                .subscribeOn(Schedulers.io())
+            metadataRepository.loadMetadata(
+                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE,
+                NabuCredentialsMetadata::class.java
+            ).toOptional()
                 .flatMapCompletable { optionalToken ->
                     if (optionalToken.isPresent) {
-                        val metadata =
-                            NabuCredentialsMetadata::class.fromMoshiJson(optionalToken.get())
+                        val metadata = optionalToken.get()
                         if (metadata.isValid()) {
                             createBasicUser(metadata.mapFromMetadata())
                         } else {
@@ -113,7 +113,7 @@ class KycProfilePresenter(
                         },
                         onError = {
                             // Silently fail
-                            Timber.e(it)
+                            Timber.d(it)
                         }
                     )
         }
@@ -125,8 +125,11 @@ class KycProfilePresenter(
             nabuDataManager.getAuthToken(jwt)
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable { tokenResponse ->
-                    metadataManager.saveToMetadata(tokenResponse.mapToMetadata())
-                        .toSingle { tokenResponse }
+                    metadataRepository.saveMetadata(
+                        tokenResponse.mapToMetadata(),
+                        NabuCredentialsMetadata::class.java,
+                        NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
+                    ).toSingle { tokenResponse }
                         .flatMapCompletable { createBasicUser(it) }
                 }
         }
@@ -151,3 +154,8 @@ class KycProfilePresenter(
     private fun Date.toCalendar(): Calendar =
         Calendar.getInstance().apply { time = this@toCalendar }
 }
+
+private fun <T> Maybe<T>.toOptional(): Single<Optional<T>> =
+    map { Optional.of(it) }
+        .switchIfEmpty(Maybe.just(Optional.absent<T>()))
+        .toSingle()

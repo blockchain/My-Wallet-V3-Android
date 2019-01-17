@@ -1,5 +1,7 @@
 package piuk.blockchain.androidcore.data.shapeshift
 
+import com.blockchain.android.testutils.rxInit
+import com.blockchain.utils.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.mock
@@ -8,11 +10,7 @@ import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.wallet.shapeshift.ShapeShiftApi
 import info.blockchain.wallet.shapeshift.ShapeShiftTrades
-import info.blockchain.wallet.shapeshift.data.MarketInfo
 import info.blockchain.wallet.shapeshift.data.Quote
-import info.blockchain.wallet.shapeshift.data.QuoteRequest
-import info.blockchain.wallet.shapeshift.data.QuoteResponseWrapper
-import info.blockchain.wallet.shapeshift.data.SendAmountResponseWrapper
 import info.blockchain.wallet.shapeshift.data.State
 import info.blockchain.wallet.shapeshift.data.Trade
 import info.blockchain.wallet.shapeshift.data.TradeStatusResponse
@@ -24,24 +22,25 @@ import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.`should not contain`
 import org.json.JSONException
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.android.testutils.RxTest
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.shapeshift.datastore.ShapeShiftDataStore
-import com.blockchain.morph.CoinPair
-import piuk.blockchain.androidcore.utils.Either
-import com.blockchain.utils.Optional
 
-@Suppress("IllegalIdentifier")
-class ShapeShiftDataManagerTest : RxTest() {
+class ShapeShiftDataManagerTest {
 
     private lateinit var subject: ShapeShiftDataManager
     private val shapeShiftApi: ShapeShiftApi = mock()
     private val shapeShiftDataStore: ShapeShiftDataStore = mock()
     private val metadataManager: MetadataManager = mock()
-    private val rxBus: RxBus =
-        RxBus()
+    private val rxBus: RxBus = RxBus()
+
+    @get:Rule
+    val initSchedulers = rxInit {
+        mainTrampoline()
+        ioTrampoline()
+    }
 
     @Before
     fun setUp() {
@@ -95,20 +94,8 @@ class ShapeShiftDataManagerTest : RxTest() {
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
-    @Test(expected = IllegalStateException::class)
-    fun `getState uninitialized`() {
-        // Arrange
-        whenever(shapeShiftDataStore.tradeData).thenReturn(null)
-        // Act
-        val testObserver = subject.getState().test()
-        // Assert
-        testObserver.assertNotComplete()
-        verify(shapeShiftDataStore).tradeData
-        verifyNoMoreInteractions(shapeShiftDataStore)
-    }
-
     @Test
-    fun `setState initialized`() {
+    fun setState() {
         // Arrange
         val tradeData: ShapeShiftTrades = mock()
         val state = State("STATE", "STATE")
@@ -125,19 +112,6 @@ class ShapeShiftDataManagerTest : RxTest() {
             tradeData.toJson(),
             ShapeShiftTrades.METADATA_TYPE_EXTERNAL
         )
-        verifyNoMoreInteractions(shapeShiftDataStore)
-    }
-
-    @Test(expected = IllegalStateException::class)
-    fun `setState uninitialized`() {
-        // Arrange
-        val state = State("STATE", "STATE")
-        whenever(shapeShiftDataStore.tradeData).thenReturn(null)
-        // Act
-        val testObserver = subject.setState(state).test()
-        // Assert
-        testObserver.assertNotComplete()
-        verify(shapeShiftDataStore).tradeData
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
@@ -158,19 +132,19 @@ class ShapeShiftDataManagerTest : RxTest() {
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `getTradesList uninitialized`() {
         // Arrange
         whenever(shapeShiftDataStore.tradeData).thenReturn(null)
         // Act
         val testObserver = subject.getTradesList().test()
         // Assert
-        testObserver.assertNotComplete()
+        testObserver.assertValue(emptyList())
         verify(shapeShiftDataStore).tradeData
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun `findTrade uninitialized`() {
         // Arrange
         val depositAddress = "DEPOSIT_ADDRESS"
@@ -178,6 +152,7 @@ class ShapeShiftDataManagerTest : RxTest() {
         val testObserver = subject.findTrade(depositAddress).test()
         // Assert
         testObserver.assertNotComplete()
+        testObserver.assertError(Throwable::class.java)
         verify(shapeShiftDataStore).tradeData
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
@@ -218,20 +193,8 @@ class ShapeShiftDataManagerTest : RxTest() {
         verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
-    @Test(expected = IllegalStateException::class)
-    fun `addTradeToList uninitialized`() {
-        // Arrange
-        val trade = Trade()
-        // Act
-        val testObserver = subject.addTradeToList(trade).test()
-        // Assert
-        testObserver.assertNotComplete()
-        verify(shapeShiftDataStore).tradeData
-        verifyNoMoreInteractions(shapeShiftDataStore)
-    }
-
     @Test
-    fun `addTradeToList initialized`() {
+    fun `addTradeToList`() {
         // Arrange
         val trade = Trade()
         val list = mutableListOf<Trade>()
@@ -248,18 +211,6 @@ class ShapeShiftDataManagerTest : RxTest() {
         verify(shapeShiftDataStore, atLeastOnce()).tradeData
         verifyNoMoreInteractions(shapeShiftDataStore)
         tradeData.trades.size `should equal to` 1
-    }
-
-    @Test(expected = IllegalStateException::class)
-    fun `clearAllTrades uninitialized`() {
-        // Arrange
-
-        // Act
-        val testObserver = subject.clearAllTrades().test()
-        // Assert
-        testObserver.assertNotComplete()
-        verify(shapeShiftDataStore).tradeData
-        verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
     @Test
@@ -280,18 +231,6 @@ class ShapeShiftDataManagerTest : RxTest() {
         verify(shapeShiftDataStore, atLeastOnce()).tradeData
         verifyNoMoreInteractions(shapeShiftDataStore)
         tradeData.trades.size `should equal to` 0
-    }
-
-    @Test(expected = IllegalStateException::class)
-    fun `updateTrade uninitialized`() {
-        // Arrange
-        val trade = Trade()
-        // Act
-        val testObserver = subject.updateTrade(trade).test()
-        // Assert
-        testObserver.assertNotComplete()
-        verify(shapeShiftDataStore).tradeData
-        verifyNoMoreInteractions(shapeShiftDataStore)
     }
 
     @Test
@@ -391,96 +330,6 @@ class ShapeShiftDataManagerTest : RxTest() {
         testObserver.assertNotComplete()
         testObserver.assertError(Throwable::class.java)
         verify(shapeShiftApi).getTradeStatus(depositAddress)
-        verifyNoMoreInteractions(shapeShiftApi)
-    }
-
-    @Test
-    fun getRate() {
-        // Arrange
-        val coinPair = CoinPair.ETH_TO_BTC
-        val marketInfo: MarketInfo = mock()
-        whenever(shapeShiftApi.getRate(coinPair)).thenReturn(Observable.just(marketInfo))
-        // Act
-        val testObserver = subject.getRate(coinPair).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        testObserver.assertValue(marketInfo)
-        verify(shapeShiftApi).getRate(coinPair)
-        verifyNoMoreInteractions(shapeShiftApi)
-    }
-
-    @Test
-    fun `getQuote returns valid quote`() {
-        // Arrange
-        val quoteRequest: QuoteRequest = mock()
-        val quote: Quote = mock()
-        val responseWrapper: SendAmountResponseWrapper = mock()
-        whenever(responseWrapper.wrapper).thenReturn(quote)
-        whenever(shapeShiftApi.getQuote(quoteRequest)).thenReturn(Observable.just(responseWrapper))
-        // Act
-        val testObserver = subject.getQuote(quoteRequest).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        testObserver.assertValue(Either.Right(quote))
-        verify(shapeShiftApi).getQuote(quoteRequest)
-        verifyNoMoreInteractions(shapeShiftApi)
-    }
-
-    @Test
-    fun `getQuote returns error string`() {
-        // Arrange
-        val quoteRequest: QuoteRequest = mock()
-        val error = "ERROR"
-        val responseWrapper: SendAmountResponseWrapper = mock()
-        whenever(responseWrapper.error).thenReturn(error)
-        whenever(shapeShiftApi.getQuote(quoteRequest)).thenReturn(Observable.just(responseWrapper))
-        // Act
-        val testObserver = subject.getQuote(quoteRequest).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        testObserver.assertValue(Either.Left(error))
-        verify(shapeShiftApi).getQuote(quoteRequest)
-        verifyNoMoreInteractions(shapeShiftApi)
-    }
-
-    @Test
-    fun `getApproximateQuote returns valid quote`() {
-        // Arrange
-        val quoteRequest: QuoteRequest = mock()
-        val quote: Quote = mock()
-        val responseWrapper: QuoteResponseWrapper = mock()
-        whenever(responseWrapper.wrapper).thenReturn(quote)
-        whenever(shapeShiftApi.getApproximateQuote(quoteRequest))
-            .thenReturn(Observable.just(responseWrapper))
-        // Act
-        val testObserver = subject.getApproximateQuote(quoteRequest).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        testObserver.assertValue(Either.Right(quote))
-        verify(shapeShiftApi).getApproximateQuote(quoteRequest)
-        verifyNoMoreInteractions(shapeShiftApi)
-    }
-
-    @Test
-    fun `getApproximateQuote returns error string`() {
-        // Arrange
-        val quoteRequest: QuoteRequest = mock()
-        val error = "ERROR"
-        val responseWrapper: QuoteResponseWrapper = mock()
-        whenever(responseWrapper.error).thenReturn(error)
-        whenever(shapeShiftApi.getApproximateQuote(quoteRequest))
-            .thenReturn(Observable.just(responseWrapper))
-        // Act
-        val testObserver = subject.getApproximateQuote(quoteRequest).test()
-        // Assert
-        testObserver.assertComplete()
-        testObserver.assertNoErrors()
-        testObserver.assertValue(Either.Left(error))
-        verify(shapeShiftApi).getApproximateQuote(quoteRequest)
         verifyNoMoreInteractions(shapeShiftApi)
     }
 }

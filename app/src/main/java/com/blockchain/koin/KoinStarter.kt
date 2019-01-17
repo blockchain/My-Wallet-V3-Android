@@ -2,6 +2,7 @@ package com.blockchain.koin
 
 import android.app.Application
 import com.blockchain.injection.kycModule
+import com.blockchain.injection.kycNabuModule
 import com.blockchain.koin.modules.apiInterceptorsModule
 import com.blockchain.koin.modules.appProperties
 import com.blockchain.koin.modules.applicationModule
@@ -49,6 +50,7 @@ object KoinStarter {
                 buySellModule,
                 moshiModule,
                 kycModule,
+                kycNabuModule,
                 morphMethodModule,
                 morphUiModule,
                 nabuModule,

@@ -7,7 +7,7 @@ import android.view.WindowManager
 import com.blockchain.koin.injectActivity
 import com.blockchain.ui.password.SecondPasswordHandler
 import org.koin.android.ext.android.inject
-import piuk.blockchain.androidcore.data.access.AccessState
+import piuk.blockchain.androidcore.data.access.LogoutTimer
 import piuk.blockchain.androidcore.utils.PrefsUtil
 import piuk.blockchain.androidcoreui.ApplicationLifeCycle
 
@@ -15,6 +15,8 @@ import piuk.blockchain.androidcoreui.ApplicationLifeCycle
  * A base Activity for all activities which need auth timeouts & screenshot prevention
  */
 abstract class BaseAuthActivity : ToolBarActivity() {
+
+    private val logoutTimer: LogoutTimer by inject()
 
     protected val prefsUtil: PrefsUtil by inject()
 
@@ -69,11 +71,11 @@ abstract class BaseAuthActivity : ToolBarActivity() {
      * Starts the logout timer. Override in an activity if timeout is not needed.
      */
     protected open fun startLogoutTimer() {
-        AccessState.getInstance().startLogoutTimer(this)
+        logoutTimer.start(this)
     }
 
     private fun stopLogoutTimer() {
-        AccessState.getInstance().stopLogoutTimer(this)
+        logoutTimer.stop(this)
     }
 
     private fun disallowScreenshots() {

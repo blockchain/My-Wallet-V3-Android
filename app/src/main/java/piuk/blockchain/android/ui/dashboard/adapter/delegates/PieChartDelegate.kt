@@ -10,8 +10,11 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.Spinner
 import android.widget.TextView
 import com.blockchain.balance.colorRes
 import com.blockchain.lockbox.ui.LockboxLandingActivity
@@ -28,8 +31,10 @@ import info.blockchain.balance.CryptoCurrency
 import kotlinx.android.synthetic.main.item_pie_chart_bitcoin_unspendable.view.*
 import kotlinx.android.synthetic.main.item_pie_chart_card.view.*
 import kotlinx.android.synthetic.main.item_pie_chart_lockbox.view.*
+import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
+import piuk.blockchain.android.ui.dashboard.BalanceFilter
 import piuk.blockchain.android.ui.dashboard.DashboardConfig
 import piuk.blockchain.android.ui.dashboard.PieChartsState
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom
@@ -46,7 +51,8 @@ import piuk.blockchain.androidcoreui.utils.helperfunctions.loadFont
 
 class PieChartDelegate<in T>(
     private val context: Context,
-    private val coinSelector: (CryptoCurrency) -> Unit
+    private val coinSelector: (CryptoCurrency) -> Unit,
+    private val balanceModeSelector: (BalanceFilter) -> Unit
 ) : AdapterDelegate<T> {
 
     private var viewHolder: PieChartViewHolder? = null
@@ -57,7 +63,8 @@ class PieChartDelegate<in T>(
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
         PieChartViewHolder(
             parent.inflate(R.layout.item_pie_chart_lockbox),
-            coinSelector
+            coinSelector,
+            balanceModeSelector
         )
 
     override fun onBindViewHolder(
@@ -99,6 +106,7 @@ class PieChartDelegate<in T>(
         val isEmpty = data.isZero
         configureChart(isEmpty)
         displayLockboxDisclaimer(data.hasLockbox)
+        displayBalanceSpinner(data.hasLockbox && BuildConfig.SHOW_LOCKBOX_BALANCE)
 
         val entries = getEntries(isEmpty, data)
         val coinColors = getCoinColors(isEmpty)
@@ -115,8 +123,8 @@ class PieChartDelegate<in T>(
         viewHolder?.apply {
 
             DashboardConfig.currencies.forEach {
-                valueTextView(it).text = data[it].spendable.fiatValueString
-                amountTextView(it).text = data[it].spendable.cryptoValueString
+                valueTextView(it).text = data[it].displayable.fiatValueString
+                amountTextView(it).text = data[it].displayable.cryptoValueString
             }
 
             nonSpendableDataPoint = data.bitcoin.watchOnly
@@ -136,7 +144,7 @@ class PieChartDelegate<in T>(
         listOf(PieEntry(100.0f, ""))
     } else {
         DashboardConfig.currencies.map {
-            data[it].spendable withLabel context.getString(it.label())
+            data[it].displayable withLabel context.getString(it.label())
         }
     }
 
@@ -195,6 +203,10 @@ class PieChartDelegate<in T>(
         }
     }
 
+    private fun displayBalanceSpinner(show: Boolean) {
+        viewHolder?.balanceSpinnerCard.goneIf(!show)
+    }
+
     private inner class ValueMarker(
         context: Context,
         layoutResource: Int
@@ -225,7 +237,8 @@ class PieChartDelegate<in T>(
 
     private class PieChartViewHolder internal constructor(
         itemView: View,
-        private val coinSelector: (CryptoCurrency) -> Unit
+        private val coinSelector: (CryptoCurrency) -> Unit,
+        private val balanceModeSelector: (BalanceFilter) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         private var displayNonSpendableAsFiat = false
@@ -290,12 +303,39 @@ class PieChartDelegate<in T>(
         // Lockbox
         internal var lockBoxDisclaimer: TextView = itemView.text_view_lockbox_disclaimer
 
+        internal var balanceSpinner: Spinner = itemView.spinner_balance_selection
+
+        internal var balanceSpinnerCard: View = itemView.card_balance_selection
+
         init {
             bitcoinButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.BTC) }
             etherButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.ETHER) }
             bitcoinCashButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.BCH) }
             lumensButton.setOnClickListener { coinSelector.invoke(CryptoCurrency.XLM) }
             lockBoxDisclaimer.setOnClickListener { LockboxLandingActivity.start(context) }
+            balanceSpinner.addOptions()
+        }
+
+        private fun Spinner.addOptions() {
+            adapter = ArrayAdapter.createFromResource(
+                context,
+                R.array.balance_type,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    when (position) {
+                        0 -> balanceModeSelector(BalanceFilter.Total)
+                        1 -> balanceModeSelector(BalanceFilter.Wallet)
+                        2 -> balanceModeSelector(BalanceFilter.ColdStorage)
+                    }
+                }
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
         android:title="@string/profile">
         <com.blockchain.kycui.settings.KycStatusPreference
             android:key="identity_verification"
-            android:title="@string/kyc_settings_identity_verification" />
+            android:title="@string/kyc_settings_swap_limit" />
         <piuk.blockchain.android.ui.settings.customprefs.CustomPreference
             android:key="guid"
             android:title="@string/options_id" />

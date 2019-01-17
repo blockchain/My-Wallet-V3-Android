@@ -42,6 +42,7 @@ import piuk.blockchain.androidcore.data.fees.FeeDataManager;
 import piuk.blockchain.androidcore.data.metadata.MetadataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
 import piuk.blockchain.androidcore.data.payments.SendDataManager;
+import piuk.blockchain.androidcore.data.settings.EmailSyncUpdater;
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager;
 import piuk.blockchain.androidcore.data.shapeshift.ShapeShiftDataManager;
 import piuk.blockchain.androidcore.data.transactions.TransactionListStore;
@@ -284,5 +285,10 @@ public class ApplicationModule extends KoinDaggerModule {
     @Provides
     LastTxUpdater provideLastTxUpdater() {
         return get(LastTxUpdater.class);
+    }
+
+    @Provides
+    EmailSyncUpdater provideEmailSyncUpdater() {
+        return get(EmailSyncUpdater.class);
     }
 }

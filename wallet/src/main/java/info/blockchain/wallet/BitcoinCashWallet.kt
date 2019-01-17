@@ -83,16 +83,16 @@ open class BitcoinCashWallet : DeterministicWallet {
         }
 
     fun getAddressBalance(address: String): BigInteger =
-        balanceManager.getAddressBalance(address) ?: BigInteger.ZERO
+        balanceManager.getAddressBalance(address)
 
-    fun getWalletBalance(): BigInteger = balanceManager.walletBalance ?: BigInteger.ZERO
+    fun getWalletBalance(): BigInteger = balanceManager.walletBalance
 
     /**
      * Returns the balance of all imported addresses, excluding those belonging to
      * archived addresses.
      */
     fun getImportedAddressBalance(): BigInteger =
-        balanceManager.importedAddressesBalance ?: BigInteger.ZERO
+        balanceManager.importedAddressesBalance
 
     /**
      *

@@ -31,6 +31,10 @@ fun Quote.toIntent(): ExchangeIntent = QuoteIntent(this)
 
 class SetTradeLimits(val min: FiatValue, val max: FiatValue) : ExchangeIntent()
 
+class SetUserTier(val tier: Int) : ExchangeIntent()
+
+class SetTierLimit(val availableOnTier: FiatValue) : ExchangeIntent()
+
 class ApplyMinimumLimit : ExchangeIntent()
 
 class ApplyMaximumLimit : ExchangeIntent()

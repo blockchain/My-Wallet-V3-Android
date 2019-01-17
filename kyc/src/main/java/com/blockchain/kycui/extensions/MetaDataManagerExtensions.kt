@@ -9,6 +9,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 
+@Deprecated("Use the MetadataRepository, it's easier to mock, and doesn't require any custom json deserializing")
 internal fun MetadataManager.fetchNabuToken(): Single<NabuOfflineTokenResponse> =
     this.fetchMetadata(NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE)
         .map {

@@ -15,14 +15,12 @@ import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.androidcore.data.walletoptions.WalletOptionsDataManager
 
 class KycCountrySelectionPresenterTest {
 
     private lateinit var subject: KycCountrySelectionPresenter
     private val view: KycCountrySelectionView = mock()
     private val nabuDataManager: NabuDataManager = mock()
-    private val walletOptionsDataManager: WalletOptionsDataManager = mock()
 
     @Suppress("unused")
     @get:Rule
@@ -33,7 +31,7 @@ class KycCountrySelectionPresenterTest {
 
     @Before
     fun setUp() {
-        subject = KycCountrySelectionPresenter(nabuDataManager, walletOptionsDataManager)
+        subject = KycCountrySelectionPresenter(nabuDataManager)
         subject.initView(view)
     }
 
@@ -82,11 +80,8 @@ class KycCountrySelectionPresenterTest {
     fun `onRegionSelected requires state selection`() {
         // Arrange
         whenever(view.regionType).thenReturn(RegionType.Country)
-        val countryCode = "US"
         whenever(nabuDataManager.getCountriesList(Scope.None))
             .thenReturn(Single.just(emptyList()))
-        whenever(walletOptionsDataManager.isInShapeShiftCountry(countryCode))
-            .thenReturn(Single.just(false))
         val countryDisplayModel = CountryDisplayModel(
             name = "United States",
             countryCode = "US"
@@ -96,26 +91,6 @@ class KycCountrySelectionPresenterTest {
         // Assert
         verify(nabuDataManager).getCountriesList(Scope.None)
         verify(view).requiresStateSelection()
-    }
-
-    @Test
-    fun `onRegionSelected country not found, not a shapeshift country`() {
-        // Arrange
-        whenever(view.regionType).thenReturn(RegionType.Country)
-        val countryCode = "UK"
-        whenever(nabuDataManager.getCountriesList(Scope.None))
-            .thenReturn(Single.just(emptyList()))
-        whenever(walletOptionsDataManager.isInShapeShiftCountry(countryCode))
-            .thenReturn(Single.just(false))
-        val countryDisplayModel = CountryDisplayModel(
-            name = "United Kingdom",
-            countryCode = "UK"
-        )
-        // Act
-        subject.onRegionSelected(countryDisplayModel)
-        // Assert
-        verify(nabuDataManager).getCountriesList(Scope.None)
-        verify(view).invalidCountry(countryDisplayModel)
     }
 
     @Test
@@ -155,8 +130,6 @@ class KycCountrySelectionPresenterTest {
                     )
                 )
             )
-        whenever(walletOptionsDataManager.isInShapeShiftCountry(countryCode))
-            .thenReturn(Single.just(false))
         val countryDisplayModel = CountryDisplayModel(
             name = "United States",
             countryCode = "US",
@@ -168,26 +141,6 @@ class KycCountrySelectionPresenterTest {
         // Assert
         verify(nabuDataManager).getStatesList("US", Scope.None)
         verify(view).continueFlow(countryCode)
-    }
-
-    @Test
-    fun `onRegionSelected not found, is a shapeshift country`() {
-        // Arrange
-        whenever(view.regionType).thenReturn(RegionType.Country)
-        val countryCode = "UK"
-        whenever(nabuDataManager.getCountriesList(Scope.None))
-            .thenReturn(Single.just(emptyList()))
-        whenever(walletOptionsDataManager.isInShapeShiftCountry(countryCode))
-            .thenReturn(Single.just(true))
-        val countryDisplayModel = CountryDisplayModel(
-            name = "United Kingdom",
-            countryCode = "UK"
-        )
-        // Act
-        subject.onRegionSelected(countryDisplayModel)
-        // Assert
-        verify(nabuDataManager).getCountriesList(Scope.None)
-        verify(view).redirectToShapeShift()
     }
 
     @Test
@@ -208,5 +161,24 @@ class KycCountrySelectionPresenterTest {
         // Assert
         verify(nabuDataManager).getCountriesList(Scope.None)
         verify(view).continueFlow(countryCode)
+    }
+
+    @Test
+    fun `onRegionSelected country found but is US so requires state selection`() {
+        // Arrange
+        whenever(view.regionType).thenReturn(RegionType.Country)
+        val countryList =
+            listOf(NabuCountryResponse("US", "United States", listOf("KYC"), emptyList()))
+        whenever(nabuDataManager.getCountriesList(Scope.None))
+            .thenReturn(Single.just(countryList))
+        val countryDisplayModel = CountryDisplayModel(
+            name = "United States",
+            countryCode = "US"
+        )
+        // Act
+        subject.onRegionSelected(countryDisplayModel)
+        // Assert
+        verify(nabuDataManager).getCountriesList(Scope.None)
+        verify(view).requiresStateSelection()
     }
 }

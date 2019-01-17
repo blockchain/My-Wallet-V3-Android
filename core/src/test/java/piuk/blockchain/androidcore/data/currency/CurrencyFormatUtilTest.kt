@@ -1,6 +1,7 @@
 package piuk.blockchain.androidcore.data.currency
 
 import com.blockchain.testutils.usd
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.FormatPrecision
 import org.amshove.kluent.`should equal`
@@ -131,22 +132,33 @@ class CurrencyFormatUtilTest {
 
     @Test
     fun `formatWithUnit ETH fractions too small to display`() {
-        subject.formatWithUnit(CryptoValue.etherFromWei(1L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(10L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(100L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(1_000L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(10_000L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(100_000L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(1_000_000L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(10_000_000L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(100_000_000L)) `should equal` "0 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(1_000_000_000L)) `should equal` "0 ETH"
+        val formatWithUnit =
+            { wei: Long ->
+                subject.formatWithUnit(
+                    CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
+                )
+            }
+        formatWithUnit(1L) `should equal` "0 ETH"
+        formatWithUnit(10L) `should equal` "0 ETH"
+        formatWithUnit(100L) `should equal` "0 ETH"
+        formatWithUnit(1_000L) `should equal` "0 ETH"
+        formatWithUnit(10_000L) `should equal` "0 ETH"
+        formatWithUnit(100_000L) `should equal` "0 ETH"
+        formatWithUnit(1_000_000L) `should equal` "0 ETH"
+        formatWithUnit(10_000_000L) `should equal` "0 ETH"
+        formatWithUnit(100_000_000L) `should equal` "0 ETH"
+        formatWithUnit(1_000_000_000L) `should equal` "0 ETH"
     }
 
     @Test
     fun `formatWithUnit ETH with tiny fractions - full precision`() {
         val formatWithUnit =
-            { wei: Long -> subject.formatWithUnit(CryptoValue.etherFromWei(wei), FormatPrecision.Full) }
+            { wei: Long ->
+                subject.formatWithUnit(
+                    CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger()),
+                    FormatPrecision.Full
+                )
+            }
         formatWithUnit(1L) `should equal` "0.000000000000000001 ETH"
         formatWithUnit(10L) `should equal` "0.00000000000000001 ETH"
         formatWithUnit(100L) `should equal` "0.0000000000000001 ETH"
@@ -163,15 +175,21 @@ class CurrencyFormatUtilTest {
 
     @Test
     fun `formatWithUnit ETH fractions`() {
-        subject.formatWithUnit(CryptoValue.etherFromWei(10_000_000_000L)) `should equal` "0.00000001 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(100_000_000_000L)) `should equal` "0.0000001 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(1_000_000_000_000L)) `should equal` "0.000001 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(10_000_000_000_000L)) `should equal` "0.00001 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(100_000_000_000_000L)) `should equal` "0.0001 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(1_000_000_000_000_000L)) `should equal` "0.001 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(10_000_000_000_000_000L)) `should equal` "0.01 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(100_000_000_000_000_000L)) `should equal` "0.1 ETH"
-        subject.formatWithUnit(CryptoValue.etherFromWei(1_200_000_000_000_000_000)) `should equal` "1.2 ETH"
+        val formatWithUnit =
+            { wei: Long ->
+                subject.formatWithUnit(
+                    CryptoValue(CryptoCurrency.ETHER, wei.toBigInteger())
+                )
+            }
+        formatWithUnit(10_000_000_000L) `should equal` "0.00000001 ETH"
+        formatWithUnit(100_000_000_000L) `should equal` "0.0000001 ETH"
+        formatWithUnit(1_000_000_000_000L) `should equal` "0.000001 ETH"
+        formatWithUnit(10_000_000_000_000L) `should equal` "0.00001 ETH"
+        formatWithUnit(100_000_000_000_000L) `should equal` "0.0001 ETH"
+        formatWithUnit(1_000_000_000_000_000L) `should equal` "0.001 ETH"
+        formatWithUnit(10_000_000_000_000_000L) `should equal` "0.01 ETH"
+        formatWithUnit(100_000_000_000_000_000L) `should equal` "0.1 ETH"
+        formatWithUnit(1_200_000_000_000_000_000) `should equal` "1.2 ETH"
     }
 
     @Test

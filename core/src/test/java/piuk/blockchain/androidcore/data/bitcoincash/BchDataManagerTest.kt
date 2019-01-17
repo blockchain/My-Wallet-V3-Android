@@ -11,6 +11,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import info.blockchain.api.blockexplorer.BlockExplorer
+import info.blockchain.api.data.Balance
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.wallet.coin.GenericMetadataAccount
 import info.blockchain.wallet.coin.GenericMetadataWallet
@@ -20,6 +21,7 @@ import info.blockchain.wallet.payload.data.Wallet
 import io.reactivex.Completable
 import io.reactivex.Observable
 import junit.framework.Assert
+import org.amshove.kluent.`it returns`
 import org.bitcoinj.params.BitcoinCashMainNetParams
 import org.junit.Before
 import org.junit.Rule
@@ -29,6 +31,8 @@ import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
+import java.math.BigInteger
+import java.util.LinkedHashMap
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -444,6 +448,49 @@ class BchDataManagerTest {
 
         verifyNoMoreInteractions(payloadDataManager)
         verifyNoMoreInteractions(bchDataStore.bchMetadata)
+    }
+
+    @Test
+    fun `get balance`() {
+        val address = "address"
+        val map = LinkedHashMap<String, Balance>().apply {
+            put(address, Balance().apply { finalBalance = BigInteger.TEN })
+        }
+
+        BchDataManager(
+            mock {
+                on { getBalanceOfBchAddresses(listOf(address)) } `it returns` Observable.just(map)
+            },
+            mock(),
+            mock(),
+            mock(),
+            mock(),
+            mock(),
+            mock()
+        ).getBalance(address)
+            .test()
+            .assertNoErrors()
+            .assertValue(BigInteger.TEN)
+    }
+
+    @Test
+    fun `get balance returns zero on error`() {
+        val address = "address"
+
+        BchDataManager(
+            mock {
+                on { getBalanceOfBchAddresses(listOf(address)) } `it returns` Observable.error(Exception())
+            },
+            mock(),
+            mock(),
+            mock(),
+            mock(),
+            mock(),
+            mock()
+        ).getBalance(address)
+            .test()
+            .assertNoErrors()
+            .assertValue(BigInteger.ZERO)
     }
 
     private fun split(words: String): List<String> {

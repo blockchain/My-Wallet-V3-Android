@@ -20,7 +20,6 @@ import info.blockchain.wallet.exceptions.InvalidCredentialsException;
 import info.blockchain.wallet.payload.PayloadManagerWiper;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import piuk.blockchain.android.BuildConfig;
@@ -221,22 +220,13 @@ public class MainPresenter extends BasePresenter<MainView> {
         }
     }
 
-    /*
-    // TODO: 24/10/2017  WalletOptions api is also accessed in BuyDataManager - This should be improved soon.
-     */
-    private void doWalletOptionsChecks() {
-        Single.zip(
-                walletOptionsDataManager.showShapeshift(
-                        payloadDataManager.getWallet().getGuid(),
-                        payloadDataManager.getWallet().getSharedKey())
-                        .singleOrError(),
-                kycStatusHelper.shouldDisplayKyc(),
-                (showShapeShift, showKyc) -> showShapeShift || showKyc
-        ).observeOn(AndroidSchedulers.mainThread())
+    private void checkKycStatus() {
+        kycStatusHelper.shouldDisplayKyc()
+                .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxUtil.addSingleToCompositeDisposable(this))
                 .subscribe(
                         this::setExchangeVisiblity,
-                        throwable -> Timber.e(throwable)
+                        Timber::e
                 );
     }
 
@@ -288,7 +278,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                         }
                 )
                 .subscribe(() -> {
-                    doWalletOptionsChecks();
+                    checkKycStatus();
                     if (getView().isBuySellPermitted()) {
                         initBuyService();
                     } else {
@@ -388,6 +378,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     private Completable shapeshiftCompletable() {
         return shapeShiftDataManager.initShapeshiftTradeData()
+                .onErrorComplete()
                 .compose(RxUtil.addCompletableToCompositeDisposable(this))
                 .doOnError(throwable -> {
                     Logging.INSTANCE.logException(throwable);

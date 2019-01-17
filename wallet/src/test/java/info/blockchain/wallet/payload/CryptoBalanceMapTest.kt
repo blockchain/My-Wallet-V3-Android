@@ -38,7 +38,7 @@ class CryptoBalanceMapTest {
             legacy = emptySet(),
             watchOnlyLegacy = emptySet()
         ).apply {
-            totalSpendable `should equal` CryptoValue.etherFromWei(123L)
+            totalSpendable `should equal` CryptoValue(CryptoCurrency.ETHER, 123L.toBigInteger())
             totalSpendableLegacy `should equal` CryptoValue.ZeroEth
             totalWatchOnly `should equal` CryptoValue.ZeroEth
         }

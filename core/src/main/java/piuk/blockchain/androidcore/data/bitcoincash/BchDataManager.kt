@@ -14,6 +14,7 @@ import info.blockchain.wallet.multiaddress.TransactionSummary
 import info.blockchain.wallet.payload.data.isArchived
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.metadata.MetadataManager
@@ -22,6 +23,7 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import piuk.blockchain.androidcore.utils.annotations.WebRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
+import timber.log.Timber
 import java.math.BigInteger
 
 class BchDataManager(
@@ -311,6 +313,13 @@ class BchDataManager(
 
     fun getAddressBalance(address: String): BigInteger =
         bchDataStore.bchWallet?.getAddressBalance(address) ?: BigInteger.ZERO
+
+    fun getBalance(address: String): Single<BigInteger> =
+        payloadDataManager.getBalanceOfBchAddresses(listOf(address))
+            .map { it[address]!!.finalBalance }
+            .doOnError(Timber::e)
+            .onErrorReturn { BigInteger.ZERO }
+            .singleOrError()
 
     fun getWalletBalance(): BigInteger =
         bchDataStore.bchWallet?.getWalletBalance() ?: BigInteger.ZERO

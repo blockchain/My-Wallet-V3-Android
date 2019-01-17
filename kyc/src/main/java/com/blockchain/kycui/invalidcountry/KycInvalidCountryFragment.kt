@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.blockchain.kycui.countryselection.util.CountryDisplayModel
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
 import org.koin.android.ext.android.inject
@@ -24,7 +23,7 @@ class KycInvalidCountryFragment :
     KycInvalidCountryView {
 
     override val displayModel by unsafeLazy {
-        arguments!!.getParcelable(ARGUMENT_DISPLAY_MODEL) as CountryDisplayModel
+        KycInvalidCountryFragmentArgs.fromBundle(arguments).countryDisplayModel
     }
     private val presenter: KycInvalidCountryPresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
@@ -70,13 +69,4 @@ class KycInvalidCountryFragment :
     override fun createPresenter(): KycInvalidCountryPresenter = presenter
 
     override fun getMvpView(): KycInvalidCountryView = this
-
-    companion object {
-
-        private const val ARGUMENT_DISPLAY_MODEL = "ARGUMENT_DISPLAY_MODEL"
-
-        fun bundleArgs(displayModel: CountryDisplayModel): Bundle = Bundle().apply {
-            putParcelable(ARGUMENT_DISPLAY_MODEL, displayModel)
-        }
-    }
 }

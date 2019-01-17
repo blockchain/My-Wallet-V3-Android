@@ -29,5 +29,7 @@ private class EthereumAsyncBalanceReportAdapter(
 
     override fun importedAddressBalance(): Single<CryptoValue> = zero
 
-    override fun addressBalance(address: String): Single<CryptoValue> = zero
+    override fun addressBalance(address: String): Single<CryptoValue> =
+        ethDataManager.getBalance(address)
+            .map { CryptoValue.etherFromWei(it) }
 }

@@ -1,25 +1,21 @@
 package com.blockchain.kycui.status
 
+import com.blockchain.BaseKycPresenter
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
-import com.blockchain.kycui.extensions.fetchNabuToken
+import com.blockchain.nabu.NabuToken
 import com.blockchain.notifications.NotificationTokenManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
-import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
-import piuk.blockchain.androidcoreui.ui.base.BasePresenter
 import piuk.blockchain.kyc.R
 import timber.log.Timber
 
 class KycStatusPresenter(
-    private val metadataManager: MetadataManager,
+    nabuToken: NabuToken,
     private val nabuDataManager: NabuDataManager,
     private val notificationTokenManager: NotificationTokenManager
-) : BasePresenter<KycStatusView>() {
-
-    private val fetchOfflineToken by unsafeLazy { metadataManager.fetchNabuToken() }
+) : BaseKycPresenter<KycStatusView>(nabuToken) {
 
     override fun onViewReady() {
         compositeDisposable +=

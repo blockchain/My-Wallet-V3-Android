@@ -173,6 +173,56 @@ class NabuMarketsServiceTest : AutoCloseKoinTest() {
     }
 
     @Test
+    fun `can get trade limits from json - nulls`() {
+        server.expect().get().withPath("/nabu-gateway/trades/limits?currency=CAD")
+            .andReturn(
+                200,
+                """
+{
+    "currency": "USD",
+    "minOrder": "10.0",
+    "maxOrder": "1000.0",
+    "maxPossibleOrder": "100.0",
+    "daily": {
+        "limit": null,
+        "available": null,
+        "used": "4900.0"
+    },
+    "weekly": {
+        "limit": "10000.0",
+        "available": "5000.1",
+        "used": null
+    },
+    "annual": null
+}
+"""
+            )
+            .once()
+
+        subject.getTradesLimits("CAD")
+            .test()
+            .values()
+            .single()
+            .apply {
+                minOrder `should equal` 10.usd()
+                maxOrder `should equal` 1000.usd()
+                maxPossibleOrder `should equal` 100.usd()
+
+                daily.limit `should be` null
+                daily.available `should be` null
+                daily.used `should equal` 4900.usd()
+
+                weekly.limit `should equal` 10000.usd()
+                weekly.available `should equal` 5000.1.usd()
+                weekly.used `should be` null
+
+                annual.limit `should be` null
+                annual.available `should be` null
+                annual.used `should be` null
+            }
+    }
+
+    @Test
     fun `can get trade limits alternative values`() {
         server.expect().get().withPath("/nabu-gateway/trades/limits?currency=CAD")
             .andReturn(

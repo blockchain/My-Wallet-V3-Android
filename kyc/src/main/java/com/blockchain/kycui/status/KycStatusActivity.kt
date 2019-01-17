@@ -8,10 +8,9 @@ import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import com.blockchain.extensions.px
 import com.blockchain.kyc.models.nabu.KycState
+import com.blockchain.notifications.analytics.logEvent
 import com.blockchain.kycui.navhost.models.CampaignType
-import com.blockchain.notifications.analytics.EventLogger
 import com.blockchain.notifications.analytics.LoggableEvent
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
@@ -42,10 +41,10 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kyc_status)
-        get<EventLogger>().logEvent(LoggableEvent.KycComplete)
+        logEvent(LoggableEvent.KycComplete)
 
         val title = when (campaignType) {
-            CampaignType.NativeBuySell -> R.string.kyc_splash_title
+            CampaignType.Swap -> R.string.kyc_splash_title
             CampaignType.Sunriver -> R.string.sunriver_splash_title
         }
         setupToolbar(toolBar, title)
@@ -86,7 +85,7 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
         textViewStatus.setText(R.string.kyc_status_title_in_progress)
         displayNotificationButton()
         val message = when (campaignType) {
-            CampaignType.NativeBuySell -> R.string.kyc_status_message_in_progress
+            CampaignType.Swap -> R.string.kyc_status_message_in_progress
             CampaignType.Sunriver -> R.string.sunriver_status_message
         }
         textViewMessage.setText(message)
@@ -183,8 +182,6 @@ class KycStatusActivity : BaseMvpActivity<KycStatusView, KycStatusPresenter>(), 
 
         internal const val HOMEBREW_LAUNCHER_INTENT =
             "info.blockchain.wallet.ui.BalanceFragment.ACTION_EXCHANGE"
-        internal const val LEGACY_SHAPESHIFT_INTENT =
-            "info.blockchain.wallet.ui.BalanceFragment.ACTION_LEGACY_SHAPESHIFT"
         private const val EXTRA_CAMPAIGN_TYPE =
             "info.blockchain.wallet.ui.BalanceFragment.EXTRA_CAMPAIGN_TYPE"
 

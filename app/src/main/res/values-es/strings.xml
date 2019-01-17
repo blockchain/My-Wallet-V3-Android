@@ -258,7 +258,7 @@ Mantener tu xPub privada.         Alguien con acceso a tu xPub podrá ver todos 
   <string name="transfer_amount">Transferir monto</string>
   <string name="transfer_archive_message">Archivar direcciones importadas después de la transferencia</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 dirección importada</item>
+    <item quantity="one">%d dirección importada</item>
     <item quantity="other">%d direcciones importadas</item>
   </plurals>
   <string name="transfer_archive">Archivo confirmado</string>
@@ -804,7 +804,6 @@ Es solo una sugerencia. El monto final puede ser diferente.</string>
   <string name="sunriver_splash_message">Verifique su identidad para solicitar sus XLM. Solo le llevará unos minutos. Una vez verificada, será capaz de usar nuestro producto de intercambio de última generación, Swap.</string>
   <string name="sunriver_status_message">Su información está siendo revisada. La revisión debe completarse en 5 minutos. Una vez que haya sido verificada con éxito, le enviaremos su Stellar en el plazo de una semana.</string>
   <string name="YESTERDAY">Ayer</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Fondos insuficientes</string>
   <string name="ok_cap">ACEPTAR</string>
   <string name="scan_qr">Escanear código QR</string>
@@ -826,7 +825,7 @@ Es solo una sugerencia. El monto final puede ser diferente.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Consiga un Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Almacene de forma segura sus criptomonedas sin conexión</string>
-  <string name="lockbox_landing_get_yours_button">Comprar ahora por 99 $</string>
+  <string name="lockbox_landing_get_yours_button">Comprar ahora</string>
   <string name="lockbox_landing_already_owned_title">¿Ya tiene uno?</string>
   <string name="lockbox_landing_already_owned_message">Desde su ordenador, inicie sesión en Blockchain y conecte su Lockbox.</string>
   <string name="lockbox_landing_learn_more">¿Quiere aprender más? Toque aquí para visitar
@@ -1031,4 +1030,9 @@ Orden creada</string>
   <string name="buy_sell_recurring_frequency_daily">Cada día</string>
   <string name="buy_sell_recurring_frequency_monthly">En el %1$s de cada mes</string>
   <string name="buy_sell_transaction_list_label">ID de orden de Coinify #%1$s</string>
+  <string name="sunriver_set_memo">Establecer Memo</string>
+  <string name="xlm_memo_explain">Las notas se usan para comunicar información opcionar al receptor.</string>
+  <string name="xlm_memo_text_hint">Memorándum</string>
+  <string name="xlm_memo_id_hint">ID Numérica</string>
+  <string name="xlm_memo_hash_hint">Hash hexadecimal de 32 bytes</string>
 </resources>

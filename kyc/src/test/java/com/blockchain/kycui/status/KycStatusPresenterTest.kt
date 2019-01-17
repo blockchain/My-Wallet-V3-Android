@@ -4,30 +4,25 @@ import com.blockchain.android.testutils.rxInit
 import com.blockchain.getBlankNabuUser
 import com.blockchain.kyc.datamanagers.nabu.NabuDataManager
 import com.blockchain.kyc.models.nabu.KycState
-import com.blockchain.nabu.metadata.NabuCredentialsMetadata
-import com.blockchain.nabu.models.mapFromMetadata
+import com.blockchain.nabu.NabuToken
 import com.blockchain.notifications.NotificationTokenManager
-import com.blockchain.serialization.toMoshiJson
 import com.blockchain.validOfflineToken
-import com.google.common.base.Optional
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import org.amshove.kluent.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import piuk.blockchain.androidcore.data.metadata.MetadataManager
 
 class KycStatusPresenterTest {
 
     private lateinit var subject: KycStatusPresenter
     private val view: KycStatusView = mock()
     private val nabuDataManager: NabuDataManager = mock()
-    private val metadataManager: MetadataManager = mock()
+    private val nabuToken: NabuToken = mock()
     private val notificationTokenManager: NotificationTokenManager = mock()
 
     @Suppress("unused")
@@ -40,7 +35,7 @@ class KycStatusPresenterTest {
     @Before
     fun setUp() {
         subject = KycStatusPresenter(
-            metadataManager,
+            nabuToken,
             nabuDataManager,
             notificationTokenManager
         )
@@ -51,10 +46,8 @@ class KycStatusPresenterTest {
     fun `onViewReady exception thrown, finish page`() {
         // Arrange
         whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.error { Throwable() })
+            nabuToken.fetchNabuToken()
+        ).thenReturn(Single.error { Throwable() })
         // Act
         subject.onViewReady()
         // Assert
@@ -69,11 +62,9 @@ class KycStatusPresenterTest {
         val kycState = KycState.UnderReview
         val user = getBlankNabuUser(kycState)
         whenever(
-            metadataManager.fetchMetadata(
-                NabuCredentialsMetadata.USER_CREDENTIALS_METADATA_NODE
-            )
-        ).thenReturn(Observable.just(Optional.of(validOfflineToken.toMoshiJson())))
-        whenever(nabuDataManager.getUser(validOfflineToken.mapFromMetadata()))
+            nabuToken.fetchNabuToken()
+        ).thenReturn(Single.just(validOfflineToken))
+        whenever(nabuDataManager.getUser(validOfflineToken))
             .thenReturn(Single.just(user))
         // Act
         subject.onViewReady()

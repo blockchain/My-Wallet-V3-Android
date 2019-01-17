@@ -17,15 +17,26 @@ public class DateUtil {
         this.context = context;
     }
 
+    /**
+     * @param ts The Unix timestamp to format
+     */
     public String formatted(long ts) {
+        return formatted(ts, System.currentTimeMillis() / 1000);
+    }
+
+    /**
+     * @param ts  The Unix timestamp to format
+     * @param now The Unix timestamp of now
+     */
+    public String formatted(long ts, long now) {
         String ret;
+        ts *= 1000;
+        now *= 1000;
 
         Date localTime = new Date(ts);
         long date = localTime.getTime();
 
-        date *= 1000L;
         long hours24 = 60L * 60L * 24L * 1000L;
-        long now = System.currentTimeMillis();
 
         Calendar calNow = Calendar.getInstance();
         calNow.setTime(new Date(now));
@@ -34,24 +45,20 @@ public class DateUtil {
         calThen.setTime(new Date(date));
         int thenDay = calThen.get(Calendar.DAY_OF_MONTH);
 
-        long yesterdayEnd = getDayEnd(now - hours24);
+        long todayStart = getDayStart(now);
         long yesterdayStart = getDayStart(now - hours24);
-        long yearStart = getYearStart(now);
 
-        if (date > yesterdayEnd) {
+        if (date >= todayStart) {
             //today
             ret = (String) DateUtils.getRelativeTimeSpanString(date, now, DateUtils.SECOND_IN_MILLIS, 0);
-
         } else if (date >= yesterdayStart) {
             //yesterday
             ret = context.getString(R.string.YESTERDAY);
-
-        } else if (date < yearStart) {
+        } else if (calNow.get(Calendar.YEAR) != calThen.get(Calendar.YEAR)) {
             //previous years
             int year = calThen.get(Calendar.YEAR);
             String month = calThen.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
             ret = month + " " + thenDay + ", " + year;
-
         } else {
             //this year
             String month = calThen.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
@@ -61,23 +68,13 @@ public class DateUtil {
         return ret;
     }
 
-    private long parseDateTime(String time) {
-        try {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time).getTime();
-        } catch (Exception e) {
-        }
-        return 0;
-    }
-
     private long getDayStart(long time) {
-        return parseDateTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date(time)) + " 00:00:00");
-    }
-
-    private long getDayEnd(long time) {
-        return parseDateTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date(time)) + " 23:59:59");
-    }
-
-    private long getYearStart(long time) {
-        return parseDateTime(new SimpleDateFormat("yyyy").format(new Date(time)) + "-01-01 00:00:00");
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(new Date(time));
+        instance.set(Calendar.HOUR_OF_DAY, 0);
+        instance.set(Calendar.MINUTE, 0);
+        instance.set(Calendar.SECOND, 0);
+        instance.set(Calendar.MILLISECOND, 0);
+        return instance.getTime().getTime();
     }
 }

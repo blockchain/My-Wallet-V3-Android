@@ -29,7 +29,7 @@ val coreUiModule = applicationContext {
             AsyncDashboardDataCalculator(
                 get(),
                 get(),
-                get()
+                get("all")
             ) as DashboardData
         }
 

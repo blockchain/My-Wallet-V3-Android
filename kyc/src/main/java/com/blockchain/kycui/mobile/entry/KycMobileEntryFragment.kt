@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.extensions.skipFirstUnless
 import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
-import com.blockchain.kycui.mobile.entry.models.PhoneNumber
-import com.blockchain.kycui.mobile.validation.KycMobileValidationFragment
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
+import com.blockchain.kycui.navigate
 import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
@@ -23,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
+import piuk.blockchain.androidcore.data.settings.PhoneNumber
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
@@ -45,7 +44,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     private val presenter: KycMobileEntryPresenter by inject()
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val compositeDisposable = CompositeDisposable()
-    private val countryCode by unsafeLazy { arguments!!.getString(ARGUMENT_COUNTRY_CODE) }
+    private val countryCode by unsafeLazy { KycMobileEntryFragmentArgs.fromBundle(arguments).countryCode }
     private val phoneNumberObservable
         get() = editTextPhoneNumber.afterTextChangeEvents()
             .skipInitialValue()
@@ -131,8 +130,7 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     }
 
     override fun continueSignUp(displayModel: PhoneDisplayModel) {
-        val bundle = KycMobileValidationFragment.bundleArgs(displayModel, countryCode)
-        findNavController(this).navigate(R.id.kycMobileValidationFragment, bundle)
+        navigate(KycMobileEntryFragmentDirections.ActionMobileCodeEntry(countryCode, displayModel))
     }
 
     override fun showProgressDialog() {
@@ -176,13 +174,4 @@ class KycMobileEntryFragment : BaseFragment<KycMobileEntryView, KycMobileEntryPr
     override fun createPresenter(): KycMobileEntryPresenter = presenter
 
     override fun getMvpView(): KycMobileEntryView = this
-
-    companion object {
-
-        private const val ARGUMENT_COUNTRY_CODE = "ARGUMENT_COUNTRY_CODE"
-
-        fun bundleArgs(countryCode: String): Bundle = Bundle().apply {
-            putString(ARGUMENT_COUNTRY_CODE, countryCode)
-        }
-    }
 }

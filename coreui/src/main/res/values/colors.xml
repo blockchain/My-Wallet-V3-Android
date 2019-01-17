@@ -70,6 +70,9 @@
     <!-- Homebrew Exchange colors -->
     <color name="exchange_confirmation_blue_bg">#E2F1F8</color>
     <color name="exchange_locked_blue_bg">#FF124670</color>
+    <color name="tiers_splash_blue_text">#FF004A7C</color>
+    <color name="tiers_splash_gray_text">#FF5F5F5F</color>
+    <color name="tiers_get_crypto_blue">#324069</color>
 
 
 </resources>

@@ -1,0 +1,34 @@
+{
+  "tiers": [
+    {
+      "index": 0,
+      "name": "Tier 0",
+      "state": "VERIFIED",
+      "limits": {
+        "currency": "USD",
+        "daily": null,
+        "annual": null
+      }
+    },
+    {
+      "index": 1,
+      "name": "Tier 1",
+      "state": "PENDING",
+      "limits": {
+        "currency": "USD",
+        "daily": null,
+        "annual": "1000.0"
+      }
+    },
+    {
+      "index": 2,
+      "name": "Tier 2",
+      "state": "NONE",
+      "limits": {
+        "currency": "USD",
+        "daily": "25000.0",
+        "annual": null
+      }
+    }
+  ]
+}

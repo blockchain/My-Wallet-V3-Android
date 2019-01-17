@@ -2,10 +2,12 @@ package com.blockchain.kycui.settings
 
 import android.content.Context
 import android.graphics.Typeface
+import android.support.v4.content.ContextCompat
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceViewHolder
 import android.util.AttributeSet
 import android.widget.TextView
+import com.blockchain.kyc.models.nabu.Kyc2TierState
 import piuk.blockchain.androidcoreui.utils.extensions.applyFont
 import piuk.blockchain.androidcoreui.utils.helperfunctions.CustomFont
 import piuk.blockchain.androidcoreui.utils.helperfunctions.loadFont
@@ -20,7 +22,7 @@ class KycStatusPreference @JvmOverloads constructor(
 ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
 
     private var textViewStatus: TextView? = null
-    private var status = SettingsKycState.Hidden
+    private var status2Tier = Kyc2TierState.Hidden
 
     init {
         init()
@@ -52,58 +54,44 @@ class KycStatusPreference @JvmOverloads constructor(
     override fun onBindViewHolder(holder: PreferenceViewHolder?) {
         super.onBindViewHolder(holder)
         textViewStatus = holder!!.itemView.findViewById(R.id.text_view_preference_status)
-        updateUi()
+        updateUi2Tier()
     }
 
-    fun setKycStatus(kycState: SettingsKycState) {
-        status = kycState
-        updateUi()
+    fun setKycStatus(kycState: Kyc2TierState) {
+        status2Tier = kycState
+        updateUi2Tier()
     }
 
-    private fun updateUi() {
-        isVisible = status != SettingsKycState.Hidden
-        when (status) {
-            SettingsKycState.Unverified -> onUnverified()
-            SettingsKycState.Verified -> onVerified()
-            SettingsKycState.InProgress -> onInProgress()
-            SettingsKycState.UnderReview -> onUnderReview()
-            SettingsKycState.Failed -> onFailed()
-            SettingsKycState.Hidden -> Unit
-        }
-    }
-
-    private fun onUnverified() {
+    private fun updateUi2Tier() {
+        isVisible = status2Tier != Kyc2TierState.Hidden
         textViewStatus?.apply {
-            setText(R.string.kyc_settings_status_none)
-            setBackgroundResource(R.drawable.rounded_view_failed)
-        }
-    }
-
-    private fun onInProgress() {
-        textViewStatus?.apply {
-            setText(R.string.kyc_settings_status_pending)
-            setBackgroundResource(R.drawable.rounded_view_in_progress)
-        }
-    }
-
-    private fun onUnderReview() {
-        textViewStatus?.apply {
-            setText(R.string.kyc_settings_status_under_review)
-            setBackgroundResource(R.drawable.rounded_view_in_progress)
-        }
-    }
-
-    private fun onFailed() {
-        textViewStatus?.apply {
-            setText(R.string.kyc_settings_status_rejected)
-            setBackgroundResource(R.drawable.rounded_view_failed)
-        }
-    }
-
-    private fun onVerified() {
-        textViewStatus?.apply {
-            setText(R.string.kyc_settings_status_verified)
-            setBackgroundResource(R.drawable.rounded_view_complete)
+            val string = when (status2Tier) {
+                Kyc2TierState.Hidden -> ""
+                Kyc2TierState.Locked -> context.getString(R.string.kyc_settings_tier_status_locked)
+                Kyc2TierState.Tier1InReview -> context.getString(R.string.kyc_settings_tier_status_in_review, 1)
+                Kyc2TierState.Tier1Approved -> context.getString(R.string.kyc_settings_tier_status_approved, 1)
+                Kyc2TierState.Tier1Failed -> context.getString(R.string.kyc_settings_tier_status_failed, 1)
+                Kyc2TierState.Tier2InReview -> context.getString(R.string.kyc_settings_tier_status_in_review, 2)
+                Kyc2TierState.Tier2Approved -> context.getString(R.string.kyc_settings_tier_status_approved, 2)
+                Kyc2TierState.Tier2Failed -> context.getString(R.string.kyc_settings_tier_status_failed, 2)
+            }
+            text = string
+            val background = when (status2Tier) {
+                Kyc2TierState.Hidden -> 0
+                Kyc2TierState.Locked -> 0
+                Kyc2TierState.Tier1InReview -> R.drawable.rounded_view_in_progress
+                Kyc2TierState.Tier1Approved -> R.drawable.rounded_view_complete
+                Kyc2TierState.Tier1Failed -> R.drawable.rounded_view_failed
+                Kyc2TierState.Tier2InReview -> R.drawable.rounded_view_in_progress
+                Kyc2TierState.Tier2Approved -> R.drawable.rounded_view_complete
+                Kyc2TierState.Tier2Failed -> R.drawable.rounded_view_failed
+            }
+            val foreground = when (status2Tier) {
+                Kyc2TierState.Locked -> R.color.kyc_progress_text_blue
+                else -> R.color.kyc_progress_text_white
+            }
+            setBackgroundResource(background)
+            setTextColor(ContextCompat.getColor(context, foreground))
         }
     }
 }

@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+
+    defaultConfig {
+        applicationId "com.blockchain.kyc.dev"
+        targetSdkVersion Versions.targetSdk
+        minSdkVersion Versions.minSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+        multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
+}
+
+dependencies {
+    implementation project(':balance')
+    implementation project(':core')
+    implementation project(':coreui')
+    implementation project(':kyc')
+
+    implementation Libraries.rxKotlin
+    implementation Libraries.rxAndroid
+
+    implementation Libraries.kotlin
+    implementation Libraries.timber
+    implementation Libraries.appCompat
+    implementation Libraries.constraintLayout
+}

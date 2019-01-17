@@ -43,16 +43,16 @@ class NabuMarketsService internal constructor(
             nabuMarkets.getTradesLimits(
                 fiatCurrency,
                 it.authHeader
-            ).map {
-                FiatTradesLimits(
-                    minOrder = FiatValue.fromMajor(it.currency, it.minOrder),
-                    maxOrder = FiatValue.fromMajor(it.currency, it.maxOrder),
-                    maxPossibleOrder = FiatValue.fromMajor(it.currency, it.maxPossibleOrder),
-                    daily = it.daily.toFiat(it.currency),
-                    weekly = it.weekly.toFiat(it.currency),
-                    annual = it.annual.toFiat(it.currency)
-                )
-            }
+            )
+        }.map {
+            FiatTradesLimits(
+                minOrder = FiatValue.fromMajor(it.currency, it.minOrder),
+                maxOrder = FiatValue.fromMajor(it.currency, it.maxOrder),
+                maxPossibleOrder = FiatValue.fromMajor(it.currency, it.maxPossibleOrder),
+                daily = it.daily.toFiat(it.currency),
+                weekly = it.weekly.toFiat(it.currency),
+                annual = it.annual.toFiat(it.currency)
+            )
         }
     }
 
@@ -73,12 +73,16 @@ class NabuMarketsService internal constructor(
     }
 }
 
-private fun PeriodicLimit.toFiat(currencyCode: String) =
-    FiatPeriodicLimit(
-        limit = FiatValue.fromMajor(currencyCode, limit),
-        available = FiatValue.fromMajor(currencyCode, available),
-        used = FiatValue.fromMajor(currencyCode, used)
-    )
+private fun PeriodicLimit?.toFiat(currencyCode: String) =
+    if (this == null) FiatPeriodicLimit(
+        null, null, null
+    ) else {
+        FiatPeriodicLimit(
+            limit = limit?.let { FiatValue.fromMajor(currencyCode, it) },
+            available = available?.let { FiatValue.fromMajor(currencyCode, it) },
+            used = used?.let { FiatValue.fromMajor(currencyCode, it) }
+        )
+    }
 
 private fun TradeJson.map(): NabuTransaction {
     val coinPair = CoinPair.fromPairCode(this.pair.replace("-", "_"))

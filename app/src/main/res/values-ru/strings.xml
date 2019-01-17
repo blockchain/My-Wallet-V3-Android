@@ -213,7 +213,7 @@
   <string name="not_archived_description">Этот объект не в архиве. Отправьте это в архив, если НЕ хотите больше этим пользоваться. Ваши средства будут в безопасности, и вы можете при необходимости разархивировать этот объект в любое время.</string>
   <string name="transfer_success_archive_prompt_title">Адреса перемещены в архив?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 адрес был успешно перенесен в Мой кошелек Bitcoin. Хотите отправить этот адрес в архив?</item>
+    <item quantity="one">%d адрес был успешно перенесен в Мой кошелек Bitcoin. Хотите отправить этот адрес в архив?</item>
     <item quantity="few"></item>
     <item quantity="many"></item>
     <item quantity="other">%d адреса(ов) были успешно перенесены в Мой кошелек Bitcoin. Хотите отправить эти адреса в архив?</item>
@@ -808,7 +808,6 @@
   <string name="sunriver_splash_message">Пройдите проверку личности, чтобы получить XLM. Это займет всего лишь несколько минут. После проверки вы сможете использовать наш торговый продукт следующего поколения под названием Swap.</string>
   <string name="sunriver_status_message">Ваша информация находится на рассмотрении. Рассмотрение должно завершиться через 5 минут. Как только вы успешно пройдете проверку, мы отправим ваш Stellar в течение одной недели.</string>
   <string name="YESTERDAY">Вчера</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Недостаточно средств</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Сканировать QR-код</string>
@@ -830,7 +829,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Получите свое устройство Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Безопасно храните вашу криптовалюту в автономном режиме.</string>
-  <string name="lockbox_landing_get_yours_button">Купить сейчас за 99$</string>
+  <string name="lockbox_landing_get_yours_button">Купить сейчас</string>
   <string name="lockbox_landing_already_owned_title">Уже есть один?</string>
   <string name="lockbox_landing_already_owned_message">Перейдите на компьютере по адресу blockchain.com и подключите свой Lockbox.</string>
   <string name="lockbox_landing_learn_more">Хотите узнать больше? Нажмите здесь, чтобы перейти к
@@ -1035,4 +1034,9 @@
   <string name="buy_sell_recurring_frequency_daily">Каждый день</string>
   <string name="buy_sell_recurring_frequency_monthly">%1$s каждого месяца</string>
   <string name="buy_sell_transaction_list_label">ID распоряжения Coinify №%1$s</string>
+  <string name="sunriver_set_memo">Установить напоминание</string>
+  <string name="xlm_memo_explain">Напоминания используются для передачи дополнительной информации получателю.</string>
+  <string name="xlm_memo_text_hint">напоминание</string>
+  <string name="xlm_memo_id_hint">Числовой идентификатор</string>
+  <string name="xlm_memo_hash_hint">32 Byte Hexadecimal Hash</string>
 </resources>

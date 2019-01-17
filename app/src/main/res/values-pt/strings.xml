@@ -610,7 +610,7 @@ Esta é apenas uma sugestão: o valor real pode diferir.</string>
   <string name="onboarding_get_eth">Obter Ether</string>
   <string name="onboarding_get_bitcoin_cash">Obter Bitcoin Cash</string>
   <string name="onboarding_get_lumens">Obter Stellar</string>
-  <string name="onboarding_complete_title">Isso é tudo!</string>
+  <string name="onboarding_complete_title">É tudo por agora!</string>
   <string name="onboarding_complete_content">Manteremos você atualizado com recomendações e novos recursos.</string>
   <string name="onboarding_start_over">Iniciar novamente</string>
   <string name="onboarding_skip_all">Pular todos</string>
@@ -803,7 +803,6 @@ Esta é apenas uma sugestão: o valor real pode diferir.</string>
   <string name="sunriver_splash_message">Verifique a sua identidade para reivindicar do XLM. Levará apenas alguns minutos. Uma vez verificada, poderá usar o nosso produto de troca comercial da última geração, Swap.</string>
   <string name="sunriver_status_message">A sua informação está a ser revista. A revisão deve estar concluída em 5 minutos. Depois de confirmar com sucesso, enviaremos o seu Stellar dentro de uma semana.</string>
   <string name="YESTERDAY">Ontem</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Fundos insuficientes</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Escanear código QR</string>
@@ -825,7 +824,7 @@ Esta é apenas uma sugestão: o valor real pode diferir.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Obtenha o seu Lockbox</string>
   <string name="lockbox_landing_get_yours_message">Armazene com segurança a sua criptografia online.</string>
-  <string name="lockbox_landing_get_yours_button">Compre agora por $99</string>
+  <string name="lockbox_landing_get_yours_button">Compre agora</string>
   <string name="lockbox_landing_already_owned_title">Já possui um?</string>
   <string name="lockbox_landing_already_owned_message">No seu computador, faça iniciar sessão no blockchain.com e ligue-se ao seu Lockbox.</string>
   <string name="lockbox_landing_learn_more">Quer aprender mais? Clique aqui para visitar 
@@ -1028,4 +1027,9 @@ Pedido criado</string>
   <string name="buy_sell_recurring_frequency_daily">Todos os dias</string>
   <string name="buy_sell_recurring_frequency_monthly">No %1$s de cada mês</string>
   <string name="buy_sell_transaction_list_label">ID do pedido Coinify #%1$s</string>
+  <string name="sunriver_set_memo">Definir memorando</string>
+  <string name="xlm_memo_explain">Os memorandos são usados para comunicar informações opcionais ao destinatário.</string>
+  <string name="xlm_memo_text_hint">Memorando</string>
+  <string name="xlm_memo_id_hint">ID numérica</string>
+  <string name="xlm_memo_hash_hint">32 byte hash hexadecimal</string>
 </resources>

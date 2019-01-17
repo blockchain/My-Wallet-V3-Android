@@ -1,5 +1,6 @@
 package com.blockchain.koin
 
+import android.content.Context
 import com.blockchain.accounts.AccountList
 import com.blockchain.accounts.AllAccountList
 import com.blockchain.accounts.AllAccountsImplementation
@@ -12,6 +13,12 @@ import com.blockchain.accounts.BtcAccountListAdapter
 import com.blockchain.accounts.BtcAsyncAccountListAdapter
 import com.blockchain.accounts.EthAccountListAdapter
 import com.blockchain.accounts.EthAsyncAccountListAdapter
+import com.blockchain.balance.AsyncAccountBalanceReporter
+import com.blockchain.balance.AsyncAddressBalanceReporter
+import com.blockchain.balance.BchBalanceAdapter
+import com.blockchain.balance.BtcBalanceAdapter
+import com.blockchain.balance.EthBalanceAdapter
+import com.blockchain.balance.plus
 import com.blockchain.datamanagers.AccountLookup
 import com.blockchain.datamanagers.AddressResolver
 import com.blockchain.datamanagers.MaximumSpendableCalculator
@@ -33,6 +40,7 @@ import info.blockchain.wallet.util.PrivateKeyFactory
 import org.koin.dsl.module.applicationContext
 import piuk.blockchain.androidcore.BuildConfig
 import piuk.blockchain.androidcore.data.access.AccessState
+import piuk.blockchain.androidcore.data.access.LogoutTimer
 import piuk.blockchain.androidcore.data.auth.AuthDataManager
 import piuk.blockchain.androidcore.data.auth.AuthService
 import piuk.blockchain.androidcore.data.bitcoincash.BchDataStore
@@ -59,7 +67,13 @@ import piuk.blockchain.androidcore.data.payload.PromptingSeedAccessAdapter
 import piuk.blockchain.androidcore.data.payments.PaymentService
 import piuk.blockchain.androidcore.data.payments.SendDataManager
 import piuk.blockchain.androidcore.data.rxjava.RxBus
+import piuk.blockchain.androidcore.data.settings.EmailSyncUpdater
+import piuk.blockchain.androidcore.data.settings.PhoneNumberUpdater
+import piuk.blockchain.androidcore.data.settings.PhoneVerificationQuery
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager
+import piuk.blockchain.androidcore.data.settings.SettingsEmailAndSyncUpdater
+import piuk.blockchain.androidcore.data.settings.SettingsPhoneNumberUpdater
+import piuk.blockchain.androidcore.data.settings.SettingsPhoneVerificationQuery
 import piuk.blockchain.androidcore.data.settings.SettingsService
 import piuk.blockchain.androidcore.data.settings.datastore.SettingsDataStore
 import piuk.blockchain.androidcore.data.settings.datastore.SettingsMemoryStore
@@ -110,6 +124,21 @@ val coreModule = applicationContext {
         factory("BTC") { BtcAsyncAccountListAdapter(get()) as AsyncAccountList }
         factory("BCH") { BchAsyncAccountListAdapter(get()) as AsyncAccountList }
         factory("ETH") { EthAsyncAccountListAdapter(EthAccountListAdapter(get())) as AsyncAccountList }
+
+        factory("BTC") { BtcBalanceAdapter(get()) }
+            .bind(AsyncAddressBalanceReporter::class)
+            .bind(AsyncAccountBalanceReporter::class)
+        factory("BCH") { BchBalanceAdapter(get()) }
+            .bind(AsyncAddressBalanceReporter::class)
+            .bind(AsyncAccountBalanceReporter::class)
+        factory("ETH") { EthBalanceAdapter(get()) }
+            .bind(AsyncAddressBalanceReporter::class)
+            .bind(AsyncAccountBalanceReporter::class)
+
+        factory("all") {
+            get<AsyncAccountBalanceReporter>("BTC") +
+                get("BCH") + get("ETH") + get("XLM")
+        }
 
         factory {
             AllAccountsImplementation(
@@ -176,6 +205,12 @@ val coreModule = applicationContext {
         factory { LastTxUpdateDateOnSettingsService(get()) as LastTxUpdater }
 
         factory { SendDataManager(get(), get(), get()) }
+
+        factory { SettingsPhoneVerificationQuery(get()) as PhoneVerificationQuery }
+
+        factory { SettingsPhoneNumberUpdater(get()) as PhoneNumberUpdater }
+
+        factory { SettingsEmailAndSyncUpdater(get(), get()) as EmailSyncUpdater }
     }
 
     bean { BlockExplorer(get("explorer"), get("api"), getProperty("api-code")) }
@@ -202,6 +237,19 @@ val coreModule = applicationContext {
     factory { EthereumAccountWrapper() }
 
     factory { AccessState.getInstance() }
+
+    factory {
+        val accessState = get<AccessState>()
+        object : LogoutTimer {
+            override fun start(context: Context) {
+                accessState.startLogoutTimer(context)
+            }
+
+            override fun stop(context: Context) {
+                accessState.stopLogoutTimer(context)
+            }
+        } as LogoutTimer
+    }
 
     factory { AESUtilWrapper() }
 

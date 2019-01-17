@@ -2,6 +2,8 @@ package com.blockchain.sunriver
 
 import com.blockchain.account.BalanceAndMin
 import com.blockchain.account.DefaultAccountDataManager
+import com.blockchain.balance.AsyncAccountBalanceReporter
+import com.blockchain.balance.AsyncAddressBalanceReporter
 import com.blockchain.sunriver.datamanager.XlmAccount
 import com.blockchain.sunriver.datamanager.XlmMetaData
 import com.blockchain.sunriver.datamanager.XlmMetaDataInitializer
@@ -13,6 +15,7 @@ import com.blockchain.transactions.SendFundsResult
 import com.blockchain.transactions.TransactionSender
 import com.blockchain.utils.toHex
 import info.blockchain.balance.AccountReference
+import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -23,7 +26,10 @@ class XlmDataManager internal constructor(
     metaDataInitializer: XlmMetaDataInitializer,
     private val xlmSecretAccess: XlmSecretAccess,
     private val memoMapper: MemoMapper
-) : TransactionSender, DefaultAccountDataManager {
+) : TransactionSender,
+    DefaultAccountDataManager,
+    AsyncAddressBalanceReporter,
+    AsyncAccountBalanceReporter {
 
     override fun sendFunds(
         sendDetails: SendDetails
@@ -56,9 +62,19 @@ class XlmDataManager internal constructor(
     private val wallet = Single.defer { metaDataInitializer.initWalletMaybePrompt.toSingle() }
     private val maybeWallet = Maybe.defer { metaDataInitializer.initWalletMaybe }
 
-    fun getBalance(accountReference: AccountReference.Xlm): Single<CryptoValue> =
-        Single.fromCallable { horizonProxy.getBalance(accountReference.accountId) }
+    override fun getBalance(address: String): Single<CryptoValue> =
+        Single.fromCallable { horizonProxy.getBalance(address) }
             .subscribeOn(Schedulers.io())
+
+    fun getBalance(accountReference: AccountReference.Xlm): Single<CryptoValue> =
+        getBalance(accountReference.accountId)
+
+    override fun balanceOf(accountReference: AccountReference): Maybe<CryptoValue> {
+        if (accountReference.cryptoCurrency != CryptoCurrency.XLM) {
+            return Maybe.empty()
+        }
+        return getBalance(accountReference as AccountReference.Xlm).toMaybe()
+    }
 
     private fun getBalanceAndMin(accountReference: AccountReference.Xlm): Single<BalanceAndMin> =
         Single.fromCallable { horizonProxy.getBalanceAndMin(accountReference.accountId) }

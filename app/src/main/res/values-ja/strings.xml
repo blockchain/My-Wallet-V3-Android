@@ -257,7 +257,7 @@ xPubのプライバシーを維持してください。あなたのxPubにアク
   <string name="transfer_amount">送金額</string>
   <string name="transfer_archive_message">送金後にインポートしたアドレスをアーカイブする</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1つのインポートされた住所</item>
+    <item quantity="one">%dつのインポートされた住所</item>
     <item quantity="other">インポートされたアドレス%d</item>
   </plurals>
   <string name="transfer_archive">アーカイブされました</string>
@@ -802,7 +802,6 @@ xPubのプライバシーを維持してください。あなたのxPubにアク
   <string name="sunriver_splash_message">あなたの身元を確認してXLMを申請してください。ほんの数分かかります。検証されると、次世代の取引商品であるスワップを使用することができます。</string>
   <string name="sunriver_status_message">あなたの情報は見直されています。レビューは5分で完了するはずです。検証が完了したら、私たちは1週間以内にあなたの星を送ります。</string>
   <string name="YESTERDAY">昨日</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">不十分な資金</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">QRコードをスキャン</string>
@@ -824,7 +823,7 @@ xPubのプライバシーを維持してください。あなたのxPubにアク
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">あなたのロックボックスを手に入れよう</string>
   <string name="lockbox_landing_get_yours_message">暗号化をオフラインで安全に保管してください。</string>
-  <string name="lockbox_landing_get_yours_button">今すぐ購入する$ 99</string>
+  <string name="lockbox_landing_get_yours_button">今買う</string>
   <string name="lockbox_landing_already_owned_title">既に1つ所有していますか？</string>
   <string name="lockbox_landing_already_owned_message">あなたのコンピュータから、blockchain.comにログインし、あなたのロックボックスに接続してください。</string>
   <string name="lockbox_landing_learn_more">もっと学びたいですか？訪問するにはここをクリック
@@ -1029,4 +1028,9 @@ xPubのプライバシーを維持してください。あなたのxPubにアク
   <string name="buy_sell_recurring_frequency_daily">毎日</string>
   <string name="buy_sell_recurring_frequency_monthly">毎月%1$sについて</string>
   <string name="buy_sell_transaction_list_label">注文ID＃ %1$s一致させる</string>
+  <string name="sunriver_set_memo">メモを設定する</string>
+  <string name="xlm_memo_explain">メモは、オプションの情報を受信者に伝えるために使用されます。</string>
+  <string name="xlm_memo_text_hint">メモ</string>
+  <string name="xlm_memo_id_hint">数値ID</string>
+  <string name="xlm_memo_hash_hint">32バイト16進ハッシュ</string>
 </resources>

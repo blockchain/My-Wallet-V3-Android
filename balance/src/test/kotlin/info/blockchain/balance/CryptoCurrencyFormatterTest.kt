@@ -100,22 +100,26 @@ class CryptoCurrencyFormatterTest {
 
     @Test
     fun `formatWithUnit ETH fractions too small to display`() {
-        CryptoValue.etherFromWei(1L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(10L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(100L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(1_000L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(10_000L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(100_000L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(1_000_000L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(10_000_000L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(100_000_000L).formatWithUnit() `should equal` "0 ETH"
-        CryptoValue.etherFromWei(1_000_000_000L).formatWithUnit() `should equal` "0 ETH"
+        1L.formatWeiWithUnit() `should equal` "0 ETH"
+        10L.formatWeiWithUnit() `should equal` "0 ETH"
+        100L.formatWeiWithUnit() `should equal` "0 ETH"
+        1_000L.formatWeiWithUnit() `should equal` "0 ETH"
+        10_000L.formatWeiWithUnit() `should equal` "0 ETH"
+        100_000L.formatWeiWithUnit() `should equal` "0 ETH"
+        1_000_000L.formatWeiWithUnit() `should equal` "0 ETH"
+        10_000_000L.formatWeiWithUnit() `should equal` "0 ETH"
+        100_000_000L.formatWeiWithUnit() `should equal` "0 ETH"
+        1_000_000_000L.formatWeiWithUnit() `should equal` "0 ETH"
     }
 
     @Test
     fun `formatWithUnit ETH with tiny fractions - full precision`() {
         val formatWithUnit =
-            { wei: Long -> CryptoValue.etherFromWei(wei).formatWithUnit(precision = FormatPrecision.Full) }
+            { wei: Long ->
+                CryptoValue(
+                    CryptoCurrency.ETHER, wei.toBigInteger()
+                ).formatWithUnit(precision = FormatPrecision.Full)
+            }
         formatWithUnit(1L) `should equal` "0.000000000000000001 ETH"
         formatWithUnit(10L) `should equal` "0.00000000000000001 ETH"
         formatWithUnit(100L) `should equal` "0.0000000000000001 ETH"
@@ -132,15 +136,15 @@ class CryptoCurrencyFormatterTest {
 
     @Test
     fun `formatWithUnit ETH fractions`() {
-        CryptoValue.etherFromWei(10_000_000_000L).formatWithUnit() `should equal` "0.00000001 ETH"
-        CryptoValue.etherFromWei(100_000_000_000L).formatWithUnit() `should equal` "0.0000001 ETH"
-        CryptoValue.etherFromWei(1_000_000_000_000L).formatWithUnit() `should equal` "0.000001 ETH"
-        CryptoValue.etherFromWei(10_000_000_000_000L).formatWithUnit() `should equal` "0.00001 ETH"
-        CryptoValue.etherFromWei(100_000_000_000_000L).formatWithUnit() `should equal` "0.0001 ETH"
-        CryptoValue.etherFromWei(1_000_000_000_000_000L).formatWithUnit() `should equal` "0.001 ETH"
-        CryptoValue.etherFromWei(10_000_000_000_000_000L).formatWithUnit() `should equal` "0.01 ETH"
-        CryptoValue.etherFromWei(100_000_000_000_000_000L).formatWithUnit() `should equal` "0.1 ETH"
-        CryptoValue.etherFromWei(1_200_000_000_000_000_000).formatWithUnit() `should equal` "1.2 ETH"
+        10_000_000_000L.formatWeiWithUnit() `should equal` "0.00000001 ETH"
+        100_000_000_000L.formatWeiWithUnit() `should equal` "0.0000001 ETH"
+        1_000_000_000_000L.formatWeiWithUnit() `should equal` "0.000001 ETH"
+        10_000_000_000_000L.formatWeiWithUnit() `should equal` "0.00001 ETH"
+        100_000_000_000_000L.formatWeiWithUnit() `should equal` "0.0001 ETH"
+        1_000_000_000_000_000L.formatWeiWithUnit() `should equal` "0.001 ETH"
+        10_000_000_000_000_000L.formatWeiWithUnit() `should equal` "0.01 ETH"
+        100_000_000_000_000_000L.formatWeiWithUnit() `should equal` "0.1 ETH"
+        1_200_000_000_000_000_000.formatWeiWithUnit() `should equal` "1.2 ETH"
     }
 
     @Test
@@ -160,4 +164,7 @@ class CryptoCurrencyFormatterTest {
         CryptoValue.etherFromMajor(10_000).format(locale = Locale.US) `should equal` "10,000.0"
         CryptoValue.etherFromMajor(100_000_000).format(locale = Locale.US) `should equal` "100,000,000.0"
     }
+
+    private fun Long.formatWeiWithUnit() =
+        CryptoValue(CryptoCurrency.ETHER, this.toBigInteger()).formatWithUnit()
 }

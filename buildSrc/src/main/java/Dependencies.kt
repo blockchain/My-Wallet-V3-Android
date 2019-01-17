@@ -6,8 +6,8 @@ object Versions {
     const val minSdk = 17
     const val targetSdk = 27
     const val compileSdk = 27
-    const val versionCode = 348
-    const val versionName = "6.15.4"
+    const val versionCode = 359
+    const val versionName = "6.16.0"
     const val buildTools = "28.0.3"
 
     // Build tools and languages
@@ -126,6 +126,7 @@ object Libraries {
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
     const val navigationControllerCore = "android.arch.navigation:navigation-ui:${Versions.navigation}"
     const val navigationControllerFragments = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
+    const val navigationControllerSafeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
     const val lifecycleViewModel = "android.arch.lifecycle:viewmodel:${Versions.lifecycle_version}"
     const val lifecycleExtensions = "android.arch.lifecycle:extensions:${Versions.lifecycle_version}"
 

@@ -1,8 +1,8 @@
 package piuk.blockchain.android.ui.settings;
 
+import com.blockchain.kyc.models.nabu.Kyc2TierState;
 import com.blockchain.kyc.models.nabu.NabuApiException;
 import com.blockchain.kycui.settings.KycStatusHelper;
-import com.blockchain.kycui.settings.SettingsKycState;
 import com.blockchain.notifications.NotificationTokenManager;
 import info.blockchain.wallet.api.data.Settings;
 import info.blockchain.wallet.payload.PayloadManager;
@@ -27,6 +27,8 @@ import piuk.blockchain.androidcore.data.auth.AuthDataManager;
 import piuk.blockchain.androidcore.data.currency.CurrencyFormatManager;
 import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateDataManager;
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager;
+import piuk.blockchain.androidcore.data.settings.Email;
+import piuk.blockchain.androidcore.data.settings.EmailSyncUpdater;
 import piuk.blockchain.androidcore.data.settings.SettingsDataManager;
 import piuk.blockchain.androidcore.utils.PrefsUtil;
 import piuk.blockchain.androidcoreui.ui.customviews.ToastCustom;
@@ -36,11 +38,17 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class SettingsPresenterTest extends RxTest {
 
@@ -73,6 +81,8 @@ public class SettingsPresenterTest extends RxTest {
     private CurrencyFormatManager currencyFormatManager;
     @Mock
     private KycStatusHelper kycStatusHelper;
+    @Mock
+    private EmailSyncUpdater emailSyncUpdater;
 
     @Before
     public void setUp() {
@@ -81,6 +91,7 @@ public class SettingsPresenterTest extends RxTest {
         subject = new SettingsPresenter(fingerprintHelper,
                 authDataManager,
                 settingsDataManager,
+                emailSyncUpdater,
                 payloadManager,
                 payloadDataManager,
                 stringUtils,
@@ -106,8 +117,8 @@ public class SettingsPresenterTest extends RxTest {
         }});
         when(mockSettings.getSmsNumber()).thenReturn("sms");
         when(mockSettings.getEmail()).thenReturn("email");
-        when(settingsDataManager.getSettings()).thenReturn(Observable.just(mockSettings));
-        when(kycStatusHelper.getSettingsKycState()).thenReturn(Single.just(SettingsKycState.Hidden));
+        when(settingsDataManager.fetchSettings()).thenReturn(Observable.just(mockSettings));
+        when(kycStatusHelper.getSettingsKycState2Tier()).thenReturn(Single.just(Kyc2TierState.Hidden));
         // Act
         subject.onViewReady();
         // Assert
@@ -121,7 +132,7 @@ public class SettingsPresenterTest extends RxTest {
     public void onViewReadyFailed() {
         // Arrange
         Settings settings = new Settings();
-        when(settingsDataManager.getSettings()).thenReturn(Observable.error(new Throwable()));
+        when(settingsDataManager.fetchSettings()).thenReturn(Observable.error(new Throwable()));
         // Act
         subject.onViewReady();
         // Assert
@@ -132,38 +143,48 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
-    public void onKycStatusClicked_should_launch_homebrew() {
-        // Arrange
-        when(kycStatusHelper.getSettingsKycState())
-                .thenReturn(Single.just(SettingsKycState.Verified));
-        when(prefsUtil.getValue(PrefsUtil.KEY_SELECTED_FIAT, PrefsUtil.DEFAULT_CURRENCY))
-                .thenReturn("GBP");
-        // Act
-        subject.onKycStatusClicked();
-        // Assert
-        verify(activity).launchHomebrew("GBP");
+    public void onKycStatusClicked_should_launch_homebrew_tier1() {
+        assertClickLaunchesKyc(Kyc2TierState.Tier1Approved);
     }
 
     @Test
-    public void onKycStatusClicked_should_launch_kyc_flow() {
+    public void onKycStatusClicked_should_launch_homebrew_tier2() {
+        assertClickLaunchesKyc(Kyc2TierState.Tier2Approved);
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_flow_locked() {
+        assertClickLaunchesKyc(Kyc2TierState.Locked);
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_status_tier1_review() {
+        assertClickLaunchesKyc(Kyc2TierState.Tier1InReview);
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_status_tier2_review() {
+        assertClickLaunchesKyc(Kyc2TierState.Tier2InReview);
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_status_tier1_rejected() {
+        assertClickLaunchesKyc(Kyc2TierState.Tier1Failed);
+    }
+
+    @Test
+    public void onKycStatusClicked_should_launch_kyc_status_tier2_rejected() {
+        assertClickLaunchesKyc(Kyc2TierState.Tier2Failed);
+    }
+
+    private void assertClickLaunchesKyc(Kyc2TierState status) {
         // Arrange
-        when(kycStatusHelper.getSettingsKycState())
-                .thenReturn(Single.just(SettingsKycState.Unverified));
+        when(kycStatusHelper.getKyc2TierStatus())
+                .thenReturn(Single.just(status));
         // Act
         subject.onKycStatusClicked();
         // Assert
         verify(activity).launchKycFlow();
-    }
-
-    @Test
-    public void onKycStatusClicked_should_launch_kyc_status() {
-        // Arrange
-        when(kycStatusHelper.getSettingsKycState())
-                .thenReturn(Single.just(SettingsKycState.InProgress));
-        // Act
-        subject.onKycStatusClicked();
-        // Assert
-        verify(activity).launchKycStatus();
     }
 
     @Test
@@ -294,6 +315,17 @@ public class SettingsPresenterTest extends RxTest {
     }
 
     @Test
+    public void isEmailVerified() {
+        // Arrange
+        subject.settings = mock(Settings.class);
+        when(subject.settings.isEmailVerified()).thenReturn(true);
+        // Act
+        boolean value = subject.isEmailVerified();
+        // Assert
+        assertTrue(value);
+    }
+
+    @Test
     public void getAuthType() {
         // Arrange
         subject.settings = mock(Settings.class);
@@ -362,13 +394,14 @@ public class SettingsPresenterTest extends RxTest {
         }};
         when(mockSettings.getNotificationsType()).thenReturn(notifications);
         String email = "EMAIL";
-        when(settingsDataManager.updateEmail(email)).thenReturn(Observable.just(mockSettings));
+        when(emailSyncUpdater.updateEmailAndSync(email)).thenReturn(Single.just(new Email(email, false)));
+        when(settingsDataManager.fetchSettings()).thenReturn(Observable.just(mockSettings));
         when(settingsDataManager.disableNotification(Settings.NOTIFICATION_TYPE_EMAIL, notifications))
                 .thenReturn(Observable.just(mockSettings));
         // Act
         subject.updateEmail(email);
         // Assert
-        verify(settingsDataManager).updateEmail(email);
+        verify(emailSyncUpdater).updateEmailAndSync(email);
         verify(settingsDataManager).disableNotification(Settings.NOTIFICATION_TYPE_EMAIL, notifications);
         verify(activity).showDialogEmailVerification();
     }
@@ -377,11 +410,11 @@ public class SettingsPresenterTest extends RxTest {
     public void updateEmailFailed() {
         // Arrange
         String email = "EMAIL";
-        when(settingsDataManager.updateEmail(email)).thenReturn(Observable.error(new Throwable()));
+        when(emailSyncUpdater.updateEmailAndSync(email)).thenReturn(Single.error(new Throwable()));
         // Act
         subject.updateEmail(email);
         // Assert
-        verify(settingsDataManager).updateEmail(email);
+        verify(emailSyncUpdater).updateEmailAndSync(email);
         //noinspection WrongConstant
         verify(activity).showToast(anyInt(), eq(ToastCustom.TYPE_ERROR));
         verifyNoMoreInteractions(activity);

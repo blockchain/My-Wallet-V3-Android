@@ -6,7 +6,7 @@
     <string name="CONTINUE">CONTINUE</string>
 
     <!-- HISTORY -->
-    <string name="morph_exchange">Exchange</string>
+    <string name="morph_exchange">Swap</string>
     <string name="debug_morph_exchange_homebrew" translatable="false">Debug Homebrew</string>
     <string name="morph_loading_orders">Loading order history</string>
     <string name="morph_loading_orders_failed">Loading orders failed</string>
@@ -32,9 +32,9 @@
     <string name="morph_fetching_unspent_outputs_failed">Error fetching unspent outputs</string>
     <string name="morph_fetching_eth_account_failed">Error fetching remaining Ether</string>
     <string name="morph_deriving_address_failed">Error deriving address</string>
-    <string name="morph_new_exchange">New Exchange</string>
-    <string name="morph_no_funds_title">No funds to exchange</string>
-    <string name="morph_no_funds_message">You currently don\'t have enough of a balance to exchange. Get started by requesting some funds to your wallet.</string>
+    <string name="morph_new_exchange">New Swap</string>
+    <string name="morph_no_funds_title">No funds to Swap</string>
+    <string name="morph_no_funds_message">You currently don\'t have enough of a balance to Swap. Get started by requesting some funds to your wallet.</string>
 
     <!-- CONFIRMATION -->
     <string name="morph_confirmation_agree">Agree to ShapeShift&#160;</string>
@@ -49,28 +49,28 @@
     <string name="morph_exchange_rate_formatted">1 %1$s = %2$s %3$s</string>
     <string name="morph_exchange_rate_placeholder">%1$s -> %2$s</string>
     <string name="morph_quote_expired_error">Quote expired</string>
-    <string name="morph_quote_expired_error_message">Your trade has expired. Please return to the Exchange page to start your trade again.</string>
-    <string name="morph_amount_to_low">%1$s %2$s required to exchange</string>
+    <string name="morph_quote_expired_error_message">This trade has expired as we have still not received your funds. If we receive your funds we will complete your trade. If you require further assistance please contact support.</string>
+    <string name="morph_amount_to_low">%1$s %2$s required to Swap</string>
     <string name="morph_confirmation_eth_pending">Ether transaction failed, please wait until your previous transaction confirms.</string>
 
     <!-- IN PROGRESS -->
-    <string name="morph_in_progress_explanation">Thanks for placing your trade! Exchange trades can take up to two hours, and you can keep track of your trade\'s progress in the Order History section.</string>
-    <string name="morph_failed_explanation">This trade has failed. Any funds broadcast from your wallet, will be returned minus the transaction fee. Please return to the exchange tab to start a new trade</string>
-    <string name="morph_refunded_explanation">This trade has been refunded. Any funds broadcast from your wallet have been returned minus the transaction fee. Please return to the exchange tab to start a new trade</string>
+    <string name="morph_in_progress_explanation">Thanks for placing your trade! Swap trades can take up to two hours, and you can keep track of your trade\'s progress in the Order History section.</string>
+    <string name="morph_failed_explanation">This trade has failed. Please return to the Swap tab to start a new trade</string>
+    <string name="morph_refunded_explanation">This trade has expired as we have still not received your funds. If we receive your funds we will complete your trade. If you require further assistance please contact support.</string>
     <string name="morph_sending_title">Sending Funds</string>
     <string name="morph_in_progress_title">In Progress</string>
     <string name="morph_complete_title">Complete</string>
     <string name="morph_failed_title">Failed</string>
-    <string name="morph_refunded_title">Refunded</string>
+    <string name="morph_refunded_title">Expired</string>
     <string name="morph_step_number">Step %1$s of 3</string>
     <string name="morph_send_now">Send Now</string>
 
     <!-- ORDER DETAIL -->
     <string name="morph_order_id_title">Order ID</string>
     <string name="morph_trade_not_found">Trade not found</string>
-    <string name="morph_in_progress_summary">Exchange in Progress</string>
-    <string name="morph_failed_summary">Exchange Failed</string>
-    <string name="morph_refunded_summary">Exchange Refunded</string>
+    <string name="morph_in_progress_summary">Swap in Progress</string>
+    <string name="morph_failed_summary">Swap Failed</string>
+    <string name="morph_refunded_summary">Swap Expired</string>
     <string name="locked_disclaimer_message">The amounts you send and receive may change slightly due to market activity. Once an order starts, we are unable to stop it</string>
     <string name="send_to">Send To</string>
     <string name="receive">Receive</string>
@@ -79,18 +79,18 @@
     <string name="status">Status</string>
     <string name="order_id">Order ID</string>
     <string name="order_detail">Order Detail</string>
-    <string name="make_a_new_exchange">Start an exchange</string>
+    <string name="make_a_new_exchange">Start a new Swap</string>
     <string name="order_history">Order History</string>
     <string name="no_orders_found">No Orders Found</string>
     <string name="done">Done</string>
-    <string name="confirm_exchange">Confirm Exchange</string>
-    <string name="exchange_locked">Exchange Locked</string>
+    <string name="confirm_exchange">Confirm Swap</string>
+    <string name="exchange_locked">Swap Locked</string>
     <string name="status_inprogress_detail">Thanks for placing your trade! Funds will usually reach your wallet within 2 hours and we’ll send you a notification when that happens. Keep track of your trade’s progress in the Order History area.</string>
-    <string name="status_failed_detail">We have refunded your wallet after the trade failed. Please return to the exchange tab to start a new trade.</string>
-    <string name="status_refund_in_progress_detail">We are now processing a refund for any funds broadcast minus the network fee. Please check your Order History to check the refund status.</string>
-    <string name="status_refunded_detail">Exchange Locked</string>
-    <string name="status_expired_detail">Your trade has expired. Any funds broadcast from your wallet will be returned minus the network fee. Contact User Support with your Order ID to request a refund.</string>
-    <string name="status_request_refund">Request a refund</string>
+    <string name="status_failed_detail">This trade has failed. Please return to the Swap tab to start a new trade.</string>
+    <string name="status_refund_in_progress_detail">This trade has expired as we have still not received your funds. If we receive your funds we will complete your trade. If you require further assistance please contact support.</string>
+    <string name="status_refunded_detail">Swap Locked</string>
+    <string name="status_expired_detail">This trade has expired as we have still not received your funds. If we receive your funds we will complete your trade. If you require further assistance please contact support.</string>
+    <string name="status_request_refund">Contact Support</string>
 
     <!-- ORDER STATUS -->
     <string name="morph_status_in_progress">In progress</string>
@@ -109,5 +109,9 @@
 
     <!-- HOMEBREW CONFIRMATION -->
     <string name="homebrew_confirmation_error_fetching_fee">Error fetching fee</string>
+
+    <!-- Limit -->
+    <string name="under_limit">Under limit</string>
+    <string name="over_limit">Over limit</string>
 
 </resources>

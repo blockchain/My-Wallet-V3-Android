@@ -9,7 +9,9 @@ import com.blockchain.morph.exchange.mvi.ExchangeViewState
 import com.blockchain.morph.exchange.mvi.FiatExchangeRateIntent
 import com.blockchain.morph.exchange.mvi.Fix
 import com.blockchain.morph.exchange.mvi.Quote
+import com.blockchain.morph.exchange.mvi.SetTierLimit
 import com.blockchain.morph.exchange.mvi.SetTradeLimits
+import com.blockchain.morph.exchange.mvi.SetUserTier
 import com.blockchain.morph.exchange.mvi.SpendableValueIntent
 import com.blockchain.morph.exchange.mvi.allQuoteClearingConditions
 import com.blockchain.morph.exchange.mvi.initial
@@ -18,6 +20,7 @@ import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.exchange.service.QuoteServiceFactory
 import com.blockchain.morph.exchange.service.TradeLimitService
 import com.blockchain.morph.quote.ExchangeQuoteRequest
+import com.blockchain.nabu.CurrentTier
 import info.blockchain.balance.AccountReference
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
@@ -31,12 +34,14 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import com.blockchain.preferences.FiatCurrencyPreference
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
 class ExchangeModel(
     quoteServiceFactory: QuoteServiceFactory,
     private val allAccountList: AllAccountList,
     private val tradeLimitService: TradeLimitService,
+    private val currentTier: CurrentTier,
     private val maximumSpendableCalculator: MaximumSpendableCalculator,
     private val currencyPreference: FiatCurrencyPreference
 ) : ViewModel() {
@@ -102,6 +107,22 @@ class ExchangeModel(
             .subscribeBy {
                 inputEventSink.onNext(SetTradeLimits(it.minOrder, it.maxOrder))
             }
+        dialogDisposable += Observable.interval(1, TimeUnit.MINUTES)
+            .startWith(0L)
+            .flatMapSingle {
+                tradeLimitService.getTradesLimits(fiatCurrency)
+            }
+            .subscribeBy {
+                inputEventSink.onNext(SetTierLimit(it.minAvailable()))
+            }
+        dialogDisposable += Observable.interval(1, TimeUnit.MINUTES)
+            .startWith(0L)
+            .flatMapSingle {
+                currentTier.usersCurrentTier()
+            }
+            .subscribeBy {
+                inputEventSink.onNext(SetUserTier(it))
+            }
         dialogDisposable += exchangeDialog.viewStates.distinctUntilChanged()
             .doOnError { Timber.e(it) }
             .subscribeBy {
@@ -166,4 +187,9 @@ private fun ExchangeViewState.toExchangeQuoteRequest(
 
 interface ExchangeViewModelProvider {
     val exchangeViewModel: ExchangeModel
+}
+
+interface ExchangeLimitState {
+
+    fun setOverTierLimit(overLimit: Boolean)
 }

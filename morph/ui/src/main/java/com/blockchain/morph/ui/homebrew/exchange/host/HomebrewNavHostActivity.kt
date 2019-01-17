@@ -7,29 +7,39 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.morph.exchange.mvi.ChangeCryptoFromAccount
 import com.blockchain.morph.exchange.mvi.ChangeCryptoToAccount
 import com.blockchain.morph.exchange.service.QuoteService
 import com.blockchain.morph.ui.R
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeFragment
+import com.blockchain.morph.ui.homebrew.exchange.ExchangeLimitState
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeModel
 import com.blockchain.morph.ui.homebrew.exchange.ExchangeViewModelProvider
 import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_RECEIVING_ACCOUNT
 import com.blockchain.morph.ui.homebrew.exchange.REQUEST_CODE_CHOOSE_SENDING_ACCOUNT
 import com.blockchain.morph.ui.homebrew.exchange.confirmation.ExchangeConfirmationFragment
 import com.blockchain.morph.ui.logging.WebsocketConnectionFailureEvent
+import com.blockchain.nabu.StartKyc
+import com.blockchain.notifications.analytics.LoggableEvent
+import com.blockchain.notifications.analytics.logEvent
 import com.blockchain.ui.chooserdialog.AccountChooserBottomDialog
 import info.blockchain.balance.AccountReference
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
 import piuk.blockchain.androidcore.utils.helperfunctions.consume
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseAuthActivity
 import piuk.blockchain.androidcoreui.utils.logging.Logging
 
-class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener, ExchangeViewModelProvider,
+class HomebrewNavHostActivity : BaseAuthActivity(),
+    HomebrewHostActivityListener,
+    ExchangeViewModelProvider,
+    ExchangeLimitState,
     AccountChooserBottomDialog.Callback {
 
     private val toolbar by unsafeLazy { findViewById<Toolbar>(R.id.toolbar_general) }
@@ -41,6 +51,8 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
     private val defaultCurrency by unsafeLazy { intent.getStringExtra(EXTRA_DEFAULT_CURRENCY) }
 
     override val exchangeViewModel: ExchangeModel by viewModel()
+
+    private val startKyc: StartKyc by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +81,37 @@ class HomebrewNavHostActivity : BaseAuthActivity(), HomebrewHostActivityListener
     override fun onPause() {
         compositeDisposable.clear()
         super.onPause()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean =
+        consume { menuInflater.inflate(R.menu.menu_tool_bar, menu) }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_show_kyc -> {
+                logEvent(LoggableEvent.SwapTiers)
+                startKyc.startKycActivity(this@HomebrewNavHostActivity)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private var showKycItem: MenuItem? = null
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        showKycItem = menu?.findItem(R.id.action_show_kyc)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun setOverTierLimit(overLimit: Boolean) {
+        showKycItem?.setIcon(
+            if (overLimit) {
+                R.drawable.ic_over_tier_limit
+            } else {
+                R.drawable.ic_under_tier_limit
+            }
+        )
     }
 
     override fun launchConfirmation() {

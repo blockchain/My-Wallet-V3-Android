@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="KycFlowTitle">
         <item name="android:layout_marginLeft">16dp</item>
@@ -25,5 +25,59 @@
         <item name="android:layout_marginLeft">32dp</item>
         <item name="android:layout_marginRight">32dp</item>
         <item name="android:textColor">@color/kyc_splash_title_black</item>
+    </style>
+
+    <style name="TierVerification">
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:textColor">#3558A8</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.29</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.3</item>
+    </style>
+
+    <style name="TierLimit">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textColor">#004A7C</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:lineSpacingMultiplier">1.22</item>
+    </style>
+
+    <style name="AnnualSwapLimit">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textColor">#3B3A3E</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Takes10Min">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textColor">#9D9C9E</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TierAvailableFiat">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textColor">#FF004A7C</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="TierApproved">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kyc_progress_green</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ContactSupport">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textColor">#FF10ADE4</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TierRequires">
+        <item name="android:fontFamily">Montserrat</item>
+        <item name="android:textColor">#FF3B3A3E</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>

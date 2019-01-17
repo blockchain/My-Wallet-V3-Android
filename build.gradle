@@ -12,6 +12,7 @@ buildscript {
         classpath Libraries.googleServicesPlugin
         classpath Libraries.kotlinGradlePlugin
         classpath Libraries.jacoco
+        classpath Libraries.navigationControllerSafeArgsPlugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

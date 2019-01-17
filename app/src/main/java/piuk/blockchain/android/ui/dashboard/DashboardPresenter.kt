@@ -3,24 +3,24 @@ package piuk.blockchain.android.ui.dashboard
 import android.support.annotation.DrawableRes
 import android.support.annotation.VisibleForTesting
 import com.blockchain.balance.drawableRes
-import com.blockchain.kyc.models.nabu.KycState
-import com.blockchain.kyc.models.nabu.UserState
+import com.blockchain.kyc.status.KycTiersQueries
 import com.blockchain.kycui.navhost.models.CampaignType
-import com.blockchain.kycui.settings.KycStatusHelper
 import com.blockchain.kycui.sunriver.SunriverCampaignHelper
 import com.blockchain.kycui.sunriver.SunriverCardType
 import com.blockchain.lockbox.data.LockboxDataManager
-import com.blockchain.remoteconfig.FeatureFlag
 import info.blockchain.balance.CryptoCurrency
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
+import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.rxkotlin.zipWith
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import piuk.blockchain.android.R
 import piuk.blockchain.android.ui.balance.AnnouncementData
 import piuk.blockchain.android.ui.balance.ImageLeftAnnouncementCard
@@ -61,10 +61,9 @@ class DashboardPresenter(
     private val rxBus: RxBus,
     private val swipeToReceiveHelper: SwipeToReceiveHelper,
     private val currencyFormatManager: CurrencyFormatManager,
-    private val kycStatusHelper: KycStatusHelper,
+    private val kycTiersQueries: KycTiersQueries,
     private val lockboxDataManager: LockboxDataManager,
-    private val sunriverCampaignHelper: SunriverCampaignHelper,
-    private val sunriverFeatureFlag: FeatureFlag
+    private val sunriverCampaignHelper: SunriverCampaignHelper
 ) : BasePresenter<DashboardView>() {
 
     private val currencies = DashboardConfig.currencies
@@ -85,6 +84,8 @@ class DashboardPresenter(
         )
     }
 
+    private val balanceUpdateDisposable = CompositeDisposable()
+
     override fun onViewReady() {
         with(view) {
             notifyItemAdded(displayList, 0)
@@ -104,6 +105,8 @@ class DashboardPresenter(
         }
 
         firstRun = false
+
+        compositeDisposable += balanceUpdateDisposable
 
         // Triggers various updates to the page once all metadata is loaded
         observable.flatMap { getOnboardingStatusObservable() }
@@ -171,29 +174,40 @@ class DashboardPresenter(
         view.notifyItemUpdated(displayList, positions)
     }
 
+    private val balanceFilter = BehaviorSubject.create<BalanceFilter>().apply {
+        onNext(BalanceFilter.Total)
+    }
+
+    fun setBalanceFilter(balanceFilter: BalanceFilter) {
+        this.balanceFilter.onNext(balanceFilter)
+    }
+
     private fun updateAllBalances() {
-        dashboardBalanceCalculator.getPieChartData()
-            .zipWith(shouldDisplayLockboxMessage())
-            .map {
-                it.first.copy(hasLockbox = it.second)
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .addToCompositeDisposable(this)
-            .subscribe(
-                {
+        balanceUpdateDisposable.clear()
+        val data =
+            dashboardBalanceCalculator.getPieChartData(balanceFilter.distinctUntilChanged())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext {
                     Logging.logCustom(
                         BalanceLoadedEvent(
-                            hasBtcBalance = !it.bitcoin.spendable.isZero,
-                            hasBchBalance = !it.bitcoinCash.spendable.isZero,
-                            hasEthBalance = !it.ether.spendable.isZero,
-                            hasXlmBalance = !it.lumen.spendable.isZero
+                            hasBtcBalance = !it.bitcoin.displayable.isZero,
+                            hasBchBalance = !it.bitcoinCash.displayable.isZero,
+                            hasEthBalance = !it.ether.displayable.isZero,
+                            hasXlmBalance = !it.lumen.displayable.isZero
                         )
                     )
                     cachedData = it
-                    view.updatePieChartState(it)
                     storeSwipeToReceiveAddresses()
-                },
-                { Timber.e(it) }
+                }
+        balanceUpdateDisposable += Observables.combineLatest(
+            data,
+            shouldDisplayLockboxMessage().cache().toObservable()
+        ).map { (data, hasLockbox) ->
+            data.copy(hasLockbox = hasLockbox)
+        }.observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                view::updatePieChartState,
+                Timber::e
             )
     }
 
@@ -242,15 +256,16 @@ class DashboardPresenter(
             displayList.removeAll { it is AnnouncementData }
             // TODO: AND-1691 This is disabled temporarily for now until onboarding/announcements have been rethought.
 //            checkNativeBuySellAnnouncement()
-            addSunriverPrompts()
-            sunriverFeatureFlag.enabled
-                .subscribeBy(
-                    onSuccess = { if (!it) checkKycPrompt() }
-                )
+            compositeDisposable +=
+                checkKycPrompt()
+                    .subscribeBy(
+                        onSuccess = { showedKycCard -> if (!showedKycCard) addSunriverPrompts() }
+                    )
         }
     }
 
-    internal fun addSunriverPrompts() {
+    internal fun addSunriverPrompts(): Single<Boolean> {
+        val publish = BehaviorSubject.create<Boolean>()
         compositeDisposable +=
             sunriverCampaignHelper.getCampaignCardType()
                 .subscribeOn(Schedulers.io())
@@ -258,34 +273,40 @@ class DashboardPresenter(
                 .subscribeBy(
                     onSuccess = {
                         when (it) {
-                            SunriverCardType.None -> Unit
+                            SunriverCardType.None -> publish.onNext(false)
                             SunriverCardType.JoinWaitList ->
                                 SunriverCard.nowSupported(
                                     { removeSunriverCard() },
                                     { view.launchWaitlist() }
                                 ).addIfNotDismissed()
+                                    .also(publish::onNext)
                             SunriverCardType.FinishSignUp ->
                                 SunriverCard.continueClaim(
                                     { removeSunriverCard() },
                                     { view.startKycFlow(CampaignType.Sunriver) }
                                 ).addIfNotDismissed()
+                                    .also(publish::onNext)
                             SunriverCardType.Complete ->
                                 SunriverCard.onTheWay(
                                     { removeSunriverCard() },
                                     {}
                                 ).addIfNotDismissed()
+                                    .also(publish::onNext)
                         }
                     },
                     onError = Timber::e
                 )
+        return publish.first(false)
     }
 
-    private fun SunriverCard.addIfNotDismissed() {
-        if (!prefsUtil.getValue(prefsKey, false)) {
+    private fun SunriverCard.addIfNotDismissed(): Boolean {
+        val add = !prefsUtil.getValue(prefsKey, false)
+        if (add) {
             displayList.add(0, this)
             view.notifyItemAdded(displayList, 0)
             view.scrollToTop()
         }
+        return add
     }
 
     private fun removeSunriverCard() {
@@ -323,16 +344,18 @@ class DashboardPresenter(
             )
     }
 
-    private fun checkKycPrompt() {
+    private fun checkKycPrompt(): Single<Boolean> {
+        val displayed = BehaviorSubject.create<Boolean>()
         if (!prefsUtil.getValue(KYC_INCOMPLETE_DISMISSED, false)) {
             compositeDisposable +=
-                getKycStatus()
+                Singles.zip(
+                    kycTiersQueries.isKycInProgress(),
+                    sunriverCampaignHelper.getCampaignCardType()
+                )
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
-                        onSuccess = { (userState, kycStatus) ->
-                            if ((userState == UserState.Created || userState == UserState.Active) &&
-                                kycStatus == KycState.None
-                            ) {
+                        onSuccess = { (isKycInProgress, campaignCard) ->
+                            if (isKycInProgress) {
                                 val kycIncompleteData = ImageRightAnnouncementCard(
                                     title = R.string.buy_sell_verify_your_identity,
                                     description = R.string.kyc_drop_off_card_description,
@@ -342,22 +365,33 @@ class DashboardPresenter(
                                         prefsUtil.setValue(KYC_INCOMPLETE_DISMISSED, true)
                                         dismissAnnouncement(KYC_INCOMPLETE_DISMISSED)
                                     },
-                                    linkFunction = { view.startKycFlow(CampaignType.Sunriver) },
+                                    linkFunction = {
+                                        view.startKycFlow(
+                                            if (campaignCard == SunriverCardType.FinishSignUp) {
+                                                CampaignType.Sunriver
+                                            } else {
+                                                CampaignType.Swap
+                                            }
+                                        )
+                                    },
                                     prefsKey = KYC_INCOMPLETE_DISMISSED
                                 )
                                 showAnnouncement(0, kycIncompleteData)
+                                displayed.onNext(true)
+                            } else {
+                                displayed.onNext(false)
                             }
                         },
-                        onError = { Timber.e(it) }
+                        onError = {
+                            Timber.e(it)
+                            displayed.onNext(false)
+                        }
                     )
+        } else {
+            displayed.onNext(false)
         }
+        return displayed.first(false)
     }
-
-    private fun getKycStatus(): Single<Pair<UserState, KycState>> = Single.zip(
-        kycStatusHelper.getUserState(),
-        kycStatusHelper.getKycStatus(),
-        BiFunction { userState: UserState, kycStatus: KycState -> userState to kycStatus }
-    ).onErrorReturn { UserState.None to KycState.None }
 
     private fun getOnboardingPages(isBuyAllowed: Boolean): OnboardingModel {
         val pages = mutableListOf<OnboardingPagerContent>()

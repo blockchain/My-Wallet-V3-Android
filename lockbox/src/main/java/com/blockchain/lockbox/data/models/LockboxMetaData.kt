@@ -1,8 +1,9 @@
 package com.blockchain.lockbox.data.models
 
 import com.blockchain.serialization.JsonSerializable
+import com.squareup.moshi.Json
 
-data class LockboxMetadata(
+internal data class LockboxMetadata(
     val devices: List<Device>
 ) : JsonSerializable {
 
@@ -14,45 +15,57 @@ data class LockboxMetadata(
     }
 }
 
-data class Device(
-    val device_type: String,
-    val device_name: String,
-    val btc: Btc,
-    val bch: Bch,
-    val eth: Eth
+internal data class Device(
+    @field:Json(name = "device_type") val deviceType: String,
+    @field:Json(name = "device_name") val deviceName: String,
+    val btc: Btc?,
+    val bch: Bch?,
+    val eth: Eth?,
+    val xlm: Xlm?
 ) : JsonSerializable
 
-data class Bch(
+internal data class Bch(
     val accounts: List<BitcoinLikeAccount>
 ) : JsonSerializable
 
-data class Btc(
+internal data class Btc(
     val accounts: List<BitcoinLikeAccount>
 ) : JsonSerializable
 
-data class Eth(
-    val accounts: List<EthLikeAccount>,
-    val last_tx: Any,
-    val last_tx_timestamp: Any
+internal data class Eth(
+    val accounts: List<EthAccount>,
+    @field:Json(name = "last_tx") val lastTx: Any,
+    @field:Json(name = "last_tx_timestamp") val lastTxTimestamp: Any
 ) : JsonSerializable
 
-data class BitcoinLikeAccount(
+internal data class BitcoinLikeAccount(
     val label: String,
     val archived: Boolean,
-    val xpriv: String,
     val xpub: String,
-    val address_labels: List<Any>,
+    @field:Json(name = "address_labels") val addressLabels: List<Any>,
     val cache: Cache
 ) : JsonSerializable
 
-data class Cache(
+internal data class Cache(
     val receiveAccount: String,
     val changeAccount: String
 ) : JsonSerializable
 
-data class EthLikeAccount(
+internal data class EthAccount(
     val label: String,
     val archived: Boolean,
     val correct: Boolean,
     val addr: String
+) : JsonSerializable
+
+internal data class Xlm(
+    @field: Json(name = "default_account_idx") val defaultAccountIndex: Int,
+    val accounts: List<XlmAccount>,
+    @field: Json(name = "tx_notes") val txNotes: Map<String, String>?
+) : JsonSerializable
+
+internal data class XlmAccount(
+    val publicKey: String,
+    val label: String,
+    val archived: Boolean
 ) : JsonSerializable

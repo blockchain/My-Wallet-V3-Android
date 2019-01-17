@@ -21,8 +21,7 @@ val dashboardModule = applicationContext {
                 get(),
                 get(),
                 get(),
-                get(),
-                get("sunriver")
+                get()
             )
         }
     }

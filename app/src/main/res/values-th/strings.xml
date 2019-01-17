@@ -255,7 +255,7 @@
   <string name="transfer_amount">จำนวนการโอน</string>
   <string name="transfer_archive_message">เก็บที่อยู่ที่นำเข้าหลังจากการโอน</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">ที่อยู่ที่นำเข้า 1 แห่ง</item>
+    <item quantity="one">ที่อยู่ที่นำเข้า %d แห่ง</item>
     <item quantity="other">%d ที่อยู่ที่นำเข้า</item>
   </plurals>
   <string name="transfer_archive">ยืนยันคลังเก็บข้อมูลแล้ว</string>
@@ -801,7 +801,6 @@
   <string name="sunriver_splash_message">ยืนยันข้อมูลประจำตัวของคุณเพื่ออ้างสิทธิ์ XLM ของคุณ มันใช้เวลาเพียงไม่กี่นาที. เมื่อได้รับการยืนยันแล้วคุณจะสามารถใช้ผลิตภัณฑ์การซื้อขายยุคใหม่ Swap ของเราได้</string>
   <string name="sunriver_status_message">ข้อมูลของคุณกำลังอยู่ในระหว่างการตรวจทาน การตรวจทานจะเสร็จสมบูรณ์ภายใน 5 นาที เมื่อยืนยันแล้วเราจะส่งดาวฤกษ์ของคุณภายในหนึ่งสัปดาห์</string>
   <string name="YESTERDAY">เมื่อวาน</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">เงินไม่เพียงพอ</string>
   <string name="ok_cap">ตกลง</string>
   <string name="scan_qr">สแกนรหัส QR</string>
@@ -823,7 +822,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">รับกล่องจดหมายของคุณ</string>
   <string name="lockbox_landing_get_yours_message">จัดเก็บเซฟโหมด cryptocurrency ของคุณแบบออฟไลน์ได้อย่างปลอดภัย</string>
-  <string name="lockbox_landing_get_yours_button">ซื้อวันนี้ราคา $ 99</string>
+  <string name="lockbox_landing_get_yours_button">ซื้อเลย</string>
   <string name="lockbox_landing_already_owned_title">เป็นเจ้าของแล้วหรือยัง?</string>
   <string name="lockbox_landing_already_owned_message">จากคอมพิวเตอร์ของคุณเข้าสู่ระบบ blockchain.com และเชื่อมต่อตู้เก็บของคุณ</string>
   <string name="lockbox_landing_learn_more">ต้องการเรียนรู้เพิ่มเติมหรือไม่? แตะที่นี่เพื่อเยี่ยมชม 
@@ -1028,4 +1027,9 @@
   <string name="buy_sell_recurring_frequency_daily">ทุกวัน</string>
   <string name="buy_sell_recurring_frequency_monthly">ใน %1$s ของทุกเดือน</string>
   <string name="buy_sell_transaction_list_label">ทำเครื่องหมายรหัสสั่งซื้อ # %1$s</string>
+  <string name="sunriver_set_memo">ตั้งค่า Memo</string>
+  <string name="xlm_memo_explain">บันทึกช่วยจำจะใช้ในการสื่อสารข้อมูลที่จำเป็นกับผู้รับ</string>
+  <string name="xlm_memo_text_hint">บันทึก</string>
+  <string name="xlm_memo_id_hint">รหัสตัวเลข</string>
+  <string name="xlm_memo_hash_hint">32 Byte Hexadecimal Hash</string>
 </resources>

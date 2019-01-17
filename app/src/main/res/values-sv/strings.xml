@@ -213,7 +213,7 @@
   <string name="not_archived_description">Denna artikel är inte arkiverad. Arkivera det här objektet om du inte vill använda det längre. Dina medel kommer att förbli säkra, och du kan avinstallera den när som helst.</string>
   <string name="transfer_success_archive_prompt_title">Arkivera raderade adresser?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 adress överfördes framgångsrikt till My Bitcoin Wallet. Vill du arkivera den här adressen nu?</item>
+    <item quantity="one">%d adress överfördes framgångsrikt till My Bitcoin Wallet. Vill du arkivera den här adressen nu?</item>
     <item quantity="other">%d adresserna överfördes framgångsrikt till My Bitcoin Wallet. Vill du arkivera dessa adresser nu?</item>
   </plurals>
   <string name="default_account_description">Denna artikel är inställd som standard och kan inte arkiveras.</string>
@@ -268,7 +268,7 @@
   <string name="transfer_amount">Överföringsbelopp</string>
   <string name="transfer_archive_message">Arkivera importerade adresser efter överföring</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 importerad adress</item>
+    <item quantity="one">%d importerad adress</item>
     <item quantity="other">%d importerade adresser</item>
   </plurals>
   <string name="transfer_archive">Arkiv bekräftat</string>
@@ -817,15 +817,13 @@
   <string name="sunriver_splash_message">Verifiera din identitet för att hävda din XLM. Det tar bara några minuter. När du väl har verifierats kan du använda vår nästa generations handelsprodukt, Byta.</string>
   <string name="sunriver_status_message">Din information granskas. Granskningen ska slutföras om 5 minuter. När du väl har verifierats skickar vi din Stellar inom en vecka.</string>
   <string name="YESTERDAY">Igår</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Otillräckligt med pengar</string>
   <string name="ok_cap">\@android: string / OK</string>
-  <string name="scan_qr"></string>
+  <string name="scan_qr">Skanna QR kod</string>
   <string name="transaction_submitted">Transaktionen slutförd</string>
   <string name="transaction_failed">Transaktionen misslyckades</string>
   <string name="unexpected_error">Oväntat fel, var god försök igen senare.</string>
   <string name="contacts_no_confirmed_contacts_found">Inga bekräftade kontakter hittades!</string>
-  <string name="eth_default_account_label"></string>
   <string name="cannot_launch_app">Blockchain Wallet kan inte köras på den här enheten.</string>
   <string name="exit">Utgång</string>
   <string name="screen_overlay_warning">Skärmöverlagret detekterat!</string>
@@ -842,7 +840,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Hämta din låsbox</string>
   <string name="lockbox_landing_get_yours_message">Spara säkert din cryptocurrency offline.</string>
-  <string name="lockbox_landing_get_yours_button">Köp nu för $ 99</string>
+  <string name="lockbox_landing_get_yours_button">Köp nu</string>
   <string name="lockbox_landing_already_owned_title">Har du redan en?</string>
   <string name="lockbox_landing_already_owned_message">Från din dator loggar du in på blockchain.com och ansluter din låsbox.</string>
   <string name="lockbox_landing_learn_more">Vill du lära dig mer? Tryck här för att besöka 
@@ -1047,4 +1045,9 @@
   <string name="buy_sell_recurring_frequency_daily">Varje dag</string>
   <string name="buy_sell_recurring_frequency_monthly">På %1$s i varje månad</string>
   <string name="buy_sell_transaction_list_label">Sammanfoga Order ID # %1$s</string>
+  <string name="sunriver_set_memo">Ange memo</string>
+  <string name="xlm_memo_explain">Noteringar används för att kommunicera frivillig information till mottagaren.</string>
+  <string name="xlm_memo_text_hint">PM</string>
+  <string name="xlm_memo_id_hint">Numeriskt ID</string>
+  <string name="xlm_memo_hash_hint">32 Byte Hexadecimal Hash</string>
 </resources>

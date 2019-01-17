@@ -213,7 +213,7 @@
   <string name="not_archived_description">Acest element nu este arhivat. Arhivați acest element dacă NU doriți să îl utilizați mai mult. Fondurile dvs. vor rămâne în siguranță și puteți să le arhivați oricând.</string>
   <string name="transfer_success_archive_prompt_title">Arhiva adreselor mutate?</string>
   <plurals name="transfer_success_archive_prompt_plurals">
-    <item quantity="one">1 adresă a fost transferată cu succes în Portofoliul My Bitcoin. Doriți să arhivați această adresă acum?</item>
+    <item quantity="one">%d adresă a fost transferată cu succes în Portofoliul My Bitcoin. Doriți să arhivați această adresă acum?</item>
     <item quantity="few"></item>
     <item quantity="other">%d adrese au fost transferate cu succes pe My Bitcoin Wallet. Doriți să arhivați aceste adrese acum?</item>
   </plurals>
@@ -269,7 +269,7 @@
   <string name="transfer_amount">Suma de transfer</string>
   <string name="transfer_archive_message">Arhivați adresele importate după transfer</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 adresă importată</item>
+    <item quantity="one">%d adresă importată</item>
     <item quantity="few"></item>
     <item quantity="other">%d adrese importate</item>
   </plurals>
@@ -819,15 +819,13 @@
   <string name="sunriver_splash_message">Verificați-vă identitatea pentru a vă revendica XLM-ul. Nu durează decât câteva minute. Odată verificat, veți putea utiliza produsul nostru de generație următoare, Swap.</string>
   <string name="sunriver_status_message">Informațiile dvs. sunt în curs de revizuire. Revizuirea trebuie terminată în 5 minute. Odată ce ați fost verificat cu succes, vă vom trimite Steler în termen de o săptămână.</string>
   <string name="YESTERDAY">Ieri</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Fonduri insuficiente</string>
   <string name="ok_cap">\@android: string / OK</string>
-  <string name="scan_qr"></string>
+  <string name="scan_qr">Scanați codul QR</string>
   <string name="transaction_submitted">Tranzacția a fost finalizată</string>
   <string name="transaction_failed">tranzactie nereusita</string>
   <string name="unexpected_error">Eroare neașteptată, încercați din nou mai târziu.</string>
   <string name="contacts_no_confirmed_contacts_found">Nu s-au găsit contacte confirmate!</string>
-  <string name="eth_default_account_label"></string>
   <string name="cannot_launch_app">Blocarea portofelului nu poate fi executată pe acest dispozitiv.</string>
   <string name="exit">Ieșire</string>
   <string name="screen_overlay_warning">Ecranul de acoperire a fost detectat!</string>
@@ -844,7 +842,7 @@
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Ia Lockbox-ul tău</string>
   <string name="lockbox_landing_get_yours_message">Salvați în siguranță criptocurrency offline.</string>
-  <string name="lockbox_landing_get_yours_button">Cumpărați acum pentru 99 USD</string>
+  <string name="lockbox_landing_get_yours_button">Cumpară acum</string>
   <string name="lockbox_landing_already_owned_title">Deja proprie?</string>
   <string name="lockbox_landing_already_owned_message">Din calculatorul dvs., conectați-vă la blocchain.com și conectați caseta de blocare.</string>
   <string name="lockbox_landing_learn_more">Doriți să aflați mai multe? Apăsați aici pentru a vizita 
@@ -1049,4 +1047,9 @@
   <string name="buy_sell_recurring_frequency_daily">In fiecare zi</string>
   <string name="buy_sell_recurring_frequency_monthly">Pe %1$s din fiecare lună</string>
   <string name="buy_sell_transaction_list_label">Coincideți codul de comandă # %1$s</string>
+  <string name="sunriver_set_memo">Setați Memo</string>
+  <string name="xlm_memo_explain">Notele sunt folosite pentru a comunica destinatarului informații opționale.</string>
+  <string name="xlm_memo_text_hint">Notificare</string>
+  <string name="xlm_memo_id_hint">Numeric ID</string>
+  <string name="xlm_memo_hash_hint">32 haste hexazecimal de octet</string>
 </resources>

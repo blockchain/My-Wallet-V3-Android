@@ -1,0 +1,151 @@
+{
+  "devices": [
+    {
+      "device_type": "ledger",
+      "device_name": "Ledger",
+      "btc": {
+        "accounts": [
+          {
+            "label": "Ledger - BTC Wallet",
+            "archived": false,
+            "xpriv": "",
+            "xpub": "xpubBTC",
+            "address_labels": [],
+            "cache": {
+              "receiveAccount": "receiveAccount",
+              "changeAccount": "changeAccount"
+            }
+          }
+        ]
+      },
+      "bch": {
+        "accounts": [
+          {
+            "label": "Ledger - BCH Wallet",
+            "archived": false,
+            "xpriv": "",
+            "xpub": "xpubBCH",
+            "address_labels": [],
+            "cache": {
+              "receiveAccount": "receiveAccount",
+              "changeAccount": "changeAccount"
+            }
+          }
+        ]
+      },
+      "eth": {
+        "accounts": [
+          {
+            "label": "Ledger - ETH Wallet",
+            "archived": false,
+            "correct": true,
+            "addr": "addrETH"
+          }
+        ],
+        "last_tx": null,
+        "last_tx_timestamp": null
+      },
+      "xlm": {
+        "default_account_idx": 0,
+        "accounts": [
+          {
+            "publicKey": "publicKeyXLM",
+            "label": "Ledger - XLM Wallet",
+            "archived": false
+          }
+        ],
+        "tx_notes": {}
+      }
+    },
+    {
+      "device_type": "ledger",
+      "device_name": "Ledger2",
+      "btc": {
+        "accounts": [
+          {
+            "label": "Ledger2 - BTC Wallet 1",
+            "archived": false,
+            "xpriv": "",
+            "xpub": "xpubBTC21",
+            "address_labels": [],
+            "cache": {
+              "receiveAccount": "receiveAccount",
+              "changeAccount": "changeAccount"
+            }
+          },
+          {
+            "label": "Ledger2 - BTC Wallet 2",
+            "archived": false,
+            "xpriv": "",
+            "xpub": "xpubBTC22",
+            "address_labels": [],
+            "cache": {
+              "receiveAccount": "receiveAccount",
+              "changeAccount": "changeAccount"
+            }
+          }
+        ]
+      },
+      "bch": {
+        "accounts": [
+          {
+            "label": "Ledger2 - BCH Wallet 1",
+            "archived": false,
+            "xpriv": "",
+            "xpub": "xpubBCH21",
+            "address_labels": [],
+            "cache": {
+              "receiveAccount": "receiveAccount",
+              "changeAccount": "changeAccount"
+            }
+          },
+          {
+            "label": "Ledger2 - BCH Wallet 2",
+            "archived": false,
+            "xpriv": "",
+            "xpub": "xpubBCH22",
+            "address_labels": [],
+            "cache": {
+              "receiveAccount": "receiveAccount",
+              "changeAccount": "changeAccount"
+            }
+          }
+        ]
+      },
+      "eth": {
+        "accounts": [
+          {
+            "label": "Ledger2 - ETH Wallet 1",
+            "archived": false,
+            "correct": true,
+            "addr": "addrETH21"
+          },
+          {
+            "label": "Ledger2 - ETH Wallet 2",
+            "archived": false,
+            "correct": true,
+            "addr": "addrETH22"
+          }
+        ],
+        "last_tx": null,
+        "last_tx_timestamp": null
+      },
+      "xlm": {
+        "default_account_idx": 0,
+        "accounts": [
+          {
+            "label": "Ledger2 - XLM Wallet 1",
+            "publicKey": "publicKeyXLM21",
+            "archived": false
+          },
+          {
+            "label": "Ledger2 - XLM Wallet 2",
+            "publicKey": "publicKeyXLM22",
+            "archived": false
+          }
+        ],
+        "tx_notes": {}
+      }
+    }
+  ]
+}

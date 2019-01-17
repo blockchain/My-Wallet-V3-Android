@@ -201,6 +201,22 @@ class ExchangeViewStateValidityTest {
     }
 
     @Test
+    fun `is not valid - quote exceeds max tier`() {
+        givenExchangeState()
+            .copy(
+                maxTierLimit = 10.usd(),
+                fix = Fix.BASE_CRYPTO,
+                fromCrypto = 10.ether(),
+                latestQuote = Quote(
+                    fix = Fix.BASE_CRYPTO,
+                    from = Quote.Value(cryptoValue = 10.ether(), fiatValue = 11.usd()),
+                    to = mock()
+                )
+            )
+            .assertNotValid(QuoteValidity.OverTierLimit)
+    }
+
+    @Test
     fun `is valid - quote equals max`() {
         givenExchangeState()
             .copy(

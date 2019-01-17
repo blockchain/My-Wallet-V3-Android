@@ -30,7 +30,7 @@ import piuk.blockchain.androidcore.data.settings.SettingsDataManager
 
 class NabuDataManagerTest {
 
-    private lateinit var subject: NabuDataManager
+    private lateinit var subject: NabuDataManagerImpl
     private val nabuService: NabuService = mock()
     private val tokenService: RetailWalletTokenService = mock()
     private val nabuTokenStore: NabuSessionTokenStore = mock()
@@ -51,7 +51,7 @@ class NabuDataManagerTest {
         whenever(settings.email).thenReturn(email)
         whenever(settingsDataManager.getSettings()).thenReturn(Observable.just(settings))
 
-        subject = NabuDataManager(
+        subject = NabuDataManagerImpl(
             nabuService,
             tokenService,
             nabuTokenStore,

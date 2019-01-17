@@ -257,7 +257,7 @@ Jaga xPub Anda tetap pribadi.         Seseorang yang memiliki akses ke xPub Anda
   <string name="transfer_amount">Jumlah Transfer</string>
   <string name="transfer_archive_message">Arsip mengimpor alamat setelah transfer</string>
   <plurals name="transfer_label_plural">
-    <item quantity="one">1 alamat impor</item>
+    <item quantity="one">%d alamat impor</item>
     <item quantity="other">%d alamat yang diimpor</item>
   </plurals>
   <string name="transfer_archive">Arsip Dikonfirmasi</string>
@@ -803,7 +803,6 @@ Ini hanya sebuah saran: jumlah yang sebenarnya mungkin berbeda.</string>
   <string name="sunriver_splash_message">Verifikasi identitas Anda untuk mengklaim XLM Anda. Hanya butuh beberapa menit. Setelah diverifikasi, Anda akan dapat menggunakan produk perdagangan generasi selanjutnya, Swap.</string>
   <string name="sunriver_status_message">Informasi Anda sedang ditinjau. Peninjauan akan selesai dalam 5 menit. Setelah Anda berhasil diverifikasi, kami akan mengirim Stellar Anda dalam waktu satu minggu.</string>
   <string name="YESTERDAY">Kemarin</string>
-  <string name="default_wallet_name"></string>
   <string name="insufficient_funds">Dana tidak mencukupi</string>
   <string name="ok_cap">OK</string>
   <string name="scan_qr">Pindai Kode QR</string>
@@ -825,7 +824,7 @@ Ini hanya sebuah saran: jumlah yang sebenarnya mungkin berbeda.</string>
   <string name="lockbox_title">Lockbox</string>
   <string name="lockbox_landing_get_yours_title">Dapatkan Lockbox Anda</string>
   <string name="lockbox_landing_get_yours_message">Simpan offline cryptocurrency Anda dengan aman.</string>
-  <string name="lockbox_landing_get_yours_button">Beli sekarang seharga $ 99</string>
+  <string name="lockbox_landing_get_yours_button">Beli sekarang</string>
   <string name="lockbox_landing_already_owned_title">Sudah memilikinya?</string>
   <string name="lockbox_landing_already_owned_message">Dari komputer Anda, masuk ke blockchain.com dan hubungkan kotak kunci Anda.</string>
   <string name="lockbox_landing_learn_more">Ingin belajar lebih banyak? Ketuk di sini untuk berkunjung 
@@ -1030,4 +1029,9 @@ Ini hanya sebuah saran: jumlah yang sebenarnya mungkin berbeda.</string>
   <string name="buy_sell_recurring_frequency_daily">Setiap hari</string>
   <string name="buy_sell_recurring_frequency_monthly">Di %1$s setiap bulan</string>
   <string name="buy_sell_transaction_list_label">Coinify Order ID # %1$s</string>
+  <string name="sunriver_set_memo">Setel Memo</string>
+  <string name="xlm_memo_explain">Memo digunakan untuk mengkomunikasikan informasi opsional kepada penerima.</string>
+  <string name="xlm_memo_text_hint">Memo</string>
+  <string name="xlm_memo_id_hint">ID numerik</string>
+  <string name="xlm_memo_hash_hint">32 Byte Heksadesimal Hash</string>
 </resources>

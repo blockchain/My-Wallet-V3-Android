@@ -24,7 +24,11 @@ interface KycHomeAddressView : View {
 
     fun finishPage()
 
-    fun continueToOnfidoSplash()
+    fun continueToOnfidoSplash(countryCode: String)
+
+    fun continueToTier2MoreInfoNeeded(countryCode: String)
+
+    fun tier1Complete()
 
     fun restoreUiState(
         line1: String,

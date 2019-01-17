@@ -58,28 +58,28 @@ class PieChartsStateTest {
         val i = 100
         PieChartsState.Data(
             bitcoin = PieChartsState.Coin(
-                spendable = PieChartsState.DataPoint(
+                displayable = PieChartsState.DataPoint(
                     fiatValue = i.usd(),
                     cryptoValueString = "1 BTC"
                 ),
                 watchOnly = zeroDataPoint()
             ),
             bitcoinCash = PieChartsState.Coin(
-                spendable = PieChartsState.DataPoint(
+                displayable = PieChartsState.DataPoint(
                     fiatValue = 200.usd(),
                     cryptoValueString = "2 BCH"
                 ),
                 watchOnly = zeroDataPoint()
             ),
             ether = PieChartsState.Coin(
-                spendable = PieChartsState.DataPoint(
+                displayable = PieChartsState.DataPoint(
                     fiatValue = 300.usd(),
                     cryptoValueString = "3 ETH"
                 ),
                 watchOnly = zeroDataPoint()
             ),
             lumen = PieChartsState.Coin(
-                spendable = PieChartsState.DataPoint(
+                displayable = PieChartsState.DataPoint(
                     fiatValue = 50.usd(),
                     cryptoValueString = "3 XLM"
                 ),
@@ -218,19 +218,19 @@ class PieChartsStateTest {
 
     private fun zeroCoin() =
         PieChartsState.Coin(
-            spendable = zeroDataPoint(),
+            displayable = zeroDataPoint(),
             watchOnly = zeroDataPoint()
         )
 
     private fun nonZeroCoin() =
         PieChartsState.Coin(
-            spendable = nonZeroDataPoint(),
+            displayable = nonZeroDataPoint(),
             watchOnly = zeroDataPoint()
         )
 
     private fun nonZeroWatchOnlyCoin() =
         PieChartsState.Coin(
-            spendable = zeroDataPoint(),
+            displayable = zeroDataPoint(),
             watchOnly = nonZeroDataPoint()
         )
 

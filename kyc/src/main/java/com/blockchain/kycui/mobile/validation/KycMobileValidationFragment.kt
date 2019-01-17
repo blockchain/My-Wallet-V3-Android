@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.blockchain.kycui.extensions.skipFirstUnless
-import com.blockchain.kycui.mobile.entry.models.PhoneDisplayModel
+import com.blockchain.kycui.hyperlinks.insertSingleLink
 import com.blockchain.kycui.mobile.entry.models.PhoneVerificationModel
 import com.blockchain.kycui.mobile.validation.models.VerificationCode
 import com.blockchain.kycui.navhost.KycProgressListener
 import com.blockchain.kycui.navhost.models.KycStep
-import com.blockchain.kycui.onfidosplash.OnfidoSplashFragment
 import com.blockchain.ui.extensions.throttledClicks
 import com.jakewharton.rxbinding2.widget.afterTextChangeEvents
 import io.reactivex.Observable
@@ -21,18 +21,22 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.inject
+import piuk.blockchain.androidcore.data.settings.PhoneNumber
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import piuk.blockchain.androidcoreui.ui.base.BaseMvpFragment
 import piuk.blockchain.androidcoreui.ui.customviews.MaterialProgressDialog
 import piuk.blockchain.androidcoreui.utils.ParentActivityDelegate
 import piuk.blockchain.androidcoreui.utils.ViewUtils
 import piuk.blockchain.androidcoreui.utils.extensions.inflate
+import piuk.blockchain.kyc.KycNavXmlDirections
 import piuk.blockchain.kyc.R
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_kyc_mobile_validation.button_kyc_mobile_validation_next as buttonNext
 import kotlinx.android.synthetic.main.fragment_kyc_mobile_validation.edit_text_kyc_mobile_validation_code as editTextVerificationCode
 import kotlinx.android.synthetic.main.fragment_kyc_mobile_validation.text_view_mobile_validation_message as textViewPhoneNumber
+import kotlinx.android.synthetic.main.fragment_kyc_mobile_validation.text_view_resend_prompt as textViewResend
 
 class KycMobileValidationFragment :
     BaseMvpFragment<KycMobileValidationView, KycMobileValidationPresenter>(),
@@ -42,10 +46,9 @@ class KycMobileValidationFragment :
     private val progressListener: KycProgressListener by ParentActivityDelegate(this)
     private val compositeDisposable = CompositeDisposable()
     private var progressDialog: MaterialProgressDialog? = null
-    private val displayModel by unsafeLazy {
-        arguments!!.getParcelable(ARGUMENT_PHONE_DISPLAY_MODEL) as PhoneDisplayModel
-    }
-    private val countryCode by unsafeLazy { arguments!!.getString(ARGUMENT_COUNTRY_CODE) }
+    private val args by unsafeLazy { KycMobileValidationFragmentArgs.fromBundle(arguments) }
+    private val displayModel by unsafeLazy { args.mobileNumber }
+    private val countryCode by unsafeLazy { args.countryCode }
     private val verificationCodeObservable by unsafeLazy {
         editTextVerificationCode.afterTextChangeEvents()
             .skipInitialValue()
@@ -58,6 +61,16 @@ class KycMobileValidationFragment :
                 )
             }
     }
+
+    private val resend = PublishSubject.create<Unit>()
+
+    override val resendObservable: Observable<Pair<PhoneNumber, Unit>> by unsafeLazy {
+        Observables.combineLatest(
+            Observable.just(PhoneNumber(displayModel.formattedString)),
+            resend.throttledClicks()
+        )
+    }
+
     override val uiStateObservable: Observable<Pair<PhoneVerificationModel, Unit>> by unsafeLazy {
         Observables.combineLatest(
             verificationCodeObservable.cache(),
@@ -76,6 +89,13 @@ class KycMobileValidationFragment :
         progressListener.setHostTitle(R.string.kyc_phone_number_title)
         progressListener.incrementProgress(KycStep.MobileVerifiedPage)
         textViewPhoneNumber.text = displayModel.formattedString
+
+        textViewResend.insertSingleLink(
+            R.string.kyc_phone_didnt_see_sms,
+            R.string.kyc_phone_send_again_hyperlink
+        ) {
+            resend.onNext(Unit)
+        }
 
         onViewReady()
     }
@@ -109,11 +129,10 @@ class KycMobileValidationFragment :
 
     override fun continueSignUp() {
         ViewUtils.hideKeyboard(requireActivity())
-        val args = OnfidoSplashFragment.bundleArgs(countryCode)
         findNavController(this).apply {
             // Remove phone entry and validation pages from back stack as it would be confusing for the user
             popBackStack(R.id.kycPhoneNumberFragment, true)
-            navigate(R.id.onfidoSplashFragment, args)
+            navigate(KycNavXmlDirections.ActionStartOnfido(countryCode))
         }
     }
 
@@ -154,15 +173,7 @@ class KycMobileValidationFragment :
 
     override fun getMvpView(): KycMobileValidationView = this
 
-    companion object {
-
-        private const val ARGUMENT_PHONE_DISPLAY_MODEL = "ARGUMENT_PHONE_DISPLAY_MODEL"
-        private const val ARGUMENT_COUNTRY_CODE = "ARGUMENT_COUNTRY_CODE"
-
-        fun bundleArgs(displayModel: PhoneDisplayModel, countryCode: String): Bundle =
-            Bundle().apply {
-                putParcelable(ARGUMENT_PHONE_DISPLAY_MODEL, displayModel)
-                putString(ARGUMENT_COUNTRY_CODE, countryCode)
-            }
+    override fun theCodeWasResent() {
+        Toast.makeText(requireContext(), R.string.kyc_phone_number_code_was_resent, Toast.LENGTH_SHORT).show()
     }
 }

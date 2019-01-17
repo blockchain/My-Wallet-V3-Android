@@ -15,10 +15,13 @@ sealed class PieChartsState {
     }
 
     data class Coin(
-        val spendable: DataPoint,
+        /**
+         * Value to display, may be spendable or cold storage or sum of both
+         */
+        val displayable: DataPoint,
         val watchOnly: DataPoint
     ) {
-        val isZero = spendable.isZero && watchOnly.isZero
+        val isZero = displayable.isZero && watchOnly.isZero
     }
 
     data class Data(
@@ -38,10 +41,10 @@ sealed class PieChartsState {
             }
 
         private val totalValue =
-            bitcoin.spendable.fiatValue +
-                bitcoinCash.spendable.fiatValue +
-                ether.spendable.fiatValue +
-                lumen.spendable.fiatValue
+            bitcoin.displayable.fiatValue +
+                bitcoinCash.displayable.fiatValue +
+                ether.displayable.fiatValue +
+                lumen.displayable.fiatValue
 
         val totalValueString = totalValue.toStringWithSymbol(Locale.getDefault())
 
