@@ -102,7 +102,7 @@
   <string name="total">Insgesamt</string>
   <string name="max_available">Verfügbaren Gesamtbetrag minus Gebühr verwenden:</string>
   <string name="invalid_bitcoin_address">Ungültige Bitcoin-Adresse</string>
-  <string name="invalid_amount">Ungültiges Konto</string>
+  <string name="invalid_amount">Ungültiger Betrag</string>
   <string name="enter_double_encryption_pw">Bitte doppelt verschlüsseltes Passwort eingeben</string>
   <string name="support">Support</string>
   <string name="rate_us">Bewerten Sie uns</string>
