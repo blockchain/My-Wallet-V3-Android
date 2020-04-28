@@ -372,8 +372,8 @@ No lo compartas con otras personas.</string>
   <string name="share_instructions">Pulsa para copiar esta dirección. Compártela con el remitente por correo electrónico o mensaje de texto.</string>
   <string name="common_pin_dialog_title">Advertencia</string>
   <string name="common_pin_dialog_message">El PIN seleccionado es muy común y puede ser fácilmente adivinado por alguien con acceso a tu teléfono en 3 intentos. ¿Quieres usar este PIN de todos modos?</string>
-  <string name="common_pin_dialog_try_again">[%key:try_again%]</string>
-  <string name="common_pin_dialog_continue">[%key:CONTINUE%]</string>
+  <string name="common_pin_dialog_try_again">Intentar nuevamente</string>
+  <string name="common_pin_dialog_continue">Continuar</string>
   <string name="logged_out_enter_password">Has cerrado sesión o hubo un error al decodificar tu monedero. Introduce tu contraseña a continuación para iniciar sesión.</string>
   <string name="logged_out_forget_wallet">Si quieres olvidar este monedero y comenzar denuevo, presiona \'Olvidar Monedero\'.</string>
   <string name="forget_wallet">Olvidar monedero</string>
@@ -662,7 +662,7 @@ Confirme su huella digital para continuar.</string>
   <string name="exit">Salir</string>
   <string name="screen_overlay_warning">¡Se detectó una superposición de pantalla!</string>
   <string name="screen_overlay_note">Las aplicaciones que utilizan superposiciones de pantalla tienen la capacidad de engañarte para que des clic en objetos invisibles y así poderte robar fondos. Ten en cuenta que esta advertencia también se lanzará en aplicaciones de atenuación de pantalla. Si estás seguro de que no existe ninguna amenaza puedes continuar. </string>
-  <string name="dialog_continue">[%key:CONTINUE%]</string>
+  <string name="dialog_continue">Continuar</string>
   <string name="insufficient_funds_with_max">Fondos insuficientes, el máximo que puede enviar es %1$s</string>
   <string name="not_enough_funds_with_currency">No hay suficientes %1$s</string>
   <string name="invalid_address">Dirección inválida</string>
@@ -695,7 +695,7 @@ denegada</string>
   <string name="buy_sell_overview_pending_title">Completar verificación
 de identidad</string>
   <string name="buy_sell_overview_in_review_button">Comprar ahora con tarjeta</string>
-  <string name="buy_sell_overview_denied_button">[%key:try_again%]</string>
+  <string name="buy_sell_overview_denied_button">Intente nuevamente</string>
   <string name="buy_sell_overview_pending_button">Finalizar verificación</string>
   <string name="buy_sell_overview_in_review_message">Las cantidades mayores de %1$s de Bitcoin no se pueden vender hasta que se haya completado su verificación de identidad.</string>
   <string name="buy_sell_overview_denied_message">Por favor, intente completar su verificación de identidad otra vez. Las transferencias bancarias no estarán disponibles hasta entonces.</string>
@@ -709,7 +709,7 @@ de identidad</string>
   <string name="buy_sell_state_awaiting_reference">Esperando número de referencia</string>
   <string name="buy_sell_state_processing">Procesando</string>
   <string name="buy_sell_state_completed">Completada</string>
-  <string name="buy_sell_state_cancelled">[%key:contacts_receiving_cancelled%]</string>
+  <string name="buy_sell_state_cancelled">Cancelado</string>
   <string name="buy_sell_state_rejected">Rechazada</string>
   <string name="buy_sell_state_expired">Vencida</string>
   <string name="buy_sell_detail_trade_id">ID de operación</string>
@@ -835,7 +835,7 @@ Orden creada</string>
   <string name="buy_sell_verification_status_title">Estatus de verificación</string>
   <string name="buy_sell_invalid_country_title">La compra y venta de Bitcoin no está disponible todavía en su país</string>
   <string name="buy_sell_invalid_country_message">Pronto llegaremos a más países.</string>
-  <string name="submit">[%key:send_bitcoin%]</string>
+  <string name="submit">Enviar</string>
   <string name="buy_sell_get_to_know_you_title">Déjenos conocerle</string>
   <string name="buy_sell_get_to_know_you_message">Necesitamos aprender un poco sobre usted antes de que podamos abrir su cuenta de compra y venta.</string>
   <string name="buy_sell_cannot_open_file">No se puede abrir el selector de archivos</string>
