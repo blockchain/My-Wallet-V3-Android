@@ -361,11 +361,11 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(),
             .setMessage(R.string.confirm_currency_message)
             .setCancelable(true)
             .setPositiveButton(R.string.bitcoin_cash) { _, _ ->
-                presenter.cryptoCurrency = CryptoCurrency.BCH
+                setCurrentCryptoCurrency(CryptoCurrency.BCH)
                 startSendFragment(uri)
             }
             .setNegativeButton(R.string.bitcoin) { _, _ ->
-                presenter.cryptoCurrency = CryptoCurrency.BTC
+                setCurrentCryptoCurrency(CryptoCurrency.BTC)
                 startSendFragment(uri)
             }
             .create()
@@ -378,11 +378,11 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(),
             .setMessage(R.string.confirm_currency_message)
             .setCancelable(true)
             .setPositiveButton(R.string.ether) { _, _ ->
-                presenter.cryptoCurrency = CryptoCurrency.ETHER
+                setCurrentCryptoCurrency(CryptoCurrency.ETHER)
                 startSendFragment(uri)
             }
             .setNegativeButton(R.string.usd_pax_1) { _, _ ->
-                presenter.cryptoCurrency = CryptoCurrency.PAX
+                setCurrentCryptoCurrency(CryptoCurrency.PAX)
                 startSendFragment(uri)
             }
             .create()
@@ -659,14 +659,14 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(),
         bottom_navigation.isBehaviorTranslationEnabled = false
     }
 
-    override fun gotoSendFor(cryptoCurrency: CryptoCurrency) {
-        presenter.cryptoCurrency = cryptoCurrency
+    override fun gotoSendFor(asset: CryptoCurrency) {
+        setCurrentCryptoCurrency(asset)
         startSendFragment(null)
     }
 
     override fun gotoSendFor(account: SingleAccount) {
         if (account is CryptoAccount) {
-            presenter.cryptoCurrency = account.asset
+            setCurrentCryptoCurrency(account.asset)
             startSendFragment(null)
         }
     }
@@ -682,10 +682,27 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(),
 
     override fun gotoReceiveFor(account: SingleAccount) {
         if (account is CryptoAccount) {
-            presenter.cryptoCurrency = account.asset
+            setCurrentCryptoCurrency(account.asset)
             setCurrentTabItem(ITEM_RECEIVE)
             ViewUtils.setElevation(appbar_layout, 0f)
             startReceiveFragment()
+        }
+    }
+
+    @Deprecated("Remove when new send/receive is fully implemented")
+    private fun setCurrentCryptoCurrency(asset: CryptoCurrency) {
+        // The old send framework does not support the newer assets, so filter them
+        // out here, else the receive and send fragments can crash if the global "selected"
+        // currency is in the not-supported set. See AND-3448
+        val oldSendSupported = setOf(
+            CryptoCurrency.BTC,
+            CryptoCurrency.ETHER,
+            CryptoCurrency.BCH,
+            CryptoCurrency.XLM,
+            CryptoCurrency.PAX
+        )
+        if (oldSendSupported.contains(asset)) {
+            presenter.cryptoCurrency = asset
         }
     }
 
@@ -711,7 +728,7 @@ class MainActivity : MvpActivity<MainView, MainPresenter>(),
         // asset dropdown to the currently/active cryptocurrency.
         // For now, we'll only set it if we're actually looking at a crypto asset
         if (account != null && account is CryptoAccount) {
-            presenter.cryptoCurrency = account.asset
+            setCurrentCryptoCurrency(account.asset)
         }
         startActivitiesFragment(account)
     }
