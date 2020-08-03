@@ -22,9 +22,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
-import java.util.function.Predicate;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -642,15 +641,15 @@ public class PayloadManager {
     public List<TransactionSummary> getAllTransactions(int limit, int offset) throws
             IOException,
             ApiException {
-        Predicate<TransactionSummary> watchOnly = new Predicate<TransactionSummary>() {
-            @Override
-            public boolean test(TransactionSummary transactionSummary) {
-                return !transactionSummary.isWatchOnly();
-            }
-        };
 
         List<TransactionSummary> txs = getAccountTransactions(null, limit, offset);
-        txs.removeIf(watchOnly);
+
+        ListIterator<TransactionSummary> iter = txs.listIterator();
+        while(iter.hasNext()){
+            if(iter.next().isWatchOnly()){
+                iter.remove();
+            }
+        }
         return txs;
     }
 
