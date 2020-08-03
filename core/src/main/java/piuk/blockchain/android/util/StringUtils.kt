@@ -35,7 +35,8 @@ class StringUtils(private val context: Context) {
         onClick: () -> Unit = {}
     ): CharSequence {
 
-        val rawText = context.getText(stringId) as SpannedString
+        val text = context.getText(stringId)
+        val rawText = text as? SpannedString ?: return text
         val out = SpannableString(rawText)
 
         for (annotation in rawText.getSpans(0, rawText.length, android.text.Annotation::class.java)) {

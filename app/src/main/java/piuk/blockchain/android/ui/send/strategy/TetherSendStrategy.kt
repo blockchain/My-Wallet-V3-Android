@@ -68,8 +68,8 @@ class TetherSendStrategy(
     environmentConfig: EnvironmentConfig
 ) : SendStrategy<SendView>(currencyState, prefs) {
 
-    override fun onViewAttached() { }
-    override fun onViewDetached() { }
+    override fun onViewAttached() {}
+    override fun onViewDetached() {}
 
     override val alwaysDisableScreenshots = false
     override val enableLogoutTimer = false
@@ -188,7 +188,9 @@ class TetherSendStrategy(
                 onNext = { (validated, errorMessage) ->
                     when {
                         validated -> view?.showSecondPasswordDialog()
-                        errorMessage == R.string.insufficient_eth_for_fees -> view?.showInsufficientGasDlg()
+                        errorMessage == R.string.insufficient_eth_for_fees -> view?.showInsufficientGasDlg(
+                            CryptoCurrency.USDT
+                        )
                         else -> view?.showSnackbar(errorMessage, Snackbar.LENGTH_LONG)
                     }
                 },

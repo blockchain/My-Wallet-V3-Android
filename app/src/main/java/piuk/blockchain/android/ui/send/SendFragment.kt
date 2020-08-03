@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.res.Resources
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -41,7 +40,6 @@ import com.blockchain.transactions.Memo
 import com.blockchain.ui.chooser.AccountChooserActivity
 import com.blockchain.ui.chooser.AccountMode
 import com.blockchain.ui.password.SecondPasswordHandler
-import com.blockchain.ui.urllinks.URL_BLOCKCHAIN_PAX_NEEDS_ETH_FAQ
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.karumi.dexter.Dexter
@@ -1332,22 +1330,13 @@ class SendFragment : HomeScreenMvpFragment<SendView, SendPresenter<SendView>>(),
         dialogHandler.postDelayed(dialogRunnable, (10 * 1000).toLong())
     }
 
-    override fun showInsufficientGasDlg() {
+    override fun showInsufficientGasDlg(cryptoCurrency: CryptoCurrency) {
 
-        val linksMap = mapOf<String, Uri>(
-            "pax_faq" to Uri.parse(URL_BLOCKCHAIN_PAX_NEEDS_ETH_FAQ)
-        )
-
-        val body = stringUtils.getStringWithMappedLinks(
-            R.string.pax_need_more_eth_error_body_1,
-            linksMap,
-            requireActivity()
-        )
         fragmentManager?.let {
             ErrorBottomDialog.newInstance(
                 ErrorBottomDialog.Content(
                     title = getString(R.string.pax_need_more_eth_error_title),
-                    description = body,
+                    description = getString(R.string.erc20_need_more_eth_error_body_1, cryptoCurrency.displayTicker),
                     icon = CryptoCurrency.ETHER.errorIcon(),
                     dismissText = R.string.btn_ok
                 )

@@ -1494,6 +1494,7 @@
 
     <!--More eth needed-->
     <string name="pax_need_more_eth_error_body_1">You\'ll need ETH to send your USD-D</string>
+    <string name="erc20_need_more_eth_error_body_1">You\'ll need ETH to send your %1$s</string>
     <string name="pax_need_more_eth_error_title">More ETH Needed</string>
 
     <!-- send -->

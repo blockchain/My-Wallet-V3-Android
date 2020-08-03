@@ -135,7 +135,7 @@ interface SendView : MvpView {
 
     fun showTransactionFailed() = showSnackbar(R.string.transaction_failed, Snackbar.LENGTH_LONG)
 
-    fun showInsufficientGasDlg()
+    fun showInsufficientGasDlg(cryptoCurrency: CryptoCurrency)
 
     fun dismissConfirmationDialog()
 

@@ -68,8 +68,8 @@ class PaxSendStrategy(
     environmentConfig: EnvironmentConfig
 ) : SendStrategy<SendView>(currencyState, prefs) {
 
-    override fun onViewAttached() { }
-    override fun onViewDetached() { }
+    override fun onViewAttached() {}
+    override fun onViewDetached() {}
 
     override val alwaysDisableScreenshots = false
     override val enableLogoutTimer = false
@@ -188,7 +188,8 @@ class PaxSendStrategy(
                 onNext = { (validated, errorMessage) ->
                     when {
                         validated -> view?.showSecondPasswordDialog()
-                        errorMessage == R.string.insufficient_eth_for_fees -> view?.showInsufficientGasDlg()
+                        errorMessage == R.string.insufficient_eth_for_fees -> view?.showInsufficientGasDlg(
+                            CryptoCurrency.PAX)
                         else -> view?.showSnackbar(errorMessage, Snackbar.LENGTH_LONG)
                     }
                 },

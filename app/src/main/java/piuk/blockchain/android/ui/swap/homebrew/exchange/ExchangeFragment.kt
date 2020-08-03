@@ -2,7 +2,6 @@ package piuk.blockchain.android.ui.swap.homebrew.exchange
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -31,7 +30,6 @@ import com.blockchain.swap.common.exchange.mvi.SimpleFieldUpdateIntent
 import com.blockchain.swap.common.exchange.mvi.ToggleFiatCryptoIntent
 import com.blockchain.swap.nabu.service.Fix
 import com.blockchain.swap.nabu.service.Quote
-import com.blockchain.ui.urllinks.URL_BLOCKCHAIN_PAX_NEEDS_ETH_FAQ
 import info.blockchain.balance.CryptoCurrency
 import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.ExchangeRate
@@ -332,21 +330,12 @@ internal class ExchangeFragment : Fragment() {
             QuoteValidity.NoQuote,
             QuoteValidity.MissMatch -> null
             QuoteValidity.NotEnoughFees -> {
-                val linksMap = mapOf<String, Uri>(
-                    "pax_faq" to Uri.parse(URL_BLOCKCHAIN_PAX_NEEDS_ETH_FAQ)
-                )
-
-                val body = stringUtils.getStringWithMappedLinks(
-                    R.string.pax_need_more_eth_error_body_1,
-                    linksMap,
-                    requireActivity()
-                )
 
                 return ExchangeMenuState.ExchangeMenuError(
                     CryptoCurrency.ETHER,
                     userTier,
                     getString(R.string.pax_need_more_eth_error_title),
-                    body,
+                    getString(R.string.erc20_need_more_eth_error_body_1, this.fromCrypto.currency.displayTicker),
                     ExchangeMenuState.ErrorType.TRADE
                 )
             }
