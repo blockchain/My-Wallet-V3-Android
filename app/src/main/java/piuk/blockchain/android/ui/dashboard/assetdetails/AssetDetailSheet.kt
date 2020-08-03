@@ -299,12 +299,17 @@ class AssetDetailSheet : SlidingModalBottomDialog() {
         val difference = lastPrice - firstPrice
 
         val percentChange = (difference / firstPrice) * 100
+        val percentChangeTxt = if (percentChange.isNaN()) {
+            "--"
+        } else {
+            String.format("%.1f", percentChange)
+        }
 
         percentageView.text =
             FiatValue.fromMajor(
                 currencyPrefs.selectedFiatCurrency,
                 difference.toBigDecimal()
-            ).toStringWithSymbol() + " (${String.format("%.1f", percentChange)}%)"
+            ).toStringWithSymbol() + " ($percentChangeTxt%)"
 
         percentageView.setDeltaColour(
             delta = difference,
