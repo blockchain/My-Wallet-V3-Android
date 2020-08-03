@@ -56,7 +56,8 @@ val activitiesModule = module {
                 ethDataManager = get(),
                 bchDataManager = get(),
                 xlmDataManager = get(),
-                environmentSettings = get()
+                environmentSettings = get(),
+                labels = get()
             )
         }
 

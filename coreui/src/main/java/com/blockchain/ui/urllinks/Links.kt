@@ -56,11 +56,11 @@ fun makeBlockExplorerUrl(
     transactionHash: String
 ) = when (cryptoCurrency) {
     CryptoCurrency.BTC -> "https://www.blockchain.com/btc/tx/"
-    CryptoCurrency.ETHER -> "https://www.blockchain.com/eth/tx/"
     CryptoCurrency.BCH -> "https://www.blockchain.com/bch/tx/"
     CryptoCurrency.XLM -> "https://stellarchain.io/tx/"
-    CryptoCurrency.PAX -> "https://www.blockchain.com/eth/tx/"
+    CryptoCurrency.ETHER,
+    CryptoCurrency.PAX,
+    CryptoCurrency.USDT -> "https://www.blockchain.com/eth/tx/"
+    CryptoCurrency.ALGO -> "https://algoexplorer.io/tx/"
     CryptoCurrency.STX -> TODO("STUB: STX NOT IMPLEMENTED")
-    CryptoCurrency.ALGO -> TODO("Unknown URL here - https://www.blockchain.com/alg/tx/ ?")
-    CryptoCurrency.USDT -> TODO("Unknown URL here - https://www.blockchain.com/usdt/tx/ ?")
 } + transactionHash
