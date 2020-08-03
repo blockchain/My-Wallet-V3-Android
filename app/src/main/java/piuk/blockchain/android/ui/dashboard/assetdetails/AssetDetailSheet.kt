@@ -299,7 +299,7 @@ class AssetDetailSheet : SlidingModalBottomDialog() {
         val difference = lastPrice - firstPrice
 
         val percentChange = (difference / firstPrice) * 100
-        val percentChangeTxt = if(percentChange.isNaN()) {
+        val percentChangeTxt = if (percentChange.isNaN()) {
             "--"
         } else {
             String.format("%.1f", percentChange)

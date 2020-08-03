@@ -28,10 +28,10 @@ class ManualPairingActivity : MvpActivity<ManualPairingView, ManualPairingPresen
     override val view: ManualPairingView = this
     override val presenter: ManualPairingPresenter by scopedInject()
 
-    private val guid: String="d7be7cce-b2fe-46b7-afc1-8cf56dde81f4"
-//        get() = wallet_id.text.toString()
-    private val password: String="ItsRainingDogs"
-//        get() = wallet_pass.text.toString()
+    private val guid: String
+        get() = wallet_id.text.toString()
+    private val password: String
+        get() = wallet_pass.text.toString()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
