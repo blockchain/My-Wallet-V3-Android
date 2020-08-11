@@ -25,7 +25,7 @@ Generate a new _google-services.json_ file
 
    a. _Project Settings_ > Add an Android app > _package_name:_ `piuk.blockchain.android.dev`
    
-   b. Download the new _google-services.json_ file and add replace it with the existing auto-generated _google-services.json_ file under the _app_ module in  the _app/src/env_ directory.
+   b. Download the new _google-services.json_ file created from the Firebase console and replace the existing _google-services.json_ file under the _app_ module in  the _app/src/env_ directory.
  
 [firebase console]: https://console.firebase.google.com
 
