@@ -1885,7 +1885,7 @@
   <string name="interest_dashboard_item_accrued_title">Verdiente Gesamtzinsen</string>
   <string name="interest_dashboard_item_action_earn">Zinsen bekommen</string>
   <string name="interest_dashboard_item_action_view">Aussicht</string>
-  <string name="interest_dashboard_item_rate_1">Verdienen bis zu </string>
+  <string name="interest_dashboard_item_rate_1">Verdienen Sie bis zu </string>
   <string name="interest_dashboard_item_rate_2"> jährlich auf Ihre %1$s</string>
   <string name="interest_dashboard_verify_title">Verdienen Sie Zinsen an Ihrer Krypto</string>
   <string name="interest_dashboard_verify_label">Verdienen Sie sofort bis zu 12%, wenn Sie Krypto auf Ihr Zinskonto übertragen.</string>
