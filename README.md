@@ -25,7 +25,7 @@ to restart Android Studio for it's changes to take effect.
 ## Building
 
 Clone the [Android Repository](https://github.com/blockchain/wallet-android-private). Make sure your repository
-is on `main`. Import it as an Android Studio project (`File -> Open`).
+is on `master`. Import it as an Android Studio project (`File -> Open`).
 
 ### Contributions and Code Style
 
