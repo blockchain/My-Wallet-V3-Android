@@ -1,6 +1,9 @@
 # Built application files
 *.apk
 
+# Readme
+README.md
+
 # Gradle files
 .gradle/
 build/
