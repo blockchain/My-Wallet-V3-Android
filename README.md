@@ -24,6 +24,8 @@ to restart Android Studio for it's changes to take effect.
 
 ## Building
 
+**Required: Create a signing key in the `app` folder with the filename `blockchainDebugKey.keystore` with same the key password and store password. Then update the `keyPassword` and `debugKeyAlias` entries in the `secretDefaults.properties` file.**
+
 Clone the [Android Repository](https://github.com/blockchain/wallet-android-private). Make sure your repository
 is on `master`. Import it as an Android Studio project (`File -> Open`).
 
