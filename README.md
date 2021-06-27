@@ -18,6 +18,20 @@ Install [Oracle JDK](https://www.oracle.com/java/technologies/javase-downloads.h
 **Required: Run the quickstart script from a bash terminal at the base of the project; `./scripts/quick_start.sh` this will install the necessary
 dependencies for the project to compile successfully.**
 
+Generate a new _google-services.json_ file
+
+1. Create a new sample Firebase project using your Google account.
+
+   a. Login to Google. > Go to [console.firebase.google.com][firebase console] > _Add project_
+
+2. Generate a new _google-services.json_ file. 
+
+   a. _Project Settings_ > Add an Android app > _package_name:_ `piuk.blockchain.android.dev`
+   
+   b. Download the new _google-services.json_ file created from the Firebase console and replace the existing _google-services.json_ file under the _app_ module in  the _app/src/env_ directory.
+ 
+[firebase console]: https://console.firebase.google.com
+
 Optional: Run the bootstrap script from terminal via `scripts/bootstrap.sh`. This will install the Google Java code style as well
 as the official Android Kotlin code style and remove any file header templates. The script may indicate that you need
 to restart Android Studio for it's changes to take effect.
