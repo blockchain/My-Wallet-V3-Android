@@ -8,6 +8,7 @@ import com.blockchain.preferences.WalletStatus
 import com.blockchain.nabu.datamanagers.CustodialWalletManager
 import com.blockchain.wallet.DefaultLabels
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.util.FormatsUtil
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -27,6 +28,7 @@ import piuk.blockchain.androidcore.data.exchangerate.ExchangeRateService
 import piuk.blockchain.androidcore.data.fees.FeeDataManager
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
 import piuk.blockchain.android.coincore.SimpleOfflineCacheItem
+import piuk.blockchain.android.coincore.btc.BtcAddress
 import piuk.blockchain.android.coincore.impl.OfflineAccountUpdater
 import piuk.blockchain.android.identity.UserIdentity
 
@@ -108,19 +110,26 @@ internal class EthAsset(
         )
     }
 
-    @CommonCode("Exists in UsdtAsset and PaxAsset")
     override fun parseAddress(address: String, label: String?): Maybe<ReceiveAddress> =
-        Single.just(isValidAddress(address)).flatMapMaybe { isValid ->
-            if (isValid) {
-                ethDataManager.isContractAddress(address).flatMapMaybe { isContract ->
-                    if (isContract) {
-                        throw AddressParseError(ETH_UNEXPECTED_CONTRACT_ADDRESS)
-                    } else {
-                        Maybe.just(EthAddress(address, label ?: address))
-                    }
-                }
+        Maybe.fromCallable {
+            val amountField = "value="
+            val normalisedAddress = address.removePrefix(FormatsUtil.ETHEREUM_PREFIX)
+            var parts = normalisedAddress.split("?")
+            val addressPart = parts.getOrNull(0)
+
+            if (parts.size > 1) {
+                parts = parts[1].split("&");
+            }
+
+            val amountPart = parts.find {
+                it.startsWith(amountField, true)
+            }?.let {
+                CryptoValue.fromMinor(CryptoCurrency.ETHER, it.substring(amountField.length).toBigDecimal())
+            }
+            if (addressPart != null && isValidAddress(addressPart)) {
+                EthAddress(address = addressPart, label = label ?: address, amount = amountPart)
             } else {
-                Maybe.empty<ReceiveAddress>()
+                null
             }
         }
 
@@ -131,7 +140,8 @@ internal class EthAsset(
 internal class EthAddress(
     override val address: String,
     override val label: String = address,
-    override val onTxCompleted: (TxResult) -> Completable = { Completable.complete() }
+    override val onTxCompleted: (TxResult) -> Completable = { Completable.complete() },
+    private val amount: CryptoValue? = null
 ) : CryptoAddress {
     override val asset: CryptoCurrency = CryptoCurrency.ETHER
 }

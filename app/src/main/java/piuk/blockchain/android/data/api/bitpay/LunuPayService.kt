@@ -11,7 +11,7 @@ import piuk.blockchain.androidcore.data.rxjava.RxBus
 import piuk.blockchain.androidcore.data.rxjava.RxPinning
 import retrofit2.Retrofit
 
-open class BitPayService constructor(
+class LunuPayService constructor(
     environmentConfig: EnvironmentConfig,
     retrofit: Retrofit,
     rxBus: RxBus
@@ -31,7 +31,7 @@ open class BitPayService constructor(
     }
 
     internal fun getPaymentVerificationRequest(
-        path: String = "$baseUrl$PATH_BITPAY_INVOICE",
+        path: String = "$baseUrl${PATH_LUNU_INVOICE}_INVOICE",
         body: BitPaymentRequest,
         invoiceId: String
     ): Completable =
@@ -40,7 +40,7 @@ open class BitPayService constructor(
             contentType = "application/payment-verification")
 
     internal fun getPaymentSubmitRequest(
-        path: String = "$baseUrl$PATH_BITPAY_INVOICE",
+        path: String = "$baseUrl$PATH_LUNU_INVOICE",
         body: BitPaymentRequest,
         invoiceId: String
     ): Completable = service.paymentRequest(path = "$path/$invoiceId",

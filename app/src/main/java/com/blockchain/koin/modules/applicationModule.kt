@@ -34,6 +34,7 @@ import piuk.blockchain.android.coincore.impl.AssetResourcesImpl
 import piuk.blockchain.android.coincore.impl.OfflineBalanceCall
 import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
 import piuk.blockchain.android.data.api.bitpay.BitPayService
+import piuk.blockchain.android.data.api.bitpay.LunuPayService
 import piuk.blockchain.android.data.biometrics.BiometricAuth
 import piuk.blockchain.android.data.biometrics.BiometricsController
 import piuk.blockchain.android.data.biometrics.CryptographyManager
@@ -646,6 +647,14 @@ val applicationModule = module {
 
         factory {
             BitPayService(
+                environmentConfig = get(),
+                retrofit = get(moshiExplorerRetrofit),
+                rxBus = get()
+            )
+        }
+
+        factory {
+            LunuPayService(
                 environmentConfig = get(),
                 retrofit = get(moshiExplorerRetrofit),
                 rxBus = get()
