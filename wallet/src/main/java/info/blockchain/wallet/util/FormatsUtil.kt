@@ -159,6 +159,7 @@ object FormatsUtil {
 
     const val BTC_PREFIX = "bitcoin:"
     const val BCH_PREFIX = "bitcoincash:"
+    const val ETHEREUM_PREFIX = "ethereum:"
 
     fun toDisambiguatedBtcAddress(
         address: String

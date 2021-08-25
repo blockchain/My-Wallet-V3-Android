@@ -14,6 +14,7 @@ import com.blockchain.wallet.DefaultLabels
 import info.blockchain.balance.AssetCatalogue
 import info.blockchain.balance.AssetInfo
 import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.balance.isCustodialOnly
 import info.blockchain.wallet.util.FormatsUtil
 import io.reactivex.rxjava3.core.Completable
@@ -121,19 +122,41 @@ internal class EthAsset(
 
     @CommonCode("Exists in UsdtAsset and PaxAsset")
     override fun parseAddress(address: String, label: String?): Maybe<ReceiveAddress> =
-        Single.just(isValidAddress(address)).flatMapMaybe { isValid ->
+        Single.just(isValidAddress(extractAddress(address))).flatMapMaybe { isValid ->
             if (isValid) {
-                ethDataManager.isContractAddress(address).flatMapMaybe { isContract ->
+                ethDataManager.isContractAddress(extractAddress(address)).flatMapMaybe { isContract ->
                     if (isContract) {
                         throw AddressParseError(ETH_UNEXPECTED_CONTRACT_ADDRESS)
                     } else {
-                        Maybe.just(EthAddress(address, label ?: address))
+                        val amountField = "value="
+                        val normalisedAddress = address.removePrefix(FormatsUtil.ETHEREUM_PREFIX)
+                        var parts = normalisedAddress.split("?")
+                        val addressPart = parts.getOrNull(0)
+                        if (parts.size > 1) {
+                            parts = parts[1].split("&");
+                        }
+
+                        val amountPart = parts.find {
+                            it.startsWith(amountField, true)
+                        }?.let {
+                            CryptoValue.fromMinor(
+                                CryptoCurrency.ETHER, it.substring(amountField.length).toBigDecimal()
+                            )
+                        }
+                        Maybe.just(
+                            EthAddress(address = addressPart!!, label = label ?: address, amount = amountPart)
+                        )
                     }
                 }
             } else {
                 Maybe.empty()
             }
         }
+
+    fun extractAddress(address: String): String {
+        val parts = address.removePrefix(FormatsUtil.ETHEREUM_PREFIX).split("?")
+        return parts.getOrNull(0)!!
+    }
 
     override fun isValidAddress(address: String): Boolean =
         FormatsUtil.isValidEthereumAddress(address)
@@ -142,7 +165,8 @@ internal class EthAsset(
 internal class EthAddress(
     override val address: String,
     override val label: String = address,
-    override val onTxCompleted: (TxResult) -> Completable = { Completable.complete() }
+    override val onTxCompleted: (TxResult) -> Completable = { Completable.complete() },
+    override val amount: CryptoValue? = null
 ) : CryptoAddress {
     override val asset: AssetInfo = CryptoCurrency.ETHER
 }
