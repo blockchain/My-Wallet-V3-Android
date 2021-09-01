@@ -103,6 +103,7 @@ import piuk.blockchain.android.data.GetAccumulatedInPeriodToIsFirstTimeBuyerMapp
 import piuk.blockchain.android.data.GetNextPaymentDateListToFrequencyDateMapper
 import piuk.blockchain.android.data.TradeDataManagerImpl
 import piuk.blockchain.android.data.Mapper
+import piuk.blockchain.android.data.api.bitpay.LunuPayService
 import piuk.blockchain.android.domain.repositories.TradeDataManager
 import piuk.blockchain.android.domain.usecases.GetNextPaymentDateUseCase
 import piuk.blockchain.android.domain.usecases.IsFirstTimeBuyerUseCase
@@ -692,6 +693,14 @@ val applicationModule = module {
 
         factory {
             BitPayService(
+                environmentConfig = get(),
+                retrofit = get(moshiExplorerRetrofit),
+                rxBus = get()
+            )
+        }
+
+        factory {
+            LunuPayService(
                 environmentConfig = get(),
                 retrofit = get(moshiExplorerRetrofit),
                 rxBus = get()

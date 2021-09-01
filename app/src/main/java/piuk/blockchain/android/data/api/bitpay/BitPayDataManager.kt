@@ -19,8 +19,9 @@ class BitPayDataManager constructor(
      *
      * @return A [RawPaymentRequest] object wrapped in a [Single].
      */
-    fun getRawPaymentRequest(invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
+    fun getRawPaymentRequest(path: String = "$BITPAY_LIVE_BASE$PATH_BITPAY_INVOICE", invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
         bitPayService.getRawPaymentRequest(
+            path = path,
             invoiceId = invoiceId,
             chain = currencyCode.toUpperCase(Locale.getDefault())
         ).applySchedulers()

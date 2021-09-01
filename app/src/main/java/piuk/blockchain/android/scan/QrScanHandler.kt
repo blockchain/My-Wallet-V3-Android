@@ -29,9 +29,12 @@ import piuk.blockchain.android.coincore.CryptoTarget
 import piuk.blockchain.android.coincore.SingleAccountList
 import piuk.blockchain.android.coincore.filterByAction
 import piuk.blockchain.android.coincore.impl.BitPayInvoiceTarget
+import piuk.blockchain.android.coincore.impl.LunuInvoiceTarget
 import piuk.blockchain.android.data.api.bitpay.BITPAY_LIVE_BASE
 import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
+import piuk.blockchain.android.data.api.bitpay.LUNU_LIVE_BASE
 import piuk.blockchain.android.data.api.bitpay.PATH_BITPAY_INVOICE
+import piuk.blockchain.android.data.api.bitpay.PATH_LUNU_INVOICE
 import piuk.blockchain.android.ui.base.BlockchainActivity
 import piuk.blockchain.android.ui.customviews.account.AccountSelectSheet
 import java.lang.IllegalArgumentException
@@ -90,6 +93,10 @@ class QrScanResultProcessor(
                 .map {
                     ScanResult.TxTarget(setOf(it), isDeeplinked)
                 }
+            scanResult.isLunuUri() -> parseLunuInvoice(scanResult)
+                .map {
+                    ScanResult.TxTarget(setOf(it), isDeeplinked)
+                }
             isMWAEnabled && scanResult.isJson() -> Single.just(ScanResult.SecuredChannelLogin(scanResult))
             else -> {
                 val addressParser: AddressFactory = payloadScope.get()
@@ -104,6 +111,14 @@ class QrScanResultProcessor(
                     }
             }
         }
+
+    private fun parseLunuInvoice(bitpayUri: String): Single<CryptoTarget> {
+        val cryptoCurrency = bitpayUri.getAssetFromLink()
+        return LunuInvoiceTarget.fromLink(cryptoCurrency, bitpayUri, bitPayDataManager)
+            .onErrorResumeNext {
+                Single.error(QrScanError(QrScanError.ErrorCode.BitPayScanFailed, it.message ?: "Unknown reason"))
+            }
+    }
 
     private fun parseBitpayInvoice(bitpayUri: String): Single<CryptoTarget> {
         val cryptoCurrency = bitpayUri.getAssetFromLink()
@@ -219,9 +234,13 @@ class QrScanResultProcessor(
 private fun String.isHttpUri(): Boolean = startsWith("http")
 
 private const val bitpayInvoiceUrl = "$BITPAY_LIVE_BASE$PATH_BITPAY_INVOICE/"
+private const val lunuInvoiceUrl = "$LUNU_LIVE_BASE$PATH_LUNU_INVOICE"
 
 private fun String.isBitpayUri(): Boolean =
     FormatsUtil.getPaymentRequestUrl(this).contains(bitpayInvoiceUrl)
+
+private fun String.isLunuUri(): Boolean =
+    FormatsUtil.getPaymentRequestUrl(this).contains(lunuInvoiceUrl)
 
 private fun String.getAssetFromLink(): AssetInfo =
     when {
