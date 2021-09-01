@@ -132,15 +132,10 @@ internal class BtcAsset(
 
     override fun parseAddress(address: String, label: String?): Maybe<ReceiveAddress> =
         Maybe.fromCallable {
-            val normalisedAddress = address.removePrefix(FormatsUtil.BTC_PREFIX)
-            val parts = normalisedAddress.split("?")
-            val addressPart = parts.getOrNull(0)
-            val amountPart = parts.find {
-                it.startsWith(BTC_ADDRESS_AMOUNT_PART, true)
-            }?.let {
-                val amountString = it.removePrefix(BTC_ADDRESS_AMOUNT_PART)
-                CryptoValue.fromMajor(CryptoCurrency.BTC, amountString.toBigDecimal())
-            }
+            val addressPart = FormatsUtil.extractCryptoAddress(address, FormatsUtil.BTC_PREFIX)
+            val amountPart = FormatsUtil.parseCryptoValue(
+                address, FormatsUtil.BTC_PREFIX, FormatsUtil.BTC_ADDRESS_AMOUNT_PART, CryptoCurrency.BTC
+            )
             if (addressPart != null && isValidAddress(addressPart)) {
                 BtcAddress(address = addressPart, label = label ?: address, amount = amountPart)
             } else {
@@ -220,7 +215,6 @@ internal class BtcAsset(
 
     companion object {
         private const val OFFLINE_CACHE_ITEM_COUNT = 5
-        private const val BTC_ADDRESS_AMOUNT_PART = "amount="
     }
 }
 

@@ -1,5 +1,7 @@
 package info.blockchain.wallet.util
 
+import info.blockchain.balance.CryptoCurrency
+import info.blockchain.balance.CryptoValue
 import info.blockchain.wallet.bch.BchMainNetParams
 import info.blockchain.wallet.bch.CashAddress
 import org.bitcoinj.core.AddressFormatException
@@ -160,6 +162,8 @@ object FormatsUtil {
     const val BTC_PREFIX = "bitcoin:"
     const val BCH_PREFIX = "bitcoincash:"
     const val ETHEREUM_PREFIX = "ethereum:"
+    const val BTC_ADDRESS_AMOUNT_PART = "amount="
+    const val ETH_ADDRESS_AMOUNT_PART = "value="
 
     fun toDisambiguatedBtcAddress(
         address: String
@@ -270,5 +274,50 @@ object FormatsUtil {
         } else {
             cashAddress
         }
+    }
+
+    fun parseCryptoValue(
+        address: String,
+        cryptoPrefix: String,
+        amountPrefix: String,
+        currency: CryptoCurrency
+    ): CryptoValue {
+        var parts = extractAddressParts(address, cryptoPrefix)
+
+        if (parts.size > 1 && parts[1].contains("&")) {
+            parts = parts[1].split("&");
+        }
+
+        val amountPart = parts.find {
+            it.startsWith(amountPrefix, true)
+        }?.let {
+            if (currency == CryptoCurrency.ETHER) {
+                CryptoValue.fromMinor(
+                    currency, it.removePrefix(amountPrefix).toBigDecimal()
+                )
+            }
+            else {
+                CryptoValue.fromMajor(
+                    currency, it.removePrefix(amountPrefix).toBigDecimal()
+                )
+            }
+        }
+
+        return amountPart!!
+    }
+
+    fun extractCryptoAddress(
+        address: String,
+        cryptoPrefix: String,
+    ): String? {
+        return extractAddressParts(address, cryptoPrefix).getOrNull(0)
+    }
+
+    private fun extractAddressParts(
+        address: String,
+        cryptoPrefix: String
+    ): List<String> {
+        val normalisedAddress = address.removePrefix(cryptoPrefix)
+        return normalisedAddress.split("?")
     }
 }
