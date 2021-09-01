@@ -128,7 +128,6 @@ internal class EthAsset(
                     if (isContract) {
                         throw AddressParseError(ETH_UNEXPECTED_CONTRACT_ADDRESS)
                     } else {
-                        val amountField = "value="
                         val normalisedAddress = address.removePrefix(FormatsUtil.ETHEREUM_PREFIX)
                         var parts = normalisedAddress.split("?")
                         val addressPart = parts.getOrNull(0)
@@ -137,10 +136,10 @@ internal class EthAsset(
                         }
 
                         val amountPart = parts.find {
-                            it.startsWith(amountField, true)
+                            it.startsWith(ETH_ADDRESS_AMOUNT_PART, true)
                         }?.let {
                             CryptoValue.fromMinor(
-                                CryptoCurrency.ETHER, it.substring(amountField.length).toBigDecimal()
+                                CryptoCurrency.ETHER, it.removePrefix(ETH_ADDRESS_AMOUNT_PART).toBigDecimal()
                             )
                         }
                         Maybe.just(
@@ -153,13 +152,18 @@ internal class EthAsset(
             }
         }
 
-    fun extractAddress(address: String): String {
+    private fun extractAddress(address: String): String {
         val parts = address.removePrefix(FormatsUtil.ETHEREUM_PREFIX).split("?")
         return parts.getOrNull(0)!!
     }
 
     override fun isValidAddress(address: String): Boolean =
         FormatsUtil.isValidEthereumAddress(address)
+
+    companion object {
+        private const val ETH_ADDRESS_AMOUNT_PART = "value="
+    }
+
 }
 
 internal class EthAddress(
