@@ -19,6 +19,8 @@ class BitPayDataManager constructor(
      *
      * @return A [RawPaymentRequest] object wrapped in a [Single].
      */
+
+    //TODO: create sep class
     fun getRawPaymentRequest(path: String = "$BITPAY_LIVE_BASE$PATH_BITPAY_INVOICE", invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
         bitPayService.getRawPaymentRequest(
             path = path,
@@ -26,16 +28,19 @@ class BitPayDataManager constructor(
             chain = currencyCode.toUpperCase(Locale.getDefault())
         ).applySchedulers()
 
-    fun paymentVerificationRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
+    fun paymentVerificationRequest(path: String = "$BITPAY_LIVE_BASE$PATH_BITPAY_INVOICE", invoiceId: String,
+                                   paymentRequest: BitPaymentRequest):
         Completable =
         bitPayService.getPaymentVerificationRequest(
+            path = path,
             invoiceId = invoiceId,
             body = paymentRequest
         ).applySchedulers()
 
-    fun paymentSubmitRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
+    fun paymentSubmitRequest(path: String = "$BITPAY_LIVE_BASE$PATH_BITPAY_INVOICE", invoiceId: String, paymentRequest: BitPaymentRequest):
         Completable =
         bitPayService.getPaymentSubmitRequest(
+            path = path,
             invoiceId = invoiceId,
             body = paymentRequest
         ).applySchedulers()

@@ -15,6 +15,7 @@ import io.reactivex.rxjava3.core.Single
 import piuk.blockchain.android.coincore.ActivitySummaryList
 import piuk.blockchain.android.coincore.AssetAction
 import piuk.blockchain.android.coincore.ReceiveAddress
+import piuk.blockchain.android.coincore.TransactionTarget
 import piuk.blockchain.android.coincore.TxEngine
 import piuk.blockchain.android.coincore.impl.CryptoNonCustodialAccount
 import piuk.blockchain.androidcore.data.payload.PayloadDataManager
@@ -88,7 +89,7 @@ internal class XlmCryptoWalletAccount(
             .doOnError { xlmAccountReference = xlmAccountReference.copy(label = revertLabel) }
     }
 
-    override fun createTxEngine(): TxEngine =
+    override fun createTxEngine(target: TransactionTarget): TxEngine =
         XlmOnChainTxEngine(
             xlmDataManager = xlmManager,
             xlmFeesFetcher = xlmFeesFetcher,

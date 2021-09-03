@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.core.Single
 import piuk.blockchain.android.coincore.ActivitySummaryList
 import piuk.blockchain.android.coincore.AssetAction
 import piuk.blockchain.android.coincore.ReceiveAddress
+import piuk.blockchain.android.coincore.TransactionTarget
 import piuk.blockchain.android.coincore.TxEngine
 import piuk.blockchain.android.coincore.TxSourceState
 import piuk.blockchain.android.coincore.impl.CryptoNonCustodialAccount
@@ -115,7 +116,7 @@ internal class EthCryptoWalletAccount(
             }
         }
 
-    override fun createTxEngine(): TxEngine =
+    override fun createTxEngine(target: TransactionTarget): TxEngine =
         EthOnChainTxEngine(
             ethDataManager = ethDataManager,
             feeManager = fees,

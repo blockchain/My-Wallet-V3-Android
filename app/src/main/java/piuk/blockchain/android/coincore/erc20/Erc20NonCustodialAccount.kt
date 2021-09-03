@@ -14,6 +14,7 @@ import piuk.blockchain.android.coincore.ActivitySummaryList
 import piuk.blockchain.android.coincore.AssetAction
 import piuk.blockchain.android.coincore.CryptoAddress
 import piuk.blockchain.android.coincore.ReceiveAddress
+import piuk.blockchain.android.coincore.TransactionTarget
 import piuk.blockchain.android.coincore.TxEngine
 import piuk.blockchain.android.coincore.TxResult
 import piuk.blockchain.android.coincore.TxSourceState
@@ -95,7 +96,7 @@ class Erc20NonCustodialAccount(
                 }
             }
 
-    override fun createTxEngine(): TxEngine =
+    override fun createTxEngine(target: TransactionTarget): TxEngine =
         Erc20OnChainTxEngine(
             erc20DataManager = erc20DataManager,
             feeManager = fees,

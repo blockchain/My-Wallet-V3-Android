@@ -20,9 +20,11 @@ import piuk.blockchain.android.coincore.AssetAction
 import piuk.blockchain.android.coincore.AvailableActions
 import piuk.blockchain.android.coincore.CryptoAccount
 import piuk.blockchain.android.coincore.ReceiveAddress
+import piuk.blockchain.android.coincore.TransactionTarget
 import piuk.blockchain.android.coincore.TxEngine
 import piuk.blockchain.android.coincore.impl.AccountRefreshTrigger
 import piuk.blockchain.android.coincore.impl.CryptoNonCustodialAccount
+import piuk.blockchain.android.coincore.impl.LunuInvoiceTarget
 import piuk.blockchain.android.coincore.impl.transactionFetchCount
 import piuk.blockchain.android.coincore.impl.transactionFetchOffset
 import piuk.blockchain.androidcore.data.fees.FeeDataManager
@@ -97,29 +99,40 @@ internal class BtcCryptoWalletAccount(
             transactionFetchCount,
             transactionFetchOffset
         ).onErrorReturn { emptyList() }
-        .mapList {
-            BtcActivitySummaryItem(
-                it,
-                payloadDataManager,
-                exchangeRates,
-                this
+            .mapList {
+                BtcActivitySummaryItem(
+                    it,
+                    payloadDataManager,
+                    exchangeRates,
+                    this
+                )
+            }
+            .flatMap {
+                appendTradeActivity(custodialWalletManager, asset, it)
+            }
+            .doOnSuccess {
+                setHasTransactions(it.isNotEmpty())
+            }
+
+    override fun createTxEngine(target: TransactionTarget): TxEngine {
+        if (target is LunuInvoiceTarget) {
+            return LunuBtcOnChainTxEngine(
+                btcDataManager = payloadDataManager,
+                sendDataManager = sendDataManager,
+                feeManager = feeDataManager,
+                requireSecondPassword = payloadDataManager.isDoubleEncrypted,
+                walletPreferences = walletPreferences
             )
         }
-        .flatMap {
-            appendTradeActivity(custodialWalletManager, asset, it)
-        }
-        .doOnSuccess {
-            setHasTransactions(it.isNotEmpty())
-        }
 
-    override fun createTxEngine(): TxEngine =
-        BtcOnChainTxEngine(
+        return BtcOnChainTxEngine(
             btcDataManager = payloadDataManager,
             sendDataManager = sendDataManager,
             feeManager = feeDataManager,
             requireSecondPassword = payloadDataManager.isDoubleEncrypted,
             walletPreferences = walletPreferences
         )
+    }
 
     override val actions: Single<AvailableActions>
         get() = super.actions.map {
@@ -180,7 +193,7 @@ internal class BtcCryptoWalletAccount(
         return payloadDataManager.syncPayloadWithServer()
             .doOnError { payloadDataManager.setDefaultIndex(revertDefault) }
             .doOnComplete { forceRefresh() }
-        }
+    }
 
     override val xpubAddress: String
         get() = when (internalAccount) {

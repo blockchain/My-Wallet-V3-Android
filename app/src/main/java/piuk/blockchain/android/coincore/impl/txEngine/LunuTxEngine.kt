@@ -27,6 +27,8 @@ import piuk.blockchain.android.coincore.impl.CryptoNonCustodialAccount
 import piuk.blockchain.android.coincore.impl.LunuInvoiceTarget
 import piuk.blockchain.android.coincore.updateTxValidity
 import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
+import piuk.blockchain.android.data.api.bitpay.LUNU_LIVE_BASE
+import piuk.blockchain.android.data.api.bitpay.PATH_LUNU_INVOICE
 import piuk.blockchain.android.data.api.bitpay.analytics.BitPayEvent
 import piuk.blockchain.android.data.api.bitpay.models.BitPayTransaction
 import piuk.blockchain.android.data.api.bitpay.models.BitPaymentRequest
@@ -35,8 +37,9 @@ import rx.Subscription
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+/*
 const val BITPAY_TIMER_SUB = "bitpay_timer"
-val PendingTx.bitpayTimer: Subscription?
+private val PendingTx.bitpayTimer: Subscription?
     get() = (this.engineState[BITPAY_TIMER_SUB] as? Subscription)
 
 interface EngineTransaction {
@@ -44,8 +47,9 @@ interface EngineTransaction {
     val msgSize: Int
     val txHash: String
 }
+*/
 
-interface BitPayClientEngine {
+interface LunuClientEngine {
     fun doPrepareTransaction(pendingTx: PendingTx): Single<Pair<Transaction, DustInput?>>
     fun doSignTransaction(
         tx: Transaction,
@@ -57,29 +61,30 @@ interface BitPayClientEngine {
     fun doOnTransactionFailed(pendingTx: PendingTx, e: Throwable)
 }
 
-class BitpayTxEngine(
+class LunuTxEngine(
     private val bitPayDataManager: BitPayDataManager,
     private val assetEngine: OnChainTxEngineBase,
     private val walletPrefs: WalletStatus,
     private val analytics: Analytics
 ) : TxEngine() {
+    private val INVOICE_PREFIX = "$LUNU_LIVE_BASE$PATH_LUNU_INVOICE"
 
     override fun assertInputsValid() {
         // Only support non-custodial BTC & BCH bitpay at this time
         val supportedCryptoCurrencies = listOf(CryptoCurrency.BTC, CryptoCurrency.BCH)
         check(supportedCryptoCurrencies.contains(sourceAsset))
         check(sourceAccount is CryptoNonCustodialAccount)
-        //check(txTarget is BitPayInvoiceTarget || txTarget is LunuInvoiceTarget)
-        require(assetEngine is BitPayClientEngine)
-        //assetEngine.assertInputsValid()
+        check(txTarget is LunuInvoiceTarget)
+        require(assetEngine is LunuClientEngine)
+        assetEngine.assertInputsValid()
     }
 
-    private val executionClient: BitPayClientEngine by unsafeLazy {
-        assetEngine as BitPayClientEngine
+    private val executionClient: LunuClientEngine by unsafeLazy {
+        assetEngine as LunuClientEngine
     }
 
-    private val bitpayInvoice: BitPayInvoiceTarget by unsafeLazy {
-        txTarget as BitPayInvoiceTarget
+    private val lunuInvoice: LunuInvoiceTarget by unsafeLazy {
+        txTarget as LunuInvoiceTarget
     }
 
     override fun start(
@@ -96,7 +101,7 @@ class BitpayTxEngine(
         assetEngine.doInitialiseTx()
             .map { tx ->
                 tx.copy(
-                    amount = bitpayInvoice.amount,
+                    amount = lunuInvoice.amount,
                     feeSelection = tx.feeSelection.copy(
                         selectedLevel = FeeLevel.Priority,
                         availableLevels = AVAILABLE_FEE_LEVELS
@@ -105,7 +110,7 @@ class BitpayTxEngine(
             }
 
     override fun doBuildConfirmations(pendingTx: PendingTx): Single<PendingTx> =
-        assetEngine.doUpdateAmount(bitpayInvoice.amount, pendingTx)
+        assetEngine.doUpdateAmount(lunuInvoice.amount, pendingTx)
             .flatMap { assetEngine.doBuildConfirmations(it) }
             .map { pTx ->
                 startTimerIfNotStarted(pTx)
@@ -131,7 +136,7 @@ class BitpayTxEngine(
         }
 
     private fun timeRemainingSecs() =
-        (bitpayInvoice.expireTimeMs - System.currentTimeMillis()) / 1000
+        (lunuInvoice.expireTimeMs - System.currentTimeMillis()) / 1000
 
     private fun startCountdownTimer(remainingTime: Long): Disposable {
         var remaining = remainingTime
@@ -187,11 +192,11 @@ class BitpayTxEngine(
     override fun doExecute(pendingTx: PendingTx, secondPassword: String): Single<TxResult> =
         executionClient.doPrepareTransaction(pendingTx)
             .flatMap { (tx, _) ->
-                doVerifyTransaction(bitpayInvoice.invoiceId, tx)
+                doVerifyTransaction(lunuInvoice.invoiceId, tx)
             }.flatMap { txVerified ->
                 executionClient.doSignTransaction(txVerified, pendingTx, secondPassword)
             }.flatMap { engineTx ->
-                doExecuteTransaction(bitpayInvoice.invoiceId, engineTx)
+                doExecuteTransaction(lunuInvoice.invoiceId, engineTx)
             }.doOnSuccess {
                 walletPrefs.setBitPaySuccess()
                 analytics.logEvent(BitPayEvent.TxSuccess(pendingTx.amount as CryptoValue))
@@ -208,8 +213,9 @@ class BitpayTxEngine(
         tx: Transaction
     ): Single<Transaction> =
         bitPayDataManager.paymentVerificationRequest(
-            invoiceId = invoiceId,
-            paymentRequest = BitPaymentRequest(
+            path = INVOICE_PREFIX,
+            invoiceId,
+            BitPaymentRequest(
                 sourceAsset.ticker,
                 listOf(
                     BitPayTransaction(
@@ -225,8 +231,9 @@ class BitpayTxEngine(
         tx: EngineTransaction
     ): Single<String> =
         bitPayDataManager.paymentSubmitRequest(
-            invoiceId = invoiceId,
-            paymentRequest = BitPaymentRequest(
+            path = INVOICE_PREFIX,
+            invoiceId,
+            BitPaymentRequest(
                 sourceAsset.ticker,
                 listOf(
                     BitPayTransaction(

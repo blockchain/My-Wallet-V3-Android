@@ -29,6 +29,7 @@ import piuk.blockchain.android.coincore.NonCustodialActivitySummaryItem
 import piuk.blockchain.android.coincore.ReceiveAddress
 import piuk.blockchain.android.coincore.SingleAccountList
 import piuk.blockchain.android.coincore.TradeActivitySummaryItem
+import piuk.blockchain.android.coincore.TransactionTarget
 import piuk.blockchain.android.coincore.TxEngine
 import piuk.blockchain.android.coincore.TxSourceState
 import piuk.blockchain.android.coincore.takeEnabledIf
@@ -231,7 +232,7 @@ abstract class CryptoNonCustodialAccount(
     override fun requireSecondPassword(): Single<Boolean> =
         Single.fromCallable { payloadDataManager.isDoubleEncrypted }
 
-    abstract fun createTxEngine(): TxEngine
+    abstract fun createTxEngine(target: TransactionTarget): TxEngine
 
     override val isArchived: Boolean
         get() = false

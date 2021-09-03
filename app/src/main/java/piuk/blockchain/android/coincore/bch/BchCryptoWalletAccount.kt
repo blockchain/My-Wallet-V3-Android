@@ -18,6 +18,7 @@ import piuk.blockchain.android.coincore.ActivitySummaryList
 import piuk.blockchain.android.coincore.AssetAction
 import piuk.blockchain.android.coincore.CryptoAccount
 import piuk.blockchain.android.coincore.ReceiveAddress
+import piuk.blockchain.android.coincore.TransactionTarget
 import piuk.blockchain.android.coincore.TxEngine
 import piuk.blockchain.android.coincore.impl.AccountRefreshTrigger
 import piuk.blockchain.android.coincore.impl.CryptoNonCustodialAccount
@@ -102,7 +103,7 @@ internal class BchCryptoWalletAccount private constructor(
                 appendTradeActivity(custodialWalletManager, asset, it)
             }.doOnSuccess { setHasTransactions(it.isNotEmpty()) }
 
-    override fun createTxEngine(): TxEngine =
+    override fun createTxEngine(target: TransactionTarget): TxEngine =
         BchOnChainTxEngine(
             feeManager = feeDataManager,
             sendDataManager = sendDataManager,

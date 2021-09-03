@@ -22,6 +22,7 @@ import piuk.blockchain.android.coincore.fiat.LinkedBankAccount
 import piuk.blockchain.android.coincore.impl.txEngine.BitpayTxEngine
 import piuk.blockchain.android.coincore.impl.txEngine.FiatDepositTxEngine
 import piuk.blockchain.android.coincore.impl.txEngine.FiatWithdrawalTxEngine
+import piuk.blockchain.android.coincore.impl.txEngine.LunuTxEngine
 import piuk.blockchain.android.coincore.impl.txEngine.OnChainTxEngineBase
 import piuk.blockchain.android.coincore.impl.txEngine.TradingToOnChainTxEngine
 import piuk.blockchain.android.coincore.impl.txEngine.TransferQuotesEngine
@@ -145,7 +146,7 @@ class TxProcessorFactory(
         target: TransactionTarget,
         action: AssetAction
     ): Single<TransactionProcessor> {
-        val engine = source.createTxEngine() as OnChainTxEngineBase
+        val engine = source.createTxEngine(target) as OnChainTxEngineBase
 
         return when (target) {
             is BitPayInvoiceTarget -> Single.just(
@@ -154,6 +155,19 @@ class TxProcessorFactory(
                     sourceAccount = source,
                     txTarget = target,
                     engine = BitpayTxEngine(
+                        bitPayDataManager = bitPayManager,
+                        walletPrefs = walletPrefs,
+                        assetEngine = engine,
+                        analytics = analytics
+                    )
+                )
+            )
+            is LunuInvoiceTarget -> Single.just(
+                TransactionProcessor(
+                    exchangeRates = exchangeRates,
+                    sourceAccount = source,
+                    txTarget = target,
+                    engine = LunuTxEngine(
                         bitPayDataManager = bitPayManager,
                         walletPrefs = walletPrefs,
                         assetEngine = engine,
