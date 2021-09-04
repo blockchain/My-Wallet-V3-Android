@@ -9,7 +9,7 @@ import java.util.Locale
 
 class BitPayDataManager constructor(
     private val bitPayService: BitPayService
-) {
+): ClientDataManager(bitPayService) {
 
     /**
      * Returns a [RawPaymentRequest] object containing details about the BitPay invoice payment
@@ -20,13 +20,13 @@ class BitPayDataManager constructor(
      * @return A [RawPaymentRequest] object wrapped in a [Single].
      */
 
-    fun getRawPaymentRequest(invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
+    override fun getRawPaymentRequest(invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
         bitPayService.getRawPaymentRequest(
             invoiceId = invoiceId,
             chain = currencyCode.toUpperCase(Locale.getDefault())
         ).applySchedulers()
 
-    fun paymentVerificationRequest(invoiceId: String,
+    override fun paymentVerificationRequest(invoiceId: String,
                                    paymentRequest: BitPaymentRequest):
         Completable =
         bitPayService.getPaymentVerificationRequest(
@@ -34,7 +34,7 @@ class BitPayDataManager constructor(
             body = paymentRequest
         ).applySchedulers()
 
-    fun paymentSubmitRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
+    override fun paymentSubmitRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
         Completable =
         bitPayService.getPaymentSubmitRequest(
             invoiceId = invoiceId,

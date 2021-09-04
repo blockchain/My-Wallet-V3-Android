@@ -7,9 +7,9 @@ import piuk.blockchain.android.data.api.bitpay.models.BitPaymentRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.util.Locale
 
-class LunuDataManager constructor(
-    private val lunuService: LunuService
-): ClientDataManager(lunuService) {
+abstract class ClientDataManager constructor(
+    private val service: ClientService
+) {
 
     /**
      * Returns a [RawPaymentRequest] object containing details about the BitPay invoice payment
@@ -20,23 +20,23 @@ class LunuDataManager constructor(
      * @return A [RawPaymentRequest] object wrapped in a [Single].
      */
 
-    override fun getRawPaymentRequest(invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
-        lunuService.getRawPaymentRequest(
+    open fun getRawPaymentRequest(invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
+        service.getRawPaymentRequest(
             invoiceId = invoiceId,
             chain = currencyCode.toUpperCase(Locale.getDefault())
         ).applySchedulers()
 
-    override fun paymentVerificationRequest(invoiceId: String,
+    open fun paymentVerificationRequest(invoiceId: String,
                                    paymentRequest: BitPaymentRequest):
         Completable =
-        lunuService.getPaymentVerificationRequest(
+        service.getPaymentVerificationRequest(
             invoiceId = invoiceId,
             body = paymentRequest
         ).applySchedulers()
 
-    override fun paymentSubmitRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
+    open fun paymentSubmitRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
         Completable =
-        lunuService.getPaymentSubmitRequest(
+        service.getPaymentSubmitRequest(
             invoiceId = invoiceId,
             body = paymentRequest
         ).applySchedulers()

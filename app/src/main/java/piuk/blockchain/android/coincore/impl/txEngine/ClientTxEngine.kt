@@ -23,7 +23,11 @@ import piuk.blockchain.android.coincore.TxValidationFailure
 import piuk.blockchain.android.coincore.ValidationState
 import piuk.blockchain.android.coincore.copyAndPut
 import piuk.blockchain.android.coincore.updateTxValidity
+import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
+import piuk.blockchain.android.data.api.bitpay.ClientDataManager
 import piuk.blockchain.android.data.api.bitpay.analytics.BitPayEvent
+import piuk.blockchain.android.data.api.bitpay.models.BitPayTransaction
+import piuk.blockchain.android.data.api.bitpay.models.BitPaymentRequest
 import piuk.blockchain.androidcore.utils.helperfunctions.unsafeLazy
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -33,6 +37,7 @@ private val PendingTx.paymentTimer: Subscription?
     get() = (this.engineState[PAYMENT_TIMER_SUB] as? Subscription)
 
 abstract class ClientTxEngine(
+    private val clientDataManager: ClientDataManager,
     private val assetEngine: OnChainTxEngineBase,
     private val walletPrefs: WalletStatus,
     private val analytics: Analytics
@@ -167,15 +172,39 @@ abstract class ClientTxEngine(
                 TxResult.HashedTxResult(it, pendingTx.amount)
             }
 
-    abstract fun doVerifyTransaction(
+    fun doVerifyTransaction(
         invoiceId: String,
         tx: Transaction
-    ): Single<Transaction>
+    ): Single<Transaction> =
+        clientDataManager.paymentVerificationRequest(
+            invoiceId = invoiceId,
+            paymentRequest = BitPaymentRequest(
+                sourceAsset.ticker,
+                listOf(
+                    BitPayTransaction(
+                        String(Hex.encode(tx.bitcoinSerialize())),
+                        tx.messageSize
+                    )
+                )
+            )
+        ).andThen(Single.just(tx))
 
-    abstract fun doExecuteTransaction(
+    fun doExecuteTransaction(
         invoiceId: String,
         tx: EngineTransaction
-    ): Single<String>
+    ): Single<String> =
+        clientDataManager.paymentSubmitRequest(
+            invoiceId = invoiceId,
+            paymentRequest = BitPaymentRequest(
+                sourceAsset.ticker,
+                listOf(
+                    BitPayTransaction(
+                        tx.encodedMsg,
+                        tx.msgSize
+                    )
+                )
+            )
+        ).andThen(Single.just(tx.txHash))
 
     companion object {
         private const val TIMEOUT_STOP = 2

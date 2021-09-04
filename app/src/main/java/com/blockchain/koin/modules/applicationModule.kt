@@ -703,7 +703,6 @@ val applicationModule = module {
             BitPayService(
                 environmentConfig = get(),
                 retrofit = get(moshiExplorerRetrofit),
-                rxBus = get()
             )
         }
 
@@ -711,7 +710,6 @@ val applicationModule = module {
             LunuService(
                 environmentConfig = get(),
                 retrofit = get(moshiExplorerRetrofit),
-                rxBus = get()
             )
         }
 

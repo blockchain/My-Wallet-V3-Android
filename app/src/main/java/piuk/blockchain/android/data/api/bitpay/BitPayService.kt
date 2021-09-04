@@ -7,39 +7,34 @@ import piuk.blockchain.android.data.api.bitpay.models.BitPaymentRequest
 import piuk.blockchain.android.data.api.bitpay.models.RawPaymentRequest
 import piuk.blockchain.android.data.api.bitpay.models.exceptions.wrapErrorMessage
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
-import piuk.blockchain.androidcore.data.rxjava.RxBus
 import retrofit2.Retrofit
 
 class BitPayService constructor(
     environmentConfig: EnvironmentConfig,
     retrofit: Retrofit,
-    rxBus: RxBus
-) {
+) : ClientService(retrofit) {
 
     private val service: BitPay = retrofit.create(BitPay::class.java)
     private val baseUrl: String = environmentConfig.bitpayUrl
 
-    internal fun getRawPaymentRequest(
-        path: String = "$baseUrl$PATH_BITPAY_INVOICE",
+    override fun getRawPaymentRequest(
         invoiceId: String,
         chain: String
-    ): Single<RawPaymentRequest> = service.getRawPaymentRequest("$path/$invoiceId", BitPayChain(chain))
+    ): Single<RawPaymentRequest> = service.getRawPaymentRequest("$baseUrl$PATH_BITPAY_INVOICE/$invoiceId", BitPayChain(chain))
         .wrapErrorMessage()
 
-    internal fun getPaymentVerificationRequest(
-        path: String = "$baseUrl$PATH_BITPAY_INVOICE",
+    override fun getPaymentVerificationRequest(
         body: BitPaymentRequest,
         invoiceId: String
     ): Completable =
-        service.paymentRequest(path = "$path/$invoiceId",
+        service.paymentRequest(path = "$baseUrl$PATH_BITPAY_INVOICE/$invoiceId",
             body = body,
             contentType = "application/payment-verification")
 
-    internal fun getPaymentSubmitRequest(
-        path: String = "$baseUrl$PATH_BITPAY_INVOICE",
+    override fun getPaymentSubmitRequest(
         body: BitPaymentRequest,
         invoiceId: String
-    ): Completable = service.paymentRequest(path = "$path/$invoiceId",
+    ): Completable = service.paymentRequest(path = "$baseUrl$PATH_BITPAY_INVOICE/$invoiceId",
             body = body,
             contentType = "application/payment")
 }
