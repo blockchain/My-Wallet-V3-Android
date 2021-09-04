@@ -103,7 +103,7 @@ internal class BchCryptoWalletAccount private constructor(
                 appendTradeActivity(custodialWalletManager, asset, it)
             }.doOnSuccess { setHasTransactions(it.isNotEmpty()) }
 
-    override fun createTxEngine(target: TransactionTarget): TxEngine =
+    override fun createTxEngine(): TxEngine =
         BchOnChainTxEngine(
             feeManager = feeDataManager,
             sendDataManager = sendDataManager,

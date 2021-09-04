@@ -116,7 +116,7 @@ internal class EthCryptoWalletAccount(
             }
         }
 
-    override fun createTxEngine(target: TransactionTarget): TxEngine =
+    override fun createTxEngine(): TxEngine =
         EthOnChainTxEngine(
             ethDataManager = ethDataManager,
             feeManager = fees,

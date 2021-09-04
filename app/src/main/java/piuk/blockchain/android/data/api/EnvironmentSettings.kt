@@ -3,6 +3,7 @@ package piuk.blockchain.android.data.api
 import info.blockchain.wallet.api.Environment
 import piuk.blockchain.android.BuildConfig
 import piuk.blockchain.android.data.api.bitpay.BITPAY_LIVE_BASE
+import piuk.blockchain.android.data.api.bitpay.LUNU_LIVE_BASE
 import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 
 class EnvironmentSettings : EnvironmentConfig {
@@ -18,4 +19,5 @@ class EnvironmentSettings : EnvironmentConfig {
     override val statusUrl: String = BuildConfig.STATUS_API_URL
 
     override val bitpayUrl: String = BITPAY_LIVE_BASE
+    override val lunuUrl: String = LUNU_LIVE_BASE
 }

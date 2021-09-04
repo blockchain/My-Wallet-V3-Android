@@ -96,7 +96,7 @@ class Erc20NonCustodialAccount(
                 }
             }
 
-    override fun createTxEngine(target: TransactionTarget): TxEngine =
+    override fun createTxEngine(): TxEngine =
         Erc20OnChainTxEngine(
             erc20DataManager = erc20DataManager,
             feeManager = fees,

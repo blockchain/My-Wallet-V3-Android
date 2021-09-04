@@ -89,7 +89,7 @@ internal class XlmCryptoWalletAccount(
             .doOnError { xlmAccountReference = xlmAccountReference.copy(label = revertLabel) }
     }
 
-    override fun createTxEngine(target: TransactionTarget): TxEngine =
+    override fun createTxEngine(): TxEngine =
         XlmOnChainTxEngine(
             xlmDataManager = xlmManager,
             xlmFeesFetcher = xlmFeesFetcher,

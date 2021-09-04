@@ -33,6 +33,7 @@ import piuk.blockchain.android.coincore.impl.LunuInvoiceTarget
 import piuk.blockchain.android.data.api.bitpay.BITPAY_LIVE_BASE
 import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
 import piuk.blockchain.android.data.api.bitpay.LUNU_LIVE_BASE
+import piuk.blockchain.android.data.api.bitpay.LunuDataManager
 import piuk.blockchain.android.data.api.bitpay.PATH_BITPAY_INVOICE
 import piuk.blockchain.android.data.api.bitpay.PATH_LUNU_INVOICE
 import piuk.blockchain.android.ui.base.BlockchainActivity
@@ -71,6 +72,7 @@ class QrScanError(val errorCode: ErrorCode, msg: String) : Exception(msg) {
 
 class QrScanResultProcessor(
     private val bitPayDataManager: BitPayDataManager,
+    private val lunuDataManager: LunuDataManager,
     mwaFeatureFlag: FeatureFlag
 ) {
     private var isMWAEnabled: Boolean = false
@@ -112,9 +114,9 @@ class QrScanResultProcessor(
             }
         }
 
-    private fun parseLunuInvoice(bitpayUri: String): Single<CryptoTarget> {
-        val cryptoCurrency = bitpayUri.getAssetFromLink()
-        return LunuInvoiceTarget.fromLink(cryptoCurrency, bitpayUri, bitPayDataManager)
+    private fun parseLunuInvoice(lunuUri: String): Single<CryptoTarget> {
+        val cryptoCurrency = lunuUri.getAssetFromLink()
+        return LunuInvoiceTarget.fromLink(cryptoCurrency, lunuUri, lunuDataManager)
             .onErrorResumeNext {
                 Single.error(QrScanError(QrScanError.ErrorCode.BitPayScanFailed, it.message ?: "Unknown reason"))
             }

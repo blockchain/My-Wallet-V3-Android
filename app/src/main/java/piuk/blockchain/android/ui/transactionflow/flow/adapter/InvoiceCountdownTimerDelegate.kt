@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import piuk.blockchain.android.R
 import piuk.blockchain.android.coincore.TxConfirmation
 import piuk.blockchain.android.coincore.TxConfirmationValue
+import piuk.blockchain.android.coincore.impl.LunuInvoiceTarget
 import piuk.blockchain.android.databinding.ItemSendConfirmCountdownBinding
 import piuk.blockchain.android.ui.adapters.AdapterDelegate
 import piuk.blockchain.android.util.context
@@ -14,13 +15,29 @@ import piuk.blockchain.android.util.getResolvedColor
 import java.util.concurrent.TimeUnit
 
 class InvoiceCountdownTimerDelegate<in T> : AdapterDelegate<T> {
+    private var useLunu: Boolean? = null
+
     override fun isForViewType(items: List<T>, position: Int): Boolean {
+        if (useLunu == null && items.isNotEmpty()) {
+            items.forEach {
+                if (it is TxConfirmationValue.To) {
+                    if (it.txTarget is LunuInvoiceTarget) {
+                        useLunu = true
+                    }
+                }
+            }
+            if (useLunu == null) {
+                useLunu = false
+            }
+        }
+
         return (items[position] as? TxConfirmationValue)?.confirmation == TxConfirmation.INVOICE_COUNTDOWN
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
         ViewHolder(
-            ItemSendConfirmCountdownBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemSendConfirmCountdownBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            useLunu!!
         )
 
     override fun onBindViewHolder(
@@ -30,11 +47,18 @@ class InvoiceCountdownTimerDelegate<in T> : AdapterDelegate<T> {
     ) = (holder as ViewHolder).bind(items[position] as TxConfirmationValue.BitPayCountdown)
 
     class ViewHolder(
-        private val binding: ItemSendConfirmCountdownBinding
+        private val binding: ItemSendConfirmCountdownBinding,
+        private val useLunu: Boolean
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: TxConfirmationValue.BitPayCountdown) {
+            // Not good idea. Any advices?
             binding.confirmationItemLabel.setText(R.string.bitpay_remaining_time)
+            if (useLunu && binding.confirmationItemLogo.tag != R.drawable.ic_lunu_logo) {
+                // Avoid image reload
+                binding.confirmationItemLogo.tag = R.drawable.ic_lunu_logo
+                binding.confirmationItemLogo.setImageResource(R.drawable.ic_lunu_logo)
+            }
             updateCountdownElements(item.timeRemainingSecs)
         }
 

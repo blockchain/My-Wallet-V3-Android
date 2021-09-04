@@ -8,6 +8,8 @@ import com.blockchain.core.price.ExchangeRates
 import com.blockchain.koin.scopedInject
 import com.blockchain.preferences.CurrencyPrefs
 import org.koin.android.ext.android.inject
+import piuk.blockchain.android.coincore.TxConfirmationValue
+import piuk.blockchain.android.coincore.impl.LunuInvoiceTarget
 import piuk.blockchain.android.databinding.DialogTxFlowConfirmBinding
 import piuk.blockchain.android.ui.customviews.BlockchainListDividerDecor
 import piuk.blockchain.android.ui.transactionflow.engine.TransactionIntent

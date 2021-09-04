@@ -35,9 +35,11 @@ import piuk.blockchain.android.coincore.impl.txEngine.sell.TradingSellTxEngine
 import piuk.blockchain.android.coincore.impl.txEngine.swap.OnChainSwapTxEngine
 import piuk.blockchain.android.coincore.impl.txEngine.swap.TradingToTradingSwapTxEngine
 import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
+import piuk.blockchain.android.data.api.bitpay.LunuDataManager
 
 class TxProcessorFactory(
     private val bitPayManager: BitPayDataManager,
+    private val lunuManager: LunuDataManager,
     private val exchangeRates: ExchangeRatesDataManager,
     private val walletManager: CustodialWalletManager,
     private val interestBalances: InterestBalanceDataManager,
@@ -146,7 +148,7 @@ class TxProcessorFactory(
         target: TransactionTarget,
         action: AssetAction
     ): Single<TransactionProcessor> {
-        val engine = source.createTxEngine(target) as OnChainTxEngineBase
+        val engine = source.createTxEngine() as OnChainTxEngineBase
 
         return when (target) {
             is BitPayInvoiceTarget -> Single.just(
@@ -168,7 +170,7 @@ class TxProcessorFactory(
                     sourceAccount = source,
                     txTarget = target,
                     engine = LunuTxEngine(
-                        bitPayDataManager = bitPayManager,
+                        lunuDataManager = lunuManager,
                         walletPrefs = walletPrefs,
                         assetEngine = engine,
                         analytics = analytics

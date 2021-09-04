@@ -20,14 +20,14 @@ class BitPayInvoiceTarget(
     override val asset: AssetInfo,
     override val address: String,
     override val amount: CryptoValue,
-    val invoiceId: String,
-    val merchant: String,
-    private val expires: String
-) : InvoiceTarget, CryptoAddress {
+    override val invoiceId: String,
+    override val merchant: String,
+    override val expires: String
+) : InvoiceTarget {
 
     override val label: String = "BitPay[$merchant]"
 
-    val expireTimeMs: Long by lazy {
+    override val expireTimeMs: Long by lazy {
         expires.fromIso8601ToUtc()?.toLocalTime()?.time ?: throw IllegalStateException("Unknown countdown time")
     }
 

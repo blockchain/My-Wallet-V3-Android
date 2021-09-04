@@ -26,7 +26,12 @@ interface TransactionTarget {
 }
 
 // An invoice has a fixed amount
-interface InvoiceTarget
+interface InvoiceTarget : CryptoAddress {
+    val invoiceId: String
+    val merchant: String
+    val expires: String
+    val expireTimeMs: Long
+}
 
 interface ReceiveAddress : TransactionTarget {
     val address: String

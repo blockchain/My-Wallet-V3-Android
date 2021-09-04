@@ -7,8 +7,8 @@ import piuk.blockchain.android.data.api.bitpay.models.BitPaymentRequest
 import piuk.blockchain.androidcore.utils.extensions.applySchedulers
 import java.util.Locale
 
-class BitPayDataManager constructor(
-    private val bitPayService: BitPayService
+class LunuDataManager constructor(
+    private val lunuService: LunuService
 ) {
 
     /**
@@ -21,7 +21,7 @@ class BitPayDataManager constructor(
      */
 
     fun getRawPaymentRequest(invoiceId: String, currencyCode: String): Single<RawPaymentRequest> =
-        bitPayService.getRawPaymentRequest(
+        lunuService.getRawPaymentRequest(
             invoiceId = invoiceId,
             chain = currencyCode.toUpperCase(Locale.getDefault())
         ).applySchedulers()
@@ -29,14 +29,14 @@ class BitPayDataManager constructor(
     fun paymentVerificationRequest(invoiceId: String,
                                    paymentRequest: BitPaymentRequest):
         Completable =
-        bitPayService.getPaymentVerificationRequest(
+        lunuService.getPaymentVerificationRequest(
             invoiceId = invoiceId,
             body = paymentRequest
         ).applySchedulers()
 
     fun paymentSubmitRequest(invoiceId: String, paymentRequest: BitPaymentRequest):
         Completable =
-        bitPayService.getPaymentSubmitRequest(
+        lunuService.getPaymentSubmitRequest(
             invoiceId = invoiceId,
             body = paymentRequest
         ).applySchedulers()

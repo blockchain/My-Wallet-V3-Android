@@ -232,7 +232,7 @@ abstract class CryptoNonCustodialAccount(
     override fun requireSecondPassword(): Single<Boolean> =
         Single.fromCallable { payloadDataManager.isDoubleEncrypted }
 
-    abstract fun createTxEngine(target: TransactionTarget): TxEngine
+    abstract fun createTxEngine(): TxEngine
 
     override val isArchived: Boolean
         get() = false

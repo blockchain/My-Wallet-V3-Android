@@ -9,9 +9,7 @@ import io.reactivex.rxjava3.core.Single
 import piuk.blockchain.android.coincore.CryptoAddress
 import piuk.blockchain.android.coincore.CryptoTarget
 import piuk.blockchain.android.coincore.InvoiceTarget
-import piuk.blockchain.android.data.api.bitpay.BitPayDataManager
-import piuk.blockchain.android.data.api.bitpay.LUNU_LIVE_BASE
-import piuk.blockchain.android.data.api.bitpay.PATH_LUNU_INVOICE
+import piuk.blockchain.android.data.api.bitpay.LunuDataManager
 import timber.log.Timber
 import java.lang.IllegalStateException
 import java.util.regex.Pattern
@@ -20,25 +18,24 @@ class LunuInvoiceTarget(
     override val asset: AssetInfo,
     override val address: String,
     override val amount: CryptoValue,
-    val invoiceId: String,
-    val merchant: String,
-    private val expires: String
-) : InvoiceTarget, CryptoAddress {
+    override val invoiceId: String,
+    override val merchant: String,
+    override val expires: String
+) : InvoiceTarget {
 
-    override val label: String = "BitPay[$merchant]"
+    override val label: String = "Lunu[$merchant]"
 
-    val expireTimeMs: Long by lazy {
+    override val expireTimeMs: Long by lazy {
         expires.fromIso8601ToUtc()?.toLocalTime()?.time ?: throw IllegalStateException("Unknown countdown time")
     }
 
     companion object {
-        private const val INVOICE_PREFIX = "$LUNU_LIVE_BASE$PATH_LUNU_INVOICE"
         private val MERCHANT_PATTERN: Pattern = Pattern.compile("invoice ")
 
         fun fromLink(
             asset: AssetInfo,
             linkData: String,
-            bitPayDataManager: BitPayDataManager
+            bitPayDataManager: LunuDataManager
         ): Single<CryptoTarget> {
             val paymentRequestURL: String =
                 FormatsUtil.getPaymentRequestUrl(linkData)
@@ -50,7 +47,7 @@ class LunuInvoiceTarget(
             }
 
             return bitPayDataManager.getRawPaymentRequest(
-                path = INVOICE_PREFIX, invoiceId = invoiceId, currencyCode = asset.ticker
+                invoiceId = invoiceId, currencyCode = asset.ticker
             )
                 .map { rawRequest ->
                     LunuInvoiceTarget(

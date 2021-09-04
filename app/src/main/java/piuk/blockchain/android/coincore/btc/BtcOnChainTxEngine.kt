@@ -32,9 +32,9 @@ import piuk.blockchain.android.coincore.TxResult
 import piuk.blockchain.android.coincore.TxValidationFailure
 import piuk.blockchain.android.coincore.ValidationState
 import piuk.blockchain.android.coincore.copyAndPut
-import piuk.blockchain.android.coincore.impl.txEngine.BitPayClientEngine
 import piuk.blockchain.android.coincore.impl.txEngine.EngineTransaction
 import piuk.blockchain.android.coincore.impl.txEngine.OnChainTxEngineBase
+import piuk.blockchain.android.coincore.impl.txEngine.PaymentClientEngine
 import piuk.blockchain.android.coincore.toFiat
 import piuk.blockchain.android.coincore.toUserFiat
 import piuk.blockchain.android.coincore.updateTxValidity
@@ -75,7 +75,7 @@ class BtcOnChainTxEngine(
 ) : OnChainTxEngineBase(
     requireSecondPassword,
     walletPreferences
-), BitPayClientEngine, KoinComponent {
+), PaymentClientEngine, KoinComponent {
 
     override fun assertInputsValid() {
         check(sourceAccount is BtcCryptoWalletAccount)

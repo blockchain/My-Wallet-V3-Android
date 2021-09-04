@@ -10,17 +10,16 @@ import piuk.blockchain.androidcore.data.api.EnvironmentConfig
 import piuk.blockchain.androidcore.data.rxjava.RxBus
 import retrofit2.Retrofit
 
-class LunuPayService constructor(
+class LunuService constructor(
     environmentConfig: EnvironmentConfig,
     retrofit: Retrofit,
-    rxBus: RxBus
 ) {
 
     private val service: BitPay = retrofit.create(BitPay::class.java)
-    private val baseUrl: String = environmentConfig.bitpayUrl
+    private val baseUrl: String = environmentConfig.lunuUrl
 
     internal fun getRawPaymentRequest(
-        path: String = "$baseUrl$PATH_BITPAY_INVOICE",
+        path: String = "$baseUrl$PATH_LUNU_INVOICE",
         invoiceId: String,
         chain: String
     ): Single<RawPaymentRequest> =
@@ -28,7 +27,7 @@ class LunuPayService constructor(
             .wrapErrorMessage()
 
     internal fun getPaymentVerificationRequest(
-        path: String = "$baseUrl${PATH_LUNU_INVOICE}_INVOICE",
+        path: String = "$baseUrl$PATH_LUNU_INVOICE",
         body: BitPaymentRequest,
         invoiceId: String
     ): Completable =

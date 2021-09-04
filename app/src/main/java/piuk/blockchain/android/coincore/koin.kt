@@ -154,6 +154,7 @@ val coincoreModule = module {
         scoped {
             TxProcessorFactory(
                 bitPayManager = get(),
+                lunuManager = get(),
                 exchangeRates = get(),
                 interestBalances = get(),
                 walletManager = get(),

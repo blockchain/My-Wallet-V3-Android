@@ -103,7 +103,8 @@ import piuk.blockchain.android.data.GetAccumulatedInPeriodToIsFirstTimeBuyerMapp
 import piuk.blockchain.android.data.GetNextPaymentDateListToFrequencyDateMapper
 import piuk.blockchain.android.data.TradeDataManagerImpl
 import piuk.blockchain.android.data.Mapper
-import piuk.blockchain.android.data.api.bitpay.LunuPayService
+import piuk.blockchain.android.data.api.bitpay.LunuDataManager
+import piuk.blockchain.android.data.api.bitpay.LunuService
 import piuk.blockchain.android.domain.repositories.TradeDataManager
 import piuk.blockchain.android.domain.usecases.GetNextPaymentDateUseCase
 import piuk.blockchain.android.domain.usecases.IsFirstTimeBuyerUseCase
@@ -422,6 +423,7 @@ val applicationModule = module {
         scoped {
             QrScanResultProcessor(
                 bitPayDataManager = get(),
+                lunuDataManager = get(),
                 mwaFeatureFlag = get(mwaFeatureFlag)
             )
         }
@@ -692,6 +694,12 @@ val applicationModule = module {
         }
 
         factory {
+            LunuDataManager(
+                lunuService = get()
+            )
+        }
+
+        factory {
             BitPayService(
                 environmentConfig = get(),
                 retrofit = get(moshiExplorerRetrofit),
@@ -700,7 +708,7 @@ val applicationModule = module {
         }
 
         factory {
-            LunuPayService(
+            LunuService(
                 environmentConfig = get(),
                 retrofit = get(moshiExplorerRetrofit),
                 rxBus = get()

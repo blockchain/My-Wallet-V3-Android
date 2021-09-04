@@ -114,17 +114,7 @@ internal class BtcCryptoWalletAccount(
                 setHasTransactions(it.isNotEmpty())
             }
 
-    override fun createTxEngine(target: TransactionTarget): TxEngine {
-        if (target is LunuInvoiceTarget) {
-            return LunuBtcOnChainTxEngine(
-                btcDataManager = payloadDataManager,
-                sendDataManager = sendDataManager,
-                feeManager = feeDataManager,
-                requireSecondPassword = payloadDataManager.isDoubleEncrypted,
-                walletPreferences = walletPreferences
-            )
-        }
-
+    override fun createTxEngine(): TxEngine {
         return BtcOnChainTxEngine(
             btcDataManager = payloadDataManager,
             sendDataManager = sendDataManager,
